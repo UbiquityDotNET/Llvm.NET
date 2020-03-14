@@ -5,7 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System;
+
 using Antlr4.Runtime;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
@@ -56,7 +58,7 @@ namespace Kaleidoscope.Grammar
             try
             {
                 string srcText = ( ( ITokenStream )recognizer.InputStream ).TokenSource.InputStream.ToString( );
-                Console.WriteLine( srcText.TrimEnd() );
+                Console.WriteLine( srcText.TrimEnd( ) );
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine( new string( ' ', charPositionInLine ) + '^' );
                 Console.Error.WriteLine( "error KLP{0:D04}: {1}"

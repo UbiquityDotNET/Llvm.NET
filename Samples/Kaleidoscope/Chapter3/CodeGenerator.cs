@@ -7,13 +7,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
-using Llvm.NET;
-using Llvm.NET.Instructions;
-using Llvm.NET.Values;
+
 using Ubiquity.ArgValidators;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Instructions;
+using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -53,6 +55,7 @@ namespace Kaleidoscope.Chapter3
         #region Generate
         public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
+            ast.ValidateNotNull( nameof( ast ) );
             codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
             try
             {

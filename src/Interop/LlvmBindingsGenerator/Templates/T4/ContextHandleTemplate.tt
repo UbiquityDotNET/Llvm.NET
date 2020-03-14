@@ -18,7 +18,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Llvm.NET.Interop
+namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Simple typesafe handle to wrap a raw pointer for interop with "C" API exported from LibLLVM</summary>
     /// <remarks>

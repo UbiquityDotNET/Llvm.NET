@@ -6,8 +6,11 @@
 
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using CppSharp.AST;
+
 using LlvmBindingsGenerator.CppSharpExtensions;
+
 using YamlDotNet.Serialization;
 
 namespace LlvmBindingsGenerator.Configuration

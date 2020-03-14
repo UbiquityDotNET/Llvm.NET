@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using CppSharp.AST;
 using CppSharp.Passes;
 

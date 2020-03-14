@@ -73,7 +73,7 @@ callback returns:
  5. return the address to the JIT engine so it can ultimately call the function and continue on it's merry way.
 
 ## Conclusion
-Implementing Lazy JIT support with Llvm.NET is pretty simple and straight forward. It took many times more
+Implementing Lazy JIT support with Ubiquity.NET.Llvm is pretty simple and straight forward. It took many times more
 words to describe then actual lines of code. Efficiently, supporting lazy JIT is a much more complex matter.
 There are trade-offs doing things lazy, in particular the application can stall for a period, while the
 system generates new code to run "on the fly". Optimizations, when fully enabled, add additional time to

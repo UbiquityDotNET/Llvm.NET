@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using Ubiquity.ArgValidators;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
@@ -33,14 +34,14 @@ namespace Kaleidoscope.Runtime
         /// </remarks>
         public static void WaitForDebugger( bool condition )
         {
-            if(!condition || Debugger.IsAttached )
+            if( !condition || Debugger.IsAttached )
             {
                 return;
             }
 
-            if( !Debugger.IsAttached)
+            if( !Debugger.IsAttached )
             {
-                Console.WriteLine( "Waiting for Debugger attach... PID: {0}", Process.GetCurrentProcess().Id );
+                Console.WriteLine( "Waiting for Debugger attach... PID: {0}", Process.GetCurrentProcess( ).Id );
             }
 
             while( !Debugger.IsAttached )

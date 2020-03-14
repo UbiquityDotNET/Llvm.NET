@@ -24,7 +24,7 @@ namespace LlvmBindingsGenerator
             {
                 Name = td.Name,
                 Namespace = td.Namespace
-            });
+            } );
         }
 
         public override bool DoesMarshalling => false;

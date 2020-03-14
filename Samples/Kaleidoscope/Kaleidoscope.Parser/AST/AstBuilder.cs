@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
 using Antlr4.Runtime;
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs

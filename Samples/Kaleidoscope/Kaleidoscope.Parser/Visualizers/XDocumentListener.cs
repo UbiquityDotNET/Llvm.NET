@@ -30,7 +30,7 @@ namespace Kaleidoscope.Grammar
         public override void EnterUnaryOpExpression( [ValidatedNotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
         {
             context.ValidateNotNull( nameof( context ) );
-            if(ActiveNode is null)
+            if( ActiveNode is null )
             {
                 throw new InvalidOperationException( "ActiveNode is null!" );
             }

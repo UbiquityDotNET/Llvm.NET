@@ -28,22 +28,22 @@ property of the CodeGenerator was added previously to aid in observing the effec
 will serve to disable the optimizations for debugging in this chapter.)
 
 ## Setup for emitting debug information
-Debug information in Llvm.NET is created with the [DebugInfoBuilder](xref:Llvm.NET.DebugInfo.DebugInfoBuilder).
-This is similar to the [InstructionBuilder](xref:Llvm.NET.Instructions.InstructionBuilder). Using the
+Debug information in Ubiquity.NET.Llvm is created with the [DebugInfoBuilder](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder).
+This is similar to the [InstructionBuilder](xref:Ubiquity.NET.Llvm.Instructions.InstructionBuilder). Using the
 DebugInfoBuilder requires a bit more knowledge on the general concepts of the DWARF debugging format, and
-in particular the [DebuggingMetadata](xref:llvm_sourcelevel_debugging) in LLVM. In Llvm.NET you don't need
+in particular the [DebuggingMetadata](xref:llvm_sourcelevel_debugging) in LLVM. In Ubiquity.NET.Llvm you don't need
 to, and in fact can't, create an instance of the DebugInfoBuilder class. Instead it is lazy constructed
-internally to a [BitcodeModule](xref:Llvm.NET.BitcodeModule) and accessible through the
-[DIBuilder](xref:Llvm.NET.BitcodeModule.DIBuilder) property. This simplifies creating the builder since it
+internally to a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) and accessible through the
+[DIBuilder](xref:Ubiquity.NET.Llvm.BitcodeModule.DIBuilder) property. This simplifies creating the builder since it
 is bound to the module.
 
-Another important item for debug information is called the Compilation Unit. In Llvm.NET that is the
-[DICompileUnit](xref:Llvm.NET.DebugInfo.DICompileUnit). The compile unit is the top level scope for
+Another important item for debug information is called the Compilation Unit. In Ubiquity.NET.Llvm that is the
+[DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit). The compile unit is the top level scope for
 storing debug information, there is only ever one per module and generally it represents the full source
 file that was used to create the module. Since the compile unit, like the builder is really tied to the
-module it is exposed as the [DICompileUnit](xref:Llvm.NET.BitcodeModule.DICompileUnit) property. However,
+module it is exposed as the [DICompileUnit](xref:Ubiquity.NET.Llvm.BitcodeModule.DICompileUnit) property. However,
 unlike a builder it isn't something that a module can automatically construct without more information.
-Therefore, Llvm.NET provides overloads for the creation of a module that includes the additional data
+Therefore, Ubiquity.NET.Llvm provides overloads for the creation of a module that includes the additional data
 needed to create the DICompileUnit for you.
 
 The updated InitializeModuleAndPassManager() function looks like this:
@@ -51,7 +51,7 @@ The updated InitializeModuleAndPassManager() function looks like this:
 [!code-csharp[InitializeModuleAndPassManager](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#InitializeModuleAndPassManager)]
 
 There are a few points of interest here. First the compile unit is created for the Kaleidoscope language,
-however it is using the [SourceLanguage.C](xref:Llvm.NET.DebugInfo.SourceLanguage.C) value. This is
+however it is using the [SourceLanguage.C](xref:Ubiquity.NET.Llvm.DebugInfo.SourceLanguage.C) value. This is
 because a debugger won't likely understand the Kaleidoscope language, runtime, or calling conventions.
 (We just invented it and only now setting up debugger support after all!) The good news is that the
 language follows the C language ABI in the code generation (generally a good idea unless you have a really
@@ -65,8 +65,8 @@ is provided so that it becomes the root compile unit.
 > It is important to note that when using the DIBuilder it must be "finalized" in order to resolve internal
 > forward references in the debug metadata. The exact details of this aren't generally relevant, just
 > remember that somewhere after generating all code and debug information to call the 
-> [Finish](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.Finish(Llvm.NET.DebugInfo.DISubProgram))
-> method. (In Llvm.NET this method is called Finish() to avoid conflicts with the .NET runtime defined
+> [Finish](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.Finish(Ubiquity.NET.Llvm.DebugInfo.DISubProgram))
+> method. (In Ubiquity.NET.Llvm this method is called Finish() to avoid conflicts with the .NET runtime defined
 > Finalize() and to avoid confusion on the term as the idea of "finalization" has a very different meaning
 > in .NET then what applies to the DIBuilder).
 
@@ -80,7 +80,7 @@ With the basics of the DIBuilder and DICompile unit setup for the module it is t
 debug information for functions. This requires adding a few extra calls to build the context of the debug
 information for the function. The DWARF debug format that LLVM's debug metadata is based on calls these
 "SubPrograms". The new code builds a representation of the file the code is contained in as a new 
-[DIFile](xref:Llvm.NET.DebugInfo.DIFile). In this case that is a bit redundant as all the code comes from
+[DIFile](xref:Ubiquity.NET.Llvm.DebugInfo.DIFile). In this case that is a bit redundant as all the code comes from
 a single file and the compile unit already has the file info. However, that's not always true for all
 languages (i.e. some sort of Include mechanism) so the file is created. It's not a problem as LLVM will
 intern the file definition so that it won't actually end up with duplicates.
@@ -116,6 +116,6 @@ parameters and local variables.
 
 ## Conclusion
 Adding debugging information in LLVM IR is rather straight forward. The bulk of the problem is in tracking
-the source location information in the parser. Fortunately for Llvm.NET version of Kaleidoscope, the ANTLR4
-generated parsers do this for us already! Thus, combining the parser with Llvm.NET makes building a full
+the source location information in the parser. Fortunately for Ubiquity.NET.Llvm version of Kaleidoscope, the ANTLR4
+generated parsers do this for us already! Thus, combining the parser with Ubiquity.NET.Llvm makes building a full
 compiler for custom languages, including debug support a lot easier.

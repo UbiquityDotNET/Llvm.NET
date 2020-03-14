@@ -7,8 +7,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using CppSharp.AST;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
@@ -55,7 +57,7 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFunctionDecl( Function function )
         {
-            if( Map.TryGetValue(function.Name, out string msg))
+            if( Map.TryGetValue( function.Name, out string msg ) )
             {
                 if( IgnoreObsoleteFunctions )
                 {

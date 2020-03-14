@@ -10,9 +10,9 @@ a success! The confusion stems from LLVMBool serving a dual role:
 
 This duality is confusing and can lead to subtle errors in usage of APIs if translated
 directly into language projections. This makes hands-off automatic generation of P/Invoke
-calls to LLVM either impossible or error prone. Thus, Llvm.NET uses manually updated P/Invoke
+calls to LLVM either impossible or error prone. Thus, Ubiquity.NET.Llvm uses manually updated P/Invoke
 calls that were initially auto generated to get things started but not maintained via any
-generation tools. In the case of LLVMBool Llvm.NET uses distinct types for the different 
+generation tools. In the case of LLVMBool Ubiquity.NET.Llvm uses distinct types for the different 
 semantics and declares the interop signatures with the form appropriate to the function
 being called. The two types are LLVMStatus and standard `System.Boolean` or `bool` in C#
 

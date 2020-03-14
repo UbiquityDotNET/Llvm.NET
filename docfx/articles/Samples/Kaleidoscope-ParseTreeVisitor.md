@@ -1,5 +1,5 @@
 # Kaleidoscope Parse Tree Visitors
-The LLVM.NET Kaleidoscope tutorials all use ANTLR4 to parse the Kaleidoscope language When ANTLR processes the
+The Ubiquity.NET.Llvm Kaleidoscope tutorials all use ANTLR4 to parse the Kaleidoscope language When ANTLR processes the
 language grammar description to generate the lexer and parser it also generates a base "visitor" class for applying
 the [Visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) to the parse tree. This is the primary mechanism
 for generating the [AST](Kaleidoscope-AST.md) for these examples. The AST transformation classes derive from the ANTLR
@@ -16,7 +16,7 @@ the parse tree. For Kaleidoscope, this is used to provide simpler access to the 
 language input simplifying generation of the AST. For simplicity and clarity of understanding each of the extended partial
 classes are placed into their own source file.
 
-Generally speaking, the use of ANTLR and the ParseTree is a hidden internal implementation detail of the Llvm.NET
+Generally speaking, the use of ANTLR and the ParseTree is a hidden internal implementation detail of the Ubiquity.NET.Llvm
 Kaleidoscope tutorials. The actual code generation deals only with the AST so the parsing could be done with some
 other technology. (Though with all the functionality that ANTLR4 provides it would take a strong argument to justify
 something else)

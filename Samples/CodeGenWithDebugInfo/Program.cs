@@ -8,14 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Llvm.NET;
-using Llvm.NET.DebugInfo;
-using Llvm.NET.Instructions;
-using Llvm.NET.Transforms;
-using Llvm.NET.Types;
-using Llvm.NET.Values;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.DebugInfo;
+using Ubiquity.NET.Llvm.Instructions;
+using Ubiquity.NET.Llvm.Transforms;
+using Ubiquity.NET.Llvm.Types;
+using Ubiquity.NET.Llvm.Values;
 
-using static Llvm.NET.Interop.Library;
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
@@ -24,7 +24,7 @@ using static Llvm.NET.Interop.Library;
 
 namespace TestDebugInfo
 {
-    /// <summary>Program to test/demonstrate Aspects of debug information generation with Llvm.NET</summary>
+    /// <summary>Program to test/demonstrate Aspects of debug information generation with Ubiquity.NET.Llvm</summary>
     public static class Program
     {
         /// <summary>Creates a test LLVM module with debug information</summary>
@@ -54,10 +54,10 @@ namespace TestDebugInfo
             srcPath = Path.GetFullPath( srcPath );
             #endregion
 
-            using( InitializeLLVM() )
+            using( InitializeLLVM( ) )
             {
                 #region TargetDetailsSelection
-                switch( args[ 0 ].ToUpperInvariant() )
+                switch( args[ 0 ].ToUpperInvariant( ) )
                 {
                 case "M3":
                     TargetDetails = new CortexM3Details( );
@@ -392,7 +392,7 @@ namespace TestDebugInfo
             {
                 instBuilder.SetDebugLocation( 25, 5, doCopyFunc.DISubProgram )
                            .Call( copyFunc, bar, baz )
-                           .AddAttributes( FunctionAttributeIndex.Parameter0, copyFunc.Parameters[0].Attributes );
+                           .AddAttributes( FunctionAttributeIndex.Parameter0, copyFunc.Parameters[ 0 ].Attributes );
             }
 
             instBuilder.SetDebugLocation( 26, 1, doCopyFunc.DISubProgram )

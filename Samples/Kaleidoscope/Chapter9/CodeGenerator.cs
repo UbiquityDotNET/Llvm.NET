@@ -10,22 +10,24 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
-using Llvm.NET;
-using Llvm.NET.DebugInfo;
-using Llvm.NET.Instructions;
-using Llvm.NET.Transforms;
-using Llvm.NET.Values;
+
 using Ubiquity.ArgValidators;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.DebugInfo;
+using Ubiquity.NET.Llvm.Instructions;
+using Ubiquity.NET.Llvm.Transforms;
+using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
 namespace Kaleidoscope.Chapter9
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
-    [SuppressMessage("Microsoft.Maintainability", "CA1506", Justification = "AST visitor and code generator, splitting this would make things much more complicated")]
+    [SuppressMessage( "Microsoft.Maintainability", "CA1506", Justification = "AST visitor and code generator, splitting this would make things much more complicated" )]
     public sealed class CodeGenerator
         : AstVisitorBase<Value>
         , IDisposable
@@ -33,7 +35,7 @@ namespace Kaleidoscope.Chapter9
     {
         #region Initialization
         public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath, bool disableOptimization = false )
-            : base(null)
+            : base( null )
         {
             globalState.ValidateNotNull( nameof( globalState ) );
             machine.ValidateNotNull( nameof( machine ) );
@@ -50,7 +52,7 @@ namespace Kaleidoscope.Chapter9
 
             #region InitializeModuleAndPassManager
             Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ), SourceLanguage.C, sourcePath, "Kaleidoscope Compiler" );
-            if(Module.DICompileUnit is null)
+            if( Module.DICompileUnit is null )
             {
                 throw new InternalCodeGeneratorException( "Expected a non-null compile unit for module" );
             }
@@ -89,6 +91,7 @@ namespace Kaleidoscope.Chapter9
         public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             ast.ValidateNotNull( nameof( ast ) );
+            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
             try
             {
                 ast.Accept( this );
@@ -119,7 +122,7 @@ namespace Kaleidoscope.Chapter9
                     Module.DIBuilder.Finish( );
                 }
             }
-            catch(CodeGeneratorException ex) when ( codeGenerationErroHandler != null)
+            catch( CodeGeneratorException ex )
             {
                 codeGenerationErroHandler( ex );
             }
@@ -475,7 +478,7 @@ namespace Kaleidoscope.Chapter9
                     Value initValue = Context.CreateConstant( 0.0 );
                     if( localVar.Initializer != null )
                     {
-                        initValue = localVar.Initializer.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr);
+                        initValue = localVar.Initializer.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr );
                     }
 
                     InstructionBuilder.Store( initValue, alloca );
@@ -517,7 +520,7 @@ namespace Kaleidoscope.Chapter9
                 scope = LexicalBlocks.Peek( );
             }
 
-            InstructionBuilder.SetDebugLocation( ( uint )(node?.Location.StartLine ?? 0), ( uint )(node?.Location.StartColumn ?? 0), scope );
+            InstructionBuilder.SetDebugLocation( ( uint )( node?.Location.StartLine ?? 0 ), ( uint )( node?.Location.StartColumn ?? 0 ), scope );
         }
         #endregion
 

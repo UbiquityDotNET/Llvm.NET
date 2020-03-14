@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
@@ -19,7 +20,7 @@ namespace LlvmBindingsGenerator.Templates
         {
             if( decl.Comment != null )
             {
-                Lines.AddRange( decl.Comment.Text.Split( AnyNewLine, StringSplitOptions.None ).Select( l=>l.Trim('/') ) );
+                Lines.AddRange( decl.Comment.Text.Split( AnyNewLine, StringSplitOptions.None ).Select( l => l.Trim( '/' ) ) );
             }
         }
 

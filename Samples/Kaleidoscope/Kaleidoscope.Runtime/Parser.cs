@@ -7,11 +7,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Runtime
@@ -30,7 +33,7 @@ namespace Kaleidoscope.Runtime
     /// <remarks>
     /// A great value of ANTLR is its flexibility, but that comes at the cost
     /// of increased complexity. This class encapsulates the complexity as
-    /// it is needed for Kaleidoscope code generation with Llvm.NET.
+    /// it is needed for Kaleidoscope code generation with Ubiquity.NET.Llvm.
     /// </remarks>
     public class Parser
         : IKaleidoscopeParser
@@ -95,14 +98,14 @@ namespace Kaleidoscope.Runtime
         }
 
         /// <inheritdoc/>
-        public IObservable<IAstNode> Parse( IObservable<string> inputSource, Action<CodeGeneratorException> errorHandler)
+        public IObservable<IAstNode> Parse( IObservable<string> inputSource, Action<CodeGeneratorException> errorHandler )
         {
             inputSource.ValidateNotNull( nameof( inputSource ) );
             errorHandler.ValidateNotNull( nameof( errorHandler ) );
             return inputSource.ParseWith( this, errorHandler );
         }
 
-        private bool TryParse( ICharStream inputStream, ParseMode mode, [MaybeNullWhen(false)] out IAstNode astNode )
+        private bool TryParse( ICharStream inputStream, ParseMode mode, [MaybeNullWhen( false )] out IAstNode astNode )
         {
             astNode = null!;
             try

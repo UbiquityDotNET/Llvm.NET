@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST

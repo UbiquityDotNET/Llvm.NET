@@ -5,8 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System;
+
 using Antlr4.Runtime;
+
 using Ubiquity.ArgValidators;
+
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar

@@ -5,8 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -50,14 +50,14 @@ namespace Kaleidoscope.Grammar.AST
         public override string ToString( )
         {
             var bldr = new StringBuilder();
-            if(CompilerGenerated)
+            if( CompilerGenerated )
             {
                 bldr.Append( "[CompilerGenerated]" );
             }
 
             bldr.Append( "Declare(" );
             bldr.Append( Name );
-            if(Initializer != null )
+            if( Initializer != null )
             {
                 bldr.Append( ", " );
                 bldr.Append( Initializer );

@@ -13,7 +13,7 @@
 ;; </auto-generated>
 ;; ------------------------------------------------------------------------------
 EXPORTS
-; Custom Extension APIs for Llvm.NET
+; Custom Extension APIs for Ubiquity.NET.Llvm
 <#foreach(var func in ExtensionFunctions) {#>
 <#=func.Name#>
 <#}#>

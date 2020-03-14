@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar
@@ -17,7 +18,7 @@ namespace Kaleidoscope.Grammar
             {
                 get
                 {
-                    yield return (Identifier( ).GetText( ), 0, Identifier().GetSourceSpan());
+                    yield return (Identifier( ).GetText( ), 0, Identifier( ).GetSourceSpan( ));
                 }
             }
 

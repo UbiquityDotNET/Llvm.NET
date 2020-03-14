@@ -87,7 +87,7 @@ operator, and doesn't need one. Notice the type of the LLVM variables @G, and @H
 actually `i32*` even though the variable is defined as i32. In other words, @G (and @H) defines space for
 an i32, but the actual symbolic name refers to the address for that space (e.g. it's a pointer). Stack
 variables work the same way, except that instead of static allocation via a global declaration they are
-declared with the [LLVM alloca instruction](xref:Llvm.NET.Instructions.Alloca).
+declared with the [LLVM alloca instruction](xref:Ubiquity.NET.Llvm.Instructions.Alloca).
 
 ```llvm
 define i32 @example() {
@@ -240,7 +240,7 @@ Then support for assignment will complete the mutable variables support.
 
 ## Adjusting Existing Variables for Mutation
 Currently the symbol stack in Kaleidoscope stores LLVM Values directly. To support mutable values the
- NamedValues ScopeStack needs to switch to using [Alloca](xref:Llvm.NET.Instructions.Alloca).
+ NamedValues ScopeStack needs to switch to using [Alloca](xref:Ubiquity.NET.Llvm.Instructions.Alloca).
 ```C#
 private readonly ScopeStack<Alloca> NamedValues;
 ```

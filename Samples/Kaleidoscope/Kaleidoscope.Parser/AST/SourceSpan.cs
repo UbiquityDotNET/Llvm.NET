@@ -49,11 +49,11 @@ namespace Kaleidoscope.Grammar
         public override int GetHashCode( )
         {
             int hashCode = 2078777074;
-            hashCode = (hashCode * -1521134295) + base.GetHashCode( );
-            hashCode = (hashCode * -1521134295) + StartLine.GetHashCode( );
-            hashCode = (hashCode * -1521134295) + StartColumn.GetHashCode( );
-            hashCode = (hashCode * -1521134295) + EndLine.GetHashCode( );
-            hashCode = (hashCode * -1521134295) + EndColumn.GetHashCode( );
+            hashCode = ( hashCode * -1521134295 ) + base.GetHashCode( );
+            hashCode = ( hashCode * -1521134295 ) + StartLine.GetHashCode( );
+            hashCode = ( hashCode * -1521134295 ) + StartColumn.GetHashCode( );
+            hashCode = ( hashCode * -1521134295 ) + EndLine.GetHashCode( );
+            hashCode = ( hashCode * -1521134295 ) + EndColumn.GetHashCode( );
             return hashCode;
         }
 

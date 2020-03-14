@@ -7,10 +7,12 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Llvm.NET.Interop;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using static Llvm.NET.Interop.NativeMethods;
+using Ubiquity.NET.Llvm.Interop;
+
+using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 [assembly: CLSCompliant( false )]
 

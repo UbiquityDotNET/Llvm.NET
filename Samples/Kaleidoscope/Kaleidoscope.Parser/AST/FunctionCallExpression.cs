@@ -6,8 +6,8 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -15,15 +15,15 @@ namespace Kaleidoscope.Grammar.AST
     public class FunctionCallExpression
         : IExpression
     {
-        public FunctionCallExpression(SourceSpan location, Prototype functionPrototype, IEnumerable<IExpression> args )
+        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, IEnumerable<IExpression> args )
         {
             Location = location;
             FunctionPrototype = functionPrototype;
             Arguments = args.ToImmutableArray( );
         }
 
-        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IExpression[] args )
-            : this(location, functionPrototype, (IEnumerable<IExpression>)args)
+        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IExpression[ ] args )
+            : this( location, functionPrototype, ( IEnumerable<IExpression> )args )
         {
         }
 
@@ -54,7 +54,7 @@ namespace Kaleidoscope.Grammar.AST
                 return $"Call({FunctionPrototype})";
             }
 
-            return $"Call({FunctionPrototype}, {string.Join(",", Arguments.Select(a=>a.ToString()))})";
+            return $"Call({FunctionPrototype}, {string.Join( ",", Arguments.Select( a => a.ToString( ) ) )})";
         }
     }
 }

@@ -6,17 +6,19 @@
 
 using System.Collections.Generic;
 using System.IO;
+
 using CppSharp.AST;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Passes;
 
 namespace LlvmBindingsGenerator
 {
-    /// <summary>ILibrary implementation for the Lllvm.NET Interop</summary>
+    /// <summary>ILibrary implementation for the LUbiquity.NET.Llvm Interop</summary>
     /// <remarks>
     /// This class provides the library specific bridging from the generalized
-    /// CppSharp infrastructure for the specific needs of the Llvm.NET.Interop library
+    /// CppSharp infrastructure for the specific needs of the Ubiquity.NET.Llvm.Interop library
     /// </remarks>
     internal class LibLlvmGeneratorLibrary
         : ILibrary
@@ -50,7 +52,7 @@ namespace LlvmBindingsGenerator
 
             var coreHeaders = Directory.EnumerateFiles( Path.Combine( CommonInclude, "llvm-c" ), "*.h", SearchOption.AllDirectories );
             var extHeaders = Directory.EnumerateFiles( Path.Combine( ExtensionsInclude, "libllvm-c" ), "*.h", SearchOption.AllDirectories );
-            var module = driver.Options.AddModule( "Llvm.NET.Interop" );
+            var module = driver.Options.AddModule( "Ubiquity.NET.Llvm.Interop" );
             module.Headers.AddRange( coreHeaders );
             module.Headers.AddRange( extHeaders );
         }

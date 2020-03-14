@@ -11,7 +11,7 @@ Handles for LLVM are just opaque pointers. They generally come in one of three f
      This occurs when a child of a global resource contains a reference to the parent. In such
      a case the handle should be considered like an alias and not disposed.
 
-The Handle implementations in Llvm.NET follow consistent patterns for implementing each form of handle.
+The Handle implementations in Ubiquity.NET.Llvm follow consistent patterns for implementing each form of handle.
 
 ### Contextual handles
 
@@ -22,7 +22,7 @@ invalid. The general pattern for implementing such handles is as follows:
 using System;
 using System.Collections.Generic;
 
-namespace Llvm.NET.Native
+namespace Ubiquity.NET.Llvm.Native
 {
     internal struct LLVMxyzRef
         : IEquatable<LLVMxyzRef>
@@ -54,15 +54,15 @@ namespace Llvm.NET.Native
 ```
 
 ### Global Handles
-Global handles require the caller to explicitly release the resources. In Llvm.NET these
-are managed with the .NET SafeHandles types through an Llvm.NET specific derived type
+Global handles require the caller to explicitly release the resources. In Ubiquity.NET.Llvm these
+are managed with the .NET SafeHandles types through an Ubiquity.NET.Llvm specific derived type
 LlvmObject. Since these types are derived from a SafeHandle they are properly cleaned
 up by the runtime without the need to make the containing type implement IDisposable,
 though there may be other reasons to make a type Disposable. Generally, types should
 avoid IDisposable unless they really need to perform some special cleanup early or in
 a particular ordered sequence but such cases are rare.
 
-All resource handles in Llvm.NET requiring explicit release are handled consistently
+All resource handles in Ubiquity.NET.Llvm requiring explicit release are handled consistently
 using the following basic pattern:
 
 ``` C#
@@ -70,9 +70,9 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Ubiquity.NET.Llvm.Native.NativeMethods;
 
-namespace Llvm.NET.Native
+namespace Ubiquity.NET.Llvm.Native
 {
     [SecurityCritical]
     internal class LLVMxyzRef
@@ -109,7 +109,7 @@ of a global container exposes a property that references the parent container.
 In such cases the reference retrieved from the child shouldn't be used to destroy
 the parent when no longer used. 
 
-In Llvm.NET this is represented as a distinct handle type derived from the global
+In Ubiquity.NET.Llvm this is represented as a distinct handle type derived from the global
 handle as follows:
 
 ``` C#

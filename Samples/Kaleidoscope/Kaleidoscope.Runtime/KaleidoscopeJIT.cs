@@ -8,14 +8,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
-using Llvm.NET;
-using Llvm.NET.JIT;
+
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.JIT;
 
 namespace Kaleidoscope.Runtime
 {
     /// <summary>JIT engine for Kaleidoscope language</summary>
     /// <remarks>
-    /// This engine uses the <see cref="Llvm.NET.JIT.OrcJit"/> engine to support lazy
+    /// This engine uses the <see cref="Ubiquity.NET.Llvm.JIT.OrcJit"/> engine to support lazy
     /// compilation of LLVM IR modules added to the JIT.
     /// </remarks>
     public sealed class KaleidoscopeJIT
@@ -23,7 +24,7 @@ namespace Kaleidoscope.Runtime
     {
         /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
         public KaleidoscopeJIT( )
-            : base( BuildTargetMachine() )
+            : base( BuildTargetMachine( ) )
         {
             AddInteropCallback( "putchard", new CallbackHandler1( PutChard ) );
             AddInteropCallback( "printd", new CallbackHandler1( Printd ) );
@@ -98,7 +99,7 @@ namespace Kaleidoscope.Runtime
             }
         }
 
-        private static TargetMachine BuildTargetMachine()
+        private static TargetMachine BuildTargetMachine( )
         {
             return Target.FromTriple( Triple.HostTriple.ToString( ) )
                          .CreateTargetMachine( Triple.HostTriple.ToString( ), null, null, CodeGenOpt.Default, RelocationMode.Default, CodeModel.JitDefault );

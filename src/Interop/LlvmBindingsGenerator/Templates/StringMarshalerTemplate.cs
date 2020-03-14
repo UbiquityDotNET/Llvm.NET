@@ -9,7 +9,7 @@ namespace LlvmBindingsGenerator.Templates
     internal partial class StringMarshalerTemplate
         : ICodeGenTemplate
     {
-        public StringMarshalerTemplate( string name, string disposeFunctionName)
+        public StringMarshalerTemplate( string name, string disposeFunctionName )
         {
             Name = name;
             NativeDisposer = disposeFunctionName;

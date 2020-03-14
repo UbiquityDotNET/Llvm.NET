@@ -177,7 +177,7 @@ The code to generate a for loop follows this pattern pretty closely.
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ForInExpression)]
 
 The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named
-variables within them. [ScopeStack](xref:Llvm.NET.ScopeStack`1) is provided in the Llvm.NET library. It is
+variables within them. [ScopeStack](xref:Ubiquity.NET.Llvm.ScopeStack`1) is provided in the Ubiquity.NET.Llvm library. It is
 basically a stack of name to value mapping dictionaries. The EnterScope method will push a new dictionary on
 to the stack and return an IDisposable that will handle popping it back off. This allows for nested expressions
 to use variables in the parent scope and to override them with its own value too. That, is the symbols available

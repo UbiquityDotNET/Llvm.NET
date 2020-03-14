@@ -6,10 +6,11 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+
 using Ubiquity.ArgValidators;
+
 using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -30,7 +31,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             Location = location;
             Name = name;
-            Parameters = parameters.ToImmutableArray();
+            Parameters = parameters.ToImmutableArray( );
         }
 
         /// <summary>Initializes a new instance of the <see cref="Prototype"/> class.</summary>
@@ -49,14 +50,14 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="name">name of the function</param>
         /// <param name="parameters">names of each parameter</param>
         public Prototype( SourceSpan location, string name, params ParameterDeclaration[ ] parameters )
-            : this( location, name, (IEnumerable<ParameterDeclaration>) parameters )
+            : this( location, name, ( IEnumerable<ParameterDeclaration> )parameters )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="Prototype"/> class.</summary>
         /// <param name="ctx"><see cref="PrototypeContext"/> to extract parameter and source location information from</param>
         public Prototype( PrototypeContext ctx )
-            : this( ctx.GetSourceSpan(), ctx.Name, ctx.Parameters.Select( p => new ParameterDeclaration(p.Span, p.Name, p.Index ) ) )
+            : this( ctx.GetSourceSpan( ), ctx.Name, ctx.Parameters.Select( p => new ParameterDeclaration( p.Span, p.Name, p.Index ) ) )
         {
             IsExtern = ctx.Parent is ExternalDeclarationContext;
         }
@@ -68,8 +69,8 @@ namespace Kaleidoscope.Grammar.AST
         /// This version of the constructor is used to create synthetic prototypes that don't
         /// exist within the original source.
         /// </remarks>
-        public Prototype( string name, params string[] parameters)
-            : this(default, name, parameters.Select( (n,i)=>new ParameterDeclaration(default, name, i)))
+        public Prototype( string name, params string[ ] parameters )
+            : this( default, name, parameters.Select( ( n, i ) => new ParameterDeclaration( default, name, i ) ) )
         {
         }
 
@@ -102,19 +103,19 @@ namespace Kaleidoscope.Grammar.AST
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
-            if(IsExtern)
+            if( IsExtern )
             {
                 bldr.Append( "[extern]" );
             }
 
-            if(IsCompilerGenerated)
+            if( IsCompilerGenerated )
             {
                 bldr.Append( "[CompilerGenerated]" );
             }
 
             bldr.Append( Name );
             bldr.Append( '(' );
-            if(Parameters.Count > 0)
+            if( Parameters.Count > 0 )
             {
                 bldr.Append( string.Join( ", ", Parameters.Select( p => p.ToString( ) ) ) );
             }

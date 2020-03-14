@@ -17,7 +17,7 @@
 using <#=import#>;
 <#}#>
 
-namespace Llvm.NET.Interop
+namespace Ubiquity.NET.Llvm.Interop
 {
 <#foreach(var e in Enums){#>
     /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/Enumeration[@name="<#=e.Name#>"]/*[not(self::Item)]' />

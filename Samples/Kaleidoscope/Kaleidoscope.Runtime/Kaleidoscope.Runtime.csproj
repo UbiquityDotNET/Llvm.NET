@@ -11,7 +11,7 @@
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\Llvm.NET\Llvm.NET.csproj" />
+      <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
       <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     </ItemGroup>
     <ItemGroup>

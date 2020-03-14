@@ -7,6 +7,7 @@
 using System;
 using System.Reactive.Linq;
 using System.Reflection;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
@@ -21,7 +22,7 @@ namespace Kaleidoscope.Chapter2
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
         public static void Main( /*string[ ] args*/ )
         {
-            string helloMsg = $"Llvm.NET Kaleidoscope Explorer - {LanguageFeatureLevel}";
+            string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Explorer - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
@@ -41,7 +42,7 @@ namespace Kaleidoscope.Chapter2
         }
 
         #region ShowPrompt
-        private static void ShowPrompt(ReadyState state)
+        private static void ShowPrompt( ReadyState state )
         {
             Console.Write( state == ReadyState.StartExpression ? "Ready>" : ">" );
         }

@@ -8,15 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
-using Llvm.NET;
-using Llvm.NET.Instructions;
-using Llvm.NET.JIT;
-using Llvm.NET.Transforms;
-using Llvm.NET.Values;
+
 using Ubiquity.ArgValidators;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Instructions;
+using Ubiquity.NET.Llvm.JIT;
+using Ubiquity.NET.Llvm.Transforms;
+using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -59,6 +61,8 @@ namespace Kaleidoscope.Chapter7
         #region Generate
         public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
+            ast.ValidateNotNull( nameof( ast ) );
+            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
             try
             {
                 // Prototypes, including extern are ignored as AST generation
@@ -103,7 +107,7 @@ namespace Kaleidoscope.Chapter7
                     return function;
                 }
             }
-            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
+            catch( CodeGeneratorException ex )
             {
                 codeGenerationErroHandler( ex );
                 return null;
@@ -431,7 +435,7 @@ namespace Kaleidoscope.Chapter7
                     Value initValue = Context.CreateConstant( 0.0 );
                     if( localVar.Initializer != null )
                     {
-                        initValue = localVar.Initializer.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr);
+                        initValue = localVar.Initializer.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr );
                     }
 
                     InstructionBuilder.Store( initValue, alloca );

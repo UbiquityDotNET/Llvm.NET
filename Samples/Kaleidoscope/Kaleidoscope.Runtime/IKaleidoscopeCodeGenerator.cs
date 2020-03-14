@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+
 using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Runtime
@@ -14,7 +14,7 @@ namespace Kaleidoscope.Runtime
     /// <typeparam name="TResult">Result type of the generation</typeparam>
     /// <remarks>
     /// For eager JIT and AOT compilation <typeparamref name="TResult"/> is normally
-    /// <see cref="Llvm.NET.Values.Value"/>. Though any type is viable.
+    /// <see cref="Ubiquity.NET.Llvm.Values.Value"/>. Though any type is viable.
     /// </remarks>
     public interface IKaleidoscopeCodeGenerator<TResult>
         where TResult : class
@@ -28,7 +28,7 @@ namespace Kaleidoscope.Runtime
         /// actually generate an LLVM module for the JIT engine. Normally, any anonymous expressions
         /// (<see cref="Kaleidoscope.Grammar.KaleidoscopeParser.TopLevelExpressionContext"/>) are
         /// JIT compiled and executed. The result of executing the expression is returned.
-        /// For Function definitions or declarations, the <see cref="Llvm.NET.Values.IrFunction"/> is returned.
+        /// For Function definitions or declarations, the <see cref="Ubiquity.NET.Llvm.Values.IrFunction"/> is returned.
         /// However, that's not required. In a simple syntax analyzer, the generate may do nothing
         /// more than generate diagrams or other diagnostics from the input tree.</para>
         /// <para>For a lazy compilation JIT the generator will defer the actual generation of code and instead

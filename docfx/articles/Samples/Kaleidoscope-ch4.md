@@ -22,7 +22,7 @@ entry:
 }
 ```
 
-That's not exactly what the parse tree would suggest. The [InstructionBuilder](xref:Llvm.NET.Instructions.InstructionBuilder)
+That's not exactly what the parse tree would suggest. The [InstructionBuilder](xref:Ubiquity.NET.Llvm.Instructions.InstructionBuilder)
 automatically performs an optimization technique known as 'Constant Folding'. This optimization is very
 important, in fact, many compilers implement the folding directly into the generation of the Abstract
 Syntax Tree (AST). With LLVM, that isn't necessary as it is automatically provided for you (no extra
@@ -67,7 +67,7 @@ that the optimizations are tailored to correctly meet the needs of the language 
 For Kaleidoscope, optimizations are limited to a single function as they are generated when the user types
 them in on the command line. Ultimate, whole program optimization is off the table (You never know when the
 user will enter the last expression so it is incorrect to eliminate unused functions). In order to support
-per-function optimization a [FunctionPassManager](xref:Llvm.NET.Transforms.FunctionPassManager) is created
+per-function optimization a [FunctionPassManager](xref:Ubiquity.NET.Llvm.Transforms.FunctionPassManager) is created
 to hold the passes used for optimizing a function. The FunctionPassManager supports running the passes
 to transform a function into the optimized form. Since a pass manager is tied to the module and, for JIT
 support, each function is generated into its own module a new method in the code generator is used to create
@@ -115,7 +115,7 @@ representation of a top level expression it is executed and the results are prov
 The changes needed to the main driver are pretty simple, mostly consisting of removing a couple lines of
 code that print out the LLVM IR for the module at the end and for each function when defined. The code
 already supported showing the results if it was a floating point value by checking if the generated value
-is a [ConstantFP](xref:Llvm.NET.Values.ConstantFP). We'll see a bit later on why that is a ConstantFP
+is a [ConstantFP](xref:Ubiquity.NET.Llvm.Values.ConstantFP). We'll see a bit later on why that is a ConstantFP
 value.
 
 ### Code Generator
@@ -125,7 +125,7 @@ code provided by the user.
 To use the Optimization transforms the generator needs a new namespace using declaration.
 
 ```C#
-using Llvm.NET.Transforms;
+using Ubiquity.NET.Llvm.Transforms;
 ```
 
 #### Generator fields
@@ -153,12 +153,12 @@ can alter or even eliminate incorrectly generated code. Thus, when modifying the
 is useful to disable the optimizations.
 
 #### JIT Engine
-The JIT engine itself is a class provided in the Kaleidoscope.Runtime library derived from the Llvm.NET
+The JIT engine itself is a class provided in the Kaleidoscope.Runtime library derived from the Ubiquity.NET.Llvm
 OrcJIT engine.
 
 [!code-csharp[Kaleidoscope JIT](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeJIT.cs)]
 
-[OrcJit](xref:Llvm.NET.JIT.OrcJit) provides support for declaring functions that are external to the JIT
+[OrcJit](xref:Ubiquity.NET.Llvm.JIT.OrcJit) provides support for declaring functions that are external to the JIT
 that the JIT'd module code can call. For Kaleidoscope, two such functions are defined directly in
 KaleidoscopeJIT (putchard and printd), which is consistent with the same functions used in the official
 LLVM C++ tutorial. Thus, allowing sharing of samples between the two. These functions are used to provide
@@ -178,7 +178,7 @@ the function pass manager for the module. This is done is a new method Initializ
 The module creation is pretty straight forward, of importance is the layout information pulled from the
 target machine for the JIT and applied to the module. 
 
-Once the module is created, the [FunctionPassManager](xref:Llvm.NET.Transforms.FunctionPassManager) is
+Once the module is created, the [FunctionPassManager](xref:Ubiquity.NET.Llvm.Transforms.FunctionPassManager) is
 constructed. If optimizations are not disabled, the optimization passes are added to the pass manager.
 The set of passes used is a very basic set since the Kaleidoscope language isn't particularly complex
 at this point.
@@ -243,5 +243,5 @@ passes for the function. This, makes sense to do, immediately after completing t
 ## Conclusion
 While the amount of words needed to describe the changes to support optimization and JIT execution here
 isn't exactly small, the actual code changes required really are. The Parser and JIT engine do all the
-heavy lifting. Llvm.NET provides a clean interface to the JIT that fits with common patterns and runtime
+heavy lifting. Ubiquity.NET.Llvm provides a clean interface to the JIT that fits with common patterns and runtime
 support for .NET. Very cool, indeed!

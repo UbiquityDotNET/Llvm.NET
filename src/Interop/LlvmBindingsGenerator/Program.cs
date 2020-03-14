@@ -6,7 +6,9 @@
 
 using System.IO;
 using System.Reflection;
+
 using CppSharp;
+
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Configuration.Yaml;
 

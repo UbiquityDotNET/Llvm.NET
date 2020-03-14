@@ -3,7 +3,7 @@ Sample application to generate target machine code. The sample is
 provided in the [source tree](https://github.com/UbiquityDotNET/Llvm.NET/tree/master/Samples/CodeGenWithDebugInfo).
 
 This sample generates LLVM IR equivalent to what Clang will generate for a sample C file. While it doesn't parse
-the C File, this sample does show all the steps and techniques for using Llvm.NET to generate the LLVM IR with debug
+the C File, this sample does show all the steps and techniques for using Ubiquity.NET.Llvm to generate the LLVM IR with debug
 information and, ultimately, the target machine code.
 
 ## Example C Code
@@ -19,13 +19,13 @@ The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the f
 
 This sample supports targeting two different processor types x64 and ARM Cortex-M3
 
-## Initializing Llvm.NET
-The underlying LLVM library requires initialization for it's internal data, furthermore Llvm.NET must load
+## Initializing Ubiquity.NET.Llvm
+The underlying LLVM library requires initialization for it's internal data, furthermore Ubiquity.NET.Llvm must load
 the actual underlying DLL specific to the current system architecture. Thus, the library as a whole requires
 initialization.
 
 ```C#
-using static Llvm.NET.StaticState;
+using static Ubiquity.NET.Llvm.StaticState;
 
 using( InitializeLLVM() )
 {
@@ -56,12 +56,12 @@ The sample determines which target to use based on the second command line argum
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#TargetDetailsSelection)]
 
 ## Creating the BitcodeModule
-To generate code in Llvm.NET a [BitcodeModule](xref:Llvm.NET.BitcodeModule) is required as
-a container for the LLVM IR. To create a module a [Context](xref:Llvm.NET.Context) is
+To generate code in Ubiquity.NET.Llvm a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) is required as
+a container for the LLVM IR. To create a module a [Context](xref:Ubiquity.NET.Llvm.Context) is
 required.
 
 >[!NOTE]
->The Context and BitcodeModule are Disposable types in Llvm.NET to manage some complex and
+>The Context and BitcodeModule are Disposable types in Ubiquity.NET.Llvm to manage some complex and
 hidden ownership transfers that can happen with the different forms of JIT/Execution engines.
 This may not always be true in future versions of the library, but for now they must be disposable.
 
@@ -75,19 +75,19 @@ manage collections of objects and interning them in a thread safe manner. Applic
 just create a context per thread if needed.
 
 To generate code for a particular target the application initializes the module to include the
-source file name that it was generated from, the [Triple](xref:Llvm.NET.Triple) that describes
-the target and a target specific [DataLayout](xref:Llvm.NET.DataLayout). The sample application
-extracts these from the [TargetMachine](xref:Llvm.NET.TargetMachine) provided by the target
+source file name that it was generated from, the [Triple](xref:Ubiquity.NET.Llvm.Triple) that describes
+the target and a target specific [DataLayout](xref:Ubiquity.NET.Llvm.DataLayout). The sample application
+extracts these from the [TargetMachine](xref:Ubiquity.NET.Llvm.TargetMachine) provided by the target
 details interface for the selected target.
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingModule)]
 
 ## Creating the DICompileUnit
-LLVM Debug information is all scoped to a top level [DICompileUnit](xref:Llvm.NET.DebugInfo.DICompileUnit).
+LLVM Debug information is all scoped to a top level [DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit).
 There is exactly one DICompileUnit for a BitcodeModule and all debug information metadata is ultimately
 a child of that unit. The sample creates the compilation unit just after the module is created and the
 target specific information is added to it. In this sample there is a direct 1:1 correlation between the
-compile unit and the source file so it creates a [DIFile](xref:Llvm.NET.DebugInfo.DIFile) for the source
+compile unit and the source file so it creates a [DIFile](xref:Ubiquity.NET.Llvm.DebugInfo.DIFile) for the source
 at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
 the normal pattern for creating the compile unit when generating debugging information. Though it is possible
 to create it independently and add it to the module there isn't and real benefit to doing so.
@@ -96,12 +96,12 @@ to create it independently and add it to the module there isn't and real benefit
 In LLVM types are fairly minimalistic and only contain the basic structural information for generating
 the final machine code. Debug information, as metadata in LLVM, provides all the source level debugging
 information. In LLVM this requires creating and tracking both the native type and the Debug information
-metadata as independent object instances. In Llvm.NET this is handled by a unified debug and type information
-system. That is, in Llvm.NET a single class is used to represent types and it acts as a binder between the
+metadata as independent object instances. In Ubiquity.NET.Llvm this is handled by a unified debug and type information
+system. That is, in Ubiquity.NET.Llvm a single class is used to represent types and it acts as a binder between the
 full debugging description of the type and the native LLVM minimal description. These types all implement
-a common interface [ITypeRef](xref:Llvm.NET.Types.ITypeRef). This interface is used throughout Llvm.NET
-to expose types in a consistent fashion. Llvm.NET provides a set of classes for building the bound types.
-This sample uses the [DebugBasicType](xref:Llvm.NET.DebugInfo.DebugBasicType). To define the basic types
+a common interface [ITypeRef](xref:Ubiquity.NET.Llvm.Types.ITypeRef). This interface is used throughout Ubiquity.NET.Llvm
+to expose types in a consistent fashion. Ubiquity.NET.Llvm provides a set of classes for building the bound types.
+This sample uses the [DebugBasicType](xref:Ubiquity.NET.Llvm.DebugInfo.DebugBasicType). To define the basic types
 used in the generated code with appropriate debug information.
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingBasicTypesWithDebugInfo)]
@@ -125,9 +125,9 @@ created first, then a pointer type is created for the const type.
 ## Creating structure types
 As previously mentioned, the LLVM types only contain basic layout information and not full source
 level debugging information. Thus, for types there are two distinct descriptions, one for the LLVM
-native type and another for the debugging information. As with basic types, Llvm.NET has support
+native type and another for the debugging information. As with basic types, Ubiquity.NET.Llvm has support
 for defining complete information for composite structure types. This is done using a collection
-of [DebugMemberInfo](xref:Llvm.NET.DebugInfo.DebugMemberInfo). DebugMemberInfo fully describes an
+of [DebugMemberInfo](xref:Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo). DebugMemberInfo fully describes an
 element of a composite type including the native LLVM type as well as all the Debugging information
 metadata. A collection of these is then used to create the final composite type with full debug
 data in a simple single call. The sample only needs to create one such type for the `struct foo`
@@ -139,24 +139,24 @@ in the example source code.
 The sample code contains two global instances of `struct foo` `bar` and `baz`. Furthermore, bar
 is initialized with constant data. The sample starts by constructing the const array data that
 forms the initialized value of `bar.c`, the source only provides const values for the first two
-entries of a 32 element array. The const data is created via [ConstArray](xref:Llvm.NET.Values.ConstantArray).
-The full initialized const data for bar is the created from [Context.CreateNamedConstantStruct](xref:Llvm.NET.Context.CreateNamedConstantStruct*)
+entries of a 32 element array. The const data is created via [ConstArray](xref:Ubiquity.NET.Llvm.Values.ConstantArray).
+The full initialized const data for bar is the created from [Context.CreateNamedConstantStruct](xref:Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct*)
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
 
 Once the constant data is available an LLVM global is created for it with a name that matches the source name
-via [AddGlobal](xref:Llvm.NET.BitcodeModule.AddGlobal*). To ensure the linker lays out the structure
+via [AddGlobal](xref:Ubiquity.NET.Llvm.BitcodeModule.AddGlobal*). To ensure the linker lays out the structure
 correctly the code uses the layout information for the module to get the ABI required alignment for 
-the global and sets the [Alignment](xref:Llvm.NET.Values.GlobalObject.Alignment) property for the global.
-Finally the debug information for the global is created as a [DIGlobalVariableExpression](xref:Llvm.NET.DebugInfo.DIGlobalVariableExpression)
-using [CreateGlobalVariableExpression](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression*)
+the global and sets the [Alignment](xref:Ubiquity.NET.Llvm.Values.GlobalObject.Alignment) property for the global.
+Finally the debug information for the global is created as a [DIGlobalVariableExpression](xref:Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
+using [CreateGlobalVariableExpression](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression*)
 finally the added to the variable to complete the creation.
 
 For the `baz` instance the process is almost identical. The major difference is that the value of the
 structure is initialized to all zeros. That is the initialized data for the structure is created with
-[NullValueFor](xref:Llvm.NET.Values.Constant.NullValueFor*), which creates an all zero value of a type.
+[NullValueFor](xref:Ubiquity.NET.Llvm.Values.Constant.NullValueFor*), which creates an all zero value of a type.
 
 [!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
 
@@ -175,10 +175,10 @@ The function declarations for both of the two function's is mostly the same, fol
   1. Add attributes appropriate for the function
 
 The two functions illustrate a global externally visible function and a static that is visible only locally.
-This is indicated by the [Linkage.Internal](xref:Llvm.NET.Values.Linkage.Internal) linkage value.
+This is indicated by the [Linkage.Internal](xref:Ubiquity.NET.Llvm.Values.Linkage.Internal) linkage value.
 
 >[!NOTE]
->The use of fluent style extension methods in the Llvm.NET API helps make it easy to add to or modify
+>The use of fluent style extension methods in the Ubiquity.NET.Llvm API helps make it easy to add to or modify
 >the attributes and linkage etc...
 
 DeclareCopyFunc() is a bit special in that it handles some target specific support in a generalized way. In
@@ -209,15 +209,15 @@ in the sample test.c file. There are a few points to make about the function gen
 As discussed the arguments and locals are allocated in the entry block however that only makes them usable in
 the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
 To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
-a variable. In Llvm.NET this is emitted using the [InsertDeclare](xref:Llvm.NET.DebugInfo.DebugInfoBuilder.InsertDeclare*)
+a variable. In Ubiquity.NET.Llvm this is emitted using the [InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.InsertDeclare*)
 method.
 
 ### Calling LLVM Intrinsics
 The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
 intrinsic memcopy function. This function is lowered to an optimized copy for the target so tat applications need
 not worry about building optimal versions of IR for this common functionality. Furthermore, the LLVM intrinsic
-supports a variety of signatures for various data types all of which are hidden in the Llvm.NET method. Rather than
-require callers to create a declaration of the correct signature the Llvm.NET wrapper automatically figures out the
+supports a variety of signatures for various data types all of which are hidden in the Ubiquity.NET.Llvm method. Rather than
+require callers to create a declaration of the correct signature the Ubiquity.NET.Llvm wrapper automatically figures out the
 correct signature from the parameters provided. 
 
 ## Final LLVM IR
@@ -270,7 +270,7 @@ attributes #2 = { argmemonly nounwind }
 !0 = !DIGlobalVariableExpression(var: !1)
 !1 = distinct !DIGlobalVariable(name: "bar", scope: !2, file: !3, line: 8, type: !8, isLocal: false, isDefinition: true)
 !2 = distinct !DICompileUnit(language: DW_LANG_C99, file: !3, producer: "clang version 5.0.0 (tags/RELEASE_500/rc4)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !4, globals: !5)
-!3 = !DIFile(filename: "test.c", directory: "D:\5CGitHub\5CUbiquity.NET\5CLlvm.Net\5CBuildOutput\5Cbin\5CCodeGenWithDebugInfo\5CRelease\5Cnetcoreapp2.0\5CSupport Files")
+!3 = !DIFile(filename: "test.c", directory: "D:\5CGitHub\5CUbiquity.NET\5CUbiquity.NET.Llvm\5CBuildOutput\5Cbin\5CCodeGenWithDebugInfo\5CRelease\5Cnetcoreapp2.0\5CSupport Files")
 !4 = !{}
 !5 = !{!0, !6}
 !6 = !DIGlobalVariableExpression(var: !7)

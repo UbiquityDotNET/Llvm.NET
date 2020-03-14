@@ -35,9 +35,9 @@ try
 
     .\Build-Interop.ps1 -BuildInfo $BuildInfo
 
-    $buildLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.binlog
-    Write-Information "Building Llvm.NET"
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Llvm.NET.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
+    $buildLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm.binlog
+    Write-Information "Building Ubiquity.NET.Llvm"
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Ubiquity.NET.Llvm.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
 
     pushd $BuildPaths.NuGetOutputPath
     Compress-Archive -Force -Path *.* -DestinationPath (join-path $BuildPaths.BuildOutputPath Nuget.Packages.zip)

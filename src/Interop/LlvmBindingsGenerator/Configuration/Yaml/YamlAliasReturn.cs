@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Configuration
@@ -15,7 +16,7 @@ namespace LlvmBindingsGenerator.Configuration
     internal class YamlAliasReturn
         : YamlBindingTransform
     {
-        public YamlAliasReturn()
+        public YamlAliasReturn( )
         {
             IsAlias = true;
         }

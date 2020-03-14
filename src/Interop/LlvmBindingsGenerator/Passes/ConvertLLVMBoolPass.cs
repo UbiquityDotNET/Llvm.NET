@@ -4,11 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
@@ -40,7 +41,7 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitASTContext( ASTContext context )
         {
-            foreach( TranslationUnit unit in context.GeneratedUnits() )
+            foreach( TranslationUnit unit in context.GeneratedUnits( ) )
             {
                 VisitTranslationUnit( unit );
             }
@@ -73,11 +74,11 @@ namespace LlvmBindingsGenerator.Passes
 
             foreach( var p in function.Parameters )
             {
-                if( (p.Type is TypedefType tdt2 ) && ( tdt2.Declaration.Name == LLVMBoolTypeName ) )
+                if( ( p.Type is TypedefType tdt2 ) && ( tdt2.Declaration.Name == LLVMBoolTypeName ) )
                 {
                     p.QualifiedType = new QualifiedType( new CILType( typeof( bool ) ) );
                     p.Attributes.Add( ParamBoolAttribute );
-                    Diagnostics.Debug( "Converted type of function {0} parameter {1}[{2}] to bool", function.Name, p.Name??string.Empty, p.Index );
+                    Diagnostics.Debug( "Converted type of function {0} parameter {1}[{2}] to bool", function.Name, p.Name ?? string.Empty, p.Index );
                 }
             }
 

@@ -34,7 +34,7 @@ namespace LlvmBindingsGenerator.Passes
             {
                 TypeMaps.TypeMaps.Add( typedef.Name, new HandleRefTypeMap( typedef, Context, TypeMaps ) );
             }
-            else if( typedef.Name == "intptr_t")
+            else if( typedef.Name == "intptr_t" )
             {
                 TypeMaps.TypeMaps.Add( typedef.Name, new IntPtrTypeMap( typedef, Context, TypeMaps ) );
             }

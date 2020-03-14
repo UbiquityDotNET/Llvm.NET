@@ -28,7 +28,7 @@ namespace Kaleidoscope.Runtime
                 {
                     prompt?.Invoke( );
 
-                    line = await input.ReadLineAsync( ).ConfigureAwait(true);
+                    line = await input.ReadLineAsync( ).ConfigureAwait( true );
                     if( line != null )
                     {
                         observer.OnNext( line );
@@ -56,7 +56,7 @@ namespace Kaleidoscope.Runtime
         /// <summary>Transforms a sequence of potentially partial statements into a sequence of complete statements</summary>
         /// <param name="partials">Sequence of potentially partial lines</param>
         /// <returns>Observable of full statements</returns>
-        public static IObservable<string> AsFullStatements( this IObservable<(string Txt, bool IsPartial)> partials)
+        public static IObservable<string> AsFullStatements( this IObservable<(string Txt, bool IsPartial)> partials )
         {
             return from p in partials
                    where !p.IsPartial
@@ -67,7 +67,7 @@ namespace Kaleidoscope.Runtime
         /// <param name="reader">Input reader</param>
         /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
         /// <returns>Observable sequence of complete statements ready for parsing</returns>
-        public static IObservable<string> ToObservableStatements(this TextReader reader, Action<ReadyState>? prompt )
+        public static IObservable<string> ToObservableStatements( this TextReader reader, Action<ReadyState>? prompt )
         {
             var stateManager = new ReadyStateManager( );
 

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Linq;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
@@ -45,7 +46,7 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFunctionDecl( Function function )
         {
-            if( !function.Ignore && !function.Name.StartsWith("LibLLVM", System.StringComparison.Ordinal) )
+            if( !function.Ignore && !function.Name.StartsWith( "LibLLVM", System.StringComparison.Ordinal ) )
             {
                 Diagnostics.Error( "Extension function {0} in {1}, does not use correct prefix", function.Name, function.TranslationUnit.FileName );
             }

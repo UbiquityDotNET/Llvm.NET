@@ -1,13 +1,13 @@
 # LLVM 8.0 Support
-## Llvm.NET.Interop (New library)
-Llvm.NET 8.0 adds a new library (Llvm.NET.Interop)  that contains the raw P/Invoke
+## Ubiquity.NET.Llvm.Interop (New library)
+Ubiquity.NET.Llvm 8.0 adds a new library (Ubiquity.NET.Llvm.Interop)  that contains the raw P/Invoke
 APIs and support needed to inter-operate with the native library. The NuGet package
 for the interop library includes the native code binaries as they are tightly coupled.
 This package contains the native LibLLVM.dll and the P/Invoke interop support layers.
-Llvm.NET uses this library to define a clean projection of LLVM for .NET consumers.
-This will, hopefully, allow for future development and enhancement of the Llvm.NET
+Ubiquity.NET.Llvm uses this library to define a clean projection of LLVM for .NET consumers.
+This will, hopefully, allow for future development and enhancement of the Ubiquity.NET.Llvm
 object model without changing the underlying P/Invoke layers. (e.g.
-the Llvm.NET.Interop can "snap" to LLVM versions, but the LLvm.NET model can have
+the Ubiquity.NET.Llvm.Interop can "snap" to LLVM versions, but the Ubiquity.NET.Llvm model can have
 multiple incremental releases) This isn't a hard/fast rule as it is possible that
 getting new functionality in the object model requires new custom extensions. At
 this point in time both libraries are built together and share build numbers.
@@ -27,11 +27,11 @@ additional "by-hand" tweaking of the generated code, such as:
    client code.
 
 The generated code is combined with some fixed support classes to create a new
-Llvm.NET.Interop Library and NuGet Package. 
+Ubiquity.NET.Llvm.Interop Library and NuGet Package. 
 
 ## New features
 * ObjectFile Support
-  * LLvm.NET.ObjectFile namespace contains support for processing object files using LLVM
+  * Ubiquity.NET.Llvm.ObjectFile namespace contains support for processing object files using LLVM
 * Eager compilation JIT
   * The OrcJIT now supports eager and lazy compilation for Windows platforms
 * Full initialization for all the latests supported targets
@@ -42,8 +42,8 @@ Llvm.NET.Interop Library and NuGet Package.
 This is a Major release and, as such, can, and does, have breaking changes. It is generally
 anticipated that these are minor issues but do require changes in source:
 
-1. New namespace for some classes (Llvm.NET.Interop)
-1. StaticState class is renamed to Llvm.NET.Interop.Library as it is fundamentally 
+1. New namespace for some classes (Ubiquity.NET.Llvm.Interop)
+1. StaticState class is renamed to Ubiquity.NET.Llvm.Interop.Library as it is fundamentally 
    part of the low level interop (and "StaticState" was always a bad name)
 1. Instructions no longer have a SetDebugLocation, instead that is provided via a new
    fluent method on the InstructionBuilder since the normal use is to set the location

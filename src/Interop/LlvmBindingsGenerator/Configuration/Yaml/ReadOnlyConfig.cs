@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration.Yaml
@@ -12,7 +13,7 @@ namespace LlvmBindingsGenerator.Configuration.Yaml
     internal class ReadOnlyConfig
         : IGeneratorConfig
     {
-        public ReadOnlyConfig(YamlConfiguration config)
+        public ReadOnlyConfig( YamlConfiguration config )
         {
             YamlConfig = config;
         }

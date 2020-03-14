@@ -14,7 +14,7 @@ namespace LlvmBindingsGenerator.Templates
             HandleName = name;
         }
 
-        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion();
+        public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
 
         public string HandleName { get; }
 

@@ -1,6 +1,6 @@
 # Samples
-Llvm.NET provides multiple samples to aid in understanding how to use the Llvm.NET library.
-These samples are designed and intended to illustrate some aspect(s) of using Llvm.NET itself
+Ubiquity.NET.Llvm provides multiple samples to aid in understanding how to use the Ubiquity.NET.Llvm library.
+These samples are designed and intended to illustrate some aspect(s) of using Ubiquity.NET.Llvm itself
 and are not generally considered production quality. 
 
 ## Code Generation

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+
 using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar
@@ -20,7 +21,7 @@ namespace Kaleidoscope.Grammar
             public IToken OpToken => userdefinedop( ).start;
 
             public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
-                => Identifier( ).Select( (id,i) => (id.GetText( ), i, id.GetSourceSpan( )) );
+                => Identifier( ).Select( ( id, i ) => (id.GetText( ), i, id.GetSourceSpan( )) );
 
             public int Precedence => ( int )double.Parse( Number( ).GetText( ), CultureInfo.InvariantCulture );
         }

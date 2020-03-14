@@ -56,7 +56,7 @@ namespace Kaleidoscope.Runtime
         {
             return from n in nodes
                    let v = generator.Generate( n, codeGeneratorExceptionHandler )
-                   where !v.Equals(default( T )!)
+                   where !v.Equals( default( T )! )
                    select v;
         }
         #endregion
@@ -70,7 +70,7 @@ namespace Kaleidoscope.Runtime
             {
                 return parser.TryParse( expression, out IAstNode? retVal ) ? retVal : null;
             }
-            catch(CodeGeneratorException ex)
+            catch( CodeGeneratorException ex )
             {
                 codeGeneratorExceptionHandler( ex );
                 return null;

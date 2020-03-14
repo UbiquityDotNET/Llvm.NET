@@ -7,13 +7,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
-using Llvm.NET;
+using Ubiquity.NET.Llvm;
 
 using static Kaleidoscope.Runtime.Utilities;
-using static Llvm.NET.Interop.Library;
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter9
 {
@@ -53,7 +54,7 @@ namespace Kaleidoscope.Chapter9
                 var machine = new TargetMachine( Triple.HostTriple );
                 var parser = new Parser( LanguageLevel.MutableVariables );
                 using var generator = new CodeGenerator( parser.GlobalState, machine, sourceFilePath, true );
-                Console.WriteLine( "Llvm.NET Kaleidoscope Compiler - {0}", parser.LanguageLevel );
+                Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
                 Console.WriteLine( "Compiling {0}", sourceFilePath );
 
                 // time the parse and code generation

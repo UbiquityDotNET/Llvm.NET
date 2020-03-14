@@ -5,7 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using CppSharp.Generators;
+
 using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator

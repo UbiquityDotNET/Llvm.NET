@@ -2,16 +2,16 @@
 The general flow of this tutorial follows that of the official
 [LLVM tutorial](http://releases.llvm.org/6.0.1/docs/tutorial/LangImpl01.html)
 and many of the samples are lifted directly from that tutorial to make it easier to follow
-along both tutorials to see how the various LLVM concepts are projected in the Llvm.NET library.
+along both tutorials to see how the various LLVM concepts are projected in the Ubiquity.NET.Llvm library.
 
 ## Overview
 Kaleidoscope is a simple functional language that is used to illustrate numerous real world
-use cases for Llvm.NET for code generation and JIT execution.
+use cases for Ubiquity.NET.Llvm for code generation and JIT execution.
 
 It is worth pointing out that this example is not intended as a treatise on compiler design nor
 on language parsing. While it contains many aspects of those topics the tutorial is, mostly, focused
-on the use of Llvm.NET for code generation. Furthermore it isn't a trans-literation of the LLVM C++
-sample as that would defeat one of the major points of Llvm.NET - to provide a familiar API and
+on the use of Ubiquity.NET.Llvm for code generation. Furthermore it isn't a trans-literation of the LLVM C++
+sample as that would defeat one of the major points of Ubiquity.NET.Llvm - to provide a familiar API and
 use pattern to C# developers.
 
 ## General layout
@@ -22,12 +22,12 @@ the tutorials explains why the changes are made and a comparison helps provide t
 view.
 
 ## Variations from the Official LLVM Tutorial
-The Llvm.NET version of the Kaleidoscope series takes a different route for parsing from the
-LLVM implementation. In particular the Llvm.NET version defines a formal grammar using
+The Ubiquity.NET.Llvm version of the Kaleidoscope series takes a different route for parsing from the
+LLVM implementation. In particular the Ubiquity.NET.Llvm version defines a formal grammar using
 [ANTLR4](http://antlr.org) with the full grammar for all variations of the language features in
 a single assembly. Ultimately the parsing produces an AST so that the actual technology used for
 the parse is hidden as an implementation detail. This helps in isolating the parsing from the use
-of Llvm.NET for code generation and JIT compilation for interactive languages.
+of Ubiquity.NET.Llvm for code generation and JIT compilation for interactive languages.
 
 ## The Kaleidoscope Language
 ### General Concepts
@@ -63,7 +63,7 @@ of this might require a line termination following the marker as with the line c
 
 ##### Kaleidoscope Implementation
 The original LLVM C++ implementation chose the expression completion approach using a semicolon as the completion.
-(So it seems familiar like statements in other C like languages) Therefore, the LLVM.NET tutorial follows the same
+(So it seems familiar like statements in other C like languages) Therefore, the Ubiquity.NET.Llvm tutorial follows the same
 design. [Implementing the line continuation mechanism in Kaleidoscope is left as an exercise for the reader :wink:]
 
 ### Example
@@ -195,5 +195,5 @@ Ready>
 ## Conclusion
 Kaleidoscope is a simple yet complete language with a good deal of functionality. This serves as
 a great language to study the use of LLVM for code generation. While, generally speaking, the 
-Llvm.NET version of this tutorial differs only slightly from that of the official LLVM version, it
-serves well as an example of what you can do with Llvm.NET.
+Ubiquity.NET.Llvm version of this tutorial differs only slightly from that of the official LLVM version, it
+serves well as an example of what you can do with Ubiquity.NET.Llvm.

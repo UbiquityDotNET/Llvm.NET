@@ -7,12 +7,13 @@
 using System;
 using System.Reactive.Linq;
 using System.Reflection;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
-using Llvm.NET.Values;
+using Ubiquity.NET.Llvm.Values;
 
 using static Kaleidoscope.Runtime.Utilities;
-using static Llvm.NET.Interop.Library;
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter6
 {
@@ -33,7 +34,7 @@ namespace Kaleidoscope.Chapter6
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
         public static void Main( string[ ] args )
         {
-            string helloMsg = $"Llvm.NET Kaleidoscope Interpreter - {LanguageFeatureLevel}";
+            string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
             WaitForDebugger( args.Length > 0 && string.Compare( args[ 0 ], "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 );

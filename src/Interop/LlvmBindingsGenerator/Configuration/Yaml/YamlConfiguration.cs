@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+
 using LlvmBindingsGenerator.Templates;
+
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -18,7 +20,7 @@ namespace LlvmBindingsGenerator.Configuration
     [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via de-serialization" )]
     internal class YamlConfiguration
     {
-        public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection();
+        public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection( );
 
         public List<string> IgnoredHeaders { get; set; } = new List<string>( );
 
@@ -50,7 +52,7 @@ namespace LlvmBindingsGenerator.Configuration
                 var returnTransforms = from x in retVal.FunctionBindings.Values
                                        where x.ReturnTransform != null
                                        select x.ReturnTransform;
-                foreach(YamlBindingTransform xform in returnTransforms)
+                foreach( YamlBindingTransform xform in returnTransforms )
                 {
                     xform.Semantics = ParamSemantics.Return;
                 }
@@ -59,7 +61,7 @@ namespace LlvmBindingsGenerator.Configuration
             }
         }
 
-        public HandleTemplateMap BuildTemplateMap()
+        public HandleTemplateMap BuildTemplateMap( )
         {
             var handleTemplates = from h in HandleMap
                                   select Transform(h);

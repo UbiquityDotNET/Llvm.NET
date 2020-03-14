@@ -1,4 +1,4 @@
-# Marshaling strings in LLVM.NET
+# Marshaling strings in Ubiquity.NET.Llvm
 LLVM provides strings in several forms and this leads to complexities for
 P/Invoke signatures as sometimes the strings require some form of release
 and in other cases, they do not. Standard .NET marshaling of strings makes
@@ -8,7 +8,7 @@ via LLVMDisposeMessage() or some other call, while in other cases it is just
 a pointer to an internal const string that does not need any release.)
 
 To resolve these issues and make the requirements explicitly clear and consistent
-Llvm.NET.Interop uses custom marshaling of the strings to mark the exact behavior directly
+Ubiquity.NET.Llvm.Interop uses custom marshaling of the strings to mark the exact behavior directly
 on the P/Invoke signature so it is both clear and easy to use for the upper layers
 (it's just a `System.String`)
 
