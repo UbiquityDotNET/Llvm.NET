@@ -5,8 +5,10 @@
 // -----------------------------------------------------------------------
 
 using System.Diagnostics;
+
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
@@ -33,7 +35,7 @@ namespace Kaleidoscope.Grammar
         public virtual void ExitEveryRule( ParserRuleContext ctx )
         {
             ctx.ValidateNotNull( nameof( ctx ) );
-            Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'");
+            Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
         }
 
         /// <inheritdoc/>
@@ -49,7 +51,7 @@ namespace Kaleidoscope.Grammar
             node.ValidateNotNull( nameof( node ) );
             var parserRuleContext = ( ParserRuleContext )node.Parent.RuleContext;
             IToken symbol = node.Symbol;
-            Trace.TraceInformation( "Terminal: '{0}' rule {1}", symbol, Parser.RuleNames[parserRuleContext.RuleIndex] );
+            Trace.TraceInformation( "Terminal: '{0}' rule {1}", symbol, Parser.RuleNames[ parserRuleContext.RuleIndex ] );
         }
 
         private readonly Parser Parser;

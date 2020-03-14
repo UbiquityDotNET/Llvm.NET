@@ -54,8 +54,11 @@ try
     # is basically hostile to the newer SDK project format.
     Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$generatorBuildLogPath"))
 
+    # At present CppSharp only supports the "desktop" framework, so limiting this to net47 for now
+    # Hopefully they will support .NET Core soon, if not the generation stage may need to move out
+    # to a manual step with the results checked in.
     Write-Information "Generating P/Invoke Bindings"
-    & "$($BuildPaths.BuildOutputPath)\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $BuildPaths.LlvmLibsRoot (Join-Path $BuildPaths.SrcRoot 'Interop\LibLLVM') (Join-Path $BuildPaths.SrcRoot 'Interop\Llvm.NET.Interop')
+    & "$($BuildPaths.BuildOutputPath)\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $BuildPaths.LlvmLibsRoot (Join-Path $BuildPaths.SrcRoot 'Interop\LibLLVM') (Join-Path $BuildPaths.SrcRoot 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the projects that consume generated output for the bindings
@@ -66,14 +69,14 @@ try
         Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
 
         Write-Information "Building LibLLVM"
-        $libLLVMBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
+        $libLLVMBinLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm.Interop-restore.binlog
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$libLLVMBinLogPath") )
 
-        Write-Information "Building Lllvm.NET.Interop"
-        $interopRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop-restore.binlog
-        $interopBinLog = Join-Path $BuildPaths.BinLogsPath Llvm.NET.Interop.binlog
-        Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$InteropRestoreBinLogPath") )
-        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\Llvm.NET.Interop\Llvm.NET.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$interopBinLog") )
+        Write-Information "Building Ubiquity.NET.Llvm.Interop"
+        $interopRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm.Interop-restore.binlog
+        $interopBinLog = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm.Interop.binlog
+        Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$InteropRestoreBinLogPath") )
+        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$interopBinLog") )
     }
     else
     {

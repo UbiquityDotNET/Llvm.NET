@@ -7,13 +7,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
-using Llvm.NET;
-using Llvm.NET.Instructions;
-using Llvm.NET.Values;
+
 using Ubiquity.ArgValidators;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Instructions;
+using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -27,12 +29,12 @@ namespace Kaleidoscope.Chapter3
     {
         #region Initialization
         public CodeGenerator( DynamicRuntimeState globalState )
-            : base(null)
+            : base( null )
         {
             globalState.ValidateNotNull( nameof( globalState ) );
             if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
             {
-                throw new ArgumentException( "Language features not supported by this generator", nameof(globalState) );
+                throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
 
             RuntimeState = globalState;
@@ -51,15 +53,17 @@ namespace Kaleidoscope.Chapter3
         }
 
         #region Generate
-        public Value Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
+            ast.ValidateNotNull( nameof( ast ) );
+            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
             try
             {
                 // Prototypes, including extern are ignored as AST generation
                 // adds them to the RuntimeState so that already has the declarations
                 return ( ast is FunctionDefinition ) ? ast.Accept( this ) : null;
             }
-            catch( CodeGeneratorException ex ) when( codeGenerationErroHandler != null )
+            catch( CodeGeneratorException ex )
             {
                 codeGenerationErroHandler( ex );
                 return null;
@@ -68,7 +72,7 @@ namespace Kaleidoscope.Chapter3
         #endregion
 
         #region ConstantExpression
-        public override Value Visit( ConstantExpression constant )
+        public override Value? Visit( ConstantExpression constant )
         {
             constant.ValidateNotNull( nameof( constant ) );
             return Context.CreateConstant( constant.Value );
@@ -76,7 +80,7 @@ namespace Kaleidoscope.Chapter3
         #endregion
 
         #region BinaryOperatorExpression
-        public override Value Visit( BinaryOperatorExpression binaryOperator )
+        public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
             switch( binaryOperator.Op )
@@ -84,8 +88,8 @@ namespace Kaleidoscope.Chapter3
             case BuiltInOperatorKind.Less:
                 {
                     var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
-                                                        , binaryOperator.Left.Accept( this )
-                                                        , binaryOperator.Right.Accept( this )
+                                                        , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                                        , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         ).RegisterName( "cmptmp" );
                     return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                              .RegisterName( "booltmp" );
@@ -95,29 +99,29 @@ namespace Kaleidoscope.Chapter3
                 {
                     var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
                     return InstructionBuilder.Call( pow
-                                                  , binaryOperator.Left.Accept( this )
-                                                  , binaryOperator.Right.Accept( this )
+                                                  , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                                  , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                   ).RegisterName( "powtmp" );
                 }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this )
-                                              , binaryOperator.Right.Accept( this )
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this )
-                                              , binaryOperator.Right.Accept( this )
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this )
-                                              , binaryOperator.Right.Accept( this )
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this )
-                                              , binaryOperator.Right.Accept( this )
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "divtmp" );
 
             default:
@@ -127,29 +131,26 @@ namespace Kaleidoscope.Chapter3
         #endregion
 
         #region FunctionCallExpression
-        public override Value Visit( FunctionCallExpression functionCall )
+        public override Value? Visit( FunctionCallExpression functionCall )
         {
             functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
-            IrFunction function;
 
             // try for an extern function declaration
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
-            {
-                function = GetOrDeclareFunction( target );
-            }
-            else
-            {
-                function = Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
-            }
+            IrFunction function = RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target )
+                                ? GetOrDeclareFunction( target )
+                                : Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
 
-            var args = functionCall.Arguments.Select( ctx => ctx.Accept( this ) ).ToArray( );
+            var args = ( from expr in functionCall.Arguments
+                         select expr.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr)
+                       ).ToArray();
+
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
         #endregion
 
         #region FunctionDefinition
-        public override Value Visit( FunctionDefinition definition )
+        public override Value? Visit( FunctionDefinition definition )
         {
             definition.ValidateNotNull( nameof( definition ) );
             var function = GetOrDeclareFunction( definition.Signature );
@@ -168,7 +169,7 @@ namespace Kaleidoscope.Chapter3
                     NamedValues[ param.Name ] = function.Parameters[ param.Index ];
                 }
 
-                var funcReturn = definition.Body.Accept( this );
+                var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
                 InstructionBuilder.Return( funcReturn );
                 function.Verify( );
                 return function;
@@ -182,10 +183,10 @@ namespace Kaleidoscope.Chapter3
         #endregion
 
         #region VariableReferenceExpression
-        public override Value Visit( VariableReferenceExpression reference )
+        public override Value? Visit( VariableReferenceExpression reference )
         {
             reference.ValidateNotNull( nameof( reference ) );
-            if( !NamedValues.TryGetValue( reference.Name, out Value value ) )
+            if( !NamedValues.TryGetValue( reference.Name, out Value? value ) )
             {
                 // Source input is validated by the parser and AstBuilder, therefore
                 // this is the result of an internal error in the generator rather
@@ -222,6 +223,9 @@ namespace Kaleidoscope.Chapter3
             return retVal;
         }
         #endregion
+
+        private const string ExpectValidExpr = "Expected a valid expression";
+        private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
         private readonly DynamicRuntimeState RuntimeState;

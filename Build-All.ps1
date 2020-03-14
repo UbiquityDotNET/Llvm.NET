@@ -1,7 +1,7 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClean,
+    [switch]$ForceClean,
     [ValidateSet('All','Source','Docs')]
     [System.String]$BuildMode = 'All'
 )
@@ -25,13 +25,13 @@ switch($BuildMode)
 
 try
 {
-    if( (Test-Path -PathType Container $BuildPaths.BuildOutputPath) -and !$NoClean )
+    if( (Test-Path -PathType Container $BuildPaths.BuildOutputPath) -and $ForceClean )
     {
         Write-Information "Cleaning output folder from previous builds"
         rd -Recurse -Force -Path $BuildPaths.BuildOutputPath
     }
 
-    md $BuildPaths.NuGetOutputPath -ErrorAction SilentlyContinue| Out-Null
+    md $BuildPaths.NuGetOutputPath -ErrorAction SilentlyContinue | Out-Null
 
     if($BuildSource)
     {

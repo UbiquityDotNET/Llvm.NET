@@ -1,12 +1,12 @@
-﻿# Llvm.NET.Interop Generation 
-The code generation for the Llvm.NET.Interop namespace leverages [CppSharp] for parsing and processing
+﻿# Ubiquity.NET.Llvm.Interop Generation 
+The code generation for the Ubiquity.NET.Llvm.Interop namespace leverages [CppSharp] for parsing and processing
 the LLVM-C (and custom extension) headers. The actual code generation is done using a custom system of
 T4 templates. While CppSharp has a code generation system it is focused primarily on projecting the full
 C++ type system (including implementing derived types in C#!). However, the generation is pretty inflexible
-when it comes to the final form of the output in C# and how it handles marshaling. Llvm.NET uses custom
+when it comes to the final form of the output in C# and how it handles marshaling. Ubiquity.NET.Llvm uses custom
 handle types for all references in the C API along with custom string marshaling to handle the various kinds
 of string disposal used in the C API. Unfortunately, CppSharp wasn't flexible enough to handle that with it's
-built-in generation. Thus, the Llvm.NET.Interop bindings are generated using customized support based on a
+built-in generation. Thus, the Ubiquity.NET.Llvm.Interop bindings are generated using customized support based on a
 few T4 templates.
 
 ## T4 Templates
@@ -52,7 +52,7 @@ invalid. The general pattern for implementing such handles is as follows:
 using System;
 using System.Collections.Generic;
 
-namespace Llvm.NET.Native
+namespace Ubiquity.NET.Llvm.Native
 {
     internal struct LLVMxyzRef
         : IEquatable<LLVMxyzRef>
@@ -85,8 +85,8 @@ namespace Llvm.NET.Native
 
 ### Global Handles
 Global handles require the caller to explicitly release the resources.
-In Llvm.NET these are managed with the .NET SafeHandles types through
-an Llvm.NET specific derived type LlvmObject. Thus, all resources in
+In Ubiquity.NET.Llvm these are managed with the .NET SafeHandles types through
+an Ubiquity.NET.Llvm specific derived type LlvmObject. Thus, all resources in
 LLVM requiring explicit release are handled consistently using the
 following basic pattern:
 
@@ -95,9 +95,9 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using static Llvm.NET.Native.NativeMethods;
+using static Ubiquity.NET.Llvm.Native.NativeMethods;
 
-namespace Llvm.NET.Native
+namespace Ubiquity.NET.Llvm.Native
 {
     [SecurityCritical]
     internal class LLVMxyzRef
@@ -134,7 +134,7 @@ of a global container exposes a property that references the parent container.
 In such cases the reference retrieved from the child shouldn't be used to destroy
 the parent when no longer used. 
 
-In Llvm.NET this is represented as a distinct handle type derived from the global
+In Ubiquity.NET.Llvm this is represented as a distinct handle type derived from the global
 handle as follows:
 
 ``` C#

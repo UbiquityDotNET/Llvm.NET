@@ -4,7 +4,7 @@ structure of the samples and parsing of the language. The sample for this chapte
 language features to allow exploring the language and how it is parsed to help better understand
 the rest of the chapters better. It is hoped that users of this library find this helpful.
 
-The Lllvm.NET version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
+The LUbiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
 This has several advantages including logical isolation of the parsing and code generation.
 Additionally, it provides a single formal definition of the grammar for the language. Understanding
 the language grammar from reading the LVM tutorials and source was a difficult task since it isn't
@@ -102,15 +102,15 @@ BINARY: {FeatureUserOperators}? 'binary';
 ```
 
 >[!NOTE]
-> There are some important distinctions in the Llvm.NET implementation of Kaleidoscope, with regard to the
+> There are some important distinctions in the Ubiquity.NET.Llvm implementation of Kaleidoscope, with regard to the
 > symbols allowed for user defined operators. The official LLVM version allows defining an operator '=',
 > (in chapter 6). However, in Chapter 7, when Mutable variables are introduced the '=' is reserved by the
 > language for assignment. Thus, any code written for chapter 6 with a user defined '=' operator would not
-> work in later versions. Thus, the Llvm.NET version reserves the '=' in all versions, but uses the '=='
+> work in later versions. Thus, the Ubiquity.NET.Llvm version reserves the '=' in all versions, but uses the '=='
 > operator for equality comparisons. (It also adds the '++' and '--' tokens as user operators [The official
 > LLVM implementation only allows a single character as the operator lexeme])
 >
-> Additionally the Llvm.NET implementation adds the built-in '^' operator for exponentiation.
+> Additionally the Ubiquity.NET.Llvm implementation adds the built-in '^' operator for exponentiation.
 
 ### Parser
 The parser, like the lexer, uses Semantic Predicates, which allows for dynamic adaptation of the grammar
@@ -430,14 +430,14 @@ and executed top level expressions, or the name of any functions defined. Chapte
 showing an XML representation of the tree but the same basic pattern applies. This, helps to keep the samples
 consistent and as similar as possible to allow direct file comparisons to show the changes for a particular feature.
 The separation of concerns also aids in making the grammar, runtime and code generation unit-testable without the
-driver. (Although that isn't implemented yet - it is intended for the future to help broaden testing of Llvm.NET to
+driver. (Although that isn't implemented yet - it is intended for the future to help broaden testing of Ubiquity.NET.Llvm to
 more scenarios and catch breaking issues quicker.)
 
 [!code-csharp[ShowResults](../../../Samples/Kaleidoscope/Chapter2/Program.cs#ShowResults)]
 
 ### Special case for Chapter 2
 Chapter 2 sample code, while still following the general patterns used in all of the chapters, is a bit
-unique, it doesn't actually use Lllvm.NET at all! Instead, it is only focused on the language and parsing.
+unique, it doesn't actually use LUbiquity.NET.Llvm at all! Instead, it is only focused on the language and parsing.
 This helps in understanding the basic patterns of the code. Furthermore, this chapter serves as an aid in
 understanding the language itself. Of particular use is the ability to generate DGML and [blockdiag](http://blockdiag.com)
 representations of the parse tree for a given parse.

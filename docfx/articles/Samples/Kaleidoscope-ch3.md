@@ -1,6 +1,6 @@
 # 3. Kaleidoscope: Generating LLVM IR
 This chapter focuses on the basics of transforming the ANTLR parse tree into LLVM IR. The general goal is
-to parse Kaleidoscope source code to generate a [BitcodeModule](xref:Llvm.NET.BitcodeModule) representing
+to parse Kaleidoscope source code to generate a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) representing
 the source as LLVM IR.
 
 ## Basic code flow
@@ -16,13 +16,13 @@ future so this rather hacky trick isn't needed...)
 >As of VS2019 this hack is no longer needed as it is now possible to set an SDK project to allow native
 >debugging directly from the project's debugging settings page. (Yeah! :triumph:)
 
-### Initializing Llvm.NET
-The underlying LLVM library requires initialization for it's internal data, furthermore Llvm.NET must load
-the actual underlying library specific to the current system architecture. Thus, the Llvm.NET as a whole
+### Initializing Ubiquity.NET.Llvm
+The underlying LLVM library requires initialization for it's internal data, furthermore Ubiquity.NET.Llvm must load
+the actual underlying library specific to the current system architecture. Thus, the Ubiquity.NET.Llvm as a whole
 requires initialization.
 
 ```C#
-using static Llvm.NET.Interop.Library;
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 // [...]
 
@@ -46,7 +46,7 @@ target is the one the host application is running on. So, only the native target
 
 ### Generator and REPL loop
 This chapter supports the simple expressions of the language that are parsed and generated to an LLVM
-[Value](xref:Llvm.NET.Values.Value). This forms the foundation of the Kaleidoscope samples outer
+[Value](xref:Ubiquity.NET.Llvm.Values.Value). This forms the foundation of the Kaleidoscope samples outer
 generation loop. Subsequent, chapters will focus on additional functionality including JIT compilation,
 Debugging information, and Native Module generation.
 
@@ -55,7 +55,7 @@ This adds the `GenerateResults` operator to the sequence from Chapter 2 to gener
 
 #### GenerateResults Rx.NET operator
 The GenerateResults operator is responsible for transforming the input sequence of AST nodes into a
-sequence of Llvm.NET.Values. The implementation of the operator is common to all result types and is
+sequence of Ubiquity.NET.Llvm.Values. The implementation of the operator is common to all result types and is
 provided in the Kaleidoscope.Runtime assembly.
 
 [!code-csharp[GenerateResults](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/ObservableExtensions.cs#GenerateResults)]
@@ -93,10 +93,10 @@ The exact set of members varies for each chapter but the basic ideas remain acro
 |Name | Description |
 |-----|-------------|
 | RuntimeState | Contains information about the language and dynamic runtime state needed for resolving operator precedence |
-| Context | Current [Context](xref:Llvm.NET.Context) for LLVM generation |
-| Module | Current [BitcodeModule](xref:Llvm.NET.BitcodeModule) to generate LLVM IR in|
-| InstructionBuilder | Current  [InstructionBuilder](xref:Llvm.NET.Instructions.InstructionBuilder) used to generate LLVM IR instructions |
-| NamedValues | Contains a mapping of named variables to the generated [Value](xref:Llvm.NET.Values.Value) |
+| Context | Current [Context](xref:Ubiquity.NET.Llvm.Context) for LLVM generation |
+| Module | Current [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) to generate LLVM IR in|
+| InstructionBuilder | Current  [InstructionBuilder](xref:Ubiquity.NET.Llvm.Instructions.InstructionBuilder) used to generate LLVM IR instructions |
+| NamedValues | Contains a mapping of named variables to the generated [Value](xref:Ubiquity.NET.Llvm.Values.Value) |
 
 ### Generate Method
 The Generate method is used by the REPL loop to generate the final output from a parse tree. The common
@@ -163,7 +163,7 @@ needed for a top level expression - they are simply just another function defini
 the top level expression comes in the next chapter)
 
 ### Constant expression
-In Kaleidoscope all values are floating point and constants are represented in LLVM IR as [ConstantFP](xref:Llvm.NET.Values.ConstantFP)
+In Kaleidoscope all values are floating point and constants are represented in LLVM IR as [ConstantFP](xref:Ubiquity.NET.Llvm.Values.ConstantFP)
 The AST provides the value of the constant as a C# `double`.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ConstantExpression.cs)]
@@ -174,7 +174,7 @@ Generation of the LLVM IR for a constant is quite simple.
 
 > [!NOTE]
 > The constant value is uniqued in LLVM so that multiple calls given the same input value will
-> produce the same LLVM Value. LLvm.NET honors this and is implemented in a way to ensure that reference
+> produce the same LLVM Value. Ubiquity.NET.Llvm honors this and is implemented in a way to ensure that reference
 > equality reflects the identity of the uniqued values correctly.
 
 ### Variable reference expression
@@ -210,7 +210,7 @@ language that's easy to manage as it only supports one data type. Other language
 additional conversion logic as part of emitting the operators. (Kaleidoscope does this for boolean
 values when supporting conditional control flow in [Chapter 5](Kaleidoscope-ch5.md))
 
-The Generation of the IR instructions uses the current InstructionBuilder and the [RegisterName](xref:Llvm.NET.Values.ValueExtensions.RegisterName``1(``0,System.String))
+The Generation of the IR instructions uses the current InstructionBuilder and the [RegisterName](xref:Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String))
 extension method to provide a name for the result in LLVM IR. The name helps with readability of the IR
 when generated in the textual form of LLVM IR assembly. A nice feature of LLVM is that it will automatically
 handle duplicate names by appending a value to the name automatically so that generators don't need to
@@ -225,7 +225,7 @@ efficiently as the back-end generator can.
 ## Examples
 
 ```Console
-Llvm.NET Kaleidoscope Interpreter - SimpleExpressions
+Ubiquity.NET.Llvm Kaleidoscope Interpreter - SimpleExpressions
 Ready># simple top level expression
 >4+5;
 Defined function: __anon_expr$0

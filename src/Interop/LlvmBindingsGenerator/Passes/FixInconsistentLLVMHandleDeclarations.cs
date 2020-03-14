@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using CppSharp.AST;
 using CppSharp.Passes;
 
@@ -55,7 +56,7 @@ namespace LlvmBindingsGenerator.Passes
                 var ptrType = new PointerType( typedef.QualifiedType );
                 typedef.QualifiedType = new QualifiedType( ptrType );
 
-                RedefinedHandleDeclarations.Add( typedef.Name, new TypedefType(typedef) );
+                RedefinedHandleDeclarations.Add( typedef.Name, new TypedefType( typedef ) );
                 return true;
             }
 
@@ -64,12 +65,12 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFunctionDecl( Function function )
         {
-            if(!base.VisitFunctionDecl( function ))
+            if( !base.VisitFunctionDecl( function ) )
             {
                 return false;
             }
 
-            if( TryGetRemappedHandleDecl( function.ReturnType.Type, out TypedefType remappedType) )
+            if( TryGetRemappedHandleDecl( function.ReturnType.Type, out TypedefType remappedType ) )
             {
                 function.ReturnType = new QualifiedType( remappedType, function.ReturnType.Qualifiers );
                 var signature = function.FunctionType.Type as FunctionType;
@@ -81,7 +82,7 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitParameterDecl( Parameter parameter )
         {
-            if(TryGetRemappedHandleDecl( parameter.Type, out TypedefType decl ))
+            if( TryGetRemappedHandleDecl( parameter.Type, out TypedefType decl ) )
             {
                 parameter.QualifiedType = new QualifiedType( decl, parameter.QualifiedType.Qualifiers );
             }

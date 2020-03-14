@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+
 using CppSharp;
 
 namespace LlvmBindingsGenerator

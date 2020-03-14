@@ -1,6 +1,6 @@
 # Kaleidoscope.Runtime Library
 The Kaleidoscope.Runtime Library provides a set of common support libraries to aid in keeping the
-tutorial chapter code focused on the code generation and JIT support in Llvm.NET rather then the
+tutorial chapter code focused on the code generation and JIT support in Ubiquity.NET.Llvm rather then the
 particulars of parsing or the Kaleidoscope language in general.
 
 ## REPL Loop infrastructure
@@ -52,7 +52,7 @@ operator transforms a TextReader to a sequence of complete statements with suppo
 needed.
 
 ## ParserStack
-Kaleidoscope for Llvm.NET leverages ANTLR4 for parsing the language into a parse tree. Since ANTRL is a
+Kaleidoscope for Ubiquity.NET.Llvm leverages ANTLR4 for parsing the language into a parse tree. Since ANTRL is a
 generalized parsing infrastructure it has a lot of flexibility depending on the needs of a language and
 application. While that flexibility is generally a value, it does come with added complexity. The ParserStack
 class encapsulates the complexity as needed for the Kaleidoscope language code generation to minimize
@@ -61,7 +61,7 @@ operators. This stack supports two distinct modes of parsing, interactive REPL, 
 for ahead of time compilation.
 
 ## Kaleidoscope JIT engine
-The JIT engine used for Kaleidoscope is based on the Llvm.NET OrcJit, which, unsurprisingly, uses the LLVM
+The JIT engine used for Kaleidoscope is based on the Ubiquity.NET.Llvm OrcJit, which, unsurprisingly, uses the LLVM
 OrcJit functionality to provide On Request Compilation (ORC). For most of the chapters, the JIT uses a
 moderately lazy compilation technique where the source language is parsed, converted to LLVM IR and submitted
 to the JIT engine. The JIT engine does not immediately generate native code from the module, however. Instead
@@ -73,7 +73,7 @@ source language to IR, even if the code will never execute.
 ### Really lazy compilation
 While the basic lazy compilation of IR to native code has performance benefits over a pure interpreter, it
 still has the potential for wasted overhead converting the parsed language to LLVM IR. Fortunately, the LLVM
-and Lllvm.NET OrcJit support truly lazy compilation. This is done by asking the JIT to create a stub for
+and LUbiquity.NET.Llvm OrcJit support truly lazy compilation. This is done by asking the JIT to create a stub for
 a named symbol and then, whenever code calls that symbol the stub calls back to the JIT which then calls back
 the application to generate the IR, add the module to the JIT and trigger compilation to native. Thus, achieving
 true Just-In-Time compilation. 

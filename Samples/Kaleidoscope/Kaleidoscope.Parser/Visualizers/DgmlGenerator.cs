@@ -45,17 +45,17 @@ namespace Kaleidoscope.Grammar
             Graph.Styles.Add( style );
         }
 
-        public override void EnterUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+        public override void EnterUnaryOpExpression( UnaryOpExpressionContext context )
         {
             ActiveNode.Properties.Add( "Op", context.Op );
         }
 
-        public override void EnterExpression( [NotNull] ExpressionContext context )
+        public override void EnterExpression( ExpressionContext context )
         {
             ActiveNode.Properties.Add( "Precedence", context._p );
         }
 
-        public override void VisitTerminal( [NotNull] ITerminalNode node )
+        public override void VisitTerminal( ITerminalNode node )
         {
             string nodeName = KaleidoscopeLexer.DefaultVocabulary.GetDisplayName( node.Symbol.Type );
             Graph.Nodes.Add( new Node( )
@@ -75,7 +75,7 @@ namespace Kaleidoscope.Grammar
             }
         }
 
-        public override void EnterEveryRule( [NotNull] ParserRuleContext context )
+        public override void EnterEveryRule( ParserRuleContext context )
         {
             string typeName = context.GetType( ).Name;
             Push( new Node( )
@@ -86,7 +86,7 @@ namespace Kaleidoscope.Grammar
             } );
         }
 
-        public override void ExitEveryRule( [NotNull] ParserRuleContext context )
+        public override void ExitEveryRule( ParserRuleContext context )
         {
             base.ExitEveryRule( context );
 

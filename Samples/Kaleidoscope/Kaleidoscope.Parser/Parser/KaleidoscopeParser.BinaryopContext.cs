@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
+
 using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar

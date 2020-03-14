@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+
 using CppSharp.AST;
+
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Templates
@@ -21,7 +23,7 @@ namespace LlvmBindingsGenerator.Templates
         {
             if( f.IsOperator || f.IsThisCall )
             {
-                throw new ArgumentException( "Unsupported function type", nameof(f) );
+                throw new ArgumentException( "Unsupported function type", nameof( f ) );
             }
 
             Signature = f.FunctionType.Type as FunctionType;
@@ -69,7 +71,7 @@ namespace LlvmBindingsGenerator.Templates
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
-            if(ReturnType.Contains("*"))
+            if( ReturnType.Contains( "*" ) )
             {
                 bldr.Append( "unsafe " );
             }
@@ -80,7 +82,7 @@ namespace LlvmBindingsGenerator.Templates
                 .Append( Name )
                 .Append( "( " );
 
-            foreach(string param in Parameters )
+            foreach( string param in Parameters )
             {
                 bldr.Append( param );
             }
@@ -96,7 +98,7 @@ namespace LlvmBindingsGenerator.Templates
             return CodeDom.CreateEscapedIdentifier( p.Name );
         }
 
-        private static IEnumerable<string> GetParameters(IList<Parameter> parameters)
+        private static IEnumerable<string> GetParameters( IList<Parameter> parameters )
         {
             var bldr = new StringBuilder( );
             for( int i = 0; i < parameters.Count; ++i )

@@ -12,7 +12,7 @@ namespace LlvmBindingsGenerator
 {
     internal static class EnumExtensions
     {
-        public static IEnumerable<T> GetEnumValues<T>()
+        public static IEnumerable<T> GetEnumValues<T>( )
             where T : Enum
         {
             return Enum.GetValues( typeof( T ) ).Cast<T>( );

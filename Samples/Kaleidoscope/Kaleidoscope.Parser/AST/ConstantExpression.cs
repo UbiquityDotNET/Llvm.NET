@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -24,7 +25,11 @@ namespace Kaleidoscope.Grammar.AST
 
         public SourceSpan Location { get; }
 
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull(nameof(visitor)).Visit( this );
+        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class
+        {
+            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        }
 
         public IEnumerable<IAstNode> Children => Enumerable.Empty<IAstNode>( );
 

@@ -8,7 +8,7 @@ you run the compiler on or, just as easily, for some other architecture. For the
 we'll focus on just the native target the compiler is running on.
 
 LLVM uses a "Triple" string to describe the target used for code generation. This takes the form
-`<arch><sub>-<vendor>-<sys>-<abi>` (see the description of the [Triple](xref:Llvm.NET.Triple) type for
+`<arch><sub>-<vendor>-<sys>-<abi>` (see the description of the [Triple](xref:Ubiquity.NET.Llvm.Triple) type for
 more details)
 
 Fortunately, it is normally not required to build such strings directly. 
@@ -67,7 +67,7 @@ else
 
 These settings are leveraged after generating from the tree to create the main function. A simple
 loop generates a call to each expression along with the call to print the results. Once, that
-is completed a [ModulePassManager](xref:Llvm.NET.Transforms.ModulePassManager) is created to run
+is completed a [ModulePassManager](xref:Ubiquity.NET.Llvm.Transforms.ModulePassManager) is created to run
 the Always inliner and a global dead code elimination pass. The always inliner will inline the functions
 marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
 This has the effect of generating the main function with all top level expressions inlined and the originally

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
@@ -16,7 +17,7 @@ namespace LlvmBindingsGenerator.Templates
         public ParsedEnum( Enumeration e )
         {
             Comments = new ParsedComment( e );
-            Name = !string.IsNullOrWhiteSpace( e.Name ) ? e.Name : throw new ArgumentException("Enum name cannot be blank");
+            Name = !string.IsNullOrWhiteSpace( e.Name ) ? e.Name : throw new ArgumentException( "Enum name cannot be blank" );
             BaseType = GetBaseTypeName( e.BuiltinType );
             Members = from i in e.Items
                       select (i.Name, e.GetItemValueAsString( i ), new ParsedComment( i ));
@@ -75,7 +76,7 @@ namespace LlvmBindingsGenerator.Templates
             // case PrimitiveType.Char16:
             // case PrimitiveType.Char32:
             default:
-                throw new ArgumentException("Unsupported enum base type", nameof(t) );
+                throw new ArgumentException( "Unsupported enum base type", nameof( t ) );
             }
         }
     }

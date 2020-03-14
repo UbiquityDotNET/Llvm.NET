@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Kaleidoscope.Grammar
 {
@@ -64,9 +65,8 @@ namespace Kaleidoscope.Grammar
         /// <param name="name">Name of the value</param>
         /// <param name="value">Value</param>
         /// <returns><see langword="true"/> if the symbol was found from a search of the scopes</returns>
-        public bool TryGetValue( string name, out T value )
+        public bool TryGetValue( string name, [MaybeNullWhen( false )] out T value )
         {
-            value = default;
             foreach( var scope in Scopes )
             {
                 if( scope.TryGetValue( name, out value ) )
@@ -75,6 +75,7 @@ namespace Kaleidoscope.Grammar
                 }
             }
 
+            value = default!;
             return false;
         }
 

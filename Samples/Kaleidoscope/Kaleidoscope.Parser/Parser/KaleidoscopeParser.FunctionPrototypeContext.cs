@@ -13,10 +13,10 @@ namespace Kaleidoscope.Grammar
     {
         public partial class FunctionPrototypeContext
         {
-            public override string Name => Identifier( 0 ).GetText();
+            public override string Name => Identifier( 0 ).GetText( );
 
             public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
-                => Identifier( ).Skip( 1 ).Select( (id,i) => (id.GetText(), i, id.GetSourceSpan( )) );
+                => Identifier( ).Skip( 1 ).Select( ( id, i ) => (id.GetText( ), i, id.GetSourceSpan( )) );
         }
     }
 }

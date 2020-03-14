@@ -1,6 +1,40 @@
 # Release Notes
+# v10.0.0-alpha
+
+## Library name changes
+With the 10.* release the names of the assemblies, and therfore the packages, are all changed.
+This was done to unify them all under a common organization name to allow use of the facilities
+privided by Nuget for organizations and to help clarify these libraries from some other similar
+projects no longer maintained.
+
+| Old Name         | New Name     |
+|------------------|--------------|
+| Ubiquity.NET.Llvm.Interop | Ubiquity.Net.Llvm.Interop |
+| LibLLVM.dll      | Ubiquity.Net.LibLLVM.dll  |
+| Ubiquity.NET.Llvm         | Ubiquity.Net.Llvm         |
+
+
+## Breaking changes
+With the 10.* release the Ubiquity.NET.Llvm.* libs all updated to target .NET Standard 2.1 and C#8. This allows use of nullable types
+to make nullability more explicit. This necessitated a few minor breaking changes in the object model surface.
+
+| Name            | Description  |
+|-----------------|--------------|
+| DebugMemberInfo | Removed setters of non-nullable properties and added constructor to allow building the type with non-null values | 
+| DIType          | null is no longer used to represent a void type, instead a new singleton DITypeVoid.Instance is used.|
+
+## Removed redundant APIs
+LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionaly equivalent to 
+APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some
+of the custom APIs were removed and replaced with the official ones.
+
+| Removed custom API | New Official API |
+|--------------------|------------------|
+| LibLLVMFoo{TBD}    | LLVMFoo{TBD}     |
+
 ## v8.0.1
 ### Bug Fixes
+
 
 | Bug | Description |
 |-------|--------------|
@@ -8,22 +42,22 @@
 | [152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) | Corrected docs copy/paste error [renaming part of the issue is left for the next major release as that is a breaking change] |
 
 ### Additional changes
-Additionally the internal build scripts were updated to simplify the consistent corss solution versioning. Previously,
+Additionally the internal build scripts were updated to simplify the consistent cross solution versioning. Previously,
 a complex process of building a dummy project to generate a data file was used, however that was no longer necessary
 as the [CSemVer.Build.Tasks ](https://github.com/UbiquityDotNET/CSemVer.GitBuild) package can figure out all except
-the CiBuildIndex, which, for this project, is an ISO-8601 formatted timestamp (of the latest commit for automated
+the CiBuildIndex, which, for this project, is an ISO-8601 formatted time-stamp (of the latest commit for automated
 builds or the build start for local developer builds)
 
 ## v8.0.0
-### Llvm.NET.Interop (New library)
-Llvm.NET 8.0 adds a new library (Llvm.NET.Interop)  that contains the raw P/Invoke
+### Ubiquity.NET.Llvm.Interop (New library)
+Ubiquity.NET.Llvm 8.0 adds a new library (Ubiquity.NET.Llvm.Interop)  that contains the raw P/Invoke
 APIs and support needed to inter-operate with the native library. The NuGet package
 for the interop library includes the native code binaries as they are tightly coupled.
 This package contains the native LibLLVM.dll and the P/Invoke interop support layers.
-Llvm.NET uses this library to define a clean projection of LLVM for .NET consumers.
-This will, hopefully, allow for future development and enhancement of the Llvm.NET
+Ubiquity.NET.Llvm uses this library to define a clean projection of LLVM for .NET consumers.
+This will, hopefully, allow for future development and enhancement of the Ubiquity.NET.Llvm
 object model without changing the underlying P/Invoke layers. (e.g.
-the Llvm.NET.Interop can "snap" to LLVM versions, but the LLvm.NET model can have
+the Ubiquity.NET.Llvm.Interop can "snap" to LLVM versions, but the Ubiquity.NET.Llvm model can have
 multiple incremental releases) This isn't a hard/fast rule as it is possible that
 getting new functionality in the object model requires new custom extensions. At
 this point in time both libraries are built together and share build numbers.
@@ -43,11 +77,11 @@ additional "by-hand" tweaking of the generated code, such as:
    client code.
 
 The generated code is combined with some fixed support classes to create a new
-Llvm.NET.Interop Library and NuGet Package. 
+Ubiquity.NET.Llvm.Interop Library and NuGet Package. 
 
 ### New features
 * ObjectFile Support
-  * LLvm.NET.ObjectFile namespace contains support for processing object files using LLVM
+  * Ubiquity.NET.Llvm.ObjectFile namespace contains support for processing object files using LLVM
 * Eager compilation JIT
   * The OrcJIT now supports eager and lazy compilation for Windows platforms
 * Full initialization for all the latests supported targets
@@ -58,23 +92,23 @@ Llvm.NET.Interop Library and NuGet Package.
 This is a Major release and, as such, can, and does, have breaking changes. While there
 are several such changes the actual impact to a code base is fairly trivial. Most are
 driven by either obsolescence of functionality in LLVM or general naming cleanup in the
-Llvm.NET library:
+Ubiquity.NET.Llvm library:
 
-1. New namespace and assembly for some classes (Llvm.NET.Interop)
-    1. Llvm.NET.DisposableAction -> Llvm.NET.Interop.DisposableAction
-    2. Llvm.NET.DisposableObject -> Llvm.NET.Interop.DisposableObject
-    3. Llvm.NET.StaticState -> Llvm.NET.Interop.Library
-    4. Llvm.NET.TargetRegistrations -> Llvm.NET.Interop.TargetRegistrations
-2. StaticState class is renamed to Llvm.NET.Interop.Library as it is fundamentally 
+1. New namespace and assembly for some classes (Ubiquity.NET.Llvm.Interop)
+    1. Ubiquity.NET.Llvm.DisposableAction -> Ubiquity.NET.Llvm.Interop.DisposableAction
+    2. Ubiquity.NET.Llvm.DisposableObject -> Ubiquity.NET.Llvm.Interop.DisposableObject
+    3. Ubiquity.NET.Llvm.StaticState -> Ubiquity.NET.Llvm.Interop.Library
+    4. Ubiquity.NET.Llvm.TargetRegistrations -> Ubiquity.NET.Llvm.Interop.TargetRegistrations
+2. StaticState class is renamed to Ubiquity.NET.Llvm.Interop.Library as it is fundamentally 
    part of the low level interop (and "StaticState" was always a bad name)
 3. Instructions no longer have a SetDebugLocation, instead that is provided via a new
    fluent method on the InstructionBuilder since the normal use is to set the location
    on the builder and then generate a sequence of IR instructions for a given expression
    in code. 
 4. Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine
-    1. Removed Llvm.NET.JIT.EngineKind
-    2. Removed all use of Llvm.NET.JIT.IJitModuleHandle. Handles are now just an integral value
-    3. Removed Llvm.NET.LegacyExecutionEngine
+    1. Removed Ubiquity.NET.Llvm.JIT.EngineKind
+    2. Removed all use of Ubiquity.NET.Llvm.JIT.IJitModuleHandle. Handles are now just an integral value
+    3. Removed Ubiquity.NET.Llvm.LegacyExecutionEngine
 5. Context.CreateBasicBlock() now only creates detached blocks, if append to a function
    is desired, there is a method on IrFunction to create and append a block.
     1. CreateBasicBlock signature changed to remove the function and block parameters 
@@ -115,13 +149,13 @@ Llvm.NET library:
     3. CreateBasicType Added DebugIngoFlags parameter
     4. CreateEnumerationType removed uniqueId string parameter as it isn't supported by LLVM-C
     5. Obsoleted CreateStructType signature taking `DINodeArray` in favor of `IEnumerable<DINode>`
-14. Llvm.NET.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
+14. Ubiquity.NET.Llvm.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
     underscores in the value names for better consistency and style compliance.
-15. Renamed some Llvm.NET.DebugInfo.SourceLanguage vendor specific values to conform with
+15. Renamed some Ubiquity.NET.Llvm.DebugInfo.SourceLanguage vendor specific values to conform with
     underlying LLVM names
     1. RenderScript -> GoogleRenderScript
     2. Delphi -> BorlandDelphi
-16. Renamed or removed some of the Llvm.NET.DebugInfo.Tag values to better reflect underlying
+16. Renamed or removed some of the Ubiquity.NET.Llvm.DebugInfo.Tag values to better reflect underlying
     LLVM names and avoid potential language keyword conflicts.
     1. Label -> TagLabel
     2. PtrToMemberType -> PointerToMemberType
@@ -132,13 +166,13 @@ Llvm.NET library:
     2. Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM intrinsic no
        longer includes an alignment parameter. It is applied as a parameter attribute for each 
        of the pointer parameters (source and destination).
-18. Llvm.NET.JIT.IExecutionEngine
+18. Ubiquity.NET.Llvm.JIT.IExecutionEngine
     1. Replaced AddModule with AddEagerlyCompiledModule to make it more explicit on the behavior
-19. Llvm.NET.ILazyCompileExecutionEngine
+19. Ubiquity.NET.Llvm.ILazyCompileExecutionEngine
     1. Replaced AddModule [From IExecutionEngine] with AddLazyCompiledModule to make it explicit
     2. Removed DefalultSymbolResolver from interface as it should not have been in the interface
        to start with.
-20. Deleted Llvm.NET.LegacyExecutionEngine
-21. Llvm.NET.JIT.OrcJit - updated to reflect changes in the IExecutionEngine and
+20. Deleted Ubiquity.NET.Llvm.LegacyExecutionEngine
+21. Ubiquity.NET.Llvm.JIT.OrcJit - updated to reflect changes in the IExecutionEngine and
     ILazyCompileExecutionEngine interfaces.
 

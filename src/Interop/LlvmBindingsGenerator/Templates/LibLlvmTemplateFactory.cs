@@ -7,9 +7,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using CppSharp;
 using CppSharp.Generators;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Templates;
 
@@ -27,7 +29,7 @@ namespace LlvmBindingsGenerator
     {
         public LibLlvmTemplateFactory( IGeneratorConfig config )
         {
-            HandleToTemplateMap = config.BuildTemplateMap();
+            HandleToTemplateMap = config.BuildTemplateMap( );
         }
 
         public void SetupPasses( BindingContext bindingContext )
@@ -45,16 +47,16 @@ namespace LlvmBindingsGenerator
 
         private IEnumerable<ICodeGenerator> CreateMiscTemplates( BindingContext bindingContext )
         {
-            yield return new TemplateCodeGenerator( true, "EXPORTS", Path.Combine("..","LibLLVM"), new[ ] { new ExportsTemplate( bindingContext.ASTContext ) } );
+            yield return new TemplateCodeGenerator( true, "EXPORTS", Path.Combine( "..", "LibLLVM" ), new[ ] { new ExportsTemplate( bindingContext.ASTContext ) } );
         }
 
         private IEnumerable<ICodeGenerator> CreateStringMarhsallingTemplates( )
         {
-            foreach( StringDisposal kind in GetEnumValues<StringDisposal>())
+            foreach( StringDisposal kind in GetEnumValues<StringDisposal>( ) )
             {
                 var (name, nativeDisposer) = StringDisposalMarshalerMap.LookupMarshaler( kind );
                 var t4Template = new StringMarshalerTemplate( name, nativeDisposer );
-                yield return new TemplateCodeGenerator( true, name, Path.Combine( GeneratedCodePath, "StringMarshaling"), new[ ] { t4Template } );
+                yield return new TemplateCodeGenerator( true, name, Path.Combine( GeneratedCodePath, "StringMarshaling" ), new[ ] { t4Template } );
             }
         }
 
@@ -79,7 +81,7 @@ namespace LlvmBindingsGenerator
             {
                 if( HandleToTemplateMap.TryGetValue( handle.Name, out IHandleCodeTemplate template ) )
                 {
-                    yield return new TemplateCodeGenerator( true, handle.Name, Path.Combine(GeneratedCodePath, "Handles"), new[ ] { template } );
+                    yield return new TemplateCodeGenerator( true, handle.Name, Path.Combine( GeneratedCodePath, "Handles" ), new[ ] { template } );
                 }
                 else
                 {

@@ -16,8 +16,9 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
-namespace Llvm.NET.Interop
+namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Simple typesafe handle to wrap a raw pointer for interop with "C" API exported from LibLLVM</summary>
     /// <remarks>
@@ -47,6 +48,26 @@ namespace Llvm.NET.Interop
         /// <param name="other">Other block to compare</param>
         /// <returns><see langword="true"/> if the other handle refers to the same native object (e.g. reference equality)</returns>
         public bool Equals( <#=HandleName#> other ) => Handle == other.Handle;
+
+        /// <summary>Fluent null handle validation</summary>
+        /// <param name="message">Message to use for an exception if thrown</param>
+        /// <param name="memberName">Name if the member calling this function (usually provided by compiler via <see cref="CallerMemberNameAttribute"/></param>
+        /// <param name="sourceFilePath">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerFilePathAttribute"/></param>
+        /// <param name="sourceLineNumber">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerLineNumberAttribute"/></param>
+        /// <returns>This object for fluent style use</returns>
+        public <#=HandleName#> ThrowIfInvalid(
+            string message = "",
+            [CallerMemberNameAttribute] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0 )
+        {
+            if( Handle == IntPtr.Zero )
+            {
+                throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " );
+            }
+
+            return this;
+        }
 
         /// <summary>Tests two handles for reference equality</summary>
         /// <param name="lhs">Left side of comparison</param>

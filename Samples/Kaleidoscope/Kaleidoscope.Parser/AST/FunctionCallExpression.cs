@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -14,15 +15,15 @@ namespace Kaleidoscope.Grammar.AST
     public class FunctionCallExpression
         : IExpression
     {
-        public FunctionCallExpression(SourceSpan location, Prototype functionPrototype, IEnumerable<IExpression> args )
+        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, IEnumerable<IExpression> args )
         {
             Location = location;
             FunctionPrototype = functionPrototype;
             Arguments = args.ToImmutableArray( );
         }
 
-        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IExpression[] args )
-            : this(location, functionPrototype, (IEnumerable<IExpression>)args)
+        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IExpression[ ] args )
+            : this( location, functionPrototype, ( IEnumerable<IExpression> )args )
         {
         }
 
@@ -32,7 +33,11 @@ namespace Kaleidoscope.Grammar.AST
 
         public IReadOnlyList<IExpression> Arguments { get; }
 
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class
+        {
+            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        }
 
         public IEnumerable<IAstNode> Children
         {
@@ -49,7 +54,7 @@ namespace Kaleidoscope.Grammar.AST
                 return $"Call({FunctionPrototype})";
             }
 
-            return $"Call({FunctionPrototype}, {string.Join(",", Arguments.Select(a=>a.ToString()))})";
+            return $"Call({FunctionPrototype}, {string.Join( ",", Arguments.Select( a => a.ToString( ) ) )})";
         }
     }
 }

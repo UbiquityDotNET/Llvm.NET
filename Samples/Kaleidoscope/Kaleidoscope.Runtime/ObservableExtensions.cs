@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
 
 using Kaleidoscope.Grammar.AST;
@@ -53,24 +52,25 @@ namespace Kaleidoscope.Runtime
                                                        , IKaleidoscopeCodeGenerator<T> generator
                                                        , Action<CodeGeneratorException> codeGeneratorExceptionHandler
                                                        )
+            where T : class
         {
             return from n in nodes
                    let v = generator.Generate( n, codeGeneratorExceptionHandler )
-                   where !EqualityComparer<T>.Default.Equals(v, default) // v != default( T )
+                   where !v.Equals( default( T )! )
                    select v;
         }
         #endregion
 
-        private static IAstNode ParseAndReportErrors( string expression
-                                                    , IKaleidoscopeParser parser
-                                                    , Action<CodeGeneratorException> codeGeneratorExceptionHandler
-                                                    )
+        private static IAstNode? ParseAndReportErrors( string expression
+                                                     , IKaleidoscopeParser parser
+                                                     , Action<CodeGeneratorException> codeGeneratorExceptionHandler
+                                                     )
         {
             try
             {
-                return parser.Parse( expression );
+                return parser.TryParse( expression, out IAstNode? retVal ) ? retVal : null;
             }
-            catch(CodeGeneratorException ex)
+            catch( CodeGeneratorException ex )
             {
                 codeGeneratorExceptionHandler( ex );
                 return null;

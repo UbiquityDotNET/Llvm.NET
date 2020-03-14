@@ -9,12 +9,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Generators;
 using CppSharp.Passes;
 using CppSharp.Types;
 using CppSharp.Utils;
+
 using LlvmBindingsGenerator.Templates;
 
 #pragma warning disable SA1600
@@ -33,8 +35,8 @@ namespace LlvmBindingsGenerator
         : IDriver
         , IDisposable
     {
-        public Driver()
-            : this(new DriverOptions())
+        public Driver( )
+            : this( new DriverOptions( ) )
         {
         }
 

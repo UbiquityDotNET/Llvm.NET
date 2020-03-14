@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
@@ -68,7 +69,7 @@ namespace LlvmBindingsGenerator.Passes
                 return false;
             }
 
-            if( FirstItemToNameMap.TryGetValue( @enum.Items[0].Name, out string enumName ) )
+            if( FirstItemToNameMap.TryGetValue( @enum.Items[ 0 ].Name, out string enumName ) )
             {
                 @enum.Name = enumName;
                 return true;

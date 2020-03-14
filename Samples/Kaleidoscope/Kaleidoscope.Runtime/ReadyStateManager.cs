@@ -36,7 +36,7 @@ namespace Kaleidoscope.Runtime
             ContinueExpression | false     | x     | StartExpression
             ContinueExpression | true      | x     | ContinueExpression
             */
-            if( State == ReadyState.StartExpression)
+            if( State == ReadyState.StartExpression )
             {
                 bool isBlank = string.IsNullOrWhiteSpace( txt );
 

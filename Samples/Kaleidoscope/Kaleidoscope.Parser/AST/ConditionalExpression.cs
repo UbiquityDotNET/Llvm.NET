@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -40,7 +41,11 @@ namespace Kaleidoscope.Grammar.AST
         // pure SSA form this isn't needed as a PHI node would be used instead.
         public LocalVariableDeclaration ResultVariable { get; }
 
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull(nameof(visitor)).Visit( this );
+        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class
+        {
+            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        }
 
         public IEnumerable<IAstNode> Children
         {

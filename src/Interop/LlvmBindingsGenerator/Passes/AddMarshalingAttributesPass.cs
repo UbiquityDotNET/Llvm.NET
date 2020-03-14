@@ -8,10 +8,12 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.AST.Extensions;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
@@ -133,7 +135,7 @@ namespace LlvmBindingsGenerator.Passes
         private bool VisitReturnType( FunctionType signature )
         {
             var scope = DeclarationStack.Peek( );
-            if(TryGetTransformInfo(scope.Name, out YamlBindingTransform xform))
+            if( TryGetTransformInfo( scope.Name, out YamlBindingTransform xform ) )
             {
                 signature.ReturnType = xform.TransformType( signature.ReturnType );
                 scope.Attributes.AddRange( xform.Attributes );

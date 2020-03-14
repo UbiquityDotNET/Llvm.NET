@@ -5,7 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
+
 using Kaleidoscope.Grammar.AST;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar

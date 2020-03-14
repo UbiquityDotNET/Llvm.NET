@@ -1,5 +1,5 @@
 ﻿# LlvmBindingsGenerator
-LlvmBindingsGenerator is a tool used in building the Llvm.NET.Interop library. As the
+LlvmBindingsGenerator is a tool used in building the Ubiquity.NET.Llvm.Interop library. As the
 name implies, this tool generates the base level bindings between the native LibLlvm
 library and managed code (e.g. It generates all the P/Invoke signatures, structure and
 enumeration definitions and declarations). 
@@ -14,7 +14,7 @@ an Abstract Syntax Tree (AST). The generator then uses the AST to generate the r
 Auto generation of the interop layer saves time and errors by moving tedious and error prone
 hand coding into a tool that is run as part of the regular automated builds. However, the
 job of auto generating for LLVM is not without some challenges. The original support for the
-interop in Llvm.NET was done using a different tool that generated code, which then needed
+interop in Ubiquity.NET.Llvm was done using a different tool that generated code, which then needed
 significant hand editing thereby defeating much of the value of the automated generation. In
 the process several challenges for the LLVM library were defined:
 

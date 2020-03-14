@@ -6,9 +6,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes

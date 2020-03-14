@@ -1,0 +1,34 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not committed to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Function name="LibLLVMGetVersionInfo">
+        <summary>Gets the <see cref="Ubiquity.NET.Llvm.Interop.LibLLVMVersionInfo"/> for the native LibLLVM library</summary>
+        <param name="pVersionInfo">Version info as an out param</param>
+    </Function>
+    <Function name="LibLLVMLookupInstrinsicId">
+        <summary>Gets the intrinsic ID from the name of the intrinsic</summary>
+        <param name="name">Name of the intrinsic</param>
+        <returns>ID of the intrinsic</returns>
+    </Function>
+    <Struct name="LibLLVMVersionInfo">
+        <summary>Simple struct to hold version information for the LibLLVM library loaded for Interop</summary>
+        <Field name="Major">
+            <summary>Major part of the version number</summary>
+        </Field>
+        <Field name="Minor">
+            <summary>Minor part of the version number</summary>
+        </Field>
+        <Field name="Patch">
+            <summary>Patch part of the version number</summary>
+        </Field>
+    </Struct>
+</LibLlvmAPI>

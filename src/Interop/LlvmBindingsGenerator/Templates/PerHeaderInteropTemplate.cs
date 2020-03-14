@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates
@@ -39,7 +40,7 @@ namespace LlvmBindingsGenerator.Templates
 
                 string[ ] pathParts = Unit.FileRelativeDirectory.Split( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar );
                 int numLevels = 2 + (pathParts.Length > 0 ? pathParts.Length - 1 : 0);
-                for(int i = 0; i < numLevels; ++i )
+                for( int i = 0; i < numLevels; ++i )
                 {
                     bldr.Append( "../" );
                 }
@@ -60,7 +61,7 @@ namespace LlvmBindingsGenerator.Templates
             {
                 var results = new SortedSet<string>( ) { "System.CodeDom.Compiler" };
 
-                foreach(var f in Unit.Functions )
+                foreach( var f in Unit.Functions )
                 {
                     foreach( var a in f.Attributes )
                     {

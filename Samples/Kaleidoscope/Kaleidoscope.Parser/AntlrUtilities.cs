@@ -7,10 +7,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+
 using Ubiquity.ArgValidators;
+
 using static System.Math;
 
 namespace Kaleidoscope.Grammar
@@ -37,7 +40,7 @@ namespace Kaleidoscope.Grammar
         /// <summary>Gets the source <see cref="ICharStream"/> from a recognizer if it is available</summary>
         /// <param name="recognizer">Recognizer to get the stream from</param>
         /// <returns>The character stream or null if not available.</returns>
-        public static ICharStream GetSourceStream( this IRecognizer recognizer )
+        public static ICharStream? GetSourceStream( this IRecognizer recognizer )
         {
             recognizer.ValidateNotNull( nameof( recognizer ) );
             return recognizer.InputStream != null && recognizer.InputStream is ITokenStream tokenStream
@@ -58,7 +61,7 @@ namespace Kaleidoscope.Grammar
         /// <param name="ruleContext">Rule context to get the source text from</param>
         /// <param name="charStream">The stream the rule was parsed from</param>
         /// <returns>Source contents for the rule or an empty string if the source is not available</returns>
-        public static string GetSourceText( this ParserRuleContext ruleContext, ICharStream charStream )
+        public static string GetSourceText( this ParserRuleContext ruleContext, ICharStream? charStream )
         {
             if( charStream == null )
             {

@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\..\Ubiquity.NET.ruleset = ..\..\Ubiquity.NET.ruleset
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Llvm.NET.Interop", "Llvm.NET.Interop\Llvm.NET.Interop.csproj", "{67857F7E-8FE8-4201-A90F-5346182C725F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.Interop", "Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj", "{67857F7E-8FE8-4201-A90F-5346182C725F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{025C2743-8A48-4B37-978A-C3A65F55DC46} = {025C2743-8A48-4B37-978A-C3A65F55DC46}
 		{6C77A7DE-D464-430F-96A9-A64768763B5F} = {6C77A7DE-D464-430F-96A9-A64768763B5F}

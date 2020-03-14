@@ -1,10 +1,10 @@
 # Articles
-This section provides articles and general concepts on using Llvm.NET. 
+This section provides articles and general concepts on using Ubiquity.NET.Llvm. 
 
-It is important to point out that the Llvm.NET documentation is not a substitute
+It is important to point out that the Ubiquity.NET.Llvm documentation is not a substitute
 for the official LLVM documentation itself. That is, the content here is focused on
-using Lllvm.NET and how it maps to the underlying LLVM. The LLVM documentation is,
-generally speaking, required reading to understand Llvm.NET. The topics here contain
+using LUbiquity.NET.Llvm and how it maps to the underlying LLVM. The LLVM documentation is,
+generally speaking, required reading to understand Ubiquity.NET.Llvm. The topics here contain
 links to the official LLVM documentation to help in further understanding the
 functionality of the library.
 

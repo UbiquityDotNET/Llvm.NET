@@ -20,14 +20,14 @@ build steps in the PowerShell script to build for other platforms. The extension
 to build with high C++ conformance mode, so they should readily build without much modification
 for other platforms given the appropriate build infrastructure is set up.
 
-### Llvm.NET.Interop
+### Ubiquity.NET.Llvm.Interop
 This is the .NET P/Invoke layer that provides the raw API projection to .NET. The, majority
 of the code is generated P/Invokes from the LlvmBindingsGenerator tool. There are a few
 additional support classes that are consistent across variations in LLVM. While this library
 has a runtime dependency on the native LibLLVM binary there is no compile time dependency.
 
 ### LlvmBindingsGenerator
-This is the P/Invoke generator for the generated interop code in Llvm.NET.Interop. It uses
+This is the P/Invoke generator for the generated interop code in Ubiquity.NET.Llvm.Interop. It uses
 CppSharp to parse the C headers and generate the C# P/Invoke API declarations, enums and value
 types required to interop with the native code.
 
@@ -38,13 +38,13 @@ types required to interop with the native code.
 |------------|-------|
 | llvmroot   | This is the root of the LLVM directory in the repository containing the llvm headers |
 | extensionsRoot | this is the root of the directory containing the extended LLVM-C headers from the LibLLVM project |
-| OutputPath | This is the root of the location to generate the output into, normally this is the root of the Llvm.NET.Interop project so the files are generated into the project |
+| OutputPath | This is the root of the location to generate the output into, normally this is the root of the Ubiquity.NET.Llvm.Interop project so the files are generated into the project |
 
 This tool is generally only required once per Major LLVM release. (Though a Minor release that adds new APIs
 would also warrant a new run) However, to ensure the code generation tool itself isn't altered with a breaking
-change, the PowerShell script takes care of running the generator to update the Llvm.NET.Interop
+change, the PowerShell script takes care of running the generator to update the Ubiquity.NET.Llvm.Interop
 code base on each run, even if nothing changes in the end. This is run on every automated build before building
-the Llvm.NET.Interop project so that the generator is tested on every full automated build. 
+the Ubiquity.NET.Llvm.Interop project so that the generator is tested on every full automated build. 
 
 ## Building the Interop libraries
 ### General requirements
@@ -57,7 +57,7 @@ of different ways to go about completing them.
        accurate and any functions declared in the headers are exported so that the linker generate an error
        for any missing implementation(s).
  3. Build the native libraries for all supported runtimes (OS+arch)
- 4. Build Llvm.NET.Interop to create the interop assembly and, ultimately create the final NuGet package with
+ 4. Build Ubiquity.NET.Llvm.Interop to create the interop assembly and, ultimately create the final NuGet package with
 the native and manged code bundled together.
 
 ### Automated build
@@ -75,14 +75,14 @@ in the correct order to get changes to propagate correctly.**_
 
 1. Build LlvmBindingsGenerator project
 2. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
-LibLLVM headers, and the output location of generated code for the Llvm.NET.Interop project.
+LibLLVM headers, and the output location of generated code for the Ubiquity.NET.Llvm.Interop project.
      1. (See above for full command line options for LlvmBindingsGenerator)
      2. This, generates C# interop source files AND also generates the native C++ EXPORTS.DEF for the LibLLVM library
 and therefore, must run before building either of the other libraries.
 3. Build LibLLVM project for all architectures and configurations.
    1. At present the only supported runtime and architecture is Windows 64bit so batch building, etc.. isn't required.
       Other runtimes and architectures are possible in the future, however.
-4. Build the Llvm.NET.Interop project.
+4. Build the Ubiquity.NET.Llvm.Interop project.
 
 
 

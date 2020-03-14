@@ -5,8 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using Llvm.NET;
-using Llvm.NET.Values;
+
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Values;
 
 namespace TestDebugInfo
 {

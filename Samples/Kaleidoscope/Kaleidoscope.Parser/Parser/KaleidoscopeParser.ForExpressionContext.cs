@@ -18,7 +18,7 @@ namespace Kaleidoscope.Grammar
 
             public ExpressionContext EndExpression => expression( 0 );
 
-            public ExpressionContext StepExpression => Expressions.Count > 2 ? expression( 1 ) : null;
+            public ExpressionContext? StepExpression => Expressions.Count > 2 ? expression( 1 ) : null;
 
             public ExpressionContext BodyExpression => expression( Expressions.Count - 1 );
         }

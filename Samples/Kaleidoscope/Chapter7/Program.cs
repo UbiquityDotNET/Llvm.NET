@@ -7,12 +7,13 @@
 using System;
 using System.Reactive.Linq;
 using System.Reflection;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
-using Llvm.NET.Values;
+using Ubiquity.NET.Llvm.Values;
 
 using static Kaleidoscope.Runtime.Utilities;
-using static Llvm.NET.Interop.Library;
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter7
 {
@@ -33,7 +34,7 @@ namespace Kaleidoscope.Chapter7
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
         public static void Main( string[ ] args )
         {
-            string helloMsg = $"Llvm.NET Kaleidoscope Interpreter - {LanguageFeatureLevel}";
+            string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
             WaitForDebugger( args.Length > 0 && string.Compare( args[ 0 ], "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 );
@@ -77,7 +78,7 @@ namespace Kaleidoscope.Chapter7
         #endregion
 
         #region ShowResults
-        private static void ShowResults( Value resultValue )
+        private static void ShowResults( Value? resultValue )
         {
             switch( resultValue )
             {
@@ -91,7 +92,7 @@ namespace Kaleidoscope.Chapter7
                 break;
 
             case IrFunction function:
-#if GENERATE_LLVM_IR
+#if SAVE_LLVM_IR
                 function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
 #endif
                 break;

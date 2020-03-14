@@ -5,7 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
+
 using Kaleidoscope.Grammar.AST;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
@@ -15,7 +17,7 @@ namespace Kaleidoscope.Grammar
     {
         public void AddOrReplaceItem( FunctionDefinition item )
         {
-            Remove( GetKeyForItem(item) );
+            Remove( GetKeyForItem( item ) );
             Add( item );
         }
 

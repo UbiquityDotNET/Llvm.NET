@@ -38,15 +38,15 @@ try
         }
     }
 
-    $docfxRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET-docfx-Build.restore.binlog
-    $docfxBinLogPath = Join-Path $BuildPaths.BinLogsPath Llvm.NET-docfx-Build.binlog
+    $docfxRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm-docfx-Build.restore.binlog
+    $docfxBinLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm-docfx-Build.binlog
 
     # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
     Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets 'Restore' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxRestoreBinLogPath") )
+    Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxRestoreBinLogPath") )
 
     Write-Information "Building Docs Project"
-    Invoke-MSBuild -Targets 'Build' -Project docfx\Llvm.NET.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxBinLogPath") )
+    Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxBinLogPath") )
 }
 finally
 {

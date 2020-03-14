@@ -5,8 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
+
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 
@@ -32,17 +33,19 @@ namespace Kaleidoscope.Runtime
 
         /// <summary>Try parsing the given input text</summary>
         /// <param name="txt">Text to parse</param>
+        /// <param name="astNode">The parsed node or <see langword="null"/> on errors</param>
         /// <returns>Parse results as an AST</returns>
         /// <remarks>
-        /// If the parse fails then the result is <see langword="null"/>.
+        /// If the parse fails then the result is <see langword="false"/>.
         /// Errors from the parse are reported through error listeners provided
         /// to the parser. Normally this is done via the constructor of a type
         /// implementing this interface.
         /// </remarks>
-        IAstNode Parse( string txt );
+        bool TryParse( string txt, [MaybeNullWhen( false )] out IAstNode astNode );
 
         /// <summary>Try parsing the given input text as full source, potentially containing multiple definitions</summary>
         /// <param name="reader">TextReader to parse</param>
+        /// <param name="astNode">The parsed node or <see langword="null"/> on errors</param>
         /// <returns>Parse results as an AST</returns>
         /// <remarks>
         /// If the parse fails then the result is <see langword="null"/>.
@@ -50,12 +53,12 @@ namespace Kaleidoscope.Runtime
         /// to the parser. Normally this is done via the constructor of a type
         /// implementing this interface.
         /// </remarks>
-        IAstNode Parse( TextReader reader );
+        bool TryParse( TextReader reader, [MaybeNullWhen( false )] out IAstNode astNode );
 
         /// <summary>Parse from a sequence of input text</summary>
         /// <param name="inputSource">Input sequence of lines</param>
         /// <param name="errorHandler">Error handler for any <see cref="CodeGeneratorException"/>s generated during parsing</param>
         /// <returns>Observable sequence of AST nodes</returns>
-        IObservable<IAstNode> Parse( IObservable<string> inputSource, [CanBeNull] Action<CodeGeneratorException> errorHandler );
+        IObservable<IAstNode> Parse( IObservable<string> inputSource, Action<CodeGeneratorException> errorHandler );
     }
 }

@@ -6,18 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Llvm.NET;
-using Llvm.NET.Types;
-using Llvm.NET.Values;
 
-using static Llvm.NET.Interop.Library;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Types;
+using Ubiquity.NET.Llvm.Values;
+
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace TestDebugInfo
 {
     internal class CortexM3Details
         : ITargetDependentDetails
     {
-        public CortexM3Details()
+        public CortexM3Details( )
         {
             RegisterARM( );
         }
@@ -63,7 +64,7 @@ namespace TestDebugInfo
         }
 
         public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx )
-            => new[]
+            => new[ ]
             {
                 ctx.CreateAttribute( "correctly-rounded-divide-sqrt-fp-math", "false" ),
                 ctx.CreateAttribute( "disable-tail-calls", "false" ),

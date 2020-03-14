@@ -4,14 +4,15 @@
             "src": [
                 {
                     "files": [
-                        "src/Llvm.Net/Llvm.NET.csproj"
+                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj",
+                        "BuildOutput/bin/Ubiquity.NET.Llvm.Interop/Release/netstandard2.1/Ubiquity.NET.Llvm.Interop.dll"
                     ],
                     "src": ".."
                 }
             ],
             "dest": "api",
             "properties": {
-                "TargetFramework": "netstandard2.0"
+                "TargetFramework": "netstandard2.1"
             }
 
         }
@@ -53,13 +54,13 @@
         "postProcessors": [],
         "noLangKeyword": false,
         "globalMetadata": {
-            "_appTitle": "Llvm.NET",
+            "_appTitle": "Ubiquity.NET.Llvm",
             "_appFooter": "Copyright (C) 2017-2019, Ubiquity.NET Contributors",
             "_appLogoPath": "DragonSharp48x48.png",
             "_disableBreadcrumb": true,
             "llvmVersion": "8.0.0",
             "assemblies": [
-                "Llvm.NET"
+                "Ubiquity.NET.Llvm"
             ],
             "_gitContribute": {
                 "repo": "https://github.com/UbiquityDotNET/Llvm.NET",

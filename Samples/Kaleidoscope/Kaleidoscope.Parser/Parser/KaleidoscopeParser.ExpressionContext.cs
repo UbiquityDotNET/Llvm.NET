@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using Antlr4.Runtime.Tree;
 
 namespace Kaleidoscope.Grammar
@@ -17,7 +18,7 @@ namespace Kaleidoscope.Grammar
 
             public bool IsAssignment => binaryop( ).Length > 0 && binaryop( )[ 0 ].Start.Type == ASSIGN;
 
-            public VariableExpressionContext AssignmentTarget => IsAssignment ? GetChild<VariableExpressionContext>( 0 ) : null;
+            public VariableExpressionContext? AssignmentTarget => IsAssignment ? GetChild<VariableExpressionContext>( 0 ) : null;
 
             public IEnumerable<(BinaryopContext op, IParseTree rhs)> OperatorExpressions
             {

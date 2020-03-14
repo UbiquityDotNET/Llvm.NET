@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 
-namespace Llvm.NET.Interop
+namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]

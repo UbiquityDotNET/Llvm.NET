@@ -6,18 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Llvm.NET;
-using Llvm.NET.Types;
-using Llvm.NET.Values;
 
-using static Llvm.NET.Interop.Library;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Types;
+using Ubiquity.NET.Llvm.Values;
+
+using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace TestDebugInfo
 {
     internal class X64Details
         : ITargetDependentDetails
     {
-        public X64Details()
+        public X64Details( )
         {
             RegisterX86( );
         }

@@ -7,7 +7,7 @@ to make the operators work, in particular implementing user defined precedence.
 
 > [!TIP]
 > The actual value of user defined operator precedence in a language is a bit debatable, and the
-> initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn't involve any new
+> initial plan for the Ubiquity.NET.Llvm tutorials was to skip this chapter as it doesn't involve any new
 > LLVM IR or code generation. After the code was done to get the other chapters working - this one
 > was still nagging, begging really, for a solution. The challenge to come up with a good solution
 > was ultimately too tempting to resist, and we now have a full implementation with a few useful

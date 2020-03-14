@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration

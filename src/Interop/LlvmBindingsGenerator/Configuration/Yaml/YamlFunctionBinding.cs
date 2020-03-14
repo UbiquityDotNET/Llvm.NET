@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
 using CppSharp;
 using CppSharp.AST;
 
@@ -29,7 +30,7 @@ namespace LlvmBindingsGenerator.Configuration
 
         public YamlBindingTransform ReturnTransform { get; set; }
 
-        public YamlParamBindingCollection ParamTransforms { get; set; } = new YamlParamBindingCollection();
+        public YamlParamBindingCollection ParamTransforms { get; set; } = new YamlParamBindingCollection( );
 
         public void ResolveParameterIndeces( ASTContext context )
         {

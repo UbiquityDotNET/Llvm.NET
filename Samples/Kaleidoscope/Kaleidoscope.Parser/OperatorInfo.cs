@@ -48,7 +48,7 @@ namespace Kaleidoscope.Grammar
     {
         public bool TryAddOrReplaceItem( OperatorInfo item )
         {
-            if(!this.TryGetValue( item.TokenType, out var existingItem ))
+            if( !TryGetValue( item.TokenType, out var existingItem ) )
             {
                 Add( item );
                 return true;
@@ -78,7 +78,7 @@ namespace Kaleidoscope.Grammar
         {
             var builtIns = Items.Where( oi => oi.IsBuiltIn ).ToList();
             base.ClearItems( );
-            foreach(var builtin in builtIns )
+            foreach( var builtin in builtIns )
             {
                 Add( builtin );
             }

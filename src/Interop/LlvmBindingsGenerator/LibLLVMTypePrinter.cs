@@ -7,11 +7,12 @@
 using CppSharp.AST;
 using CppSharp.Generators;
 using CppSharp.Generators.CSharp;
+
 using Ubiquity.ArgValidators;
 
 namespace LlvmBindingsGenerator
 {
-    /// <summary>Specialized type printer for Llvm.NET.Interop</summary>
+    /// <summary>Specialized type printer for Ubiquity.NET.Llvm.Interop</summary>
     /// <remarks>
     /// <para>Unfortunately <see cref="CppSharp.AST.Type.ToString"/> will fail with a null
     /// reference if there isn't a type printer delegate assigned. E.g. it has no
@@ -24,7 +25,7 @@ namespace LlvmBindingsGenerator
     /// to the ToString() method in code generating a null reference exception if the
     /// delegate isn't set up.</para>
     /// <para>This type serves as an extension to the default <see cref="CSharpTypePrinter"/>
-    /// that handles the specific needs of the Llvm.NET.Interop code generation.</para>
+    /// that handles the specific needs of the Ubiquity.NET.Llvm.Interop code generation.</para>
     /// </remarks>
     internal class LibLLVMTypePrinter
         : CSharpTypePrinter

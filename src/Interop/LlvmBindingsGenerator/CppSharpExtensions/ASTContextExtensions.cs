@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using CppSharp.AST;
+
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator
@@ -29,7 +31,7 @@ namespace LlvmBindingsGenerator
 
         public static bool IsExtensionHeader( this TranslationUnit tu )
         {
-            return !tu.IsCoreHeader()
+            return !tu.IsCoreHeader( )
                 && tu.IsValid
                 && !tu.IsSystemHeader
                 && tu.FileNameWithoutExtension.EndsWith( "Bindings", StringComparison.Ordinal );
@@ -37,7 +39,7 @@ namespace LlvmBindingsGenerator
 
         public static IEnumerable<TypedefNameDecl> GetHandleTypeDefs( this ASTContext ctx )
         {
-            return from tu in ctx.GeneratedUnits()
+            return from tu in ctx.GeneratedUnits( )
                    from td in tu.Typedefs
                    where td.IsHandleTypeDef( )
                    select td;
@@ -80,7 +82,7 @@ namespace LlvmBindingsGenerator
         public static bool IsCannonicalHandleTypeDef( this TypedefNameDecl td )
         {
             // Canonical form, declaration is a pointer to an opaque struct
-            if( !(td.Type is PointerType pt ))
+            if( !( td.Type is PointerType pt ) )
             {
                 return false;
             }
@@ -92,13 +94,13 @@ namespace LlvmBindingsGenerator
         public static string AsString( this CppSharp.AST.Attribute attr, bool useFullNamespace = false )
         {
             var bldr = new StringBuilder( "[" );
-            if(attr is TargetedAttribute ta && ta.Target != AttributeTarget.Default)
+            if( attr is TargetedAttribute ta && ta.Target != AttributeTarget.Default )
             {
                 bldr.Append( ta.Target.ToString( ).ToLowerInvariant( ) );
                 bldr.Append( ": " );
             }
 
-            bldr.Append( useFullNamespace ? attr.Type.FullName : attr.Type.Name.Substring(0, attr.Type.Name.Length - 9 /*Len(Attribute)*/ ) );
+            bldr.Append( useFullNamespace ? attr.Type.FullName : attr.Type.Name.Substring( 0, attr.Type.Name.Length - 9 /*Len(Attribute)*/ ) );
             if( !string.IsNullOrWhiteSpace( attr.Value ) )
             {
                 bldr.Append( "( " );
@@ -110,7 +112,7 @@ namespace LlvmBindingsGenerator
             return bldr.ToString( );
         }
 
-        public static bool IsDelegateTypeDef( this TypedefNameDecl td)
+        public static bool IsDelegateTypeDef( this TypedefNameDecl td )
         {
             return td.TryGetFunctionSignature( out _ );
         }
@@ -129,10 +131,10 @@ namespace LlvmBindingsGenerator
 
         public static FunctionType GetFunctionPointerType( this TypedefNameDecl td )
         {
-            return (td.Type is PointerType pt && pt.Pointee is FunctionType ft) ? ft : null;
+            return ( td.Type is PointerType pt && pt.Pointee is FunctionType ft ) ? ft : null;
         }
 
-        public static IReadOnlyDictionary<string, FunctionType> GetFunctionPointers(this ASTContext context)
+        public static IReadOnlyDictionary<string, FunctionType> GetFunctionPointers( this ASTContext context )
         {
             return ( from tu in context.TranslationUnits
                      from td in tu.Typedefs

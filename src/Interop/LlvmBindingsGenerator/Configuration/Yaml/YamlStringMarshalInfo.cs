@@ -9,7 +9,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
+
 using CppSharp.AST;
+
 using LlvmBindingsGenerator.CppSharpExtensions;
 using LlvmBindingsGenerator.Templates;
 

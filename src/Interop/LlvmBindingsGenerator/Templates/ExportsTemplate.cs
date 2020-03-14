@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+
 using CppSharp.AST;
 
 namespace LlvmBindingsGenerator.Templates

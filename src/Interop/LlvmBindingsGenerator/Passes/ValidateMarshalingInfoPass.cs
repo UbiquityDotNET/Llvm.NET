@@ -5,9 +5,11 @@
 // -----------------------------------------------------------------------
 
 using System.Linq;
+
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
@@ -41,18 +43,18 @@ namespace LlvmBindingsGenerator.Passes
                 return false;
             }
 
-            if(function.ReturnType.Type is CILType cilType && cilType.Type.Name == "string" )
+            if( function.ReturnType.Type is CILType cilType && cilType.Type.Name == "string" )
             {
                 bool hasCustomMarshaling = ( from attrib in function.Attributes.OfType<TargetedAttribute>( )
                                              where attrib.Target == AttributeTarget.Return && IsStringMarshalingAttribute( attrib )
                                              select attrib
                                            ).Any( );
-                if(!hasCustomMarshaling)
+                if( !hasCustomMarshaling )
                 {
                     Diagnostics.Error( "ERROR: Function {0} has string return type, but does not have string custom marshaling attribute to define marshaling behavior!", function.Name );
                 }
             }
-            else if ( function.ReturnType.Type is PointerType pt && function.ReturnType.Type is CILType cilptr && cilptr.Type.Name != "IntPtr" )
+            else if( function.ReturnType.Type is PointerType pt && function.ReturnType.Type is CILType cilptr && cilptr.Type.Name != "IntPtr" )
             {
                 bool hasMarhsalAsAttrib = ( from attrib in function.Attributes.OfType<TargetedAttribute>( )
                                             where attrib.Target == AttributeTarget.Return && attrib.Type.Name == "MarshalAsAttribute"
@@ -73,7 +75,7 @@ namespace LlvmBindingsGenerator.Passes
                                 && !p.Attributes.Any( IsStringMarshalingAttribute )
                              select p;
 
-            foreach(var param in outStrings)
+            foreach( var param in outStrings )
             {
                 Diagnostics.Error( "ERROR: Parameter {0} of function {1} is an out string but has no custom marshaling attribute to define marshaling behavior", param.Name, function.Name );
             }
@@ -81,7 +83,7 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
-        private static bool IsStringMarshalingAttribute( CppSharp.AST.Attribute attribute)
+        private static bool IsStringMarshalingAttribute( CppSharp.AST.Attribute attribute )
         {
             return attribute.Type.Name == "MarshalAsAttribute"
                 && attribute.Value.StartsWith( "UnmanagedType.CustomMarshaler", System.StringComparison.InvariantCulture );

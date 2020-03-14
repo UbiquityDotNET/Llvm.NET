@@ -18,7 +18,7 @@ namespace Kaleidoscope.Grammar
     {
         /// <summary>Initializes a new instance of the <see cref="AnonymousNameProvider"/> class.</summary>
         /// <param name="prefix">Prefix to use for the name</param>
-        public AnonymousNameProvider(string prefix)
+        public AnonymousNameProvider( string prefix )
         {
             NamePrefix = prefix;
         }

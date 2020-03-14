@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Xml.Linq;
 
 using Antlr4.Runtime;
@@ -29,6 +30,11 @@ namespace Kaleidoscope.Grammar
         public override void EnterUnaryOpExpression( [ValidatedNotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
         {
             context.ValidateNotNull( nameof( context ) );
+            if( ActiveNode is null )
+            {
+                throw new InvalidOperationException( "ActiveNode is null!" );
+            }
+
             ActiveNode.Add( new XAttribute( "Op", context.Op ) );
         }
 
@@ -41,6 +47,11 @@ namespace Kaleidoscope.Grammar
         public override void VisitTerminal( [ValidatedNotNull] ITerminalNode node )
         {
             node.ValidateNotNull( nameof( node ) );
+            if( ActiveNode is null )
+            {
+                throw new InvalidOperationException( "ActiveNode is null!" );
+            }
+
             ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText( ) ) ) );
         }
 
@@ -55,6 +66,11 @@ namespace Kaleidoscope.Grammar
         {
             context.ValidateNotNull( nameof( context ) );
             base.ExitEveryRule( context );
+            if( ActiveNode is null )
+            {
+                throw new InvalidOperationException( "ActiveNode is null!" );
+            }
+
             ActiveNode.Add( new XAttribute( "Text", context.GetSourceText( Recognizer ) ) );
             ActiveNode.Add( new XAttribute( "RuleIndex", context.RuleIndex ) );
             ActiveNode.Add( new XAttribute( "SourceInterval", context.SourceInterval.ToString( ) ) );
@@ -87,7 +103,7 @@ namespace Kaleidoscope.Grammar
 
         private const string ContextTypeNameSuffix = "Context";
 
-        private XElement ActiveNode;
+        private XElement? ActiveNode;
         private readonly IRecognizer Recognizer;
     }
 }

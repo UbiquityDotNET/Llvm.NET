@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Text;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
@@ -13,7 +14,7 @@ namespace Kaleidoscope.Grammar.AST
     public class LocalVariableDeclaration
         : IVariableDeclaration
     {
-        public LocalVariableDeclaration( SourceSpan location, string name, IExpression initializer, bool compilerGenerated = false )
+        public LocalVariableDeclaration( SourceSpan location, string name, IExpression? initializer, bool compilerGenerated = false )
         {
             Location = location;
             Name = name;
@@ -25,11 +26,15 @@ namespace Kaleidoscope.Grammar.AST
 
         public string Name { get; }
 
-        public IExpression Initializer { get; }
+        public IExpression? Initializer { get; }
 
         public bool CompilerGenerated { get; }
 
-        public TResult Accept<TResult>( IAstVisitor<TResult> visitor ) => visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : class
+        {
+            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+        }
 
         public IEnumerable<IAstNode> Children
         {
@@ -45,14 +50,14 @@ namespace Kaleidoscope.Grammar.AST
         public override string ToString( )
         {
             var bldr = new StringBuilder();
-            if(CompilerGenerated)
+            if( CompilerGenerated )
             {
                 bldr.Append( "[CompilerGenerated]" );
             }
 
             bldr.Append( "Declare(" );
             bldr.Append( Name );
-            if(Initializer != null )
+            if( Initializer != null )
             {
                 bldr.Append( ", " );
                 bldr.Append( Initializer );
