@@ -34,7 +34,6 @@ jobs:
             name: Nuget Packages
             path: .\BuildOutput\Nuget
 
-jobs:
   build-docs:
     runs-on: windows-latest
     steps:
