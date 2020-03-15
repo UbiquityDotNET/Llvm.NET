@@ -2,15 +2,15 @@
 # v10.0.0-alpha
 
 ## Library name changes
-With the 10.* release the names of the assemblies, and therfore the packages, are all changed.
+With the 10.* release the names of the assemblies, and therefore the packages, are all changed.
 This was done to unify them all under a common organization name to allow use of the facilities
-privided by Nuget for organizations and to help clarify these libraries from some other similar
+provided by NuGet for organizations and to help clarify these libraries from some other similar
 projects no longer maintained.
 
-| Old Name         | New Name     |
-|------------------|--------------|
+| Old Name                  | New Name     |
+|---------------------------|--------------|
 | Ubiquity.NET.Llvm.Interop | Ubiquity.Net.Llvm.Interop |
-| LibLLVM.dll      | Ubiquity.Net.LibLLVM.dll  |
+| LibLLVM.dll               | Ubiquity.Net.LibLLVM.dll  |
 | Ubiquity.NET.Llvm         | Ubiquity.Net.Llvm         |
 
 
@@ -22,6 +22,21 @@ to make nullability more explicit. This necessitated a few minor breaking change
 |-----------------|--------------|
 | DebugMemberInfo | Removed setters of non-nullable properties and added constructor to allow building the type with non-null values | 
 | DIType          | null is no longer used to represent a void type, instead a new singleton DITypeVoid.Instance is used.|
+
+The comparison instruction predicates `Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]`were renamed for greater consistency
+and clarity (Some of the float predicates had 'Than' in the name while the integer counterparts did not. (See:
+[Bug #152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) for details.)
+
+| Old Name               | New Name     |
+|------------------------|--------------|
+| UnsignedGreater        | UnsignedGreaterThan |
+| UnsignedGreaterOrEqual | UnsignedGreaterThanOrEqual |
+| UnsignedLess           | UnsignedLessThan |
+| UnsignedLessOrEqual    | UnsignedLessThanOrEqual |
+| SignedGreater          | SignedGreaterThan |
+| SignedGreaterOrEqual   | SignedGreaterThanOrEqual |
+| SignedLess             | SignedLessThan |
+| SignedLessOrEqual      | SignedLessThanOrEqual |
 
 ## Removed redundant APIs
 LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionaly equivalent to 
