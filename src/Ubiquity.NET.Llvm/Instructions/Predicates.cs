@@ -82,34 +82,34 @@ namespace Ubiquity.NET.Llvm.Instructions
         NotEqual = LLVMIntPredicate.LLVMIntNE,
 
         /// <summary>Integer unsigned greater than comparison</summary>
-        UnsignedGreater = LLVMIntPredicate.LLVMIntUGT,
+        UnsignedGreaterThan = LLVMIntPredicate.LLVMIntUGT,
 
         /// <summary>Integer unsigned greater than or equal comparison</summary>
-        UnsignedGreaterOrEqual = LLVMIntPredicate.LLVMIntUGE,
+        UnsignedGreaterThanOrEqual = LLVMIntPredicate.LLVMIntUGE,
 
         /// <summary>Integer unsigned less than comparison</summary>
-        UnsignedLess = LLVMIntPredicate.LLVMIntULT,
+        UnsignedLessThan = LLVMIntPredicate.LLVMIntULT,
 
         /// <summary>Integer unsigned less than or equal comparison</summary>
-        UnsignedLessOrEqual = LLVMIntPredicate.LLVMIntULE,
+        UnsignedLessThanOrEqual = LLVMIntPredicate.LLVMIntULE,
 
         /// <summary>Integer signed greater than comparison</summary>
-        SignedGreater = LLVMIntPredicate.LLVMIntSGT,
+        SignedGreaterThan = LLVMIntPredicate.LLVMIntSGT,
 
         /// <summary>Integer signed greater than or equal comparison</summary>
-        SignedGreaterOrEqual = LLVMIntPredicate.LLVMIntSGE,
+        SignedGreaterThanOrEqual = LLVMIntPredicate.LLVMIntSGE,
 
         /// <summary>Integer signed less than comparison</summary>
-        SignedLess = LLVMIntPredicate.LLVMIntSLT,
+        SignedLessThan = LLVMIntPredicate.LLVMIntSLT,
 
         /// <summary>Integer signed less than or equal comparison</summary>
-        SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE,
+        SignedLessThanOrEqual = LLVMIntPredicate.LLVMIntSLE,
 
         /// <summary>Tag for the first integer compare predicate, all integer predicates are greater than or equal to this value</summary>
         FirstIcmpPredicate = Equal,
 
         /// <summary>Tag for the last integer compare predicate, all integer predicates are less than or equal to this value</summary>
-        LastIcmpPredicate = SignedLessOrEqual,
+        LastIcmpPredicate = SignedLessThanOrEqual,
 
         /// <summary>Any value Greater than or equal to this is not valid for cmp operations</summary>
         BadIcmpPredicate = LastIcmpPredicate + 1
@@ -186,28 +186,28 @@ namespace Ubiquity.NET.Llvm.Instructions
         NotEqual = LLVMIntPredicate.LLVMIntNE,
 
         /// <summary>Integer unsigned greater than comparison</summary>
-        UnsignedGreater = LLVMIntPredicate.LLVMIntUGT,
+        UnsignedGreaterThan = LLVMIntPredicate.LLVMIntUGT,
 
         /// <summary>Integer unsigned greater than or equal comparison</summary>
         UnsignedGreaterOrEqual = LLVMIntPredicate.LLVMIntUGE,
 
         /// <summary>Integer unsigned less than comparison</summary>
-        UnsignedLess = LLVMIntPredicate.LLVMIntULT,
+        UnsignedLessThan = LLVMIntPredicate.LLVMIntULT,
 
         /// <summary>Integer unsigned less than or equal comparison</summary>
-        UnsignedLessOrEqual = LLVMIntPredicate.LLVMIntULE,
+        UnsignedLessThanOrEqual = LLVMIntPredicate.LLVMIntULE,
 
         /// <summary>Integer signed greater than comparison</summary>
-        SignedGreater = LLVMIntPredicate.LLVMIntSGT,
+        SignedGreaterThan = LLVMIntPredicate.LLVMIntSGT,
 
         /// <summary>Integer signed greater than or equal comparison</summary>
-        SignedGreaterOrEqual = LLVMIntPredicate.LLVMIntSGE,
+        SignedGreaterThanOrEqual = LLVMIntPredicate.LLVMIntSGE,
 
         /// <summary>Integer signed less than comparison</summary>
-        SignedLess = LLVMIntPredicate.LLVMIntSLT,
+        SignedLessThan = LLVMIntPredicate.LLVMIntSLT,
 
         /// <summary>Integer signed less than or equal comparison</summary>
-        SignedLessOrEqual = LLVMIntPredicate.LLVMIntSLE
+        SignedLessThanOrEqual = LLVMIntPredicate.LLVMIntSLE
     }
 
     /// <summary>Predicate enumeration for floating point comparison</summary>
