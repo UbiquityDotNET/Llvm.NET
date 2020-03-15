@@ -4,8 +4,7 @@
             "src": [
                 {
                     "files": [
-                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj",
-                        "BuildOutput/bin/Ubiquity.NET.Llvm.Interop/Release/netstandard2.1/Ubiquity.NET.Llvm.Interop.dll"
+                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj"
                     ],
                     "src": ".."
                 }
