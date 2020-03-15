@@ -3,8 +3,8 @@
 #### Build Status
 [![CI-Build](https://github.com/UbiquityDotNET/Llvm.NET/workflows/CI-Build/badge.svg?branch=master&event=push)](https://github.com/UbiquityDotNET/Llvm.NET/actions?query=workflow%3ACI-Build+branch%3Amaster+is%3Ain_progress)
 ![Release-Build](https://github.com/UbiquityDotNET/Llvm.NET/workflows/Release-Build/badge.svg)
-### Nuget
-[![Nuget](https://img.shields.io/nuget/dt/Ubiquity.NET.Llvm.svg)](https://www.nuget.org/packages/Ubiquity.NET.Llvm/)
+### NuGet
+[![NuGet](https://img.shields.io/nuget/dt/Ubiquity.NET.Llvm.svg)](https://www.nuget.org/packages/Ubiquity.NET.Llvm/)
 
 For details of releases, see the [release notes](https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/ReleaseNotes.md)
 
@@ -56,11 +56,11 @@ need to change except to pick up a new package version.)
 The CI Builds of the NuGet package built from the latest source in the master branch are available as build artifacts from the build. 
 Unfortunately with an all GitHub build via GitHub Actions we don't have a good story for accessing the packages from unreleased automated builds. While GitHub does support a package registry (GPR), it really doesn't meet the needs of CI builds. In particular:
 * GPR Doesn't support deletion of older CI build packages (Cluttering the feed)
-* GPR requires complex logon/Tokens just to get packages from the feed, despite being a public repo...
+* GPR requires complex login/Tokens just to get packages from the feed, despite being a public repository...
 * Tool integration (esp. Visual Studio) is not well supported and difficult to setup.
 
-Given all of the above the CI builds are not published to a feed at this time and GPR isn't used for publishing releases. (Official Nuget will serve that role for releases)
-CI build and PR build pacakges are available as artifacts from the GitHub actions that build them.
+Given all of the above the CI builds are not published to a feed at this time and GPR isn't used for publishing releases. (Official NuGet will serve that role for releases)
+CI build and PR build packages are available as artifacts from the GitHub actions that build them.
 
 ### API Documentation
 The full API documentation on using Ubiquity.NET.Llvm is available on the [Ubiquity.NET.Llvm documentation site](https://ubiquitydotnet.github.io/Ubiquity.NET.Llvm/).
@@ -72,11 +72,11 @@ LLVM Bit code equivalent to what the Clang compiler generates for a [simple C la
 The sample application doesn't actually parse the source, instead it is a manually constructed and documented example of how to use Ubiquity.NET.Llvm to accomplish the bit-code generation. 
 
 #### Kaleidoscope Tutorial
-Aa Ubiquity.NET.Llvm version of the LLVM sample [Kaleidoscope language tutorial](https://ubiquitydotnet.github.io/Llvm.NET/articles/Samples/Kaleidoscope.html) is provided to walk through many aspects of code generation and JIT execution with Llvm.NET. This tutorial implements a complete JIT execution engine for the Kaleidoscope language, along with AOT compilation, optimization and debug symbol generation. This, covers a significant surface area of the Llvm.NET classes and methods to provide a solid grounding on the use of the library.
+A Ubiquity.NET.Llvm version of the LLVM sample [Kaleidoscope language tutorial](https://ubiquitydotnet.github.io/Llvm.NET/articles/Samples/Kaleidoscope.html) is provided to walk through many aspects of code generation and JIT execution with Llvm.NET. This tutorial implements a complete JIT execution engine for the Kaleidoscope language, along with AOT compilation, optimization and debug symbol generation. This, covers a significant surface area of the Llvm.NET classes and methods to provide a solid grounding on the use of the library.
 
 ## Building Ubiquity.NET.Llvm
-### Prerequsites
-* Visual Studio 2017 (15.4+) [Community Edition OK]
+### Prerequisites
+* Visual Studio 2019 (16.4+) [Community Edition OK]
 * [7-Zip](https://www.7-zip.org/) [Used to unpack the pre-built LLVM libraries]
 
 #### Using Visual Studio
@@ -86,7 +86,7 @@ Ubiquity.NET.Llvm source code during development.
 
 ### Replicating the automated build
 The Automated build support for Ubiquity.NET.Llvm uses Build-All.ps1 PowerShell script to build all the binaries and generate a
-NuGet package. To build the full package simply run `Build-All.ps1` from a PowerShell command prompt with MSBuild tools
+NuGet package. To build the full package simply run `Build-All.ps1 -ForceClean` from a PowerShell command prompt with MSBuild tools
 on the system search path.
 
 ### Code of Conduct
