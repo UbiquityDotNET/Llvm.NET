@@ -19,7 +19,7 @@ jobs:
            fetch-depth: 0
 
       - name: Build Source
-        run: .\Build-All.ps1
+        run: .\Build-All.ps1 -ForceClean
 
       - name: Publish build logs
         if: always() && github.event_name == 'pull_request'
