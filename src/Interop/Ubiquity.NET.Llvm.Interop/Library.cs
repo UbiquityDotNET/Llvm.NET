@@ -763,7 +763,7 @@ namespace Ubiquity.NET.Llvm.Interop
             paths.Add( Path.Combine( packageRoot, runTimePath ) );
             paths.Add( Path.Combine( thisModulePath, runTimePath ) );
             paths.Add( thisModulePath );
-            IntPtr hLibLLVM = LoadWin32Library( "LibLlvm.dll", paths );
+            IntPtr hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
 
             // Verify the version of LLVM in LibLLVM
             LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
