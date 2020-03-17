@@ -18,7 +18,7 @@ extern "C" {
 
     typedef enum LibLLVMDwarfTag
     {
-#define HANDLE_DW_TAG(ID, NAME, VERSION, VENDOR)                 \
+#define HANDLE_DW_TAG(ID, NAME, VERSION, VENDOR, KIND) \
   LibLLVMDwarfTag##NAME = ID,
 #include "llvm/BinaryFormat/Dwarf.def"
 #undef HANDLE_DW_TAG

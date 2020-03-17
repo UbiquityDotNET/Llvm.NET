@@ -57,6 +57,9 @@
     <Function name="LLVMInitializePowerPCTargetInfo">
         <summary>TODO: Provide summary for Function LLVMInitializePowerPCTargetInfo</summary>
     </Function>
+    <Function name="LLVMInitializeRISCVTargetInfo">
+        <summary>TODO: Provide summary for Function LLVMInitializeRISCVTargetInfo</summary>
+    </Function>
     <Function name="LLVMInitializeSparcTargetInfo">
         <summary>TODO: Provide summary for Function LLVMInitializeSparcTargetInfo</summary>
     </Function>
@@ -101,6 +104,9 @@
     </Function>
     <Function name="LLVMInitializePowerPCTarget">
         <summary>TODO: Provide summary for Function LLVMInitializePowerPCTarget</summary>
+    </Function>
+    <Function name="LLVMInitializeRISCVTarget">
+        <summary>TODO: Provide summary for Function LLVMInitializeRISCVTarget</summary>
     </Function>
     <Function name="LLVMInitializeSparcTarget">
         <summary>TODO: Provide summary for Function LLVMInitializeSparcTarget</summary>
@@ -147,6 +153,9 @@
     <Function name="LLVMInitializePowerPCTargetMC">
         <summary>TODO: Provide summary for Function LLVMInitializePowerPCTargetMC</summary>
     </Function>
+    <Function name="LLVMInitializeRISCVTargetMC">
+        <summary>TODO: Provide summary for Function LLVMInitializeRISCVTargetMC</summary>
+    </Function>
     <Function name="LLVMInitializeSparcTargetMC">
         <summary>TODO: Provide summary for Function LLVMInitializeSparcTargetMC</summary>
     </Function>
@@ -192,6 +201,9 @@
     <Function name="LLVMInitializePowerPCAsmPrinter">
         <summary>TODO: Provide summary for Function LLVMInitializePowerPCAsmPrinter</summary>
     </Function>
+    <Function name="LLVMInitializeRISCVAsmPrinter">
+        <summary>TODO: Provide summary for Function LLVMInitializeRISCVAsmPrinter</summary>
+    </Function>
     <Function name="LLVMInitializeSparcAsmPrinter">
         <summary>TODO: Provide summary for Function LLVMInitializeSparcAsmPrinter</summary>
     </Function>
@@ -234,6 +246,9 @@
     <Function name="LLVMInitializePowerPCAsmParser">
         <summary>TODO: Provide summary for Function LLVMInitializePowerPCAsmParser</summary>
     </Function>
+    <Function name="LLVMInitializeRISCVAsmParser">
+        <summary>TODO: Provide summary for Function LLVMInitializeRISCVAsmParser</summary>
+    </Function>
     <Function name="LLVMInitializeSparcAsmParser">
         <summary>TODO: Provide summary for Function LLVMInitializeSparcAsmParser</summary>
     </Function>
@@ -272,6 +287,9 @@
     </Function>
     <Function name="LLVMInitializePowerPCDisassembler">
         <summary>TODO: Provide summary for Function LLVMInitializePowerPCDisassembler</summary>
+    </Function>
+    <Function name="LLVMInitializeRISCVDisassembler">
+        <summary>TODO: Provide summary for Function LLVMInitializeRISCVDisassembler</summary>
     </Function>
     <Function name="LLVMInitializeSparcDisassembler">
         <summary>TODO: Provide summary for Function LLVMInitializeSparcDisassembler</summary>

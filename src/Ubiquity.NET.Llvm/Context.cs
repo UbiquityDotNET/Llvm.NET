@@ -14,6 +14,7 @@ using System.Text;
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.ObjectFile;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
@@ -751,6 +752,15 @@ namespace Ubiquity.NET.Llvm
         {
             get => LibLLVMContextGetIsODRUniquingDebugTypes( ContextHandle );
             set => LibLLVMContextSetIsODRUniquingDebugTypes( ContextHandle, value );
+        }
+
+        /// <summary>Opens a <see cref="TargetBinary"/> from a path</summary>
+        /// <param name="path">path to the object file binary</param>
+        /// <returns>new object file</returns>
+        /// <exception cref="System.IO.IOException">File IO failures</exception>
+        public TargetBinary OpenBinary( string path )
+        {
+            return new TargetBinary( new MemoryBuffer( path ), this );
         }
 
         /*TODO: Create interop calls to support additional properties/methods

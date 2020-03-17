@@ -725,8 +725,43 @@ namespace Ubiquity.NET.Llvm.Interop
             */
         }
 
+        /// <summary>Registers components for the RISCV target</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterRISCV( TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            {
+                LLVMInitializeRISCVTarget( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            {
+                LLVMInitializeRISCVTargetInfo( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            {
+                LLVMInitializeRISCVTargetMC( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            {
+                LLVMInitializeRISCVAsmPrinter( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeRISCVDisassembler( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeRISCVAsmParser( );
+            }
+        }
+
         // version info for verification of matched LibLLVM
-        private const int VersionMajor = 8;
+        private const int VersionMajor = 10;
         private const int VersionMinor = 0;
         private const int VersionPatch = 0;
 

@@ -41,6 +41,7 @@ namespace Ubiquity.NET.Llvm
     {
         /// <summary>Enumeration for the Architecture portion of a target triple</summary>
         [SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
+        [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to read without them" )]
         public enum ArchType
         {
             /// <summary>Invalid or unknown architecture</summary>
@@ -57,6 +58,9 @@ namespace Ubiquity.NET.Llvm
 
             /// <summary>AArch64 (big endian): aarch64_be</summary>
             Aarch64BE = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64_be,
+
+            /// <summary>AArch64 32 bit (Little endian) ILP32: aarch64_32</summary>
+            Aarch64_32 = LibLLVMTripleArchType.LibLLVMTripleArchType_aarch64_32,
 
             /// <summary>Synopsis ARC</summary>
             Arc = LibLLVMTripleArchType.LibLLVMTripleArchType_arc,
@@ -195,16 +199,23 @@ namespace Ubiquity.NET.Llvm
             /// <summary>Renderscript 64-bit</summary>
             Renderscript64 = LibLLVMTripleArchType.LibLLVMTripleArchType_renderscript64,
 
-            /// <summary>Maximum architecture type</summary>
-            LastArchType = Renderscript64
+            /// <summary>NEC SX Aurora Vector Engine</summary>
+            Ve = LibLLVMTripleArchType.LibLLVMTripleArchType_ve,
         }
 
         /// <summary>Processor sub architecture type</summary>
         [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to understand without them" )]
+        [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "These are NOT flags" )]
         public enum SubArchType
         {
             /// <summary>No sub architecture</summary>
             NoSubArch = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_NoSubArch,
+
+            /// <summary>ARM v8.5a</summary>
+            ARMSubArch_v8_5a = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_5a,
+
+            /// <summary>ARM v8.4a</summary>
+            ARMSubArch_v8_4a = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_4a,
 
             /// <summary>ARM v8.3a</summary>
             ARMSubArch_v8_3a = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_3a,
@@ -226,6 +237,9 @@ namespace Ubiquity.NET.Llvm
 
             /// <summary>ARM v8m mainline</summary>
             ARMSubArch_v8m_mainline = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8m_mainline,
+
+            /// <summary>ARM v8 1m mainline</summary>
+            ARMSubArch_v8_1m_mainline = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v8_1m_mainline,
 
             /// <summary>ARM v7</summary>
             ARMSubArch_v7 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_ARMSubArch_v7,
@@ -276,7 +290,10 @@ namespace Ubiquity.NET.Llvm
             KalimbaSubArch_v5 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_KalimbaSubArch_v5,
 
             /// <summary>MIPS R6</summary>
-            MipsSubArch_r6 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_MipsSubArch_r6
+            MipsSubArch_r6 = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_MipsSubArch_r6,
+
+            /// <summary>PowerPC SPE</summary>
+            PowerPC_SE = LibLLVMTripleSubArchType.LibLLVMTripleSubArchType_PPCSubArch_spe,
         }
 
         /// <summary>Vendor type for the triple</summary>
@@ -441,6 +458,9 @@ namespace Ubiquity.NET.Llvm
 
             /// <summary>WebAssembly OS</summary>
             WASI = LibLLVMTripleOSType.LibLLVMTripleOSType_WASI,
+
+            /// <summary>Emscripten</summary>
+            Emscripten = LibLLVMTripleOSType.LibLLVMTripleOSType_Emscripten,
         }
 
         /// <summary>Triple Environment type</summary>
@@ -501,7 +521,10 @@ namespace Ubiquity.NET.Llvm
             CoreCLR = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_CoreCLR,
 
             /// <summary>Simulator</summary>
-            Simultator = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Simulator
+            Simultator = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_Simulator,
+
+            /// <summary>Mac Catalyst variant of Apple's iOS deployment target</summary>
+            MacABI = LibLLVMTripleEnvironmentType.LibLLVMTripleEnvironmentType_MacABI,
         }
 
         /// <summary>Object format type for a Triple</summary>
@@ -520,7 +543,10 @@ namespace Ubiquity.NET.Llvm
             MachO = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_MachO,
 
             /// <summary>Wasm format</summary>
-            Wasm = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_Wasm
+            Wasm = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_Wasm,
+
+            /// <summary>SCOFF format</summary>
+            XCOFF = LibLLVMTripleObjectFormatType.LibLLVMTripleObjectFormatType_XCOFF,
         }
 
         /// <summary>Initializes a new instance of the <see cref="Triple"/> class from a triple string</summary>

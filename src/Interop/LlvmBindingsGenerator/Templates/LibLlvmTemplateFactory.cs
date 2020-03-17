@@ -85,7 +85,7 @@ namespace LlvmBindingsGenerator
                 }
                 else
                 {
-                    Diagnostics.Error( "No Mapping for handle type {0}", handle.Name );
+                    Diagnostics.Error( "No Mapping for handle type {0} - {1}@{2}", handle.Name, handle.TranslationUnit.FileRelativePath, handle.LineNumberStart );
                 }
             }
         }

@@ -14,7 +14,7 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
-    /// <summary>Section in an <see cref="ObjectFile"/></summary>
+    /// <summary>Section in an <see cref="TargetBinary"/></summary>
     [DebuggerDisplay( "{Name,nq}" )]
     public struct Section
         : IEquatable<Section>
@@ -22,10 +22,10 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the name of the section</summary>
         public string Name => LLVMGetSectionName( IteratorRef );
 
-        /// <summary>Gets the object file this section belongs to</summary>
-        public TargetObjectFile ObjectFile { get; }
+        /// <summary>Gets the <see cref="TargetBinary"/> this section belongs to</summary>
+        public TargetBinary ContainingBinary { get; }
 
-        /// <summary>Gets the Relocations in this <see cref="TargetObjectFile"/></summary>
+        /// <summary>Gets the Relocations in this <see cref="TargetBinary"/></summary>
         public IEnumerable<Relocation> Relocations
         {
             get
@@ -88,14 +88,14 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <inheritdoc/>
         public bool Equals( Section other ) => IteratorRef.Equals( other.IteratorRef );
 
-        internal Section( TargetObjectFile objFile, LLVMSectionIteratorRef iterator )
+        internal Section( TargetBinary objFile, LLVMSectionIteratorRef iterator )
             : this( objFile, iterator, true )
         {
         }
 
-        internal Section( TargetObjectFile objFile, LLVMSectionIteratorRef iterator, bool clone )
+        internal Section( TargetBinary objFile, LLVMSectionIteratorRef iterator, bool clone )
         {
-            ObjectFile = objFile;
+            ContainingBinary = objFile;
             IteratorRef = clone ? LibLLVMSectionIteratorClone( iterator ) : iterator;
         }
 

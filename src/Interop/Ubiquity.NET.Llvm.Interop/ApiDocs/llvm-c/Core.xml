@@ -34,6 +34,9 @@
         <Item name="LLVMUnreachable">
             <summary>TODO: Provide summary for LLVMOpcode.LLVMUnreachable Enumeration</summary>
         </Item>
+        <Item name="LLVMCallBr">
+            <summary>TODO: Provide summary for LLVMOpcode.LLVMCallBr Enumeration</summary>
+        </Item>
         <Item name="LLVMFNeg">
             <summary>TODO: Provide summary for LLVMOpcode.LLVMFNeg Enumeration</summary>
         </Item>
@@ -180,6 +183,9 @@
         </Item>
         <Item name="LLVMInsertValue">
             <summary>TODO: Provide summary for LLVMOpcode.LLVMInsertValue Enumeration</summary>
+        </Item>
+        <Item name="LLVMFreeze">
+            <summary>TODO: Provide summary for LLVMOpcode.LLVMFreeze Enumeration</summary>
         </Item>
         <Item name="LLVMFence">
             <summary>TODO: Provide summary for LLVMOpcode.LLVMFence Enumeration</summary>
@@ -733,6 +739,12 @@
         <Item name="LLVMAtomicRMWBinOpUMin">
             <summary>TODO: Provide summary for LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpUMin Enumeration</summary>
         </Item>
+        <Item name="LLVMAtomicRMWBinOpFAdd">
+            <summary>TODO: Provide summary for LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpFAdd Enumeration</summary>
+        </Item>
+        <Item name="LLVMAtomicRMWBinOpFSub">
+            <summary>TODO: Provide summary for LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpFSub Enumeration</summary>
+        </Item>
     </Enumeration>
     <Enumeration name="LLVMDiagnosticSeverity">
         <summary>TODO: Provide summary for LLVMDiagnosticSeverity Enumeration</summary>
@@ -947,10 +959,6 @@
         <summary>TODO: Provide summary for Function LLVMCloneModule</summary>
         <param name="M">TODO: Provide details of parameter M</param>
         <returns>TODO: Document return value</returns>
-    </Function>
-    <Function name="LLVMDisposeModule">
-        <summary>TODO: Provide summary for Function LLVMDisposeModule</summary>
-        <param name="M">TODO: Provide details of parameter M</param>
     </Function>
     <Function name="LLVMGetModuleIdentifier">
         <summary>TODO: Provide summary for Function LLVMGetModuleIdentifier</summary>
@@ -1707,6 +1715,11 @@
         <param name="Val">TODO: Provide details of parameter Val</param>
         <returns>TODO: Document return value</returns>
     </Function>
+    <Function name="LLVMIsAUnaryOperator">
+        <summary>TODO: Provide summary for Function LLVMIsAUnaryOperator</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
     <Function name="LLVMIsABinaryOperator">
         <summary>TODO: Provide summary for Function LLVMIsABinaryOperator</summary>
         <param name="Val">TODO: Provide details of parameter Val</param>
@@ -1867,6 +1880,16 @@
         <param name="Val">TODO: Provide details of parameter Val</param>
         <returns>TODO: Document return value</returns>
     </Function>
+    <Function name="LLVMIsACatchSwitchInst">
+        <summary>TODO: Provide summary for Function LLVMIsACatchSwitchInst</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMIsACallBrInst">
+        <summary>TODO: Provide summary for Function LLVMIsACallBrInst</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
     <Function name="LLVMIsAFuncletPadInst">
         <summary>TODO: Provide summary for Function LLVMIsAFuncletPadInst</summary>
         <param name="Val">TODO: Provide details of parameter Val</param>
@@ -1974,6 +1997,26 @@
     </Function>
     <Function name="LLVMIsAVAArgInst">
         <summary>TODO: Provide summary for Function LLVMIsAVAArgInst</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMIsAFreezeInst">
+        <summary>TODO: Provide summary for Function LLVMIsAFreezeInst</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMIsAAtomicCmpXchgInst">
+        <summary>TODO: Provide summary for Function LLVMIsAAtomicCmpXchgInst</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMIsAAtomicRMWInst">
+        <summary>TODO: Provide summary for Function LLVMIsAAtomicRMWInst</summary>
+        <param name="Val">TODO: Provide details of parameter Val</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMIsAFenceInst">
+        <summary>TODO: Provide summary for Function LLVMIsAFenceInst</summary>
         <param name="Val">TODO: Provide details of parameter Val</param>
         <returns>TODO: Document return value</returns>
     </Function>
@@ -2840,6 +2883,12 @@
         <param name="Fn">TODO: Provide details of parameter Fn</param>
         <param name="PersonalityFn">TODO: Provide details of parameter PersonalityFn</param>
     </Function>
+    <Function name="LLVMLookupIntrinsicID">
+        <summary>TODO: Provide summary for Function LLVMLookupIntrinsicID</summary>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
     <Function name="LLVMGetIntrinsicID">
         <summary>TODO: Provide summary for Function LLVMGetIntrinsicID</summary>
         <param name="Fn">TODO: Provide details of parameter Fn</param>
@@ -2998,29 +3047,72 @@
         <param name="Arg">TODO: Provide details of parameter Arg</param>
         <param name="Align">TODO: Provide details of parameter Align</param>
     </Function>
-    <Function name="LLVMMDStringInContext">
-        <summary>TODO: Provide summary for Function LLVMMDStringInContext</summary>
+    <Function name="LLVMAddGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMAddGlobalIFunc</summary>
+        <param name="M">TODO: Provide details of parameter M</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <param name="Ty">TODO: Provide details of parameter Ty</param>
+        <param name="AddrSpace">TODO: Provide details of parameter AddrSpace</param>
+        <param name="Resolver">TODO: Provide details of parameter Resolver</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetNamedGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMGetNamedGlobalIFunc</summary>
+        <param name="M">TODO: Provide details of parameter M</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetFirstGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMGetFirstGlobalIFunc</summary>
+        <param name="M">TODO: Provide details of parameter M</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetLastGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMGetLastGlobalIFunc</summary>
+        <param name="M">TODO: Provide details of parameter M</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetNextGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMGetNextGlobalIFunc</summary>
+        <param name="IFunc">TODO: Provide details of parameter IFunc</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetPreviousGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMGetPreviousGlobalIFunc</summary>
+        <param name="IFunc">TODO: Provide details of parameter IFunc</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetGlobalIFuncResolver">
+        <summary>TODO: Provide summary for Function LLVMGetGlobalIFuncResolver</summary>
+        <param name="IFunc">TODO: Provide details of parameter IFunc</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMSetGlobalIFuncResolver">
+        <summary>TODO: Provide summary for Function LLVMSetGlobalIFuncResolver</summary>
+        <param name="IFunc">TODO: Provide details of parameter IFunc</param>
+        <param name="Resolver">TODO: Provide details of parameter Resolver</param>
+    </Function>
+    <Function name="LLVMEraseGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMEraseGlobalIFunc</summary>
+        <param name="IFunc">TODO: Provide details of parameter IFunc</param>
+    </Function>
+    <Function name="LLVMRemoveGlobalIFunc">
+        <summary>TODO: Provide summary for Function LLVMRemoveGlobalIFunc</summary>
+        <param name="IFunc">TODO: Provide details of parameter IFunc</param>
+    </Function>
+    <Function name="LLVMMDStringInContext2">
+        <summary>TODO: Provide summary for Function LLVMMDStringInContext2</summary>
         <param name="C">TODO: Provide details of parameter C</param>
         <param name="Str">TODO: Provide details of parameter Str</param>
         <param name="SLen">TODO: Provide details of parameter SLen</param>
         <returns>TODO: Document return value</returns>
     </Function>
-    <Function name="LLVMMDString">
-        <summary>TODO: Provide summary for Function LLVMMDString</summary>
-        <param name="Str">TODO: Provide details of parameter Str</param>
-        <param name="SLen">TODO: Provide details of parameter SLen</param>
-        <returns>TODO: Document return value</returns>
-    </Function>
-    <Function name="LLVMMDNodeInContext">
-        <summary>TODO: Provide summary for Function LLVMMDNodeInContext</summary>
+    <Function name="LLVMMDNodeInContext2">
+        <summary>TODO: Provide summary for Function LLVMMDNodeInContext2</summary>
         <param name="C">TODO: Provide details of parameter C</param>
-        <param name="Vals">TODO: Provide details of parameter Vals</param>
-        <param name="Count">TODO: Provide details of parameter Count</param>
-        <returns>TODO: Document return value</returns>
-    </Function>
-    <Function name="LLVMMDNode">
-        <summary>TODO: Provide summary for Function LLVMMDNode</summary>
-        <param name="Vals">TODO: Provide details of parameter Vals</param>
+        <param name="MDs">TODO: Provide details of parameter MDs</param>
         <param name="Count">TODO: Provide details of parameter Count</param>
         <returns>TODO: Document return value</returns>
     </Function>
@@ -3050,6 +3142,32 @@
         <summary>TODO: Provide summary for Function LLVMGetMDNodeOperands</summary>
         <param name="V">TODO: Provide details of parameter V</param>
         <param name="Dest">TODO: Provide details of parameter Dest</param>
+    </Function>
+    <Function name="LLVMMDStringInContext">
+        <summary>TODO: Provide summary for Function LLVMMDStringInContext</summary>
+        <param name="C">TODO: Provide details of parameter C</param>
+        <param name="Str">TODO: Provide details of parameter Str</param>
+        <param name="SLen">TODO: Provide details of parameter SLen</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMMDString">
+        <summary>TODO: Provide summary for Function LLVMMDString</summary>
+        <param name="Str">TODO: Provide details of parameter Str</param>
+        <param name="SLen">TODO: Provide details of parameter SLen</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMMDNodeInContext">
+        <summary>TODO: Provide summary for Function LLVMMDNodeInContext</summary>
+        <param name="C">TODO: Provide details of parameter C</param>
+        <param name="Vals">TODO: Provide details of parameter Vals</param>
+        <param name="Count">TODO: Provide details of parameter Count</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMMDNode">
+        <summary>TODO: Provide summary for Function LLVMMDNode</summary>
+        <param name="Vals">TODO: Provide details of parameter Vals</param>
+        <param name="Count">TODO: Provide details of parameter Count</param>
+        <returns>TODO: Document return value</returns>
     </Function>
     <Function name="LLVMBasicBlockAsValue">
         <summary>TODO: Provide summary for Function LLVMBasicBlockAsValue</summary>
@@ -3115,6 +3233,16 @@
         <summary>TODO: Provide summary for Function LLVMGetEntryBasicBlock</summary>
         <param name="Fn">TODO: Provide details of parameter Fn</param>
         <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMInsertExistingBasicBlockAfterInsertBlock">
+        <summary>TODO: Provide summary for Function LLVMInsertExistingBasicBlockAfterInsertBlock</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="BB">TODO: Provide details of parameter BB</param>
+    </Function>
+    <Function name="LLVMAppendExistingBasicBlock">
+        <summary>TODO: Provide summary for Function LLVMAppendExistingBasicBlock</summary>
+        <param name="Fn">TODO: Provide details of parameter Fn</param>
+        <param name="BB">TODO: Provide details of parameter BB</param>
     </Function>
     <Function name="LLVMCreateBasicBlockInContext">
         <summary>TODO: Provide summary for Function LLVMCreateBasicBlockInContext</summary>
@@ -3485,6 +3613,31 @@
         <param name="Instr">TODO: Provide details of parameter Instr</param>
         <param name="Name">TODO: Provide details of parameter Name</param>
     </Function>
+    <Function name="LLVMGetCurrentDebugLocation2">
+        <summary>TODO: Provide summary for Function LLVMGetCurrentDebugLocation2</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMSetCurrentDebugLocation2">
+        <summary>TODO: Provide summary for Function LLVMSetCurrentDebugLocation2</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="Loc">TODO: Provide details of parameter Loc</param>
+    </Function>
+    <Function name="LLVMSetInstDebugLocation">
+        <summary>TODO: Provide summary for Function LLVMSetInstDebugLocation</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="Inst">TODO: Provide details of parameter Inst</param>
+    </Function>
+    <Function name="LLVMBuilderGetDefaultFPMathTag">
+        <summary>TODO: Provide summary for Function LLVMBuilderGetDefaultFPMathTag</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMBuilderSetDefaultFPMathTag">
+        <summary>TODO: Provide summary for Function LLVMBuilderSetDefaultFPMathTag</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="FPMathTag">TODO: Provide details of parameter FPMathTag</param>
+    </Function>
     <Function name="LLVMSetCurrentDebugLocation">
         <summary>TODO: Provide summary for Function LLVMSetCurrentDebugLocation</summary>
         <param name="Builder">TODO: Provide details of parameter Builder</param>
@@ -3494,11 +3647,6 @@
         <summary>TODO: Provide summary for Function LLVMGetCurrentDebugLocation</summary>
         <param name="Builder">TODO: Provide details of parameter Builder</param>
         <returns>TODO: Document return value</returns>
-    </Function>
-    <Function name="LLVMSetInstDebugLocation">
-        <summary>TODO: Provide summary for Function LLVMSetInstDebugLocation</summary>
-        <param name="Builder">TODO: Provide details of parameter Builder</param>
-        <param name="Inst">TODO: Provide details of parameter Inst</param>
     </Function>
     <Function name="LLVMBuildRetVoid">
         <summary>TODO: Provide summary for Function LLVMBuildRetVoid</summary>
@@ -4079,6 +4227,16 @@
         <param name="MemoryAccessInst">TODO: Provide details of parameter MemoryAccessInst</param>
         <param name="IsVolatile">TODO: Provide details of parameter IsVolatile</param>
     </Function>
+    <Function name="LLVMGetWeak">
+        <summary>TODO: Provide summary for Function LLVMGetWeak</summary>
+        <param name="CmpXchgInst">TODO: Provide details of parameter CmpXchgInst</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMSetWeak">
+        <summary>TODO: Provide summary for Function LLVMSetWeak</summary>
+        <param name="CmpXchgInst">TODO: Provide details of parameter CmpXchgInst</param>
+        <param name="IsWeak">TODO: Provide details of parameter IsWeak</param>
+    </Function>
     <Function name="LLVMGetOrdering">
         <summary>TODO: Provide summary for Function LLVMGetOrdering</summary>
         <param name="MemoryAccessInst">TODO: Provide details of parameter MemoryAccessInst</param>
@@ -4088,6 +4246,16 @@
         <summary>TODO: Provide summary for Function LLVMSetOrdering</summary>
         <param name="MemoryAccessInst">TODO: Provide details of parameter MemoryAccessInst</param>
         <param name="Ordering">TODO: Provide details of parameter Ordering</param>
+    </Function>
+    <Function name="LLVMGetAtomicRMWBinOp">
+        <summary>TODO: Provide summary for Function LLVMGetAtomicRMWBinOp</summary>
+        <param name="AtomicRMWInst">TODO: Provide details of parameter AtomicRMWInst</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMSetAtomicRMWBinOp">
+        <summary>TODO: Provide summary for Function LLVMSetAtomicRMWBinOp</summary>
+        <param name="AtomicRMWInst">TODO: Provide details of parameter AtomicRMWInst</param>
+        <param name="BinOp">TODO: Provide details of parameter BinOp</param>
     </Function>
     <Function name="LLVMBuildTrunc">
         <summary>TODO: Provide summary for Function LLVMBuildTrunc</summary>
@@ -4343,6 +4511,13 @@
         <param name="AggVal">TODO: Provide details of parameter AggVal</param>
         <param name="EltVal">TODO: Provide details of parameter EltVal</param>
         <param name="Index">TODO: Provide details of parameter Index</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMBuildFreeze">
+        <summary>TODO: Provide summary for Function LLVMBuildFreeze</summary>
+        <param name="_0">TODO: Provide details of parameter _0</param>
+        <param name="Val">TODO: Provide details of parameter Val</param>
         <param name="Name">TODO: Provide details of parameter Name</param>
         <returns>TODO: Document return value</returns>
     </Function>

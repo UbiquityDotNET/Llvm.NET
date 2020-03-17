@@ -70,6 +70,22 @@
 #       SizeParam - optional integer index of an out parmater that contains the size of the array
 #
 FunctionBindings:
+  - Name: LLVMCreateObjectFile
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMCreateBinary instead"
+
+  - Name: LLVMGetSecions
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMObjectFileCopySectionIterator instead"
+
+  - Name: LLVMIsSectionIteratorAtEnd
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMObjectFileIsSectionIteratorAtEnd instead"
+
+  - Name: LLVMGetSymbols
+    IsObsolete: True
+    DeprecationMessage: "LLVMObjectFileIsSectionIteratorAtEnd"
+
   - Name: LLVMParseBitCode
     IsObsolete: True
     DeprecationMessage: "Use LLVMParseBitcode2 instead"
@@ -164,6 +180,10 @@ FunctionBindings:
   - Name: LLVMStopMultithreaded
     IsObsolete: True
     DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
+
+  - Name: LLVMCreateBinary
+    ParamTransforms:
+      - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMDisposeMessage
     IsProjected: False
@@ -1053,6 +1073,7 @@ HandleMap:
   - !ContextHandle {HandleName: LLVMTargetRef }
   - !ContextHandle {HandleName: LLVMErrorTypeId }
   - !GlobalHandle {HandleName: LLVMObjectFileRef, Disposer: LLVMDisposeObjectFile, Alias: False}
+  - !GlobalHandle {HandleName: LLVMBinaryRef, Disposer: LLVMDisposeBinary, Alias: False}
   - !GlobalHandle {HandleName: LLVMSectionIteratorRef, Disposer: LLVMDisposeSectionIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMSymbolIteratorRef, Disposer: LLVMDisposeSymbolIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMRelocationIteratorRef, Disposer: LLVMDisposeRelocationIterator, Alias: False}
@@ -1064,8 +1085,13 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMDisasmContextRef, Disposer: LLVMDisasmDispose, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMTripleRef, Disposer: LibLLVMDisposeTriple, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMValueCacheRef, Disposer: LibLLVMDisposeValueCache, Alias: False}
-  - !ContextHandle {HandleName: LLVMOrcModuleHandle }
-  - !ContextHandle {HandleName: LibLLVMMDOperandRef }
+  - !ContextHandle {HandleName: LLVMOrcModuleHandle}
+  - !ContextHandle {HandleName: LibLLVMMDOperandRef}
+  - !ContextHandle {HandleName: LLVMRemarkStringRef}
+  - !ContextHandle {HandleName: LLVMRemarkDebugLocRef}
+  - !ContextHandle {HandleName: LLVMRemarkArgRef}
+  - !GlobalHandle {HandleName: LLVMRemarkEntryRef, Disposer: LLVMRemarkEntryDispose, Alias: False}
+  - !GlobalHandle {HandleName: LLVMRemarkParserRef, Disposer: LLVMRemarkParserDispose, Alias: False}
 
 #AnonymousEnums:
 #    LLVMAttributeReturnIndex: LLVMAttributeIndex

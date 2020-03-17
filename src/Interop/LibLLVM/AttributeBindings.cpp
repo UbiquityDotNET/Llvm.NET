@@ -15,4 +15,14 @@ extern "C"
     {
         return LLVMCreateMessage( unwrap( attribute ).getAsString( ).c_str( ) );
     }
+
+    LLVMBool LibLLVMIsTypeAttribute( LLVMAttributeRef attribute )
+    {
+        return unwrap( attribute ).isTypeAttribute( );
+    }
+
+    LLVMTypeRef LibLLVMGetAttributeTypeValue( LLVMAttributeRef attribute )
+    {
+        return wrap(unwrap( attribute ).getValueAsType( ));
+    }
 }

@@ -237,8 +237,16 @@ function Get-BuildInformation($BuildPaths, $DefaultVerbosity='Minimal')
 {
     $msbuildLoggerArgs = @("/clp:Verbosity=$DefaultVerbosity")
 
+    # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
+    # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
+    # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
+    # and incompatibilities libs are generally not something published in a package. However, since the build time
+    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
+    # automated builds.
+    Install-LlvmLibs $BuildPaths.LlvmLibsRoot "10.0.0" "msvc" "16.4"
+
     return @{
-              LlvmVersion = "8.0.0" # TODO: Figure out how to extract this from the llvmlibs download
+              LlvmVersion = "10.0.0"
               MsBuildLoggerArgs = $msbuildLoggerArgs
             }
 }

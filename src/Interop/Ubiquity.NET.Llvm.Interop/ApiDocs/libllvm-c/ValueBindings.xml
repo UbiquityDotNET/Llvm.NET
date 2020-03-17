@@ -130,6 +130,9 @@
         <Item name="CatchSwitchKind">
             <summary>TODO: Provide summary for LibLLVMValueKind.CatchSwitchKind Enumeration</summary>
         </Item>
+        <Item name="CallBrKind">
+            <summary>TODO: Provide summary for LibLLVMValueKind.CallBrKind Enumeration</summary>
+        </Item>
         <Item name="FNegKind">
             <summary>TODO: Provide summary for LibLLVMValueKind.FNegKind Enumeration</summary>
         </Item>
@@ -295,6 +298,9 @@
         <Item name="LandingPadKind">
             <summary>TODO: Provide summary for LibLLVMValueKind.LandingPadKind Enumeration</summary>
         </Item>
+        <Item name="FreezeKind">
+            <summary>TODO: Provide summary for LibLLVMValueKind.FreezeKind Enumeration</summary>
+        </Item>
         <Item name="ConstantFirstValKind">
             <summary>TODO: Provide summary for LibLLVMValueKind.ConstantFirstValKind Enumeration</summary>
         </Item>
@@ -335,7 +341,7 @@
         <summary>Removes a global from the containing module</summary>
         <param name="valueRef">Global to remove from it's parent</param>
     </Function>
-    <Function name="LibLLVMGetValueID">
+    <Function name="LibLLVMGetValueKind">
         <summary>Gets an ID for the concrete type of this object.</summary>
         <param name="valueRef">Value to get the ID from</param>
         <remarks>

@@ -1,0 +1,167 @@
+<!--
+;; ==============================================================================
+;; <usage>
+;;     This file contains the Manually edited doc comments info that the
+;;     generated code files refer to. This was originally cloned from the
+;;     'GeneratedDocsFolder' and requires manual update and merging whenever
+;;     the API surface changes. The generated XML is not committed to the repository
+;;     but serves as a useful aid in building the docs for generated code files.
+;; </usage>
+;; ==============================================================================
+-->
+<LibLlvmAPI>
+    <Enumeration name="LLVMRemarkType">
+        <summary>TODO: Provide summary for LLVMRemarkType Enumeration</summary>
+        <remarks>
+            **
+             * The type of the emitted remark.
+             *
+        </remarks>
+        <Item name="LLVMRemarkTypeUnknown">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypeUnknown Enumeration</summary>
+        </Item>
+        <Item name="LLVMRemarkTypePassed">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypePassed Enumeration</summary>
+        </Item>
+        <Item name="LLVMRemarkTypeMissed">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypeMissed Enumeration</summary>
+        </Item>
+        <Item name="LLVMRemarkTypeAnalysis">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypeAnalysis Enumeration</summary>
+        </Item>
+        <Item name="LLVMRemarkTypeAnalysisFPCommute">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypeAnalysisFPCommute Enumeration</summary>
+        </Item>
+        <Item name="LLVMRemarkTypeAnalysisAliasing">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypeAnalysisAliasing Enumeration</summary>
+        </Item>
+        <Item name="LLVMRemarkTypeFailure">
+            <summary>TODO: Provide summary for LLVMRemarkType.LLVMRemarkTypeFailure Enumeration</summary>
+        </Item>
+    </Enumeration>
+    <Function name="LLVMRemarkStringGetData">
+        <summary>TODO: Provide summary for Function LLVMRemarkStringGetData</summary>
+        <param name="String">TODO: Provide details of parameter String</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkStringGetLen">
+        <summary>TODO: Provide summary for Function LLVMRemarkStringGetLen</summary>
+        <param name="String">TODO: Provide details of parameter String</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkDebugLocGetSourceFilePath">
+        <summary>TODO: Provide summary for Function LLVMRemarkDebugLocGetSourceFilePath</summary>
+        <param name="DL">TODO: Provide details of parameter DL</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkDebugLocGetSourceLine">
+        <summary>TODO: Provide summary for Function LLVMRemarkDebugLocGetSourceLine</summary>
+        <param name="DL">TODO: Provide details of parameter DL</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkDebugLocGetSourceColumn">
+        <summary>TODO: Provide summary for Function LLVMRemarkDebugLocGetSourceColumn</summary>
+        <param name="DL">TODO: Provide details of parameter DL</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkArgGetKey">
+        <summary>TODO: Provide summary for Function LLVMRemarkArgGetKey</summary>
+        <param name="Arg">TODO: Provide details of parameter Arg</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkArgGetValue">
+        <summary>TODO: Provide summary for Function LLVMRemarkArgGetValue</summary>
+        <param name="Arg">TODO: Provide details of parameter Arg</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkArgGetDebugLoc">
+        <summary>TODO: Provide summary for Function LLVMRemarkArgGetDebugLoc</summary>
+        <param name="Arg">TODO: Provide details of parameter Arg</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryDispose">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryDispose</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+    </Function>
+    <Function name="LLVMRemarkEntryGetType">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetType</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetPassName">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetPassName</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetRemarkName">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetRemarkName</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetFunctionName">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetFunctionName</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetDebugLoc">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetDebugLoc</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetHotness">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetHotness</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetNumArgs">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetNumArgs</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetFirstArg">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetFirstArg</summary>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkEntryGetNextArg">
+        <summary>TODO: Provide summary for Function LLVMRemarkEntryGetNextArg</summary>
+        <param name="It">TODO: Provide details of parameter It</param>
+        <param name="Remark">TODO: Provide details of parameter Remark</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkParserCreateYAML">
+        <summary>TODO: Provide summary for Function LLVMRemarkParserCreateYAML</summary>
+        <param name="Buf">TODO: Provide details of parameter Buf</param>
+        <param name="Size">TODO: Provide details of parameter Size</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkParserCreateBitstream">
+        <summary>TODO: Provide summary for Function LLVMRemarkParserCreateBitstream</summary>
+        <param name="Buf">TODO: Provide details of parameter Buf</param>
+        <param name="Size">TODO: Provide details of parameter Size</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkParserGetNext">
+        <summary>TODO: Provide summary for Function LLVMRemarkParserGetNext</summary>
+        <param name="Parser">TODO: Provide details of parameter Parser</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkParserHasError">
+        <summary>TODO: Provide summary for Function LLVMRemarkParserHasError</summary>
+        <param name="Parser">TODO: Provide details of parameter Parser</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkParserGetErrorMessage">
+        <summary>TODO: Provide summary for Function LLVMRemarkParserGetErrorMessage</summary>
+        <param name="Parser">TODO: Provide details of parameter Parser</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMRemarkParserDispose">
+        <summary>TODO: Provide summary for Function LLVMRemarkParserDispose</summary>
+        <param name="Parser">TODO: Provide details of parameter Parser</param>
+    </Function>
+    <Function name="LLVMRemarkVersion">
+        <summary>TODO: Provide summary for Function LLVMRemarkVersion</summary>
+        <returns>TODO: Document return value</returns>
+    </Function>
+</LibLlvmAPI>

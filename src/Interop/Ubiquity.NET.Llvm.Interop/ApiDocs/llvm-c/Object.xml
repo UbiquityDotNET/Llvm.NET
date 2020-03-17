@@ -10,19 +10,102 @@
 ;; ==============================================================================
 -->
 <LibLlvmAPI>
-    <Function name="LLVMCreateObjectFile">
-        <summary>TODO: Provide summary for Function LLVMCreateObjectFile</summary>
+    <Enumeration name="LLVMBinaryType">
+        <summary>TODO: Provide summary for LLVMBinaryType Enumeration</summary>
+        <Item name="LLVMBinaryTypeArchive">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeArchive Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeMachOUniversalBinary">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeMachOUniversalBinary Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeCOFFImportFile">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeCOFFImportFile Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeIR">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeIR Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeWinRes">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeWinRes Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeCOFF">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeCOFF Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeELF32L">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeELF32L Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeELF32B">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeELF32B Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeELF64L">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeELF64L Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeELF64B">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeELF64B Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeMachO32L">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeMachO32L Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeMachO32B">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeMachO32B Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeMachO64L">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeMachO64L Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeMachO64B">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeMachO64B Enumeration</summary>
+        </Item>
+        <Item name="LLVMBinaryTypeWasm">
+            <summary>TODO: Provide summary for LLVMBinaryType.LLVMBinaryTypeWasm Enumeration</summary>
+        </Item>
+    </Enumeration>
+    <Function name="LLVMCreateBinary">
+        <summary>TODO: Provide summary for Function LLVMCreateBinary</summary>
         <param name="MemBuf">TODO: Provide details of parameter MemBuf</param>
+        <param name="Context">TODO: Provide details of parameter Context</param>
+        <param name="ErrorMessage">TODO: Provide details of parameter ErrorMessage</param>
         <returns>TODO: Document return value</returns>
     </Function>
-    <Function name="LLVMGetSections">
-        <summary>TODO: Provide summary for Function LLVMGetSections</summary>
-        <param name="ObjectFile">TODO: Provide details of parameter ObjectFile</param>
+    <Function name="LLVMDisposeBinary">
+        <summary>TODO: Provide summary for Function LLVMDisposeBinary</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
+    </Function>
+    <Function name="LLVMBinaryCopyMemoryBuffer">
+        <summary>TODO: Provide summary for Function LLVMBinaryCopyMemoryBuffer</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
         <returns>TODO: Document return value</returns>
     </Function>
-    <Function name="LLVMIsSectionIteratorAtEnd">
-        <summary>TODO: Provide summary for Function LLVMIsSectionIteratorAtEnd</summary>
-        <param name="ObjectFile">TODO: Provide details of parameter ObjectFile</param>
+    <Function name="LLVMBinaryGetType">
+        <summary>TODO: Provide summary for Function LLVMBinaryGetType</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMMachOUniversalBinaryCopyObjectForArch">
+        <summary>TODO: Provide summary for Function LLVMMachOUniversalBinaryCopyObjectForArch</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
+        <param name="Arch">TODO: Provide details of parameter Arch</param>
+        <param name="ArchLen">TODO: Provide details of parameter ArchLen</param>
+        <param name="ErrorMessage">TODO: Provide details of parameter ErrorMessage</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMObjectFileCopySectionIterator">
+        <summary>TODO: Provide summary for Function LLVMObjectFileCopySectionIterator</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMObjectFileIsSectionIteratorAtEnd">
+        <summary>TODO: Provide summary for Function LLVMObjectFileIsSectionIteratorAtEnd</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
+        <param name="SI">TODO: Provide details of parameter SI</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMObjectFileCopySymbolIterator">
+        <summary>TODO: Provide summary for Function LLVMObjectFileCopySymbolIterator</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMObjectFileIsSymbolIteratorAtEnd">
+        <summary>TODO: Provide summary for Function LLVMObjectFileIsSymbolIteratorAtEnd</summary>
+        <param name="BR">TODO: Provide details of parameter BR</param>
         <param name="SI">TODO: Provide details of parameter SI</param>
         <returns>TODO: Document return value</returns>
     </Function>
@@ -34,17 +117,6 @@
         <summary>TODO: Provide summary for Function LLVMMoveToContainingSection</summary>
         <param name="Sect">TODO: Provide details of parameter Sect</param>
         <param name="Sym">TODO: Provide details of parameter Sym</param>
-    </Function>
-    <Function name="LLVMGetSymbols">
-        <summary>TODO: Provide summary for Function LLVMGetSymbols</summary>
-        <param name="ObjectFile">TODO: Provide details of parameter ObjectFile</param>
-        <returns>TODO: Document return value</returns>
-    </Function>
-    <Function name="LLVMIsSymbolIteratorAtEnd">
-        <summary>TODO: Provide summary for Function LLVMIsSymbolIteratorAtEnd</summary>
-        <param name="ObjectFile">TODO: Provide details of parameter ObjectFile</param>
-        <param name="SI">TODO: Provide details of parameter SI</param>
-        <returns>TODO: Document return value</returns>
     </Function>
     <Function name="LLVMMoveToNextSymbol">
         <summary>TODO: Provide summary for Function LLVMMoveToNextSymbol</summary>
@@ -129,6 +201,17 @@
     <Function name="LLVMGetRelocationValueString">
         <summary>TODO: Provide summary for Function LLVMGetRelocationValueString</summary>
         <param name="RI">TODO: Provide details of parameter RI</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMGetSections">
+        <summary>TODO: Provide summary for Function LLVMGetSections</summary>
+        <param name="ObjectFile">TODO: Provide details of parameter ObjectFile</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMIsSymbolIteratorAtEnd">
+        <summary>TODO: Provide summary for Function LLVMIsSymbolIteratorAtEnd</summary>
+        <param name="ObjectFile">TODO: Provide details of parameter ObjectFile</param>
+        <param name="SI">TODO: Provide details of parameter SI</param>
         <returns>TODO: Document return value</returns>
     </Function>
 </LibLlvmAPI>

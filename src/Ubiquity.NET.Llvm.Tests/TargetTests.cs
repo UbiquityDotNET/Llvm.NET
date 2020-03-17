@@ -5,7 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
-
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ubiquity.NET.Llvm.Tests
@@ -42,7 +44,8 @@ namespace Ubiquity.NET.Llvm.Tests
         [TestMethod]
         public void AvailableTargetsTest( )
         {
-            /* string expTargets = GenerateExpectedTargets( ); */
+            // for debug builds show the full list to aid in updating test code
+            GenerateExpectedTargets( );
 
             Assert.IsNotNull( Target.AvailableTargets );
             int foundTargets = 0;
@@ -107,9 +110,8 @@ namespace Ubiquity.NET.Llvm.Tests
 
             public bool HasTargetMachine { get; }
 
-            public static TargetInfoCollection ExpectedTargets { get; } = new TargetInfoCollection
+            internal static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection
             {
-                /* ReSharper disable StringLiteralTypo */
                 new TargetInfo( "xcore", "XCore", false, false, true ),
                 new TargetInfo( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),
                 new TargetInfo( "x86", "32-bit X86: Pentium-Pro and above", true, true, true ),
@@ -119,6 +121,8 @@ namespace Ubiquity.NET.Llvm.Tests
                 new TargetInfo( "sparcel", "Sparc LE", true, true, true ),
                 new TargetInfo( "sparcv9", "Sparc V9", true, true, true ),
                 new TargetInfo( "sparc", "Sparc", true, true, true ),
+                new TargetInfo( "riscv64", "64-bit RISC-V", true, false, true ),
+                new TargetInfo( "riscv32", "32-bit RISC-V", true, false, true ),
                 new TargetInfo( "ppc64le", "PowerPC 64 LE", true, true, true ),
                 new TargetInfo( "ppc64", "PowerPC 64", true, true, true ),
                 new TargetInfo( "ppc32", "PowerPC 32", true, true, true ),
@@ -140,40 +144,42 @@ namespace Ubiquity.NET.Llvm.Tests
                 new TargetInfo( "arm", "ARM", true, true, true ),
                 new TargetInfo( "amdgcn", "AMD GCN GPUs", true, false, true ),
                 new TargetInfo( "r600", "AMD GPUs HD2XXX-HD6XXX", true, false, true ),
+                new TargetInfo( "aarch64_32", "AArch64 (little endian ILP32)", true, true, true ),
                 new TargetInfo( "aarch64_be", "AArch64 (big endian)", true, true, true ),
                 new TargetInfo( "aarch64", "AArch64 (little endian)", true, true, true ),
+                new TargetInfo( "arm64_32", "ARM64 (little endian ILP32)", true, true, true ),
                 new TargetInfo( "arm64", "ARM64 (little endian)", true, true, true )
-                /* ReSharper enable StringLiteralTypo */
             };
         }
 
-        /*
         // This is useful for generating the list of expected targets
         // Obviously, since it uses the API being tested, the results require verification
         // before updating the list of ExpectedTargets above, but it helps eliminate tedious
         // typing
-        internal string GenerateExpectedTargets( )
+        [SuppressMessage( "Globalization", "CA1308:Normalize strings to uppercase", Justification = "Uppercase is WRONG for this" )]
+        [Conditional( "DEBUG" )]
+        internal void GenerateExpectedTargets( )
         {
-            var bldr = new System.Text.StringBuilder( "private static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
+            var bldr = new System.Text.StringBuilder( "internal static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
             bldr.AppendLine( );
             var targets = System.Linq.Enumerable.ToList( Target.AvailableTargets );
             for( int i = 0; i < targets.Count; ++i )
             {
                 var target = targets[ i ];
-                bldr.AppendFormat( "    new TargetInfo( \"{0}\", \"{1}\", {2}, {3}, {4} )"
+                bldr.AppendFormat( CultureInfo.InvariantCulture
+                                 , "    new TargetInfo( \"{0}\", \"{1}\", {2}, {3}, {4} )"
                                  , target.Name
                                  , target.Description
-                                 , target.HasAsmBackEnd.ToString( ).ToLowerInvariant( )
-                                 , target.HasJIT.ToString( ).ToLowerInvariant( )
-                                 , target.HasTargetMachine.ToString( ).ToLowerInvariant( )
+                                 , target.HasAsmBackEnd.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant( )
+                                 , target.HasJIT.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant( )
+                                 , target.HasTargetMachine.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant( )
                                  );
 
                 bldr.AppendLine( i == targets.Count - 1 ? string.Empty : "," );
             }
 
             bldr.AppendLine( "};" );
-            return bldr.ToString( );
+            Debug.WriteLine( bldr.ToString( ) );
         }
-        */
     }
 }

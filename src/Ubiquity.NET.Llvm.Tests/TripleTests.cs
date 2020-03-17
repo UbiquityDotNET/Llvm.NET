@@ -74,6 +74,8 @@ namespace Ubiquity.NET.Llvm.Tests
                   { Triple.ArchType.PPC,            "powerpc" },
                   { Triple.ArchType.R600,           "r600" },
                   { Triple.ArchType.AMDGCN,         "amdgcn" },
+                  { Triple.ArchType.RiscV32,        "riscv32" },
+                  { Triple.ArchType.RiscV64,        "riscv64" },
                   { Triple.ArchType.Sparc,          "sparc" },
                   { Triple.ArchType.Sparcv9,        "sparcv9" },
                   { Triple.ArchType.Sparcel,        "sparcel" },
@@ -117,6 +119,7 @@ namespace Ubiquity.NET.Llvm.Tests
             var values = new Dictionary<Triple.SubArchType, string>
                 {
                     { Triple.SubArchType.NoSubArch,               string.Empty },
+                    { Triple.SubArchType.ARMSubArch_v8_4a,        "v8.4a" },
                     { Triple.SubArchType.ARMSubArch_v8_3a,        "v8.3a" },
                     { Triple.SubArchType.ARMSubArch_v8_2a,        "v8.2a" },
                     { Triple.SubArchType.ARMSubArch_v8_1a,        "v8.1a" },
@@ -138,7 +141,8 @@ namespace Ubiquity.NET.Llvm.Tests
                     { Triple.SubArchType.ARMSubArch_v4t,          "v4t" },
                     { Triple.SubArchType.KalimbaSubArch_v3,       "kalimba3" },
                     { Triple.SubArchType.KalimbaSubArch_v4,       "kalimba4" },
-                    { Triple.SubArchType.KalimbaSubArch_v5,       "kalimba5" }
+                    { Triple.SubArchType.KalimbaSubArch_v5,       "kalimba5" },
+                    { Triple.SubArchType.MipsSubArch_r6,          "mipsr6" },
                 };
 
             foreach( var kvp in values )

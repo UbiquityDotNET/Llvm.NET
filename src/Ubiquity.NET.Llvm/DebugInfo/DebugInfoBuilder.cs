@@ -832,9 +832,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="file">File for the declaration of the typedef</param>
         /// <param name="line">line for the typedef</param>
         /// <param name="context">Context for creating the typedef</param>
+        /// <param name="alignInBits">Bit alignment for the type</param>
         /// <returns><see cref="DIDerivedType"/>for the alias</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DIDerivedType CreateTypedef( DIType type, string name, DIFile? file, uint line, DINode? context )
+        public DIDerivedType CreateTypedef( DIType type, string name, DIFile? file, uint line, DINode? context, UInt32 alignInBits )
         {
             type.ValidateNotNull( nameof( type ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -846,6 +847,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                    , file?.MetadataHandle ?? default
                                                    , line
                                                    , context?.MetadataHandle ?? default
+                                                   , alignInBits
                                                    );
             return MDNode.FromHandle<DIDerivedType>( handle.ThrowIfInvalid( ) )!;
         }
