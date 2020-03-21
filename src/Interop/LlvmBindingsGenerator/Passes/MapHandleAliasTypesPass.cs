@@ -59,7 +59,7 @@ namespace LlvmBindingsGenerator.Passes
             {
                 foreach( string f in missingFunctions )
                 {
-                    Diagnostics.Error( "Function {0} not found; It was delcared as returning an Alias handle but was not found in the source", f );
+                    Diagnostics.Error( "Function {0} not found; It was declared as returning an Alias handle but was not found in the source", f );
                 }
 
                 return false;

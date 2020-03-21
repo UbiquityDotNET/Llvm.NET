@@ -1,14 +1,15 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="GeneratorConfig.cs" company="Ubiquity.NET Contributors">
+// <copyright file="YamlConfigNode.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
+using YamlDotNet.Core;
+
 namespace LlvmBindingsGenerator.Configuration
 {
-    internal interface IHandleInfo
-        : IYamlConfigLocation
+    internal interface IYamlConfigLocation
     {
-        string HandleName { get; }
+        Mark Start { get; set; }
     }
 }

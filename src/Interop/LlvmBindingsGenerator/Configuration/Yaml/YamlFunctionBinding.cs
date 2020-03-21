@@ -12,11 +12,15 @@ using System.Linq;
 using CppSharp;
 using CppSharp.AST;
 
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
+
 namespace LlvmBindingsGenerator.Configuration
 {
     [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via de-serialization" )]
     [DebuggerDisplay( "{Name}" )]
     internal class YamlFunctionBinding
+        : IYamlConfigLocation
     {
         public string Name { get; set; }
 
@@ -31,6 +35,9 @@ namespace LlvmBindingsGenerator.Configuration
         public YamlBindingTransform ReturnTransform { get; set; }
 
         public YamlParamBindingCollection ParamTransforms { get; set; } = new YamlParamBindingCollection( );
+
+        [YamlIgnore]
+        public Mark Start { get; set; }
 
         public void ResolveParameterIndeces( ASTContext context )
         {

@@ -60,8 +60,11 @@ namespace LlvmBindingsGenerator
         public void SetupPasses( )
         {
             // Analysis passes that markup, but don't otherwise modify the AST run first
-            // always start the passes with the IgnoreSystemHeaders pass to ensure that generation
-            // only occurs for the desired headers. Other passes depend on TranslationUnit.IsGenerated
+            // always start the passes with the IdentifyReduntantConfigurationEntriesPass and
+            // IgnoreSystemHeaders pass to ensure that errors in the configuration file are
+            // identified early and that transformation only occurs for the desired headers.
+            // Other passes depend on TranslationUnit.IsGenerated
+            Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
             Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
             Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
             Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );

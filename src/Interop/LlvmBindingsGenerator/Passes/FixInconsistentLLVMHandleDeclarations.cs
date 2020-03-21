@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 
+using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
 
@@ -56,6 +57,7 @@ namespace LlvmBindingsGenerator.Passes
                 var ptrType = new PointerType( typedef.QualifiedType );
                 typedef.QualifiedType = new QualifiedType( ptrType );
 
+                Diagnostics.Message( "NOTE: Bad form 'REF' declaration for {0} found in LLVM source at {1}@{2}", typedef.Name, typedef.TranslationUnit.FileName, typedef.LineNumberStart );
                 RedefinedHandleDeclarations.Add( typedef.Name, new TypedefType( typedef ) );
                 return true;
             }

@@ -11,6 +11,7 @@ using CppSharp.AST;
 
 using LlvmBindingsGenerator.CppSharpExtensions;
 
+using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
 namespace LlvmBindingsGenerator.Configuration
@@ -24,6 +25,7 @@ namespace LlvmBindingsGenerator.Configuration
     }
 
     internal abstract class YamlBindingTransform
+        : IYamlConfigLocation
     {
         public const uint ReturnParamIndex = uint.MaxValue;
 
@@ -37,6 +39,9 @@ namespace LlvmBindingsGenerator.Configuration
 
         [YamlIgnore]
         public abstract IEnumerable<Attribute> Attributes { get; }
+
+        [YamlIgnore]
+        public Mark Start { get; set; }
 
         public virtual QualifiedType TransformType( CppSharp.AST.QualifiedType type ) => type;
 

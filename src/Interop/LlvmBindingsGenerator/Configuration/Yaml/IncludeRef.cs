@@ -1,14 +1,18 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="GeneratorConfig.cs" company="Ubiquity.NET Contributors">
+// <copyright file="LocationAnnotatedNode.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
+using YamlDotNet.Core;
+
 namespace LlvmBindingsGenerator.Configuration
 {
-    internal interface IHandleInfo
+    internal class IncludeRef
         : IYamlConfigLocation
     {
-        string HandleName { get; }
+        public string Path { get; set; }
+
+        public Mark Start { get; set; }
     }
 }

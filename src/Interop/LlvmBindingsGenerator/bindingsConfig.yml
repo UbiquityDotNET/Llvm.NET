@@ -4,7 +4,7 @@
 #      IsExported: [true|false] # indicates if the function is exported from LibLLVM.dll [ Default is true]
 #      IsProjected: [true|false] # indicates if the function is projected to .NET via Ubiquity.NET.Llvm.Interop.dll [Default is true]
 #      ReturnMarshaling: <Marshaling info, see below for details>
-#      ParamMarshaling:
+#      ParamTransforms:
 #        - <Marshaling info, see below for details>
 #        - <Marshaling info, see below for details>
 #        - ...
@@ -27,14 +27,14 @@
 # Marhsaling info derived types
 #   !Status {} - [Return only] Force LLVMStatus as the return type
 #   !Alias {} -  [Return only] Return is a GlobalContext handle alias (e.g. caller does not, and cannot destroy the item)
-#   !String 
+#   !String
 #       Kind - type of marshalling to apply for the string. In all cases the string is copied to a managed string during marshaling
 #           CopyAlias - Copy only, no release of the native string
 #           DisposeMesage - LLVMDisposeMessage() is used to release the native string
 #           OrcDisposeMangledSymbol - LLVMOrcDisposeMangledSymbol is used to release the native string
 #           DisposeErrorMesage - LLVMDisposeErrorMessage()
 #
-#   !PrimitiveType
+#   !Primitive
 #       Kind - indicates the native type of a primitive to facilitate correct interop signatures
 #           Null
 #           Void
@@ -48,6 +48,7 @@
 #           Short
 #           UShort
 #           Int
+#           IntPtr
 #           UInt
 #           Long
 #           ULong
@@ -74,10 +75,6 @@ FunctionBindings:
     IsObsolete: True
     DeprecationMessage: "Use LLVMCreateBinary instead"
 
-  - Name: LLVMGetSecions
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMObjectFileCopySectionIterator instead"
-
   - Name: LLVMIsSectionIteratorAtEnd
     IsObsolete: True
     DeprecationMessage: "Use LLVMObjectFileIsSectionIteratorAtEnd instead"
@@ -85,10 +82,6 @@ FunctionBindings:
   - Name: LLVMGetSymbols
     IsObsolete: True
     DeprecationMessage: "LLVMObjectFileIsSectionIteratorAtEnd"
-
-  - Name: LLVMParseBitCode
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMParseBitcode2 instead"
 
   - Name: LLVMParseBitcodeInContext
     IsObsolete: True
@@ -101,10 +94,6 @@ FunctionBindings:
     DeprecationMessage: "Use LLVMGetBitcodeModuleInContext2 instead"
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
-
-  - Name: LVMGetBitcodeModule
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMGetBitcodeModule2 instead"
 
   - Name: LLVMWriteBitcodeToFileHandle
     IsObsolete: True
@@ -204,6 +193,10 @@ FunctionBindings:
   - Name: LLVMOrcDisposeMangledSymbol
     IsProjected: False
 
+  - Name: LLVMAddInternalizePassWithMustPreservePredicate
+    ParamTransforms:
+      - !Primitive { Name: MustPreserve, Semantics: In, Kind: IntPtr }
+
     # LLVMConstGEP2 appears in Core.h, but has no implementation [Go, Figure!]
   - Name: LLVMConstGEP2
     IsExported: False
@@ -211,10 +204,6 @@ FunctionBindings:
 
     # LLVMConstInBoundsGEP2 appears in Core.h, but has no implementation [Go, Figure!]
   - Name: LLVMConstInBoundsGEP2
-    IsExported: False
-    IsProjected: False
-
-  - Name: LLVMOptRemarkVersion
     IsExported: False
     IsProjected: False
 
@@ -533,9 +522,6 @@ FunctionBindings:
   - Name: LLVMDisposePassManager
     IsProjected: False
 
-  - Name: LLVMPassRegistryDispose
-    IsProjected: False
-
   - Name: LLVMDisposeGenericValue
     IsProjected: False
 
@@ -561,9 +547,6 @@ FunctionBindings:
     IsProjected: False
 
   - Name: LLVMDisposeRelocationIterator
-    IsProjected: False
-
-  - Name: LLVMOptRemarkParserDispose
     IsProjected: False
 
   - Name: LLVMOrcDisposeInstance
@@ -776,7 +759,7 @@ FunctionBindings:
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ElementTypes, Semantics: In }
 
-  - Name: LibLLVMMDNode2
+  - Name: LLVMMDNodeInContext2
     ParamTransforms:
       - !Array {SubType: SysInt, Name: MDs, Semantics: In }
 
@@ -892,9 +875,6 @@ FunctionBindings:
 
   - Name: LLVMGetRelocationValueString
     ReturnTransform: !String {Kind: DisposeMessage }
-
-  - Name: LLVMOptRemarkParserGetErrorMessage
-    ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMOrcGetErrorMsg
     ReturnTransform: !String {Kind: CopyAlias }
@@ -1040,6 +1020,12 @@ FunctionBindings:
   - Name: LLVMGetModuleDataLayout
     ReturnTransform: !Alias {}
 
+  - Name: LLVMDIFileGetDirectory
+    ReturnTransform: !String {Kind: CopyAlias }
+
+  - Name: LLVMDIFileGetFilename
+    ReturnTransform: !String {Kind: CopyAlias }
+
 # The HandleMap Lists the types of handles and their disposal semantics
 #HandleMap:
 #    - !ContextHandle { HandleName: LLVMTypeRef}
@@ -1077,7 +1063,6 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMSectionIteratorRef, Disposer: LLVMDisposeSectionIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMSymbolIteratorRef, Disposer: LLVMDisposeSymbolIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMRelocationIteratorRef, Disposer: LLVMDisposeRelocationIterator, Alias: False}
-  - !GlobalHandle {HandleName: LLVMOptRemarkParserRef, Disposer: LLVMOptRemarkParserDispose, Alias: False}
   - !GlobalHandle {HandleName: LLVMOrcJITStackRef, Disposer: LLVMOrcDisposeInstance, Alias: False}
   - !GlobalHandle {HandleName: LLVMPassManagerBuilderRef, Disposer: LLVMPassManagerBuilderDispose, Alias: False}
   - !GlobalHandle {HandleName: LLVMValueMetadataEntry, Disposer: LLVMDisposeValueMetadataEntries, Alias: False}
@@ -1085,7 +1070,6 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMDisasmContextRef, Disposer: LLVMDisasmDispose, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMTripleRef, Disposer: LibLLVMDisposeTriple, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMValueCacheRef, Disposer: LibLLVMDisposeValueCache, Alias: False}
-  - !ContextHandle {HandleName: LLVMOrcModuleHandle}
   - !ContextHandle {HandleName: LibLLVMMDOperandRef}
   - !ContextHandle {HandleName: LLVMRemarkStringRef}
   - !ContextHandle {HandleName: LLVMRemarkDebugLocRef}
@@ -1093,6 +1077,15 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMRemarkEntryRef, Disposer: LLVMRemarkEntryDispose, Alias: False}
   - !GlobalHandle {HandleName: LLVMRemarkParserRef, Disposer: LLVMRemarkParserDispose, Alias: False}
 
+# C/C++ allow anonymous enums that effectively introduce a const into the parent namespace.
+# Generally, that's not desired for the interop. In fact the only known use cases for this
+# in the LLVM-C headers is to handle some FLAGS type enums where the language limits the values
+# of an enum to the range of an int. So what LLVM does is define the anonymous enum, and then
+# define a typedef of unsigned to a name for the enum. (see: Core.h\LLVMAttributeIndex as an
+# example)
+# This table maps the name of the first element of an anonymous enum with the name of the
+# typedef used to represent the enumeration. This is used to find the correct declaration
+# in the AST
 #AnonymousEnums:
 #    LLVMAttributeReturnIndex: LLVMAttributeIndex
 #    LLVMMDStringMetadataKind: LLVMMetadataKind
@@ -1107,6 +1100,6 @@ AnonymousEnums:
 #    - OptRemarks.h
 #
 IgnoredHeaders:
-  - LinkTimeOptimizer.h
-  - lto.h
-  - OptRemarks.h
+  - llvm-c/LinkTimeOptimizer.h
+  - llvm-c/lto.h
+  - llvm-c/Remarks.h

@@ -198,23 +198,13 @@ namespace LlvmBindingsGenerator.Passes
         {
             parameter.Attributes.AddRange( marshaling.Attributes );
             parameter.QualifiedType = marshaling.TransformType( parameter.QualifiedType );
-            switch( marshaling.Semantics )
+            parameter.Usage = marshaling.Semantics switch
             {
-            case ParamSemantics.In:
-                parameter.Usage = ParameterUsage.In;
-                break;
-
-            case ParamSemantics.Out:
-                parameter.Usage = ParameterUsage.Out;
-                break;
-
-            case ParamSemantics.InOut:
-                parameter.Usage = parameter.Type is ArrayType ? ParameterUsage.In : ParameterUsage.InOut;
-                break;
-
-            default:
-                throw new InvalidOperationException( );
-            }
+                ParamSemantics.In => ParameterUsage.In,
+                ParamSemantics.Out => ParameterUsage.Out,
+                ParamSemantics.InOut => parameter.Type is ArrayType ? ParameterUsage.In : ParameterUsage.InOut,
+                _ => throw new InvalidOperationException( ),
+            };
         }
 
         private static void ApplyDllImportAttribute( Function function )

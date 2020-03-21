@@ -17,6 +17,9 @@
         <PackageReference Include="CppSharp" />
         <PackageReference Include="YamlDotNet" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="System.ComponentModel.DataAnnotations" />
+    </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
         <None Update="BindingsConfig.yml">
