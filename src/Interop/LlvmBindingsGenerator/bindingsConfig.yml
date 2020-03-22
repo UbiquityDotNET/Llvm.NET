@@ -71,6 +71,30 @@
 #       SizeParam - optional integer index of an out parmater that contains the size of the array
 #
 FunctionBindings:
+  - Name: LLVMMDStringInContext
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMMDStringInContext2 instead"
+
+  - Name: LLVMMDString
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMMDStringInContext2"
+
+  - Name: LLVMMDNodeInContext
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMMDNodeInContext2 instead"
+
+  - Name: LLVMMDNode
+    IsObsolete: true
+    DeprecationMessage: "Use LLVMMDNodeInContext2 instead"
+
+  - Name: LLVMSetCurrentDebugLocation
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMSetCurrentDebugLocation2 instead"
+
+  - Name: LLVMGetCurrentDebugLocation
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMGetCurrentDebugLocation2 instead"
+
   - Name: LLVMCreateObjectFile
     IsObsolete: True
     DeprecationMessage: "Use LLVMCreateBinary instead"

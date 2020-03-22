@@ -59,12 +59,15 @@ namespace LlvmBindingsGenerator
 
         public void SetupPasses( )
         {
-            // Analysis passes that markup, but don't otherwise modify the AST run first
-            // always start the passes with the IdentifyReduntantConfigurationEntriesPass and
-            // IgnoreSystemHeaders pass to ensure that errors in the configuration file are
-            // identified early and that transformation only occurs for the desired headers.
-            // Other passes depend on TranslationUnit.IsGenerated
+            // configuration validation - generates warnings for entries in configuration that
+            // have no corresponding elements in the source AST. (either from typos in the config
+            // or version to version changes in the underlying LLVM source)
             Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
+
+            // Analysis passes that markup, but don't otherwise modify the AST run first
+            // always start the passes with the IgnoreSystemHeaders pass to ensure that
+            // transformation only occurs for the desired headers. Other passes depend on
+            // TranslationUnit.IsGenerated to ignore headers.
             Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
             Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
             Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
@@ -73,15 +76,15 @@ namespace LlvmBindingsGenerator
             Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
             Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
 
-            // General transformations
+            // General transformations - These passes may alter the in memory AST
             Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
             Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration ) );
             Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnums ) );
             Driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration ) );
-            Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration, true ) );
+            Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration ) );
             Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( Configuration ) );
 
-            // validations apply after all transforms
+            // validations to apply after all transforms complete
             Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( ) );
             Driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
         }

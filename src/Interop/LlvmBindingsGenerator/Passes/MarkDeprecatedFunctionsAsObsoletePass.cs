@@ -19,7 +19,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class MarkDeprecatedFunctionsAsObsoletePass
         : TranslationUnitPass
     {
-        public MarkDeprecatedFunctionsAsObsoletePass( IGeneratorConfig config, bool ignoreObsolete )
+        public MarkDeprecatedFunctionsAsObsoletePass( IGeneratorConfig config, bool ignoreObsolete = false )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;

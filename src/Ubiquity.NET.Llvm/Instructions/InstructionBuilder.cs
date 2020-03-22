@@ -50,15 +50,14 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                MDNode.TryGetFromHandle<DILocation>( LLVMValueAsMetadata( LLVMGetCurrentDebugLocation( BuilderHandle ) ), out DILocation? retVal );
+                MDNode.TryGetFromHandle<DILocation>( LLVMGetCurrentDebugLocation2( BuilderHandle ), out DILocation? retVal );
                 return retVal;
             }
 
             set
             {
                 value.ValidateNotNull( nameof( value ) );
-                var valueAsMetadata = LLVMMetadataAsValue( Context.ContextHandle, value!.MetadataHandle );
-                LLVMSetCurrentDebugLocation( BuilderHandle, valueAsMetadata );
+                LLVMSetCurrentDebugLocation2( BuilderHandle, value!.MetadataHandle );
             }
         }
 
@@ -127,6 +126,14 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
 
             LLVMPositionBuilderBefore( BuilderHandle, instr.ValueHandle );
+        }
+
+        /// <summary>Appends a basic block after the <see cref="InsertBlock"/> of this <see cref="InstructionBuilder"/></summary>
+        /// <param name="block">Block to insert</param>
+        public void AppendBasicBlock( BasicBlock block )
+        {
+            block.ValidateNotNull( nameof( block ) );
+            LLVMInsertExistingBasicBlockAfterInsertBlock( BuilderHandle, block.BlockHandle );
         }
 
         /// <summary>Creates a floating point negation operator</summary>
@@ -403,6 +410,16 @@ namespace Ubiquity.NET.Llvm.Instructions
                                                          );
 
             return Value.FromHandle<LandingPad>( landingPad.ThrowIfInvalid( ) )!;
+        }
+
+        /// <summary>Creates a <see cref="Instructions.Freeze"/> instruction</summary>
+        /// <param name="value">Value to freeze</param>
+        /// <returns><see cref="Instructions.Freeze"/></returns>
+        public Freeze Freeze( Value value )
+        {
+            value.ValidateNotNull( nameof( value ) );
+            LLVMValueRef inst = LLVMBuildFreeze( BuilderHandle, value.ValueHandle, string.Empty);
+            return Value.FromHandle<Freeze>( inst.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Instructions.ResumeInstruction"/></summary>
