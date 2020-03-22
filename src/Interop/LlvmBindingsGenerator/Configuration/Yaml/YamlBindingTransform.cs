@@ -35,6 +35,8 @@ namespace LlvmBindingsGenerator.Configuration
 
         public bool IsAlias { get; set; } // only applies to return marshaling
 
+        public bool IsUnsafe { get; set; } // only applies to return marshaling
+
         public uint? ParameterIndex { get; set; }
 
         [YamlIgnore]

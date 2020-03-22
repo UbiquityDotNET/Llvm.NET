@@ -47,6 +47,7 @@ namespace LlvmBindingsGenerator.Configuration
                                   .WithTagMapping("!Primitive", typeof(YamlPrimitiveMarshalInfo))
                                   .WithTagMapping("!Array", typeof(YamlArrayMarshalInfo))
                                   .WithTagMapping("!Alias", typeof(YamlAliasReturn))
+                                  .WithTagMapping("!Unsafe", typeof(YamlUnsafeReturn))
                                   .WithTagMapping("!ContextHandle", typeof(YamlContextHandle))
                                   .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
                                   .Build( );

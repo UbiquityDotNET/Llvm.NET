@@ -3,7 +3,7 @@
 #      IsObsolete: [true|false] # indicates if the function is considered obsolete [Default is false]
 #      IsExported: [true|false] # indicates if the function is exported from LibLLVM.dll [ Default is true]
 #      IsProjected: [true|false] # indicates if the function is projected to .NET via Ubiquity.NET.Llvm.Interop.dll [Default is true]
-#      ReturnMarshaling: <Marshaling info, see below for details>
+#      ReturnTransform: <Marshaling info, see below for details>
 #      ParamTransforms:
 #        - <Marshaling info, see below for details>
 #        - <Marshaling info, see below for details>
@@ -18,6 +18,7 @@
 # Properties for all forms of parameter binding:
 #     Name - Name of the prameter [ignored for return]
 #     IsAlias - Indicates if the return is an alias handle [Only applies to Return]
+#     IsUnsafe - Indicates if the return type in manged code is unsafe [Only applies to Return]
 #     Semantics - Semantics for the parameter
 #         Return - the binding applies to the return of a function
 #         In     - the binding is for an input paramater
@@ -26,7 +27,8 @@
 #
 # Marhsaling info derived types
 #   !Status {} - [Return only] Force LLVMStatus as the return type
-#   !Alias {} -  [Return only] Return is a GlobalContext handle alias (e.g. caller does not, and cannot destroy the item)
+#   !Alias {}  - [Return only] Return is a GlobalContext handle alias (e.g. caller does not, and cannot destroy the item)
+#   !Unsafe {} - [Return only] Return is an unsafe pointer type (This basically disables the validation pass check for unsafe types for this function)
 #   !String
 #       Kind - type of marshalling to apply for the string. In all cases the string is copied to a managed string during marshaling
 #           CopyAlias - Copy only, no release of the native string
@@ -1049,6 +1051,27 @@ FunctionBindings:
 
   - Name: LLVMDIFileGetFilename
     ReturnTransform: !String {Kind: CopyAlias }
+
+  - Name: LLVMDIFileGetSource
+    ReturnTransform: !String {Kind: CopyAlias }
+
+  - Name: LLVMGetPointerToGlobal
+    ReturnTransform: !Primitive {Kind: IntPtr}
+
+  - Name: LLVMContextGetDiagnosticContext
+    ReturnTransform: !Primitive {Kind: IntPtr}
+
+  - Name: LLVMGenericValueToPointer
+    ReturnTransform: !Primitive {Kind: IntPtr}
+
+  - Name: LLVMRecompileAndRelinkFunction
+    ReturnTransform: !Primitive {Kind: IntPtr}
+
+  - Name: LLVMSearchForAddressOfSymbol
+    ReturnTransform: !Primitive {Kind: IntPtr}
+
+  - Name: LLVMGetIndices
+    ReturnTransform: !Unsafe {}
 
 # The HandleMap Lists the types of handles and their disposal semantics
 #HandleMap:

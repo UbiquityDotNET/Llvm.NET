@@ -85,7 +85,7 @@ namespace LlvmBindingsGenerator
             Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( Configuration ) );
 
             // validations to apply after all transforms complete
-            Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( ) );
+            Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( Configuration ) );
             Driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
         }
 
