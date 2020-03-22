@@ -370,17 +370,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             type.ValidateNotNull( nameof( type ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            var handle = LibLLVMDIBuilderCreateAutoVariable( BuilderHandle
-                                                           , scope.MetadataHandle
-                                                           , name
-                                                           , name.Length
-                                                           , file?.MetadataHandle ?? default
-                                                           , line
-                                                           , type.MetadataHandle
-                                                           , alwaysPreserve
-                                                           , ( LLVMDIFlags )debugFlags
-                                                           , alignInBits
-                                                           );
+            var handle = LLVMDIBuilderCreateAutoVariable( BuilderHandle
+                                                        , scope.MetadataHandle
+                                                        , name
+                                                        , name.Length
+                                                        , file?.MetadataHandle ?? default
+                                                        , line
+                                                        , type.MetadataHandle
+                                                        , alwaysPreserve
+                                                        , ( LLVMDIFlags )debugFlags
+                                                        , alignInBits
+                                                        );
             return MDNode.FromHandle<DILocalVariable>( handle.ThrowIfInvalid( ) )!;
         }
 
@@ -409,17 +409,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             type.ValidateNotNull( nameof( type ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            var handle = LibLLVMDIBuilderCreateParameterVariable( BuilderHandle
-                                                                , scope.MetadataHandle
-                                                                , name
-                                                                , name.Length
-                                                                , argNo
-                                                                , file?.MetadataHandle ?? default
-                                                                , line
-                                                                , type.MetadataHandle
-                                                                , alwaysPreserve
-                                                                , ( LLVMDIFlags )debugFlags
-                                                                );
+            var handle = LLVMDIBuilderCreateParameterVariable( BuilderHandle
+                                                             , scope.MetadataHandle
+                                                             , name
+                                                             , name.Length
+                                                             , argNo
+                                                             , file?.MetadataHandle ?? default
+                                                             , line
+                                                             , type.MetadataHandle
+                                                             , alwaysPreserve
+                                                             , ( LLVMDIFlags )debugFlags
+                                                             );
             return MDNode.FromHandle<DILocalVariable>( handle.ThrowIfInvalid( ) )!;
         }
 
@@ -905,10 +905,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Creates a value for an enumeration</summary>
         /// <param name="name">Name of the value</param>
         /// <param name="value">Value of the enumerated value</param>
+        /// <param name="isUnsigned">Indicates if the value is unsigned [Default: false]</param>
         /// <returns><see cref="DIEnumerator"/> for the name, value pair</returns>
-        public DIEnumerator CreateEnumeratorValue( string name, long value )
+        public DIEnumerator CreateEnumeratorValue( string name, long value, bool isUnsigned = false )
         {
-            var handle = LibLLVMDIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            var handle = LLVMDIBuilderCreateEnumerator( BuilderHandle, name, name!.Length, value, isUnsigned );
             return MDNode.FromHandle<DIEnumerator>( handle.ThrowIfInvalid( ) )!;
         }
 

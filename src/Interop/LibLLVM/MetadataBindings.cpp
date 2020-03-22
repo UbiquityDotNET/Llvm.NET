@@ -54,22 +54,22 @@ extern "C"
         unwrap( dref )->finalizeSubprogram( unwrap<DISubprogram>( subProgram ) );
     }
 
-    LLVMMetadataRef LibLLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
-    {
-        DILocation* pLoc = DILocation::get( *unwrap( context )
-                                            , Line
-                                            , Column
-                                            , unwrap<DILocalScope>( scope )
-                                            , InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr
-        );
-        return wrap( pLoc );
-    }
+    //LLVMMetadataRef LibLLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt )
+    //{
+    //    DILocation* pLoc = DILocation::get( *unwrap( context )
+    //                                        , Line
+    //                                        , Column
+    //                                        , unwrap<DILocalScope>( scope )
+    //                                        , InlinedAt ? unwrap<DILocation>( InlinedAt ) : nullptr
+    //    );
+    //    return wrap( pLoc );
+    //}
 
-    LLVMMetadataRef /*DILocation*/ LibLLVMDILocationGetInlinedAt( LLVMMetadataRef /*DILocation*/ location )
-    {
-        DILocation* loc = unwrap<DILocation>( location );
-        return wrap( loc->getInlinedAt( ) );
-    }
+    //LLVMMetadataRef /*DILocation*/ LibLLVMDILocationGetInlinedAt( LLVMMetadataRef /*DILocation*/ location )
+    //{
+    //    DILocation* loc = unwrap<DILocation>( location );
+    //    return wrap( loc->getInlinedAt( ) );
+    //}
 
     LLVMMetadataRef /*DILocalScope*/ LibLLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location )
     {
@@ -203,21 +203,21 @@ extern "C"
         return wrap( ConstantAsMetadata::get( unwrap<Constant>( C ) ) );
     }
 
-    LLVMMetadataRef LibLLVMMDString2( LLVMContextRef C, char const* Str, unsigned SLen )
-    {
-        return wrap( MDString::get( *unwrap( C ), StringRef( Str, SLen ) ) );
-    }
+    //LLVMMetadataRef LibLLVMMDString2( LLVMContextRef C, char const* Str, unsigned SLen )
+    //{
+    //    return wrap( MDString::get( *unwrap( C ), StringRef( Str, SLen ) ) );
+    //}
 
-    LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C
-                                    , LLVMMetadataRef* MDs
-                                    , unsigned Count
-    )
-    {
-        auto node = MDNode::get( *unwrap( C )
-                                 , ArrayRef<Metadata*>( unwrap( MDs ), Count )
-        );
-        return wrap( node );
-    }
+    //LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C
+    //                                , LLVMMetadataRef* MDs
+    //                                , unsigned Count
+    //)
+    //{
+    //    auto node = MDNode::get( *unwrap( C )
+    //                             , ArrayRef<Metadata*>( unwrap( MDs ), Count )
+    //    );
+    //    return wrap( node );
+    //}
 
     void LibLLVMAddNamedMetadataOperand2( LLVMModuleRef M
                                           , char const* name

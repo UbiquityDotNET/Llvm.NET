@@ -455,7 +455,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>new metadata string</returns>
         public MDString CreateMetadataString( string? value )
         {
-            var handle = LibLLVMMDString2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
+            var handle = LLVMMDStringInContext2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
             return new MDString( handle );
         }
 
@@ -466,7 +466,7 @@ namespace Ubiquity.NET.Llvm
         {
             value.ValidateNotNullOrWhiteSpace( nameof( value ) );
             var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
-            var hNode = LibLLVMMDNode2( ContextHandle, elements, ( uint )elements.Length );
+            var hNode = LLVMMDNodeInContext2( ContextHandle, elements, ( uint )elements.Length );
             if( MDNode.TryGetFromHandle<MDNode>( hNode, out MDNode? retVal ) )
             {
                 return retVal;

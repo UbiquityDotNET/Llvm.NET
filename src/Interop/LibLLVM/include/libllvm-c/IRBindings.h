@@ -37,8 +37,6 @@ extern "C" {
 
     void LibLLVMGetVersionInfo( LibLLVMVersionInfo* pVersionInfo );
 
-    unsigned LibLLVMLookupInstrinsicId( char const* name );
-
 #ifdef __cplusplus
 }
 #endif

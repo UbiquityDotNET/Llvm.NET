@@ -234,10 +234,8 @@ namespace Kaleidoscope.Grammar.AST
         }
         #endregion
 
-        [SuppressMessage( "Build", "CS8609:Nullability of reference types in return type doesn't match overridden member", Justification = "Override of method defined in assembly not using nullable types" )]
-#pragma warning disable CS8609 // Nullability of reference types in return type doesn't match overridden member.
-        protected override IAstNode? DefaultResult => null;
-#pragma warning restore CS8609 // Nullability of reference types in return type doesn't match overridden member.
+        [MaybeNull]
+        protected override IAstNode DefaultResult => null;
 
         private Prototype FindCallTarget( string calleeName )
         {
@@ -311,10 +309,17 @@ namespace Kaleidoscope.Grammar.AST
 
         private IAstNode BuildPrototype( PrototypeContext context, string name )
         {
-            var parameters = from param in context.Parameters
-                             select new ParameterDeclaration( param.Span, param.Name, param.Index );
+            if(string.IsNullOrWhiteSpace(name))
+            {
+                name = context.Name;
+            }
 
-            var retVal = new Prototype( context.GetSourceSpan( ), name, parameters );
+            var retVal = new Prototype( context.GetSourceSpan()
+                                      , name
+                                      , false
+                                      , context.Parent is ExternalDeclarationContext
+                                      , context.Parameters.Select( p => new ParameterDeclaration( p.Span, p.Name, p.Index ))
+                                      );
 
             // block second incompatible declaration to prevent issues with in any definitions that may be using it
             if( RuntimeState.FunctionDeclarations.TryGetValue( name, out Prototype existingPrototype ) )

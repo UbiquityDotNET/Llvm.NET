@@ -24,24 +24,4 @@ extern "C"
     {
         *pVersionInfo = { LLVM_VERSION_MAJOR, LLVM_VERSION_MINOR, LLVM_VERSION_PATCH };
     }
-
-    void LibLLVMSetCurrentDebugLocation2( LLVMBuilderRef Bref
-                                          , unsigned Line
-                                          , unsigned Col
-                                          , LLVMMetadataRef Scope
-                                          , LLVMMetadataRef InlinedAt
-    )
-    {
-        auto loc = DebugLoc::get( Line
-                                  , Col
-                                  , Scope ? unwrap<MDNode>( Scope ) : nullptr
-                                  , InlinedAt ? unwrap<MDNode>( InlinedAt ) : nullptr
-        );
-        unwrap( Bref )->SetCurrentDebugLocation( loc );
-    }
-
-    unsigned LibLLVMLookupInstrinsicId( char const* name )
-    {
-        return Function::lookupIntrinsicID( name );
-    }
 }

@@ -419,7 +419,15 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <seealso cref="Instructions.CatchSwitch"/>
         /// <seealso href="xref:llvm_langref#catchswitch-instruction">LLVM catchswitch instruction</seealso>
         /// <seealso href="xref:llvm_langref#terminator-instructions">LLVM Terminator Instructions</seealso>
-        CatchSwitch = LLVMOpcode.LLVMCatchSwitch
+        CatchSwitch = LLVMOpcode.LLVMCatchSwitch,
+
+        /// <summary>callbr instruction</summary>
+        /// <seealso href="xref::llvm_langref#i-callbr"/>
+        CallBr = LLVMOpcode.LLVMCallBr,
+
+        /// <summary>Freeze instruction</summary>
+        /// <seealso href="xref:llvm_langref#i-freeze"/>
+        Freeze = LLVMOpcode.LLVMFreeze,
     }
 
     /// <summary>Exposes an LLVM Instruction</summary>

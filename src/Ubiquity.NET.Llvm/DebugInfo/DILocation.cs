@@ -32,12 +32,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="scope">Containing scope for the location</param>
         /// <param name="inlinedAt">Scope where this scope is inlined at/into</param>
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation? inlinedAt )
-            : base( LibLLVMDILocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
-                                     , line
-                                     , column
-                                     , scope.ValidateNotNull( nameof( scope ) ).MetadataHandle
-                                     , inlinedAt?.MetadataHandle ?? default
-                                     )
+            : base( LLVMDIBuilderCreateDebugLocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
+                                                    , line
+                                                    , column
+                                                    , scope.ValidateNotNull( nameof( scope ) ).MetadataHandle
+                                                    , inlinedAt?.MetadataHandle ?? default
+                                                    )
                   )
         {
         }
@@ -52,7 +52,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public uint Column => LLVMDILocationGetColumn( MetadataHandle );
 
         /// <summary>Gets the location this location is inlined at</summary>
-        public DILocation? InlinedAt => FromHandle<DILocation>( LibLLVMDILocationGetInlinedAt( MetadataHandle ) );
+        public DILocation? InlinedAt => FromHandle<DILocation>( LLVMDILocationGetInlinedAt( MetadataHandle ) );
 
         /// <summary>Gets the scope where this is inlined.</summary>
         /// <remarks>This walks through the <see cref="InlinedAt"/> properties to return
