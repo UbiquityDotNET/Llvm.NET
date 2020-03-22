@@ -13,12 +13,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DIScope
     {
         /// <summary>Gets the parent scope as a <see cref="DILocalScope"/></summary>
-        public DILocalScope LocalScope => ( DILocalScope )Scope!;
+        public DILocalScope? LocalScope => Scope as DILocalScope;
 
         /// <summary>Gets the DISubprogram for this scope</summary>
         /// <remarks>If this scope is a <see cref="DISubProgram"/> then it is returned, otherwise
         /// the scope is walked up to find the subprogram that ultimately owns this scope</remarks>
-        public DISubProgram? SubProgram => this is DILexicalBlockBase block ? block.LocalScope.SubProgram : this as DISubProgram;
+        public DISubProgram? SubProgram => this is DILexicalBlockBase block ? block.LocalScope?.SubProgram : this as DISubProgram;
 
         /// <summary>Gets the first non-<see cref="DILexicalBlockFile"/> scope in the chain of parent scopes</summary>
         public DILocalScope FirstNonLexicalBlockFileScope => this is DILexicalBlockFile file ? file.FirstNonLexicalBlockFileScope : ( this );

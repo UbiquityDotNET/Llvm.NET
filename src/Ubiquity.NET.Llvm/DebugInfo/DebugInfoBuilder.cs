@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Macro definition</summary>
         Define = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeDefine,
 
-        /// <summary>Macro undefine</summary>
+        /// <summary>Undefine a macro</summary>
         Undefine = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeMacro,
 
 /* These are not supported in the LLVM native code yet, so no point in exposing them at this time

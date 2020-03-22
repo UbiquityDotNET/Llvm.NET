@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DIScope
     {
         /// <inheritdoc/>
-        public override DIScope Scope => GetOperand<DIScope>( 0 )!;
+        public override DIScope? Scope => GetOperand<DIScope>( 0 );
 
         /// <inheritdoc/>
         public override string Name => GetOperandString( 1 );
