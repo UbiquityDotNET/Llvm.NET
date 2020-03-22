@@ -2,15 +2,17 @@
     <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <!--Due to current limitations of the CppSharp library NUGET package, this only supports the Windows Desktop .NET Framework (64 bit)-->
-        <TargetFramework>net47</TargetFramework>
-        <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
         <DebugType>portable</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
         <PlatformTarget>x64</PlatformTarget>
-        <Nullable />
+        <!--
+        Due to current limitations of the CppSharp library NUGET package, this only supports the Windows Desktop .NET Framework (64 bit)
+        This means that this project can't use language features > 7.3 (Limits for .NET Framework)
+        -->
+        <TargetFramework>net47</TargetFramework>
+        <Nullable/>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Ubiquity.ArgValidators" />

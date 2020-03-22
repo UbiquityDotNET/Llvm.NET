@@ -34,8 +34,9 @@ namespace LlvmBindingsGenerator.Configuration
 
         public static YamlConfiguration ParseFrom( string path )
         {
-            using var input = File.OpenText( path );
-            var deserializer = new DeserializerBuilder( )
+            using( var input = File.OpenText( path ) )
+            {
+                var deserializer = new DeserializerBuilder( )
                                   .WithNodeDeserializer( inner => new YamlConfigNodeDeserializer(inner)
                                                        , s => s.InsteadOf<ObjectNodeDeserializer>()
                                                        )
@@ -50,20 +51,21 @@ namespace LlvmBindingsGenerator.Configuration
                                   .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
                                   .Build( );
 
-            var retVal = deserializer.Deserialize<YamlConfiguration>( input );
+                var retVal = deserializer.Deserialize<YamlConfiguration>( input );
 
-            // Force all return transforms to use Return semantics so that
-            // transform passes will generate correct attributes for the
-            // return value.
-            var returnTransforms = from x in retVal.FunctionBindings.Values
-                                   where x.ReturnTransform != null
-                                   select x.ReturnTransform;
-            foreach( YamlBindingTransform xform in returnTransforms )
-            {
-                xform.Semantics = ParamSemantics.Return;
+                // Force all return transforms to use Return semantics so that
+                // transform passes will generate correct attributes for the
+                // return value.
+                var returnTransforms = from x in retVal.FunctionBindings.Values
+                                       where x.ReturnTransform != null
+                                       select x.ReturnTransform;
+                foreach( YamlBindingTransform xform in returnTransforms )
+                {
+                    xform.Semantics = ParamSemantics.Return;
+                }
+
+                return retVal;
             }
-
-            return retVal;
         }
 
         public HandleTemplateMap BuildTemplateMap( )
@@ -86,13 +88,20 @@ namespace LlvmBindingsGenerator.Configuration
 
         private static IHandleCodeTemplate Transform( IHandleInfo h )
         {
-            return h switch
+            switch( h )
             {
-                YamlGlobalHandle ygh => new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias ),
-                YamlContextHandle ych => new ContextHandleTemplate( ych.HandleName ),
-                YamlErrorRef _ => new LLVMErrorRefTemplate( ),
-                _ => throw new InvalidOperationException( "Unknown handle info kind encountered" ),
-            };
+            case YamlGlobalHandle ygh:
+                return new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias );
+
+            case YamlContextHandle ych:
+                return new ContextHandleTemplate( ych.HandleName );
+
+            case YamlErrorRef _:
+                return new LLVMErrorRefTemplate( );
+
+            default:
+                throw new InvalidOperationException( "Unknown handle info kind encountered" );
+            }
         }
 
         private class IncludeRefConverter
