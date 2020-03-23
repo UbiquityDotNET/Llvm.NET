@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.ArgValidators;
+using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
@@ -440,6 +441,13 @@ namespace Ubiquity.NET.Llvm.Instructions
 
         /// <summary>Gets the LLVM opcode for the instruction</summary>
         public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( ValueHandle );
+
+        /// <summary>Gets or sets the <see cref="DILocation"/> for this instruction</summary>
+        public DILocation? Location
+        {
+            get => MDNode.FromHandle<DILocation>( LLVMInstructionGetDebugLoc( ValueHandle ) );
+            set => LLVMInstructionSetDebugLoc( ValueHandle, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
+        }
 
         /// <summary>Gets a value indicating whether the opcode is for a memory access (<see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/>)</summary>
         public bool IsMemoryAccess

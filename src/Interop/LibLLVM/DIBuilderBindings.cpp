@@ -12,16 +12,6 @@ namespace
     {
         return (DIT* )( Ref ? unwrap<MDNode>( Ref ) : nullptr );
     }
-
-    //static DINode::DIFlags map_from_llvmDIFlags( LLVMDIFlags Flags )
-    //{
-    //    return static_cast< DINode::DIFlags >( Flags );
-    //}
-
-    //static LLVMDIFlags map_to_llvmDIFlags( DINode::DIFlags Flags )
-    //{
-    //    return static_cast< LLVMDIFlags >( Flags );
-    //}
 }
 
 extern "C"
@@ -58,26 +48,4 @@ extern "C"
             SplitDebugInlining, DebugInfoForProfiling )
         );
     }
-
-    //LLVMMetadataRef LibLLVMDIBuilderCreateAutoVariable(
-    //    LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, const char* Name,
-    //    size_t NameLen, LLVMMetadataRef File, unsigned LineNo, LLVMMetadataRef Ty,
-    //    LLVMBool AlwaysPreserve, LLVMDIFlags Flags, uint32_t AlignInBits )
-    //{
-    //    return wrap( unwrap( Builder )->createAutoVariable(
-    //        unwrap<DIScope>( Scope ), { Name, NameLen }, unwrap_maybenull<DIFile>( File ),
-    //        LineNo, unwrap<DIType>( Ty ), AlwaysPreserve,
-    //        map_from_llvmDIFlags( Flags ), AlignInBits ) );
-    //}
-
-    //LLVMMetadataRef LibLLVMDIBuilderCreateParameterVariable(
-    //    LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, const char* Name,
-    //    size_t NameLen, unsigned ArgNo, LLVMMetadataRef File, unsigned LineNo,
-    //    LLVMMetadataRef Ty, LLVMBool AlwaysPreserve, LLVMDIFlags Flags )
-    //{
-    //    return wrap( unwrap( Builder )->createParameterVariable(
-    //        unwrap<DIScope>( Scope ), { Name, NameLen }, ArgNo, unwrap_maybenull<DIFile>( File ),
-    //        LineNo, unwrap<DIType>( Ty ), AlwaysPreserve,
-    //        map_from_llvmDIFlags( Flags ) ) );
-    //}
 }

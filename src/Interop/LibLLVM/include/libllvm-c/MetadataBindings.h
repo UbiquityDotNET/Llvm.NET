@@ -77,8 +77,6 @@ extern "C" {
     void LibLLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
 
     LLVMMetadataRef LibLLVMConstantAsMetadata( LLVMValueRef Val );
-    //LLVMMetadataRef LibLLVMMDString2( LLVMContextRef C, const char* Str, unsigned SLen );
-    //LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C, LLVMMetadataRef* MDs, unsigned Count );
 
     char const* LibLLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len );
 
@@ -90,9 +88,6 @@ extern "C" {
     LLVMBool LibLLVMIsUniqued( LLVMMetadataRef M );
     LLVMBool LibLLVMIsDistinct( LLVMMetadataRef M );
 
-    LLVMMetadataRef LibLLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
-
-    uint32_t LibLLVMDIVariableGetLine( LLVMMetadataRef /*DIVariable*/ );
 #ifdef __cplusplus
 } // extern "C"
 #endif

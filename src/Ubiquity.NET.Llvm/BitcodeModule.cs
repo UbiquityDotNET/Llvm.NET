@@ -249,6 +249,21 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
+        /// <summary>Gets the <see cref="GlobalIFunc"/>s in this module</summary>
+        public IEnumerable<GlobalIFunc> IndirectFunctions
+        {
+            get
+            {
+                ThrowIfDisposed( );
+                var current = LLVMGetFirstGlobalIFunc( ModuleHandle );
+                while( current != default )
+                {
+                    yield return Value.FromHandle<GlobalIFunc>( current )!;
+                    current = LLVMGetNextGlobalIFunc( current );
+                }
+            }
+        }
+
         /// <summary>Gets the name of the module</summary>
         public string Name
         {
@@ -331,6 +346,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets a function by name from this module</summary>
         /// <param name="name">Name of the function to get</param>
         /// <returns>The function or null if not found</returns>
+        [Obsolete( "Use TryGetFunction instead" )]
         public IrFunction? GetFunction( string name )
         {
             ThrowIfDisposed( );
@@ -338,6 +354,63 @@ namespace Ubiquity.NET.Llvm
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
             return funcRef == default ? null : Value.FromHandle<IrFunction>( funcRef );
+        }
+
+        /// <summary>Looks up a function in the module by name</summary>
+        /// <param name="name">Name of the function</param>
+        /// <param name="function">The function or <see langword="null"/> if not found</param>
+        /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
+        public bool TryGetFunction( string name, [MaybeNullWhen( false )] out IrFunction function )
+        {
+            ThrowIfDisposed( );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
+            var funcRef = LLVMGetNamedFunction( ModuleHandle, name );
+            if( funcRef == default )
+            {
+                function = null;
+                return false;
+            }
+
+            function = Value.FromHandle<IrFunction>( funcRef )!;
+            return true;
+        }
+
+        /// <summary>Create and add a global indirect function</summary>
+        /// <param name="name">Name of the function</param>
+        /// <param name="type">Signature of the function</param>
+        /// <param name="addressSpace">Address space for the indirect function</param>
+        /// <param name="resolver">Resolver for the indirect function</param>
+        /// <returns>New <see cref="GlobalIFunc"/></returns>
+        public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, IrFunction resolver )
+        {
+            ThrowIfDisposed( );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            type.ValidateNotNull( nameof( name ) );
+            resolver.ValidateNotNull( nameof( resolver ) );
+
+            var handle = LLVMAddGlobalIFunc( ModuleHandle, name, name.Length, type.GetTypeRef( ), addressSpace, resolver.ValueHandle );
+            return Value.FromHandle<GlobalIFunc>( handle.ThrowIfInvalid( ) )!;
+        }
+
+        /// <summary>Get a named Global Indirect function in the module</summary>
+        /// <param name="name">Name of the ifunc to find</param>
+        /// <param name="function">Function or <see langword="null"/> if not found</param>
+        /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
+        public bool TryGetNamedGlobalIFunc( string name, [MaybeNullWhen( false )] out GlobalIFunc function )
+        {
+            ThrowIfDisposed( );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+
+            var funcRef = LLVMGetNamedGlobalIFunc( ModuleHandle, name, name.Length );
+            if( funcRef == default )
+            {
+                function = null;
+                return false;
+            }
+
+            function = Value.FromHandle<GlobalIFunc>( funcRef )!;
+            return true;
         }
 
         /// <summary>Add a function with the specified signature to the module</summary>
