@@ -32,7 +32,7 @@ namespace Kaleidoscope.Chapter2
             // Create Observable chain to parse input lines from console into AST Nodes
             var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError );
 
-            // Subscribe to the sequence the sequence
+            // Subscribe to the sequence
             using( replSeq.Subscribe( ShowResults ) )
             {
             }
