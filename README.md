@@ -7,7 +7,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/Ubiquity.NET.Llvm.svg)](https://www.nuget.org/packages/Ubiquity.NET.Llvm/)  
 **NOTE:** until there is an official release of the LLVM10 package with the new name this will indicate the package isn't found, to get the latest official release, use the [master branch](https://github.com/UbiquityDotNET/Llvm.NET/tree/master)
 
-For details of releases, see the [release notes](https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/ReleaseNotes.md)
+For details of releases, see the [release notes](https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/ReleaseNotes.md)
 
 ### Welcome to Ubiquity.NET.Llvm!
 Ubiquity.NET.Llvm provides LLVM language and runtime bindings for .NET based applications. Ubiquity.NET.Llvm's goal is to provide
