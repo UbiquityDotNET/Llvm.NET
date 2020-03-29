@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+
 using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm.Transforms
@@ -25,7 +26,7 @@ namespace Ubiquity.NET.Llvm.Transforms
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
-            foreach(var callback in NativeCallBacks)
+            foreach( var callback in NativeCallBacks )
             {
                 callback.Dispose( );
             }

@@ -45,16 +45,16 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Undefine a macro</summary>
         Undefine = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeMacro,
 
-/* These are not supported in the LLVM native code yet, so no point in exposing them at this time
-        /// <summary>Start of file macro</summary>
-        StartFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeStartFile,
+        /* These are not supported in the LLVM native code yet, so no point in exposing them at this time
+                /// <summary>Start of file macro</summary>
+                StartFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeStartFile,
 
-        /// <summary>End of file macro</summary>
-        EndFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeEndFile,
+                /// <summary>End of file macro</summary>
+                EndFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeEndFile,
 
-        /// <summary>Vendor specific extension type</summary>
-        VendorExt = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeVendorExt
-*/
+                /// <summary>Vendor specific extension type</summary>
+                VendorExt = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeVendorExt
+        */
     }
 
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM <see cref="BitcodeModule"/></summary>
@@ -165,7 +165,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// The list of macro node direct children is calculated by the use of the <see cref="CreateMacro"/>
         /// functions parentFile parameter.
         /// </remarks>
-        public DIMacroFile CreateTempMacroFile(DIMacroFile? parent, uint line, DIFile? file)
+        public DIMacroFile CreateTempMacroFile( DIMacroFile? parent, uint line, DIFile? file )
         {
             var handle = LLVMDIBuilderCreateTempMacroFile( BuilderHandle
                                                          , parent?.MetadataHandle ?? LLVMMetadataRef.Zero
@@ -183,7 +183,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="name">Name of the macro</param>
         /// <param name="value">Value of the macro (use String.Empty for <see cref="MacroKind.Undefine"/>)</param>
         /// <returns>Newly created macro node</returns>
-        public DIMacro CreateMacro( DIMacroFile? parentFile, uint line, MacroKind kind, string name, string value)
+        public DIMacro CreateMacro( DIMacroFile? parentFile, uint line, MacroKind kind, string name, string value )
         {
             kind.ValidateDefined( nameof( kind ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );

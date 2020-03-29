@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Transforms
         /// <param name="passManager">PassManager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#dce-dead-code-elimination"/>
-        public static T AddDCEPass<T>([ValidatedNotNull] this T passManager)
+        public static T AddDCEPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
             passManager.ValidateNotNull( nameof( passManager ) );
