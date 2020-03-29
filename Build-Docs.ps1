@@ -5,7 +5,7 @@ Param(
 )
 
 . .\buildutils.ps1
-Initialize-BuildEnvironment
+$buildInfo = Initialize-BuildEnvironment
 
 # Main Script entry point -----------
 $ErrorActionPreference = "Stop"
@@ -16,11 +16,11 @@ $oldPath = $env:Path
 try
 {
     $msBuildProperties = @{ Configuration = $Configuration
-                            LlvmVersion = $BuildInfo.LlvmVersion
+                            LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
     # clone docs output location so it is available as a destination for the Generated docs content
-    if(!$NoClone -and !(Test-Path (Join-Path $BuildPaths.DocsOutput '.git') -PathType Container))
+    if(!$NoClone -and !(Test-Path (Join-Path $buildInfo['DocsOutput'] '.git') -PathType Container))
     {
         Write-Information "Cloning Docs repository"
         pushd BuildOutput -ErrorAction Stop
@@ -38,15 +38,15 @@ try
         }
     }
 
-    $docfxRestoreBinLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm-docfx-Build.restore.binlog
-    $docfxBinLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm-docfx-Build.binlog
+    $docfxRestoreBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.restore.binlog
+    $docfxBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.binlog
 
     # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
     Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxRestoreBinLogPath") )
+    Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxRestoreBinLogPath") )
 
     Write-Information "Building Docs Project"
-    Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$docfxBinLogPath") )
+    Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBinLogPath") )
 }
 finally
 {

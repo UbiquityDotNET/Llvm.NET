@@ -35,6 +35,28 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         LineTablesOnly
     }
 
+    /// <summary>Describes the kind of macro declaration</summary>
+    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Simple 1:1 mapping to native names and values, there is no 0 value" )]
+    public enum MacroKind
+    {
+        /// <summary>Macro definition</summary>
+        Define = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeDefine,
+
+        /// <summary>Undefine a macro</summary>
+        Undefine = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeMacro,
+
+/* These are not supported in the LLVM native code yet, so no point in exposing them at this time
+        /// <summary>Start of file macro</summary>
+        StartFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeStartFile,
+
+        /// <summary>End of file macro</summary>
+        EndFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeEndFile,
+
+        /// <summary>Vendor specific extension type</summary>
+        VendorExt = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeVendorExt
+*/
+    }
+
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM <see cref="BitcodeModule"/></summary>
     /// <remarks>
     /// Many Debug information metadata nodes are created with unresolved references to additional
@@ -132,6 +154,60 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             throw new InternalCodeGeneratorException( "Could not create compile unit" );
+        }
+
+        /// <summary>Creates a debugging information temporary entry for a macro file</summary>
+        /// <param name="parent">Macro file parent, if any</param>
+        /// <param name="line">Source line where the macro file is included</param>
+        /// <param name="file">File information for the file containing the macro</param>
+        /// <returns>Newly created <see cref="DIMacroFile"/></returns>
+        /// <remarks>
+        /// The list of macro node direct children is calculated by the use of the <see cref="CreateMacro"/>
+        /// functions parentFile parameter.
+        /// </remarks>
+        public DIMacroFile CreateTempMacroFile(DIMacroFile? parent, uint line, DIFile? file)
+        {
+            var handle = LLVMDIBuilderCreateTempMacroFile( BuilderHandle
+                                                         , parent?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                         , line
+                                                         , file?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                         );
+
+            return MDNode.FromHandle<DIMacroFile>( handle.ThrowIfInvalid( ) )!;
+        }
+
+        /// <summary>Create a macro</summary>
+        /// <param name="parentFile">Parent file containing the macro</param>
+        /// <param name="line">Source line number where the macro is defined</param>
+        /// <param name="kind">Kind of macro</param>
+        /// <param name="name">Name of the macro</param>
+        /// <param name="value">Value of the macro (use String.Empty for <see cref="MacroKind.Undefine"/>)</param>
+        /// <returns>Newly created macro node</returns>
+        public DIMacro CreateMacro( DIMacroFile? parentFile, uint line, MacroKind kind, string name, string value)
+        {
+            kind.ValidateDefined( nameof( kind ) );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            value.ValidateNotNull( nameof( value ) );
+            switch( kind )
+            {
+            case MacroKind.Define:
+            case MacroKind.Undefine:
+                break;
+            default:
+                throw new NotSupportedException( "LLVM currently only supports MacroKind.Define and MacroKind.Undefine" );
+            }
+
+            var handle = LLVMDIBuilderCreateMacro( BuilderHandle
+                                                 , parentFile?.MetadataHandle ?? LLVMMetadataRef.Zero
+                                                 , line
+                                                 , ( LLVMDWARFMacinfoRecordType )kind
+                                                 , name
+                                                 , name.Length
+                                                 , value
+                                                 , value.Length
+                                                 );
+
+            return MDNode.FromHandle<DIMacro>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="DINamespace"/></summary>
@@ -370,17 +446,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             type.ValidateNotNull( nameof( type ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            var handle = LibLLVMDIBuilderCreateAutoVariable( BuilderHandle
-                                                           , scope.MetadataHandle
-                                                           , name
-                                                           , name.Length
-                                                           , file?.MetadataHandle ?? default
-                                                           , line
-                                                           , type.MetadataHandle
-                                                           , alwaysPreserve
-                                                           , ( LLVMDIFlags )debugFlags
-                                                           , alignInBits
-                                                           );
+            var handle = LLVMDIBuilderCreateAutoVariable( BuilderHandle
+                                                        , scope.MetadataHandle
+                                                        , name
+                                                        , name.Length
+                                                        , file?.MetadataHandle ?? default
+                                                        , line
+                                                        , type.MetadataHandle
+                                                        , alwaysPreserve
+                                                        , ( LLVMDIFlags )debugFlags
+                                                        , alignInBits
+                                                        );
             return MDNode.FromHandle<DILocalVariable>( handle.ThrowIfInvalid( ) )!;
         }
 
@@ -409,17 +485,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             type.ValidateNotNull( nameof( type ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
 
-            var handle = LibLLVMDIBuilderCreateParameterVariable( BuilderHandle
-                                                                , scope.MetadataHandle
-                                                                , name
-                                                                , name.Length
-                                                                , argNo
-                                                                , file?.MetadataHandle ?? default
-                                                                , line
-                                                                , type.MetadataHandle
-                                                                , alwaysPreserve
-                                                                , ( LLVMDIFlags )debugFlags
-                                                                );
+            var handle = LLVMDIBuilderCreateParameterVariable( BuilderHandle
+                                                             , scope.MetadataHandle
+                                                             , name
+                                                             , name.Length
+                                                             , argNo
+                                                             , file?.MetadataHandle ?? default
+                                                             , line
+                                                             , type.MetadataHandle
+                                                             , alwaysPreserve
+                                                             , ( LLVMDIFlags )debugFlags
+                                                             );
             return MDNode.FromHandle<DILocalVariable>( handle.ThrowIfInvalid( ) )!;
         }
 
@@ -832,9 +908,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="file">File for the declaration of the typedef</param>
         /// <param name="line">line for the typedef</param>
         /// <param name="context">Context for creating the typedef</param>
+        /// <param name="alignInBits">Bit alignment for the type</param>
         /// <returns><see cref="DIDerivedType"/>for the alias</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public DIDerivedType CreateTypedef( DIType type, string name, DIFile? file, uint line, DINode? context )
+        public DIDerivedType CreateTypedef( DIType type, string name, DIFile? file, uint line, DINode? context, UInt32 alignInBits )
         {
             type.ValidateNotNull( nameof( type ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -846,6 +923,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                    , file?.MetadataHandle ?? default
                                                    , line
                                                    , context?.MetadataHandle ?? default
+                                                   , alignInBits
                                                    );
             return MDNode.FromHandle<DIDerivedType>( handle.ThrowIfInvalid( ) )!;
         }
@@ -903,10 +981,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Creates a value for an enumeration</summary>
         /// <param name="name">Name of the value</param>
         /// <param name="value">Value of the enumerated value</param>
+        /// <param name="isUnsigned">Indicates if the value is unsigned [Default: false]</param>
         /// <returns><see cref="DIEnumerator"/> for the name, value pair</returns>
-        public DIEnumerator CreateEnumeratorValue( string name, long value )
+        public DIEnumerator CreateEnumeratorValue( string name, long value, bool isUnsigned = false )
         {
-            var handle = LibLLVMDIBuilderCreateEnumeratorValue( BuilderHandle, name, value );
+            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            var handle = LLVMDIBuilderCreateEnumerator( BuilderHandle, name, name!.Length, value, isUnsigned );
             return MDNode.FromHandle<DIEnumerator>( handle.ThrowIfInvalid( ) )!;
         }
 

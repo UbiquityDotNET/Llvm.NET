@@ -18,6 +18,7 @@
 #include <llvm/IR/Module.h>
 #include <llvm/Transforms/Instrumentation.h>
 #include <llvm/PassRegistry.h>
+#include "llvm/Transforms/Instrumentation/AddressSanitizer.h"
 #include <llvm/Transforms/Instrumentation/MemorySanitizer.h>
 #include <llvm/Transforms/Instrumentation/ThreadSanitizer.h>
 
@@ -42,7 +43,7 @@ extern "C"
 
     void LibLLVMAddAddressSanitizerModulePass( LLVMPassManagerRef PM )
     {
-        unwrap( PM )->add( createAddressSanitizerModulePass( ) );
+        unwrap( PM )->add( createModuleAddressSanitizerLegacyPassPass( ) );
     }
 
     void LibLLVMAddThreadSanitizerPass( LLVMPassManagerRef PM )

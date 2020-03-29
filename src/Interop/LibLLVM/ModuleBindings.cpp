@@ -12,7 +12,7 @@ extern "C"
     {
         auto pModule = unwrap( module );
         auto pSignature = cast< FunctionType >( unwrap( functionType ) );
-        return wrap( pModule->getOrInsertFunction( name, pSignature ) );
+        return wrap( pModule->getOrInsertFunction( name, pSignature ).getCallee() );
     }
 
     char const* LibLLVMGetModuleSourceFileName( LLVMModuleRef module )

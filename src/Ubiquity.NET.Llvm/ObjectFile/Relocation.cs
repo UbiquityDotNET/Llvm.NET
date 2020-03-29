@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         public ulong Offset => LLVMGetRelocationOffset( IteratorRef );
 
         /// <summary>Gets the symbol associated with this relocation</summary>
-        public Symbol Symbol => new Symbol( Section.ObjectFile, LLVMGetRelocationSymbol( IteratorRef ) );
+        public Symbol Symbol => new Symbol( Section.ContainingBinary, LLVMGetRelocationSymbol( IteratorRef ) );
 
         /// <summary>Gets the kind of relocation as a string for display purposes</summary>
         public string Description => LLVMGetRelocationTypeName( IteratorRef );

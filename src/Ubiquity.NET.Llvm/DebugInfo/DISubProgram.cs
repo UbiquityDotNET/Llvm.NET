@@ -30,6 +30,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             bool IsLocalToUnit {get;}
         */
 
+        /// <summary>Gets the source line associated with this <see cref="DISubProgram"/></summary>
+        public uint Line => LLVMDISubprogramGetLine( MetadataHandle );
+
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
         public override string Name => GetOperandString( 2 );
 

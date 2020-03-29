@@ -44,7 +44,7 @@
         <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'==''">false</IsPullRequestBuild>
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildTime Condition="'$(BuildTime)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTime>
-        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">8</LlvmVersionMajor>
+        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">10</LlvmVersionMajor>
         <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
         <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
         <!--<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>-->

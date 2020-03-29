@@ -1,6 +1,5 @@
 . .\buildutils.ps1
-
-Initialize-BuildEnvironment
+$buildInfo = Initialize-BuildEnvironment
 
 # Release tags must only be pushed from a repository with the official GitHub repository as the origin remote.
 # This ensures that the links to source in the generated docs will have the correct URLs

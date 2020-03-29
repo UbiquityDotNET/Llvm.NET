@@ -26,6 +26,19 @@ namespace Ubiquity.NET.Llvm.Transforms
             return passManager;
         }
 
+        /// <summary>Add Dead Code Elimination pass</summary>
+        /// <typeparam name="T">Type of pass manager</typeparam>
+        /// <param name="passManager">PassManager to add the pass to</param>
+        /// <returns><paramref name="passManager"/>for fluent support</returns>
+        /// <seealso href="xref:llvm_docs_passes#dce-dead-code-elimination"/>
+        public static T AddDCEPass<T>([ValidatedNotNull] this T passManager)
+            where T : PassManager
+        {
+            passManager.ValidateNotNull( nameof( passManager ) );
+            LLVMAddDCEPass( passManager.Handle );
+            return passManager;
+        }
+
         /// <summary>Adds an Bit tracking DCE pass to the manager</summary>
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
@@ -331,7 +344,7 @@ namespace Ubiquity.NET.Llvm.Transforms
             return passManager;
         }
 
-        /// <summary>Adds an Reassociate expressions pass to the manager</summary>
+        /// <summary>Adds a reassociate expressions pass to the manager</summary>
         /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
@@ -543,6 +556,30 @@ namespace Ubiquity.NET.Llvm.Transforms
         {
             passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddBasicAliasAnalysisPass( passManager.Handle );
+            return passManager;
+        }
+
+        /// <summary>Adds a Lower Constant Intrinsics pass to the manager</summary>
+        /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
+        /// <param name="passManager">THe pass manager to add the pass to</param>
+        /// <returns><paramref name="passManager"/>for fluent support</returns>
+        public static T AddLowerConstantIntrinsicsPass<T>( [ValidatedNotNull] this T passManager )
+            where T : PassManager
+        {
+            passManager.ValidateNotNull( nameof( passManager ) );
+            LLVMAddLowerConstantIntrinsicsPass( passManager.Handle );
+            return passManager;
+        }
+
+        /// <summary>Adds an Add Discriminators Pass to the pass manager</summary>
+        /// <typeparam name="T">Type of pass manager to add the pass to</typeparam>
+        /// <param name="passManager">Pass manager to add the pass to</param>
+        /// <returns><paramref name="passManager"/>for fluent support</returns>
+        public static T AddAddDiscriminatorsPass<T>( [ValidatedNotNull] this T passManager )
+            where T : PassManager
+        {
+            passManager.ValidateNotNull( nameof( passManager ) );
+            LLVMAddAddDiscriminatorsPass( passManager.Handle );
             return passManager;
         }
     }

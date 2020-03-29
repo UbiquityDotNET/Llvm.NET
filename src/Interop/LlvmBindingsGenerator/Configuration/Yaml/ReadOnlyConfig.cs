@@ -21,7 +21,7 @@ namespace LlvmBindingsGenerator.Configuration.Yaml
         public IReadOnlyDictionary<string, YamlFunctionBinding> FunctionBindings
             => YamlConfig.FunctionBindings;
 
-        public IReadOnlyCollection<string> IgnoredHeaders
+        public IReadOnlyCollection<IncludeRef> IgnoredHeaders
             => YamlConfig.IgnoredHeaders;
 
         public IEnumerable<IHandleInfo> HandleMap => YamlConfig.HandleMap;

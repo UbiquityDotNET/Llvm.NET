@@ -52,10 +52,8 @@ namespace Kaleidoscope.Chapter9
 
             #region InitializeModuleAndPassManager
             Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ), SourceLanguage.C, sourcePath, "Kaleidoscope Compiler" );
-            if( Module.DICompileUnit is null )
-            {
-                throw new InternalCodeGeneratorException( "Expected a non-null compile unit for module" );
-            }
+            Debug.Assert( Module.DICompileUnit != null, "Expected non null compile unit" );
+            Debug.Assert( Module.DICompileUnit.File != null, "Expected non-null file for compile unit" );
 
             Module.TargetTriple = machine.Triple;
             Module.Layout = TargetMachine.TargetData;
@@ -205,10 +203,15 @@ namespace Kaleidoscope.Chapter9
             EmitLocation( functionCall );
             string targetName = functionCall.FunctionPrototype.Name;
 
-            // try for an extern function declaration
-            IrFunction function = RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target )
-                                ? GetOrDeclareFunction( target )
-                                : Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            IrFunction? function;
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            {
+                function = GetOrDeclareFunction( target );
+            }
+            else if( !Module.TryGetFunction( targetName, out function ) )
+            {
+                throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            }
 
             var args = ( from expr in functionCall.Arguments
                          select expr.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr)
@@ -514,13 +517,27 @@ namespace Kaleidoscope.Chapter9
         #region EmitLocation
         private void EmitLocation( IAstNode? node )
         {
-            DIScope? scope = Module.DICompileUnit;
+            DILocalScope? scope = null;
             if( LexicalBlocks.Count > 0 )
             {
                 scope = LexicalBlocks.Peek( );
             }
+            else if (InstructionBuilder.InsertFunction != null && InstructionBuilder.InsertFunction.DISubProgram != null)
+            {
+                scope = InstructionBuilder.InsertFunction.DISubProgram;
+            }
 
-            InstructionBuilder.SetDebugLocation( ( uint )( node?.Location.StartLine ?? 0 ), ( uint )( node?.Location.StartColumn ?? 0 ), scope );
+            DILocation? loc = null;
+            if( scope != null )
+            {
+                loc = new DILocation( InstructionBuilder.Context
+                                    , ( uint )( node?.Location.StartLine ?? 0 )
+                                    , ( uint )( node?.Location.StartColumn ?? 0 )
+                                    , scope
+                                    );
+            }
+
+            InstructionBuilder.SetDebugLocation( loc );
         }
         #endregion
 
@@ -530,8 +547,7 @@ namespace Kaleidoscope.Chapter9
         // otherwise declares the function and returns the newly declared function.
         private IrFunction GetOrDeclareFunction( Prototype prototype )
         {
-            var function = Module.GetFunction( prototype.Name );
-            if( function != null )
+            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
             {
                 return function;
             }
@@ -547,8 +563,8 @@ namespace Kaleidoscope.Chapter9
             {
                 var parameters = prototype.Parameters;
 
-                // DICompile unit is checked for null in constructor
-                var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit!.File.FileName, Module.DICompileUnit!.File.Directory );
+                // DICompileUnit and File are checked for null in constructor
+                var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit!.File!.FileName, Module.DICompileUnit!.File.Directory );
                 var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
                 var lastParamLocation = parameters.Count > 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
@@ -586,14 +602,18 @@ namespace Kaleidoscope.Chapter9
             uint line = ( uint )param.Location.StartLine;
             uint col = ( uint )param.Location.StartColumn;
 
+            // Keep compiler happy on null checks by asserting on expectations
+            // The items were created in this file with all necessary info so
+            // these properties should never be null.
             Debug.Assert( function.DISubProgram != null, "expected function with non-null DISubProgram" );
+            Debug.Assert( function.DISubProgram.File != null, "expected function with a non-null DISubProgram.File" );
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected Instruction builder with non-null insertion block" );
 
             DILocalVariable debugVar = Module.DIBuilder.CreateArgument( scope: function.DISubProgram
                                                                       , name: param.Name
                                                                       , file: function.DISubProgram.File
                                                                       , line
-                                                                      , type: DoubleType! // Analyzer is confused (readonly and set in constructor...)
+                                                                      , type: DoubleType
                                                                       , alwaysPreserve: true
                                                                       , debugFlags: DebugInfoFlags.None
                                                                       , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
@@ -610,14 +630,18 @@ namespace Kaleidoscope.Chapter9
             uint line = ( uint )localVar.Location.StartLine;
             uint col = ( uint )localVar.Location.StartColumn;
 
+            // Keep compiler happy on null checks by asserting on expectations
+            // The items were created in this file with all necessary info so
+            // these properties should never be null.
             Debug.Assert( function.DISubProgram != null, "expected function with non-null DISubProgram" );
+            Debug.Assert( function.DISubProgram.File != null, "expected function with non-null DISubProgram.File" );
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected Instruction builder with non-null insertion block" );
 
             DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( scope: function.DISubProgram
                                                                            , name: localVar.Name
                                                                            , file: function.DISubProgram.File
                                                                            , line
-                                                                           , type: DoubleType! // Analyzer is confused (readonly and set in constructor...)
+                                                                           , type: DoubleType
                                                                            , alwaysPreserve: false
                                                                            , debugFlags: DebugInfoFlags.None
                                                                            );
@@ -639,7 +663,7 @@ namespace Kaleidoscope.Chapter9
         private readonly TargetMachine TargetMachine;
         private readonly List<IrFunction> AnonymousFunctions = new List<IrFunction>( );
         private readonly DebugBasicType DoubleType;
-        private readonly Stack<DIScope> LexicalBlocks = new Stack<DIScope>( );
+        private readonly Stack<DILocalScope> LexicalBlocks = new Stack<DILocalScope>( );
         #endregion
     }
 }

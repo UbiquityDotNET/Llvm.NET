@@ -1,5 +1,5 @@
 ﻿# Kaleidoscope Parser
-This library implements a Lexer/Parser for the LUbiquity.NET.Llvm Kaleidoscope tutorial.
+This library implements a Lexer/Parser for the Ubiquity.NET.Llvm Kaleidoscope tutorial.
 The language syntax follows that of the official LLVM C++ tutorial though, unlike
 the C++ version, all versions of the language (Chapters 2-7) use the same parser
 library. To accomplish this, the grammar takes advantage of the dynamic parsing

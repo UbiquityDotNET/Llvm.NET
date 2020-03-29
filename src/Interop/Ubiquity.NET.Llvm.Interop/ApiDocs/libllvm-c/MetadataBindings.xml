@@ -424,6 +424,9 @@
         <Item name="LibLLVMMetadataKind_DIMacroFile">
             <summary>DIMacroFile</summary>
         </Item>
+        <Item name="LibLLVMMetadataKind_DICommonBlock">
+            <summary>TODO: Provide summary for LibLLVMMetadataKind.LibLLVMMetadataKind_DICommonBlock Enumeration</summary>
+        </Item>
     </Enumeration>
     <Function name="LibLLVMDIBasicTypeGetEncoding">
         <summary>Gets the type encoding for a basic type</summary>

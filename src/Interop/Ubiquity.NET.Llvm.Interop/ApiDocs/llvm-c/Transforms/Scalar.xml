@@ -14,6 +14,10 @@
         <summary>TODO: Provide summary for Function LLVMAddAggressiveDCEPass</summary>
         <param name="PM">TODO: Provide details of parameter PM</param>
     </Function>
+    <Function name="LLVMAddDCEPass">
+        <summary>TODO: Provide summary for Function LLVMAddDCEPass</summary>
+        <param name="PM">TODO: Provide details of parameter PM</param>
+    </Function>
     <Function name="LLVMAddBitTrackingDCEPass">
         <summary>TODO: Provide summary for Function LLVMAddBitTrackingDCEPass</summary>
         <param name="PM">TODO: Provide details of parameter PM</param>
@@ -153,6 +157,10 @@
     </Function>
     <Function name="LLVMAddLowerExpectIntrinsicPass">
         <summary>TODO: Provide summary for Function LLVMAddLowerExpectIntrinsicPass</summary>
+        <param name="PM">TODO: Provide details of parameter PM</param>
+    </Function>
+    <Function name="LLVMAddLowerConstantIntrinsicsPass">
+        <summary>TODO: Provide summary for Function LLVMAddLowerConstantIntrinsicsPass</summary>
         <param name="PM">TODO: Provide details of parameter PM</param>
     </Function>
     <Function name="LLVMAddTypeBasedAliasAnalysisPass">

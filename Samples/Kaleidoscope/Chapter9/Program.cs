@@ -64,23 +64,23 @@ namespace Kaleidoscope.Chapter9
                     generator.Generate( ast, ErrorHandler );
                     if( !generator.Module.Verify( out string errMsg ) )
                     {
+                        Console.Error.WriteLine( "Module verification failed:" );
                         Console.Error.WriteLine( errMsg );
+                        return -1;
                     }
-                    else
+
+                    machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
+                    timer.Stop( );
+
+                    Console.WriteLine( "Wrote {0}", objFilePath );
+                    if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
                     {
-                        machine.EmitToFile( generator.Module, objFilePath, CodeGenFileType.ObjectFile );
-                        timer.Stop( );
-
-                        Console.WriteLine( "Wrote {0}", objFilePath );
-                        if( !generator.Module.WriteToTextFile( irFilePath, out string msg ) )
-                        {
-                            Console.Error.WriteLine( msg );
-                            return -1;
-                        }
-
-                        machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
-                        Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
+                        Console.Error.WriteLine( msg );
+                        return -1;
                     }
+
+                    machine.EmitToFile( generator.Module, asmPath, CodeGenFileType.AssemblySource );
+                    Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
                 }
             }
 

@@ -9,7 +9,7 @@ using System.Linq;
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
-
+using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
@@ -17,7 +17,7 @@ namespace LlvmBindingsGenerator.Passes
     internal class ValidateMarshalingInfoPass
         : TranslationUnitPass
     {
-        public ValidateMarshalingInfoPass( )
+        public ValidateMarshalingInfoPass( IGeneratorConfig config )
         {
             VisitOptions.VisitClassBases = false;
             VisitOptions.VisitClassFields = false;
@@ -34,6 +34,8 @@ namespace LlvmBindingsGenerator.Passes
             VisitOptions.VisitNamespaceVariables = false;
             VisitOptions.VisitPropertyAccessors = false;
             VisitOptions.VisitTemplateArguments = false;
+
+            Config = config;
         }
 
         public override bool VisitFunctionDecl( Function function )
@@ -54,7 +56,7 @@ namespace LlvmBindingsGenerator.Passes
                     Diagnostics.Error( "ERROR: Function {0} has string return type, but does not have string custom marshaling attribute to define marshaling behavior!", function.Name );
                 }
             }
-            else if( function.ReturnType.Type is PointerType pt && function.ReturnType.Type is CILType cilptr && cilptr.Type.Name != "IntPtr" )
+            else if( function.ReturnType.Type is PointerType pt )
             {
                 bool hasMarhsalAsAttrib = ( from attrib in function.Attributes.OfType<TargetedAttribute>( )
                                             where attrib.Target == AttributeTarget.Return && attrib.Type.Name == "MarshalAsAttribute"
@@ -62,10 +64,16 @@ namespace LlvmBindingsGenerator.Passes
                                           ).Any( );
                 if( !hasMarhsalAsAttrib )
                 {
-                    Diagnostics.Error( "ERROR: Function {0} has unsafe return type '{1}', without a marshaling attribute - (Possible missing marshal info map entry)"
-                                     , function.Name
-                                     , pt.ToString( )
-                                     );
+                    bool allowUnsafeReturn = Config.FunctionBindings.TryGetValue( function.Name, out YamlFunctionBinding binding )
+                                          && (binding.ReturnTransform?.IsUnsafe ?? false);
+
+                    if( !allowUnsafeReturn )
+                    {
+                        Diagnostics.Error( "ERROR: Function {0} has unsafe return type '{1}', without a marshaling attribute - (Possible missing FunctionBindings entry)"
+                                         , function.Name
+                                         , pt.ToString( )
+                                         );
+                    }
                 }
             }
 
@@ -88,5 +96,7 @@ namespace LlvmBindingsGenerator.Passes
             return attribute.Type.Name == "MarshalAsAttribute"
                 && attribute.Value.StartsWith( "UnmanagedType.CustomMarshaler", System.StringComparison.InvariantCulture );
         }
+
+        private readonly IGeneratorConfig Config;
     }
 }

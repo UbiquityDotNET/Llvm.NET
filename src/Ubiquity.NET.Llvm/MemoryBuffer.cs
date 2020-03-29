@@ -90,7 +90,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Detaches the underlying buffer from automatic management</summary>
         /// <remarks>
-        /// This is used when passing the memory buffer to an LLVM object (like <see cref="Ubiquity.NET.Llvm.ObjectFile.TargetObjectFile"/>
+        /// This is used when passing the memory buffer to an LLVM object (like <see cref="Ubiquity.NET.Llvm.ObjectFile.TargetBinary"/>
         /// that takes ownership of the underlying buffer. Any use of the buffer after this point results in
         /// an <see cref="InvalidOperationException"/>.
         /// </remarks>

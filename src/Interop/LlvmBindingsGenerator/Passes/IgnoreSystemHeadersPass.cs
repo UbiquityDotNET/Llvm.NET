@@ -9,6 +9,7 @@ using System.Linq;
 
 using CppSharp.AST;
 using CppSharp.Passes;
+using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
 {
@@ -16,9 +17,10 @@ namespace LlvmBindingsGenerator.Passes
     internal class IgnoreSystemHeadersPass
         : TranslationUnitPass
     {
-        public IgnoreSystemHeadersPass( IReadOnlyCollection<string> ignoredHeaders )
+        public IgnoreSystemHeadersPass( IReadOnlyCollection<IncludeRef> ignoredHeaders )
         {
-            IgnoredHeaders = ignoredHeaders;
+            IgnoredHeaders = from entry in ignoredHeaders
+                             select entry.Path;
         }
 
         public IgnoreSystemHeadersPass( )
@@ -42,7 +44,13 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitTranslationUnit( TranslationUnit unit )
         {
-            bool isExplicitlyIgnored = IgnoredHeaders.Contains( unit.FileName );
+            if( unit.IncludePath == null || !unit.IsValid || unit.IsInvalid )
+            {
+                unit.GenerationKind = GenerationKind.None;
+                return true;
+            }
+
+            bool isExplicitlyIgnored = IgnoredHeaders.Contains( unit.FileRelativePath );
             if( isExplicitlyIgnored )
             {
                 unit.Ignore = true;
@@ -55,6 +63,6 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
-        private readonly IReadOnlyCollection<string> IgnoredHeaders;
+        private readonly IEnumerable<string> IgnoredHeaders;
     }
 }

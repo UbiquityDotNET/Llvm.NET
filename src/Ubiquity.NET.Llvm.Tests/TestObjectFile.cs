@@ -79,14 +79,16 @@ namespace Ubiquity.NET.Llvm.Tests
         [TestMethod]
         public void LoadObjFileTest( )
         {
-            using var obj = TargetObjectFile.Open( TestObjFileName );
+            using var llvmContext = new Context( );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
         }
 
         [TestMethod]
         [Description( "All the declared section names should exist" )]
         public void DeclaredSectionsTest( )
         {
-            using var obj = TargetObjectFile.Open( TestObjFileName );
+            using var llvmContext = new Context( );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // all the declared section names should be present (There may be additional obj format specific sections as well)
             Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == AddSectionName ) != default );
@@ -99,7 +101,8 @@ namespace Ubiquity.NET.Llvm.Tests
         [Description( "Symbols should exist for all the declared functions" )]
         public void DeclaredSymbolsTest( )
         {
-            using var obj = TargetObjectFile.Open( TestObjFileName );
+            using var llvmContext = new Context( );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // symbols should be present for all the declared functions
             Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == AddFuncName ) != default );
@@ -112,7 +115,8 @@ namespace Ubiquity.NET.Llvm.Tests
         [Description( "Declared sections should have one relocation for the declared function" )]
         public void DeclaredFunctionRelocationTest( )
         {
-            using var obj = TargetObjectFile.Open( TestObjFileName );
+            using var llvmContext = new Context( );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // all the declared section names should be present (There may be additional obj format specific sections as well)
             var declaredSections = from sec in obj.Sections

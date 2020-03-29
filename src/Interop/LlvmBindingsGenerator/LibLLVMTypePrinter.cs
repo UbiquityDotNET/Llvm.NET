@@ -12,6 +12,12 @@ using Ubiquity.ArgValidators;
 
 namespace LlvmBindingsGenerator
 {
+    // CONSIDER: Make this type printer provide the source language name
+    // so that Type.TosString() just works as is generally expected.
+    // (May be simpler to get the debug signature if available)
+    // Then add an extension method to type (i.e. ToTargetLanguageString())
+    // that implements the functionality currently in this class
+
     /// <summary>Specialized type printer for Ubiquity.NET.Llvm.Interop</summary>
     /// <remarks>
     /// <para>Unfortunately <see cref="CppSharp.AST.Type.ToString"/> will fail with a null
@@ -25,7 +31,11 @@ namespace LlvmBindingsGenerator
     /// to the ToString() method in code generating a null reference exception if the
     /// delegate isn't set up.</para>
     /// <para>This type serves as an extension to the default <see cref="CSharpTypePrinter"/>
-    /// that handles the specific needs of the Ubiquity.NET.Llvm.Interop code generation.</para>
+    /// that handles the specific needs of the Ubiquity.NET.Llvm.Interop code generation. The
+    /// role of the type printer is to get a string for the type in the syntax of the target
+    /// language. (As mentioned this is unfortunately tied into the type.ToString() method,
+    /// which means the debugger only shows the target language type names and NOT the original
+    /// AST names from the source)</para>
     /// </remarks>
     internal class LibLLVMTypePrinter
         : CSharpTypePrinter
@@ -45,6 +55,9 @@ namespace LlvmBindingsGenerator
                 break;
 
             case PointerType pt when pt.Pointee is BuiltinType:
+                retVal = $"{ToString(pt.Pointee)}*";
+                break;
+
             case TypedefType tdt when tdt.Declaration.Name == "intptr_t":
                 retVal = "global::System.IntPtr";
                 break;

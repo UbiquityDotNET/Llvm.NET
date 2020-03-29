@@ -162,7 +162,7 @@ namespace Ubiquity.NET.Llvm
             return node;
         }
 
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created via GetMeatadataContext() is owned, and disposed of via the ContextCache" )]
         internal static bool TryGetFromHandle<T>( LLVMMetadataRef handle, [MaybeNullWhen( false )] out T node )
         where T : MDNode
         {

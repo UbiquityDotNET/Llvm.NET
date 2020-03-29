@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Ubiquity.NET.Llvm;
@@ -363,6 +364,7 @@ namespace TestDebugInfo
 
             // create block for the function body, only need one for this simple sample
             var blk = doCopyFunc.AppendBasicBlock( "entry" );
+            Debug.Assert( doCopyFunc.DISubProgram != null, "Expected non null subProgram" );
 
             // create instruction builder to build the body
             var instBuilder = new InstructionBuilder( blk );
