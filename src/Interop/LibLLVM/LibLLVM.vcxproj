@@ -117,7 +117,7 @@
     <ClCompile Include="AttributeBindings.cpp" />
     <ClCompile Include="ContextBindings.cpp" />
     <ClCompile Include="DIBuilderBindings.cpp" />
-    <ClCompile Include="include\libllvm-c\ObjectFileBindings.cpp" />
+    <ClCompile Include="ObjectFileBindings.cpp" />
     <ClCompile Include="InlinedExports.cpp" />
     <ClCompile Include="IRBindings.cpp" />
     <ClCompile Include="LibLlvmOrcJitBindings.cpp" />
