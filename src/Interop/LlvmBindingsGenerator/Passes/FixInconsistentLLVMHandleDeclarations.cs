@@ -12,7 +12,7 @@ using CppSharp.Passes;
 
 namespace LlvmBindingsGenerator.Passes
 {
-    /// <summary>Fix inconsistencies in type defs for handles in LLVM</summary>
+    /// <summary>Fix inconsistencies in typedefs for handles in LLVM</summary>
     /// <remarks>
     /// <para>
     /// The canonical pattern is 'typedef struct LLVMOpaqueGoodFoo* LLVMGoodFooRef',
@@ -57,7 +57,7 @@ namespace LlvmBindingsGenerator.Passes
                 var ptrType = new PointerType( typedef.QualifiedType );
                 typedef.QualifiedType = new QualifiedType( ptrType );
 
-                Diagnostics.Message( "NOTE: Bad form 'REF' declaration for {0} found in LLVM source at {1}@{2}", typedef.Name, typedef.TranslationUnit.FileName, typedef.LineNumberStart );
+                Diagnostics.Debug( "NOTE: Bad form 'REF' declaration for {0} found in LLVM source at {1}@{2}", typedef.Name, typedef.TranslationUnit.FileName, typedef.LineNumberStart );
                 RedefinedHandleDeclarations.Add( typedef.Name, new TypedefType( typedef ) );
                 return true;
             }

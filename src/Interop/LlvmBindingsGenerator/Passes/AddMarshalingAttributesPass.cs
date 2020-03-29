@@ -57,7 +57,13 @@ namespace LlvmBindingsGenerator.Passes
 
         public override bool VisitFieldDecl( Field field )
         {
-            TryAddImplicitMarahalingAttributesForType( field.QualifiedType, field.Attributes );
+            var (usage, type) = TryAddImplicitMarahalingAttributesForType( field.QualifiedType, field.Attributes );
+            if( usage != ParameterUsage.Unknown )
+            {
+                Diagnostics.Debug( "Converting type of field {0}.{1} to {2}", field.Namespace, field.Name, type.ToString( ) );
+                field.QualifiedType = new QualifiedType( type, field.QualifiedType.Qualifiers );
+            }
+
             return true;
         }
 
@@ -132,6 +138,29 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
+        public override bool VisitFunctionType( FunctionType function, TypeQualifiers quals )
+        {
+            if( !VisitType( function, quals ) )
+            {
+                return false;
+            }
+
+            if( function.ReturnType.Type != null )
+            {
+                VisitReturnType( function );
+            }
+
+            if( VisitOptions.VisitFunctionParameters )
+            {
+                foreach( Parameter parameter in function.Parameters )
+                {
+                    parameter.Visit( this );
+                }
+            }
+
+            return true;
+        }
+
         private bool VisitReturnType( FunctionType signature )
         {
             var scope = DeclarationStack.Peek( );
@@ -146,7 +175,7 @@ namespace LlvmBindingsGenerator.Passes
                 }
             }
 
-            return true;
+            return signature.ReturnType.Visit( this );
         }
 
         private static void ApplyImplicitParamsUsage( Parameter p )
@@ -154,6 +183,7 @@ namespace LlvmBindingsGenerator.Passes
             var (usage, type) = TryAddImplicitMarahalingAttributesForType( p.QualifiedType, p.Attributes );
             if( usage != ParameterUsage.Unknown )
             {
+                Diagnostics.Debug( "Converting type of parameter {0}::{1} to {2} [Usage: {3}]", p.Namespace, p.Name, type.ToString( ), usage );
                 p.Usage = usage;
                 p.QualifiedType = new QualifiedType( type, p.QualifiedType.Qualifiers );
                 return;
@@ -165,11 +195,13 @@ namespace LlvmBindingsGenerator.Passes
                 {
                 // void* => IntPtr
                 case BuiltinType bt when bt.Type == PrimitiveType.Void:
+                    Diagnostics.Debug( "Converting void* parameter {0}::{1} to IntPtr [In]", p.Namespace, p.Name );
                     p.QualifiedType = new QualifiedType( new CILType( typeof( IntPtr ) ) );
                     break;
 
                 // Pointer to Pointer and Pointer to built in types are out parameters
                 default:
+                    Diagnostics.Debug( "Setting usage semantics of pointer to pointer parameter {0}::{1} to [Out]", p.Namespace, p.Name );
                     p.Usage = ParameterUsage.Out;
                     break;
                 }

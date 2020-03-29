@@ -1047,13 +1047,13 @@ FunctionBindings:
     ReturnTransform: !Alias {}
 
   - Name: LLVMDIFileGetDirectory
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: CopyAlias}
 
   - Name: LLVMDIFileGetFilename
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: CopyAlias}
 
   - Name: LLVMDIFileGetSource
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: CopyAlias}
 
   - Name: LLVMGetPointerToGlobal
     ReturnTransform: !Primitive {Kind: IntPtr}
@@ -1072,6 +1072,9 @@ FunctionBindings:
 
   - Name: LLVMGetIndices
     ReturnTransform: !Unsafe {}
+
+  - Name: LLVMSymbolLookupCallback
+    ReturnTransform: !String {Kind: CopyAlias}
 
 # The HandleMap Lists the types of handles and their disposal semantics
 #HandleMap:

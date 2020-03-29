@@ -176,8 +176,14 @@ namespace LlvmBindingsGenerator.Passes
                                ).Distinct(new FunctionNameComparer())
                                 .ToDictionary( f => f.Name );
 
+            var allDelegates = ( from unit in context.GeneratedUnits()
+                                 from td in unit.Typedefs
+                                 where td.IsDelegateTypeDef()
+                                 select td
+                               ).ToDictionary(t=>t.Name);
+
             var missingFunctions = ( from declaredFunc in configFunctions
-                                     where !allFunctions.ContainsKey( declaredFunc.Key )
+                                     where !allFunctions.ContainsKey( declaredFunc.Key ) && !allDelegates.ContainsKey( declaredFunc.Key )
                                      select declaredFunc
                                    ).ToList();
 
@@ -188,7 +194,7 @@ namespace LlvmBindingsGenerator.Passes
 
             foreach( var missingFunc in missingFunctions )
             {
-                Diagnostics.Warning( "Function {0} not found; It was declared in the configuration at line {1} but was not found in the source"
+                Diagnostics.Warning( "Function {0} was declared in the configuration at line {1} but neither the function nor any delegate typdefs were found in the source"
                                    , missingFunc.Key
                                    , missingFunc.Value.Start.Line
                                    );
