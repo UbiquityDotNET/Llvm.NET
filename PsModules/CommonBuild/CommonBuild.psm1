@@ -215,7 +215,7 @@ function Invoke-NuGet
     }
 }
 
-function Find-VSInstance([switch]$PreRelease, [switch]$Force, $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
+function Find-VSInstance([switch]$PreRelease, [switch]$Force = [System.Convert]::ToBoolean($env:IsAutomatedBuild), $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
 {
 <#
 .SYNOPSIS
