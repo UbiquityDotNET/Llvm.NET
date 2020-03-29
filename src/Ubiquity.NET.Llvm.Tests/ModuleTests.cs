@@ -225,8 +225,8 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.AreSame( module, testFunc.ParentModule );
             Assert.AreEqual( "foo", testFunc.Name );
 
-            // Verify the function is in the module
-            var funcFromModule = module.GetFunction( "foo" );
+            // Verify the function is in the module, and getting it retrieves the same instance
+            Assert.IsTrue( module.TryGetFunction( "foo", out IrFunction? funcFromModule ) );
             Assert.AreSame( testFunc, funcFromModule );
         }
 
@@ -248,7 +248,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
                 // force a GC to ensure buffer created in LoadFrom is handled correctly
                 GC.Collect( GC.MaxGeneration );
-                IrFunction? testFunc = module2.GetFunction( "foo" );
+                Assert.IsTrue( module2.TryGetFunction( "foo", out IrFunction? testFunc ) );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -516,7 +516,7 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.AreEqual( 1, clone.Comdats.Count, "Comdat count should contain the one and only referenced comdat after save/clone" );
             Assert.IsTrue( clone.Comdats.Contains( globalName ), "Cloned module should have the referenced comdat" );
 
-            var clonedGlobal = clone.GetFunction( globalName );
+            Assert.IsTrue( clone.TryGetFunction( globalName, out IrFunction? clonedGlobal ) );
             Assert.IsNotNull( clonedGlobal );
             Assert.IsNotNull( clonedGlobal!.Comdat );
             Assert.AreEqual( globalName, clonedGlobal.Comdat!.Name, "Name of the comdat on the cloned global should match the one set in the original module" );

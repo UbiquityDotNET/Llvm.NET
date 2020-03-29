@@ -234,8 +234,7 @@ namespace Kaleidoscope.Grammar.AST
         }
         #endregion
 
-        [MaybeNull]
-        protected override IAstNode DefaultResult => null;
+        protected override IAstNode DefaultResult => NullNode.Instance;
 
         private Prototype FindCallTarget( string calleeName )
         {

@@ -185,10 +185,15 @@ namespace Kaleidoscope.Chapter6
             functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
 
-            // try for an extern function declaration
-            IrFunction function = RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target )
-                                ? GetOrDeclareFunction( target )
-                                : Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            IrFunction? function;
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            {
+                function = GetOrDeclareFunction( target );
+            }
+            else if( !Module.TryGetFunction( targetName, out function ) )
+            {
+                throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            }
 
             var args = ( from expr in functionCall.Arguments
                          select expr.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr)
@@ -441,8 +446,7 @@ namespace Kaleidoscope.Chapter6
                 throw new InvalidOperationException( "ICE: Can't get or declare a function without an active module" );
             }
 
-            var function = Module.GetFunction( prototype.Name );
-            if( function != null )
+            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
             {
                 return function;
             }

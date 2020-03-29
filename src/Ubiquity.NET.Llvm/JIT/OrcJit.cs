@@ -218,6 +218,7 @@ namespace Ubiquity.NET.Llvm.JIT
                 catch
                 {
                     // native callback - MUST NOT leak exceptions out of this call.
+                    System.Diagnostics.Debug.Assert( false, "Callbacks should not allow exceptions - this is an application crash scenario!" );
                     return 0;
                 }
 #pragma warning restore CA1031 // Do not catch general exception types
