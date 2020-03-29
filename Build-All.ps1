@@ -9,8 +9,6 @@ Param(
 . .\buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment -FullInit
 
-Write-Information "****: $buildInfo"
-
 pushd $PSScriptRoot
 $oldPath = $env:Path
 $BuildSource = $false

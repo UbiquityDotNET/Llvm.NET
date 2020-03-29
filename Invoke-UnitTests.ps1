@@ -4,8 +4,8 @@ $buildInfo = Initialize-BuildEnvironment
 $testsFailed = $false
 
 Write-Information 'Running tests as x64'
-$testProj = Join-Path $buildInfo['SrcRoot'] 'Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj'
-$runSettings = Join-Path $buildInfo['SrcRoot'] 'x64.runsettings'
+$testProj = Join-Path $buildInfo['SrcRootPath'] 'Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj'
+$runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
 dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath']
 $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
 
