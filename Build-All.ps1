@@ -5,11 +5,11 @@ Param(
     [ValidateSet('All','Source','Docs')]
     [System.String]$BuildMode = 'All'
 )
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
 
 . .\buildutils.ps1
-Initialize-BuildEnvironment -FullInit
+$buildInfo = Initialize-BuildEnvironment -FullInit
+
+Write-Information "****: $buildInfo"
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
@@ -25,22 +25,22 @@ switch($BuildMode)
 
 try
 {
-    if( (Test-Path -PathType Container $BuildPaths.BuildOutputPath) -and $ForceClean )
+    if((Test-Path -PathType Container $buildInfo['BuildOutputPath']) -and $ForceClean )
     {
         Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $BuildPaths.BuildOutputPath
+        rd -Recurse -Force -Path $buildInfo['BuildOutputPath']
     }
 
-    md $BuildPaths.NuGetOutputPath -ErrorAction SilentlyContinue | Out-Null
+    md $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
     if($BuildSource)
     {
-        .\Build-Source.ps1 -BuildInfo $BuildInfo
+        .\Build-Source.ps1
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1 -BuildInfo $BuildInfo
+        .\Build-Docs.ps1
     }
 }
 finally

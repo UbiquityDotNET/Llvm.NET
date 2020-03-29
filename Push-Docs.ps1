@@ -3,8 +3,7 @@ Param(
 )
 
 . .\buildutils.ps1
-
-Initialize-BuildEnvironment
+$buildInfo = Initialize-BuildEnvironment
 
 Write-Information "Preparing to PUSH updated docs to GitHub IO"
 

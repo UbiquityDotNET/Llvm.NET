@@ -4,8 +4,7 @@ Param(
 )
 
 . .\buildutils.ps1
-
-Initialize-BuildEnvironment
+$buildInfo = Initialize-BuildEnvironment
 
 # Main Script entry point -----------
 $ErrorActionPreference = "Stop"
@@ -15,24 +14,24 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    $packProperties = @{ version=$($BuildInfo.PackageVersion)
-                         llvmversion=$($BuildInfo.LlvmVersion)
-                         buildbinoutput=(normalize-path (Join-path $($BuildPaths.BuildOutputPath) 'bin'))
+    $packProperties = @{ version=$($buildInfo['PackageVersion'])
+                         llvmversion=$($buildInfo['LlvmVersion'])
+                         buildbinoutput=(Join-path $($buildInfo['BuildOutputPath']) 'bin')
                          configuration=$Configuration
                        }
 
     $msBuildProperties = @{ Configuration = $Configuration
-                            LlvmVersion = $BuildInfo.LlvmVersion
+                            LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
-    .\Build-Interop.ps1 -BuildInfo $BuildInfo
+    .\Build-Interop.ps1
 
-    $buildLogPath = Join-Path $BuildPaths.BinLogsPath Ubiquity.NET.Llvm.binlog
+    $buildLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.binlog
     Write-Information "Building Ubiquity.NET.Llvm"
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Ubiquity.NET.Llvm.sln -Properties $msBuildProperties -LoggerArgs ($BuildInfo.MsBuildLoggerArgs + @("/bl:$buildLogPath") )
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Ubiquity.NET.Llvm.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
 
-    pushd $BuildPaths.NuGetOutputPath
-    Compress-Archive -Force -Path *.* -DestinationPath (join-path $BuildPaths.BuildOutputPath Nuget.Packages.zip)
+    pushd $buildInfo['NuGetOutputPath']
+    Compress-Archive -Force -Path *.* -DestinationPath (join-path $buildInfo['BuildOutputPath'] Nuget.Packages.zip)
 }
 finally
 {
