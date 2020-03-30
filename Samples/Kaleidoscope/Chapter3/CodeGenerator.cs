@@ -53,7 +53,7 @@ namespace Kaleidoscope.Chapter3
         }
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             ast.ValidateNotNull( nameof( ast ) );
             codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
@@ -61,12 +61,18 @@ namespace Kaleidoscope.Chapter3
             {
                 // Prototypes, including extern are ignored as AST generation
                 // adds them to the RuntimeState so that already has the declarations
-                return ( ast is FunctionDefinition ) ? ast.Accept( this ) : null;
+                Value? result = null;
+                if( ast is FunctionDefinition )
+                {
+                    result = ast.Accept( this );
+                }
+
+                return result != null ? new OptionalValue<Value>( result ) : default;
             }
             catch( CodeGeneratorException ex )
             {
                 codeGenerationErroHandler( ex );
-                return null;
+                return default;
             }
         }
         #endregion

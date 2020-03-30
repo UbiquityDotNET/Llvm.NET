@@ -6,7 +6,6 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Antlr4.Runtime;
@@ -308,7 +307,7 @@ namespace Kaleidoscope.Grammar.AST
 
         private IAstNode BuildPrototype( PrototypeContext context, string name )
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if( string.IsNullOrWhiteSpace( name ) )
             {
                 name = context.Name;
             }

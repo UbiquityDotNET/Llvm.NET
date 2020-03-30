@@ -59,7 +59,7 @@ namespace Kaleidoscope.Chapter6
         #endregion
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             ast.ValidateNotNull( nameof( ast ) );
             codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
@@ -69,7 +69,7 @@ namespace Kaleidoscope.Chapter6
                 // adds them to the RuntimeState so that already has the declarations
                 if( !( ast is FunctionDefinition definition ) )
                 {
-                    return null;
+                    return default;
                 }
 
                 InitializeModuleAndPassManager( );
@@ -84,7 +84,7 @@ namespace Kaleidoscope.Chapter6
                     var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
                     var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
-                    return retVal;
+                    return new OptionalValue<Value>( retVal );
                 }
                 else
                 {
@@ -104,13 +104,13 @@ namespace Kaleidoscope.Chapter6
                     // Native code is generated for the module automatically only when required.
                     ulong jitHandle = JIT.AddLazyCompiledModule( Module );
                     FunctionModuleMap.Add( definition.Name, jitHandle );
-                    return function;
+                    return new OptionalValue<Value>( function );
                 }
             }
             catch( CodeGeneratorException ex )
             {
                 codeGenerationErroHandler( ex );
-                return null;
+                return default;
             }
         }
         #endregion

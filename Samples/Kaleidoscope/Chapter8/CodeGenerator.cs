@@ -76,7 +76,7 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             ast.ValidateNotNull( nameof( ast ) );
             codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
@@ -114,7 +114,7 @@ namespace Kaleidoscope.Chapter8
                 codeGenerationErroHandler( ex );
             }
 
-            return null;
+            return default;
         }
         #endregion
 
