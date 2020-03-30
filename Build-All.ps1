@@ -6,6 +6,8 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
+Write-Information "Starting build..."
+
 . .\buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment -FullInit
 

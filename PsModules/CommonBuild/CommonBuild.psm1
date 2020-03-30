@@ -17,18 +17,18 @@ function Get-DefaultBuildPaths([string]$repoRoot)
     allows for standardization of build output locations etc... across builds. The
     values set are as follows:
 
-    | Name            | Description                          |
-    |-----------------|--------------------------------------|
-    | RepoRoot        | Root of the repository for the build |
-    | BuildOutput     | Base directory for all build output during the build |
-    | NuGetRepository | NuGet 'packages' directory for C++ projects using packages.config |
-    | NuGetOutput     | Location where NuGet packages created during the build are placed |
-    | SrcRoot         | Root of the source code for this repository |
-    | DocsOutput      | Root path for the generated documentation for the project |
-    | BinLogs         | Path to where the binlogs are generated for PR builds to allow diagnosing failures in the automated builds |
-    | TestResultsPath | Path to where test results are placed. |
-    | Downloads       | Location where any downloaded files, used by the build are placed |
-    | Tools           | Location of any executable tools downloaded for the build (Typically expanded from a compressed download) |
+    | Name                | Description                          |
+    |---------------------|--------------------------------------|
+    | RepoRootPath        | Root of the repository for the build |
+    | BuildOutputPath     | Base directory for all build output during the build |
+    | NuGetRepositoryPath | NuGet 'packages' directory for C++ projects using packages.config |
+    | NuGetOutputPath     | Location where NuGet packages created during the build are placed |
+    | SrcRootPath         | Root of the source code for this repository |
+    | DocsOutputPath      | Root path for the generated documentation for the project |
+    | BinLogsPath         | Path to where the binlogs are generated for PR builds to allow diagnosing failures in the automated builds |
+    | TestResultsPath     | Path to where test results are placed. |
+    | DownloadsPath       | Location where any downloaded files, used by the build are placed |
+    | ToolsPath           | Location of any executable tools downloaded for the build (Typically expanded from a compressed download) |
 #>
     $buildOutputPath = ConvertTo-NormalizedPath (Join-Path $repoRoot 'BuildOutput')
     $buildPaths = @{

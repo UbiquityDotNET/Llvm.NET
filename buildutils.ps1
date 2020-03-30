@@ -21,7 +21,7 @@ function Install-LlvmLibs($destPath, $packageReleaseName)
     $buildInfo = Get-BuildInformation
     if(!(Test-Path -PathType Container $destPath))
     {
-        if(!(Test-Path -PathType Container $buildInfo['Downloads']))
+        if(!(Test-Path -PathType Container $buildInfo['DownloadsPath']))
         {
             md $buildInfo['Downloads'] | Out-Null
         }

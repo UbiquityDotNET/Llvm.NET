@@ -20,7 +20,7 @@ try
                           }
 
     # clone docs output location so it is available as a destination for the Generated docs content
-    if(!$NoClone -and !(Test-Path (Join-Path $buildInfo['DocsOutput'] '.git') -PathType Container))
+    if(!$NoClone -and !(Test-Path (Join-Path $buildInfo['DocsOutputPath'] '.git') -PathType Container))
     {
         Write-Information "Cloning Docs repository"
         pushd BuildOutput -ErrorAction Stop
