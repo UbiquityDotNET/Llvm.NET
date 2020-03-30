@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - llvm_10
     paths-ignore:
       - '**.md'
   pull_request:
