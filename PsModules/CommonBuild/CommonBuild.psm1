@@ -215,7 +215,7 @@ function Invoke-NuGet
     }
 }
 
-function Find-VSInstance([switch]$PreRelease, [switch]$Force = [System.Convert]::ToBoolean($env:IsAutomatedBuild), $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
+function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
 {
 <#
 .SYNOPSIS
@@ -223,10 +223,6 @@ function Find-VSInstance([switch]$PreRelease, [switch]$Force = [System.Convert]:
 
 .PARAMETER PreRelease
     Indicates if the search should include pre-release versions of Visual Studio
-
-.PARAMETER Force
-    Indicates if the installation of the VSSetup module is forced (no user prompting), generally this
-    is only enabled for automated build tooling
 
 .PARAMETER version
     The version range to search for. [Default is '[15.0, 17.0)']
@@ -238,11 +234,12 @@ function Find-VSInstance([switch]$PreRelease, [switch]$Force = [System.Convert]:
     Uses the official MS provided PowerShell module to find a VS instance. If the VSSetup
     module is not loaded it is loaded first. If it isn't installed, then the module is installed.
 #>
+    $forceModuleInstall = [System.Convert]::ToBoolean($env:IsAutomatedBuild)
     $existingModule = Get-InstalledModule -ErrorAction SilentlyContinue VSSetup
     if(!$existingModule)
     {
         Write-Information "Installing VSSetup module"
-        Install-Module VSSetup -Scope CurrentUser -Force:$Force | Out-Null
+        Install-Module VSSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
     }
 
     Get-VSSetupInstance -Prerelease:$PreRelease |
