@@ -3,17 +3,13 @@ Param(
     [switch]$AllowVsPreReleases
 )
 
-. .\buildutils.ps1
-$buildInfo = Initialize-BuildEnvironment
-
-# Main Script entry point -----------
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
-
 pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
+    . .\buildutils.ps1
+    $buildInfo = Initialize-BuildEnvironment
+
     $packProperties = @{ version=$($buildInfo['PackageVersion'])
                          llvmversion=$($buildInfo['LlvmVersion'])
                          buildbinoutput=(Join-path $($buildInfo['BuildOutputPath']) 'bin')
@@ -32,6 +28,10 @@ try
 
     pushd $buildInfo['NuGetOutputPath']
     Compress-Archive -Force -Path *.* -DestinationPath (join-path $buildInfo['BuildOutputPath'] Nuget.Packages.zip)
+}
+catch
+{
+    Write-Error $_.Exception.Message
 }
 finally
 {

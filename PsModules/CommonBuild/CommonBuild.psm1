@@ -17,18 +17,18 @@ function Get-DefaultBuildPaths([string]$repoRoot)
     allows for standardization of build output locations etc... across builds. The
     values set are as follows:
 
-    | Name            | Description                          |
-    |-----------------|--------------------------------------|
-    | RepoRoot        | Root of the repository for the build |
-    | BuildOutput     | Base directory for all build output during the build |
-    | NuGetRepository | NuGet 'packages' directory for C++ projects using packages.config |
-    | NuGetOutput     | Location where NuGet packages created during the build are placed |
-    | SrcRoot         | Root of the source code for this repository |
-    | DocsOutput      | Root path for the generated documentation for the project |
-    | BinLogs         | Path to where the binlogs are generated for PR builds to allow diagnosing failures in the automated builds |
-    | TestResultsPath | Path to where test results are placed. |
-    | Downloads       | Location where any downloaded files, used by the build are placed |
-    | Tools           | Location of any executable tools downloaded for the build (Typically expanded from a compressed download) |
+    | Name                | Description                          |
+    |---------------------|--------------------------------------|
+    | RepoRootPath        | Root of the repository for the build |
+    | BuildOutputPath     | Base directory for all build output during the build |
+    | NuGetRepositoryPath | NuGet 'packages' directory for C++ projects using packages.config |
+    | NuGetOutputPath     | Location where NuGet packages created during the build are placed |
+    | SrcRootPath         | Root of the source code for this repository |
+    | DocsOutputPath      | Root path for the generated documentation for the project |
+    | BinLogsPath         | Path to where the binlogs are generated for PR builds to allow diagnosing failures in the automated builds |
+    | TestResultsPath     | Path to where test results are placed. |
+    | DownloadsPath       | Location where any downloaded files, used by the build are placed |
+    | ToolsPath           | Location of any executable tools downloaded for the build (Typically expanded from a compressed download) |
 #>
     $buildOutputPath = ConvertTo-NormalizedPath (Join-Path $repoRoot 'BuildOutput')
     $buildPaths = @{
@@ -40,7 +40,7 @@ function Get-DefaultBuildPaths([string]$repoRoot)
         DocsOutputPath = Join-Path $buildOutputPath 'docs'
         BinLogsPath = Join-Path $buildOutputPath 'BinLogs'
         TestResultsPath = Join-Path $buildOutputPath 'Test-Results'
-        DownloadsPath = Join-Path $buildOutputPath 'Downloads'
+        DownloadsPath = Join-Path $repoRoot 'Downloads'
         ToolsPath = Join-Path $repoRoot 'Tools'
     }
 
@@ -215,7 +215,7 @@ function Invoke-NuGet
     }
 }
 
-function Find-VSInstance([switch]$PreRelease, [switch]$Force, $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
+function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
 {
 <#
 .SYNOPSIS
@@ -223,10 +223,6 @@ function Find-VSInstance([switch]$PreRelease, [switch]$Force, $Version = '[15.0,
 
 .PARAMETER PreRelease
     Indicates if the search should include pre-release versions of Visual Studio
-
-.PARAMETER Force
-    Indicates if the installation of the VSSetup module is forced (no user prompting), generally this
-    is only enabled for automated build tooling
 
 .PARAMETER version
     The version range to search for. [Default is '[15.0, 17.0)']
@@ -238,11 +234,12 @@ function Find-VSInstance([switch]$PreRelease, [switch]$Force, $Version = '[15.0,
     Uses the official MS provided PowerShell module to find a VS instance. If the VSSetup
     module is not loaded it is loaded first. If it isn't installed, then the module is installed.
 #>
+    $forceModuleInstall = [System.Convert]::ToBoolean($env:IsAutomatedBuild)
     $existingModule = Get-InstalledModule -ErrorAction SilentlyContinue VSSetup
     if(!$existingModule)
     {
         Write-Information "Installing VSSetup module"
-        Install-Module VSSetup -Scope CurrentUser -Force:$Force | Out-Null
+        Install-Module VSSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
     }
 
     Get-VSSetupInstance -Prerelease:$PreRelease |
@@ -374,7 +371,8 @@ Function Expand-7zArchive([string]$Path, [string]$Destination)
         "`"-o$($Destination)`""  # Output directory
         "`"$($Path)`"" # 7z file name
     )
-    & $7zPath $7zArgs
+    Write-Information "Expanding '$Path' to '$Destination'"
+    & $7zPath $7zArgs | Out-Null
 }
 
 enum BuildKind
@@ -445,4 +443,20 @@ function Get-CurrentBuildKind
     }
 
     return $currentBuildKind
+}
+
+function Get-GitHubReleases($org, $project)
+{
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    $releases = Invoke-RestMethod -Uri "https://api.github.com/repos/$org/$project/releases"
+    foreach($r in $releases)
+    {
+        $r
+    }
+}
+
+function Get-GitHubTaggedRelease($org, $project, $tag)
+{
+    Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
 }

@@ -9,6 +9,7 @@ using System;
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
+
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -53,7 +54,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets the kind of the attribute</summary>
         /// <value>The <see cref="AttributeKind"/> or <see cref="AttributeKind.None"/> for named attributes</value>
         public AttributeKind Kind
-            => LLVMIsStringAttribute(NativeAttribute)
+            => LLVMIsStringAttribute( NativeAttribute )
                  ? AttributeKind.None
                  : AttributeKindExtensions.LookupId( LLVMGetEnumAttributeKind( NativeAttribute ) );
 

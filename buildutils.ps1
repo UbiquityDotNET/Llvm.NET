@@ -21,12 +21,12 @@ function Install-LlvmLibs($destPath, $packageReleaseName)
     $buildInfo = Get-BuildInformation
     if(!(Test-Path -PathType Container $destPath))
     {
-        if(!(Test-Path -PathType Container $buildInfo['Downloads']))
+        if(!(Test-Path -PathType Container $buildInfo['DownloadsPath']))
         {
-            md $buildInfo['Downloads'] | Out-Null
+            md $buildInfo['DownloadsPath'] | Out-Null
         }
 
-        $localLlvmLibs7zPath = Join-Path $destPath "llvm-libs-$packageReleaseName.7z"
+        $localLlvmLibs7zPath = Join-Path $buildInfo['DownloadsPath'] "llvm-libs-$packageReleaseName.7z"
         if( !( test-path -PathType Leaf $localLlvmLibs7zPath ) )
         {
             $release = Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$packageReleaseName"
@@ -37,11 +37,11 @@ function Install-LlvmLibs($destPath, $packageReleaseName)
             }
             else
             {
-                throw "Release 'v$packageReleaseName' not found!"
+                throw "LLVM library package release 'v$packageReleaseName' not found!"
             }
         }
 
-        Expand-Archive $localLlvmLibs7zPath $destPath
+        Expand-7zArchive $localLlvmLibs7zPath $destPath
     }
 }
 
@@ -91,14 +91,6 @@ function Initialize-BuildEnvironment
 
     if($FullInit)
     {
-        # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
-        # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
-        # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
-        # and incompatibilities libs are generally not something published in a package. However, since the build time
-        # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
-        # automated builds.
-        Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmVersion'] "msvc" "16.4"
-
         Write-Information 'Build Info:'
         Write-Information ($buildInfo | Format-Table | Out-String)
 

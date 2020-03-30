@@ -20,10 +20,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the file name for this file</summary>
-        public string FileName => LLVMDIFileGetFilename( MetadataHandle, out uint _);
+        public string FileName => LLVMDIFileGetFilename( MetadataHandle, out uint _ );
 
         /// <summary>Gets the Directory for this file</summary>
-        public string Directory => LLVMDIFileGetDirectory( MetadataHandle, out uint _);
+        public string Directory => LLVMDIFileGetDirectory( MetadataHandle, out uint _ );
 
         /// <summary>Gets the source of the file or an empty string if not available</summary>
         public string Source => LLVMDIFileGetSource( MetadataHandle, out uint _ );

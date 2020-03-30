@@ -6,23 +6,23 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-. .\buildutils.ps1
-$buildInfo = Initialize-BuildEnvironment -FullInit
-
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$BuildSource = $false
-$BuildDocs = $false;
-
-switch($BuildMode)
-{
-'All' { $BuildSource = $true; $BuildDocs = $true; }
-'Source' { $BuildSource = $true }
-'Docs' { $BuildDocs = $true }
-}
-
 try
 {
+    . .\buildutils.ps1
+    $buildInfo = Initialize-BuildEnvironment -FullInit
+
+    $BuildSource = $false
+    $BuildDocs = $false;
+
+    switch($BuildMode)
+    {
+    'All' { $BuildSource = $true; $BuildDocs = $true; }
+    'Source' { $BuildSource = $true }
+    'Docs' { $BuildDocs = $true }
+    }
+
     if((Test-Path -PathType Container $buildInfo['BuildOutputPath']) -and $ForceClean )
     {
         Write-Information "Cleaning output folder from previous builds"
@@ -41,8 +41,14 @@ try
         .\Build-Docs.ps1
     }
 }
+catch
+{
+    Write-Error $_.Exception.Message
+}
 finally
 {
     popd
     $env:Path = $oldPath
 }
+
+Write-Information "Done build"

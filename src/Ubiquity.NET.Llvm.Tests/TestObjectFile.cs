@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.ObjectFile;
 using Ubiquity.NET.Llvm.Types;
 
 // signatures required by test framework
