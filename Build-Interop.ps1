@@ -39,15 +39,22 @@ Param(
     [switch]$NoClean
 )
 
-. .\buildutils.ps1
-$buildInfo = Initialize-BuildEnvironment
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
 try
 {
+    . .\buildutils.ps1
+    $buildInfo = Initialize-BuildEnvironment
+
+    # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
+    # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
+    # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
+    # and incompatibilities libs are generally not something published in a package. However, since the build time
+    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
+    # automated builds.
+    Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmLibsPackageReleaseName']
+
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
@@ -87,6 +94,10 @@ try
     {
         Write-Error "Generating LLVM Bindings failed"
     }
+}
+catch
+{
+    Write-Error $_.Exception.Message
 }
 finally
 {

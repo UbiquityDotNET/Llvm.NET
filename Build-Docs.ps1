@@ -4,17 +4,13 @@ Param(
     [switch]$NoClone = (!([System.Convert]::ToBoolean($env:IsAutomatedBuild)))
 )
 
-. .\buildutils.ps1
-$buildInfo = Initialize-BuildEnvironment
-
-# Main Script entry point -----------
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
-
 pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
+    . .\buildutils.ps1
+    $buildInfo = Initialize-BuildEnvironment
+
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
@@ -47,6 +43,10 @@ try
 
     Write-Information "Building Docs Project"
     Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBinLogPath") )
+}
+catch
+{
+    Write-Error $_.Exception.Message
 }
 finally
 {

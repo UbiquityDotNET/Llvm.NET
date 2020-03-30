@@ -40,7 +40,7 @@ function Get-DefaultBuildPaths([string]$repoRoot)
         DocsOutputPath = Join-Path $buildOutputPath 'docs'
         BinLogsPath = Join-Path $buildOutputPath 'BinLogs'
         TestResultsPath = Join-Path $buildOutputPath 'Test-Results'
-        DownloadsPath = Join-Path $buildOutputPath 'Downloads'
+        DownloadsPath = Join-Path $repoRoot 'Downloads'
         ToolsPath = Join-Path $repoRoot 'Tools'
     }
 
@@ -371,7 +371,8 @@ Function Expand-7zArchive([string]$Path, [string]$Destination)
         "`"-o$($Destination)`""  # Output directory
         "`"$($Path)`"" # 7z file name
     )
-    & $7zPath $7zArgs
+    Write-Information "Expanding '$Path' to '$Destination'"
+    & $7zPath $7zArgs | Out-Null
 }
 
 enum BuildKind
@@ -442,4 +443,20 @@ function Get-CurrentBuildKind
     }
 
     return $currentBuildKind
+}
+
+function Get-GitHubReleases($org, $project)
+{
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    $releases = Invoke-RestMethod -Uri "https://api.github.com/repos/$org/$project/releases"
+    foreach($r in $releases)
+    {
+        $r
+    }
+}
+
+function Get-GitHubTaggedRelease($org, $project, $tag)
+{
+    Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
 }
