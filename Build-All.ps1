@@ -6,9 +6,12 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-Write-Information "Starting build"
+$ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
-<#
+Write-Information "Starting build"
+Set-PSDebug -Trace 2
+
 . .\buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment -FullInit
 
@@ -49,6 +52,5 @@ finally
     popd
     $env:Path = $oldPath
 }
-#>
 
 Write-Information "Done build"
