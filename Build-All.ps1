@@ -8,6 +8,7 @@ Param(
 
 Write-Information "Starting build"
 
+<#
 . .\buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment -FullInit
 
@@ -48,3 +49,6 @@ finally
     popd
     $env:Path = $oldPath
 }
+#>
+
+Write-Information "Done build"
