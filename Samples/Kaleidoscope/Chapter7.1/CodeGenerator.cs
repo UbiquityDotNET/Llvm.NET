@@ -59,7 +59,7 @@ namespace Kaleidoscope.Chapter71
         #endregion
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             ast.ValidateNotNull( nameof( ast ) );
             codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
@@ -69,7 +69,7 @@ namespace Kaleidoscope.Chapter71
                 // adds them to the RuntimeState so that already has the declarations
                 if( !( ast is FunctionDefinition definition ) )
                 {
-                    return null;
+                    return default;
                 }
 
                 // Anonymous functions are called immediately then removed from the JIT
@@ -85,7 +85,7 @@ namespace Kaleidoscope.Chapter71
                     var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
                     var retVal = Context.CreateConstant( nativeFunc( ) );
                     JIT.RemoveModule( jitHandle );
-                    return retVal;
+                    return new OptionalValue<Value>( retVal );
                 }
 
                 // Unknown if any future input will call the function so don't even generate IR
@@ -98,19 +98,20 @@ namespace Kaleidoscope.Chapter71
                 {
                     InitializeModuleAndPassManager( );
                     var function = ( IrFunction? )implDefinition.Accept( this );
-                    if(function is null)
+                    if( function is null )
                     {
                         throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
                     }
 
-                    return (implDefinition.Name, function.ParentModule );
+                    return (implDefinition.Name, function.ParentModule);
                 } );
-                return null;
+
+                return default;
             }
             catch( CodeGeneratorException ex )
             {
                 codeGenerationErroHandler( ex );
-                return null;
+                return default;
             }
         }
         #endregion

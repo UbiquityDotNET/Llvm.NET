@@ -56,8 +56,8 @@ namespace Kaleidoscope.Runtime
         {
             return from n in nodes
                    let v = generator.Generate( n, codeGeneratorExceptionHandler )
-                   where !v.Equals( default( T )! )
-                   select v;
+                   where v.HasValue
+                   select v.Value;
         }
         #endregion
 

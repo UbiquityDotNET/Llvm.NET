@@ -10,6 +10,7 @@ using System.Reflection;
 
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
+
 using Ubiquity.NET.Llvm.Values;
 
 using static Kaleidoscope.Runtime.Utilities;
@@ -48,8 +49,9 @@ namespace Kaleidoscope.Chapter3
                 using var generator = new CodeGenerator( parser.GlobalState );
 
                 // Create Observable chain to provide the REPL implementation
-                var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError )
-                                    .GenerateResults( generator, ShowCodeGenError );
+                var replSeq = Console.In.ToObservableStatements( ShowPrompt )
+                                        .ParseWith( parser, ShowCodeGenError )
+                                        .GenerateResults( generator, ShowCodeGenError );
 
                 // Run the sequence
                 using( replSeq.Subscribe( ShowResults ) )

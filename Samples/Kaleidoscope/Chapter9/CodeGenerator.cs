@@ -86,7 +86,7 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
         {
             ast.ValidateNotNull( nameof( ast ) );
             codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
@@ -125,7 +125,7 @@ namespace Kaleidoscope.Chapter9
                 codeGenerationErroHandler( ex );
             }
 
-            return null;
+            return default;
         }
         #endregion
 
@@ -522,7 +522,7 @@ namespace Kaleidoscope.Chapter9
             {
                 scope = LexicalBlocks.Peek( );
             }
-            else if (InstructionBuilder.InsertFunction != null && InstructionBuilder.InsertFunction.DISubProgram != null)
+            else if( InstructionBuilder.InsertFunction != null && InstructionBuilder.InsertFunction.DISubProgram != null )
             {
                 scope = InstructionBuilder.InsertFunction.DISubProgram;
             }

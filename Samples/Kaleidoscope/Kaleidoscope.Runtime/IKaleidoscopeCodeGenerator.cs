@@ -17,7 +17,6 @@ namespace Kaleidoscope.Runtime
     /// <see cref="Ubiquity.NET.Llvm.Values.Value"/>. Though any type is viable.
     /// </remarks>
     public interface IKaleidoscopeCodeGenerator<TResult>
-        where TResult : class
     {
         /// <summary>Generates output from the tree</summary>
         /// <param name="ast">Tree to generate</param>
@@ -34,12 +33,8 @@ namespace Kaleidoscope.Runtime
         /// <para>For a lazy compilation JIT the generator will defer the actual generation of code and instead
         /// will create stubs for each function definition. When those functions are called, the stubs trigger a
         /// callback to the application that will then generate the code for the function "on the fly". In this case,
-        /// only a top level expression is immediately generated/executed.</para>
-        /// <para>For <typeparamref name="TResult"/> that is a value type the default value for the type is special
-        /// and indicates no result. This is used when a <see cref="CodeGeneratorException"/> is swallowed, and
-        /// reported to the caller via the provided <paramref name="codeGenerationErroHandler"/> for reference types
-        /// null is returned. Thus the default value indicates an unusable result</para>
+        /// only a top level expression is immediately generated/executed to produce a value.</para>
         /// </remarks>
-        TResult? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler );
+        OptionalValue<TResult> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler );
     }
 }
