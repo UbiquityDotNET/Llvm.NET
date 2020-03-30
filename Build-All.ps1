@@ -6,8 +6,8 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-Write-Information "Starting build..."
-
+Write-Information "Starting build, testing 1,2,3..."
+<#
 . .\buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment -FullInit
 
@@ -48,3 +48,4 @@ finally
     popd
     $env:Path = $oldPath
 }
+#>
