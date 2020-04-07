@@ -5,15 +5,16 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Reactive.Linq;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm.Values;
 
-using static Kaleidoscope.Runtime.Utilities;
 using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter7
@@ -22,23 +23,13 @@ namespace Kaleidoscope.Chapter7
     {
         private const LanguageLevel LanguageFeatureLevel = LanguageLevel.MutableVariables;
 
-        /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
-        /// <param name="args">Command line arguments to the application</param>
-        /// <remarks>
-        /// The only supported command line option at present is 'WaitForDebugger'
-        /// This parameter is optional and if used must be the first parameter.
-        /// Setting 'WaitForDebugger' will trigger a wait loop in Main() to wait
-        /// for an attached debugger if one is not yet attached. This is useful
-        /// for mixed mode native+managed debugging as the SDK project system does
-        /// not support that on launch.
-        /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
-        public static void Main( string[ ] args )
+        /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 3)</summary>
+        /// <returns>Async task</returns>
+        public static async Task Main( )
         {
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
-            WaitForDebugger( args.Length > 0 && string.Compare( args[ 0 ], "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 );
 
             using( InitializeLLVM( ) )
             {
@@ -48,15 +39,29 @@ namespace Kaleidoscope.Chapter7
                 var parser = new Parser( LanguageFeatureLevel );
                 using var generator = new CodeGenerator( parser.GlobalState );
 
-                // Create Observable chain to provide the REPL implementation
-                var replSeq = Console.In.ToObservableStatements( ShowPrompt )
-                                        .ParseWith( parser, ShowCodeGenError )
-                                        .GenerateResults( generator, ShowCodeGenError );
+                ShowPrompt( ReadyState.StartExpression );
 
-                // Run the sequence
-                using( replSeq.Subscribe( ShowResults ) )
+                // Create sequence to feed the REPL loop
+                var replSeq = from stmt in Console.In.ToStatements( ShowPrompt )
+                              let node = parser.Parse( stmt )
+                              where !ShowParseErrors( node )
+                              select node;
+
+                await foreach( IAstNode node in replSeq )
                 {
+                    try
+                    {
+                        ShowResults( generator.Generate( node ) );
+                    }
+                    catch( CodeGeneratorException ex )
+                    {
+                        // This is an internal error that is not recoverable.
+                        // Show the error and stop additional processing
+                        ShowError( ex );
+                        break;
+                    }
                 }
+
                 #endregion
             }
         }
@@ -69,37 +74,66 @@ namespace Kaleidoscope.Chapter7
         #endregion
 
         #region ErrorHandling
-        private static void ShowCodeGenError( CodeGeneratorException ex )
+        private static bool ShowParseErrors( this IAstNode node )
+        {
+            if( node is ErrorNode errNode )
+            {
+                ShowError( errNode.Error );
+                return true;
+            }
+
+            if( node.Errors.Count > 0 )
+            {
+                foreach( var err in node.Errors )
+                {
+                    ShowError( err.Error );
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void ShowError( CodeGeneratorException ex )
+        {
+            ShowError( ex.ToString( ) );
+        }
+
+        private static void ShowError( string msg )
         {
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine( ex.Message );
+            Console.Error.WriteLine( msg );
             Console.ForegroundColor = color;
         }
         #endregion
 
         #region ShowResults
-        private static void ShowResults( Value? resultValue )
+        private static void ShowResults( OptionalValue<Value> resultValue )
         {
-            switch( resultValue )
+            if( resultValue.HasValue )
             {
-            case ConstantFP result:
-                if( Console.CursorLeft > 0 )
+                switch( resultValue.Value )
                 {
-                    Console.WriteLine( );
+                case ConstantFP result:
+                    if( Console.CursorLeft > 0 )
+                    {
+                        Console.WriteLine( );
+                    }
+
+                    Console.WriteLine( "Evaluated to {0}", result.Value );
+                    break;
+
+                case IrFunction function:
+    #if SAVE_LLVM_IR
+                    function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
+    #endif
+                    break;
+
+                default:
+                    throw new InvalidOperationException( );
                 }
-
-                Console.WriteLine( "Evaluated to {0}", result.Value );
-                break;
-
-            case IrFunction function:
-#if SAVE_LLVM_IR
-                function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( GetSafeFileName( function.Name ), "ll" ), out string ignoredMsg );
-#endif
-                break;
-
-            default:
-                throw new InvalidOperationException( );
             }
         }
         #endregion

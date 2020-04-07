@@ -14,6 +14,12 @@ namespace Kaleidoscope.Grammar.AST
     public class RootNode
         : IAstNode
     {
+        public RootNode( SourceSpan location, IAstNode child )
+        {
+            Location = location;
+            ChildNodes = ImmutableArray<IAstNode>.Empty.Add( child );
+        }
+
         public RootNode( SourceSpan location, IEnumerable<IAstNode> children )
         {
             Location = location;

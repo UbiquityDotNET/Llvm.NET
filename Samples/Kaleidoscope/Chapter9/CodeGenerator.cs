@@ -31,7 +31,7 @@ namespace Kaleidoscope.Chapter9
     public sealed class CodeGenerator
         : AstVisitorBase<Value>
         , IDisposable
-        , IKaleidoscopeCodeGenerator<Value>
+        , IKaleidoscopeCodeGenerator<BitcodeModule>
     {
         #region Initialization
         public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath, bool disableOptimization = false )
@@ -75,57 +75,49 @@ namespace Kaleidoscope.Chapter9
         }
         #endregion
 
-        public BitcodeModule Module { get; }
-
         #region Dispose
         public void Dispose( )
         {
             FunctionPassManager?.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
         #endregion
 
         #region Generate
-        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<BitcodeModule> Generate( IAstNode ast )
         {
             ast.ValidateNotNull( nameof( ast ) );
-            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
-            try
-            {
-                ast.Accept( this );
+            ast.Accept( this );
 
-                if( AnonymousFunctions.Count > 0 )
+            if( AnonymousFunctions.Count > 0 )
+            {
+                var mainFunction = Module.AddFunction( "main", Context.GetFunctionType( Context.VoidType ) );
+                var block = mainFunction.AppendBasicBlock( "entry" );
+                var irBuilder = new InstructionBuilder( block );
+                var printdFunc = Module.AddFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+                foreach( var anonFunc in AnonymousFunctions )
                 {
-                    var mainFunction = Module.AddFunction( "main", Context.GetFunctionType( Context.VoidType ) );
-                    var block = mainFunction.AppendBasicBlock( "entry" );
-                    var irBuilder = new InstructionBuilder( block );
-                    var printdFunc = Module.AddFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
-                    foreach( var anonFunc in AnonymousFunctions )
-                    {
-                        var value = irBuilder.Call( anonFunc );
-                        irBuilder.Call( printdFunc, value );
-                    }
-
-                    irBuilder.Return( );
-
-                    // Use always inline and Dead Code Elimination module passes to inline all of the
-                    // anonymous functions. This effectively strips all the calls just generated for main()
-                    // and inlines each of the anonymous functions directly into main, dropping the now
-                    // unused original anonymous functions all while retaining all of the original source
-                    // debug information locations.
-                    using var mpm = new ModulePassManager( );
-                    mpm.AddAlwaysInlinerPass( )
-                       .AddGlobalDCEPass( )
-                       .Run( Module );
-                    Module.DIBuilder.Finish( );
+                    var value = irBuilder.Call( anonFunc );
+                    irBuilder.Call( printdFunc, value );
                 }
-            }
-            catch( CodeGeneratorException ex )
-            {
-                codeGenerationErroHandler( ex );
+
+                irBuilder.Return( );
+
+                // Use always inline and Dead Code Elimination module passes to inline all of the
+                // anonymous functions. This effectively strips all the calls just generated for main()
+                // and inlines each of the anonymous functions directly into main, dropping the now
+                // unused original anonymous functions all while retaining all of the original source
+                // debug information locations.
+                using var mpm = new ModulePassManager( );
+                mpm.AddAlwaysInlinerPass( )
+                   .AddGlobalDCEPass( )
+                   .Run( Module );
+
+                Module.DIBuilder.Finish( );
             }
 
-            return default;
+            return OptionalValue.Create( Module );
         }
         #endregion
 
@@ -656,6 +648,7 @@ namespace Kaleidoscope.Chapter9
         #region PrivateMembers
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
+        private readonly BitcodeModule Module;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
         private readonly FunctionPassManager FunctionPassManager;

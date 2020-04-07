@@ -23,5 +23,16 @@ namespace Kaleidoscope.Grammar.AST
         /// <returns>Result of visiting this node</returns>
         TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : class;
+
+        /// <summary>Gets the complete collection of errors for this node and children</summary>
+        IReadOnlyCollection<ErrorNode> Errors
+        {
+            get
+            {
+                var collector = new ErrorNodeCollector();
+                Accept<string>( collector );
+                return collector.Errors;
+            }
+        }
     }
 }

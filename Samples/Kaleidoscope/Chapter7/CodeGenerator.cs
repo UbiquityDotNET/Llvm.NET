@@ -59,58 +59,50 @@ namespace Kaleidoscope.Chapter7
         #endregion
 
         #region Generate
-        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast )
         {
             ast.ValidateNotNull( nameof( ast ) );
-            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
-            try
+
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            if( !( ast is FunctionDefinition definition ) )
             {
-                // Prototypes, including extern are ignored as AST generation
-                // adds them to the RuntimeState so that already has the declarations
-                if( !( ast is FunctionDefinition definition ) )
-                {
-                    return default;
-                }
-
-                InitializeModuleAndPassManager( );
-                Debug.Assert( !( Module is null ), "Module initialization failed" );
-
-                var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
-
-                if( definition.IsAnonymous )
-                {
-                    // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
-                    ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
-                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
-                    var retVal = Context.CreateConstant( nativeFunc( ) );
-                    JIT.RemoveModule( jitHandle );
-                    return new OptionalValue<Value>( retVal );
-                }
-                else
-                {
-                    // Destroy any previously generated module for this function.
-                    // This allows re-definition as the new module will provide the
-                    // implementation. This is needed, otherwise both the MCJIT
-                    // and OrcJit engines will resolve to the original module, despite
-                    // claims to the contrary in the official tutorial text. (Though,
-                    // to be fair it may have been true in the original JIT and might
-                    // still be true for the interpreter)
-                    if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
-                    {
-                        JIT.RemoveModule( handle );
-                    }
-
-                    // Unknown if any future input will call the function so add it for lazy compilation.
-                    // Native code is generated for the module automatically only when required.
-                    ulong jitHandle = JIT.AddLazyCompiledModule( Module );
-                    FunctionModuleMap.Add( definition.Name, jitHandle );
-                    return new OptionalValue<Value>( function );
-                }
-            }
-            catch( CodeGeneratorException ex )
-            {
-                codeGenerationErroHandler( ex );
                 return default;
+            }
+
+            InitializeModuleAndPassManager( );
+            Debug.Assert( !( Module is null ), "Module initialization failed" );
+
+            var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
+
+            if( definition.IsAnonymous )
+            {
+                // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+                ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
+                var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
+                var retVal = Context.CreateConstant( nativeFunc( ) );
+                JIT.RemoveModule( jitHandle );
+                return OptionalValue.Create<Value>( retVal );
+            }
+            else
+            {
+                // Destroy any previously generated module for this function.
+                // This allows re-definition as the new module will provide the
+                // implementation. This is needed, otherwise both the MCJIT
+                // and OrcJit engines will resolve to the original module, despite
+                // claims to the contrary in the official tutorial text. (Though,
+                // to be fair it may have been true in the original JIT and might
+                // still be true for the interpreter)
+                if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
+                {
+                    JIT.RemoveModule( handle );
+                }
+
+                // Unknown if any future input will call the function so add it for lazy compilation.
+                // Native code is generated for the module automatically only when required.
+                ulong jitHandle = JIT.AddLazyCompiledModule( Module );
+                FunctionModuleMap.Add( definition.Name, jitHandle );
+                return OptionalValue.Create<Value>( function );
             }
         }
         #endregion

@@ -409,17 +409,16 @@ the driver. In particular Chapters 3-7 only really differ in the language level 
 
 [!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter2/Program.cs#generatorloop)]
 
-The ParserStack contains the support for parsing the Kaleidoscope language from the REPL loop interactive
-input. The stack also maintains the global state of the runtime, which controls the language features
+The Parser contains the support for parsing the Kaleidoscope language from the REPL loop interactive
+input. The parser stack also maintains the global state of the runtime, which controls the language features
 enabled, and if user defined operators are enabled, contains the operators defined along with their
 precedence.
 
-After the parser is created an observable sequence of statements is created for the parser to process. The
-parser produces a sequence of AST nodes. This effectively adds [Rx.NET](https://github.com/dotnet/reactive)
-operators to the chain of operators to produce the parsed nodes from the input text. After construction the
-sequence is subscribed to call the ShowResults function for each result.
+After the parser is created an async enumerable sequence of statements is created for the parser to process.
+This results in a sequence of AST nodes. After construction, the sequence is used to iterate over all of
+the nodes generated from the user input.
 
-This use of Observable sequences is a bit of a different approach to things for running an interpreter Read,
+This use of an Async enumerator sequences is a bit of a different approach to things for running an interpreter Read,
 Evaluate Print Loop, but once you get your head around it, the sequence provides a nice clean and flexible
 mechanism for building a pipeline of transformations from the text input into the result output.
 

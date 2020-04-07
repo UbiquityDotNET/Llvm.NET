@@ -59,60 +59,52 @@ namespace Kaleidoscope.Chapter71
         #endregion
 
         #region Generate
-        public OptionalValue<Value> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast )
         {
             ast.ValidateNotNull( nameof( ast ) );
-            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
-            try
+
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            if( !( ast is FunctionDefinition definition ) )
             {
-                // Prototypes, including extern are ignored as AST generation
-                // adds them to the RuntimeState so that already has the declarations
-                if( !( ast is FunctionDefinition definition ) )
-                {
-                    return default;
-                }
-
-                // Anonymous functions are called immediately then removed from the JIT
-                // so no point in setting them up as a lazy compilation item.
-                if( definition.IsAnonymous )
-                {
-                    InitializeModuleAndPassManager( );
-                    Debug.Assert( Module != null, "Expected non-null Module at this point" );
-                    var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
-
-                    // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
-                    ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
-                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
-                    var retVal = Context.CreateConstant( nativeFunc( ) );
-                    JIT.RemoveModule( jitHandle );
-                    return new OptionalValue<Value>( retVal );
-                }
-
-                // Unknown if any future input will call the function so don't even generate IR
-                // until it is needed. JIT triggers the callback to generate the IR module so the JIT
-                // can then generate native code only when required.
-                FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
-
-                // register the generator as a stub with the original source name
-                JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
-                {
-                    InitializeModuleAndPassManager( );
-                    var function = ( IrFunction? )implDefinition.Accept( this );
-                    if( function is null )
-                    {
-                        throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
-                    }
-
-                    return (implDefinition.Name, function.ParentModule);
-                } );
-
                 return default;
             }
-            catch( CodeGeneratorException ex )
+
+            // Anonymous functions are called immediately then removed from the JIT
+            // so no point in setting them up as a lazy compilation item.
+            if( definition.IsAnonymous )
             {
-                codeGenerationErroHandler( ex );
-                return default;
+                InitializeModuleAndPassManager( );
+                Debug.Assert( Module != null, "Expected non-null Module at this point" );
+                var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
+
+                // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+                ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
+                var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
+                var retVal = Context.CreateConstant( nativeFunc( ) );
+                JIT.RemoveModule( jitHandle );
+                return OptionalValue.Create<Value>( retVal );
             }
+
+            // Unknown if any future input will call the function so don't even generate IR
+            // until it is needed. JIT triggers the callback to generate the IR module so the JIT
+            // can then generate native code only when required.
+            FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+            // register the generator as a stub with the original source name
+            JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
+            {
+                InitializeModuleAndPassManager( );
+                var function = ( IrFunction? )implDefinition.Accept( this );
+                if( function is null )
+                {
+                    throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
+                }
+
+                return (implDefinition.Name, function.ParentModule);
+            } );
+
+            return default;
         }
         #endregion
 

@@ -5,8 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Reactive.Linq;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
@@ -20,7 +21,8 @@ namespace Kaleidoscope.Chapter2
         private const LanguageLevel LanguageFeatureLevel = LanguageLevel.MutableVariables;
 
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
-        public static void Main( /*string[ ] args*/ )
+        /// <returns>Async task</returns>
+        public static async Task Main( )
         {
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Explorer - {LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
@@ -29,12 +31,17 @@ namespace Kaleidoscope.Chapter2
             #region GeneratorLoop
             var parser = new Parser( LanguageFeatureLevel );
 
-            // Create Observable chain to parse input lines from console into AST Nodes
-            var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError );
+            ShowPrompt( ReadyState.StartExpression );
 
-            // Subscribe to the sequence
-            using( replSeq.Subscribe( ShowResults ) )
+            // Create sequence to feed the REPL loop
+            var replSeq = from stmt in Console.In.ToStatements( ShowPrompt )
+                          let node = parser.Parse( stmt )
+                          where !ShowParseErrors( node )
+                          select node;
+
+            await foreach( IAstNode node in replSeq )
             {
+                ShowResults( node );
             }
 
             Console.WriteLine( "Bye!" );
@@ -48,12 +55,33 @@ namespace Kaleidoscope.Chapter2
         }
         #endregion
 
-        #region Error Handling
-        private static void ShowCodeGenError( CodeGeneratorException ex )
+        #region ErrorHandling
+        private static bool ShowParseErrors( this IAstNode node )
+        {
+            if( node is ErrorNode errNode )
+            {
+                ShowError( errNode.Error );
+                return true;
+            }
+
+            if( node.Errors.Count > 0 )
+            {
+                foreach( var err in node.Errors )
+                {
+                    ShowError( err.Error );
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void ShowError( string msg )
         {
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine( ex.Message );
+            Console.Error.WriteLine( msg );
             Console.ForegroundColor = color;
         }
         #endregion

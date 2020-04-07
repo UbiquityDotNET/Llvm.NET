@@ -19,7 +19,7 @@ using static System.Math;
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Utility functions for extending ANTLR types</summary>
-    public static class AntlrUtilities
+    internal static class AntlrUtilities
     {
         /// <summary>Gets a character based interval from a <see cref="ParserRuleContext"/></summary>
         /// <param name="ruleContext">context to get the interval from</param>
