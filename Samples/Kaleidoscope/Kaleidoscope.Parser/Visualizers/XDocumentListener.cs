@@ -10,12 +10,14 @@ using System.Xml.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
+using Kaleidoscope.Grammar.ANTLR;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Parse listener that, when used with <see cref="ParseTreeWalker"/> generates an XML representation of the parse tree</summary>
-    public class XDocumentListener
+    internal class XDocumentListener
         : KaleidoscopeBaseListener
     {
         public XDocumentListener( IRecognizer recognizer )

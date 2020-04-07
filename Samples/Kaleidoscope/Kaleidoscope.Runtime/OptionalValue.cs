@@ -68,5 +68,19 @@ namespace Kaleidoscope.Runtime
                 && other.HasValue
                 && Value!.Equals( other.Value );
         }
+
+        public void Deconstruct( out bool hasValue, [MaybeNull] out T value)
+        {
+            hasValue = HasValue;
+            value = Value;
+        }
+    }
+
+    public static class OptionalValue
+    {
+        public static OptionalValue<T> Create<T>( T value )
+        {
+            return new OptionalValue<T>( value );
+        }
     }
 }

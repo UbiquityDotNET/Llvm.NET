@@ -19,7 +19,7 @@ namespace Kaleidoscope.Grammar
     }
 
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Equality operators make no sense for this type" )]
-    public struct OperatorInfo
+    internal struct OperatorInfo
     {
         public OperatorInfo( int tokenType, OperatorKind kind, int precedence )
             : this( tokenType, kind, precedence, false )

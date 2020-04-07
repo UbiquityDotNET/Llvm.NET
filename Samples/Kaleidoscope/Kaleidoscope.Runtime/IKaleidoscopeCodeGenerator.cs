@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 using Kaleidoscope.Grammar.AST;
 
 namespace Kaleidoscope.Runtime
@@ -20,7 +18,6 @@ namespace Kaleidoscope.Runtime
     {
         /// <summary>Generates output from the tree</summary>
         /// <param name="ast">Tree to generate</param>
-        /// <param name="codeGenerationErroHandler">Error handling action for code generator errors</param>
         /// <returns>Generated result</returns>
         /// <remarks>
         /// <para>The behavior of this method depends on the implementation. The common case is to
@@ -35,6 +32,6 @@ namespace Kaleidoscope.Runtime
         /// callback to the application that will then generate the code for the function "on the fly". In this case,
         /// only a top level expression is immediately generated/executed to produce a value.</para>
         /// </remarks>
-        OptionalValue<TResult> Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler );
+        OptionalValue<TResult> Generate( IAstNode ast );
     }
 }

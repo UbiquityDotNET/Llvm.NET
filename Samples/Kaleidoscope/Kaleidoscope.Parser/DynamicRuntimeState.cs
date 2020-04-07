@@ -8,16 +8,18 @@ using System;
 
 using Antlr4.Runtime;
 
+using Kaleidoscope.Grammar.ANTLR;
+
 using Ubiquity.ArgValidators;
 
-using static Kaleidoscope.Grammar.KaleidoscopeParser;
+using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeLexer;
 
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Class to hold dynamic runtime global state</summary>
     /// <remarks>
     /// <para>Generally speaking the parser is the wrong place to store any
-    /// sort of global state. Furthermore, the actual <see cref="KaleidoscopeParser"/>
+    /// sort of global state. Furthermore, the actual underlying ANTLR parser
     /// is destroyed and re-created for each REPL input string to ensure
     /// there isn't any internal parsing state carry over between parses of partial
     /// input text. Thus, this class serves to maintain state for parsing and the
@@ -59,6 +61,13 @@ namespace Kaleidoscope.Grammar
         /// <summary>Gets a collection of declared functions</summary>
         public PrototypeCollection FunctionDeclarations { get; } = new PrototypeCollection( );
 
+        /// <summary>Generates a new unique name for an anonymous function</summary>
+        /// <returns>Name for an anonymous function</returns>
+        public string GenerateAnonymousName( )
+        {
+            return $"anon_expr_{AnonymousNameIndex++}";
+        }
+
         /// <summary>Attempts to add a new user defined operator</summary>
         /// <param name="token">Symbol for the operator</param>
         /// <param name="kind"><see cref="OperatorKind"/> value to define the behavior of the operator</param>
@@ -68,7 +77,7 @@ namespace Kaleidoscope.Grammar
         /// This can add or replace user defined operators, however attempts to replace a built-in operator
         /// will not replace the operator and will simply return <see langword="false"/>.
         /// </remarks>
-        public bool TryAddOperator( string token, OperatorKind kind, int precedence )
+        internal bool TryAddOperator( string token, OperatorKind kind, int precedence )
         {
             if( !Lexer.TokenTypeMap.TryGetValue( token, out int tokenType ) )
             {
@@ -87,7 +96,7 @@ namespace Kaleidoscope.Grammar
         /// This can add or replace user defined operators, however attempts to replace a built-in operator
         /// will not replace the operator and will simply return <see langword="false"/>.
         /// </remarks>
-        public bool TryAddOperator( IToken token, OperatorKind kind, int precedence )
+        internal bool TryAddOperator( IToken token, OperatorKind kind, int precedence )
         {
             token.ValidateNotNull( nameof( token ) );
             return TryAddOperator( token.Type, kind, precedence );
@@ -96,7 +105,7 @@ namespace Kaleidoscope.Grammar
         /// <summary>Gets the binary operator information for a given token type</summary>
         /// <param name="tokenType">Operator token type</param>
         /// <returns>Operator info for the operator or default if not found</returns>
-        public OperatorInfo GetBinOperatorInfo( int tokenType )
+        internal OperatorInfo GetBinOperatorInfo( int tokenType )
         {
             return BinOpPrecedence.TryGetValue( tokenType, out var value ) ? value : ( default );
         }
@@ -104,16 +113,9 @@ namespace Kaleidoscope.Grammar
         /// <summary>Gets the unary operator information for a given token type</summary>
         /// <param name="tokenType">Operator token type</param>
         /// <returns>Operator info for the operator or default if not found</returns>
-        public OperatorInfo GetUnaryOperatorInfo( int tokenType )
+        internal OperatorInfo GetUnaryOperatorInfo( int tokenType )
         {
             return UnaryOps.TryGetValue( tokenType, out var value ) ? value : ( default );
-        }
-
-        /// <summary>Generates a new unique name for an anonymous function</summary>
-        /// <returns>Name for an anonymous function</returns>
-        public string GenerateAnonymousName( )
-        {
-            return $"anon_expr_{AnonymousNameIndex++}";
         }
 
         internal bool IsPrefixOp( int tokenType )

@@ -9,20 +9,28 @@ using System.Collections.Immutable;
 using System.Linq;
 
 using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
+
+using Kaleidoscope.Grammar.ANTLR;
+
+using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
-
-using static Kaleidoscope.Grammar.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
 {
     /// <summary>Parse tree Visitor to construct the AST from a parse tree</summary>
-    public sealed class AstBuilder
+    internal sealed class AstBuilder
         : KaleidoscopeBaseVisitor<IAstNode>
     {
         public AstBuilder( DynamicRuntimeState globalState )
         {
             RuntimeState = globalState;
+        }
+
+        public override IAstNode VisitErrorNode( IErrorNode node )
+        {
+            return new ErrorNode( node.GetSourceSpan( ), $"Syntax Error: {node}" );
         }
 
         public override IAstNode VisitParenExpression( ParenExpressionContext context )
@@ -40,7 +48,7 @@ namespace Kaleidoscope.Grammar.AST
             string varName = context.Name;
             if( !NamedValues.TryGetValue( varName, out IVariableDeclaration? declaration ) )
             {
-                throw new CodeGeneratorException( $"Unknown variable name: {varName}" );
+                return new ErrorNode( context.GetSourceSpan( ), $"Unknown variable name: {varName}" );
             }
 
             return new VariableReferenceExpression( context.GetSourceSpan( ), declaration );
@@ -48,7 +56,11 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitFunctionCallExpression( FunctionCallExpressionContext context )
         {
-            Prototype function = FindCallTarget( context.CaleeName );
+            Prototype? function = FindCallTarget( context.CaleeName );
+            if( function is null )
+            {
+                return new ErrorNode( context.GetSourceSpan( ), $"Call to unknown function '{context.CaleeName}'" );
+            }
 
             var args = from expCtx in context.expression( )
                        select ( IExpression )expCtx.Accept( this );
@@ -60,11 +72,10 @@ namespace Kaleidoscope.Grammar.AST
         {
             // Expression: PrimaryExpression (op expression)*
             // where the sub-expressions are in evaluation order
-            var lhs = ( IExpression )context.Atom.Accept( this );
-
+            IAstNode lhs = context.Atom.Accept( this );
             foreach( var (op, rhs) in context.OperatorExpressions )
             {
-                lhs = CreateBinaryOperatorNode( lhs, op, ( IExpression )rhs.Accept( this ) );
+                lhs = CreateBinaryOperatorNode( ( IExpression )lhs, op, ( IExpression )rhs.Accept( this ) );
             }
 
             return lhs;
@@ -115,14 +126,14 @@ namespace Kaleidoscope.Grammar.AST
             var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
             if( opKind == OperatorKind.None )
             {
-                throw new CodeGeneratorException( $"invalid unary operator {context.Op}" );
+                return new ErrorNode( context.GetSourceSpan( ), $"invalid unary operator {context.Op}" );
             }
 
             string calleeName = CreateUnaryFunctionName( context.OpToken );
             var function = FindCallTarget( calleeName );
             if( function == null )
             {
-                throw new CodeGeneratorException( $"Unknown function reference {calleeName}" );
+                return new ErrorNode( context.GetSourceSpan( ), $"reference to unknown unary operator function {calleeName}" );
             }
 
             var arg = ( IExpression )context.Rhs.Accept( this );
@@ -235,7 +246,7 @@ namespace Kaleidoscope.Grammar.AST
 
         protected override IAstNode DefaultResult => NullNode.Instance;
 
-        private Prototype FindCallTarget( string calleeName )
+        private Prototype? FindCallTarget( string calleeName )
         {
             // search defined functions first as they override extern declarations
             if( RuntimeState.FunctionDefinitions.TryGetValue( calleeName, out FunctionDefinition definition ) )
@@ -244,12 +255,9 @@ namespace Kaleidoscope.Grammar.AST
             }
 
             // search extern declarations
-            if( RuntimeState.FunctionDeclarations.TryGetValue( calleeName, out Prototype declaration ) )
-            {
-                return declaration;
-            }
-
-            throw new CodeGeneratorException( $"Function '{calleeName}' not found" );
+            return RuntimeState.FunctionDeclarations.TryGetValue( calleeName, out Prototype declaration )
+                ? declaration
+                : null;
         }
 
         private IExpression CreateBinaryOperatorNode( IExpression lhs, BinaryopContext op, IExpression rhs )
@@ -284,12 +292,14 @@ namespace Kaleidoscope.Grammar.AST
                     var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
                     if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
                     {
-                        throw new CodeGeneratorException( $"Invalid binary operator '{op.OpToken.Text}'" );
+                        return new ErrorNode( op.GetSourceSpan( ), $"Invalid binary operator '{op.OpToken.Text}'" );
                     }
 
                     string calleeName = CreateBinaryFunctionName( op.OpToken );
-                    Prototype callTarget = FindCallTarget( calleeName );
-                    return new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
+                    Prototype? callTarget = FindCallTarget( calleeName );
+                    return callTarget is null
+                        ? new ErrorNode( op.GetSourceSpan( ), $"Unary operator function '{calleeName}' not found" )
+                        : ( IExpression )new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
                 }
                 #endregion
             }
@@ -319,12 +329,12 @@ namespace Kaleidoscope.Grammar.AST
                                       , context.Parameters.Select( p => new ParameterDeclaration( p.Span, p.Name, p.Index ))
                                       );
 
-            // block second incompatible declaration to prevent issues with in any definitions that may be using it
+            // block second incompatible (name + arity ) declaration to prevent issues with in any definitions that may be using it
             if( RuntimeState.FunctionDeclarations.TryGetValue( name, out Prototype existingPrototype ) )
             {
                 if( existingPrototype.Parameters.Count != retVal.Parameters.Count )
                 {
-                    throw new CodeGeneratorException( "Declaration incompatible with previous declaration" );
+                    return new ErrorNode( context.GetSourceSpan( ), "Declaration incompatible with previous declaration" );
                 }
             }
 

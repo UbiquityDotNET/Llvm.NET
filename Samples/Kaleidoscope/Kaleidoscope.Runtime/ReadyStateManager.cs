@@ -22,7 +22,17 @@ namespace Kaleidoscope.Runtime
     /// </remarks>
     public class ReadyStateManager
     {
+        public ReadyStateManager( Action<ReadyState>? prompt = null )
+        {
+            PromptAction = prompt;
+        }
+
         public ReadyState State { get; private set; }
+
+        public void Prompt( )
+        {
+            PromptAction?.Invoke( State );
+        }
 
         public void UpdateState( string txt, bool isPartial )
         {
@@ -52,5 +62,7 @@ namespace Kaleidoscope.Runtime
                 State = isPartial ? ReadyState.ContinueExpression : ReadyState.StartExpression;
             }
         }
+
+        private readonly Action<ReadyState>? PromptAction;
     }
 }

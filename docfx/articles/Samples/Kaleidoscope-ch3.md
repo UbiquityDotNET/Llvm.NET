@@ -51,14 +51,8 @@ generation loop. Subsequent, chapters will focus on additional functionality inc
 Debugging information, and Native Module generation.
 
 [!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter3/Program.cs#generatorloop)]
-This adds the `GenerateResults` operator to the sequence from Chapter 2 to generate the LLVM IR.
-
-#### GenerateResults Rx.NET operator
-The GenerateResults operator is responsible for transforming the input sequence of AST nodes into a
-sequence of Ubiquity.NET.Llvm.Values. The implementation of the operator is common to all result types and is
-provided in the Kaleidoscope.Runtime assembly.
-
-[!code-csharp[GenerateResults](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/ObservableExtensions.cs#GenerateResults)]
+This uses the Async enumerator and an additional LINQ expression to filter out and show
+errors from the parsing.
 
 ### Handling errors in code generation
 In many cases successfully parsing the input code isn't sufficient to determine correctness of the code in
