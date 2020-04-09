@@ -284,7 +284,7 @@ namespace Ubiquity.NET.Llvm.Transforms
         /// <param name="passManager">Pass manager to add the pass to</param>
         /// <returns><paramref name="passManager"/>for fluent support</returns>
         /// <seealso href="xref:llvm_docs_passes#loweratomic-lower-atomic-intrinsics-to-non-atomic-form">LLVM: Lower atomic</seealso>
-        public static T LowerAtomicPass<T>( [ValidatedNotNull] this T passManager )
+        public static T AddLowerAtomicPass<T>( [ValidatedNotNull] this T passManager )
             where T : PassManager
         {
             passManager.ValidateNotNull( nameof( passManager ) );

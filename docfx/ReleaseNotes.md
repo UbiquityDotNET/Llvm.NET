@@ -38,6 +38,13 @@ and clarity (Some of the float predicates had 'Than' in the name while the integ
 | SignedLess             | SignedLessThan |
 | SignedLessOrEqual      | SignedLessThanOrEqual |
 
+### Renamed APIs
+Some APIs had inconsistent, misspelled or confusing names and were updated.
+
+| Old Name               | New Name     |
+|------------------------|--------------|
+| `Ubiquity.NET.Llvm.Transforms.ScalarTransforms.LowerAtomicPass<T>` | `Ubiquity.NET.Llvm.Transforms.ScalarTransforms.AddLowerAtomicPass<T>` |
+
 ## Removed redundant APIs
 LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionaly equivalent to 
 APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some
