@@ -24,6 +24,8 @@ extern "C" {
 #endif
     // caller must release the returned string via LLVMDisposeMessage
     char const* LibLLVMAttributeToString( LLVMAttributeRef attribute );
+    LLVMBool LibLLVMIsTypeAttribute( LLVMAttributeRef attribute );
+    LLVMTypeRef LibLLVMGetAttributeTypeValue( LLVMAttributeRef attribute );
 
 #ifdef __cplusplus
 }

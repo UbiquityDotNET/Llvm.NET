@@ -24,6 +24,13 @@ namespace LlvmBindingsGenerator
                    select tu;
         }
 
+        public static IEnumerable<TranslationUnit> ValidUnits( this ASTContext ctx )
+        {
+            return from tu in ctx.TranslationUnits
+                   where tu.IsValid
+                   select tu;
+        }
+
         public static bool IsCoreHeader( this TranslationUnit tu )
         {
             return tu.IsValid && tu.IncludePath != null && tu.FileRelativeDirectory.StartsWith( "llvm-c", StringComparison.Ordinal );
@@ -87,7 +94,8 @@ namespace LlvmBindingsGenerator
                 return false;
             }
 
-            return ( pt.Pointee is TagType tt && tt.IsOpaqueStruct( ) ) || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
+            return ( pt.Pointee is TagType tt && tt.IsOpaqueStruct( ) )
+                || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "It's supposed to be all lowercase" )]

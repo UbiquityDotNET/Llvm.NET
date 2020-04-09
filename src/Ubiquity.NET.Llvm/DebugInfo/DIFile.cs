@@ -6,6 +6,8 @@
 
 using Ubiquity.NET.Llvm.Interop;
 
+using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a source file</summary>
@@ -18,10 +20,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the file name for this file</summary>
-        public string FileName => GetOperandString( 0 );
+        public string FileName => LLVMDIFileGetFilename( MetadataHandle, out uint _ );
 
         /// <summary>Gets the Directory for this file</summary>
-        public string Directory => GetOperandString( 1 );
+        public string Directory => LLVMDIFileGetDirectory( MetadataHandle, out uint _ );
+
+        /// <summary>Gets the source of the file or an empty string if not available</summary>
+        public string Source => LLVMDIFileGetSource( MetadataHandle, out uint _ );
 
         /// <summary>Gets the Checksum for this file</summary>
         public string CheckSum => GetOperandString( 2 );

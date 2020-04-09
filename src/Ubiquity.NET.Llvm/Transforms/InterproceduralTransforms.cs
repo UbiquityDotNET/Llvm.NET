@@ -4,7 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+
 using Ubiquity.ArgValidators;
+using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Values;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
@@ -234,6 +238,35 @@ namespace Ubiquity.NET.Llvm.Transforms
         {
             passManager.ValidateNotNull( nameof( passManager ) );
             LLVMAddStripSymbolsPass( passManager.Handle );
+            return passManager;
+        }
+
+        /// <summary>Create and add the internalize pass to the given pass manager with the provided preservation callback.</summary>
+        /// <typeparam name="T">Type of PassManager</typeparam>
+        /// <param name="passManager">PassManager to add the pass to</param>
+        /// <param name="predicate">predicate to callback on each invocation</param>
+        /// <returns>The input <paramref name="passManager"/></returns>
+        /// <remarks>
+        /// <para>Any instance that <paramref name="predicate"/> is a member of (if not static) MUST outlive the
+        /// lifetime of <paramref name="passManager"/> or unpredictable results will occur (usually a crash).
+        /// This is especially important for disposable types as calling Dispose on them can invalidate the
+        /// predicate function.</para>
+        /// <para>Additionally, the predicate function MUST NOT throw, or allow any exceptions to bubble out
+        /// of the function as it is called by native code that has no idea what to do with a managed code
+        /// exception. (Again, likely resulting in a crash)</para>
+        /// </remarks>
+        public static T AddInternalizePassWithMustPreservePredicate<T>( [ValidatedNotNull] this T passManager
+                                                                      , Predicate<Value> predicate
+                                                                      )
+            where T : PassManager
+        {
+            passManager.ValidateNotNull( nameof( passManager ) );
+            predicate.ValidateNotNull( nameof( predicate ) );
+
+            var wrappedCallBack = new WrappedNativeCallback<Predicate<Value>>(predicate);
+            passManager.NativeCallBacks.Add( wrappedCallBack );
+
+            LLVMAddInternalizePassWithMustPreservePredicate( passManager.Handle, IntPtr.Zero, wrappedCallBack.ToIntPtr( ) );
             return passManager;
         }
     }

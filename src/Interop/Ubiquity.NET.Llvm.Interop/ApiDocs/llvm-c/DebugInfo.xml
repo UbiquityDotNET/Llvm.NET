@@ -35,8 +35,8 @@
         <Item name="LLVMDIFlagAppleBlock">
             <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagAppleBlock Enumeration</summary>
         </Item>
-        <Item name="LLVMDIFlagBlockByrefStruct">
-            <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagBlockByrefStruct Enumeration</summary>
+        <Item name="LLVMDIFlagReservedBit4">
+            <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagReservedBit4 Enumeration</summary>
         </Item>
         <Item name="LLVMDIFlagVirtual">
             <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagVirtual Enumeration</summary>
@@ -89,9 +89,6 @@
         <Item name="LLVMDIFlagNoReturn">
             <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagNoReturn Enumeration</summary>
         </Item>
-        <Item name="LLVMDIFlagMainSubprogram">
-            <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagMainSubprogram Enumeration</summary>
-        </Item>
         <Item name="LLVMDIFlagTypePassByValue">
             <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagTypePassByValue Enumeration</summary>
         </Item>
@@ -107,8 +104,8 @@
         <Item name="LLVMDIFlagThunk">
             <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagThunk Enumeration</summary>
         </Item>
-        <Item name="LLVMDIFlagTrivial">
-            <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagTrivial Enumeration</summary>
+        <Item name="LLVMDIFlagNonTrivial">
+            <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagNonTrivial Enumeration</summary>
         </Item>
         <Item name="LLVMDIFlagBigEndian">
             <summary>TODO: Provide summary for LLVMDIFlags.LLVMDIFlagBigEndian Enumeration</summary>
@@ -371,6 +368,34 @@
         <Item name="LLVMDIMacroFileMetadataKind">
             <summary>TODO: Provide summary for LLVMMetadataKind.LLVMDIMacroFileMetadataKind Enumeration</summary>
         </Item>
+        <Item name="LLVMDICommonBlockMetadataKind">
+            <summary>TODO: Provide summary for LLVMMetadataKind.LLVMDICommonBlockMetadataKind Enumeration</summary>
+        </Item>
+    </Enumeration>
+    <Enumeration name="LLVMDWARFMacinfoRecordType">
+        <summary>TODO: Provide summary for LLVMDWARFMacinfoRecordType Enumeration</summary>
+        <remarks>
+            **
+             * Describes the kind of macro declaration used for LLVMDIBuilderCreateMacro.
+             * @see llvm::dwarf::MacinfoRecordType
+             * @note Values are from DW_MACINFO_* constants in the DWARF specification.
+             *
+        </remarks>
+        <Item name="LLVMDWARFMacinfoRecordTypeDefine">
+            <summary>TODO: Provide summary for LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeDefine Enumeration</summary>
+        </Item>
+        <Item name="LLVMDWARFMacinfoRecordTypeMacro">
+            <summary>TODO: Provide summary for LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeMacro Enumeration</summary>
+        </Item>
+        <Item name="LLVMDWARFMacinfoRecordTypeStartFile">
+            <summary>TODO: Provide summary for LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeStartFile Enumeration</summary>
+        </Item>
+        <Item name="LLVMDWARFMacinfoRecordTypeEndFile">
+            <summary>TODO: Provide summary for LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeEndFile Enumeration</summary>
+        </Item>
+        <Item name="LLVMDWARFMacinfoRecordTypeVendorExt">
+            <summary>TODO: Provide summary for LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeVendorExt Enumeration</summary>
+        </Item>
     </Enumeration>
     <Function name="LLVMDebugMetadataVersion">
         <summary>TODO: Provide summary for Function LLVMDebugMetadataVersion</summary>
@@ -438,8 +463,8 @@
         <param name="ConfigMacrosLen">TODO: Provide details of parameter ConfigMacrosLen</param>
         <param name="IncludePath">TODO: Provide details of parameter IncludePath</param>
         <param name="IncludePathLen">TODO: Provide details of parameter IncludePathLen</param>
-        <param name="ISysRoot">TODO: Provide details of parameter ISysRoot</param>
-        <param name="ISysRootLen">TODO: Provide details of parameter ISysRootLen</param>
+        <param name="SysRoot">TODO: Provide details of parameter SysRoot</param>
+        <param name="SysRootLen">TODO: Provide details of parameter SysRootLen</param>
         <returns>TODO: Document return value</returns>
     </Function>
     <Function name="LLVMDIBuilderCreateNameSpace">
@@ -548,6 +573,34 @@
         <param name="Location">TODO: Provide details of parameter Location</param>
         <returns>TODO: Document return value</returns>
     </Function>
+    <Function name="LLVMDILocationGetInlinedAt">
+        <summary>TODO: Provide summary for Function LLVMDILocationGetInlinedAt</summary>
+        <param name="Location">TODO: Provide details of parameter Location</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIScopeGetFile">
+        <summary>TODO: Provide summary for Function LLVMDIScopeGetFile</summary>
+        <param name="Scope">TODO: Provide details of parameter Scope</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIFileGetDirectory">
+        <summary>TODO: Provide summary for Function LLVMDIFileGetDirectory</summary>
+        <param name="File">TODO: Provide details of parameter File</param>
+        <param name="Len">TODO: Provide details of parameter Len</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIFileGetFilename">
+        <summary>TODO: Provide summary for Function LLVMDIFileGetFilename</summary>
+        <param name="File">TODO: Provide details of parameter File</param>
+        <param name="Len">TODO: Provide details of parameter Len</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIFileGetSource">
+        <summary>TODO: Provide summary for Function LLVMDIFileGetSource</summary>
+        <param name="File">TODO: Provide details of parameter File</param>
+        <param name="Len">TODO: Provide details of parameter Len</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
     <Function name="LLVMDIBuilderGetOrCreateTypeArray">
         <summary>TODO: Provide summary for Function LLVMDIBuilderGetOrCreateTypeArray</summary>
         <param name="Builder">TODO: Provide details of parameter Builder</param>
@@ -562,6 +615,35 @@
         <param name="ParameterTypes">TODO: Provide details of parameter ParameterTypes</param>
         <param name="NumParameterTypes">TODO: Provide details of parameter NumParameterTypes</param>
         <param name="Flags">TODO: Provide details of parameter Flags</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIBuilderCreateMacro">
+        <summary>TODO: Provide summary for Function LLVMDIBuilderCreateMacro</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="ParentMacroFile">TODO: Provide details of parameter ParentMacroFile</param>
+        <param name="Line">TODO: Provide details of parameter Line</param>
+        <param name="RecordType">TODO: Provide details of parameter RecordType</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <param name="Value">TODO: Provide details of parameter Value</param>
+        <param name="ValueLen">TODO: Provide details of parameter ValueLen</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIBuilderCreateTempMacroFile">
+        <summary>TODO: Provide summary for Function LLVMDIBuilderCreateTempMacroFile</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="ParentMacroFile">TODO: Provide details of parameter ParentMacroFile</param>
+        <param name="Line">TODO: Provide details of parameter Line</param>
+        <param name="File">TODO: Provide details of parameter File</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIBuilderCreateEnumerator">
+        <summary>TODO: Provide summary for Function LLVMDIBuilderCreateEnumerator</summary>
+        <param name="Builder">TODO: Provide details of parameter Builder</param>
+        <param name="Name">TODO: Provide details of parameter Name</param>
+        <param name="NameLen">TODO: Provide details of parameter NameLen</param>
+        <param name="Value">TODO: Provide details of parameter Value</param>
+        <param name="IsUnsigned">TODO: Provide details of parameter IsUnsigned</param>
         <returns>TODO: Document return value</returns>
     </Function>
     <Function name="LLVMDIBuilderCreateEnumerationType">
@@ -768,6 +850,7 @@
         <param name="File">TODO: Provide details of parameter File</param>
         <param name="LineNo">TODO: Provide details of parameter LineNo</param>
         <param name="Scope">TODO: Provide details of parameter Scope</param>
+        <param name="AlignInBits">TODO: Provide details of parameter AlignInBits</param>
         <returns>TODO: Document return value</returns>
     </Function>
     <Function name="LLVMDIBuilderCreateInheritance">
@@ -930,6 +1013,31 @@
         <param name="AlignInBits">TODO: Provide details of parameter AlignInBits</param>
         <returns>TODO: Document return value</returns>
     </Function>
+    <Function name="LLVMDIGlobalVariableExpressionGetVariable">
+        <summary>TODO: Provide summary for Function LLVMDIGlobalVariableExpressionGetVariable</summary>
+        <param name="GVE">TODO: Provide details of parameter GVE</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIGlobalVariableExpressionGetExpression">
+        <summary>TODO: Provide summary for Function LLVMDIGlobalVariableExpressionGetExpression</summary>
+        <param name="GVE">TODO: Provide details of parameter GVE</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIVariableGetFile">
+        <summary>TODO: Provide summary for Function LLVMDIVariableGetFile</summary>
+        <param name="Var">TODO: Provide details of parameter Var</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIVariableGetScope">
+        <summary>TODO: Provide summary for Function LLVMDIVariableGetScope</summary>
+        <param name="Var">TODO: Provide details of parameter Var</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMDIVariableGetLine">
+        <summary>TODO: Provide summary for Function LLVMDIVariableGetLine</summary>
+        <param name="Var">TODO: Provide details of parameter Var</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
     <Function name="LLVMTemporaryMDNode">
         <summary>TODO: Provide summary for Function LLVMTemporaryMDNode</summary>
         <param name="Ctx">TODO: Provide details of parameter Ctx</param>
@@ -1039,6 +1147,21 @@
         <summary>TODO: Provide summary for Function LLVMSetSubprogram</summary>
         <param name="Func">TODO: Provide details of parameter Func</param>
         <param name="SP">TODO: Provide details of parameter SP</param>
+    </Function>
+    <Function name="LLVMDISubprogramGetLine">
+        <summary>TODO: Provide summary for Function LLVMDISubprogramGetLine</summary>
+        <param name="Subprogram">TODO: Provide details of parameter Subprogram</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMInstructionGetDebugLoc">
+        <summary>TODO: Provide summary for Function LLVMInstructionGetDebugLoc</summary>
+        <param name="Inst">TODO: Provide details of parameter Inst</param>
+        <returns>TODO: Document return value</returns>
+    </Function>
+    <Function name="LLVMInstructionSetDebugLoc">
+        <summary>TODO: Provide summary for Function LLVMInstructionSetDebugLoc</summary>
+        <param name="Inst">TODO: Provide details of parameter Inst</param>
+        <param name="Loc">TODO: Provide details of parameter Loc</param>
     </Function>
     <Function name="LLVMGetMetadataKind">
         <summary>TODO: Provide summary for Function LLVMGetMetadataKind</summary>

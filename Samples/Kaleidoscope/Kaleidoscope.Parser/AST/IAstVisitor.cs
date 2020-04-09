@@ -11,6 +11,8 @@ namespace Kaleidoscope.Grammar.AST
     {
         TResult? Visit( RootNode root );
 
+        TResult? Visit( ErrorNode errorNode );
+
         TResult? Visit( Prototype prototype );
 
         TResult? Visit( FunctionDefinition definition );

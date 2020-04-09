@@ -18,7 +18,7 @@ extern "C" {
 
     typedef enum LibLLVMDwarfTag
     {
-#define HANDLE_DW_TAG(ID, NAME, VERSION, VENDOR)                 \
+#define HANDLE_DW_TAG(ID, NAME, VERSION, VENDOR, KIND) \
   LibLLVMDwarfTag##NAME = ID,
 #include "llvm/BinaryFormat/Dwarf.def"
 #undef HANDLE_DW_TAG
@@ -54,9 +54,8 @@ extern "C" {
     );
 
     void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef /*DISubProgram*/ subProgram );
-    LLVMMetadataRef LibLLVMDILocation( LLVMContextRef context, unsigned Line, unsigned Column, LLVMMetadataRef scope, LLVMMetadataRef InlinedAt );
     LibLLVMDwarfTag LibLLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
-    LLVMMetadataRef /*DILocation*/ LibLLVMDILocationGetInlinedAt( LLVMMetadataRef /*DILocation*/ location );
+    //LLVMMetadataRef /*DILocation*/ LibLLVMDILocationGetInlinedAt( LLVMMetadataRef /*DILocation*/ location );
     LLVMMetadataRef /*DILocalScope*/ LibLLVMDILocationGetInlinedAtScope( LLVMMetadataRef /*DILocation*/ location );
 
     // caller must call LLVMDisposeMessage() on the returned string
@@ -78,23 +77,17 @@ extern "C" {
     void LibLLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
 
     LLVMMetadataRef LibLLVMConstantAsMetadata( LLVMValueRef Val );
-    LLVMMetadataRef LibLLVMMDString2( LLVMContextRef C, const char* Str, unsigned SLen );
-    LLVMMetadataRef LibLLVMMDNode2( LLVMContextRef C, LLVMMetadataRef* MDs, unsigned Count );
 
     char const* LibLLVMGetMDStringText( LLVMMetadataRef mdstring, unsigned* len );
 
     void LibLLVMAddNamedMetadataOperand2( LLVMModuleRef M, const char* name, LLVMMetadataRef Val );
     void LibLLVMSetMetadata2( LLVMValueRef Inst, unsigned KindID, LLVMMetadataRef MD );
-    void LibLLVMSetCurrentDebugLocation2( LLVMBuilderRef Bref, unsigned Line, unsigned Col, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt );
 
     LLVMBool LibLLVMIsTemporary( LLVMMetadataRef M );
     LLVMBool LibLLVMIsResolved( LLVMMetadataRef M );
     LLVMBool LibLLVMIsUniqued( LLVMMetadataRef M );
     LLVMBool LibLLVMIsDistinct( LLVMMetadataRef M );
 
-    LLVMMetadataRef LibLLVMDIGlobalVarExpGetVariable( LLVMMetadataRef /*DIGlobalVariableExpression*/ metadataHandle );
-
-    uint32_t LibLLVMDIVariableGetLine( LLVMMetadataRef /*DIVariable*/ );
 #ifdef __cplusplus
 } // extern "C"
 #endif

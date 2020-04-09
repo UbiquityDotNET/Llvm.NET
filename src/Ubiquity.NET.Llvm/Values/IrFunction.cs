@@ -315,6 +315,14 @@ namespace Ubiquity.NET.Llvm.Values
         }
 
         /// <summary>Appends a new basic block to a function</summary>
+        /// <param name="block">Existing block to append to the function's list of blocks</param>
+        public void AppendBasicBlock( BasicBlock block )
+        {
+            block.ValidateNotNull( nameof( block ) );
+            LLVMAppendExistingBasicBlock( ValueHandle, block.BlockHandle );
+        }
+
+        /// <summary>Creates an appends a new basic block to a function</summary>
         /// <param name="name">Name (label) of the block</param>
         /// <returns><see cref="BasicBlock"/> created and inserted onto the end of the function</returns>
         public BasicBlock AppendBasicBlock( string name )
@@ -331,7 +339,7 @@ namespace Ubiquity.NET.Llvm.Values
         public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
         {
             insertBefore.ValidateNotNull( nameof( insertBefore ) );
-            if( insertBefore.ContainingFunction != this )
+            if( insertBefore.ContainingFunction != null && insertBefore.ContainingFunction != this )
             {
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }

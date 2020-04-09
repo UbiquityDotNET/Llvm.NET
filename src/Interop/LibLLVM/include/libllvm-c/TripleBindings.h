@@ -14,6 +14,7 @@ extern "C" {
         LibLLVMTripleArchType_armeb,          // ARM (big endian): armeb
         LibLLVMTripleArchType_aarch64,        // AArch64 (little endian): aarch64
         LibLLVMTripleArchType_aarch64_be,     // AArch64 (big endian): aarch64_be
+        LibLLVMTripleArchType_aarch64_32,     // AArch64 (little endian) ILP32: aarch64_32
         LibLLVMTripleArchType_arc,            // ARC: Synopsys ARC
         LibLLVMTripleArchType_avr,            // AVR: Atmel AVR microcontroller
         LibLLVMTripleArchType_bpfel,          // eBPF or extended BPF or 64-bit BPF (little endian)
@@ -59,7 +60,8 @@ extern "C" {
         LibLLVMTripleArchType_wasm64,         // WebAssembly with 64-bit pointers
         LibLLVMTripleArchType_renderscript32, // 32-bit RenderScript
         LibLLVMTripleArchType_renderscript64, // 64-bit RenderScript
-        LibLLVMTripleArchType_LastArchType = LibLLVMTripleArchType_renderscript64
+        LibLLVMTripleArchType_ve,             // NEC SX-Aurora Vector Engine
+        LibLLVMTripleArchType_LastArchType = LibLLVMTripleArchType_ve
     };
 
     enum LibLLVMTripleSubArchType
@@ -75,6 +77,7 @@ extern "C" {
         LibLLVMTripleSubArchType_ARMSubArch_v8r,
         LibLLVMTripleSubArchType_ARMSubArch_v8m_baseline,
         LibLLVMTripleSubArchType_ARMSubArch_v8m_mainline,
+        LibLLVMTripleSubArchType_ARMSubArch_v8_1m_mainline,
         LibLLVMTripleSubArchType_ARMSubArch_v7,
         LibLLVMTripleSubArchType_ARMSubArch_v7em,
         LibLLVMTripleSubArchType_ARMSubArch_v7m,
@@ -93,7 +96,9 @@ extern "C" {
         LibLLVMTripleSubArchType_KalimbaSubArch_v4,
         LibLLVMTripleSubArchType_KalimbaSubArch_v5,
 
-        LibLLVMTripleSubArchType_MipsSubArch_r6
+        LibLLVMTripleSubArchType_MipsSubArch_r6,
+
+        LibLLVMTripleSubArchType_PPCSubArch_spe
     };
 
     enum LibLLVMTripleVendorType
@@ -157,7 +162,8 @@ extern "C" {
         LibLLVMTripleOSType_HermitCore, // HermitCore Unikernel/Multikernel
         LibLLVMTripleOSType_Hurd,       // GNU/Hurd
         LibLLVMTripleOSType_WASI,       // Experimental WebAssembly OS
-        LibLLVMTripleOSType_LastOSType = LibLLVMTripleOSType_WASI
+        LibLLVMTripleOSType_Emscripten,
+        LibLLVMTripleOSType_LastOSType = LibLLVMTripleOSType_Emscripten
     };
 
     enum LibLLVMTripleEnvironmentType
@@ -182,17 +188,20 @@ extern "C" {
         LibLLVMTripleEnvironmentType_Itanium,
         LibLLVMTripleEnvironmentType_Cygnus,
         LibLLVMTripleEnvironmentType_CoreCLR,
-        LibLLVMTripleEnvironmentType_Simulator,  // Simulator variants of other systems, e.g., Apple's iOS
-        LibLLVMTripleEnvironmentType_LastEnvironmentType = LibLLVMTripleEnvironmentType_Simulator
+        LibLLVMTripleEnvironmentType_Simulator, // Simulator variants of other systems, e.g., Apple's iOS
+        LibLLVMTripleEnvironmentType_MacABI, // Mac Catalyst variant of Apple's iOS deployment target.
+        LibLLVMTripleEnvironmentType_LastEnvironmentType = LibLLVMTripleEnvironmentType_MacABI
     };
 
     enum LibLLVMTripleObjectFormatType
     {
         LibLLVMTripleObjectFormatType_UnknownObjectFormat,
+
         LibLLVMTripleObjectFormatType_COFF,
         LibLLVMTripleObjectFormatType_ELF,
         LibLLVMTripleObjectFormatType_MachO,
         LibLLVMTripleObjectFormatType_Wasm,
+        LibLLVMTripleObjectFormatType_XCOFF,
     };
 
     typedef struct LibLLVMOpaqueTriple* LibLLVMTripleRef;

@@ -16,6 +16,8 @@ namespace Kaleidoscope.Grammar.AST
     {
         public virtual TResult? Visit( RootNode root ) => VisitChildren( root );
 
+        public virtual TResult? Visit( ErrorNode errorNode ) => default;
+
         public virtual TResult? Visit( Prototype prototype ) => VisitChildren( prototype );
 
         public virtual TResult? Visit( FunctionDefinition definition ) => VisitChildren( definition );

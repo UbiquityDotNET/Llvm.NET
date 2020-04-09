@@ -19,8 +19,6 @@ using CppSharp.Utils;
 
 using LlvmBindingsGenerator.Templates;
 
-#pragma warning disable SA1600
-
 namespace LlvmBindingsGenerator
 {
     /// <summary>Provides a more flexible implementation of the general "driver" concept in CppSharp</summary>
@@ -171,7 +169,20 @@ namespace LlvmBindingsGenerator
 
         public void ProcessCode( )
         {
-            Context.RunPasses( );
+            Context.TranslationUnitPasses.RunPasses( delegate ( TranslationUnitPass pass )
+            {
+                Diagnostics.Debug( "Pass '{0}'", pass );
+                Diagnostics.PushIndent( );
+                try
+                {
+                    pass.Context = Context;
+                    pass.VisitASTContext( Context.ASTContext );
+                }
+                finally
+                {
+                    Diagnostics.PopIndent( );
+                }
+            } );
         }
 
         public void GenerateCode( IEnumerable<ICodeGenerator> generators )

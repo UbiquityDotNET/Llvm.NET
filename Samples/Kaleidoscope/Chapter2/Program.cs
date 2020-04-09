@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Reactive.Linq;
+using System.Linq;
 using System.Reflection;
 
 using Kaleidoscope.Grammar;
@@ -16,53 +16,30 @@ namespace Kaleidoscope.Chapter2
 {
     public static class Program
     {
-        // Using language level that includes the complete set for exploration of pare trees and AST
-        private const LanguageLevel LanguageFeatureLevel = LanguageLevel.MutableVariables;
-
-        /// <summary>C# version of the LLVM Kaleidoscope language tutorial</summary>
-        public static void Main( /*string[ ] args*/ )
+        /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 2)</summary>
+        public static void Main( )
         {
-            string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Explorer - {LanguageFeatureLevel}";
+            string helloMsg = "Ubiquity.NET.Llvm Kaleidoscope parse evaluator";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
-            #region GeneratorLoop
-            var parser = new Parser( LanguageFeatureLevel );
+            ShowPrompt( ReadyState.StartExpression );
+            var parser = new Parser( LanguageLevel.MutableVariables );
 
-            // Create Observable chain to parse input lines from console into AST Nodes
-            var replSeq = parser.Parse( Console.In.ToObservableStatements( ShowPrompt ), ShowCodeGenError );
+            // Create sequence of parsed AST nodes to feed the loop
+            var nodes = from stmt in Console.In.ToStatements( ShowPrompt )
+                        select parser.Parse( stmt );
 
-            // Subscribe to the sequence the sequence
-            using( replSeq.Subscribe( ShowResults ) )
+            // Read, Parse, Print loop
+            foreach( IAstNode node in nodes )
             {
+                Console.WriteLine( "PARSED: {0}", node );
             }
-
-            Console.WriteLine( "Bye!" );
-            #endregion
         }
 
-        #region ShowPrompt
-        private static void ShowPrompt( ReadyState state )
+        public static void ShowPrompt( ReadyState state )
         {
             Console.Write( state == ReadyState.StartExpression ? "Ready>" : ">" );
         }
-        #endregion
-
-        #region Error Handling
-        private static void ShowCodeGenError( CodeGeneratorException ex )
-        {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine( ex.Message );
-            Console.ForegroundColor = color;
-        }
-        #endregion
-
-        #region ShowResults
-        private static void ShowResults( IAstNode node )
-        {
-            Console.WriteLine( "Parsed {0}", node.GetType( ).Name );
-        }
-        #endregion
     }
 }

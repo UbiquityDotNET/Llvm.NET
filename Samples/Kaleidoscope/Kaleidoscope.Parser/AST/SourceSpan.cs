@@ -43,18 +43,14 @@ namespace Kaleidoscope.Grammar
 
         public override string ToString( )
         {
-            return $"({StartLine},{StartColumn})-({EndLine},{EndColumn})";
+            return StartLine == EndLine && StartColumn == EndColumn
+                ? $"({StartLine},{StartColumn})"
+                : $"({StartLine},{StartColumn},{EndLine},{EndColumn})";
         }
 
         public override int GetHashCode( )
         {
-            int hashCode = 2078777074;
-            hashCode = ( hashCode * -1521134295 ) + base.GetHashCode( );
-            hashCode = ( hashCode * -1521134295 ) + StartLine.GetHashCode( );
-            hashCode = ( hashCode * -1521134295 ) + StartColumn.GetHashCode( );
-            hashCode = ( hashCode * -1521134295 ) + EndLine.GetHashCode( );
-            hashCode = ( hashCode * -1521134295 ) + EndColumn.GetHashCode( );
-            return hashCode;
+            return HashCode.Combine( StartLine, StartColumn, EndLine, EndColumn );
         }
 
         public static bool operator ==( SourceSpan span1, SourceSpan span2 ) => span1.Equals( span2 );

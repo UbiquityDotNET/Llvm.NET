@@ -50,7 +50,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Public ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ForwardDeclaration ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.AppleBlock ) );
-            Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.BlockByrefStruct ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Virtual ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Artificial ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ObjectPointer ) );
@@ -132,7 +131,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Public ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ForwardDeclaration ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.AppleBlock ) );
-            Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.BlockByrefStruct ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Virtual ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.Artificial ) );
             Assert.IsFalse( union.DIType.DebugInfoFlags.HasFlag( DebugInfoFlags.ObjectPointer ) );

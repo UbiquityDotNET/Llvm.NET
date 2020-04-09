@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Llvm.JIT
         {
             machine.ValidateNotNull( nameof( machine ) );
 
-            JitStackHandle = LLVMOrcCreateInstance( machine.TargetMachineHandle );
+            JitStackHandle = LLVMOrcCreateInstance( machine.TargetMachineHandle ).ThrowIfInvalid();
             TargetMachine = machine;
         }
 
@@ -218,6 +218,7 @@ namespace Ubiquity.NET.Llvm.JIT
                 catch
                 {
                     // native callback - MUST NOT leak exceptions out of this call.
+                    System.Diagnostics.Debug.Assert( false, "Callbacks should not allow exceptions - this is an application crash scenario!" );
                     return 0;
                 }
 #pragma warning restore CA1031 // Do not catch general exception types
@@ -242,7 +243,7 @@ namespace Ubiquity.NET.Llvm.JIT
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
-            JitStackHandle.Dispose( );
+            JitStackHandle?.Dispose( );
             DisposeCallbacks( GlobalInteropFunctions );
             DisposeCallbacks( SymbolResolvers );
             DisposeCallbacks( LazyFunctionGenerators );
@@ -251,12 +252,15 @@ namespace Ubiquity.NET.Llvm.JIT
         private static void DisposeCallbacks<T, T2>( IDictionary<T, T2> map )
             where T2 : WrappedNativeCallback
         {
-            foreach( var callBack in map.Values )
+            if( map != null )
             {
-                callBack.Dispose( );
-            }
+                foreach( var callBack in map.Values )
+                {
+                    callBack.Dispose( );
+                }
 
-            map.Clear( );
+                map.Clear( );
+            }
         }
 
         private readonly Dictionary<string, WrappedNativeCallback> GlobalInteropFunctions

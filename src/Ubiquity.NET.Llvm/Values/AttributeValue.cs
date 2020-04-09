@@ -8,6 +8,7 @@ using System;
 
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Types;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
@@ -53,7 +54,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets the kind of the attribute</summary>
         /// <value>The <see cref="AttributeKind"/> or <see cref="AttributeKind.None"/> for named attributes</value>
         public AttributeKind Kind
-            => !LLVMIsEnumAttribute( NativeAttribute )
+            => LLVMIsStringAttribute( NativeAttribute )
                  ? AttributeKind.None
                  : AttributeKindExtensions.LookupId( LLVMGetEnumAttributeKind( NativeAttribute ) );
 
@@ -68,13 +69,16 @@ namespace Ubiquity.NET.Llvm.Values
         public string? StringValue => !IsString ? null : LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
 
         /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
-        public UInt64? IntegerValue => IsInt ? LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
+        public UInt64? IntegerValue => HasIntegerVaue ? LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
+
+        /// <summary>Gets the Type value of this attribute, if any</summary>
+        public ITypeRef? TypeValue => TypeRef.FromHandle( LibLLVMGetAttributeTypeValue( NativeAttribute ) );
 
         /// <summary>Gets a value indicating whether this attribute is a target specific string value</summary>
         public bool IsString => LLVMIsStringAttribute( NativeAttribute );
 
         /// <summary>Gets a value indicating whether this attribute has an integer attribute</summary>
-        public bool IsInt => Kind.RequiresIntValue( );
+        public bool HasIntegerVaue => Kind.RequiresIntValue( );
 
         /// <summary>Gets a value indicating whether this attribute is a simple enumeration value</summary>
         public bool IsEnum => LLVMIsEnumAttribute( NativeAttribute );

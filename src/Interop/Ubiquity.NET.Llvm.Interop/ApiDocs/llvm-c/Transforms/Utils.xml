@@ -18,4 +18,8 @@
         <summary>TODO: Provide summary for Function LLVMAddPromoteMemoryToRegisterPass</summary>
         <param name="PM">TODO: Provide details of parameter PM</param>
     </Function>
+    <Function name="LLVMAddAddDiscriminatorsPass">
+        <summary>TODO: Provide summary for Function LLVMAddAddDiscriminatorsPass</summary>
+        <param name="PM">TODO: Provide details of parameter PM</param>
+    </Function>
 </LibLlvmAPI>

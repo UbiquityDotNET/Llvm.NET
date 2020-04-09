@@ -42,7 +42,7 @@ migrated to requiring C++/11 support in the language to build. This became an is
 Microsoft C++/CLI compiler didn't support the C++11 syntax. Thus a change was made to Ubiquity.NET.Llvm to move to an extended
 C API with a C# adapter layer to provide the full experience .NET developers expect. While the transition was a
 tedious one very little application code required changes. LLVM and Ubiquity.NET.Llvm have continued to progress and Ubiquity.NET.Llvm
-is currently based on LLVM 8.0.
+is currently based on LLVM 10.0.0 (RC3)
 
 ### Platform Support
 Currently Ubiquity.NET.Llvm supports x64 builds targeting the full desktop framework v4.7 and .NET standard 2.0. Ideally

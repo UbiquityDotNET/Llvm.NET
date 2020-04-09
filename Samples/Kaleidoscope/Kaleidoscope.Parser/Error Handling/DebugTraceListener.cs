@@ -9,17 +9,19 @@ using System.Diagnostics;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
+using Kaleidoscope.Grammar.ANTLR;
+
 using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Provides debug <see cref="Trace.TraceInformation(string)"/> notification of all rule processing while parsing</summary>
-    public class DebugTraceListener
+    internal class DebugTraceListener
         : IParseTreeListener
     {
         /// <summary>Initializes a new instance of the <see cref="DebugTraceListener"/> class.</summary>
         /// <param name="parser">Parser to use to resolve names when generating messages</param>
-        public DebugTraceListener( Parser parser )
+        public DebugTraceListener( KaleidoscopeParser parser )
         {
             Parser = parser;
         }
@@ -54,6 +56,6 @@ namespace Kaleidoscope.Grammar
             Trace.TraceInformation( "Terminal: '{0}' rule {1}", symbol, Parser.RuleNames[ parserRuleContext.RuleIndex ] );
         }
 
-        private readonly Parser Parser;
+        private readonly KaleidoscopeParser Parser;
     }
 }

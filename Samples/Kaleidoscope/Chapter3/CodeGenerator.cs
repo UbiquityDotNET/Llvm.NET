@@ -53,21 +53,22 @@ namespace Kaleidoscope.Chapter3
         }
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast )
         {
-            ast.ValidateNotNull( nameof( ast ) );
-            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
-            try
+            if( ast is null )
             {
-                // Prototypes, including extern are ignored as AST generation
-                // adds them to the RuntimeState so that already has the declarations
-                return ( ast is FunctionDefinition ) ? ast.Accept( this ) : null;
+                return default;
             }
-            catch( CodeGeneratorException ex )
+
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            Value? result = null;
+            if( ast is FunctionDefinition )
             {
-                codeGenerationErroHandler( ex );
-                return null;
+                result = ast.Accept( this );
             }
+
+            return result != null ? OptionalValue.Create( result ) : default;
         }
         #endregion
 
@@ -136,10 +137,15 @@ namespace Kaleidoscope.Chapter3
             functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
 
-            // try for an extern function declaration
-            IrFunction function = RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target )
-                                ? GetOrDeclareFunction( target )
-                                : Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            IrFunction? function;
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            {
+                function = GetOrDeclareFunction( target );
+            }
+            else if( !Module.TryGetFunction( targetName, out function ) )
+            {
+                throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            }
 
             var args = ( from expr in functionCall.Arguments
                          select expr.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr)
@@ -204,8 +210,7 @@ namespace Kaleidoscope.Chapter3
         // otherwise declares the function and returns the newly declared function.
         private IrFunction GetOrDeclareFunction( Prototype prototype )
         {
-            var function = Module.GetFunction( prototype.Name );
-            if( function != null )
+            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
             {
                 return function;
             }

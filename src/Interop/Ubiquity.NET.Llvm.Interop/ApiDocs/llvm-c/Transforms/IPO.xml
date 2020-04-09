@@ -18,6 +18,10 @@
         <summary>TODO: Provide summary for Function LLVMAddConstantMergePass</summary>
         <param name="PM">TODO: Provide details of parameter PM</param>
     </Function>
+    <Function name="LLVMAddMergeFunctionsPass">
+        <summary>TODO: Provide summary for Function LLVMAddMergeFunctionsPass</summary>
+        <param name="PM">TODO: Provide details of parameter PM</param>
+    </Function>
     <Function name="LLVMAddCalledValuePropagationPass">
         <summary>TODO: Provide summary for Function LLVMAddCalledValuePropagationPass</summary>
         <param name="PM">TODO: Provide details of parameter PM</param>
@@ -62,6 +66,12 @@
         <summary>TODO: Provide summary for Function LLVMAddInternalizePass</summary>
         <param name="_0">TODO: Provide details of parameter _0</param>
         <param name="AllButMain">TODO: Provide details of parameter AllButMain</param>
+    </Function>
+    <Function name="LLVMAddInternalizePassWithMustPreservePredicate">
+        <summary>TODO: Provide summary for Function LLVMAddInternalizePassWithMustPreservePredicate</summary>
+        <param name="PM">TODO: Provide details of parameter PM</param>
+        <param name="Context">TODO: Provide details of parameter Context</param>
+        <param name="MustPreserve">TODO: Provide details of parameter MustPreserve</param>
     </Function>
     <Function name="LLVMAddStripDeadPrototypesPass">
         <summary>TODO: Provide summary for Function LLVMAddStripDeadPrototypesPass</summary>

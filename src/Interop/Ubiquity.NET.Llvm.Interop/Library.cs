@@ -56,17 +56,73 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <see cref="System.IDisposable"/> implementation for the library
         /// </returns>
         /// <remarks>
-        /// This should be called once per application to initialize the
+        /// This can only be called once per application to initialize the
         /// LLVM library. <see cref="System.IDisposable.Dispose()"/> will release
-        /// any resources allocated by the library.
+        /// any resources allocated by the library. The current LLVM library does
+        /// *NOT* support re-initialization within the same process. Thus, this
+        /// is best used at the top level of the application and released at or
+        /// near process exit.
         /// </remarks>
         public static IDisposable InitializeLLVM( )
         {
-            return LazyInitializer.EnsureInitialized( ref LlvmInitializationState
-                                                    , ref LlvmStateInitialized
-                                                    , ref InitializationSyncObj
-                                                    , InternalInitializeLLVM
-                                                    );
+            var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
+                                                                                , (int)InitializationState.Initializing
+                                                                                , (int)InitializationState.Uninitialized
+                                                                                );
+            if( previousState != InitializationState.Uninitialized )
+            {
+                throw new InvalidOperationException( Resources.Llvm_already_initialized );
+            }
+
+            // force loading the appropriate architecture specific
+            // DLL before any use of the wrapped interop APIs to
+            // allow building this library as ANYCPU
+            string thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
+            if( string.IsNullOrWhiteSpace( thisModulePath ) )
+            {
+                throw new InvalidOperationException( Resources.Cannot_determine_assembly_location );
+            }
+
+            string packageRoot = Path.GetFullPath( Path.Combine( thisModulePath, "..", ".." ) );
+            var paths = new List<string>( );
+
+            // TODO: support other non-windows runtimes via .NET CORE
+            string osArch = Environment.Is64BitProcess ? "Win-x64" : "win-x86";
+            string runTimePath = Path.Combine( "runtimes", osArch, "native" );
+
+            // .NET core apps will actually run with references directly from the NuGet install
+            // but full framework apps (including unit tests will have CopyLocal applied)
+            paths.Add( Path.Combine( packageRoot, runTimePath ) );
+            paths.Add( Path.Combine( thisModulePath, runTimePath ) );
+            paths.Add( thisModulePath );
+            IntPtr hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
+
+            // Verify the version of LLVM in LibLLVM
+            LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
+            if( versionInfo.Major != VersionMajor
+             || versionInfo.Minor != VersionMinor
+             || versionInfo.Patch < VersionPatch
+              )
+            {
+                string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
+                string msg = string.Format( CultureInfo.CurrentCulture
+                                          , msgFmt
+                                          , VersionMajor
+                                          , VersionMinor
+                                          , VersionPatch
+                                          , versionInfo.Major
+                                          , versionInfo.Minor
+                                          , versionInfo.Patch
+                                          );
+
+                throw new InvalidOperationException( msg );
+            }
+
+            // initialize the static fields
+            FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
+            LLVMInstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
+            Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.Initialized );
+            return new DisposableAction( ( ) => InternalShutdownLLVM( hLibLLVM ) );
         }
 
         /// <summary>Parse a command line string for LLVM Options</summary>
@@ -725,14 +781,56 @@ namespace Ubiquity.NET.Llvm.Interop
             */
         }
 
+        /// <summary>Registers components for the RISCV target</summary>
+        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        public static void RegisterRISCV( TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            {
+                LLVMInitializeRISCVTarget( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            {
+                LLVMInitializeRISCVTargetInfo( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            {
+                LLVMInitializeRISCVTargetMC( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            {
+                LLVMInitializeRISCVAsmPrinter( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            {
+                LLVMInitializeRISCVDisassembler( );
+            }
+
+            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            {
+                LLVMInitializeRISCVAsmParser( );
+            }
+        }
+
+        private enum InitializationState
+        {
+            Uninitialized,
+            Initializing,
+            Initialized,
+            ShuttingDown,
+            ShutDown, // NOTE: This is a terminal state, it doesn't return to uninitialized
+        }
+
         // version info for verification of matched LibLLVM
-        private const int VersionMajor = 8;
+        private const int VersionMajor = 10;
         private const int VersionMinor = 0;
         private const int VersionPatch = 0;
 
-        private static IDisposable LlvmInitializationState = new DisposableAction( ()=> { } );
-        private static object InitializationSyncObj = new object();
-        private static bool LlvmStateInitialized;
+        private static int CurrentInitializationState;
 
         private static void FatalErrorHandler( string reason )
         {
@@ -740,75 +838,24 @@ namespace Ubiquity.NET.Llvm.Interop
             Trace.TraceError( "LLVM Fatal Error: '{0}'; Application exiting.", reason );
         }
 
-        private static IDisposable InternalInitializeLLVM( )
-        {
-            // force loading the appropriate architecture specific
-            // DLL before any use of the wrapped interop APIs to
-            // allow building this library as ANYCPU
-            string thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
-            if( string.IsNullOrWhiteSpace( thisModulePath ) )
-            {
-                throw new InvalidOperationException( Resources.Cannot_determine_assembly_location );
-            }
-
-            string packageRoot = Path.GetFullPath( Path.Combine( thisModulePath, "..", ".." ) );
-            var paths = new List<string>( );
-
-            // TODO: support other non-windows runtimes via .NET CORE
-            string osArch = Environment.Is64BitProcess ? "Win-x64" : "win-x86";
-            string runTimePath = Path.Combine( "runtimes", osArch, "native" );
-
-            // .NET core apps will actually run with references directly from the NuGet install
-            // but full framework apps (including unit tests will have CopyLocal applied)
-            paths.Add( Path.Combine( packageRoot, runTimePath ) );
-            paths.Add( Path.Combine( thisModulePath, runTimePath ) );
-            paths.Add( thisModulePath );
-            IntPtr hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
-
-            // Verify the version of LLVM in LibLLVM
-            LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
-            if( versionInfo.Major != VersionMajor
-             || versionInfo.Minor != VersionMinor
-             || versionInfo.Patch < VersionPatch
-              )
-            {
-                string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
-                string msg = string.Format( CultureInfo.CurrentCulture
-                                          , msgFmt
-                                          , VersionMajor
-                                          , VersionMinor
-                                          , VersionPatch
-                                          , versionInfo.Major
-                                          , versionInfo.Minor
-                                          , versionInfo.Patch
-                                          );
-
-                throw new InvalidOperationException( msg );
-            }
-
-            // initialize the static fields
-            FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
-            LLVMInstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
-            return new DisposableAction( ( ) => InternalShutdownLLVM( hLibLLVM ) );
-        }
-
         private static void InternalShutdownLLVM( IntPtr hLibLLVM )
         {
-            if( InitializationSyncObj is null )
+            var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
+                                                                                , (int)InitializationState.ShuttingDown
+                                                                                , (int)InitializationState.Initialized
+                                                                                );
+            if( previousState != InitializationState.Initialized )
             {
-                throw new InvalidOperationException( );
+                throw new InvalidOperationException( Resources.Llvm_not_initialized );
             }
 
-            lock( InitializationSyncObj )
+            LLVMShutdown( );
+            if( hLibLLVM != IntPtr.Zero )
             {
-                LlvmInitializationState = new DisposableAction( ( ) => { } );
-                LlvmStateInitialized = false;
-                LLVMShutdown( );
-                if( hLibLLVM != IntPtr.Zero )
-                {
-                    FreeLibrary( hLibLLVM );
-                }
+                FreeLibrary( hLibLLVM );
             }
+
+            Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.ShutDown );
         }
 
         // lazy initialized singleton unmanaged delegate so it is never collected

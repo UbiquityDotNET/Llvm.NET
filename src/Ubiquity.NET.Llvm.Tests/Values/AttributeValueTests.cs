@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( AttributeKind.AlwaysInline );
             Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.HasIntegerVaue );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "alwaysinline", value.Name );
             Assert.IsNull( value.StringValue );
@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( AttributeKind.DereferenceableOrNull, 1234ul );
             Assert.IsTrue( value.IntegerValue.HasValue );
-            Assert.IsTrue( value.IsInt );
+            Assert.IsTrue( value.HasIntegerVaue );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "dereferenceable_or_null", value.Name );
             Assert.IsNull( value.StringValue );
@@ -53,7 +53,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( TestTargetDependentAttributeName );
             Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.HasIntegerVaue );
             Assert.IsTrue( value.IsString );
             Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
             Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
@@ -67,7 +67,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var ctx = new Context( );
             AttributeValue value = ctx.CreateAttribute( AttributeKind.NoInline );
             Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.HasIntegerVaue );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "noinline", value.Name );
             Assert.IsNull( value.StringValue );
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var ctx = new Context( );
             AttributeValue value = ctx.CreateAttribute( TestTargetDependentAttributeName );
             Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.HasIntegerVaue );
             Assert.IsTrue( value.IsString );
             Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
             Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );

@@ -55,7 +55,7 @@
     <ClCompile Include="DIBuilderBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\libllvm-c\ObjectFileBindings.cpp">
+    <ClCompile Include="ObjectFileBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LibLlvmOrcJitBindings.cpp">

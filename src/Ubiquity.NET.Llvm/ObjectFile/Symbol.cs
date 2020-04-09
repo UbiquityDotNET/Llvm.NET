@@ -13,22 +13,22 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
-    /// <summary>Symbol in an <see cref="TargetObjectFile"/></summary>
+    /// <summary>Symbol in an <see cref="TargetBinary"/></summary>
     [DebuggerDisplay( "{Name,nq}@{Address}[{Size}]" )]
     public struct Symbol
         : IEquatable<Symbol>
     {
-        /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile"/> this symbol belongs to</summary>
-        public TargetObjectFile ObjectFile { get; }
+        /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile.TargetBinary"/> this symbol belongs to</summary>
+        public TargetBinary ContainingBinary { get; }
 
         /// <summary>Gets the section this symbol belongs to</summary>
         public Section Section
         {
             get
             {
-                LLVMSectionIteratorRef iterator = LLVMGetSections( ObjectFile.ObjFileRef );
+                LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.BinaryRef );
                 LLVMMoveToContainingSection( iterator, IteratorRef );
-                return new Section( ObjectFile, iterator, false );
+                return new Section( ContainingBinary, iterator, false );
             }
         }
 
@@ -62,15 +62,15 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <inheritdoc/>
         public bool Equals( Symbol other ) => IteratorRef.Equals( other.IteratorRef );
 
-        internal Symbol( TargetObjectFile objFile, LLVMSymbolIteratorRef iterator )
+        internal Symbol( TargetBinary objFile, LLVMSymbolIteratorRef iterator )
             : this( objFile, iterator, true )
         {
         }
 
-        internal Symbol( TargetObjectFile objFile, LLVMSymbolIteratorRef iterator, bool clone )
+        internal Symbol( TargetBinary binary, LLVMSymbolIteratorRef iterator, bool clone )
         {
             IteratorRef = clone ? LibLLVMSymbolIteratorClone( iterator ) : iterator;
-            ObjectFile = objFile;
+            ContainingBinary = binary;
         }
 
         internal LLVMSymbolIteratorRef IteratorRef { get; }

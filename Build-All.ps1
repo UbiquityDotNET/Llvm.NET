@@ -5,46 +5,50 @@ Param(
     [ValidateSet('All','Source','Docs')]
     [System.String]$BuildMode = 'All'
 )
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
-
-. .\buildutils.ps1
-Initialize-BuildEnvironment -FullInit
 
 pushd $PSScriptRoot
 $oldPath = $env:Path
-$BuildSource = $false
-$BuildDocs = $false;
-
-switch($BuildMode)
-{
-'All' { $BuildSource = $true; $BuildDocs = $true; }
-'Source' { $BuildSource = $true }
-'Docs' { $BuildDocs = $true }
-}
-
 try
 {
-    if( (Test-Path -PathType Container $BuildPaths.BuildOutputPath) -and $ForceClean )
+    . .\buildutils.ps1
+    $buildInfo = Initialize-BuildEnvironment -FullInit
+
+    $BuildSource = $false
+    $BuildDocs = $false;
+
+    switch($BuildMode)
     {
-        Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $BuildPaths.BuildOutputPath
+    'All' { $BuildSource = $true; $BuildDocs = $true; }
+    'Source' { $BuildSource = $true }
+    'Docs' { $BuildDocs = $true }
     }
 
-    md $BuildPaths.NuGetOutputPath -ErrorAction SilentlyContinue | Out-Null
+    if((Test-Path -PathType Container $buildInfo['BuildOutputPath']) -and $ForceClean )
+    {
+        Write-Information "Cleaning output folder from previous builds"
+        rd -Recurse -Force -Path $buildInfo['BuildOutputPath']
+    }
+
+    md $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
     if($BuildSource)
     {
-        .\Build-Source.ps1 -BuildInfo $BuildInfo
+        .\Build-Source.ps1
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1 -BuildInfo $BuildInfo
+        .\Build-Docs.ps1
     }
+}
+catch
+{
+    Write-Error $_.Exception.Message
 }
 finally
 {
     popd
     $env:Path = $oldPath
 }
+
+Write-Information "Done build"

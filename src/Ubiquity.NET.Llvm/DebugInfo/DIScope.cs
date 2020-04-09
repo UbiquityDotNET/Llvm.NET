@@ -6,6 +6,8 @@
 
 using Ubiquity.NET.Llvm.Interop;
 
+using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for all Debug information scopes</summary>
@@ -14,7 +16,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Gets the <see cref="DIFile"/> describing the file this scope belongs to</summary>
         /// <remarks>If this scope is a <see cref="DIFile"/> then this returns <see langword="this"/></remarks>
-        public DIFile File => this is DIFile file ? file : GetOperand<DIFile>( 0 )!;
+        public DIFile? File => this is DIFile file ? file : FromHandle<DIFile>( LLVMDIScopeGetFile( MetadataHandle ) );
 
         /// <summary>Gets the parent scope for this scope or <see langword="null"/> if no parent scope exists</summary>
         public virtual DIScope? Scope { get; } = null;

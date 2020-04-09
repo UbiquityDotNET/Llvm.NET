@@ -50,27 +50,36 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                MDNode.TryGetFromHandle<DILocation>( LLVMValueAsMetadata( LLVMGetCurrentDebugLocation( BuilderHandle ) ), out DILocation? retVal );
+                MDNode.TryGetFromHandle<DILocation>( LLVMGetCurrentDebugLocation2( BuilderHandle ), out DILocation? retVal );
                 return retVal;
             }
 
             set
             {
                 value.ValidateNotNull( nameof( value ) );
-                var valueAsMetadata = LLVMMetadataAsValue( Context.ContextHandle, value!.MetadataHandle );
-                LLVMSetCurrentDebugLocation( BuilderHandle, valueAsMetadata );
+                LLVMSetCurrentDebugLocation2( BuilderHandle, value!.MetadataHandle );
             }
         }
 
         /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>
         /// <param name="line">Source line</param>
         /// <param name="col">Source column</param>
-        /// <param name="scope"><see cref="DIScope"/> for the location</param>
-        /// <param name="inlinedAt"><see cref="DIScope"/>the location is inlined into</param>
+        /// <param name="scope"><see cref="DILocalScope"/> for the location</param>
+        /// <param name="inlinedAt"><see cref="DILocation"/>the location is inlined into</param>
         /// <returns>This builder for fluent API usage</returns>
-        public InstructionBuilder SetDebugLocation( uint line, uint col, DIScope? scope = null, DIScope? inlinedAt = null )
+        public InstructionBuilder SetDebugLocation( uint line, uint col, DILocalScope scope, DILocation? inlinedAt = null )
         {
-            LibLLVMSetCurrentDebugLocation2( BuilderHandle, line, col, scope?.MetadataHandle ?? default, inlinedAt?.MetadataHandle ?? default );
+            var loc = new DILocation(Context, line, col, scope, inlinedAt);
+            return SetDebugLocation( loc );
+        }
+
+        /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>
+        /// <param name="location">Location to set</param>
+        /// <returns>This builder for fluent API usage</returns>
+        public InstructionBuilder SetDebugLocation( DILocation? location )
+        {
+            location.ValidateNotNull( nameof( location ) );
+            LLVMSetCurrentDebugLocation2( BuilderHandle, location?.MetadataHandle ?? default );
             return this;
         }
 
@@ -117,6 +126,14 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
 
             LLVMPositionBuilderBefore( BuilderHandle, instr.ValueHandle );
+        }
+
+        /// <summary>Appends a basic block after the <see cref="InsertBlock"/> of this <see cref="InstructionBuilder"/></summary>
+        /// <param name="block">Block to insert</param>
+        public void AppendBasicBlock( BasicBlock block )
+        {
+            block.ValidateNotNull( nameof( block ) );
+            LLVMInsertExistingBasicBlockAfterInsertBlock( BuilderHandle, block.BlockHandle );
         }
 
         /// <summary>Creates a floating point negation operator</summary>
@@ -395,6 +412,16 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Value.FromHandle<LandingPad>( landingPad.ThrowIfInvalid( ) )!;
         }
 
+        /// <summary>Creates a <see cref="Instructions.Freeze"/> instruction</summary>
+        /// <param name="value">Value to freeze</param>
+        /// <returns><see cref="Instructions.Freeze"/></returns>
+        public Freeze Freeze( Value value )
+        {
+            value.ValidateNotNull( nameof( value ) );
+            LLVMValueRef inst = LLVMBuildFreeze( BuilderHandle, value.ValueHandle, string.Empty);
+            return Value.FromHandle<Freeze>( inst.ThrowIfInvalid( ) )!;
+        }
+
         /// <summary>Creates a <see cref="Instructions.ResumeInstruction"/></summary>
         /// <param name="exception">Exception value</param>
         /// <returns><see cref="Instructions.ResumeInstruction"/></returns>
@@ -545,6 +572,18 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="val">Right hand side operand</param>
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicRMW AtomicUMin( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpUMin, ptr, val );
+
+        /// <summary>Creates an atomic FAdd instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicFadd( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpFAdd, ptr, val );
+
+        /// <summary>Creates an atomic FSub instruction</summary>
+        /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
+        /// <param name="val">Right hand side operand</param>
+        /// <returns><see cref="AtomicRMW"/></returns>
+        public AtomicRMW AtomicFSub( Value ptr, Value val ) => BuildAtomicRMW( LLVMAtomicRMWBinOp.LLVMAtomicRMWBinOpFSub, ptr, val );
 
         /// <summary>Creates an atomic Compare exchange instruction</summary>
         /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>

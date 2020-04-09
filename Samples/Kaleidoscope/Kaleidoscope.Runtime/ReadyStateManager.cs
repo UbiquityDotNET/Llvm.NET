@@ -20,9 +20,19 @@ namespace Kaleidoscope.Runtime
     /// The ready state is used to handle partial input lines where the prompt
     /// presented to the user indicates that input is a continuation of the previous.
     /// </remarks>
-    public class ReadyStateManager
+    internal class ReadyStateManager
     {
+        public ReadyStateManager( Action<ReadyState>? prompt = null )
+        {
+            PromptAction = prompt;
+        }
+
         public ReadyState State { get; private set; }
+
+        public void Prompt( )
+        {
+            PromptAction?.Invoke( State );
+        }
 
         public void UpdateState( string txt, bool isPartial )
         {
@@ -52,5 +62,7 @@ namespace Kaleidoscope.Runtime
                 State = isPartial ? ReadyState.ContinueExpression : ReadyState.StartExpression;
             }
         }
+
+        private readonly Action<ReadyState>? PromptAction;
     }
 }

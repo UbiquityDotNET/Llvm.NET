@@ -6,14 +6,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
 using LlvmBindingsGenerator.Templates;
 
+using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.Serialization.NodeDeserializers;
 
 namespace LlvmBindingsGenerator.Configuration
 {
@@ -22,7 +26,7 @@ namespace LlvmBindingsGenerator.Configuration
     {
         public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection( );
 
-        public List<string> IgnoredHeaders { get; set; } = new List<string>( );
+        public List<IncludeRef> IgnoredHeaders { get; set; } = new List<IncludeRef>( );
 
         public List<IHandleInfo> HandleMap { get; set; } = new List<IHandleInfo>( );
 
@@ -33,16 +37,20 @@ namespace LlvmBindingsGenerator.Configuration
             using( var input = File.OpenText( path ) )
             {
                 var deserializer = new DeserializerBuilder( )
-                                .WithNamingConvention( PascalCaseNamingConvention.Instance )
-                                .IgnoreUnmatchedProperties()
-                                .WithTagMapping("!Status", typeof(YamlReturnStatusMarshalInfo))
-                                .WithTagMapping("!String", typeof(YamlStringMarshalInfo))
-                                .WithTagMapping("!Primitive", typeof(YamlPrimitiveMarshalInfo))
-                                .WithTagMapping("!Array", typeof(YamlArrayMarshalInfo))
-                                .WithTagMapping("!Alias", typeof(YamlAliasReturn))
-                                .WithTagMapping("!ContextHandle", typeof(YamlContextHandle))
-                                .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
-                                .Build( );
+                                  .WithNodeDeserializer( inner => new YamlConfigNodeDeserializer(inner)
+                                                       , s => s.InsteadOf<ObjectNodeDeserializer>()
+                                                       )
+                                  .WithTypeConverter( new IncludeRefConverter())
+                                  .WithNamingConvention( PascalCaseNamingConvention.Instance )
+                                  .WithTagMapping("!Status", typeof(YamlReturnStatusMarshalInfo))
+                                  .WithTagMapping("!String", typeof(YamlStringMarshalInfo))
+                                  .WithTagMapping("!Primitive", typeof(YamlPrimitiveMarshalInfo))
+                                  .WithTagMapping("!Array", typeof(YamlArrayMarshalInfo))
+                                  .WithTagMapping("!Alias", typeof(YamlAliasReturn))
+                                  .WithTagMapping("!Unsafe", typeof(YamlUnsafeReturn))
+                                  .WithTagMapping("!ContextHandle", typeof(YamlContextHandle))
+                                  .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
+                                  .Build( );
 
                 var retVal = deserializer.Deserialize<YamlConfiguration>( input );
 
@@ -97,83 +105,59 @@ namespace LlvmBindingsGenerator.Configuration
             }
         }
 
-#if LEGACY_CONFIG
-        private YamlFunctionBinding GetOrCreateFunctionBinding( string name )
+        private class IncludeRefConverter
+            : IYamlTypeConverter
         {
-            if( FunctionBindings.TryGetValue( name, out YamlFunctionBinding binding ) )
+            public bool Accepts( Type type )
             {
-                return binding;
+                return type == typeof( IncludeRef );
             }
 
-            binding = new YamlFunctionBinding( ) { Name = name };
-            FunctionBindings.Add( binding );
-            return binding;
-        }
-
-        private static IHandleInfo ConvertToYamlHandleInfo( IHandleCodeTemplate handleTemplate )
-        {
-            switch( handleTemplate )
+            public object ReadYaml( IParser parser, Type type )
             {
-            case GlobalHandleTemplate ght:
-                return new YamlGlobalHandle( ) { HandleName = ght.HandleName, Disposer = ght.HandleDisposeFunction, Alias = ght.NeedsAlias };
+                var scalarEvent = parser.Consume<Scalar>();
+                return new IncludeRef( ) { Path = NormalizePathSep( scalarEvent.Value ), Start = scalarEvent.Start };
+            }
 
-            case ContextHandleTemplate cht:
-                return new YamlContextHandle( ) { HandleName = cht.HandleName };
+            public void WriteYaml( IEmitter emitter, object value, Type type )
+            {
+                throw new NotSupportedException( );
+            }
 
-            case LLVMErrorRefTemplate _:
-                return new YamlErrorRef( );
-
-            default:
-                throw new ArgumentException( "unknown handle type" );
+            internal string NormalizePathSep( string path )
+            {
+                return path.Replace( Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar );
             }
         }
 
-        private void UpdateBindingMarshaling( YamlFunctionBinding fb, IMarshalInfo mi )
+        private class YamlConfigNodeDeserializer
+            : INodeDeserializer
         {
-            YamlBindingTransform xform;
-            switch( mi )
+            public YamlConfigNodeDeserializer( INodeDeserializer inner )
             {
-            case ArrayMarshalInfo ami:
-                xform = new YamlArrayMarshalInfo( )
-                {
-                    Name = ami.ParameterName,
-                    Semantics = ami.Semantics,
-                    SubType = ami.ElementMarshalType,
-                    SizeParam = ami.SizeParam,
-                };
-                break;
-
-            case PrimitiveTypeMarshalInfo ptmi:
-                xform = new YamlPrimitiveMarshalInfo( )
-                {
-                    Name = ptmi.ParameterName,
-                    Kind = ptmi.PrimitiveType,
-                    Semantics = ptmi.Semantics,
-                };
-                break;
-
-            case StringMarshalInfo smi:
-                xform = new YamlStringMarshalInfo( )
-                {
-                    Name = smi.ParameterName,
-                    Kind = smi.DisposalKind,
-                    Semantics = smi.Semantics,
-                };
-                break;
-
-            default:
-                throw new ArgumentException( "Unknown marshal info" );
+                Inner = inner;
             }
 
-            if(mi.Semantics == ParamSemantics.Return )
+            public bool Deserialize( IParser reader, Type expectedType, Func<IParser, Type, object> nestedObjectDeserializer, out object value )
             {
-                fb.ReturnTransform = xform;
+                // System.Diagnostics.Debug.WriteLine( "ExpectedType: {0} @[{1},{2}]", expectedType.Name, reader.Current.Start.Line, reader.Current.Start.Column );
+                var start = reader.Current.Start;
+                if( Inner.Deserialize( reader, expectedType, nestedObjectDeserializer, out value ) )
+                {
+                    var ctx = new ValidationContext(value, null, null);
+                    Validator.ValidateObject( value, ctx, true );
+                    if( value is IYamlConfigLocation node )
+                    {
+                        node.Start = start;
+                    }
+
+                    return true;
+                }
+
+                return false;
             }
-            else
-            {
-                fb.ParamTransforms.Add( xform );
-            }
+
+            private readonly INodeDeserializer Inner;
         }
-#endif
     }
 }

@@ -9,9 +9,10 @@ using namespace llvm;
 
 DEFINE_SIMPLE_CONVERSION_FUNCTIONS( Triple, LibLLVMTripleRef )
 
+// cribbed from internals of Triple::SubArchType parseSubArch()
 LibLLVMTripleSubArchType MapEnum( ARM::ArchKind from )
 {
-    switch( from )
+    switch ( from )
     {
     case ARM::ArchKind::ARMV4:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_NoSubArch;
@@ -37,6 +38,8 @@ LibLLVMTripleSubArchType MapEnum( ARM::ArchKind from )
     case ARM::ArchKind::ARMV7A:
     case ARM::ArchKind::ARMV7R:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v7;
+    case ARM::ArchKind::ARMV7VE:
+        return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v7ve;
     case ARM::ArchKind::ARMV7K:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v7k;
     case ARM::ArchKind::ARMV7M:
@@ -51,19 +54,36 @@ LibLLVMTripleSubArchType MapEnum( ARM::ArchKind from )
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8_1a;
     case ARM::ArchKind::ARMV8_2A:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8_2a;
+    case ARM::ArchKind::ARMV8_3A:
+        return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8_3a;
+    case ARM::ArchKind::ARMV8_4A:
+        return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8_4a;
+    case ARM::ArchKind::ARMV8_5A:
+        return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8_5a;
+    case ARM::ArchKind::ARMV8R:
+        return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8r;
     case ARM::ArchKind::ARMV8MBaseline:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8m_baseline;
     case ARM::ArchKind::ARMV8MMainline:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8m_mainline;
+    case ARM::ArchKind::ARMV8_1MMainline:
+        return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_ARMSubArch_v8_1m_mainline;
     default:
         return LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_NoSubArch;
     }
 }
 
+// Created by effectively inverting the mapping function above
 ARM::ArchKind MapEnum( LibLLVMTripleSubArchType from )
 {
-    switch( from )
+    switch ( from )
     {
+    case LibLLVMTripleSubArchType_ARMSubArch_v8_5a:
+        return ARM::ArchKind::ARMV8_5A;
+
+    case LibLLVMTripleSubArchType_ARMSubArch_v8_4a:
+        return ARM::ArchKind::ARMV8_4A;
+
     case LibLLVMTripleSubArchType_ARMSubArch_v8_3a:
         return ARM::ArchKind::ARMV8_3A;
 
@@ -84,6 +104,9 @@ ARM::ArchKind MapEnum( LibLLVMTripleSubArchType from )
 
     case LibLLVMTripleSubArchType_ARMSubArch_v8m_mainline:
         return ARM::ArchKind::ARMV8MMainline;
+
+    case LibLLVMTripleSubArchType_ARMSubArch_v8_1m_mainline:
+        return ARM::ArchKind::ARMV8_1MMainline;
 
     case LibLLVMTripleSubArchType_ARMSubArch_v7:
         return ARM::ArchKind::ARMV7A; // 7A and 7R are mapped to v7 going the other way
@@ -163,22 +186,22 @@ extern "C"
 
     LibLLVMTripleArchType LibLLVMTripleGetArchType( LibLLVMTripleRef triple )
     {
-        return (LibLLVMTripleArchType )unwrap( triple )->getArch( );
+        return ( LibLLVMTripleArchType )unwrap( triple )->getArch( );
     }
 
     LibLLVMTripleSubArchType LibLLVMTripleGetSubArchType( LibLLVMTripleRef triple )
     {
-        return (LibLLVMTripleSubArchType )unwrap( triple )->getSubArch( );
+        return ( LibLLVMTripleSubArchType )unwrap( triple )->getSubArch( );
     }
 
     LibLLVMTripleVendorType LibLLVMTripleGetVendorType( LibLLVMTripleRef triple )
     {
-        return (LibLLVMTripleVendorType )unwrap( triple )->getVendor( );
+        return ( LibLLVMTripleVendorType )unwrap( triple )->getVendor( );
     }
 
     LibLLVMTripleOSType LibLLVMTripleGetOsType( LibLLVMTripleRef triple )
     {
-        return (LibLLVMTripleOSType )unwrap( triple )->getOS( );
+        return ( LibLLVMTripleOSType )unwrap( triple )->getOS( );
     }
 
     LLVMBool LibLLVMTripleHasEnvironment( LibLLVMTripleRef triple )
@@ -188,7 +211,7 @@ extern "C"
 
     LibLLVMTripleEnvironmentType LibLLVMTripleGetEnvironmentType( LibLLVMTripleRef triple )
     {
-        return (LibLLVMTripleEnvironmentType )unwrap( triple )->getEnvironment( );
+        return ( LibLLVMTripleEnvironmentType )unwrap( triple )->getEnvironment( );
     }
 
     void LibLLVMTripleGetEnvironmentVersion( LibLLVMTripleRef triple, unsigned* major, unsigned* minor, unsigned* micro )
@@ -198,7 +221,7 @@ extern "C"
 
     LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType( LibLLVMTripleRef triple )
     {
-        return (LibLLVMTripleObjectFormatType )unwrap( triple )->getObjectFormat( );
+        return ( LibLLVMTripleObjectFormatType )unwrap( triple )->getObjectFormat( );
     }
 
     char const* LibLLVMTripleGetArchTypeName( LibLLVMTripleArchType type )
@@ -210,12 +233,13 @@ extern "C"
         return LLVMCreateMessage( Triple::getArchTypeName( llvmArchType ).data( ) );
     }
 
-    char const* LibLLVMTripleGetSubArchTypeName( LibLLVMTripleSubArchType type )
+    char const* LibLLVMTripleGetSubArchTypeName( LibLLVMTripleSubArchType subArchType )
     {
-        ARM::ArchKind armKind = MapEnum( type );
+        // try for an ARM sub type first...
+        ARM::ArchKind armKind = MapEnum( subArchType );
         if ( armKind == ARM::ArchKind::INVALID )
         {
-            switch ( type )
+            switch ( subArchType )
             {
             case LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_KalimbaSubArch_v3:
                 return LLVMCreateMessage( "kalimba3" );
@@ -223,6 +247,10 @@ extern "C"
                 return LLVMCreateMessage( "kalimba4" );
             case LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_KalimbaSubArch_v5:
                 return LLVMCreateMessage( "kalimba5" );
+            case LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_MipsSubArch_r6:
+                return LLVMCreateMessage( "mipsr6" );
+            case LibLLVMTripleSubArchType::LibLLVMTripleSubArchType_PPCSubArch_spe:
+                return LLVMCreateMessage( "powerpcspe" );
             default:
                 return nullptr;
             }

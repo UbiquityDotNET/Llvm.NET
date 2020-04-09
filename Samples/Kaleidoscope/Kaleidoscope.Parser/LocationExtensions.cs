@@ -11,7 +11,7 @@ using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
-    public static class LocationExtensions
+    internal static class LocationExtensions
     {
         public static SourceSpan GetSourceSpan( [ValidatedNotNull] this ParserRuleContext ctx )
         {

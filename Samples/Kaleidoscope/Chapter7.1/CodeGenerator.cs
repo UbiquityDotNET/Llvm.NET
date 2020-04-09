@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 using Kaleidoscope.Grammar;
@@ -31,9 +32,10 @@ namespace Kaleidoscope.Chapter71
         , IKaleidoscopeCodeGenerator<Value>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
+        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false, TextWriter? outputWriter = null )
             : base( null )
         {
+            JIT.OutputWriter = outputWriter ?? Console.Out;
             globalState.ValidateNotNull( nameof( globalState ) );
             if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
             {
@@ -59,54 +61,52 @@ namespace Kaleidoscope.Chapter71
         #endregion
 
         #region Generate
-        public Value? Generate( IAstNode ast, Action<CodeGeneratorException> codeGenerationErroHandler )
+        public OptionalValue<Value> Generate( IAstNode ast )
         {
             ast.ValidateNotNull( nameof( ast ) );
-            codeGenerationErroHandler.ValidateNotNull( nameof( codeGenerationErroHandler ) );
-            try
+
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            if( !( ast is FunctionDefinition definition ) )
             {
-                // Prototypes, including extern are ignored as AST generation
-                // adds them to the RuntimeState so that already has the declarations
-                if( !( ast is FunctionDefinition definition ) )
+                return default;
+            }
+
+            // Anonymous functions are called immediately then removed from the JIT
+            // so no point in setting them up as a lazy compilation item.
+            if( definition.IsAnonymous )
+            {
+                InitializeModuleAndPassManager( );
+                Debug.Assert( Module != null, "Expected non-null Module at this point" );
+                var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
+
+                // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+                ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
+                var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
+                var retVal = Context.CreateConstant( nativeFunc( ) );
+                JIT.RemoveModule( jitHandle );
+                return OptionalValue.Create<Value>( retVal );
+            }
+
+            // Unknown if any future input will call the function so don't even generate IR
+            // until it is needed. JIT triggers the callback to generate the IR module so the JIT
+            // can then generate native code only when required.
+            FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+            // register the generator as a stub with the original source name
+            JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
+            {
+                InitializeModuleAndPassManager( );
+                var function = ( IrFunction? )implDefinition.Accept( this );
+                if( function is null )
                 {
-                    return null;
+                    throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
                 }
 
-                // Anonymous functions are called immediately then removed from the JIT
-                // so no point in setting them up as a lazy compilation item.
-                if( definition.IsAnonymous )
-                {
-                    InitializeModuleAndPassManager( );
-                    Debug.Assert( Module != null, "Expected non-null Module at this point" );
-                    var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
+                return (implDefinition.Name, function.ParentModule);
+            } );
 
-                    // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
-                    ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
-                    var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
-                    var retVal = Context.CreateConstant( nativeFunc( ) );
-                    JIT.RemoveModule( jitHandle );
-                    return retVal;
-                }
-
-                // Unknown if any future input will call the function so don't even generate IR
-                // until it is needed. JIT triggers the callback to generate the IR module so the JIT
-                // can then generate native code only when required.
-                FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
-
-                // register the generator as a stub with the original source name
-                JIT.AddLazyFunctionGenerator( definition.Name, ( ) =>
-                {
-                    InitializeModuleAndPassManager( );
-                    var function = ( IrFunction? )implDefinition.Accept( this );
-                    return (implDefinition.Name, function.ParentModule);
-                } );
-                return null;
-            }
-            catch( CodeGeneratorException ex )
-            {
-                codeGenerationErroHandler( ex );
-                return null;
-            }
+            return default;
         }
         #endregion
 
@@ -186,10 +186,15 @@ namespace Kaleidoscope.Chapter71
             functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
 
-            // try for an extern function declaration
-            IrFunction function = RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target )
-                                ? GetOrDeclareFunction( target )
-                                : Module.GetFunction( targetName ) ?? throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            IrFunction? function;
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            {
+                function = GetOrDeclareFunction( target );
+            }
+            else if( !Module.TryGetFunction( targetName, out function ) )
+            {
+                throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
+            }
 
             var args = ( from expr in functionCall.Arguments
                          select expr.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr)
@@ -493,8 +498,7 @@ namespace Kaleidoscope.Chapter71
                 throw new InvalidOperationException( "ICE: Can't get or declare a function without an active module" );
             }
 
-            var function = Module.GetFunction( prototype.Name );
-            if( function != null )
+            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
             {
                 return function;
             }
