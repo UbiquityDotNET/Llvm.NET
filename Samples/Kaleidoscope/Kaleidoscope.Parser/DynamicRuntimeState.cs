@@ -77,25 +77,6 @@ namespace Kaleidoscope.Grammar
         /// This can add or replace user defined operators, however attempts to replace a built-in operator
         /// will not replace the operator and will simply return <see langword="false"/>.
         /// </remarks>
-        internal bool TryAddOperator( string token, OperatorKind kind, int precedence )
-        {
-            if( !Lexer.TokenTypeMap.TryGetValue( token, out int tokenType ) )
-            {
-                return false;
-            }
-
-            return TryAddOperator( tokenType, kind, precedence );
-        }
-
-        /// <summary>Attempts to add a new user defined operator</summary>
-        /// <param name="token">Symbol for the operator</param>
-        /// <param name="kind"><see cref="OperatorKind"/> value to define the behavior of the operator</param>
-        /// <param name="precedence">precedence level for the operator</param>
-        /// <returns><see langword="true"/> if the operator was added and <see langword="false"/> if not</returns>
-        /// <remarks>
-        /// This can add or replace user defined operators, however attempts to replace a built-in operator
-        /// will not replace the operator and will simply return <see langword="false"/>.
-        /// </remarks>
         internal bool TryAddOperator( IToken token, OperatorKind kind, int precedence )
         {
             token.ValidateNotNull( nameof( token ) );
@@ -164,8 +145,6 @@ namespace Kaleidoscope.Grammar
             new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true)
         };
 
-        // this is used only to get the token type map, which is provided via a virtual
-        private readonly KaleidoscopeLexer Lexer = new KaleidoscopeLexer( null );
         private int AnonymousNameIndex;
     }
 }

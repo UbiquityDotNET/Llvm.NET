@@ -9,12 +9,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm;
 
-using static Kaleidoscope.Runtime.Utilities;
 using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter8
@@ -53,10 +51,12 @@ namespace Kaleidoscope.Chapter8
                 Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
                 Console.WriteLine( "Compiling {0}", sourceFilePath );
 
+                IParseErrorLogger errorLogger = new ColoredConsoleParseErrorLogger( );
+
                 // time the parse and code generation
                 var timer = System.Diagnostics.Stopwatch.StartNew( );
                 var ast = parser.Parse( rdr );
-                if( !ShowParseErrors( ast ) )
+                if( !errorLogger.CheckAndShowParseErrors( ast ) )
                 {
                     (bool hasValue, BitcodeModule? module) = generator.Generate( ast );
                     if( !hasValue )
@@ -89,67 +89,21 @@ namespace Kaleidoscope.Chapter8
         }
         #endregion
 
-        #region ErrorHandling
-        private static bool ShowParseErrors( this IAstNode node )
-        {
-            if( node is ErrorNode errNode )
-            {
-                ShowError( errNode.Error );
-                return true;
-            }
-
-            if( node.Errors.Count > 0 )
-            {
-                foreach( var err in node.Errors )
-                {
-                    ShowError( err.Error );
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private static void ShowError( CodeGeneratorException ex )
-        {
-            ShowError( ex.ToString( ) );
-        }
-
-        private static void ShowError( string msg )
-        {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine( msg );
-            Console.ForegroundColor = color;
-        }
-        #endregion
-
         #region ProcessArgs
 
         // really simple command line handling, just loops through the input arguments
         private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
         {
-            bool waitForDebugger = false;
             string sourceFilePath = string.Empty;
             foreach( string arg in args )
             {
-                if( string.Compare( arg, "waitfordebugger", StringComparison.OrdinalIgnoreCase ) == 0 )
+                if( !string.IsNullOrWhiteSpace( sourceFilePath ) )
                 {
-                    waitForDebugger = true;
+                    Console.Error.WriteLine( "Source path already provided, unrecognized option: '{0}'", arg );
                 }
-                else
-                {
-                    if( !string.IsNullOrWhiteSpace( sourceFilePath ) )
-                    {
-                        Console.Error.WriteLine( "Source path already provided, unrecognized option: '{0}'", arg );
-                    }
 
-                    sourceFilePath = Path.GetFullPath( arg );
-                }
+                sourceFilePath = Path.GetFullPath( arg );
             }
-
-            WaitForDebugger( waitForDebugger );
 
             if( string.IsNullOrWhiteSpace( sourceFilePath ) )
             {

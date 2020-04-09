@@ -49,14 +49,10 @@ namespace Kaleidoscope.Grammar.AST
         public override string ToString( )
         {
             var bldr = new StringBuilder( "VarIn{" );
-            foreach( var local in LocalVariables )
-            {
-                bldr.Append( local );
-            }
-
-            bldr.Append( "}(" );
-            bldr.Append( Body );
-            bldr.Append( ')' );
+            bldr.AppendJoin( ',', LocalVariables )
+                .Append( "}(" )
+                .Append( Body )
+                .Append( ')' );
             return bldr.ToString( );
         }
     }

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Ubiquity.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -23,16 +24,27 @@ namespace Kaleidoscope.Grammar.AST
         /// <returns>Result of visiting this node</returns>
         TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : class;
+    }
 
+    /// <summary>Extensions for IAstNode</summary>
+    /// <remarks>
+    /// While default interface methods seems like a great idea, it's not yet complete enough to be useful.
+    /// In particular there's pretty much no debugger support for evaluating such things, leaving you
+    /// with no way to see what they produce when used as a property. Hopefully, that will be resolved in
+    /// the future - but for now it is more a hindrance than it is a help.
+    /// </remarks>
+    public static class AstNodeExtensions
+    {
         /// <summary>Gets the complete collection of errors for this node and children</summary>
-        IReadOnlyCollection<ErrorNode> Errors
+        /// <param name="node">Node to traverse for errors</param>
+        /// <remarks>Traverses the node hierarchy to find all error node at any depth</remarks>
+        /// <returns>Collection of errors found</returns>
+        public static IReadOnlyCollection<ErrorNode> CollectErrors( this IAstNode node )
         {
-            get
-            {
-                var collector = new ErrorNodeCollector();
-                Accept<string>( collector );
-                return collector.Errors;
-            }
+            node.ValidateNotNull( nameof( node ) );
+            var collector = new ErrorNodeCollector();
+            node.Accept<string>( collector );
+            return collector.Errors;
         }
     }
 }

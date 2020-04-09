@@ -5,8 +5,14 @@ try
 
     $testsFailed = $false
 
-    Write-Information 'Running tests as x64'
+    Write-Information 'Running Core library tests as x64'
     $testProj = Join-Path $buildInfo['SrcRootPath'] 'Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj'
+    $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
+    dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath']
+    $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
+
+    Write-Information 'Running tests for Kaleidoscope Samples as x64'
+    $testProj = Join-Path $buildInfo['RepoRootPath'] 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj'
     $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
     dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath']
     $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)

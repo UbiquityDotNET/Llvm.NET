@@ -14,7 +14,4 @@
       <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
       <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="System.Linq.Async" />
-    </ItemGroup>
 </Project>

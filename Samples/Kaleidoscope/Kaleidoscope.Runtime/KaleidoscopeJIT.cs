@@ -101,8 +101,15 @@ namespace Kaleidoscope.Runtime
 
         private static TargetMachine BuildTargetMachine( )
         {
-            return Target.FromTriple( Triple.HostTriple.ToString( ) )
-                         .CreateTargetMachine( Triple.HostTriple.ToString( ), null, null, CodeGenOpt.Default, RelocationMode.Default, CodeModel.JitDefault );
+            string hostTriple = Triple.HostTriple.ToString( );
+            return Target.FromTriple( hostTriple )
+                         .CreateTargetMachine( hostTriple
+                                             , /*cpu*/null
+                                             , /*features*/null
+                                             , CodeGenOpt.Default
+                                             , RelocationMode.Default
+                                             , CodeModel.JitDefault
+                                             );
         }
     }
 }

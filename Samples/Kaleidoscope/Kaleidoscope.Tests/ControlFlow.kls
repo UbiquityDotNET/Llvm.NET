@@ -1,0 +1,28 @@
+﻿extern putchard(char);
+
+def printchar(x)
+  if x < 10 then
+    putchard(43)     # 43 => ASCII '+'
+  else
+    putchard(42);    # 42 => ASCII '*'
+
+printchar(1);
+printchar(9);
+printchar(10);
+printchar(10.00001);
+
+def printstar(n)
+  for i = 1, i < n, 1.0 in
+    putchard(42);  # ascii 42 = '*'
+
+# print 100 '*' characters
+printstar(100);
+
+# Recursive fib
+def fib(x)
+  if (x < 3) then
+    1
+  else
+    fib(x-1)+fib(x-2);
+
+fib(10);

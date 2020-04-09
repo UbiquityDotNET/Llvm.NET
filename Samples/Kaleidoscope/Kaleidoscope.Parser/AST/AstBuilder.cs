@@ -84,7 +84,12 @@ namespace Kaleidoscope.Grammar.AST
         public override IAstNode VisitExternalDeclaration( ExternalDeclarationContext context )
         {
             var retVal = ( Prototype )context.Signature.Accept( this );
-            RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
+            var error = retVal.CollectErrors( );
+            if( error.Count == 0 )
+            {
+                RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
+            }
+
             return retVal;
         }
 
@@ -105,7 +110,19 @@ namespace Kaleidoscope.Grammar.AST
                                                , body
                                                , LocalVariables.ToImmutableArray( )
                                                );
-            RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
+
+            // only add valid definitions to the runtime state.
+            var errors = retVal.CollectErrors( );
+            if( errors.Count == 0 )
+            {
+                RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
+            }
+            else
+            {
+                // remove the prototype implicitly added for this definition
+                // as the definition has errors
+                RuntimeState.FunctionDeclarations.Remove( sig );
+            }
             return retVal;
         }
 
@@ -115,7 +132,13 @@ namespace Kaleidoscope.Grammar.AST
             var sig = new Prototype( context.GetSourceSpan( ), RuntimeState.GenerateAnonymousName( ), true );
             var body = ( IExpression )context.expression( ).Accept( this );
             var retVal = new FunctionDefinition( context.GetSourceSpan( ), sig, body, true );
-            RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
+
+            // only add valid definitions to the runtime state.
+            var errors = retVal.CollectErrors( );
+            if( errors.Count == 0 )
+            {
+                RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
+            }
             return retVal;
         }
 
@@ -256,8 +279,8 @@ namespace Kaleidoscope.Grammar.AST
 
             // search extern declarations
             return RuntimeState.FunctionDeclarations.TryGetValue( calleeName, out Prototype declaration )
-                ? declaration
-                : null;
+                 ? declaration
+                 : null;
         }
 
         private IExpression CreateBinaryOperatorNode( IExpression lhs, BinaryopContext op, IExpression rhs )
@@ -338,7 +361,12 @@ namespace Kaleidoscope.Grammar.AST
                 }
             }
 
-            RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
+            var errors = retVal.CollectErrors( );
+            if( errors.Count == 0 )
+            {
+                RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
+            }
+
             return retVal;
         }
 

@@ -32,5 +32,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
         }
+
+        public override string ToString( ) => $"<{Location}:{Error}>";
     }
 }
