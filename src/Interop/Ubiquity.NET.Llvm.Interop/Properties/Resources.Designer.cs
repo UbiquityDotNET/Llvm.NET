@@ -70,6 +70,24 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LLVM library was already initialized in this process - re-initialization is not allowed (This is a limitation of the underlying LLVM library).
+        /// </summary>
+        internal static string Llvm_already_initialized {
+            get {
+                return ResourceManager.GetString("Llvm_already_initialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLVM library is not initialized - nothing to shut down..
+        /// </summary>
+        internal static string Llvm_not_initialized {
+            get {
+                return ResourceManager.GetString("Llvm_not_initialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System error (0x{0:X08}) occurred trying to load DLL {1}.
         /// Search paths:
         /// {2}.

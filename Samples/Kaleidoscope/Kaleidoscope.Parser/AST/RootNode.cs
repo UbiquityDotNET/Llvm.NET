@@ -15,9 +15,8 @@ namespace Kaleidoscope.Grammar.AST
         : IAstNode
     {
         public RootNode( SourceSpan location, IAstNode child )
+            : this( location, new IAstNode[ ] { child } )
         {
-            Location = location;
-            ChildNodes = ImmutableArray<IAstNode>.Empty.Add( child );
         }
 
         public RootNode( SourceSpan location, IEnumerable<IAstNode> children )
@@ -35,6 +34,11 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         public IEnumerable<IAstNode> Children => ChildNodes;
+
+        public override string ToString( )
+        {
+            return string.Join( ' ', Children );
+        }
 
         private readonly ImmutableArray<IAstNode> ChildNodes;
     }

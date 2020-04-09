@@ -17,7 +17,6 @@
         <PackageReference Update="Antlr4" Version="4.6.6"/>
         <PackageReference Update="OpenSoftware.DgmlBuilder" Version="1.13.0" Condition="'$(TargetFramework)'=='net47'" />
         <PackageReference Update="System.Collections.Immutable" Version="1.7.0" />
-        <PackageReference Update="System.Linq.Async" Version="4.1.1" />
         <!-- See: https://github.com/dotnet/docfx/issues/5536 before updating...-->
         <PackageReference Update="docfx.console" Version="2.48.1" />
         <PackageReference Update="memberpage" Version="2.49.0" />

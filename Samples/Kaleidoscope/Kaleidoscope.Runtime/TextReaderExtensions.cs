@@ -17,14 +17,13 @@ namespace Kaleidoscope.Runtime
     public static class TextReaderExtensions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "StyleCop.CSharp.LayoutRules", "SA1500:Braces for multi-line statements should not share line", Justification = "Do/While Loop" )]
-        public static async IAsyncEnumerable<string> ToAsyncLines( [ValidatedNotNull] this TextReader input )
+        public static IEnumerable<string> ToLines( [ValidatedNotNull] this TextReader input )
         {
             input.ValidateNotNull( nameof( input ) );
             string? line;
             do
             {
-                line = await input.ReadLineAsync( )
-                                  .ConfigureAwait( false );
+                line = input.ReadLine( );
                 if( line != null )
                 {
                     yield return line;
@@ -36,11 +35,11 @@ namespace Kaleidoscope.Runtime
         /// <param name="reader">Input reader</param>
         /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
         /// <returns>Observable sequence of complete statements ready for parsing</returns>
-        public static async IAsyncEnumerable<string> ToStatements( this TextReader reader, Action<ReadyState>? prompt )
+        public static IEnumerable<string> ToStatements( this TextReader reader, Action<ReadyState>? prompt )
         {
             var stateManager = new ReadyStateManager( prompt );
             var bldr = new StringBuilder( );
-            await foreach( string line in reader.ToAsyncLines( ) )
+            foreach( string line in reader.ToLines( ) )
             {
                 var partials = SplitLines(bldr, line);
                 foreach( var (txt, isPartial) in partials )

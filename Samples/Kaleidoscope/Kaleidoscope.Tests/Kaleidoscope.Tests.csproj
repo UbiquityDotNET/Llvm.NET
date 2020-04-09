@@ -1,20 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
-    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <ProjectReference Include="..\Chapter3\Chapter3.csproj" />
+    <ProjectReference Include="..\Chapter4\Chapter4.csproj" />
+    <ProjectReference Include="..\Chapter5\Chapter5.csproj" />
+    <ProjectReference Include="..\Chapter6\Chapter6.csproj" />
+    <ProjectReference Include="..\Chapter7\Chapter7.csproj" />
+    <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
+    <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" />
+      <PackageReference Include="MSTest.TestFramework" />
+      <PackageReference Include="MSTest.TestAdapter" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ControlFlow.kls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="fibi.kls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mandel.kls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SimpleExpressions.kls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

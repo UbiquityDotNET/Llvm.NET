@@ -43,7 +43,9 @@ namespace Kaleidoscope.Grammar
 
         public override string ToString( )
         {
-            return $"({StartLine},{StartColumn},{EndLine},{EndColumn})";
+            return StartLine == EndLine && StartColumn == EndColumn
+                ? $"({StartLine},{StartColumn})"
+                : $"({StartLine},{StartColumn},{EndLine},{EndColumn})";
         }
 
         public override int GetHashCode( )

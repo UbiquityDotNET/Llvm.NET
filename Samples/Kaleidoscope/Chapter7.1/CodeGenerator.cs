@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 using Kaleidoscope.Grammar;
@@ -31,9 +32,10 @@ namespace Kaleidoscope.Chapter71
         , IKaleidoscopeCodeGenerator<Value>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false )
+        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false, TextWriter? outputWriter = null )
             : base( null )
         {
+            JIT.OutputWriter = outputWriter ?? Console.Out;
             globalState.ValidateNotNull( nameof( globalState ) );
             if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
             {
