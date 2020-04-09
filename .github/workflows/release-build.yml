@@ -23,6 +23,16 @@ jobs:
           name: Nuget Packages
           path: .\BuildOutput\Nuget
 
+      - name: Run Tests
+        run: .\Invoke-UnitTests.ps1
+
+      - name: Publish test logs
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+            name: Test Logs
+            path: .\BuildOutput\Test-Results
+
       - name: Commit Docs
         env:
           docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
