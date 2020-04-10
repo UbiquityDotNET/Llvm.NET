@@ -1,10 +1,14 @@
+---
+uid: Kaleidoscope-ch2
+---
+
 # 2. Kaleidoscope: Implementing the parser
 The chapter 2 sample doesn't actually generate any code. Instead it focuses on the general
 structure of the samples and parsing of the language. The sample for this chapter enables all
 language features to allow exploring the language and how it is parsed to help better understand
 the rest of the chapters better. It is hoped that users of this library find this helpful.
 
-The LUbiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
+The Ubiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
 This has several advantages including logical isolation of the parsing and code generation.
 Additionally, it provides a single formal definition of the grammar for the language. Understanding
 the language grammar from reading the LVM tutorials and source was a difficult task since it isn't
@@ -262,7 +266,7 @@ This is a simple rule for sub-expressions within parenthesis for example: `(1+2)
 the addition so that it occurs before the division since, normally the precedence of division is higher.
 The parse tree for that expression looks like this:
 
-![Parse Tree](parsetree-paren-expr.svg)
+![Parse Tree](./parsetree-paren-expr.svg)
 
 ### FunctionCallExpression
 ```antlr
@@ -271,7 +275,7 @@ Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN
 This rule covers a function call which can have 0 or more comma delimited arguments. The parse tree
 for the call `foo(1, 2, 3);` is:
 
-![Parse Tree](parsetree-func-call.svg)
+![Parse Tree](./parsetree-func-call.svg)
 
 ### VarInExpression
 ```antlr
@@ -366,20 +370,21 @@ classes so they are extensible from the parser assembly without needing to deriv
 methods etc. Thus, the Kaleidoscope.Grammar assembly contains partial class extensions that provide simpler
 property accessors and support methods to aid is generating the AST.
 
-See [Kaleidoscope Parse Tree Examples](Kaleidoscope-Parsetree-examples.md) for more information and example
+See [Kaleidoscope Parse Tree Examples](xref:Kaleidoscope-Parsetree-examples) for more information and example
 diagrams of the parse tree for various language constructs.
 
 ## Abstract Syntax Tree (AST)
 To further simplify code generators the Kaleidoscope.Runtime library contains the AstBuilder type that is
-an ANTLR parse tree visitor. AstBuilder will convert a raw ANTLR IParseTree into an `IEnumerable<IFunctionNode>`.
-That is, it visits the declarations and definitions in the parse tree to produce an ordered sequence of declarations
-and definitions as they appeared in the source. For interactive modes - the sequence will have only a single element.
-However, when parsing a whole source file, the parse tree may contain multiple declarations and definitions.
+an ANTLR parse tree visitor. AstBuilder will convert a raw ANTLR IParseTree into a a tree of `IAstNode` elements.
+That is, it visits the declarations and definitions in the parse tree to produce a full tree of declarations
+and definitions as they appeared in the source. For interactive modes - the tree will have only one top level node.
+However, when parsing a whole source file, the parse tree may contain multiple declarations and definitions under
+a RootNode.
 
-The [Kaleidoscope AST](Kaleidoscope-AST.md) is a means of simplifying the original parse tree into
-constructs that are easy for the code generation to use directly. In the case of Kaleidoscope there are
-a few types of nodes that are used to generate LLVM IR. The AstBuilder class is responsible for
-generating an AST from an ANTLR4 parse tree.
+The [Kaleidoscope AST](xref:Kaleidoscope-AST) is a means of simplifying the original parse tree into
+constructs that are easy for the code generation to use directly and to validate the syntax of the input source.
+In the case of Kaleidoscope there are a few types of nodes that are used to generate LLVM IR. The AstBuilder class
+is responsible for generating an AST from an ANTLR4 parse tree.
 
 The major simplifying transformations performed in building the AST are:
  * Convert top-level functions to a pair of FunctionDeclaration and FunctionDefinition
@@ -391,52 +396,60 @@ The major simplifying transformations performed in building the AST are:
 >operators no longer exists in the AST! The AST only deals in function declarations, definitions and the built-in
 >operators. All issues of precedence are implicitly resolved in the ordering of the nodes in the AST.
 >Thus, the code generation doesn't need to consider the issue of user defined operators or operator
->precedence at all. ([Chapter 6](Kaleidoscope-ch6.md) covers the details of user defined operators)
->
- 
+>precedence at all. ([Chapter 6](xref:Kaleidoscope-ch6) covers the details of user defined operators and how
+>the Kaleidoscope sample language uses ANTLR to implement them.)
+
 ## Basic Application Architecture
 
-Generally speaking there are four main components to all of the sample chapter applications.
+Generally speaking, there are four main components to most of the sample chapter applications.
 
   1. The main driver application (e.g. program.cs)
-  2. The parser (e.g. Kaleidoscope.Grammar assembly)
-  3. Runtime support (e.g. Kaliedoscope.Runtime)
+  2. The Read-Evaluate-Print-Loop (e.g. ReplEngine.cs)
+  3. Runtime support (e.g. Kaliedoscope.Runtime and Kaleidoscope.Parser libraries)
   4. The code generator (e.g. CodeGenerator.cs)
 
 ### Driver
 While each chapter is a bit different from the others. Many of the chapters are virtually identical for
-the driver. In particular Chapters 3-7 only really differ in the language level support. 
+the driver. In particular Chapters 3-7 only really differ in the name of the app and window title etc... 
 
-[!code-csharp[Program.cs](../../../Samples/Kaleidoscope/Chapter2/Program.cs#generatorloop)]
+[!code-csharp[Program.cs](Program.cs)]
 
+### Read, Evaluate, Print loop
+The Kaleidoscope.Runtime library contains an abstract base class for building a standard REPL engine from an
+input TextReader. The base class handles converting the input reader into a sequence of statements, and
+parsing them into AST nodes. The nodes are provided to an application provided generator that produces the
+output result. The REPL engine base uses the abstract ShowResults method to actually show the results.
+
+[!code-csharp[Program.cs](ReplEngine.cs)]
+
+### Runtime Support
 The Parser contains the support for parsing the Kaleidoscope language from the REPL loop interactive
 input. The parser stack also maintains the global state of the runtime, which controls the language features
 enabled, and if user defined operators are enabled, contains the operators defined along with their
 precedence.
 
-After the parser is created an async enumerable sequence of statements is created for the parser to process.
+After the parser is created an enumerable sequence of statements is created for the parser to process.
 This results in a sequence of AST nodes. After construction, the sequence is used to iterate over all of
 the nodes generated from the user input.
 
-This use of an Async enumerator sequences is a bit of a different approach to things for running an interpreter Read,
+This use of an enumerator sequences is a bit of a different approach to things for running an interpreter Read,
 Evaluate Print Loop, but once you get your head around it, the sequence provides a nice clean and flexible
 mechanism for building a pipeline of transformations from the text input into the result output.
 
-### Processing generated results
-The calling application will generally subscribe to the observable sequence with a `ShowResults` function to show the
-results of the generation in some fashion. For the basic samples (Chapter 3-7) it indicates the value of any JITed
-and executed top level expressions, or the name of any functions defined. Chapter 2 has additional support for
-showing an XML representation of the tree but the same basic pattern applies. This, helps to keep the samples
+### CodeGenerator
+The code generator will transform the AST node into the final output for the program. For the basic samples
+(Chapter 3-7) it indicates the value of any JITed and executed top level expressions, or the name of any functions
+defined. Chapter 2 uses a generator that simply produces the node it was given as the app doesn't actually use LLVM
+(it focuses on parsing the language only and the REPL infrastructure). This, helps to keep the samples
 consistent and as similar as possible to allow direct file comparisons to show the changes for a particular feature.
 The separation of concerns also aids in making the grammar, runtime and code generation unit-testable without the
-driver. (Although that isn't implemented yet - it is intended for the future to help broaden testing of Ubiquity.NET.Llvm to
-more scenarios and catch breaking issues quicker.)
+driver.
 
-[!code-csharp[ShowResults](../../../Samples/Kaleidoscope/Chapter2/Program.cs#ShowResults)]
+[!code-csharp[ShowResults](CodeGenerator.cs)]
 
 ### Special case for Chapter 2
 Chapter 2 sample code, while still following the general patterns used in all of the chapters, is a bit
-unique, it doesn't actually use LUbiquity.NET.Llvm at all! Instead, it is only focused on the language and parsing.
+unique, it doesn't actually use Ubiquity.NET.Llvm at all! Instead, it is only focused on the language and parsing.
 This helps in understanding the basic patterns of the code. Furthermore, this chapter serves as an aid in
 understanding the language itself. Of particular use is the ability to generate DGML and [blockdiag](http://blockdiag.com)
 representations of the parse tree for a given parse.

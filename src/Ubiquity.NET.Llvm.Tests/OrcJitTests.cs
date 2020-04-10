@@ -7,7 +7,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.JIT;
 using Ubiquity.NET.Llvm.Values;
 
@@ -19,7 +18,6 @@ namespace Ubiquity.NET.Llvm.Tests
         [TestMethod]
         public void TestEagerIRCompilation( )
         {
-            Library.RegisterNative( );
             using var ctx = new Context( );
             var nativeTriple = Triple.HostTriple;
             var target = Target.FromTriple( nativeTriple );

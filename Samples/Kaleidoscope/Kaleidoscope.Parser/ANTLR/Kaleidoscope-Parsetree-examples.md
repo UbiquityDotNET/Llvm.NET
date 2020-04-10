@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-Parsetree-examples
+---
+
 # Parse Tree Examples
 
 ## Simple Expressions (Chapters 3,4)
@@ -6,7 +10,7 @@
 
 `1 + 2 * 3 - 4 / 5 ^ 6;`
 
-![Parse Tree](parsetree-simpleexp-1.svg)
+![Parse Tree](./parsetree-simpleexp-1.svg)
 
 >[!NOTE]
 >The small circle in the upper left corner of the Expression nodes is the precedence value at
@@ -79,4 +83,4 @@ def binary== 9 (LHS RHS)
 
 The expression `2 == 3 | 5 < 4 | !1;` generates the following parse tree
 
-![Parse Tree](parsetree-userops.svg)
+![Parse Tree](./parsetree-userops.svg)

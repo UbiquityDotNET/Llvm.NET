@@ -88,6 +88,10 @@ namespace Kaleidoscope.Chapter71
                 return OptionalValue.Create<Value>( retVal );
             }
 
+            // LLVM 10 is transitioning to ORC JIT v2 and unfortunately,
+            // the lazy function generator is doing it's own symbol resolution that doesn't
+            // account for the COFF export bug
+#if LAZY_FUNCTION_GENERATOR_SUPPORTED
             // Unknown if any future input will call the function so don't even generate IR
             // until it is needed. JIT triggers the callback to generate the IR module so the JIT
             // can then generate native code only when required.
@@ -105,20 +109,22 @@ namespace Kaleidoscope.Chapter71
 
                 return (implDefinition.Name, function.ParentModule);
             } );
-
             return default;
+#else
+            throw new NotSupportedException( "Truly Lazy JIT not currently supported due to issues in underlying LLVM-C ORCJIT support." );
+#endif
         }
-        #endregion
+#endregion
 
-        #region ConstantExpression
+#region ConstantExpression
         public override Value? Visit( ConstantExpression constant )
         {
             constant.ValidateNotNull( nameof( constant ) );
             return Context.CreateConstant( constant.Value );
         }
-        #endregion
+#endregion
 
-        #region BinaryOperatorExpression
+#region BinaryOperatorExpression
         public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
@@ -173,9 +179,9 @@ namespace Kaleidoscope.Chapter71
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        #endregion
+#endregion
 
-        #region FunctionCallExpression
+#region FunctionCallExpression
         public override Value? Visit( FunctionCallExpression functionCall )
         {
             if( Module is null )
@@ -202,9 +208,9 @@ namespace Kaleidoscope.Chapter71
 
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        #endregion
+#endregion
 
-        #region FunctionDefinition
+#region FunctionDefinition
         public override Value? Visit( FunctionDefinition definition )
         {
             definition.ValidateNotNull( nameof( definition ) );
@@ -251,9 +257,9 @@ namespace Kaleidoscope.Chapter71
                 throw;
             }
         }
-        #endregion
+#endregion
 
-        #region VariableReferenceExpression
+#region VariableReferenceExpression
         public override Value? Visit( VariableReferenceExpression reference )
         {
             reference.ValidateNotNull( nameof( reference ) );
@@ -265,9 +271,9 @@ namespace Kaleidoscope.Chapter71
             return InstructionBuilder.Load( value.ElementType, value )
                                      .RegisterName( reference.Name );
         }
-        #endregion
+#endregion
 
-        #region ConditionalExpression
+#region ConditionalExpression
         public override Value? Visit( ConditionalExpression conditionalExpression )
         {
             conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
@@ -327,9 +333,9 @@ namespace Kaleidoscope.Chapter71
             return InstructionBuilder.Load( result.ElementType, result )
                                      .RegisterName( "ifresult" );
         }
-        #endregion
+#endregion
 
-        #region ForInExpression
+#region ForInExpression
         public override Value? Visit( ForInExpression forInExpression )
         {
             forInExpression.ValidateNotNull( nameof( forInExpression ) );
@@ -420,9 +426,9 @@ namespace Kaleidoscope.Chapter71
                 return Context.DoubleType.GetNullValue( );
             }
         }
-        #endregion
+#endregion
 
-        #region VarInExpression
+#region VarInExpression
         public override Value? Visit( VarInExpression varInExpression )
         {
             varInExpression.ValidateNotNull( nameof( varInExpression ) );
@@ -444,7 +450,7 @@ namespace Kaleidoscope.Chapter71
                 return varInExpression.Body.Accept( this );
             }
         }
-        #endregion
+#endregion
 
         private Alloca LookupVariable( string name )
         {
@@ -467,7 +473,7 @@ namespace Kaleidoscope.Chapter71
             InstructionBuilder.PositionAtEnd( newBlock );
         }
 
-        #region InitializeModuleAndPassManager
+#region InitializeModuleAndPassManager
         private void InitializeModuleAndPassManager( )
         {
             Module = Context.CreateBitcodeModule( );
@@ -485,9 +491,9 @@ namespace Kaleidoscope.Chapter71
 
             FunctionPassManager.Initialize( );
         }
-        #endregion
+#endregion
 
-        #region GetOrDeclareFunction
+#region GetOrDeclareFunction
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
@@ -515,12 +521,12 @@ namespace Kaleidoscope.Chapter71
 
             return retVal;
         }
-        #endregion
+#endregion
 
         private const string ExpectValidExpr = "Expected a valid expression";
         private const string ExpectValidFunc = "Expected a valid function";
 
-        #region CloneAndRenameFunction
+#region CloneAndRenameFunction
         private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
         {
             // clone the definition with a new name, note that this is really
@@ -537,9 +543,9 @@ namespace Kaleidoscope.Chapter71
                                                        );
             return implDefinition;
         }
-        #endregion
+#endregion
 
-        #region PrivateMembers
+#region PrivateMembers
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
@@ -548,6 +554,6 @@ namespace Kaleidoscope.Chapter71
         private readonly bool DisableOptimizations;
         private BitcodeModule? Module;
         private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
-        #endregion
+#endregion
     }
 }

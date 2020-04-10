@@ -66,7 +66,7 @@ namespace Kaleidoscope.Grammar
             Diagnostics = diagnostics;
         }
 
-        public DiagnosticRepresentations Diagnostics { get; }
+        public DiagnosticRepresentations Diagnostics { get; set; }
 
         /// <summary>Gets or sets the language level for this parser</summary>
         public LanguageLevel LanguageLevel
@@ -137,28 +137,23 @@ namespace Kaleidoscope.Grammar
                     retVal = astBuilder.Visit( parseTree );
                 }
 
-#if NET47
                 if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                 {
                     // both forms share the same initial DirectedGraph model as the formats are pretty similar
-                    var dgmlGenerator = new DgmlGenerator( AntlrParser );
+                    var dgmlGenerator = new DgmlGenerator( antlrParser );
                     ParseTreeWalker.Default.Walk( dgmlGenerator, parseTree );
-                    var astGraphGenereator = new AstGraphGenerator( );
-                    retVal.Accept( astGraphGenereator );
 
                     if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
                     {
                         dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
-                        astGraphGenereator.WriteDgmlGraph( "Ast.dgml" );
                     }
 
                     if( Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
                     {
-                        dgmlGenerator.WriteBlockDiag( "ParseTree.diag" );
-                        astGraphGenereator.WriteBlockDiag( "Ast.diag" );
+                        dgmlGenerator.Graph.WriteAsBlockDiag( "ParseTree.diag" );
                     }
                 }
-#endif
+
                 return retVal;
             }
             catch( ParseCanceledException )

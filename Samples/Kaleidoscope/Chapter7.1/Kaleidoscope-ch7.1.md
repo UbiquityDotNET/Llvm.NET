@@ -1,4 +1,12 @@
-﻿# 7. Kaleidoscope: Extreme Lazy JIT
+﻿---
+uid: Kaleidoscope-ch7.1
+---
+> [!CAUTION]
+> This sample is presently not functional. There are bugs in the LLVM OrcJIT support on Windows platforms
+> that prevents the fully lazy function generation callbacks from working. (See LLVM
+> bugs [25493](https://bugs.llvm.org/show_bug.cgi?id=25493) and [28699](https://bugs.llvm.org/show_bug.cgi?id=28699) for details.)
+
+# 7. Kaleidoscope: Extreme Lazy JIT
 In the previous chapters the code generation took an AST, converted it to LLVM IR, handed the IR to the
 JIT, which then generated the native code. For a top level anonymous expression that is pretty much all
 you need. But what if a function is defined but not used (yet)? The process of generating the IR, and then
@@ -45,7 +53,7 @@ Since the lazy JIT registers the callback stub with the function's name when the
 it needs a new name. So, we add a new helper method to effectively clone a FunctionDefinition AST node while
 renaming it. This only needs a shallow clone so there isn't a lot of overhead for it.
 
-[!code-csharp[CloneAndRenameFunction](../../../Samples/Kaleidoscope/Chapter7.1/CodeGenerator.cs#CloneAndRenameFunction)]
+[!code-csharp[CloneAndRenameFunction](CodeGenerator.cs#CloneAndRenameFunction)]
 
 The name used is the original function name plus the suffix `$impl` tacked onto the end.
 
@@ -54,7 +62,7 @@ is pretty much the same. There's really no point in going through the process of
 when the next thing to do is get the address of the function and call it. For other definitions, though,
 things get different as they are selected for lazy JIT.
 
-[!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter7.1/CodeGenerator.cs#Generate)]
+[!code-csharp[Generate](CodeGenerator.cs#Generate)]
 
 Function definitions for lazy JIT are first cloned and renamed, as discussed previously. Then a lazy
 function generator is registered for the name of the function. This creates the stub function exported

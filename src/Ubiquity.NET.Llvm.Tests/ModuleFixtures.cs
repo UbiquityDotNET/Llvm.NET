@@ -27,16 +27,16 @@ namespace Ubiquity.NET.LlvmTests
                 throw new ArgumentNullException( nameof( ctx ) );
             }
 
-            LlvmInit = Library.InitializeLLVM( );
-            Library.RegisterAll( );
+            LibLLVM = Library.InitializeLLVM( );
+            LibLLVM.RegisterTarget( CodeGenTarget.All );
         }
 
         [AssemblyCleanup]
         public static void AssemblyCleanup( )
         {
-            LlvmInit?.Dispose( );
+            LibLLVM?.Dispose( );
         }
 
-        private static IDisposable? LlvmInit;
+        private static ILibLlvm? LibLLVM;
     }
 }

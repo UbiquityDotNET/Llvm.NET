@@ -7,6 +7,8 @@
 using System;
 using System.Reflection;
 
+using Ubiquity.NET.Llvm.Interop;
+
 using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter4
@@ -22,11 +24,9 @@ namespace Kaleidoscope.Chapter4
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
-            using( InitializeLLVM( ) )
-            {
-                RegisterNative( );
-                repl.Run( Console.In );
-            }
+            using var libLlvm = InitializeLLVM( );
+            libLlvm.RegisterTarget( CodeGenTarget.Native );
+            repl.Run( Console.In );
         }
     }
 }

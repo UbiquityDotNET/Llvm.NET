@@ -15,7 +15,7 @@
         <PackageReference Update="System.Memory" Version="4.5.4" />
         <PackageReference Update="CppSharp" Version="0.10.1" />
         <PackageReference Update="Antlr4" Version="4.6.6"/>
-        <PackageReference Update="OpenSoftware.DgmlBuilder" Version="1.13.0" Condition="'$(TargetFramework)'=='net47'" />
+        <PackageReference Update="OpenSoftware.DgmlBuilder" Version="1.14.0" />
         <PackageReference Update="System.Collections.Immutable" Version="1.7.0" />
         <!-- See: https://github.com/dotnet/docfx/issues/5536 before updating...-->
         <PackageReference Update="docfx.console" Version="2.48.1" />

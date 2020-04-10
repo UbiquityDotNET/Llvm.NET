@@ -12,6 +12,7 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.Library;
 
@@ -40,48 +41,46 @@ namespace Kaleidoscope.Chapter9
             string irFilePath = Path.ChangeExtension( sourceFilePath, ".ll" );
             string asmPath = Path.ChangeExtension( sourceFilePath, ".s" );
 
-            using( var rdr = File.OpenText( sourceFilePath ) )
-            using( InitializeLLVM( ) )
+            using var rdr = File.OpenText( sourceFilePath );
+            using var libLLVM = InitializeLLVM( );
+            libLLVM.RegisterTarget( CodeGenTarget.Native );
+
+            var machine = new TargetMachine( Triple.HostTriple );
+            var parser = new Parser( LanguageLevel.MutableVariables );
+            using var generator = new CodeGenerator( parser.GlobalState, machine, sourceFilePath, true );
+            Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
+            Console.WriteLine( "Compiling {0}", sourceFilePath );
+
+            IParseErrorLogger errorLogger = new ColoredConsoleParseErrorLogger( );
+
+            // time the parse and code generation
+            var timer = System.Diagnostics.Stopwatch.StartNew( );
+            var ast = parser.Parse( rdr );
+            if( !errorLogger.CheckAndShowParseErrors( ast ) )
             {
-                RegisterNative( );
-
-                var machine = new TargetMachine( Triple.HostTriple );
-                var parser = new Parser( LanguageLevel.MutableVariables );
-                using var generator = new CodeGenerator( parser.GlobalState, machine, sourceFilePath, true );
-                Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
-                Console.WriteLine( "Compiling {0}", sourceFilePath );
-
-                IParseErrorLogger errorLogger = new ColoredConsoleParseErrorLogger( );
-
-                // time the parse and code generation
-                var timer = System.Diagnostics.Stopwatch.StartNew( );
-                var ast = parser.Parse( rdr );
-                if( !errorLogger.CheckAndShowParseErrors( ast ) )
+                (bool hasValue, BitcodeModule? module) = generator.Generate( ast );
+                if( !hasValue )
                 {
-                    (bool hasValue, BitcodeModule? module) = generator.Generate( ast );
-                    if( !hasValue )
-                    {
-                        Console.Error.WriteLine( "No module generated" );
-                    }
-                    else if( !module!.Verify( out string errMsg ) )
-                    {
-                        Console.Error.WriteLine( errMsg );
-                    }
-                    else
-                    {
-                        machine.EmitToFile( module, objFilePath, CodeGenFileType.ObjectFile );
-                        timer.Stop( );
+                    Console.Error.WriteLine( "No module generated" );
+                }
+                else if( !module!.Verify( out string errMsg ) )
+                {
+                    Console.Error.WriteLine( errMsg );
+                }
+                else
+                {
+                    machine.EmitToFile( module, objFilePath, CodeGenFileType.ObjectFile );
+                    timer.Stop( );
 
-                        Console.WriteLine( "Wrote {0}", objFilePath );
-                        if( !module.WriteToTextFile( irFilePath, out string msg ) )
-                        {
-                            Console.Error.WriteLine( msg );
-                            return -1;
-                        }
-
-                        machine.EmitToFile( module, asmPath, CodeGenFileType.AssemblySource );
-                        Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
+                    Console.WriteLine( "Wrote {0}", objFilePath );
+                    if( !module.WriteToTextFile( irFilePath, out string msg ) )
+                    {
+                        Console.Error.WriteLine( msg );
+                        return -1;
                     }
+
+                    machine.EmitToFile( module, asmPath, CodeGenFileType.AssemblySource );
+                    Console.WriteLine( "Compilation Time: {0}", timer.Elapsed );
                 }
             }
 

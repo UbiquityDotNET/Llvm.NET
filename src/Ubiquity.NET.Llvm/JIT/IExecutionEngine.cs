@@ -86,6 +86,10 @@ namespace Ubiquity.NET.Llvm.JIT
         /// </remarks>
         ulong AddLazyCompiledModule( BitcodeModule bitcodeModule, LLVMOrcSymbolResolverFn resolver );
 
+// LLVM 10 is transitioning to ORC JIT v2 and unfortunately,
+// the lazy function generator is doing it's own symbol resolution that doesn't
+// account for the COFF export bug
+#if LAZY_FUNCTION_GENERATOR_SUPPORTED
         /// <summary>Add a lazy function generator</summary>
         /// <param name="name">name of the function</param>
         /// <param name="generator">Generator that will generate the bit-code module for the function on demand</param>
@@ -99,6 +103,7 @@ namespace Ubiquity.NET.Llvm.JIT
         /// context is available as a means to identify the function to generate.</para>
         /// </remarks>
         void AddLazyFunctionGenerator( string name, LazyFunctionCompiler generator, IntPtr context );
+#endif
     }
 
     /// <summary>Extension class to add common default behavior for implementations of ILazyCompileExecutionEngine</summary>
@@ -107,6 +112,7 @@ namespace Ubiquity.NET.Llvm.JIT
     /// </remarks>
     public static class LazyCompilationExecutionEngineExtensions
     {
+#if LAZY_FUNCTION_GENERATOR_SUPPORTED
         /// <summary>Add a lazy function generator</summary>
         /// <param name="jit">JIT to add the module to</param>
         /// <param name="name">name of the function</param>
@@ -124,6 +130,7 @@ namespace Ubiquity.NET.Llvm.JIT
             jit.ValidateNotNull( nameof( jit ) );
             jit.AddLazyFunctionGenerator( name, generator, IntPtr.Zero );
         }
+#endif
 
         /// <summary>Adds a module to the JIT for lazy compilation using the engine's default symbol resolver</summary>
         /// <param name="jit">JIT engine to add the module to</param>

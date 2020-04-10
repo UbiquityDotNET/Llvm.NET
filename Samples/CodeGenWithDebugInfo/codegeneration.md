@@ -1,3 +1,7 @@
+---
+uid: code-generation-with-debug-info
+---
+
 # CodeGenWithDebugInfo
 Sample application to generate target machine code. The sample is
 provided in the [source tree](https://github.com/UbiquityDotNET/Llvm.NET/tree/master/Samples/CodeGenWithDebugInfo).
@@ -15,7 +19,7 @@ The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the f
 >are expected to be minor. Updating the sample to replicate the latest Clang version is left as an exercise for
 >the reader :grin:
 
-[!code-c[Main](../../../Samples/CodeGenWithDebugInfo/Support Files/test.c)]
+[!code-c[Main](Support Files/test.c)]
 
 This sample supports targeting two different processor types x64 and ARM Cortex-M3
 
@@ -46,14 +50,14 @@ In this sample that is handled in the constructor of the target dependent detail
 would allow command line options for the CPU target variants and feature sets. For this sample those are just
 hard coded into the target details class to keep things simple and focused on the rest of the code generation.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/ITargetDependentDetails.cs#ITargetDependentDetails)]
+[!code-csharp[Main](ITargetDependentDetails.cs#ITargetDependentDetails)]
 
 This interface isolates the rest of the code from knowing which architecture is used, and theoretically
 could include support for additional targets beyond the two in the sample source.
 
 The sample determines which target to use based on the second command line argument to the application
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#TargetDetailsSelection)]
+[!code-csharp[Main](Program.cs#TargetDetailsSelection)]
 
 ## Creating the BitcodeModule
 To generate code in Ubiquity.NET.Llvm a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) is required as
@@ -80,7 +84,7 @@ the target and a target specific [DataLayout](xref:Ubiquity.NET.Llvm.DataLayout)
 extracts these from the [TargetMachine](xref:Ubiquity.NET.Llvm.TargetMachine) provided by the target
 details interface for the selected target.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingModule)]
+[!code-csharp[Main](Program.cs#CreatingModule)]
 
 ## Creating the DICompileUnit
 LLVM Debug information is all scoped to a top level [DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit).
@@ -104,7 +108,7 @@ to expose types in a consistent fashion. Ubiquity.NET.Llvm provides a set of cla
 This sample uses the [DebugBasicType](xref:Ubiquity.NET.Llvm.DebugInfo.DebugBasicType). To define the basic types
 used in the generated code with appropriate debug information.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingBasicTypesWithDebugInfo)]
+[!code-csharp[Main](Program.cs#CreatingBasicTypesWithDebugInfo)]
 
 This constructs several basic types and assigns them to variables:
 
@@ -120,7 +124,7 @@ Creating qualified (const, volatile, etc...) and pointers is just as easy as cre
 The sample needs a pointer to a const instance of the struct foo. A qualified type for constant foo is
 created first, then a pointer type is created for the const type.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingQualifiedTypes)]
+[!code-csharp[Main](Program.cs#CreatingQualifiedTypes)]
 
 ## Creating structure types
 As previously mentioned, the LLVM types only contain basic layout information and not full source
@@ -133,7 +137,7 @@ metadata. A collection of these is then used to create the final composite type 
 data in a simple single call. The sample only needs to create one such type for the `struct foo`
 in the example source code.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingStructureTypes)]
+[!code-csharp[Main](Program.cs#CreatingStructureTypes)]
 
 ## Creating module metadata and global variables
 The sample code contains two global instances of `struct foo` `bar` and `baz`. Furthermore, bar
@@ -142,9 +146,9 @@ forms the initialized value of `bar.c`, the source only provides const values fo
 entries of a 32 element array. The const data is created via [ConstArray](xref:Ubiquity.NET.Llvm.Values.ConstantArray).
 The full initialized const data for bar is the created from [Context.CreateNamedConstantStruct](xref:Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct*)
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
+[!code-csharp[Main](Program.cs#CreatingGlobalsAndMetadata)]
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
+[!code-csharp[Main](Program.cs#AddModuleFlags)]
 
 Once the constant data is available an LLVM global is created for it with a name that matches the source name
 via [AddGlobal](xref:Ubiquity.NET.Llvm.BitcodeModule.AddGlobal*). To ensure the linker lays out the structure
@@ -158,7 +162,7 @@ For the `baz` instance the process is almost identical. The major difference is 
 structure is initialized to all zeros. That is the initialized data for the structure is created with
 [NullValueFor](xref:Ubiquity.NET.Llvm.Values.Constant.NullValueFor*), which creates an all zero value of a type.
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#CreatingGlobalsAndMetadata)]
+[!code-csharp[Main](Program.cs#CreatingGlobalsAndMetadata)]
 
 LLVM modules may contain additional module flags as metadata that describe how the module is generated
 or how the code generation/linker should treat the code. In this sample the dwarf version and debug metadata
@@ -166,7 +170,7 @@ versions are set along with a VersionIdentString that identifies the application
 Additionally, any target specific metadata is added to the module. The ordering of these is generally not
 relevant, however it is very specific in the sample to help ensure the generated IR is as close to the
 Clang version as possible making it possible to run llvm-dis to generate the textual IR files and compare them.
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#AddModuleFlags)]
+[!code-csharp[Main](Program.cs#AddModuleFlags)]
 
 ## Declaring the functions
 The function declarations for both of the two function's is mostly the same, following a common pattern:
@@ -189,7 +193,7 @@ registers). For the two processors this sample supports Clang only uses this for
 calls the TargetDetails.AddABIAttributesForByValueStructure) to add the appropriate attributes for the target
 as needed. 
 
-[!code-csharp[Main](../../../Samples/CodeGenWithDebugInfo/Program.cs#FunctionDeclarations)]
+[!code-csharp[Main](Program.cs#FunctionDeclarations)]
 
 ## Generating function bodies
 This is where things really get interesting as this is where the actual code is generated for the functions. Up

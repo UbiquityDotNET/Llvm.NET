@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-ch4
+---
+
 # 4. Kaleidoscope: Adding JIT and Optimizer Support
 This chapter of the Kaleidoscope tutorial introduces Just-In-Time (JIT) compilation and simple optimizations
 of the generated code. As, such this is the first variant of the language implementation where you can actually
@@ -73,7 +77,7 @@ to transform a function into the optimized form. Since a pass manager is tied to
 support, each function is generated into its own module a new method in the code generator is used to create
 the module and initialize the pass manager.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#InitializeModuleAndPassManager)]
+[!code-csharp[Main](CodeGenerator.cs#InitializeModuleAndPassManager)]
 
 Creating the pass manager isn't enough to get the optimizations. Something needs to actually provide the
 pass manager with the function to optimize. The most sensible place to put that is as the last step of
@@ -131,7 +135,7 @@ using Ubiquity.NET.Llvm.Transforms;
 #### Generator fields
 To begin with, the generator needs some additional members, including the JIT engine.
 
-[!code-csharp[PrivateMembers](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#PrivateMembers)]
+[!code-csharp[PrivateMembers](CodeGenerator.cs#PrivateMembers)]
 
 The JIT engine is retained for the generator to use. The same engine is retained for the lifetime of the
 generator so that functions are added to the same engine and can call functions previously added. The JIT
@@ -144,7 +148,7 @@ Since the JIT support uses a module per function approach, lookups on the curren
 #### Generator initialization
 The initialization of the generator requires updating to support the new members.
 
-[!code-csharp[Initialization](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Initialization)]
+[!code-csharp[Initialization](CodeGenerator.cs#Initialization)]
 The bool indicating if optimizations are enabled or not is stored and an initial module and pass manager
 is created.
 
@@ -173,7 +177,7 @@ rudimentary console output support.
 Every time a new function definition is processed the generator creates a new module and initializes
 the function pass manager for the module. This is done is a new method InitializeModuleAndPassManager()
 
-[!code-csharp[Initialization](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#InitializeModuleAndPassManager)]
+[!code-csharp[Initialization](CodeGenerator.cs#InitializeModuleAndPassManager)]
 
 The module creation is pretty straight forward, of importance is the layout information pulled from the
 target machine for the JIT and applied to the module. 
@@ -188,7 +192,7 @@ at this point.
 Since the JIT engine is disposable, the code generators Dispose() method must now call the
 Dispose() method on the JIT engine.
 
-[!code-csharp[Dispose](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Dispose)]
+[!code-csharp[Dispose](CodeGenerator.cs#Dispose)]
 
 #### Generate Method
 To actually execute the code the generated modules are added to the JIT. If the function is an 
@@ -199,24 +203,24 @@ the module is added to the JIT and the function is returned.
 
 For named function definitions, the module is lazy added to the JIT as it isn't known if/when the functions
 is called. The JIT engine will compile modules lazy added into native code on first use. (Though if the
-function is never used, then creating the IR module was wasted. ([Chapter 7.1](Kaleidoscope-ch7.1.md) has a
+function is never used, then creating the IR module was wasted. ([Chapter 7.1](xref:Kaleidoscope-ch7.1) has a
 solution for even that extra overhead - truly lazy JIT). Since Kaleidoscope is generally a dynamic language
 it is possible and reasonable for the user to re-define a function (to fix an error, or provide a completely
 different implementation all together). Therefore, any named functions are removed from the JIT, if they
 existed, before adding in the new definition. Otherwise the JIT resolver would still resolve to the previously
 compiled instance.
 
-[!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#Generate)]
+[!code-csharp[Generate](CodeGenerator.cs#Generate)]
 
 Keeping all the JIT interaction in the generate method isolates the rest of the generation from any
-awareness of the JIT. This will help when adding truly lazy JIT compilation in [Chapter 7.1](Kaleidoscope-ch7.1.md)
-and AOT compilation in [Chapter 8](Kaleidoscope-ch8.md)
+awareness of the JIT. This will help when adding truly lazy JIT compilation in [Chapter 7.1](xref:Kaleidoscope-ch7.1)
+and AOT compilation in [Chapter 8](xref:Kaleidoscope-ch8)
 
 #### Function call expressions
 Since functions are no longer collected into a single module the code to find the target for a function
 call requires updating to lookup the function from a collection of functions mapped by name.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FunctionCallExpression)]
+[!code-csharp[Main](CodeGenerator.cs#FunctionCallExpression)]
 
 This will lookup the function prototype by name and call the GetOrDeclareFunction() with the prototype
 found. If the prototype wasn't found then it falls back to the previous lookup in the current module.
@@ -227,7 +231,7 @@ current module.
 Next is to update the GetOrDeclareFunction() to handle mapping the functions prototype and re-definition
 of functions.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#GetOrDeclareFunction)]
+[!code-csharp[Main](CodeGenerator.cs#GetOrDeclareFunction)]
 
 This distinguishes the special case of an anonymous top level expression as those are never added to the
 prototype maps. They are only in the JIT engine long enough to execute once and are then removed. Since
@@ -237,7 +241,7 @@ they are, by definition, anonymous they can never be referenced by anything else
 Visiting a function definition needs to add a call to the function pass manager to run the optimization
 passes for the function. This, makes sense to do, immediately after completing the generation of the function.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter4/CodeGenerator.cs#FunctionDefinition)]
+[!code-csharp[Main](CodeGenerator.cs#FunctionDefinition)]
 
 
 ## Conclusion

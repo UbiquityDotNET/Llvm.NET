@@ -16,41 +16,73 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>Target tools to register/enable</summary>
-    [Flags]
-    public enum TargetRegistrations
-    {
-        /// <summary>Register nothing</summary>
-        None = 0x00,
-
-        /// <summary>Register the Target class</summary>
-        Target = 0x01,
-
-        /// <summary>Register the Target info for the target</summary>
-        TargetInfo = 0x02,
-
-        /// <summary>Register the target machine(s) for a target</summary>
-        TargetMachine = 0x04,
-
-        /// <summary>Registers the assembly source code generator for a target</summary>
-        AsmPrinter = 0x08,
-
-        /// <summary>Registers the Disassembler for a target</summary>
-        Disassembler = 0x10,
-
-        /// <summary>Registers the assembly source parser for a target</summary>
-        AsmParser = 0x20,
-
-        /// <summary>Registers all the code generation components</summary>
-        CodeGen = Target | TargetInfo | TargetMachine,
-
-        /// <summary>Registers all components</summary>
-        All = CodeGen | AsmPrinter | Disassembler | AsmParser
-    }
-
     /// <summary>Provides support for various LLVM static state initialization and manipulation</summary>
-    public static class Library
+    public sealed class Library
+        : DisposableObject
+        , ILibLlvm
     {
+        /// <inheritdoc/>
+        public void RegisterTarget( CodeGenTarget target, TargetRegistrations registrations = TargetRegistrations.All )
+        {
+            switch( target )
+            {
+            case CodeGenTarget.Native:
+                RegisterNative( registrations );
+                break;
+            case CodeGenTarget.AArch64:
+                RegisterAArch64( registrations );
+                break;
+            case CodeGenTarget.AMDGPU:
+                RegisterAMDGPU( registrations );
+                break;
+            case CodeGenTarget.ARM:
+                RegisterARM( registrations );
+                break;
+            case CodeGenTarget.BPF:
+                RegisterBPF( registrations );
+                break;
+            case CodeGenTarget.Hexagon:
+                RegisterHexagon( registrations );
+                break;
+            case CodeGenTarget.Lanai:
+                RegisterLanai( registrations );
+                break;
+            case CodeGenTarget.MIPS:
+                RegisterMips( registrations );
+                break;
+            case CodeGenTarget.MSP430:
+                RegisterMSP430( registrations );
+                break;
+            case CodeGenTarget.NvidiaPTX:
+                RegisterNVPTX( registrations );
+                break;
+            case CodeGenTarget.PowerPC:
+                RegisterPowerPC( registrations );
+                break;
+            case CodeGenTarget.Sparc:
+                RegisterSparc( registrations );
+                break;
+            case CodeGenTarget.SystemZ:
+                RegisterSystemZ( registrations );
+                break;
+            case CodeGenTarget.WebAssembly:
+                RegisterWebAssembly( registrations );
+                break;
+            case CodeGenTarget.X86:
+                RegisterX86( registrations );
+                break;
+            case CodeGenTarget.XCore:
+                RegisterXCore( registrations );
+                break;
+            case CodeGenTarget.RISCV:
+                RegisterRISCV( registrations );
+                break;
+            case CodeGenTarget.All:
+                RegisterAll( registrations );
+                break;
+            }
+        }
+
         /// <summary>Initializes the native LLVM library support</summary>
         /// <returns>
         /// <see cref="System.IDisposable"/> implementation for the library
@@ -63,7 +95,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// is best used at the top level of the application and released at or
         /// near process exit.
         /// </remarks>
-        public static IDisposable InitializeLLVM( )
+        public static ILibLlvm InitializeLLVM( )
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
                                                                                 , (int)InitializationState.Initializing
@@ -122,25 +154,7 @@ namespace Ubiquity.NET.Llvm.Interop
             FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
             LLVMInstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
             Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.Initialized );
-            return new DisposableAction( ( ) => InternalShutdownLLVM( hLibLLVM ) );
-        }
-
-        /// <summary>Parse a command line string for LLVM Options</summary>
-        /// <param name="args">Arguments to parse</param>
-        /// <param name="overview">overview of the application for help/diagnostics</param>
-        /// <remarks>
-        /// Use of this method is discouraged as calling applications should control
-        /// options directly without reliance on particulars of the LLVM argument handling
-        /// </remarks>
-        [Obsolete( "Applications should manage options directly without relying on the LLVM argument handling" )]
-        public static void ParseCommandLineOptions( string[ ] args, string overview )
-        {
-            if( args == null )
-            {
-                throw new ArgumentNullException( nameof( args ) );
-            }
-
-            LLVMParseCommandLineOptions( args.Length, args, overview );
+            return new Library( hLibLLVM );
         }
 
         // TODO: Figure out how to read targets.def to get the full set of target architectures
@@ -186,7 +200,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for all available targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterAll( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterAll( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -221,7 +235,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the target representing the system the calling process is running on</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterNative( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterNative( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -254,7 +268,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for ARM AArch64 target(s)</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterAArch64( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterAArch64( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -289,7 +303,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for AMDGPU targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterAMDGPU( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterAMDGPU( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -324,7 +338,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for ARM 32bit and 16bit thumb targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterARM( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterARM( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -359,7 +373,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the Berkeley Packet Filter (BPF) target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterBPF( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterBPF( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -394,7 +408,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the Hexagon CPU</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterHexagon( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterHexagon( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -429,7 +443,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the Lanai target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterLanai( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterLanai( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -464,7 +478,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for MIPS targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterMips( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterMips( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -499,7 +513,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for MSP430 targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterMSP430( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterMSP430( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -534,7 +548,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the NVPTX targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterNVPTX( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterNVPTX( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -571,7 +585,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the PowerPC targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterPowerPC( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterPowerPC( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -606,7 +620,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for SPARC targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterSparc( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterSparc( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -641,7 +655,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for SystemZ targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterSystemZ( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterSystemZ( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -676,7 +690,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the WebAssembly target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterWebAssembly( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterWebAssembly( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -711,7 +725,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for X86 targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterX86( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterX86( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -746,7 +760,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for XCore targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterXCore( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterXCore( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -783,7 +797,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the RISCV target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        public static void RegisterRISCV( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterRISCV( TargetRegistrations registrations = TargetRegistrations.All )
         {
             if( registrations.HasFlag( TargetRegistrations.Target ) )
             {
@@ -816,6 +830,19 @@ namespace Ubiquity.NET.Llvm.Interop
             }
         }
 
+        /// <inheritdoc/>
+        protected override void Dispose( bool disposing )
+        {
+            InternalShutdownLLVM( ModuleHandle );
+        }
+
+        private Library( IntPtr moduleHandle )
+        {
+            ModuleHandle = moduleHandle;
+        }
+
+        private IntPtr ModuleHandle;
+
         private enum InitializationState
         {
             Uninitialized,
@@ -835,7 +862,7 @@ namespace Ubiquity.NET.Llvm.Interop
         private static void FatalErrorHandler( string reason )
         {
             // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
-            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application exiting.", reason );
+            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", reason );
         }
 
         private static void InternalShutdownLLVM( IntPtr hLibLLVM )

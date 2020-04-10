@@ -9,11 +9,7 @@
                     "src": ".."
                 }
             ],
-            "dest": "api",
-            "properties": {
-                "TargetFramework": "netstandard2.1"
-            }
-
+            "dest": "api"
         }
     ],
     "build": {
@@ -26,9 +22,17 @@
                     "api/**.md",
                     "api/**.yml",
                     "articles/**.md",
-                    "articles/**.yml"
+                    "articles/**.yml",
                 ],
                 "exclude": [ "obj/**" ]
+            },
+            {
+                "files": [
+                    "Kaleidoscope/**/Kaleidoscope*.md",
+                    "CodeGenWithDebugInfo/codegeneration.md"
+                ],
+                "src": "../samples",
+                "dest": "articles/samples"
             }
         ],
         "resource": [
@@ -36,9 +40,15 @@
                 "files": [
                     "favicon.ico",
                     "DragonSharp48x48.png",
-                    "DragonSharp.png",
-                    "articles/**.svg"
+                    "DragonSharp.png"
                 ]
+            },
+            {
+                "files": [
+                    "/samples/**/*.svg"
+                ],
+                "dest": "articles",
+                "src": ".."
             }
         ],
         "overwrite": [
@@ -57,7 +67,7 @@
             "_appFooter": "Copyright (C) 2017-2019, Ubiquity.NET Contributors",
             "_appLogoPath": "DragonSharp48x48.png",
             "_disableBreadcrumb": true,
-            "llvmVersion": "8.0.0",
+            "llvmVersion": "10.0.0",
             "assemblies": [
                 "Ubiquity.NET.Llvm"
             ],

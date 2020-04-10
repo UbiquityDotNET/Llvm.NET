@@ -1,3 +1,8 @@
+---
+uid: Kaleidoscope-Overview
+---
+
+
 # 1. Kaleidoscope: Language Introduction
 The general flow of this tutorial follows that of the official
 [LLVM tutorial](http://releases.llvm.org/6.0.1/docs/tutorial/LangImpl01.html)
@@ -25,9 +30,9 @@ view.
 The Ubiquity.NET.Llvm version of the Kaleidoscope series takes a different route for parsing from the
 LLVM implementation. In particular the Ubiquity.NET.Llvm version defines a formal grammar using
 [ANTLR4](http://antlr.org) with the full grammar for all variations of the language features in
-a single assembly. Ultimately the parsing produces an AST so that the actual technology used for
-the parse is hidden as an implementation detail. This helps in isolating the parsing from the use
-of Ubiquity.NET.Llvm for code generation and JIT compilation for interactive languages.
+a single assembly. Ultimately the parsing produces an [AST](xref:Kaleidoscope-AST) so that the actual
+technology used for the parse is hidden as an implementation detail. This helps in isolating the parsing
+from the use of Ubiquity.NET.Llvm for code generation and JIT compilation for interactive languages.
 
 ## The Kaleidoscope Language
 ### General Concepts
@@ -41,7 +46,7 @@ Kaleidoscope is a simple functional language with the following major features:
   - User defined operators can specify operator precedence
     - User defined precedence is arguably the most complex part of parsing and implementing the language.
       Though, ANTLR4's flexibility made it fairly easy to do once fully understood. (more details in
-      [Chapter 6](Kaleidoscope-ch6.md))
+      [Chapter 6](xref:Kaleidoscope-ch6))
 
 ### Expressions
 In Kaleidoscope, everything is an expression (e.g. everything has or returns a value even if the value
@@ -70,75 +75,7 @@ design. [Implementing the line continuation mechanism in Kaleidoscope is left as
 The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set.
 
-```Kaleidoscope
-def unary!(v)
-  if v then
-    0
-  else
-    1;
-
-def unary-(v)
-  0-v;
-
-def binary> 10 (LHS RHS)
-  RHS < LHS;
-
-def binary| 5 (LHS RHS)
-  if LHS then
-    1
-  else if RHS then
-    1
-  else
-    0;
-
-def binary& 6 (LHS RHS)
-  if !LHS then
-    0
-  else
-    !!RHS;
-
-def binary= 9 (LHS RHS)
-  !(LHS < RHS | LHS > RHS);
-
-def binary : 1 (x y) y;
-
-extern putchard(char);
-
-def printdensity(d)
-  if d > 8 then
-    putchard(32)
-  else if d > 4 then
-    putchard(46)
-  else if d > 2 then
-    putchard(43)
-  else
-    putchard(42);
-
-def mandelconverger(real imag iters creal cimag)
-  if iters > 255 | (real*real + imag*imag > 4) then
-    iters
-  else
-    mandelconverger( real*real - imag*imag + creal
-                   , 2*real*imag + cimag
-                   , iters+1
-                   , creal
-                   , cimag
-                   );
-
-def mandelconverge(real imag)
-  mandelconverger(real, imag, 0, real, imag);
-
-def mandelhelp(xmin xmax xstep   ymin ymax ystep)
-  for y = ymin, y < ymax, ystep in
-  (
-    (for x = xmin, x < xmax, xstep in printdensity(mandelconverge(x,y))) : putchard(10)
-  );
-
-def mandel(realstart imagstart realmag imagmag)
-  mandelhelp(realstart, realstart+realmag*78, realmag, imagstart, imagstart+imagmag*40, imagmag);
-
-mandel(-2.3, -1.3, 0.05, 0.07);
-```
+[!code-Kaleidoscope[mandel.kls](mandel.kls)]
 
 When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:
 >[!NOTE]
@@ -194,6 +131,7 @@ Ready>
 
 ## Conclusion
 Kaleidoscope is a simple yet complete language with a good deal of functionality. This serves as
-a great language to study the use of LLVM for code generation. While, generally speaking, the 
-Ubiquity.NET.Llvm version of this tutorial differs only slightly from that of the official LLVM version, it
-serves well as an example of what you can do with Ubiquity.NET.Llvm.
+a great language to study the use of Ubiquity.NET.Llvm for code generation and Domain Specific
+Languages. While, generally speaking, the functionality of the Ubiquity.NET.Llvm version of this
+tutorial differs only slightly from that of the official LLVM version, it serves well as an example
+of what you can do with Ubiquity.NET.Llvm.

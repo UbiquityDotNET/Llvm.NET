@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-ch5
+---
+
 # 5. Kaleidoscope: Control Flow
 This chapter focuses on adding the support necessary to implement the if-then-else and for loop control
 flow support in the Kaleidoscope language. Without some sort of control flow the Kaleidoscope language
@@ -6,7 +10,7 @@ language.
 
 ## if-then-else
 It is worth re-visiting the discussion of the intended syntax and semantics for conditional flow in
-[Chapter 2](Kaleidoscope-ch2.md#conditionalexpression). This will help in understanding the language
+[Chapter 2](xref:Kaleidoscope-ch2#conditionalexpression). This will help in understanding the language
 functionality to implement.
 
 The ultimate goal of the changes to support code generation for control flow constructs is to transform
@@ -58,7 +62,7 @@ only two reasons where a phi node may crop up:
  1. Mutable variables like x = 1; x = x + 1;
  2. Values that are part of the structure of the language (usually for control flow)
 
-[Chapter 7](Kaleidoscope-ch7.md) Covers the mutable variables case in detail and the techniques for
+[Chapter 7](xref:Kaleidoscope-ch7) Covers the mutable variables case in detail and the techniques for
 generating the code without using a phi node. For cases like this one where it is straight forward and easy
 to insert the phi node directly then there's no reason not to. Though, the solution provided in Chapter 7 can,
 and does, eliminate the need to manually insert the phi node here as well.
@@ -97,7 +101,7 @@ for generation to ensure that the correct block is used with the value.
 
 The actual code follows the description pretty closely and should now be fairly easy to follow:
 
-[!code-csharp[ConditionalExpression](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ConditionalExpression)]
+[!code-csharp[ConditionalExpression](CodeGenerator.cs#ConditionalExpression)]
 
 ## For Loop
 Now that the basics of control flow are available it is possible to leverage the same concepts to
@@ -174,7 +178,7 @@ and direct phi-nodes remains the same.
 
 The code to generate a for loop follows this pattern pretty closely.
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter5/CodeGenerator.cs#ForInExpression)]
+[!code-csharp[Main](CodeGenerator.cs#ForInExpression)]
 
 The only new functionality in that is the use of the ScopeStack class to support nested scopes and the named
 variables within them. [ScopeStack](xref:Ubiquity.NET.Llvm.ScopeStack`1) is provided in the Ubiquity.NET.Llvm library. It is

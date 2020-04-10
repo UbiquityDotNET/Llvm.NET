@@ -4,14 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-#if NET47
 using System.Collections.Generic;
+
 using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+
+using Kaleidoscope.Grammar.ANTLR;
+
 using OpenSoftware.DgmlTools.Model;
 
-using static Kaleidoscope.Grammar.KaleidoscopeParser;
+using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar
 {
@@ -20,7 +22,7 @@ namespace Kaleidoscope.Grammar
     /// This is similar to the <see cref="XDocumentListener"/> but allows writing to a
     /// DGML file for visualizing in VisualStudio or any available DGML viewer.
     /// </remarks>
-    public class DgmlGenerator
+    internal class DgmlGenerator
         : KaleidoscopeBaseListener
     {
         public DgmlGenerator( KaleidoscopeParser recognizer )
@@ -118,7 +120,7 @@ namespace Kaleidoscope.Grammar
 
         internal DirectedGraph Graph { get; } = new DirectedGraph( );
 
-        private Node ActiveNode => NodeStack.Peek();
+        private Node ActiveNode => NodeStack.Peek( );
 
         private Node Pop( )
         {
@@ -137,4 +139,3 @@ namespace Kaleidoscope.Grammar
         private readonly Stack<Node> NodeStack = new Stack<Node>();
     }
 }
-#endif

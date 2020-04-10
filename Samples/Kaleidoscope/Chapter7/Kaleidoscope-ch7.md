@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-ch7
+---
+
 # 7. Kaleidoscope: Mutable Variables
 The previous chapters introduced the Kaleidoscope language and progressively implemented a variety of
 language features to make a fully featured, though simplistic, functional programming language. To a
@@ -8,14 +12,13 @@ useful for transformations and optimizations it is sometimes overwhelming to new
 particular it may seem like LLVM doesn't support imperative languages with mutable variables or that
 you need to convert all such languages into SSA form before generating LLVM IR. That is a bit of a
 daunting task that might scare off a number of users. The good news is, there is no need for a language
-front-end to convert to SSA form directly. In fact, it is generally discouraged! LLVM already has very
-efficient, and more importantly, well tested, support for converting to SSA form (though how that works
-might be a bit surprising).
+front-end to convert to SSA form directly.
 
 >[!IMPORTANT]
->There is no need for a language front-end to convert to SSA form directly. In fact, it is generally
-> discouraged! LLVM already has very efficient, and more importantly, well tested, support for
-> converting to SSA form described in this chapter.
+>There is no need for a language front-end to convert to SSA form directly. In fact, manually converting
+> to SSA form it is strongly discouraged! LLVM already has very efficient, and more importantly, well
+> tested, support for converting to SSA form (though how that works might be a bit surprising). The use
+> of this support is the focus of this chapter.
 
 ## Mutable Variables in LLVM
 ### Mutable Variables vs. SSA, What's the big deal?
@@ -34,7 +37,7 @@ int test(_Bool Condition)
 }
 ```
 
-The general idea of how to handle this in LLVM SSA form was already covered in [Chapter 5](Kaleidoscope-ch5.md).
+The general idea of how to handle this in LLVM SSA form was already covered in [Chapter 5](xref:Kaleidoscope-ch5).
 Since there are two possible values for X when the function returns, a PHI node is inserted to merge the values.
 The LLVM IR for this would look like this:
 
@@ -64,8 +67,9 @@ A full treatise on SSA is beyond the scope of this tutorial. If you are interest
 [resources available on-line](http://en.wikipedia.org/wiki/Static_single_assignment_form). The focus for
 this chapter is on how traditional imperative language front-ends can use the LLVM support for mutable
 values without performing SSA conversion up-front. While, LLVM requires IR in SSA form (there's no such
-thing as "non-SSA mode"). Constructing the SSA form requires non-trivial algorithms and data structures,
-so it is both wasteful and error-prone for every front-end to have to manage implementing such a thing.
+thing as "non-SSA mode"). Constructing the SSA form usually would require non-trivial algorithms and data
+structures, so it is both wasteful and error-prone for every front-end to have to manage implementing such
+a thing. Thus, LLVM provides a consistent and simpler solution.
 
 ### Memory in LLVM
 The trick to the apparent incompatibility of SSA in LLVM IR and mutable values in imperative languages
@@ -135,7 +139,7 @@ for PHI nodes.
 
 1. Mutable Variables become a stack allocation
 2. Reading the variable uses a load instruction to retrieve the value from memory
-3. Updates of the variable becomes a store instruction to write the value to memory
+3. Updates of the variable become a store instruction to write the value to memory
 4. Taking the address of a variable just uses the stack address directly
 
 This nicely and cleanly handles mutable variables in a fairly simple and easy to generate form. However, it
@@ -250,7 +254,7 @@ The first change to the existing code generation is to update handling of variab
 a load through the pointer created with an alloca instruction. This is pretty straight forward since the
 scope map now stores the alloca instructions for the variable.
 
-[!code-csharp[VisitVariableExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VariableReferenceExpression)]
+[!code-csharp[VisitVariableExpression](CodeGenerator.cs#VariableReferenceExpression)]
 
 ### Update Visitor for ConditionalExpression
 Now that we have the alloca support we can update the conditional expression handling to remove the need
@@ -259,13 +263,13 @@ of the condition and storing the result value into that location for each side o
 continue block load the value from the location so that it is available as a value for the result of the
 expression.
 
-[!code-csharp[VisitConditionalExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#ConditionalExpression)]
+[!code-csharp[VisitConditionalExpression](CodeGenerator.cs#ConditionalExpression)]
 
 ### Update Visitor for ForInExpression
 Next up is to update the for loop handling to use Alloca. The code is almost identical except for the
 use of load/store for the variables and removal of the manually generated PHI nodes.
 
-[!code-csharp[VisitForExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#ForInExpression)]
+[!code-csharp[VisitForExpression](CodeGenerator.cs#ForInExpression)]
 
 ### Update Visitor for FunctionDefinition
 To support mutable function argument variables the handler for functions requires a small update to create
@@ -273,14 +277,14 @@ the Alloca for each incoming argument and for each of the local variables used b
 generation tracks the variable declarations in a function so they are all available to generate directly
 into the entry block.
 
-[!code-csharp[DefineFunction](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#FunctionDefinition)]
+[!code-csharp[DefineFunction](CodeGenerator.cs#FunctionDefinition)]
 
 
 ### InitializeModuleAndPassManager
 The last piece required for mutable variables support is to include the optimization pass to promote memory
-to registers. This is always enabled, so that the proper SSA for is correctly generated.
+to registers. This is always enabled, so that the proper SSA form is correctly generated.
 
-[!code-csharp[InitializeModuleAndPassManager](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#InitializeModuleAndPassManager)]
+[!code-csharp[InitializeModuleAndPassManager](CodeGenerator.cs#InitializeModuleAndPassManager)]
 
 ### Add operator support for Assignment Expressions
 Unlike the other binary operators assignment doesn't follow the same emit left, emit right, emit operator
@@ -290,7 +294,7 @@ special case the Generator doesn't generate for the left side, but instead looks
 variable for the store. The generator then implements a store operation of the right hand side value to the
 Alloca for the left side.
 
-[!code-csharp[BinaryOperatorExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#BinaryOperatorExpression)]
+[!code-csharp[BinaryOperatorExpression](CodeGenerator.cs#BinaryOperatorExpression)]
 
 Now that we have mutable variables and assignment we can mutate loop variables or input parameters. For
 example:
@@ -314,7 +318,7 @@ test(123);
 When run, this prints `1234` and `4`, showing that the value was mutated as, expected.
 
 ## User-defined Local Variables
-As described in the general syntax discussion of the Kaleidoscope language [VarInExpression](Kaleidoscope-ch2.md#varinexpression)
+As described in the general syntax discussion of the Kaleidoscope language [VarInExpression](xref:Kaleidoscope-ch2#varinexpression)
 the VarIn expression is used to declare local variables for a scope. A few changes are required to support
 this language construct.
 
@@ -325,7 +329,7 @@ expression to define them and emit the expression for the initializer. After all
 child expression "scope" is emitted, which may contain another VarIn or loop expression. Once the emit
 completes, the variable scope is popped from the stack to restore back the previous level.
 
-[!code-csharp[VisitVarInExpression](../../../Samples/Kaleidoscope/Chapter7/CodeGenerator.cs#VarInExpression)]
+[!code-csharp[VisitVarInExpression](CodeGenerator.cs#VarInExpression)]
 
 ## Conclusion
 This completes the updates needed to support mutable variables with potentially nested scopes. All of this
