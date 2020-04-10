@@ -1,8 +1,12 @@
+---
+uid: Kaleidoscope-AST
+---
+
 # Kaleidoscope Abstract Syntax Tree
 As with many language parsing systems Kaleidoscope leverages an Abstract Syntax Tree (AST) to simplify
 generating code from the parsed language. Each type of node in the tree implements the IAstNode interface
 
-[!code-csharp[IAstNode](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IAstNode.cs)]
+[!code-csharp[IAstNode](IAstNode.cs)]
 
 This interface provides the basic properties of any node in the tree for common uses. The Kaleidoscope
 language is a simple one and, therefore, has only a few kinds of nodes. The AST consist of the following
@@ -24,19 +28,20 @@ basic categories of nodes:
 ## AST Nodes
 The IAstNode interface forms the common interface for all AST nodes, it provides the common properties
 for all nodes.
-[!code-csharp[IAstNode](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IAstNode.cs)]
+[!code-csharp[IAstNode](IAstNode.cs)]
 
 ## Expressions
 Kaleidoscope is a functional language, all expressions produce a value, even if it is always zero. There
-are no statements in the language. Expressions for the core of the language and the bulk of the AST.
+are no statements in the language. Expressions form the core of the language and the bulk of the AST.
 
 The IExpression interface forms the common interface for all AST expression nodes
-[!code-csharp[IExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IExpression.cs)]
+[!code-csharp[IExpression](IExpression.cs)]
 
 While this is an empty interface, it serves to distinguish between AST nodes that are not expressions.
 Thus providing some type safety for consumers. (i.e. it makes no sense to have a prototype as the operand
 for a binary operator so only nodes that implement the IExpression tag interface are allowed) This isn't
-a common pattern for interfaces but makes sense here since some form of differentiation is needed.
+a common or generally recommended pattern for interfaces but makes sense here since some form of differentiation
+is needed.
 
 ### Unary Operators
 Unary operators are all user defined, so the AST simply represents them as a Function Definition. No
@@ -44,7 +49,7 @@ additional node types are needed for unary operators in the AST.
 
 ### Binary Operators
 BinaryOperatorExpression covers the built-in operators
-[!code-csharp[BinaryOperatorExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/BinaryOperatorExpression.cs)]
+[!code-csharp[BinaryOperatorExpression](BinaryOperatorExpression.cs)]
 
 The properties are fairly self explanatory, including the kind of operator and the left and right sides of the
 operator. The normal code generator pattern for the binary operators is:
@@ -66,42 +71,43 @@ Calls to functions (extern, user defined operators, or user defined functions) a
 FunctionCallExpression. The FunctionCallExpression contains the declaration of the function to call along with 
 expressions for all of the arguments to the function.
 
-[!code-csharp[FunctionCallExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/FunctionCallExpression.cs)]
+[!code-csharp[FunctionCallExpression](FunctionCallExpression.cs)]
 
 ### Variable Reference Expression
-A variable reference is used to refer to a variable. In most cases this represents implicit "load" semantics for a variable. However,
-when used as the left hand side of an assignment operator, it has "store" semantics.
-[!code-csharp[VariableReferenceExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/VariableReferenceExpression.cs)]
+A variable reference is used to refer to a variable. In most cases this represents implicit "load" semantics for a
+variable. However, when used as the left hand side of an assignment operator, it has "store" semantics.
+
+[!code-csharp[VariableReferenceExpression](VariableReferenceExpression.cs)]
 
 ### Conditional Expression
 In Kaleidoscope conditional expressions follow the familiar if/then/else form, even though they are really more
 like the ternary operator expression `( x ? y : z )` in C and related languages.
 
-[!code-csharp[ConditionalExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ConditionalExpression.cs)]
+[!code-csharp[ConditionalExpression](ConditionalExpression.cs)]
 
 ### For-In Expression
 The for in expression is used to implement loops in Kaleidoscope.
 
-[!code-csharp[ForInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ForInExpression.cs)]
+[!code-csharp[ForInExpression](ForInExpression.cs)]
 
 ### Var-In Expression
 Var-In Expression is used to provide, potentially nested, local scopes for variables
 
-[!code-csharp[VarInExpression](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/VarInExpression.cs)]
+[!code-csharp[VarInExpression](VarInExpression.cs)]
 
 ### Misc AST Interfaces
 IVariableDeclaration is implemented by local variable declarations and parameter declarations. The
 interface abstracts the differences between the two types of variable declarations. (Parameters have an index but locals don't)
-[!code-csharp[IVariableDeclaration](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/IVariableDeclaration.cs)]
+[!code-csharp[IVariableDeclaration](IVariableDeclaration.cs)]
 
 ## Other AST Nodes
 ### AST Declarations
-[!code-csharp[Function Signatures (Prototype)](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/Prototype.cs)]
-[!code-csharp[Local Variable Declarations](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/LocalVariableDeclaration.cs)]
-[!code-csharp[Parameter declarations](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/ParameterDeclaration.cs)]
+[!code-csharp[Function Signatures (Prototype)](Prototype.cs)]
+[!code-csharp[Local Variable Declarations](LocalVariableDeclaration.cs)]
+[!code-csharp[Parameter declarations](ParameterDeclaration.cs)]
 
 ### AST FunctionDefinition
 FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
 and the full body of the function.
 
-[!code-csharp[FunctionDefinition](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/FunctionDefinition.cs)]
+[!code-csharp[FunctionDefinition](FunctionDefinition.cs)]

@@ -8,19 +8,18 @@ using System;
 using System.Collections.Generic;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace TestDebugInfo
 {
     internal class X64Details
         : ITargetDependentDetails
     {
-        public X64Details( )
+        public X64Details( ILibLlvm libLLVM )
         {
-            RegisterX86( );
+            libLLVM.RegisterTarget( CodeGenTarget.X86 );
         }
 
         public string ShortName => "x86";

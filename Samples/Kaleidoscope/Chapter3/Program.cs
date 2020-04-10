@@ -7,12 +7,16 @@
 using System;
 using System.Reflection;
 
+using Ubiquity.NET.Llvm.Interop;
+
 using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace Kaleidoscope.Chapter3
 {
     public static class Program
     {
+        #region Main
+
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 3)</summary>
         public static void Main( )
         {
@@ -22,11 +26,10 @@ namespace Kaleidoscope.Chapter3
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
-            using( InitializeLLVM( ) )
-            {
-                RegisterNative( );
-                repl.Run( Console.In );
-            }
+            using var libLlvm = InitializeLLVM( );
+            libLlvm.RegisterTarget( CodeGenTarget.Native );
+            repl.Run( Console.In );
         }
+        #endregion
     }
 }

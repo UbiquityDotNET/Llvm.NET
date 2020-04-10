@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Antlr4"/>
-        <PackageReference Include="OpenSoftware.DgmlBuilder" Condition="'$(TargetFramework)'=='net47'" />
+        <PackageReference Include="Antlr4" />
+        <PackageReference Include="OpenSoftware.DgmlBuilder" />
         <PackageReference Include="System.Collections.Immutable" />
         <PackageReference Include="Ubiquity.ArgValidators" />
     </ItemGroup>

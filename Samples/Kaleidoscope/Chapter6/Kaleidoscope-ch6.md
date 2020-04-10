@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-ch6
+---
+
 # 6. Kaleidoscope: User Defined Operators
 At this point in the progression of the tutorial, Kaleidoscope is a fully functional, albeit fairly minimal,
 language. Thus far, the tutorial has avoided details of the parsing. One of the benefits of using a tool
@@ -28,7 +32,7 @@ is that the expression rule takes an additional precedence argument and the oper
 a semantic predicate that tests the current precedence level. If the current level is greater than or equal
 to the current level then that operator rule expression is allowed to match the input. Otherwise, the rule
 is skipped. Usually this is all hidden by the implicit support for precedence climbing and left recursion
-that is built-in to ANTLR4. However that requires fixing the precedence for operators in the grammar.
+that is built-in to ANTLR4. However, that requires fixing the precedence for operators in the grammar.
 Thus, Kaleidoscope doesn't use the default left-recursion support, but does use the same concepts with
 custom semantic predicates in the code behind.
 
@@ -151,16 +155,16 @@ lookup process will include them during parsing.
 
 Actually adding the operators to the table is handled in the parsing process itself using a feature of the
 ANTLR generated parser called a "Parse Listener". A parse listener is attached to the parser and effectively
-monitors the entire parsing process. For the user operators the listener will listen for the specific case
-of a complete function definition that defines a user operator. When it detects such a case it will update
-the runtime table accordingly.
+monitors the entire parsing process. For the user operators, the listener will listen for the specific case
+of a complete definition of a user operator. When it detects such a case it will update the runtime table to
+include the operator.
 
-[!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeUserOperatorListener.cs)]
+[!code-csharp[UserOperatorListener](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/KaleidoscopeUserOperatorListener.cs)]
 
 With the use of the listener the dynamic precedence is contained entirely in the parser. When the parse tree is
 processed to produce the AST the user defined operators are transformed to simple function declarations and
-function calls. This simplification allows the generator and later stages to remain blissfully ignorant of the
-issue of precedence and even the existence of user defined operators.
+function calls. This simplification allows consumers of the AST to remain blissfully ignorant of the issue of
+precedence and even the existence of user defined operators.
 
 Ordinarily it is best to design parsers without any sort of context or feedback mechanisms to keep them easier
 to maintain. However, the language design of the Kaleidoscope language requires some level of feedback so that
@@ -196,75 +200,7 @@ That completes the support for user defined operators.
 The following example is a complete program in Kaleidoscope that will generate a textual representation
 of the classic Mandelbrot Set using all of the features of the language.
 
-```kaleidoscope
-def unary!(v)
-  if v then
-    0
-  else
-    1;
-
-def unary-(v)
-  0-v;
-
-def binary> 10 (LHS RHS)
-  RHS < LHS;
-
-def binary| 5 (LHS RHS)
-  if LHS then
-    1
-  else if RHS then
-    1
-  else
-    0;
-
-def binary& 6 (LHS RHS)
-  if !LHS then
-    0
-  else
-    !!RHS;
-
-def binary= 9 (LHS RHS)
-  !(LHS < RHS | LHS > RHS);
-
-def binary : 1 (x y) y;
-
-extern putchard(char);
-
-def printdensity(d)
-  if d > 8 then
-    putchard(32)
-  else if d > 4 then
-    putchard(46)
-  else if d > 2 then
-    putchard(43)
-  else
-    putchard(42);
-
-def mandelconverger(real imag iters creal cimag)
-  if iters > 255 | (real*real + imag*imag > 4) then
-    iters
-  else
-    mandelconverger( real*real - imag*imag + creal
-                   , 2*real*imag + cimag
-                   , iters+1
-                   , creal
-                   , cimag
-                   );
-
-def mandelconverge(real imag)
-  mandelconverger(real, imag, 0, real, imag);
-
-def mandelhelp(xmin xmax xstep   ymin ymax ystep)
-  for y = ymin, y < ymax, ystep in
-  (
-    (for x = xmin, x < xmax, xstep in printdensity(mandelconverge(x,y))) : putchard(10)
-  );
-
-def mandel(realstart imagstart realmag imagmag)
-  mandelhelp(realstart, realstart+realmag*78, realmag, imagstart, imagstart+imagmag*40, imagmag);
-
-mandel(-2.3, -1.3, 0.05, 0.07);
-```
+[!code-Kaleidoscope[mandel](mandel.kls)]
 
 When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:
 
@@ -324,7 +260,8 @@ precedence and associativity, once the underlying mechanics are understood. The 
 construction as it converts the user defined operators to function definitions and function calls. 
 
 >[!TIP]
->An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
->the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
->an otherwise unimplemented feature - truly lazy compilation, which is covered in [Chapter 7.1](Kaleidoscope-ch7.1.md).)
+>An early version of these samples skipped the use of an AST and used the parse tree directly. You can
+>compare the history of the generators for that transition to see how the AST helps simplify the code
+>generation. (Not to mention sets the stage for an otherwise unimplemented feature - truly lazy compilation,
+>which is covered in [Chapter 7.1](xref:Kaleidoscope-ch7.1).)
 

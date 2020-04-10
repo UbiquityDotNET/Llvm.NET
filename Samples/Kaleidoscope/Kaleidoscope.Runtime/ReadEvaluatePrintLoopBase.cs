@@ -28,29 +28,27 @@ namespace Kaleidoscope.Runtime
 
         public abstract void ShowResults( T resultValue );
 
-        public void Run( TextReader input )
+        public void Run( TextReader input, DiagnosticRepresentations diagnostics = DiagnosticRepresentations.None )
         {
-            var parser = new Parser( LanguageFeatureLevel );
+            var parser = new Parser( LanguageFeatureLevel, diagnostics );
             using var generator = CreateGenerator( parser.GlobalState );
 
             ShowPrompt( ReadyState.StartExpression );
 
             // Create sequence of parsed AST RootNodes to feed the REPL loop
             var replSeq = from stmt in input.ToStatements( ShowPrompt )
-                          select parser.Parse( stmt );
+                          let node = parser.Parse( stmt )
+                          where !ErrorLogger.CheckAndShowParseErrors( node )
+                          select node;
 
             foreach( IAstNode node in replSeq )
             {
                 try
                 {
-                    if( !ErrorLogger.CheckAndShowParseErrors( node ) )
+                    var result = generator.Generate( node );
+                    if( result.HasValue )
                     {
-                        var result = generator.Generate( node );
-
-                        if( result.HasValue )
-                        {
-                            ShowResults( result.Value! );
-                        }
+                        ShowResults( result.Value! );
                     }
                 }
                 catch( CodeGeneratorException ex )

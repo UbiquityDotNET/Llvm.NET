@@ -1,7 +1,13 @@
 # Release Notes
 # v10.0.0-alpha
 
-## Library name changes
+## Breaking changes
+With the 10.* release the Ubiquity.NET.Llvm.* libs have made a number of breaking changes.
+While these are mostly small and easily adapted to they are still a breaking change. Thus,
+these changes were held to only occur on a Major release. Despite the pain of updating code
+we think the changes are worth the effort to create a cleaner simpler and more consistent library.
+
+### Library name changes
 With the 10.* release the names of the assemblies, and therefore the packages, are all changed.
 This was done to unify them all under a common organization name to allow use of the facilities
 provided by NuGet for organizations and to help clarify these libraries from some other similar
@@ -13,8 +19,14 @@ projects no longer maintained.
 | LibLLVM.dll               | Ubiquity.Net.LibLLVM.dll  |
 | Ubiquity.NET.Llvm         | Ubiquity.Net.Llvm         |
 
+### Library initialization
+The library initialization and target registration was changed to better reflect the requirements
+and proper sequence of usage. In particular the `Ubiquity.Net.Llvm.Interop.Library.InitializeLLVM()`
+static function now returns an `ILibLLVM` interface (that is still disposable). All target registration
+is done through this interface. This prevents accidental use of the registration methods **BEFORE**
+initializing the library (as that's a guaranteed app crash!)
 
-## Breaking changes
+### C#8 and non-Nullable references
 With the 10.* release the Ubiquity.NET.Llvm.* libs all updated to target .NET Standard 2.1 and C#8. This allows use of nullable types
 to make nullability more explicit. This necessitated a few minor breaking changes in the object model surface.
 
@@ -23,6 +35,7 @@ to make nullability more explicit. This necessitated a few minor breaking change
 | DebugMemberInfo | Removed setters of non-nullable properties and added constructor to allow building the type with non-null values | 
 | DIType          | null is no longer used to represent a void type, instead a new singleton DITypeVoid.Instance is used.|
 
+### Renamed instruction predicate enumerator values
 The comparison instruction predicates `Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]`were renamed for greater consistency
 and clarity (Some of the float predicates had 'Than' in the name while the integer counterparts did not. (See:
 [Bug #152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) for details.)
@@ -45,8 +58,8 @@ Some APIs had inconsistent, misspelled or confusing names and were updated.
 |------------------------|--------------|
 | `Ubiquity.NET.Llvm.Transforms.ScalarTransforms.LowerAtomicPass<T>` | `Ubiquity.NET.Llvm.Transforms.ScalarTransforms.AddLowerAtomicPass<T>` |
 
-## Removed redundant APIs
-LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionaly equivalent to 
+### Removed redundant APIs
+LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality equivalent to 
 APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some
 of the custom APIs were removed and replaced with the official ones.
 
@@ -54,11 +67,18 @@ of the custom APIs were removed and replaced with the official ones.
 |--------------------|------------------|
 | LibLLVMFoo{TBD}    | LLVMFoo{TBD}     |
 
+### Disabled ORCJIT LazyFunction binding
+Unfortunately, the ORCJIT truly lazy function generation callback support is currently disabled. LLVM itself is transitioning to the ORCJIT v2 and in the process
+broke the lazy function binding support (At least for Windows+COFF). Previously a workaround for the issue of the COFF exports was applied in the 
+Llvm.NET ORCJIT library code for symbol lookups. However, with ORCJIT v2 the JIT itself is doing lookups and it does so only for external symbols
+assuming the symbols it generates internally will be exports, but are not (at least for COFF modules anyway).
+For more details see the LLVM bugs [25493](https://bugs.llvm.org/show_bug.cgi?id=25493) and [28699](https://bugs.llvm.org/show_bug.cgi?id=28699)
+
 ## v8.0.1
 ### Bug Fixes
 
 
-| Bug | Description |
+| Bug   | Description  |
 |-------|--------------|
 | [151](https://github.com/UbiquityDotNET/Llvm.NET/issues/151) | Updated DebugFunctionType signature to use interface instead of concrete type |
 | [152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) | Corrected docs copy/paste error [renaming part of the issue is left for the next major release as that is a breaking change] |

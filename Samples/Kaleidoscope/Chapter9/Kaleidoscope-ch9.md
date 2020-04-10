@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-ch9
+---
+
 # 9. Kaleidoscope: Adding Debug Information
 So far in the progress of the Kaleidoscope tutorials we've covered the basics of the language as a JIT
 engine and even added ahead of time compilation into the mix so it is a full static compiled language. But
@@ -48,7 +52,7 @@ needed to create the DICompileUnit for you.
 
 The updated InitializeModuleAndPassManager() function looks like this:
 
-[!code-csharp[InitializeModuleAndPassManager](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#InitializeModuleAndPassManager)]
+[!code-csharp[InitializeModuleAndPassManager](CodeGenerator.cs#InitializeModuleAndPassManager)]
 
 There are a few points of interest here. First the compile unit is created for the Kaleidoscope language,
 however it is using the [SourceLanguage.C](xref:Ubiquity.NET.Llvm.DebugInfo.SourceLanguage.C) value. This is
@@ -73,7 +77,7 @@ is provided so that it becomes the root compile unit.
 The tutorial takes care of finishing the debug information in the generator's Generate method after
 completing code generation for the module.
 
-[!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#Generate)]
+[!code-csharp[Generate](CodeGenerator.cs#Generate)]
 
 ## Functions
 With the basics of the DIBuilder and DICompile unit setup for the module it is time to focus on providing
@@ -86,7 +90,7 @@ languages (i.e. some sort of Include mechanism) so the file is created. It's not
 intern the file definition so that it won't actually end up with duplicates.
 
 
-[!code-csharp[GetIrDeclareFunction](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#GetOrDeclareFunction)]
+[!code-csharp[GetIrDeclareFunction](CodeGenerator.cs#GetOrDeclareFunction)]
 
 ## Debug Locations
 The AST contains full location information for each parsed node from the parse tree. This allows building
@@ -94,7 +98,7 @@ debug location information for each node fairly easily. The general idea is to s
 InstructionBuilder so that it is applied to all instructions emitted until it is changed. This saves on
 manually adding the location on every instruction.
 
-[!code-csharp[EmitLocation](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#EmitLocation)]
+[!code-csharp[EmitLocation](CodeGenerator.cs#EmitLocation)]
 
 ## Function Definition
 The next step is to update the function definition with attached debug information. The definition starts
@@ -105,14 +109,14 @@ information for each parameter is constructed. After the function is fully gener
 for the function is finalized, this is needed to allow for any optimizations to occur at the function
 level.
 
-[!code-csharp[DefineFunction](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#FunctionDefinition)]
+[!code-csharp[DefineFunction](CodeGenerator.cs#FunctionDefinition)]
 
 ## Debug info for Parameters and Local Variables
 Debug information for parameters and local variables is similar but not quite identical. Thus, two new
 overloaded helper methods `AddDebugInfoForAlloca` handle attaching the correct debug information for
 parameters and local variables.
 
-[!code-csharp[CreateEntryBlockAlloca](../../../Samples/Kaleidoscope/Chapter9/CodeGenerator.cs#AddDebugInfoForAlloca)]
+[!code-csharp[CreateEntryBlockAlloca](CodeGenerator.cs#AddDebugInfoForAlloca)]
 
 ## Conclusion
 Adding debugging information in LLVM IR is rather straight forward. The bulk of the problem is in tracking

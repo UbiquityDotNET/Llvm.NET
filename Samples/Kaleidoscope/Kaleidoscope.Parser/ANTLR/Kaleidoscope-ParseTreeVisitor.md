@@ -1,13 +1,17 @@
+---
+uid: Kaleidoscope-ParseTreeVisitor
+---
+
 # Kaleidoscope Parse Tree Visitors
 The Ubiquity.NET.Llvm Kaleidoscope tutorials all use ANTLR4 to parse the Kaleidoscope language When ANTLR processes the
 language grammar description to generate the lexer and parser it also generates a base "visitor" class for applying
 the [Visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) to the parse tree. This is the primary mechanism
-for generating the [AST](Kaleidoscope-AST.md) for these examples. The AST transformation classes derive from the ANTLR
+for generating the [AST](xref:Kaleidoscope-AST) for these examples. The AST transformation classes derive from the ANTLR
 generated base visitor class.
 
 There are only a few top level rules in the grammar to consider (although each has many sub rules).
 
-[!code-antlr[repl](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4?start=181&end=187)]
+[!code-antlr[repl](Kaleidoscope.g4?start=181&end=187)]
 
 The parse tree consist of a tree of nodes generated for each rule in the grammar. The rule classes are generated at
 build time when the antlr grammar file is parsed. The C# target for ANTLR4 will generate the rule classes with the

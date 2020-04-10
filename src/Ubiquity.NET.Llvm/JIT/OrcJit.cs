@@ -177,6 +177,10 @@ namespace Ubiquity.NET.Llvm.JIT
             GlobalInteropFunctions.Add( mangledName, new WrappedNativeCallback<T>( @delegate ) );
         }
 
+// LLVM 10 is transitioning to ORC JIT v2 and unfortunately,
+// the lazy function generator is doing it's own symbol resolution that doesn't
+// account for the COFF export bug
+#if LAZY_FUNCTION_GENERATOR_SUPPORTED
         /// <inheritdoc/>
         public void AddLazyFunctionGenerator( string name, LazyFunctionCompiler generator, IntPtr context )
         {
@@ -239,6 +243,7 @@ namespace Ubiquity.NET.Llvm.JIT
                 throw new LlvmException( err.ToString( ) );
             }
         }
+#endif
 
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )

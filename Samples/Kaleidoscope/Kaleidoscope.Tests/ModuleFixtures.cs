@@ -27,16 +27,16 @@ namespace Kaleidosocope.Tests
             // the LLVM-C un-init seems to undo things more aggressively than the init
             // does. (e.g. it wipes out things assumed init via static construction so
             // they are not re-initialized [Not verified, but that would explain the behavior]
-            LlvmInit = Library.InitializeLLVM( );
-            Library.RegisterNative();
+            LibLLVM = Library.InitializeLLVM( );
+            LibLLVM.RegisterTarget( CodeGenTarget.Native );
         }
 
         [AssemblyCleanup]
         public static void AssemblyCleanup( )
         {
-            LlvmInit?.Dispose( );
+            LibLLVM?.Dispose( );
         }
 
-        private static IDisposable? LlvmInit;
+        private static ILibLlvm? LibLLVM;
     }
 }

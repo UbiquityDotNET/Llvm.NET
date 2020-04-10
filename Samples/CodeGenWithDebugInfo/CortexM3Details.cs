@@ -8,19 +8,18 @@ using System;
 using System.Collections.Generic;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.Library;
 
 namespace TestDebugInfo
 {
     internal class CortexM3Details
         : ITargetDependentDetails
     {
-        public CortexM3Details( )
+        public CortexM3Details( ILibLlvm libLLVM )
         {
-            RegisterARM( );
+            libLLVM.RegisterTarget( CodeGenTarget.ARM );
         }
 
         public string ShortName => "M3";

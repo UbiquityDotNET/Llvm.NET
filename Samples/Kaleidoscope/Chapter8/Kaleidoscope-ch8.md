@@ -1,3 +1,7 @@
+---
+uid: Kaleidoscope-ch8
+---
+
 # 8. Kaleidoscope: Compiling to Object Code
 This tutorial describes how to adapt the Kaleidoscope JIT engine into an Ahead of Time (AOT) compiler
 by generating target specific native object files.
@@ -30,7 +34,7 @@ fullsrc
 
 This rule simply accepts any number of expressions so that a single source file is parsed to a single
 complete parse tree. (This particular point will become even more valuable when generating debug information
-in [Chapter 9](Kaleidoscope-ch9.md) as the parse tree nodes contain the source location information based
+in [Chapter 9](xref:Kaleidoscope-ch9) as the parse tree nodes contain the source location information based
 on the original input stream).
 
 ## Code Generation Changes
@@ -73,7 +77,7 @@ marked as inline and the dead code elimination pass will eliminate unused intern
 This has the effect of generating the main function with all top level expressions inlined and the originally
 generated anonymous functions removed. 
 
-[!code-csharp[Generate](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#Generate)]
+[!code-csharp[Generate](CodeGenerator.cs#Generate)]
 
 Most of the rest of the changes are pretty straightforward following the steps listed previously.
 
@@ -81,7 +85,7 @@ Most of the rest of the changes are pretty straightforward following the steps l
 As previously mentioned, when generating the top level expression the resulting function is added to the
 list of anonymous functions to generate a call to it from main().
 
-[!code-csharp[FunctionDefinition](../../../Samples/Kaleidoscope/Chapter8/CodeGenerator.cs#FunctionDefinition)]
+[!code-csharp[FunctionDefinition](CodeGenerator.cs#FunctionDefinition)]
 
 
 ## Driver changes
@@ -96,7 +100,7 @@ To allow providing a file like a traditional compiler the driver app needs to ha
 command line argument handling. ("Basic" in this case means truly rudimentary :grin: )
 Generally this just gets a viable file path to use for the source code.
 
-[!code-csharp[ProcessArgs](../../../Samples/Kaleidoscope/Chapter8/Program.cs#ProcessArgs)]
+[!code-csharp[ProcessArgs](Program.cs#ProcessArgs)]
 
 ### Update Main()
 The real work comes in the Main application driver, though there isn't a lot of additional code
@@ -110,7 +114,7 @@ here either. The general plan is:
 7. Once the parsing has completed, verify the module and emit the object file
 8. For diagnostics use, also emit the LLVM IR textual form and assembly files
 
-[!code-csharp[Main](../../../Samples/Kaleidoscope/Chapter8/Program.cs#Main)]
+[!code-csharp[Main](Program.cs#Main)]
 
 ## Conclusion
 That's it - seriously! Very little change was needed, mostly deleting code and adding the special handling
