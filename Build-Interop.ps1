@@ -89,6 +89,9 @@ try
         $interopBinLog = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.Interop.binlog
         Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$InteropRestoreBinLogPath") )
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopBinLog") )
+
+        $interopTestsBinLog = Join-Path $buildInfo['BinLogsPath'] InteropTests.binlog
+        Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\InteropTests\InteropTests.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopTestsBinLog") )
     }
     else
     {

@@ -5,17 +5,15 @@ try
 
     $testsFailed = $false
 
+    Write-Information 'Running Source tests as x64'
+    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Interop\InteropTests\InteropTests.csproj')
+
     Write-Information 'Running Core library tests as x64'
-    $testProj = Join-Path $buildInfo['SrcRootPath'] 'Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj'
-    $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
-    dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath']
-    $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
+    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj')
+
 
     Write-Information 'Running tests for Kaleidoscope Samples as x64'
-    $testProj = Join-Path $buildInfo['RepoRootPath'] 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj'
-    $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
-    dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath']
-    $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
+    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj')
 
     Write-Information 'Running sample app for .NET Core'
     pushd (Join-path $buildInfo['BuildOutputPath'] bin\CodeGenWithDebugInfo\Release\netcoreapp3.1)

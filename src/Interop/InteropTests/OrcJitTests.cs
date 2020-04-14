@@ -27,14 +27,15 @@ namespace InteropTests
         [TestMethod]
         public void TestLazyIRCompilation( )
         {
-            using( Library.InitializeLLVM( ) )
-            {
-                Library.RegisterNative( );
-                using LLVMContextRef context = LLVMContextCreate( );
-                string nativeTriple = LLVMGetDefaultTargetTriple();
-                Assert.IsFalse( string.IsNullOrWhiteSpace( nativeTriple ) );
-                Assert.IsTrue( LLVMGetTargetFromTriple( nativeTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Succeeded );
-                using LLVMTargetMachineRef machine = LLVMCreateTargetMachine(
+            using var libLLVm = Library.InitializeLLVM( );
+            libLLVm.RegisterTarget( CodeGenTarget.Native );
+
+            using LLVMContextRef context = LLVMContextCreate( );
+            string nativeTriple = LLVMGetDefaultTargetTriple();
+            Assert.IsFalse( string.IsNullOrWhiteSpace( nativeTriple ) );
+            Assert.IsTrue( LLVMGetTargetFromTriple( nativeTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Succeeded );
+
+            using LLVMTargetMachineRef machine = LLVMCreateTargetMachine(
                                                           targetHandle,
                                                           nativeTriple,
                                                           string.Empty,
@@ -43,13 +44,12 @@ namespace InteropTests
                                                           LLVMRelocMode.LLVMRelocDefault,
                                                           LLVMCodeModel.LLVMCodeModelJITDefault );
 
-                using LLVMOrcJITStackRef orcJit = LLVMOrcCreateInstance( machine );
+            using LLVMOrcJITStackRef orcJit = LLVMOrcCreateInstance( machine );
 
-                // try several different modules with the same function name replacing the previous
-                AddAndExecuteTestModule( orcJit, context, machine, 42 );
-                AddAndExecuteTestModule( orcJit, context, machine, 12345678 );
-                AddAndExecuteTestModule( orcJit, context, machine, 87654321 );
-            }
+            // try several different modules with the same function name replacing the previous
+            AddAndExecuteTestModule( orcJit, context, machine, 42 );
+            AddAndExecuteTestModule( orcJit, context, machine, 12345678 );
+            AddAndExecuteTestModule( orcJit, context, machine, 87654321 );
         }
 
         private static void AddAndExecuteTestModule( LLVMOrcJITStackRef orcJit, LLVMContextRef context, LLVMTargetMachineRef machine, int expectedResult )
