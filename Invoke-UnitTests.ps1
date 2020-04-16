@@ -5,12 +5,11 @@ try
 
     $testsFailed = $false
 
-    Write-Information 'Running Source tests as x64'
+    Write-Information 'Running Interop tests as x64'
     $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Interop\InteropTests\InteropTests.csproj')
 
     Write-Information 'Running Core library tests as x64'
     $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj')
-
 
     Write-Information 'Running tests for Kaleidoscope Samples as x64'
     $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj')

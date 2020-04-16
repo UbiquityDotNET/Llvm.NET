@@ -6,7 +6,7 @@
       <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(BuildRootDir)src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj">
+    <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj">
         <Name>Ubiquity.NET.Llvm</Name>
         <Private>true</Private>
     </ProjectReference>

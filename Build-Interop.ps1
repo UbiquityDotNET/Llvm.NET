@@ -39,7 +39,6 @@ Param(
     [switch]$NoClean
 )
 
-
 pushd $PSScriptRoot
 $oldPath = $env:Path
 try
@@ -81,17 +80,12 @@ try
         Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
 
         Write-Information "Building LibLLVM"
-        $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.Interop-restore.binlog
+        $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
 
         Write-Information "Building Ubiquity.NET.Llvm.Interop"
-        $interopRestoreBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.Interop-restore.binlog
-        $interopBinLog = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.Interop.binlog
-        Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$InteropRestoreBinLogPath") )
-        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopBinLog") )
-
-        $interopTestsBinLog = Join-Path $buildInfo['BinLogsPath'] InteropTests.binlog
-        Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\InteropTests\InteropTests.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopTestsBinLog") )
+        $interopSlnBinLog = Join-Path $buildInfo['BinLogsPath'] Interop.sln.binlog
+        Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\Interop.sln' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopSlnBinLog") )
     }
     else
     {
