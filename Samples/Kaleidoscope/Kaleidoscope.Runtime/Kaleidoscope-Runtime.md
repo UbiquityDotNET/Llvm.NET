@@ -48,5 +48,6 @@ a named symbol and then, whenever code calls that symbol the stub calls back to 
 the application to generate the IR, add the module to the JIT and trigger compilation to native. Thus, achieving
 true Just-In-Time compilation.
 
->[!CAUTION] The truly lazy functionality is currently disabled due to a bug in the underlying LLVM OrcJIT
+>[!CAUTION]
+> The truly lazy functionality is currently disabled due to a bug in the underlying LLVM OrcJIT
 > implementation on Windows.

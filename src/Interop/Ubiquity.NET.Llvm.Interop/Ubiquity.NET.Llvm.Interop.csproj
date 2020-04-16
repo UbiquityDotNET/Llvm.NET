@@ -2,6 +2,7 @@
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <LangVersion>8.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
@@ -15,9 +16,9 @@
     <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>

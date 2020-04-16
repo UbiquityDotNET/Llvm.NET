@@ -5,31 +5,21 @@ PowerShell script.
 
 The nature of the .NET SDK projects and VCX projects drives the need for the script,instead of
 VS solution dependencies or even MSBuild project to project references. Unfortunately, due to
-the way multi-targeting is done in the newer C# SDK projects project to project references
-don't work. The VCXproj files don't have targets for all the .NET targets. Making that all work
-seamlessly in VS is just plain hard work that has, thus far, not worked particularly well. Thus,
-the design here uses a simpler PowerShell script that takes care of building the correct
-platform+configuration+target framework combinations of each and finally builds the NuGet
+the way multi-targeting is done in the newer C# SDK projects the project to project references
+don't work with C++. The VCXproj files don't have targets for all the .NET targets. Making that
+all work seamlessly in VS is just plain hard work that has, thus far, not worked particularly
+well. Thus, the design here uses a simpler PowerShell script that takes care of building the
+correct platform+configuration+target framework combinations of each and finally builds the NuGet
 package from the resulting binaries.
 
 ## Projects
-### LibLLVM
-This is the native project that creates the extended LLVM-C API as an actual DLL. Currently
-only Windows 64 bit is supported, though other configurations are plausible with additional
-build steps in the PowerShell script to build for other platforms. The extensions are configured
-to build with high C++ conformance mode, so they should readily build without much modification
-for other platforms given the appropriate build infrastructure is set up.
-
-### Ubiquity.NET.Llvm.Interop
-This is the .NET P/Invoke layer that provides the raw API projection to .NET. The, majority
-of the code is generated P/Invokes from the LlvmBindingsGenerator tool. There are a few
-additional support classes that are consistent across variations in LLVM. While this library
-has a runtime dependency on the native LibLLVM binary there is no compile time dependency.
-
 ### LlvmBindingsGenerator
 This is the P/Invoke generator for the generated interop code in Ubiquity.NET.Llvm.Interop. It uses
-CppSharp to parse the C headers and generate the C# P/Invoke API declarations, enums and value
-types required to interop with the native code.
+CppSharp to parse the C or C++ headers and generate the C# P/Invoke API declarations, enums and value
+types required to interop with the native code. The generator has a number of automatic marshaling
+rules, but there are ambiguous cases that it needs a configuration file to resolve. The configuration
+file provides resolution of the ambiguities and also helps in detection of missing or removed APIs when
+moving to a newer version of LLVM.
 
 #### Usage
 `LlvmBindingsGenerator <llvmRoot> <extensionsRoot> [OutputPath]`
@@ -45,6 +35,19 @@ would also warrant a new run) However, to ensure the code generation tool itself
 change, the PowerShell script takes care of running the generator to update the Ubiquity.NET.Llvm.Interop
 code base on each run, even if nothing changes in the end. This is run on every automated build before building
 the Ubiquity.NET.Llvm.Interop project so that the generator is tested on every full automated build. 
+
+### LibLLVM
+This is the native project that creates the extended LLVM-C API as an actual DLL. Currently
+only Windows 64 bit is supported, though other configurations are plausible with additional
+build steps in the PowerShell script to build for other platforms. The extensions are configured
+to build with high C++ conformance mode, so they should readily build without much modification
+for other platforms given the appropriate build infrastructure is set up.
+
+### Ubiquity.NET.Llvm.Interop
+This is the .NET P/Invoke layer that provides the raw API projection to .NET. The, majority
+of the code is generated P/Invokes from the LlvmBindingsGenerator tool. There are a few
+additional support classes that are consistent across variations in LLVM. While this library
+has a runtime dependency on the native LibLLVM binary there is no compile time dependency.
 
 ## Building the Interop libraries
 ### General requirements
@@ -65,24 +68,13 @@ The interop libraries are built using the Build-Interop.ps1 PowerShell script. T
 to correctly build the projects in an automated build as it isn't possible to accomplish all the required
 steps in a standard project/solution. (OK, impossible is a bit strong as creating custom targets and tasks
 could probably cover it but at the expense of greater complexity). The script is pretty simple though
-understanding it is a more complex matter this document is aimed towards.
+understanding why it is needed is a more complex matter this document is aimed towards.
 
-### Manually (developer inner loop)
-While it is possible to use the PowerShell script as part of the development of the interop libraries themselves,
-it is generally easier to use the solution file. The solution contains projects for the native libraries, the
-bindings generator and the managed interop. _**Using the solution requires that you manually build/run the projects
-in the correct order to get changes to propagate correctly.**_
-
-1. Build LlvmBindingsGenerator project
-2. Run LlvmBindingsGenerator (via command line or debugger launch) with the location of the LLVM headers, the
-LibLLVM headers, and the output location of generated code for the Ubiquity.NET.Llvm.Interop project.
-     1. (See above for full command line options for LlvmBindingsGenerator)
-     2. This, generates C# interop source files AND also generates the native C++ EXPORTS.DEF for the LibLLVM library
-and therefore, must run before building either of the other libraries.
-3. Build LibLLVM project for all architectures and configurations.
-   1. At present the only supported runtime and architecture is Windows 64bit so batch building, etc.. isn't required.
-      Other runtimes and architectures are possible in the future, however.
-4. Build the Ubiquity.NET.Llvm.Interop project.
+>[!NOTE]
+> Building the interop tests via the solution is required as building the CSproj doesn't 'publish' the test.
+> If you build via a solution file, then the publish automatically occurs. (You can run the publish target via
+> `dotnet publish`, but that's both an extra step AND ends up doing things differently then when you build the
+> solution! (There's a publish folder with binaries in it and things are generally in different places - Go Figure!)
 
 
 
