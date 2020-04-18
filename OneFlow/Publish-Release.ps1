@@ -5,13 +5,13 @@ $buildInfo = Initialize-BuildEnvironment
 [xml]$buildVersionXml = Get-Content .\BuildVersion.xml
 $buildVersionData = $buildVersionXml.BuildVersionData
 $preReleaseSuffix=""
-if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseName))
+if($buildVersionData.PSObject.Properties['PreReleaseName'])
 {
     $preReleaseSuffix = "-$($buildVersionData.PreReleaseName)"
-    if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseNumber))
+    if($buildVersionData.PSObject.Properties['PreReleaseNumber'])
     {
         $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
-        if(![string]::IsNullOrWhiteSpace($buildVersionData.PreReleaseFix))
+        if($buildVersionData.PSObject.Properties['PreReleaseFix'])
         {
             $preReleaseSuffix += ".$($buildVersionData.PreReleaseFix)"
         }
@@ -45,6 +45,8 @@ if( $localCommitSha -ne $remoteCommitSha )
 {
     throw "Local HEAD is not the same as origin, these must be in sync so that only the tag itself is pushed"
 }
+
+Write-Information "tagging $tagname on $releasebranch"
 
 git tag -a $tagname -m "Official release: $tagname"
 git checkout develop
