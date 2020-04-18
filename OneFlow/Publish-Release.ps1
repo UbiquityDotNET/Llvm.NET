@@ -57,5 +57,5 @@ git push origin --delete $releaseBranch
 
 # update master branch to point to the latest release for full releases
 git checkout master
-git merge -ff-only $tagName
+git merge --ff-only $tagName
 git push
