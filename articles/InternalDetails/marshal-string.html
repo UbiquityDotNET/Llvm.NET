@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Marshaling strings in LLVM.NET | Llvm.NET </title>
+    <title>Marshaling strings in Ubiquity.NET.Llvm | Ubiquity.NET.Llvm </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Marshaling strings in LLVM.NET | Llvm.NET ">
+    <meta name="title" content="Marshaling strings in Ubiquity.NET.Llvm | Ubiquity.NET.Llvm ">
     <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -130,7 +130,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="marshaling-strings-in-llvmnet">Marshaling strings in LLVM.NET</h1>
+<h1 id="marshaling-strings-in-ubiquitynetllvm">Marshaling strings in Ubiquity.NET.Llvm</h1>
 
 <p>LLVM provides strings in several forms and this leads to complexities for
 P/Invoke signatures as sometimes the strings require some form of release
@@ -140,7 +140,7 @@ APIs difficult. (e.g. in some LLVM APIs the returned string must be released
 via LLVMDisposeMessage() or some other call, while in other cases it is just
 a pointer to an internal const string that does not need any release.)</p>
 <p>To resolve these issues and make the requirements explicitly clear and consistent
-Llvm.NET.Interop uses custom marshaling of the strings to mark the exact behavior directly
+Ubiquity.NET.Llvm.Interop uses custom marshaling of the strings to mark the exact behavior directly
 on the P/Invoke signature so it is both clear and easy to use for the upper layers
 (it&#39;s just a <code>System.String</code>)</p>
 <h2 id="generated-string-marshalers">Generated String Marshalers</h2>
@@ -174,7 +174,7 @@ class</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.1
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha
             
           </div>
         </div>

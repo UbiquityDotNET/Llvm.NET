@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Marshaling LLVMBool | Llvm.NET </title>
+    <title>Marshaling LLVMBool | Ubiquity.NET.Llvm </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Marshaling LLVMBool | Llvm.NET ">
+    <meta name="title" content="Marshaling LLVMBool | Ubiquity.NET.Llvm ">
     <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -143,9 +143,9 @@ a success! The confusion stems from LLVMBool serving a dual role:</p>
 </ol>
 <p>This duality is confusing and can lead to subtle errors in usage of APIs if translated
 directly into language projections. This makes hands-off automatic generation of P/Invoke
-calls to LLVM either impossible or error prone. Thus, Llvm.NET uses manually updated P/Invoke
+calls to LLVM either impossible or error prone. Thus, Ubiquity.NET.Llvm uses manually updated P/Invoke
 calls that were initially auto generated to get things started but not maintained via any
-generation tools. In the case of LLVMBool Llvm.NET uses distinct types for the different 
+generation tools. In the case of LLVMBool Ubiquity.NET.Llvm uses distinct types for the different 
 semantics and declares the interop signatures with the form appropriate to the function
 being called. The two types are LLVMStatus and standard <code>System.Boolean</code> or <code>bool</code> in C#</p>
 <h2 id="llvmstatus">LLVMStatus</h2>
@@ -181,7 +181,7 @@ internal static extern bool LLVMTypeIsSized( LLVMTypeRef @Ty );
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.1
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha
             
           </div>
         </div>
