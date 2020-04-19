@@ -37,6 +37,7 @@ function Get-DefaultBuildPaths([string]$repoRoot)
         NuGetRepositoryPath = Join-Path $buildOutputPath 'packages'
         NuGetOutputPath = Join-Path $buildOutputPath 'NuGet'
         SrcRootPath = Join-Path $repoRoot 'src'
+        DocsRepoPath = Join-Path $buildOutputPath 'docs'
         DocsOutputPath = Join-Path $buildOutputPath 'docs'
         BinLogsPath = Join-Path $buildOutputPath 'BinLogs'
         TestResultsPath = Join-Path $buildOutputPath 'Test-Results'
@@ -469,4 +470,34 @@ function Invoke-DotNetTest($buildInfo, $projectRelativePath)
             | Out-String
     Write-Information $result
     return $LASTEXITCODE -ne 0
+}
+
+function Get-BuildVersionXML
+{
+    [OutputType([xml])]
+    param ()
+
+    # determine release tag from the build version XML file in the branch
+    [xml]$buildVersionXml = Get-Content .\BuildVersion.xml
+    return $buildVersionXml.BuildVersionData
+}
+
+function Get-BuildVersionTag
+{
+    Param([xml]$buildVersionData = (Get-BuildVersionXML))
+    $preReleaseSuffix=""
+    if($buildVersionData.PSObject.Properties['PreReleaseName'])
+    {
+        $preReleaseSuffix = "-$($buildVersionData.PreReleaseName)"
+        if($buildVersionData.PSObject.Properties['PreReleaseNumber'])
+        {
+            $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
+            if($buildVersionData.PSObject.Properties['PreReleaseFix'])
+            {
+                $preReleaseSuffix += ".$($buildVersionData.PreReleaseFix)"
+            }
+        }
+    }
+
+    return "v$($buildVersionData.BuildMajor).$($buildVersionData.BuildMinor).$($buildVersionData.BuildPatch)$preReleaseSuffix"
 }

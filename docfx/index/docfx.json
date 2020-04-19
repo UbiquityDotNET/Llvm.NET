@@ -1,0 +1,39 @@
+{
+    "build": {
+        "content": [
+            {
+                "files": [
+                    "toc.yml",
+                    "index.md"
+                ]
+            }
+        ],
+        "resource": [
+            {
+                "files": [
+                    "favicon.ico",
+                    "DragonSharp48x48.png",
+                    "DragonSharp.png"
+                ],
+                "src": ".."
+            }
+        ],
+        "dest": "../../BuildOutput/docs",
+        "globalMetadataFiles": [],
+        "fileMetadataFiles": [],
+        "postProcessors": [],
+        "noLangKeyword": false,
+        "globalMetadata": {
+            "_appTitle": "Ubiquity.NET.Llvm",
+            "_appFooter": "Copyright (C) 2017-2020, Ubiquity.NET Contributors",
+            "_appLogoPath": "DragonSharp48x48.png",
+            "_disableBreadcrumb": true,
+            "llvmVersion": "10.0.0",
+            "_gitContribute": {
+                "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
+                "branch": "develop"
+            },
+            "_gitUrlPattern": "github"
+        }
+    }
+}

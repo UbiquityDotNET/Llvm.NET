@@ -1,0 +1,7 @@
+# This is the top level TOC, it describes the entries along the horizontal top menu of the main landing page for the Docs
+- name: Current Release
+  href: xref:current-release
+- name: Source Repository
+  href: https://github.com/UbiquityDotNET/Llvm.NET
+- name: LLVM.org
+  href: http://LLVM.org

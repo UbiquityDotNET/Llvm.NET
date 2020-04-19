@@ -6,7 +6,7 @@
                     "files": [
                         "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj"
                     ],
-                    "src": ".."
+                    "src": "../.."
                 }
             ],
             "dest": "api"
@@ -22,7 +22,7 @@
                     "api/**.md",
                     "api/**.yml",
                     "articles/**.md",
-                    "articles/**.yml",
+                    "articles/**.yml"
                 ],
                 "exclude": [ "obj/**" ]
             },
@@ -31,7 +31,7 @@
                     "Kaleidoscope/**/Kaleidoscope*.md",
                     "CodeGenWithDebugInfo/codegeneration.md"
                 ],
-                "src": "../samples",
+                "src": "../../samples",
                 "dest": "articles/samples"
             }
         ],
@@ -41,14 +41,15 @@
                     "favicon.ico",
                     "DragonSharp48x48.png",
                     "DragonSharp.png"
-                ]
+                ],
+                "src": ".."
             },
             {
                 "files": [
                     "/samples/**/*.svg"
                 ],
                 "dest": "articles",
-                "src": ".."
+                "src": "../.."
             }
         ],
         "overwrite": [
@@ -57,14 +58,14 @@
                 "exclude": [ "obj/**" ]
             }
         ],
-        "dest": "../BuildOutput/docs",
+        "dest": "../../BuildOutput/docs/current",
         "globalMetadataFiles": [],
         "fileMetadataFiles": [],
         "postProcessors": [],
         "noLangKeyword": false,
         "globalMetadata": {
             "_appTitle": "Ubiquity.NET.Llvm",
-            "_appFooter": "Copyright (C) 2017-2019, Ubiquity.NET Contributors",
+            "_appFooter": "Copyright (C) 2017-2020, Ubiquity.NET Contributors",
             "_appLogoPath": "DragonSharp48x48.png",
             "_disableBreadcrumb": true,
             "llvmVersion": "10.0.0",
@@ -73,7 +74,7 @@
             ],
             "_gitContribute": {
                 "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
-                "branch": "master"
+                "branch": "develop"
             },
             "_gitUrlPattern": "github"
         }

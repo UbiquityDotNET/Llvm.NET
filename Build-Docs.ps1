@@ -1,7 +1,7 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClone = (!([System.Convert]::ToBoolean($env:IsAutomatedBuild)))
+    [switch]$NoClone
 )
 
 pushd $PSScriptRoot
@@ -15,34 +15,37 @@ try
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
+    $docsOutputPath = $buildInfo['DocsOutputPath']
     # clone docs output location so it is available as a destination for the Generated docs content
-    if(!$NoClone -and !(Test-Path (Join-Path $buildInfo['DocsOutputPath'] '.git') -PathType Container))
+    # and the versioned docs links can function correctly for locally generated docs
+    if(!$NoClone -and !(Test-Path (Join-Path $docsOutputPath '.git') -PathType Container))
     {
-        Write-Information "Cloning Docs repository"
-        pushd BuildOutput -ErrorAction Stop
-        try
+        if(Test-Path -PathType Container $docsOutputPath)
         {
-            git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages docs -q
-            if( !$? )
-            {
-                throw "Git clone failed"
-            }
+            del -Path $docsOutputPath -Recurse -Force
         }
-        finally
+
+        Write-Information "Cloning Docs repository"
+        git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages $docsOutputPath -q
+        if(!$?)
         {
-            popd
+            throw "Git clone failed"
         }
     }
 
-    $docfxRestoreBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.restore.binlog
-    $docfxBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.binlog
+    # remove all contents from 'current' docs to ensure clean generated docs for this release
+    $currentVersionDocsPath = Join-Path $docsOutputPath 'current'
+    if(Test-Path -PathType Container $currentVersionDocsPath)
+    {
+        del -Path $currentVersionDocsPath -Recurse -Force
+    }
 
-    # DocFX.console build support is peculiar and a bit fragile, It requires a separate restore path or it won't do anything for the build target.
-    Write-Information "Restoring Docs Project"
-    Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxRestoreBinLogPath") )
+    $docfxRestoreBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Restore.binlog
+    $docfxBuildBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.binlog
 
-    Write-Information "Building Docs Project"
-    Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.csproj -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBinLogPath") )
+    Write-Information "Building Docs Solution"
+    Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxRestoreBinLogPath") )
+    Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBuildBinLogPath") )
 }
 catch
 {

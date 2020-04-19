@@ -9,7 +9,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="memberpage" PrivateAssets="All" />
-    <PackageReference Include="msdn.4.5.2" PrivateAssets="All" />
   </ItemGroup>
 
   <!-- Custom task to Compare versions -->
@@ -43,7 +42,6 @@
     <PropertyGroup>
       <DocfxConsolePath>%(docfxpkg.ResolvedPath)</DocfxConsolePath>
       <MemberPagePath>%(memberpage.ResolvedPath)</MemberPagePath>
-      <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
       <IsSupportedMSBuild>false</IsSupportedMSBuild>
     </PropertyGroup>
     <VersionCheck Condition="$(MSBuildVersion)!=''" MaximumSupportedVersion="17.0.999" ActualVersion="$(MSBuildVersion)">
@@ -54,9 +52,7 @@
 
   <Target Name="SetDocFxParameters" BeforeTargets="DocGenerateMetadata" DependsOnTargets="GetDocfxPackagePaths">
     <ItemGroup>
-      <DocFxCrossRefMap Include="llvm-xref.yml" />
-      <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\msdn.4.5.2.zip" />
-      <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\namespaces.4.5.2.zip" />
+      <DocFxCrossRefMap Include="versions-xref.yml" />
     </ItemGroup>
     <PropertyGroup>
       <LogLevel>Warning</LogLevel>
@@ -64,7 +60,7 @@
       <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
       <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
       <DocParameters>$(DocParameters) --xref="@(DocFxCrossRefMap->'%(FullPath)',',')"</DocParameters>
-      <DocTemplate>statictoc,$(MemberPagePath)\content,templates\Ubiquity</DocTemplate>
+      <DocTemplate>statictoc,$(MemberPagePath)\content,$(BuildRootDir)docfx\templates\Ubiquity</DocTemplate>
     </PropertyGroup>
   </Target>
 </Project>

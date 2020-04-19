@@ -1,11 +1,9 @@
-![Logo](DragonSharp.png)
+![Logo](../DragonSharp.png)
 
 # Ubiquity.NET.Llvm
 Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 
 the underlying LLVM internal object model. This allows for building code generation and other utilities
 leveraging LLVM from .NET applications.
-
-For more details see the full [API documentation](api/index.md)
 
 ## Guiding principles
 
@@ -25,8 +23,10 @@ For more details see the full [API documentation](api/index.md)
 ## Features
 * LLVM Cross target code generation from .NET code
 * JIT engine support for creating dynamic domain specific language
-  runtimes with JIT support. (See [Kaleidoscope language tutorial](xref:Kaleidoscope-Overview) for more details)
+  runtimes with JIT support.
 * Ahead of time compilation with support for Link time optimization and debug information
 * Object model that reflects the underlying LLVM classes
 
-[Release Notes](ReleaseNotes.md)
+## Releases
+[Current](xref:current-release)  
+[v8.0.1](xref:release-8-0-1)  
