@@ -1,0 +1,561 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>6. Kaleidoscope: User Defined Operators | Llvm.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="6. Kaleidoscope: User Defined Operators | Llvm.NET ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="../../articles/index.html" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository">GitHub Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/8.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="codegeneration.html" title="Code Generation" class="">Code Generation</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Kaleidoscope.html" title="Kaleidoscope" class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Kaleidoscope.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="active">
+                            <a href="Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="active">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="Kaleidoscope.html" title="Additional Support" class="">Additional Support</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-AST.html" title="Kaleidoscope AST" class="">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="6-kaleidoscope-user-defined-operators">6. Kaleidoscope: User Defined Operators</h1>
+
+<p>At this point in the progression of the tutorial, Kaleidoscope is a fully functional, albeit fairly minimal,
+language. Thus far, the tutorial has avoided details of the parsing. One of the benefits of using a tool
+like ANTLR4 is that you can accomplish a lot without needing to spend a lot of time thinking about the
+parser too much. With user defined operators we&#39;ll break that and get down and dirty with the parser a bit
+to make the operators work, in particular implementing user defined precedence.</p>
+<div class="TIP"><h5>Tip</h5><p>The actual value of user defined operator precedence in a language is a bit debatable, and the
+initial plan for the Llvm.NET tutorials was to skip this chapter as it doesn&#39;t involve any new
+LLVM IR or code generation. After the code was done to get the other chapters working - this one
+was still nagging, begging really, for a solution. The challenge to come up with a good solution
+was ultimately too tempting to resist, and we now have a full implementation with a few useful
+extensions on top! (Exponent operator &#39;^&#39;, &#39;=&#39; vs &#39;==&#39;, &#39;++&#39;, and &#39;--&#39;)</p>
+</div>
+<h2 id="general-idea-of-user-defined-operators">General idea of user defined operators</h2>
+<p>User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar languages, the
+precedence of the user defined operators in Kaleidoscope are not fixed. Though, the built-in operators
+all use a fixed precedence. That poses some interesting challenges for a parser as it must dynamically
+adapt to the state of the language runtime as it is parsing so that it can correctly evaluate the operator
+expressions.</p>
+<p>Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily handles
+precedence. A full treatise on the subject is outside the scope of this tutorial, but the
+<a href="https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md">ANTLR GitHub site</a>
+has a good description of the details of the precedence climbing approach used in ANTLR. The general idea
+is that the expression rule takes an additional precedence argument and the operator expressions include
+a semantic predicate that tests the current precedence level. If the current level is greater than or equal
+to the current level then that operator rule expression is allowed to match the input. Otherwise, the rule
+is skipped. Usually this is all hidden by the implicit support for precedence climbing and left recursion
+that is built-in to ANTLR4. However that requires fixing the precedence for operators in the grammar.
+Thus, Kaleidoscope doesn&#39;t use the default left-recursion support, but does use the same concepts with
+custom semantic predicates in the code behind.</p>
+<pre><code class="lang-antlr">// pull the initializer out to a distinct rule so it is easier to get at
+// the list of initializers when walking the parse tree
+initializer
+    : Identifier (ASSIGN expression[0])?
+    ;
+
+// Non Left recursive expressions (a.k.a. atoms)
+primaryExpression
+    : LPAREN expression[0] RPAREN                                                 # ParenExpression
+    | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
+    | VAR initializer (COMMA initializer)* IN expression[0]                       # VarInExpression
+    | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
+    | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
+    | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
+    | Identifier                                                                  # VariableExpression
+    | Number                                                                      # ConstExpression
+    ;
+
+// Need to make precedence handling explicit in the code behind
+// since precedence is potentially user defined at runtime.
+expression[int _p]
+    : primaryExpression
+      ( {GetPrecedence() &gt;= $_p}? binaryop expression[GetNextPrecedence()]
+      )*
+    ;
+</code></pre><p>Two custom functions are used to handle the dynamic runtime defined nature of the precedence.</p>
+<ol>
+<li>GetPrecedence() used in the semantic predicate determines the precedence of the operator for
+the current rule</li>
+<li>GetNextPrecedence() is used to determine the next higher level of precedence for any child expressions</li>
+</ol>
+<p>These are implemented in the partial class extension of the parser:</p>
+<pre><code class="lang-C#">private int GetPrecedence( )
+{
+    return GlobalState.GetPrecedence( _input.Lt( 1 ).Type );
+}
+
+private int GetNextPrecedence( )
+{
+    return GlobalState.GetNextPrecedence( _input.Lt( -1 ).Type );
+}
+</code></pre><p>These two functions use the current input state to identify the actual operator token. Get Precedence does
+a look-ahead by one token to determine what the precedence for the operator is. The rest of the rule is
+only executed if the precedence is greater than or equal to the current precedence. The right hand side
+matches expressions of a higher precedence by doing a look-behind one token to get the next precedence
+level. The custom parser functions are pretty small since they defer the real work to the GlobalState
+instance provided when constructing the parser. The state is an instance of the DynamicRuntimeState class.
+Up until now, this state was only used to determine the language features to enable. With dynamic precedence
+for user operators, the state maintains a pair of tables of operator information that includes the symbol
+for the operator and precedence:</p>
+<pre><code class="lang-C#">private OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
+
+private OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection( )
+{
+    new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
+    new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
+    new OperatorInfo( MINUS,     OperatorKind.InfixLeftAssociative, 20, true),
+    new OperatorInfo( ASTERISK,  OperatorKind.InfixLeftAssociative, 40, true),
+    new OperatorInfo( SLASH,     OperatorKind.InfixLeftAssociative, 40, true),
+    new OperatorInfo( CARET,     OperatorKind.InfixRightAssociative, 50, true),
+    new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true),
+};
+</code></pre><p>The tables are used to determine the precedence for an operator and what the next precedence should be.
+They start out with the built-in binary operators. (Kaleidoscope doesn&#39;t define any unary operators so
+that table starts empty) The GetPrededence() and GetNextPrecedence() functions lookup the operators token
+in the table to determine the operators associativity and its precedence.</p>
+<pre><code class="lang-C#">public OperatorInfo GetBinOperatorInfo( int tokenType )
+{
+    if( BinOpPrecedence.TryGetValue( tokenType, out var value ) )
+    {
+        return value;
+    }
+
+    return default;
+}
+
+public OperatorInfo GetUnaryOperatorInfo( int tokenType )
+{
+    if( UnaryOps.TryGetValue( tokenType, out var value ) )
+    {
+        return value;
+    }
+
+    return default;
+}
+
+internal int GetPrecedence( int tokenType ) =&gt; GetBinOperatorInfo( tokenType ).Precedence;
+
+internal int GetNextPrecedence( int tokenType )
+{
+    var operatorInfo = GetBinOperatorInfo( tokenType );
+    int retVal = operatorInfo.Precedence;
+    if( operatorInfo.Kind == OperatorKind.InfixRightAssociative || operatorInfo.Kind == OperatorKind.PreFix )
+    {
+        return retVal;
+    }
+
+    return retVal + 1;
+}
+</code></pre><p>This provides the core ability for looking up and handling precedence. Though, as shown so far, it is just
+a rather convoluted form of what ANTLR4 gives us for free. The real point of this runtime state is the
+ability of the language to <em>dynamically add user operators</em>. By adding operators to the runtime state the
+lookup process will include them during parsing.</p>
+<p>Actually adding the operators to the table is handled in the parsing process itself using a feature of the
+ANTLR generated parser called a &quot;Parse Listener&quot;. A parse listener is attached to the parser and effectively
+monitors the entire parsing process. For the user operators the listener will listen for the specific case
+of a complete function definition that defines a user operator. When it detects such a case it will update
+the runtime table accordingly.</p>
+<pre><code class="lang-csharp" name="UserOperatorListener">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;KaleidoscopeUserOperatorListener.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using JetBrains.Annotations;
+using Kaleidoscope.Grammar;
+
+namespace Kaleidoscope.Runtime
+{
+    // Parse listener to handle updating runtime state on successfully parsing a user defined
+    // operator definition.
+    internal class KaleidoscopeUserOperatorListener
+        : KaleidoscopeBaseListener
+    {
+        public KaleidoscopeUserOperatorListener( DynamicRuntimeState state )
+        {
+            RuntimeState = state;
+        }
+
+        // upon successful parse of a function definition check if it is a user defined operator
+        // and update the RuntimeState accordingly, if it is.
+        public override void ExitFunctionDefinition( [NotNull] KaleidoscopeParser.FunctionDefinitionContext context )
+        {
+            switch( context.Signature )
+            {
+            case KaleidoscopeParser.UnaryPrototypeContext unaryProto:
+                RuntimeState.TryAddOperator( unaryProto.OpToken, OperatorKind.PreFix, 0 );
+                break;
+
+            case KaleidoscopeParser.BinaryPrototypeContext binaryProto:
+                RuntimeState.TryAddOperator( binaryProto.OpToken, OperatorKind.InfixLeftAssociative, binaryProto.Precedence );
+                break;
+
+            default:
+                base.ExitFunctionDefinition( context );
+                break;
+            }
+        }
+
+        private readonly DynamicRuntimeState RuntimeState;
+    }
+}
+</code></pre><p>With the use of the listener the dynamic precedence is contained entirely in the parser. When the parse tree is
+processed to produce the AST the user defined operators are transformed to simple function declarations and
+function calls. This simplification allows the generator and later stages to remain blissfully ignorant of the
+issue of precedence and even the existence of user defined operators.</p>
+<p>Ordinarily it is best to design parsers without any sort of context or feedback mechanisms to keep them easier
+to maintain. However, the language design of the Kaleidoscope language requires some level of feedback so that
+the parser can handle precedence correctly. Using the state, listener and semantic predicates keeps the roles
+of each part clear while allowing for completely isolating the feedback to the parsing alone.</p>
+<h4 id="ast">AST</h4>
+<p>When building the AST Prototypes for user defined operators are transformed to a FunctionDeclaration</p>
+<pre><code class="lang-csharp" name="UserOperatorPrototypes">public override IAstNode VisitBinaryPrototype( [NotNull] BinaryPrototypeContext context )
+{
+    return BuildPrototype( context, CreateBinaryFunctionName( context.OpToken ) );
+}
+
+public override IAstNode VisitUnaryPrototype( [NotNull] UnaryPrototypeContext context )
+{
+    return BuildPrototype( context, CreateUnaryFunctionName( context.OpToken ) );
+}
+</code></pre><p>During construction of the AST all occurrences of a user defined operator expression are transformed into a function
+call for the function that actually implements the behavior for the operator.</p>
+<pre><code class="lang-csharp" name="UserBinaryOpExpression">default:
+    {
+        // User defined op?
+        var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
+        if( opKind != OperatorKind.InfixLeftAssociative &amp;&amp; opKind != OperatorKind.InfixRightAssociative )
+        {
+            throw new CodeGeneratorException( $&quot;Invalid binary operator &#39;{op.OpToken.Text}&#39;&quot; );
+        }
+
+        string calleeName = CreateBinaryFunctionName( op.OpToken );
+        Prototype callTarget = FindCallTarget( calleeName );
+        return new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
+    }
+</code></pre><pre><code class="lang-csharp" name="UnaryOpExpression">public override IAstNode VisitUnaryOpExpression( [NotNull] UnaryOpExpressionContext context )
+{
+    // verify the operator was previously defined
+    var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
+    if( opKind == OperatorKind.None )
+    {
+        throw new CodeGeneratorException( $&quot;invalid unary operator {context.Op}&quot; );
+    }
+
+    string calleeName = CreateUnaryFunctionName( context.OpToken );
+    var function = FindCallTarget( calleeName );
+    if( function == null )
+    {
+        throw new CodeGeneratorException( $&quot;Unknown function reference {calleeName}&quot; );
+    }
+
+    var arg = ( IExpression )context.Rhs.Accept( this );
+    return new FunctionCallExpression( context.GetSourceSpan( ), function, arg );
+}
+</code></pre><p>Thus, after AST transformation completes, the user defined operators, and any issues of precedence no longer
+exist!</p>
+<h3 id="codegen-and-driver">CodeGen and Driver</h3>
+<p>If you compare the code generation and driver code between Chapter 5 and Chapter 6 you&#39;ll see the only differences
+are the change of namespace and the language level setting - it got a bump (Literally a single enum on one line of
+each component). Everything else is identical. This is because the real work is on the parser and AST not the code
+generation. This is where having a good parser + AST model can help keep the code generation simpler. If the parse
+tree alone was used, then the code generation would need additional support similar to what is found in the AST
+generation. Putting it into the AST generation keeps things much cleaner as, obviously, the support for user
+defined operators and precedence has nothing to do with code generation. Keeping the code generation simpler is
+generally a really good thing!</p>
+<p>That completes the support for user defined operators.</p>
+<h3 id="example">Example</h3>
+<p>The following example is a complete program in Kaleidoscope that will generate a textual representation
+of the classic Mandelbrot Set using all of the features of the language.</p>
+<pre><code class="lang-kaleidoscope">def unary!(v)
+  if v then
+    0
+  else
+    1;
+
+def unary-(v)
+  0-v;
+
+def binary&gt; 10 (LHS RHS)
+  RHS &lt; LHS;
+
+def binary| 5 (LHS RHS)
+  if LHS then
+    1
+  else if RHS then
+    1
+  else
+    0;
+
+def binary&amp; 6 (LHS RHS)
+  if !LHS then
+    0
+  else
+    !!RHS;
+
+def binary= 9 (LHS RHS)
+  !(LHS &lt; RHS | LHS &gt; RHS);
+
+def binary : 1 (x y) y;
+
+extern putchard(char);
+
+def printdensity(d)
+  if d &gt; 8 then
+    putchard(32)
+  else if d &gt; 4 then
+    putchard(46)
+  else if d &gt; 2 then
+    putchard(43)
+  else
+    putchard(42);
+
+def mandelconverger(real imag iters creal cimag)
+  if iters &gt; 255 | (real*real + imag*imag &gt; 4) then
+    iters
+  else
+    mandelconverger( real*real - imag*imag + creal
+                   , 2*real*imag + cimag
+                   , iters+1
+                   , creal
+                   , cimag
+                   );
+
+def mandelconverge(real imag)
+  mandelconverger(real, imag, 0, real, imag);
+
+def mandelhelp(xmin xmax xstep   ymin ymax ystep)
+  for y = ymin, y &lt; ymax, ystep in
+  (
+    (for x = xmin, x &lt; xmax, xstep in printdensity(mandelconverge(x,y))) : putchard(10)
+  );
+
+def mandel(realstart imagstart realmag imagmag)
+  mandelhelp(realstart, realstart+realmag*78, realmag, imagstart, imagstart+imagmag*40, imagmag);
+
+mandel(-2.3, -1.3, 0.05, 0.07);
+</code></pre><p>When entered ( or copy/pasted) to the command line Kaleidoscope will print out the following:</p>
+<pre><code class="lang-shell">Ready&gt;mandel(-2.3, -1.3, 0.05, 0.07);
+*******************************************************************************
+*******************************************************************************
+****************************************++++++*********************************
+************************************+++++...++++++*****************************
+*********************************++++++++.. ...+++++***************************
+*******************************++++++++++..   ..+++++**************************
+******************************++++++++++.     ..++++++*************************
+****************************+++++++++....      ..++++++************************
+**************************++++++++.......      .....++++***********************
+*************************++++++++.   .            ... .++**********************
+***********************++++++++...                     ++**********************
+*********************+++++++++....                    .+++*********************
+******************+++..+++++....                      ..+++********************
+**************++++++. ..........                        +++********************
+***********++++++++..        ..                         .++********************
+*********++++++++++...                                 .++++*******************
+********++++++++++..                                   .++++*******************
+*******++++++.....                                    ..++++*******************
+*******+........                                     ...++++*******************
+*******+... ....                                     ...++++*******************
+*******+++++......                                    ..++++*******************
+*******++++++++++...                                   .++++*******************
+*********++++++++++...                                  ++++*******************
+**********+++++++++..        ..                        ..++********************
+*************++++++.. ..........                        +++********************
+******************+++...+++.....                      ..+++********************
+*********************+++++++++....                    ..++*********************
+***********************++++++++...                     +++*********************
+*************************+++++++..   .            ... .++**********************
+**************************++++++++.......      ......+++***********************
+****************************+++++++++....      ..++++++************************
+*****************************++++++++++..     ..++++++*************************
+*******************************++++++++++..  ...+++++**************************
+*********************************++++++++.. ...+++++***************************
+***********************************++++++....+++++*****************************
+***************************************++++++++********************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+Evaluated to 0
+Ready&gt;
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>Adding user defined operators with user defined precedence is fairly straight forward to implement in
+terms of the code generation. No new code generation is required (Can&#39;t get any simpler than that! <span class="emoji" shortcode="grin">😁</span> ).
+ANTLR4 has support for left-recursion in the grammar and precedence of expressions. Even though ANTLR4 only
+directly supports fixed precedence it is rather easy to extend the underlying support to handle dynamic
+precedence and associativity, once the underlying mechanics are understood. The rest is on the AST
+construction as it converts the user defined operators to function definitions and function calls. </p>
+<div class="TIP"><h5>Tip</h5><p>An early version of these samples skipped the use of an AST and used the parse tree directly. You can compare the history of
+the generators for that transition to see how the AST helps simplify the code generation. (Not to mention sets the stage for
+an otherwise unimplemented feature - truly lazy compilation, which is covered in <a href="Kaleidoscope-ch7.1.html">Chapter 7.1</a>.)</p>
+</div>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/articles/Samples/Kaleidoscope-ch6.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 8.0.1
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
