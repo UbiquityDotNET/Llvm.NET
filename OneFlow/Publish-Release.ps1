@@ -1,23 +1,6 @@
 . .\buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment
 
-# determine release tag from the build version XML file in the branch
-[xml]$buildVersionXml = Get-Content .\BuildVersion.xml
-$buildVersionData = $buildVersionXml.BuildVersionData
-$preReleaseSuffix=""
-if($buildVersionData.PSObject.Properties['PreReleaseName'])
-{
-    $preReleaseSuffix = "-$($buildVersionData.PreReleaseName)"
-    if($buildVersionData.PSObject.Properties['PreReleaseNumber'])
-    {
-        $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
-        if($buildVersionData.PSObject.Properties['PreReleaseFix'])
-        {
-            $preReleaseSuffix += ".$($buildVersionData.PreReleaseFix)"
-        }
-    }
-}
-
 # Release tags must only be pushed from a repository with the official GitHub repository as the origin remote.
 # This ensures that the links to source in the generated docs will have the correct URLs
 # (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
@@ -31,7 +14,7 @@ if($remoteUrl -ine "https://github.com/UbiquityDotNET/Llvm.NET.git")
 }
 
 # pushing the tag to GitHub triggers the official build and release of the Nuget Packages
-$tagName = "v$($buildVersionData.BuildMajor).$($buildVersionData.BuildMinor).$($buildVersionData.BuildPatch)$preReleaseSuffix"
+$tagName = Get-BuildVersionTag
 $releaseBranch = "release/$tagName"
 $currentBranch = git rev-parse --abbrev-ref HEAD
 if( $releaseBranch -ne $currentBranch )

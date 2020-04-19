@@ -1,4 +1,4 @@
-# Project specific common support
+# Project/Repo specific extensions to common support
 using module 'PSModules\CommonBuild\CommonBuild.psd1'
 
 Set-StrictMode -version 3.0

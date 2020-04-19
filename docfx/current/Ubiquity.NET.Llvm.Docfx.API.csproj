@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\BuildVersion.xml" Link="BuildVersion.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="docfx.console" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="memberpage" PrivateAssets="All" />
+    <PackageReference Include="msdn.4.5.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="docfx.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Custom task to Compare versions -->
+  <UsingTask TaskName="VersionCheck" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <ActualVersion ParameterType="System.String" Required="true" />
+      <MaximumSupportedVersion ParameterType="System.String" Required="true" />
+      <IsValidVersion ParameterType="System.Boolean" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          IsValidVersion = Version.Parse(ActualVersion) < Version.Parse(MaximumSupportedVersion);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!--
+    This target dynamically resolves the installed location of the NuGet Packages used and applies
+    appropriate parameters to the DocFx command to use them. Otherwise the docfx.json would need to
+    have a hard coded path, which doesn't work with multiple users of a version controlled project.
+    -->
+  <Target Name="GetDocfxPackagePaths" BeforeTargets="DocBuild" DependsOnTargets="ResolvePackageDependenciesDesignTime">
+    <ItemGroup>
+      <docfxpkg Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='docfx.console'" />
+      <memberpage Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='memberpage'" />
+      <Msdn4_5_2 Include="@(PackageDefinitions)" Condition="'%(PackageDefinitions.Name)'=='msdn.4.5.2'" />
+    </ItemGroup>
+    <PropertyGroup>
+      <DocfxConsolePath>%(docfxpkg.ResolvedPath)</DocfxConsolePath>
+      <MemberPagePath>%(memberpage.ResolvedPath)</MemberPagePath>
+      <MsdnXRefPath>%(msdn4_5_2.ResolvedPath)</MsdnXRefPath>
+      <IsSupportedMSBuild>false</IsSupportedMSBuild>
+    </PropertyGroup>
+    <VersionCheck Condition="$(MSBuildVersion)!=''" MaximumSupportedVersion="17.0.999" ActualVersion="$(MSBuildVersion)">
+      <Output TaskParameter="IsValidVersion" PropertyName="IsSupportedMSBuild" />
+    </VersionCheck>
+    <Error Code="DOCFX:0001" ContinueOnError="false" Condition="!$(IsSupportedMSBuild)" Text="As of DOCFX 2.40 docfx cannot generate metadata for CSPROJ files using MSBuild &gt; 16.0.xx (Current MSBuild is $(MSBuildVersion))" />
+  </Target>
+
+  <Target Name="SetDocFxParameters" BeforeTargets="DocGenerateMetadata" DependsOnTargets="GetDocfxPackagePaths">
+    <ItemGroup>
+      <DocFxCrossRefMap Include="llvm-xref.yml" />
+      <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\msdn.4.5.2.zip" />
+      <DocFxCrossRefMap Include="$(MsdnXrefPath)\content\namespaces.4.5.2.zip" />
+    </ItemGroup>
+    <ItemGroup>
+        <DocFxTemplate Include="statictoc" />
+        <DocFxTemplate Include="$(MemberPagePath)\content" />
+        <DocFxTemplate Include="$(BuildRootDir)docfx\templates\Ubiquity" />
+    </ItemGroup>
+    <PropertyGroup>
+      <LogLevel>Warning</LogLevel>
+      <LogFile>$(IntermediateOutputPath)DocFx-Metadata.log</LogFile>
+      <DocParameters>$(DocParameters) --globalMetadata="{_buildVersion:\"$(FullBuildNumber)\"}"</DocParameters>
+      <DocParameters>$(DocParameters) --intermediateFolder="$(IntermediateOutputPath.TrimEnd('\'))"</DocParameters>
+      <DocParameters>$(DocParameters) --xref="@(DocFxCrossRefMap->'%(FullPath)',',')"</DocParameters>
+      <DocTemplate>@(DocFxTemplate, ',')</DocTemplate>
+    </PropertyGroup>
+  </Target>
+</Project>

@@ -12,7 +12,7 @@
 ## [Chapter 7.1 - Extreme Lazy JIT](xref:Kaleidoscope-ch7.1)
 ## [Chapter 8 - AOT Compilation](xref:Kaleidoscope-ch8)
 ## [Chapter 9 - Debug Information](xref:Kaleidoscope-ch9)
-## Additional Support
+## Appendix
 ### [Kaleidoscope.Runtime](xref:Kaleidoscope-Runtime)
 ### [Kaleidoscope AST](xref:Kaleidoscope-AST)
 ### [ParseTree Visitor](xref:Kaleidoscope-ParseTreeVisitor)

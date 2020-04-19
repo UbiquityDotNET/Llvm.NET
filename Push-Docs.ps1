@@ -63,7 +63,7 @@ try
     }
 
     cmd /c echo Committing changes to git
-    git commit -m "CI Docs Update"
+    git commit -m "CI Docs Update $(Get-BuildVersionTag)"
     if(!$?)
     {
         throw "git commit failed"
