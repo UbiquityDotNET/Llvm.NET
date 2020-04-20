@@ -477,14 +477,15 @@ function Get-BuildVersionXML
     [OutputType([xml])]
     param ()
 
-    # determine release tag from the build version XML file in the branch
     [xml]$buildVersionXml = Get-Content .\BuildVersion.xml
-    return $buildVersionXml.BuildVersionData
+    return $buildVersionXml
 }
 
 function Get-BuildVersionTag
 {
-    Param([xml]$buildVersionData = (Get-BuildVersionXML))
+    # determine release tag from the build version XML file in the branch
+    Param([xml]$buildVersionXml = (Get-BuildVersionXML))
+    $buildVersionData = $buildVersionXml.BuildVersionData
     $preReleaseSuffix=""
     if($buildVersionData.PSObject.Properties['PreReleaseName'])
     {
