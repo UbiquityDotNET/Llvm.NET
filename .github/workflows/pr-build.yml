@@ -58,9 +58,17 @@ jobs:
       - name: Build Docs
         run: .\Build-All.ps1 -ForceClean -BuildMode Docs
 
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v1
+        with:
+            name: Docs
+            path: .\BuildOutput\docs\current
+
       - name: Publish build logs
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v1
         with:
             name: Build Logs
             path: .\BuildOutput\BinLogs
+
+
