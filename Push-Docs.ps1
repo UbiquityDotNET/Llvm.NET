@@ -53,8 +53,7 @@ try
     git config --local user.email "$env:docspush_email"
     git config --local user.name "$env:docspush_username"
 
-    # use cmd /c to get message output from GH Actions that are suppressed when a secret is used.
-    cmd /c echo Adding files to git
+    Write-Information 'Adding files to git'
     git add -A
     git ls-files -o --exclude-standard | %{ git add $_}
     if(!$?)
@@ -63,8 +62,8 @@ try
     }
 
     $msg = "CI Docs Update $(Get-BuildVersionTag)"
-    cmd /c "echo Committing changes to git [$msg]"
-    git commit -m"`"$msg`""
+    Write-Information "Committing changes to git [$msg]"
+    git commit -m"$msg"
     if(!$?)
     {
         throw "git commit failed"
@@ -72,15 +71,9 @@ try
 
     if(!$SkipPush)
     {
-        cmd /c echo Pushing changes to git
+        Write-Information 'Pushing changes to git'
         git push
     }
-}
-catch
-{
-    cmd /c echo Error pushing docs:
-    cmd /c echo ($_.Exception | out-string)
-    throw
 }
 finally
 {
