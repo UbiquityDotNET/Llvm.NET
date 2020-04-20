@@ -477,7 +477,7 @@ function Get-BuildVersionXML
     [OutputType([xml])]
     param ()
 
-    [xml]$buildVersionXml = Get-Content .\BuildVersion.xml
+    [xml]$buildVersionXml = Get-Content ([System.IO.Path]::Combine($PSScriptRoot, '..', '..', 'BuildVersion.xml'))
     return $buildVersionXml
 }
 
