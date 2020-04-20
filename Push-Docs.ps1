@@ -62,8 +62,9 @@ try
         throw "git add failed"
     }
 
-    cmd /c echo Committing changes to git
-    git commit -m "CI Docs Update $(Get-BuildVersionTag)"
+    $msg = "CI Docs Update $(Get-BuildVersionTag)"
+    cmd /c "echo Committing changes to git [$msg]"
+    git commit -m"`"$msg`""
     if(!$?)
     {
         throw "git commit failed"
