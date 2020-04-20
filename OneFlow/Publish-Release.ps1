@@ -32,22 +32,22 @@ if( $localCommitSha -ne $remoteCommitSha )
 Write-Information "tagging $tagname on $releasebranch"
 
 git tag -a $tagname -m "Official release: $tagname"
-if($?) {throw 'GIT tag command failed'}
+if(!$?) {throw 'GIT tag command failed'}
 git checkout develop
-if($?) {throw 'GIT co develop command failed'}
+if(!$?) {throw 'GIT co develop command failed'}
 git merge $releaseBranch
-if($?) {throw 'GIT merge command failed'}
+if(!$?) {throw 'GIT merge command failed'}
 git push --tags origin develop
-if($?) {throw 'GIT push --tags origin develop command failed'}
+if(!$?) {throw 'GIT push --tags origin develop command failed'}
 git branch -d $releaseBranch
-if($?) {throw 'GIT delete local release branch command failed'}
+if(!$?) {throw 'GIT delete local release branch command failed'}
 git push origin --delete $releaseBranch
-if($?) {throw 'GIT delete remote release branch command failed'}
+if(!$?) {throw 'GIT delete remote release branch command failed'}
 
 # update master branch to point to the latest release for full releases
 git checkout master
-if($?) {throw 'GIT checkout master command failed'}
+if(!$?) {throw 'GIT checkout master command failed'}
 git merge --ff-only $tagName
-if($?) {throw 'GIT merge --ff-only command failed'}
+if(!$?) {throw 'GIT merge --ff-only command failed'}
 git push
-if($?) {throw 'GIT push (master update) command failed'}
+if(!$?) {throw 'GIT push (master update) command failed'}
