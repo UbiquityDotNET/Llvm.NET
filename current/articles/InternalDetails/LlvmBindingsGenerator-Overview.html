@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>LlvmBindingsGenerator | Ubiquity.NET.Llvm </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="LlvmBindingsGenerator | Ubiquity.NET.Llvm ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="Source Repository">Source Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/10.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">LLVM-C API Handles</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="llvm-handles.html" title="Wrapping LLVM-C Handles" class="">Wrapping LLVM-C Handles</a>
+                          </li>
+                          <li class="">
+                            <a href="handleref-interning.html" title="Interning LLVM-C Handles" class="">Interning LLVM-C Handles</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Marshaling LLVM types</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="marshal-string.html" title="Marshaling Strings" class="">Marshaling Strings</a>
+                          </li>
+                          <li class="">
+                            <a href="marshal-LLVMBool.html" title="Marshaling LLVMBool" class="">Marshaling LLVMBool</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">LLVMBindingsGenerator</a>
+                        
+                        <ul class="nav level2">
+                          <li class="active">
+                            <a href="LlvmBindingsGenerator-Overview.html" title="Bindings Overview" class="active">Bindings Overview</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a href="LlvmBindingsGenerator-Configuration.html" title="Configuration" class="">Configuration</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="LlvmBindingsGenerator-MarshalingInfo-Table.html" title="Marshaling Info Table" class="">Marshaling Info Table</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="llvmbindingsgenerator">LlvmBindingsGenerator</h1>
+
+<p>LlvmBindingsGenerator is a tool used in building the Ubiquity.NET.Llvm.Interop library. As the
+name implies, this tool generates the base level bindings between the native LibLlvm
+library and managed code (e.g. It generates all the P/Invoke signatures, structure and
+enumeration definitions and declarations). </p>
+<h2 id="auto-generation">Auto generation</h2>
+<p>The generator uses the <a href="https://github.com/mono/CppSharp">CppSharp library</a> to parse
+LLVM headers and the LibLLVM extended headers to get all the required declarations into
+an Abstract Syntax Tree (AST). The generator then uses the AST to generate the required 
+.NET interop code. </p>
+<h2 id="challenges-of-interop-for-llvm-c">Challenges of interop for LLVM-C</h2>
+<p>Auto generation of the interop layer saves time and errors by moving tedious and error prone
+hand coding into a tool that is run as part of the regular automated builds. However, the
+job of auto generating for LLVM is not without some challenges. The original support for the
+interop in Ubiquity.NET.Llvm was done using a different tool that generated code, which then needed
+significant hand editing thereby defeating much of the value of the automated generation. In
+the process several challenges for the LLVM library were defined:</p>
+<ol>
+<li>There are several different ways that strings are provided as either out parameters or
+return value.<ol>
+<li>As a raw const char*, this basically is just an alias that the managed code must then copy
+into a managed System.String.</li>
+<li>As an allocated buffer that the managed application will need to release through some
+sort of Dispose type API.<ol>
+<li>There are actually several such dispose APIs so the caller has to know which one to use</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>LLVM-C uses a typedef LLVMBool as a return value for many functions, however the semantics
+of the return value depend on the function used. In some cases it is literally a boolean
+success(non-zero)/failure(zero) indication. While other functions use it as a status where
+success is zero and failure is any non zero value. This causes a great deal of confusion,
+especially if LLVMBool is blindly transformed to System.Boolean.</li>
+<li>LLVM-C uses typedefs for opaque pointers for objects in the underlying C++ implementation.
+Unfortunately, not all of the typedefs are consistent in how the are declared. Most are
+declared with the pointer as part of the typedef, but some are not. This makes automated
+generation more complex.</li>
+<li>Input and output array handling in the LLVM-C API is inconsistent.<ol>
+<li>There are cases where the length required is retrieved from a function and other cases
+where it is an out parameter.</li>
+</ol>
+</li>
+<li>Some flags type enumerations use a typedef to an unsigned value, since C limits the range
+of an enumerated value to an integer. Thus, what should be an enum with an underlying unsigned
+value ends up as a typedef to an unsigned.</li>
+<li>In many cases function pointer declarations (i.e. call back delegates) and function declarations
+in the LLVM-C headers don&#39;t include names for the parameters.</li>
+<li>In array vs out scalar semantics are not expressible in C (e.g. void foo(int* baz) could declare
+a function with a single integer as an out parameter, or it could mean a function that accepts an
+array of integers, with a fixed known size or possibly some sort of tag value to indicate the end,
+etc...)</li>
+</ol>
+<h2 id="configuration">Configuration</h2>
+<p>LlvmBindings takes care of all of the challenges by using various custom passes on the AST to
+correct or transform it to handle the special cases. Since it is not possible to automatically
+determine the correct choice on many of the cases (like in vs. out array semantics, if a string
+needs dispose, and which dispose method is needed, etc...) the LlvmBindings generator uses a
+configuration data structure to determine the correct action. It also uses a set of validation
+passes to ensure that any ambiguities without entries in the configuration trigger errors. It is
+hoped that moving forward the only thing needed to update to a new version of LLVM is to update
+the <a href="LlvmBindingsGenerator-Configuration.html">configuration</a> tables. Although it is always possible
+that some new pattern of code will require some new pass to handle.</p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/current/articles/InternalDetails/LlvmBindingsGenerator-Overview.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.2
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

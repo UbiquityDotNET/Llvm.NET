@@ -47,19 +47,13 @@
                 
                 <ul class="nav level1 navbar-nav">
                       <li>
-                          <a href="api/index.html" title="API Documentation">API Documentation</a>
+                          <a class="xref" href="current/index.html" title="Current Release">Current Release</a>
                       </li>
                       <li>
-                          <a href="articles/index.html" title="Articles">Articles</a>
-                      </li>
-                      <li>
-                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="GitHub Repository">GitHub Repository</a>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="Source Repository">Source Repository</a>
                       </li>
                       <li>
                           <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
-                      </li>
-                      <li>
-                          <a href="http://releases.llvm.org/8.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
                       </li>
                 </ul>    </div>
           </div>
@@ -75,7 +69,6 @@
 <p>Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 
 the underlying LLVM internal object model. This allows for building code generation and other utilities
 leveraging LLVM from .NET applications.</p>
-<p>For more details see the full <a href="api/index.html">API documentation</a></p>
 <h2 id="guiding-principles">Guiding principles</h2>
 <ol>
 <li>Mirror the underlying LLVM model as much as possible while 
@@ -98,15 +91,16 @@ underlying LLVM model while fitting naturally into .NET programming patterns.</l
 <ul>
 <li>LLVM Cross target code generation from .NET code</li>
 <li>JIT engine support for creating dynamic domain specific language
-runtimes with JIT support. (See <a class="xref" href="articles/samples/Kaleidoscope/Kaleidoscope.html">Kaleidoscope language tutorial</a> for more details)</li>
+runtimes with JIT support.</li>
 <li>Ahead of time compilation with support for Link time optimization and debug information</li>
 <li>Object model that reflects the underlying LLVM classes</li>
 </ul>
-<p><a href="ReleaseNotes.html">Release Notes</a></p>
+<h2 id="releases">Releases</h2>
+<p><a class="xref" href="current/index.html">Current</a><br><a class="xref" href="v8.0.1/index.html">v8.0.1</a>  </p>
 </article>
           </div>
           <div class="contribution-panel mobile-hide">
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/docfx/index.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/index/index.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -125,7 +119,7 @@ runtimes with JIT support. (See <a class="xref" href="articles/samples/Kaleidosc
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2019, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.2
             
           </div>
         </div>

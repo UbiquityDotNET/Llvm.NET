@@ -1,0 +1,464 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>8. Kaleidoscope: Compiling to Object Code | Ubiquity.NET.Llvm </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="8. Kaleidoscope: Compiling to Object Code | Ubiquity.NET.Llvm ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../toc">
+    <meta property="docfx:tocrel" content="../../toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../index.html">
+                <img id="logo" class="svg" src="../../../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="Source Repository">Source Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/10.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Samples</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a class="">Code Generation</a>
+                          </li>
+                          <li class="">
+                            <a href="../../CodeGenWithDebugInfo/codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="../../Kaleidoscope/Kaleidoscope-Overview.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter2/Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter3/Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter4/Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter5/Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter6/Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter7/Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter7.1/Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter8/Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter9/Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a class="">Appendix</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/AST/Kaleidoscope-AST.html" title="Kaleidoscope AST" class="">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/ANTLR/Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/ANTLR/Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Kaleidoscope-ch8">
+<h1 id="8-kaleidoscope-compiling-to-object-code">8. Kaleidoscope: Compiling to Object Code</h1>
+
+<p>This tutorial describes how to adapt the Kaleidoscope JIT engine into an Ahead of Time (AOT) compiler
+by generating target specific native object files.</p>
+<h2 id="choosing-a-target">Choosing a target</h2>
+<p>LLVM has built-in support for cross-compilation. This allows compiling to the architecture of the platform
+you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial
+we&#39;ll focus on just the native target the compiler is running on.</p>
+<p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the form
+<code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code> (see the description of the <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Triple.html">Triple</a> type for
+more details)</p>
+<p>Fortunately, it is normally not required to build such strings directly. </p>
+<h2 id="grammar">Grammar</h2>
+<p>In the preceding chapters the Kaleidoscope implementation provided an interactive JIT based on the classic
+Read Evaluate Print Loop (REPL). So the grammar focused on a top level rule &quot;repl&quot; that processes individual
+expressions one at a time. For native compilation this complicates the process of parsing and processing a
+complete file. To handle these two distinct scenarios the grammar has different rules. For the interactive
+scenario the previously mentioned &quot;repl&quot; rule is used. When parsing a full source file the &quot;fullsrc&quot; rule
+is used as the start.</p>
+<pre><code class="lang-antlr">// Full source parse accepts a series of definitions or prototypes, all top level expressions
+// are generated into a single function called Main()
+fullsrc
+    : repl*;
+</code></pre><p>This rule simply accepts any number of expressions so that a single source file is parsed to a single
+complete parse tree. (This particular point will become even more valuable when generating debug information
+in <a class="xref" href="../Chapter9/Kaleidoscope-ch9.html">Chapter 9</a> as the parse tree nodes contain the source location information based
+on the original input stream).</p>
+<h2 id="code-generation-changes">Code Generation Changes</h2>
+<p>The changes in code generation are fairly straight forward and consist of the following basic steps.</p>
+<ol>
+<li>Remove JIT engine support</li>
+<li>Expose the bit code module generated, so it is available to the &quot;driver&quot;.</li>
+<li>Saving the target machine (since it doesn&#39;t come from the JIT anymore)</li>
+<li>Keep track of all generated top level anonymous expressions</li>
+<li>Once generating from the parse tree is complete generate a main() that includes calls to all the
+previously generated anonymous expressions.</li>
+</ol>
+<p>Most of these steps are pretty straight forward. The anonymous function handling is a bit distinct.
+Since the language syntax allows anonymous expressions throughout the source file, and they don&#39;t
+actually execute during generation - they need to be organized into an executable form. Thus, a new
+list of the generated functions is maintained and, after the tree is generated, a new main() function
+is created and a call to each anonymous expression is made with a second call to printd() to show
+the results - just like they would appear if typed in an interactive console. A trick used in the
+code generation is to mark each of the anonymous functions as private and always inline so that a
+simple optimization pass can eliminate the anonymous functions after inlining them all into the main()
+function. </p>
+<pre><code class="lang-C#">// mark anonymous functions as always-inline and private so they can be inlined and then removed
+if( isAnonymous )
+{
+    retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+          .Linkage( Linkage.Private );
+}
+else
+{
+    retVal.Linkage( Linkage.External );
+}
+</code></pre><p>These settings are leveraged after generating from the tree to create the main function. A simple
+loop generates a call to each expression along with the call to print the results. Once, that
+is completed a <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Transforms.ModulePassManager.html">ModulePassManager</a> is created to run
+the Always inliner and a global dead code elimination pass. The always inliner will inline the functions
+marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
+This has the effect of generating the main function with all top level expressions inlined and the originally
+generated anonymous functions removed. </p>
+<pre><code class="lang-csharp" name="Generate">public OptionalValue&lt;BitcodeModule&gt; Generate( IAstNode ast )
+{
+    ast.ValidateNotNull( nameof( ast ) );
+    ast.Accept( this );
+
+    if( AnonymousFunctions.Count &gt; 0 )
+    {
+        var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
+        var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
+        var irBuilder = new InstructionBuilder( block );
+        var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+        foreach( var anonFunc in AnonymousFunctions )
+        {
+            var value = irBuilder.Call( anonFunc );
+            irBuilder.Call( printdFunc, value );
+        }
+
+        irBuilder.Return( );
+
+        // Use always inline and Dead Code Elimination module passes to inline all of the
+        // anonymous functions. This effectively strips all the calls just generated for main()
+        // and inlines each of the anonymous functions directly into main, dropping the now
+        // unused original anonymous functions all while retaining all of the original source
+        // debug information locations.
+        using var mpm = new ModulePassManager( );
+        mpm.AddAlwaysInlinerPass( )
+           .AddGlobalDCEPass( )
+           .Run( Module );
+    }
+
+    return OptionalValue.Create( Module );
+}
+</code></pre><p>Most of the rest of the changes are pretty straightforward following the steps listed previously.</p>
+<h3 id="anonymous-function-definitions">Anonymous Function Definitions</h3>
+<p>As previously mentioned, when generating the top level expression the resulting function is added to the
+list of anonymous functions to generate a call to it from main().</p>
+<pre><code class="lang-csharp" name="FunctionDefinition">public override Value? Visit( FunctionDefinition definition )
+{
+    definition.ValidateNotNull( nameof( definition ) );
+    var function = GetOrDeclareFunction( definition.Signature );
+    if( !function.IsDeclaration )
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
+
+    try
+    {
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        using( NamedValues.EnterScope( ) )
+        {
+            foreach( var param in definition.Signature.Parameters )
+            {
+                var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                .RegisterName( param.Name );
+                InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
+                NamedValues[ param.Name ] = argSlot;
+            }
+
+            foreach( LocalVariableDeclaration local in definition.LocalVariables )
+            {
+                var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
+                                                  .RegisterName( local.Name );
+                NamedValues[ local.Name ] = localSlot;
+            }
+
+            EmitBranchToNewBlock( &quot;body&quot; );
+
+            var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
+            InstructionBuilder.Return( funcReturn );
+            function.Verify( );
+
+            FunctionPassManager.Run( function );
+
+            if( definition.IsAnonymous )
+            {
+                function.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
+                        .Linkage( Linkage.Private );
+
+                AnonymousFunctions.Add( function );
+            }
+
+            return function;
+        }
+    }
+    catch( CodeGeneratorException )
+    {
+        function.EraseFromParent( );
+        throw;
+    }
+}
+</code></pre><h2 id="driver-changes">Driver changes</h2>
+<p>To support generating object files the &quot;driver&quot; application code needs some alterations. The changes
+fall into two general categories:</p>
+<ol>
+<li>Command line argument handling</li>
+<li>Generating the output files</li>
+</ol>
+<h3 id="adding-command-line-handling">Adding Command Line handling</h3>
+<p>To allow providing a file like a traditional compiler the driver app needs to have some basic
+command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary <span class="emoji" shortcode="grin">😁</span> )
+Generally this just gets a viable file path to use for the source code.</p>
+<pre><code class="lang-csharp" name="ProcessArgs">
+// really simple command line handling, just loops through the input arguments
+private static (string SourceFilePath, int ExitCode) ProcessArgs( string[ ] args )
+{
+    string sourceFilePath = string.Empty;
+    foreach( string arg in args )
+    {
+        if( !string.IsNullOrWhiteSpace( sourceFilePath ) )
+        {
+            Console.Error.WriteLine( &quot;Source path already provided, unrecognized option: &#39;{0}&#39;&quot;, arg );
+        }
+
+        sourceFilePath = Path.GetFullPath( arg );
+    }
+
+    if( string.IsNullOrWhiteSpace( sourceFilePath ) )
+    {
+        Console.Error.WriteLine( &quot;Missing source file name!&quot; );
+        return (string.Empty, -1);
+    }
+
+    if( !File.Exists( sourceFilePath ) )
+    {
+        Console.Error.WriteLine( &quot;Source file &#39;{0}&#39; - not found!&quot;, sourceFilePath );
+        return (string.Empty, -2);
+    }
+
+    return (sourceFilePath, 0);
+}
+</code></pre><h3 id="update-main">Update Main()</h3>
+<p>The real work comes in the Main application driver, though there isn&#39;t a lot of additional code
+here either. The general plan is:</p>
+<ol>
+<li>Process the arguments to get the path to compile</li>
+<li>Open the file for reading</li>
+<li>Create a new target machine from the default triple of the host</li>
+<li>Create the parser stack</li>
+<li>Parse the input file</li>
+<li>Generate the IR code from the parse tree</li>
+<li>Once the parsing has completed, verify the module and emit the object file</li>
+<li>For diagnostics use, also emit the LLVM IR textual form and assembly files</li>
+</ol>
+<pre><code class="lang-csharp" name="Main">
+/// &lt;summary&gt;C# version of the LLVM Kaleidoscope language tutorial&lt;/summary&gt;
+/// &lt;param name=&quot;args&quot;&gt;Command line arguments to the application&lt;/param&gt;
+/// &lt;returns&gt;0 on success; non-zero on error&lt;/returns&gt;
+/// &lt;remarks&gt;
+/// The command line options at present are just the source file name
+/// &lt;/remarks&gt;
+[SuppressMessage( &quot;Design&quot;, &quot;CA1062:Validate arguments of public methods&quot;, Justification = &quot;Provided by Platform&quot; )]
+public static int Main( string[ ] args )
+{
+    (string sourceFilePath, int exitCode) = ProcessArgs( args );
+    if( exitCode != 0 )
+    {
+        return exitCode;
+    }
+
+    string objFilePath = Path.ChangeExtension( sourceFilePath, &quot;.o&quot; );
+    string irFilePath = Path.ChangeExtension( sourceFilePath, &quot;.ll&quot; );
+    string asmPath = Path.ChangeExtension( sourceFilePath, &quot;.s&quot; );
+
+    using var rdr = File.OpenText( sourceFilePath );
+    using var libLLVM = InitializeLLVM( );
+    libLLVM.RegisterTarget( CodeGenTarget.Native );
+
+    var machine = new TargetMachine( Triple.HostTriple );
+    var parser = new Parser( LanguageLevel.MutableVariables );
+    using var generator = new CodeGenerator( parser.GlobalState, machine );
+    Console.WriteLine( &quot;Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
+    Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
+
+    IParseErrorLogger errorLogger = new ColoredConsoleParseErrorLogger( );
+
+    // time the parse and code generation
+    var timer = System.Diagnostics.Stopwatch.StartNew( );
+    var ast = parser.Parse( rdr );
+    if( !errorLogger.CheckAndShowParseErrors( ast ) )
+    {
+        (bool hasValue, BitcodeModule? module) = generator.Generate( ast );
+        if( !hasValue )
+        {
+            Console.Error.WriteLine( &quot;No module generated&quot; );
+        }
+        else if( !module!.Verify( out string errMsg ) )
+        {
+            Console.Error.WriteLine( errMsg );
+        }
+        else
+        {
+            machine.EmitToFile( module, objFilePath, CodeGenFileType.ObjectFile );
+            timer.Stop( );
+
+            Console.WriteLine( &quot;Wrote {0}&quot;, objFilePath );
+            if( !module.WriteToTextFile( irFilePath, out string msg ) )
+            {
+                Console.Error.WriteLine( msg );
+                return -1;
+            }
+
+            machine.EmitToFile( module, asmPath, CodeGenFileType.AssemblySource );
+            Console.WriteLine( &quot;Compilation Time: {0}&quot;, timer.Elapsed );
+        }
+    }
+
+    return 0;
+}
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>That&#39;s it - seriously! Very little change was needed, mostly deleting code and adding the special handling
+of the anonymous expressions. Looking at the changes it should be clear that it is possible to support
+runtime choice between JIT and full native compilation instead of deleting the JIT code. (Implementing
+this feature is &quot;left as an exercise for the reader&quot; <span class="emoji" shortcode="wink">😉</span>)</p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/samples/Kaleidoscope/Chapter8/Kaleidoscope-ch8.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.2
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../styles/main.js"></script>
+  </body>
+</html>
