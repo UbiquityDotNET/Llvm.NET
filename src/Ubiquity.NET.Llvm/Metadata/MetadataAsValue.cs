@@ -15,9 +15,13 @@ namespace Ubiquity.NET.Llvm
     public class MetadataAsValue
         : Value
     {
+        /// <summary>Gets a list of the operands for the Metadata</summary>
+        public ValueOperandListCollection<Value> Operands { get; }
+
         internal MetadataAsValue( LLVMValueRef valueRef )
             : base( valueRef )
         {
+            Operands = new ValueOperandListCollection<Value>( this );
         }
 
         internal static LLVMValueRef IsAMetadataAsValue( LLVMValueRef value )

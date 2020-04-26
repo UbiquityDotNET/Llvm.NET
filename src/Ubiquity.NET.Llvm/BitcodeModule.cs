@@ -424,7 +424,24 @@ namespace Ubiquity.NET.Llvm
         /// not perform any function overloading.
         /// </remarks>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        [Obsolete( "Use CreateFunction( string name, IFunctionType signature ) instead" )]
         public IrFunction AddFunction( string name, IFunctionType signature )
+        {
+            return CreateFunction( name, signature );
+        }
+
+        /// <summary>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</summary>
+        /// <param name="name">Name of the function to add</param>
+        /// <param name="signature">Signature of the function</param>
+        /// <returns><see cref="IrFunction"/>matching the specified signature and name</returns>
+        /// <remarks>
+        /// If a matching function already exists it is returned, and therefore the returned
+        /// <see cref="IrFunction"/> may have a body and additional attributes. If a function of
+        /// the same name exists with a different signature an exception is thrown as LLVM does
+        /// not perform any function overloading.
+        /// </remarks>
+        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
+        public IrFunction CreateFunction( string name, IFunctionType signature )
         {
             ThrowIfDisposed( );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -714,29 +731,33 @@ namespace Ubiquity.NET.Llvm
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
         /// <returns>Function described by the arguments</returns>
-        public IrFunction CreateFunction( DIScope scope
-                                      , string name
-                                      , string? linkageName
-                                      , DIFile file
-                                      , uint line
-                                      , DebugFunctionType signature
-                                      , bool isLocalToUnit
-                                      , bool isDefinition
-                                      , uint scopeLine
-                                      , DebugInfoFlags debugFlags
-                                      , bool isOptimized
-                                      )
+        public IrFunction CreateFunction( DIScope? scope
+                                        , string name
+                                        , string? linkageName
+                                        , DIFile? file
+                                        , uint line
+                                        , DebugFunctionType signature
+                                        , bool isLocalToUnit
+                                        , bool isDefinition
+                                        , uint scopeLine
+                                        , DebugInfoFlags debugFlags
+                                        , bool isOptimized
+                                        )
         {
             ThrowIfDisposed( );
-            scope.ValidateNotNull( nameof( scope ) );
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
+            if(string.IsNullOrWhiteSpace(linkageName))
+            {
+                linkageName = name;
+            }
+
             if( signature.DIType == null )
             {
                 throw new ArgumentException( Resources.Signature_requires_debug_type_information, nameof( signature ) );
             }
 
-            var func = AddFunction( linkageName ?? name, signature );
+            var func = CreateFunction( linkageName, signature );
             var diSignature = signature.DIType;
             var diFunc = DIBuilder.CreateFunction( scope: scope
                                                  , name: name
@@ -767,14 +788,14 @@ namespace Ubiquity.NET.Llvm
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
         public IrFunction CreateFunction( string name
-                                      , bool isVarArg
-                                      , IDebugType<ITypeRef, DIType> returnType
-                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
-                                      )
+                                        , bool isVarArg
+                                        , IDebugType<ITypeRef, DIType> returnType
+                                        , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                        )
         {
             ThrowIfDisposed( );
             IFunctionType signature = Context.CreateFunctionType( DIBuilder, isVarArg, returnType, argumentTypes );
-            return AddFunction( name, signature );
+            return CreateFunction( name, signature );
         }
 
         /// <summary>Creates a function</summary>
@@ -787,10 +808,10 @@ namespace Ubiquity.NET.Llvm
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
         public IrFunction CreateFunction( string name
-                                      , bool isVarArg
-                                      , IDebugType<ITypeRef, DIType> returnType
-                                      , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
-                                      )
+                                        , bool isVarArg
+                                        , IDebugType<ITypeRef, DIType> returnType
+                                        , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
+                                        )
         {
             return CreateFunction( name, isVarArg, returnType, ( IEnumerable<IDebugType<ITypeRef, DIType>> )argumentTypes );
         }
@@ -861,7 +882,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, out T value )
+        bool IExtensiblePropertyContainer.TryGetExtendedPropertyValue<T>( string id, [MaybeNullWhen(false)] out T value )
             => PropertyBag.TryGetExtendedPropertyValue( id, out value );
 
         /// <inheritdoc/>

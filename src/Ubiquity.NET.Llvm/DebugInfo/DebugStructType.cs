@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public DebugStructType( BitcodeModule module
                               , string nativeName
-                              , DIScope scope
+                              , DIScope? scope
                               , string name
                               , DIFile? file
                               , uint line
@@ -90,12 +90,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public DebugStructType( IStructType llvmType
                               , BitcodeModule module
-                              , DIScope scope
+                              , DIScope? scope
                               , string name
-                              , DIFile file
+                              , DIFile? file
                               , uint line
                               , DebugInfoFlags debugFlags
-                              , DIType derivedFrom
+                              , DIType? derivedFrom
                               , IEnumerable<DIType> elements
                               , uint bitAlignment = 0
                               )
@@ -159,7 +159,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         public DebugStructType( BitcodeModule module
                               , string nativeName
-                              , DIScope scope
+                              , DIScope? scope
                               , string name
                               , DIFile? file = null
                               , uint line = 0
@@ -205,8 +205,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="debugElements">Descriptors for all the elements in the type</param>
         public void SetBody( bool packed
                            , BitcodeModule module
-                           , DIScope scope
-                           , DIFile file
+                           , DIScope? scope
+                           , DIFile? file
                            , uint line
                            , DebugInfoFlags debugFlags
                            , IEnumerable<DebugMemberInfo> debugElements
@@ -231,8 +231,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public void SetBody( bool packed
                            , BitcodeModule module
-                           , DIScope scope
-                           , DIFile file
+                           , DIScope? scope
+                           , DIFile? file
                            , uint line
                            , DebugInfoFlags debugFlags
                            , IEnumerable<ITypeRef> nativeElements
@@ -262,7 +262,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         }
 
         /// <summary>Gets a list of descriptors for each members</summary>
-        public IReadOnlyList<DebugMemberInfo>? DebugMembers { get; private set; }
+        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>( ).AsReadOnly( );
 
         private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
         {

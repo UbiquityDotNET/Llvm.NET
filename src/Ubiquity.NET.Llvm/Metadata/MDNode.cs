@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.ArgValidators;
@@ -28,7 +27,6 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     public class MDNode
         : LlvmMetadata
-        , IOperandContainer<LlvmMetadata>
     {
         /// <summary>Gets the <see cref="Context"/> this node belongs to</summary>
         public Context Context
@@ -64,7 +62,7 @@ namespace Ubiquity.NET.Llvm
         public bool IsDistinct => LibLLVMIsDistinct( MetadataHandle );
 
         /// <summary>Gets the operands for this node, if any</summary>
-        public IList<LlvmMetadata> Operands { get; }
+        public MetadataOperandCollection Operands { get; }
 
         /// <summary>Replace all uses of this node with a new node</summary>
         /// <param name="other">Node to replace this one with</param>
@@ -96,12 +94,12 @@ namespace Ubiquity.NET.Llvm
         /// <typeparam name="T">Type of the operand</typeparam>
         /// <param name="index">Index of the operand</param>
         /// <returns>Operand</returns>
-        /// <exception cref="InvalidCastException">When the the operand is not castable to <typeparamref name="T"/></exception>
-        /// <exception cref="IndexOutOfRangeException">When the index is out of range for the operands of this node</exception>
-        public T GetOperand<T>( int index )
+        /// <exception cref="InvalidCastException">When the operand is not castable to <typeparamref name="T"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException">When the index is out of range for the operands of this node</exception>
+        public T? GetOperand<T>( int index )
             where T : LlvmMetadata
         {
-            return ( T )Operands[ index ];
+            return Operands.GetOperand<T>( index );
         }
 
         /// <summary>Gets a string operand by index</summary>
@@ -130,49 +128,17 @@ namespace Ubiquity.NET.Llvm
         public static DeleteTemporary(MDNode node) {...}
         */
 
-        /// <inheritdoc/>
-        long IOperandContainer<LlvmMetadata>.Count => LibLLVMMDNodeGetNumOperands( MetadataHandle );
-
-        /// <inheritdoc/>
-        LlvmMetadata? IOperandContainer<LlvmMetadata>.this[ int index ]
-        {
-            get
-            {
-                ThrowIfDeleted( );
-                var node = LibLLVMGetOperandNode( LibLLVMMDNodeGetOperand( MetadataHandle, ( uint )index ) );
-                return TryGetFromHandle<LlvmMetadata>( Context, node, out LlvmMetadata? retVal ) ? retVal : null;
-            }
-
-            set => LibLLVMMDNodeReplaceOperand( MetadataHandle, ( uint )index, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
-        }
-
-        /// <inheritdoc/>
-        void IOperandContainer<LlvmMetadata>.Add( LlvmMetadata? item ) => throw new NotSupportedException( );
-
         internal MDNode( LLVMMetadataRef handle )
             : base( handle )
         {
-            Operands = new OperandList<LlvmMetadata>( this );
+            Operands = new MetadataOperandCollection( this );
         }
 
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         internal static T? FromHandle<T>( LLVMMetadataRef handle )
             where T : MDNode
         {
-            TryGetFromHandle<T>( handle, out T? node );
-            return node;
-        }
-
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created via GetMeatadataContext() is owned, and disposed of via the ContextCache" )]
-        internal static bool TryGetFromHandle<T>( LLVMMetadataRef handle, [MaybeNullWhen( false )] out T node )
-        where T : MDNode
-        {
-            if( handle == default )
-            {
-                node = default!;
-                return false;
-            }
-
-            return TryGetFromHandle<T>( GetMeatadataContext( handle ), handle, out node! );
+            return handle == default ? null : FromHandle<T>( GetMeatadataContext( handle ), handle );
         }
 
         private void ThrowIfDeleted( )
@@ -183,7 +149,6 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private static Context GetMeatadataContext( LLVMMetadataRef metadataHandle )
         {
             var hContext = LibLLVMGetNodeContext( metadataHandle ).ThrowIfInvalid()!;

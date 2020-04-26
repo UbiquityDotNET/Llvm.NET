@@ -83,7 +83,7 @@ namespace TestDebugInfo
             module.SourceFileName = Path.GetFileName( srcPath );
             module.TargetTriple = TargetDetails.TargetMachine.Triple;
             module.Layout = TargetDetails.TargetMachine.TargetData;
-            System.Diagnostics.Debug.Assert( !( module.DICompileUnit is null ), "Expected module with non-null compile unit" );
+            Debug.Assert( !( module.DICompileUnit is null ), "Expected module with non-null compile unit" );
 
             TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
             #endregion
@@ -94,7 +94,7 @@ namespace TestDebugInfo
             // Create basic types used in this compilation
             var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
             var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
-            var voidType = DebugType.Create<ITypeRef,DIType>( module.Context.VoidType, DITypeVoid.Instance );
+            var voidType = DebugType.Create<ITypeRef,DIType>( module.Context.VoidType, null );
             var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
             #endregion
 

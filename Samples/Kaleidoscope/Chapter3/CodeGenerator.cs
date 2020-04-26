@@ -216,7 +216,7 @@ namespace Kaleidoscope.Chapter3
             }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
-            var retVal = Module.AddFunction( prototype.Name, llvmSignature );
+            var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
 
             int index = 0;
             foreach( var argId in prototype.Parameters )

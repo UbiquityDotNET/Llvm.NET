@@ -4,7 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+/*
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -20,15 +22,22 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the count of operands in the container</summary>
         long Count { get; }
 
-        /// <summary>Gets or sets an operand</summary>
+        /// <summary>Gets an operand from the container</summary>
         /// <param name="index">Raw index of the operand in the container</param>
         /// <returns>Operand from the container</returns>
-        T? this[ int index ] { get; set; }
+        TItem? GetRawOperandAt<TItem>( int index )
+            where TItem : class, T;
 
-        /// <summary>Adds an item to the container</summary>
+        /// <summary>Sets an operand in the container</summary>
+        /// <param name="index">Raw index of the operand in the container</param>
+        /// <param name="value">Value to set at the index</param>
+        void SetRawOperandAt( int index, T? value );
+
+        /// <summary>Adds an item to the end of the container (i.e. append)</summary>
         /// <param name="item">item to add</param>
         /// <exception cref="NotSupportedException">If the container doesn't support adding items</exception>
         /// <exception cref="ArgumentNullException">If the container doesn't support adding null items</exception>
         void Add( T? item );
     }
 }
+*/

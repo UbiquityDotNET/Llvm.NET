@@ -33,22 +33,22 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="elements">Descriptors for the members of the type</param>
         public DebugUnionType( IStructType llvmType
                              , BitcodeModule module
-                             , DIScope scope
+                             , DIScope? scope
                              , string name
-                             , DIFile file
+                             , DIFile? file
                              , uint line
                              , DebugInfoFlags debugFlags
                              , IEnumerable<DebugMemberInfo> elements
                              )
-            : base( llvmType,
+            : base( llvmType.ValidateNotNull( nameof( llvmType ) ),
                     module.ValidateNotNull( nameof( module ) )
-                           .DIBuilder
-                           .CreateReplaceableCompositeType( Tag.UnionType
-                                                          , name
-                                                          , scope.ValidateNotNull( nameof( scope ) )
-                                                          , file.ValidateNotNull( nameof( scope ) )
-                                                          , line
-                                                          )
+                          .DIBuilder
+                          .CreateReplaceableCompositeType( Tag.UnionType
+                                                         , name
+                                                         , scope
+                                                         , file
+                                                         , line
+                                                         )
                   )
         {
             if( !llvmType.IsOpaque )
@@ -70,7 +70,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                              , string nativeName
                              , DIScope? scope
                              , string name
-                             , DIFile file
+                             , DIFile? file
                              , uint line = 0
                              )
             : base( module.ValidateNotNull( nameof( module ) ).Context.CreateStructType( nativeName ),
@@ -78,7 +78,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                           .CreateReplaceableCompositeType( Tag.UnionType
                                                          , name
                                                          , scope
-                                                         , file.ValidateNotNull( nameof( file ) )
+                                                         , file
                                                          , line
                                                          )
                   )
@@ -95,7 +95,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public string Name => NativeType.Name;
 
         /// <summary>Gets the description of each member of the type</summary>
-        public IReadOnlyList<DebugMemberInfo>? DebugMembers { get; private set; }
+        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>( ).AsReadOnly( );
 
         /// <summary>Sets the body of the union type</summary>
         /// <param name="module">Module to contain the debug metadata</param>
@@ -105,15 +105,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="debugFlags">Flags for the type</param>
         /// <param name="debugElements">Descriptors for each element in the type</param>
         public void SetBody( BitcodeModule module
-                           , DIScope scope
-                           , DIFile file
+                           , DIScope? scope
+                           , DIFile? file
                            , uint line
                            , DebugInfoFlags debugFlags
                            , IEnumerable<DebugMemberInfo> debugElements
                            )
         {
             module.ValidateNotNull( nameof( module ) );
-            scope.ValidateNotNull( nameof( scope ) );
             debugElements.ValidateNotNull( nameof( debugElements ) );
 
             if( module.Layout == null )
@@ -155,7 +154,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                        , ( a, d ) => (Math.Max( a.MaxSize, d.BitSize ), Math.Max( a.MaxAlign, d.BitAlignment ))
                                        );
             var concreteType = module.DIBuilder.CreateUnionType( scope: scope
-                                                               , name: DIType.Name
+                                                               , name: DIType!.Name // not null via construction
                                                                , file: file
                                                                , line: line
                                                                , bitSize: checked((uint)unionBitSize)

@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>
         /// true if the item was found and it's type matches <typeparamref name="T"/> false otherwise.
         /// </returns>
-        bool TryGetExtendedPropertyValue<T>( string id, [MaybeNull] out T value );
+        bool TryGetExtendedPropertyValue<T>( string id, [MaybeNullWhen(false)] out T value );
 
         /// <summary>Adds a value to the container</summary>
         /// <param name="id">Id of the value</param>

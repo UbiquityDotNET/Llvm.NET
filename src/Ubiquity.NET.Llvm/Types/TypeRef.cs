@@ -99,7 +99,7 @@ namespace Ubiquity.NET.Llvm.Types
             return FromHandle<IPointerType>( LLVMPointerType( TypeRefHandle, addressSpace ).ThrowIfInvalid( ) )!;
         }
 
-        public bool TryGetExtendedPropertyValue<T>( string id, out T value )
+        public bool TryGetExtendedPropertyValue<T>( string id, [MaybeNullWhen(false)] out T value )
             => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
 
         public void AddExtendedPropertyValue( string id, object? value )
@@ -151,7 +151,8 @@ namespace Ubiquity.NET.Llvm.Types
                     TypeKind.Pointer => new PointerType( handle ),
                     TypeKind.Vector => new VectorType( handle ),
                     TypeKind.Function => new FunctionType( handle ), // NOTE: This is a signature rather than a Function, which is a Value
-                    /* other types not yet supported in Object wrappers
+                    /* other types not yet supported in Object wrappers as LLVM itself doesn't
+                    // have any specific types for them (except for IntegerType)
                     // but the pattern for doing so should be pretty obvious...
                     // case TypeKind.Void:
                     // case TypeKind.Float16:
@@ -161,7 +162,7 @@ namespace Ubiquity.NET.Llvm.Types
                     // case TypeKind.Float128m112:
                     // case TypeKind.Float128:
                     // case TypeKind.Label:
-                    // case TypeKind.Integer:
+                    // case TypeKind.Integer: => IntegerType
                     // case TypeKind.Metadata:
                     // case TypeKind.X86MMX:
                     */

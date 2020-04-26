@@ -14,13 +14,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DIType
     {
         /// <summary>Gets the base type for this type, if any</summary>
-        public DIType BaseType => GetOperand<DIType>( 3 );
+        public DIType? BaseType => GetOperand<DIType>( 3 );
 
         /// <summary>Gets the elements of this <see cref="DICompositeType"/></summary>
         public DINodeArray Elements => new DINodeArray( GetOperand<MDTuple>( 4 ) );
 
         /// <summary>Gets the type that holds the VTable for this type, if any</summary>
-        public DIType VTableHolder => GetOperand<DIType>( 5 );
+        public DIType? VTableHolder => GetOperand<DIType>( 5 );
 
         /// <summary>Gets the template parameters for this type, if any</summary>
         public DITemplateParameterArray? TemplateParameters

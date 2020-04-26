@@ -535,7 +535,7 @@ namespace Ubiquity.NET.Llvm.Tests
             var ctx = module.Context;
             Assert.IsNotNull( ctx );
 
-            var testFunc = module.AddFunction( name, ctx.GetFunctionType( ctx.VoidType ) );
+            var testFunc = module.CreateFunction( name, ctx.GetFunctionType( ctx.VoidType ) );
             var entryBlock = testFunc.AppendBasicBlock( "entry" );
             Assert.IsNotNull( testFunc.EntryBlock );
             Assert.AreSame( entryBlock, testFunc.EntryBlock );
@@ -549,7 +549,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             var ctx = module.Context;
 
-            var testFunc = module.AddFunction( name, ctx.GetFunctionType( ctx.VoidType ) );
+            var testFunc = module.CreateFunction( name, ctx.GetFunctionType( ctx.VoidType ) );
             testFunc.AppendBasicBlock( "entry" );
 
             // UNTERMINATED BLOCK INTENTIONAL

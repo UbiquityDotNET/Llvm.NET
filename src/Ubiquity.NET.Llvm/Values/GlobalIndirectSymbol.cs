@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -15,8 +16,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the symbol this indirectly references</summary>
         public Constant IndirectSymbol
         {
-            get => GetOperand<Constant>( 0 );
-            set => Operands[ 0 ] = value;
+            get => Operands.GetOperand<Constant>( 0 )!;
+            set => Operands[ 0 ] = value.ValidateNotNull( nameof( value ) );
         }
 
         internal GlobalIndirectSymbol( LLVMValueRef handle )

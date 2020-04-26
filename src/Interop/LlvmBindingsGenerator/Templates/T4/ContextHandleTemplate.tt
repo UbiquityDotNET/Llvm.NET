@@ -63,7 +63,7 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             if( Handle == IntPtr.Zero )
             {
-                throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " );
+                throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " );
             }
 
             return this;

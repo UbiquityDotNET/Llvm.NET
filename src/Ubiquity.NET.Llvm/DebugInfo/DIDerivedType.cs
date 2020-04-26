@@ -24,8 +24,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets the base type of this type</summary>
         public DIType BaseType => GetOperand<DIType>( 3 )!;
 
-        /// <summary>Gets the extra data attached to this derived type</summary>
-        public LlvmMetadata ExtraData => Operands[ 4 ];
+        /// <summary>Gets the extra data, if any, attached to this derived type</summary>
+        public LlvmMetadata? ExtraData => Operands[ 4 ];
 
         /// <summary>Gets the Class type extra data for a pointer to member type, if any</summary>
         public DIType? ClassType => Tag != Tag.PointerToMemberType ? null : GetOperand<DIType>( 4 );

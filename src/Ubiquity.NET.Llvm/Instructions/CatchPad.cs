@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -23,8 +24,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets the <seealso cref="Ubiquity.NET.Llvm.Instructions.CatchSwitch"/> for this pad</summary>
         public CatchSwitch CatchSwitch
         {
-            get => GetOperand<CatchSwitch>( -1 );
-            set => SetOperand( -1, value );
+            get => Operands.GetOperand<CatchSwitch>( ^1 )!;
+            set => Operands[ ^1 ] = value.ValidateNotNull( nameof( value ) );
         }
 
         internal CatchPad( LLVMValueRef valueRef )

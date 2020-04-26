@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DIFile? File => FromHandle<DIFile>( LLVMDIVariableGetFile( MetadataHandle ) );
 
         /// <summary>Gets the Debug information type for this variable</summary>
-        public DIType DIType => GetOperand<DIType>( 3 ); // TODO: Can this ever legitimately be null? (Previous releases essentially allowed for that)
+        public DIType? DIType => GetOperand<DIType>( 3 );
 
         internal DIVariable( LLVMMetadataRef handle )
             : base( handle )

@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -20,11 +21,12 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets the Parent pad for this <see cref="CatchSwitch"/></summary>
         public Value ParentPad
         {
-            get => GetOperand<Value>( 0 );
-            set => SetOperand( 0, value );
+            get => Operands.GetOperand<Value>( 0 )!;
+            set => Operands[ 0 ] = value.ValidateNotNull( nameof(value) );
         }
 
         /* TODO: Enable UnwindDestination once the non-operand properties are enabled
+            LLVMGetUnwindDest is available now...
             BasicBlock UnwindDestination
             {
                 get => HasUnwindDestination ? GetOperand<BasicBlock>( 1 );
@@ -41,7 +43,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
         /* TODO: non-operand properties
             bool HasUnwindDestination { get; }
-            bool UnwindsToCaller { get; }
+            bool UnwindsToCaller => !HasUnwindDestination;
         */
 
         internal CatchSwitch( LLVMValueRef valueRef )

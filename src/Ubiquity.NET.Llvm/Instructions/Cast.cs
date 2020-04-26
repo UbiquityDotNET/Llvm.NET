@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         : UnaryInstruction
     {
         /// <summary>Gets the source type of the cast</summary>
-        public ITypeRef FromType => GetOperand<Value>( 0 ).NativeType;
+        public ITypeRef FromType => Operands.GetOperand<Value>( 0 )!.NativeType;
 
         /// <summary>Gets the destination type of the cast</summary>
         public ITypeRef ToType => NativeType;

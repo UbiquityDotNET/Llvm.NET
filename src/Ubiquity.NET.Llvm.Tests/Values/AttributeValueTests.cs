@@ -97,7 +97,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var ctx = new Context( );
             using var module = ctx.CreateBitcodeModule( );
             var signature = ctx.GetFunctionType( ctx.DoubleType, ctx.Int8Type.CreatePointerType( ), ctx.Int32Type );
-            var function = module.AddFunction( "test", signature );
+            var function = module.CreateFunction( "test", signature );
             function.Parameters[ 0 ].AddAttributes( AttributeKind.Nest, AttributeKind.ByVal );
             var attributes = function.GetAttributesAtIndex( FunctionAttributeIndex.Parameter0 ).ToArray( );
             Assert.AreEqual( 2, attributes.Length );

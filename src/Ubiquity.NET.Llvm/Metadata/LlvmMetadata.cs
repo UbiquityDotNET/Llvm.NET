@@ -148,32 +148,7 @@ namespace Ubiquity.NET.Llvm
         internal static T? FromHandle<T>( Context context, LLVMMetadataRef handle )
             where T : LlvmMetadata
         {
-            TryGetFromHandle<T>( context, handle, out T? retVal );
-            return retVal;
-        }
-
-        internal static bool TryGetFromHandle<T>( Context context, LLVMMetadataRef handle, [MaybeNullWhen( false )] out T node )
-            where T : LlvmMetadata
-        {
-            if( handle == default )
-            {
-                // special case for void debug type to simplify the use of non-nullable ref types
-                // when looking up a debug type that has a null handle, then treat it as the void
-                // type, since that is how LLVM represents a void debug type. :(
-                if( typeof( T ) == typeof( DIType ) )
-                {
-                    // T Is known to be DIType so this can't result in node == null,
-                    // but the compiler isn't *that* smart about checking for nullability
-                    node = ( DITypeVoid.Instance as T )!;
-                    return true;
-                }
-
-                node = null!;
-                return false;
-            }
-
-            node = ( T )context.GetNodeFor( handle );
-            return true;
+            return handle == default ? null : ( T )context.GetNodeFor( handle );
         }
 
         internal class InterningFactory
@@ -292,11 +267,6 @@ namespace Ubiquity.NET.Llvm
 
         private protected LlvmMetadata( LLVMMetadataRef handle )
         {
-            if( handle == default && GetType( ) != typeof( DITypeVoid ) )
-            {
-                throw new ArgumentNullException( nameof( handle ) );
-            }
-
             MetadataHandle = handle;
         }
     }

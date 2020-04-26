@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.Tests
             module.Layout = tm.TargetData;
 
             var doubleType = new DebugBasicType( llvmContext.DoubleType, module, "double", DiTypeKind.Float );
-            var voidType = DebugType.Create<ITypeRef, DIType>( module.Context.VoidType, DITypeVoid.Instance );
+            var voidType = DebugType.Create<ITypeRef, DIType>( module.Context.VoidType, null );
 
             var printDecl = module.CreateFunction( PrintFuncName, false, voidType, doubleType );
 
