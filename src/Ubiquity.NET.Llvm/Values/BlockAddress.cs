@@ -13,10 +13,10 @@ namespace Ubiquity.NET.Llvm.Values
         : Constant
     {
         /// <summary>Gets the <see cref="Function"/> that owns the block</summary>
-        public IrFunction Function => GetOperand<IrFunction>( 0 );
+        public IrFunction Function => Operands.GetOperand<IrFunction>( 0 )!;
 
         /// <summary>Gets the <see cref="BasicBlock"/> the address refers to</summary>
-        public BasicBlock BasicBlock => GetOperand<BasicBlock>( 1 );
+        public BasicBlock BasicBlock => Operands.GetOperand<BasicBlock>( 1 )!;
 
         internal BlockAddress( LLVMValueRef valueRef )
             : base( valueRef )

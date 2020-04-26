@@ -12,7 +12,7 @@ using Ubiquity.NET.Llvm.Types;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
-    /// <summary>Provides debug information binding between an <see cref="IArrayType"/>and a <see cref="DICompositeType"/></summary>
+    /// <summary>Provides debug information binding between an <see cref="IArrayType"/> and a <see cref="DICompositeType"/></summary>
     /// <seealso href="xref:llvm_langref#dicompositetype">DICompositeType</seealso>
     public class DebugArrayType
         : DebugType<IArrayType, DICompositeType>
@@ -34,6 +34,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                              )
             : base( llvmType, BuildDebugType( llvmType, elementType, module, count, lowerBound, alignment ) )
         {
+            elementType.ValidateNotNull(nameof( elementType ) );
+            elementType.DIType.ValidateNotNull( $"{nameof( elementType )}.{nameof( elementType.DIType )}" );
             DebugElementType = elementType;
         }
 
@@ -90,11 +92,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentNullException( nameof( diBuilder ) );
             }
 
-            if( DIType.IsTemporary && !DIType.IsResolved )
+            if( DIType != null && DIType.IsTemporary && !DIType.IsResolved )
             {
                 DIType = diBuilder.CreateArrayType( layout.BitSizeOf( NativeType )
                                                   , layout.AbiBitAlignmentOf( NativeType )
-                                                  , DebugElementType.DIType
+                                                  , DebugElementType.DIType!
                                                   , diBuilder.CreateSubRange( LowerBound, NativeType.Length )
                                                   );
             }
@@ -121,12 +123,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             {
                 return module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmType )
                                                        , alignment
-                                                       , elementType.DIType
+                                                       , elementType.DIType! // validated not null in constructor
                                                        , module.DIBuilder.CreateSubRange( lowerBound, count )
                                                        );
             }
 
-            return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType, string.Empty, module.DICompileUnit, null, 0 );
+            return module.DIBuilder.CreateReplaceableCompositeType( Tag.ArrayType
+                                                                  , string.Empty
+                                                                  , module.DICompileUnit ?? default
+                                                                  , default
+                                                                  , 0
+                                                                  );
         }
     }
 }

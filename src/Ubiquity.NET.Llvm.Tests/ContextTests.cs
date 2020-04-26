@@ -598,9 +598,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -635,19 +635,19 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantStruct ) );
             Assert.IsInstanceOfType( value.Operands[ 3 ], typeof( ConstantInt ) );
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 3 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 3 ]! ).SignExtendedValue );
 
             // verify the nested struct is generated correctly
-            var nestedConst = ( Constant )value.Operands[ 2 ];
-            Assert.IsInstanceOfType( nestedConst.Operands[ 0 ], typeof( ConstantInt ) );
-            Assert.IsInstanceOfType( nestedConst.Operands[ 1 ], typeof( ConstantDataArray ) );
-            Assert.IsInstanceOfType( nestedConst.Operands[ 2 ], typeof( ConstantInt ) );
+            var nestedConst = ( Constant )value.Operands[ 2 ]!;
+            Assert.IsInstanceOfType( nestedConst.Operands[ 0 ]!, typeof( ConstantInt ) );
+            Assert.IsInstanceOfType( nestedConst.Operands[ 1 ]!, typeof( ConstantDataArray ) );
+            Assert.IsInstanceOfType( nestedConst.Operands[ 2 ]!, typeof( ConstantInt ) );
 
-            Assert.AreEqual( 5, ( ( ConstantInt )nestedConst.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( "Hello", ( ( ConstantDataSequential )nestedConst.Operands[ 1 ] ).ExtractAsString( ) );
-            Assert.AreEqual( 6, ( ( ConstantInt )nestedConst.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 5, ( ( ConstantInt )nestedConst.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( "Hello", ( ( ConstantDataSequential )nestedConst.Operands[ 1 ]! ).ExtractAsString( ) );
+            Assert.AreEqual( 6, ( ( ConstantInt )nestedConst.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -676,9 +676,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -709,9 +709,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -740,9 +740,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -771,9 +771,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -807,9 +807,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -843,9 +843,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -879,9 +879,9 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
             Assert.IsInstanceOfType( value.Operands[ 2 ], typeof( ConstantInt ) );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ] ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ] ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ] ).SignExtendedValue );
+            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
+            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
+            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );

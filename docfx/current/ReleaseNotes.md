@@ -33,7 +33,7 @@ to make nullability more explicit. This necessitated a few minor breaking change
 | Name            | Description  |
 |-----------------|--------------|
 | DebugMemberInfo | Removed setters of non-nullable properties and added constructor to allow building the type with non-null values | 
-| DIType          | null is no longer used to represent a void type, instead a new singleton DITypeVoid.Instance is used.|
+
 
 ### Renamed instruction predicate enumerator values
 The comparison instruction predicates `Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]`were renamed for greater consistency
@@ -58,6 +58,11 @@ Some APIs had inconsistent, misspelled or confusing names and were updated.
 |------------------------|--------------|
 | `Ubiquity.NET.Llvm.Transforms.ScalarTransforms.LowerAtomicPass<T>` | `Ubiquity.NET.Llvm.Transforms.ScalarTransforms.AddLowerAtomicPass<T>` |
 
+### Obsoleted APIs
+| Obsolete API              | Alternative API                | Justification |
+|---------------------------|--------------------------------|---------------|
+| BitcodeModule.AddFunction | BitcodeModule.CreateFunction() | The Create vs Add between debug info and raw native was always confusing |
+
 ### Removed redundant APIs
 LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality equivalent to 
 APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some
@@ -65,7 +70,7 @@ of the custom APIs were removed and replaced with the official ones.
 
 | Removed custom API | New Official API |
 |--------------------|------------------|
-| LibLLVMFoo{TBD}    | LLVMFoo{TBD}     |
+| LibLLVMFoo [TBD]   | LLVMFoo [TBD]    |
 
 ### Disabled ORCJIT LazyFunction binding
 Unfortunately, the ORCJIT truly lazy function generation callback support is currently disabled. LLVM itself is transitioning to the ORCJIT v2 and in the process

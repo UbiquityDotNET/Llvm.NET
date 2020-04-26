@@ -20,10 +20,10 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <note type="note">This returns the associated <see cref="CatchSwitch"/> if this
         /// <see cref="FuncletPad"/> is a <see cref="CleanupPad"/> instruction.</note>
         /// </remarks>
-        public Value ParentPad => GetOperand<Value>( -1 );
+        public Value ParentPad => Operands[ ^1 ]!;
 
         /// <summary>Gets the argument operands for this <see cref="FuncletPad"/>.</summary>
-        public IList<Value> ArgOperands => new OperandList<Value>( this, 1 );
+        public IOperandCollection<Value?> ArgOperands => ((IOperandCollection<Value?>)Operands)[1..];
 
         internal FuncletPad( LLVMValueRef valueRef )
             : base( valueRef )

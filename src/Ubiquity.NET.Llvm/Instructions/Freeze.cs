@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         : UnaryInstruction
     {
         /// <summary>Gets the value this instruction freezes</summary>
-        public Value Value => GetOperand<Value>( 0 );
+        public Value Value => Operands.GetOperand<Value>( 0 )!;
 
         internal Freeze( LLVMValueRef valueRef )
             : base( valueRef )

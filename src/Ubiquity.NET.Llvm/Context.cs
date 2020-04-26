@@ -229,7 +229,7 @@ namespace Ubiquity.NET.Llvm
             }
 
             var nativeArgTypes = new List<ITypeRef>( );
-            var debugArgTypes = new List<DIType>( );
+            var debugArgTypes = new List<DIType?>( );
             var msg = new StringBuilder( Resources.One_or_more_parameter_types_are_not_valid );
             bool hasParamErrors = false;
 
@@ -467,19 +467,14 @@ namespace Ubiquity.NET.Llvm
             value.ValidateNotNullOrWhiteSpace( nameof( value ) );
             var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
             var hNode = LLVMMDNodeInContext2( ContextHandle, elements, ( uint )elements.Length );
-            if( MDNode.TryGetFromHandle<MDNode>( hNode, out MDNode? retVal ) )
-            {
-                return retVal;
-            }
-
-            throw new InternalCodeGeneratorException( $"Cannot create MDNode {value}" );
+            return MDNode.FromHandle<MDNode>( hNode.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Create a constant data string value</summary>
         /// <param name="value">string to convert into an LLVM constant value</param>
         /// <returns>new <see cref="ConstantDataArray"/></returns>
         /// <remarks>
-        /// This converts th string to ANSI form and creates an LLVM constant array of i8
+        /// This converts the string to ANSI form and creates an LLVM constant array of i8
         /// characters for the data without any terminating null character.
         /// </remarks>
         public ConstantDataArray CreateConstantString( string value )

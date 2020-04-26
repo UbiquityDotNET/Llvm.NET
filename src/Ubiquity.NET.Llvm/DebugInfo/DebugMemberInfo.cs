@@ -25,12 +25,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="line">Line number containing the member</param>
         /// <param name="debugType">Debug type for the member</param>
         /// <param name="debugInfoFlags">Flags for the member</param>
+        /// <param name="explicitLayout">Explicit layout information for this member, if any</param>
         public DebugMemberInfo( uint index
                               , string name
-                              , DIFile file
+                              , DIFile? file
                               , uint line
                               , IDebugType<ITypeRef, DIType> debugType
                               , DebugInfoFlags debugInfoFlags = DebugInfoFlags.None
+                              , DebugMemberLayout? explicitLayout = null
                               )
         {
             Index = index;
@@ -39,6 +41,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             Line = line;
             DebugType = debugType;
             DebugInfoFlags = debugInfoFlags;
+            ExplicitLayout = explicitLayout;
         }
 
         /// <summary>Gets the LLVM structure element index this descriptor describes</summary>
@@ -48,7 +51,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public string Name { get; }
 
         /// <summary>Gets the file the field is declared in</summary>
-        public DIFile File { get; }
+        public DIFile? File { get; }
 
         /// <summary>Gets the source line the field is declared on</summary>
         public uint Line { get; }
@@ -59,7 +62,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets the debug type information for this field</summary>
         public IDebugType<ITypeRef, DIType> DebugType { get; }
 
-        /// <summary>Gets or sets the explicit layout information for this member</summary>
+        /// <summary>Gets the explicit layout information for this member</summary>
         /// <remarks>If this is <see langword="null"/> then <see href="xref:Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody*">DebugStructType.SetBody</see>
         /// will default to using <see cref="BitcodeModule.Layout"/> to determine the size using the module's target specific layout.
         /// <note type="Important">
@@ -69,6 +72,6 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// include the "packed" modifier.
         /// </note>
         /// </remarks>
-        public DebugMemberLayout? ExplicitLayout { get; set; }
+        public DebugMemberLayout? ExplicitLayout { get; }
     }
 }

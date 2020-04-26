@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm.Instructions
@@ -18,8 +19,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets the <see cref="CleanupPad"/> for this instruction</summary>
         public CleanupPad CleanupPad
         {
-            get => GetOperand<CleanupPad>( 0 );
-            set => SetOperand( 0, value );
+            get => Operands.GetOperand<CleanupPad>( 0 )!;
+            set => Operands[ 0 ] = value.ValidateNotNull( nameof( value ) );
         }
 
         /* TODO: Enable UnwindDestination once the non-operand properties are enabled

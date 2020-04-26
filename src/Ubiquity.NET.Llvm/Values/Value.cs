@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
@@ -88,7 +89,8 @@ namespace Ubiquity.NET.Llvm.Values
         }
 
         /// <inheritdoc/>
-        public bool TryGetExtendedPropertyValue<T>( string id, out T value ) => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
+        public bool TryGetExtendedPropertyValue<T>( string id, [MaybeNullWhen(false)] out T value )
+            => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
 
         /// <inheritdoc/>
         public void AddExtendedPropertyValue( string id, object? value ) => ExtensibleProperties.AddExtendedPropertyValue( id, value );

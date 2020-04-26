@@ -511,9 +511,13 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
         }
 
+        /// <summary>Gets a, potentially empty, collection of successor blocks for this instruction</summary>
+        public IOperandCollection<BasicBlock> Successors { get; }
+
         internal Instruction( LLVMValueRef valueRef )
             : base( valueRef )
         {
+            Successors = new SuccessorBlockCollection( this );
         }
     }
 }

@@ -16,10 +16,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         : Terminator
     {
         /// <summary>Gets the <see cref="CatchPad"/> instruction associated with this <see cref="CatchReturn"/></summary>
-        public CatchPad CatchPad => GetOperand<CatchPad>( 0 );
-
-        /// <summary>Gets the Successor <see cref="BasicBlock"/>s for this instruction</summary>
-        public IReadOnlyList<BasicBlock> Successors => new List<BasicBlock> { GetOperand<BasicBlock>( 1 ) };
+        public CatchPad CatchPad => Operands.GetOperand<CatchPad>( 0 )!;
 
         /// <summary>Gets the <see cref="CatchSwitch.ParentPad"/> property from the <see cref="Ubiquity.NET.Llvm.Instructions.CatchPad.CatchSwitch"/>
         /// of the <see cref="CatchReturn.CatchPad"/> property</summary>

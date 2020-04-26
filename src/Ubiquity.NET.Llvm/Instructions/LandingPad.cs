@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -23,11 +20,7 @@ namespace Ubiquity.NET.Llvm.Instructions
     /// <seealso href="xref:llvm_exception_handling#exception-handling-in-llvm">Exception Handling in LLVM</seealso>
     public class LandingPad
         : Instruction
-        , IOperandContainer<Constant>
     {
-        /// <summary>Gets the list of clauses for this pad</summary>
-        public IList<Constant> Clauses { get; }
-
         /// <summary>Gets or sets a value indicating whether this <see cref="LandingPad"/> is a cleanup pad</summary>
         public bool IsCleanup
         {
@@ -35,29 +28,13 @@ namespace Ubiquity.NET.Llvm.Instructions
             set => LLVMSetCleanup( ValueHandle, value );
         }
 
-        /// <inheritdoc/>
-        long IOperandContainer<Constant>.Count => Operands.Count;
-
-        /// <inheritdoc/>
-        Constant? IOperandContainer<Constant>.this[ int index ]
-        {
-            get => GetOperand<Constant>( index );
-            set => Operands[ index ] = value.ValidateNotNull( nameof( value ) )!;
-        }
-
-        /// <inheritdoc/>
-        /// <remarks>The <paramref name="item"/> parameter must not be <see langword="null"/></remarks>
-        void IOperandContainer<Constant>.Add( Constant? item )
-        {
-            item.ValidateNotNull( nameof( item ) );
-
-            LLVMAddClause( ValueHandle, item!.ValueHandle );
-        }
+        /// <summary>Gets the collection of clauses for this landing pad</summary>
+        public ValueOperandListCollection<Constant> Clauses { get; }
 
         internal LandingPad( LLVMValueRef valueRef )
             : base( valueRef )
         {
-            Clauses = new OperandList<Constant>( this );
+            Clauses = new ValueOperandListCollection<Constant>( this );
         }
     }
 }

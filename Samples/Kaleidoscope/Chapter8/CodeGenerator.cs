@@ -82,10 +82,10 @@ namespace Kaleidoscope.Chapter8
 
             if( AnonymousFunctions.Count > 0 )
             {
-                var mainFunction = Module.AddFunction( "main", Context.GetFunctionType( Context.VoidType ) );
+                var mainFunction = Module.CreateFunction( "main", Context.GetFunctionType( Context.VoidType ) );
                 var block = mainFunction.AppendBasicBlock( "entry" );
                 var irBuilder = new InstructionBuilder( block );
-                var printdFunc = Module.AddFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+                var printdFunc = Module.CreateFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
                 foreach( var anonFunc in AnonymousFunctions )
                 {
                     var value = irBuilder.Call( anonFunc );
@@ -482,7 +482,7 @@ namespace Kaleidoscope.Chapter8
             }
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
-            var retVal = Module.AddFunction( prototype.Name, llvmSignature );
+            var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
 
             int index = 0;
             foreach( var argId in prototype.Parameters )

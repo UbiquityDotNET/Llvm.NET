@@ -63,7 +63,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             var module = ctx.CreateBitcodeModule(modulename);
             module.Layout = machine.TargetData;
-            IrFunction main = module.AddFunction( functionname, ctx.GetFunctionType( ctx.Int32Type ) );
+            IrFunction main = module.CreateFunction( functionname, ctx.GetFunctionType( ctx.Int32Type ) );
             BasicBlock entryBlock = main.AppendBasicBlock("entry");
             var bldr = new InstructionBuilder(entryBlock);
             bldr.Return( ctx.CreateConstant( magicNumber ) );

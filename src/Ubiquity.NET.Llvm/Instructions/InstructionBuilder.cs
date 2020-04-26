@@ -48,17 +48,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets the current Debug Location for this <see cref="InstructionBuilder"/></summary>
         public DILocation? CurrentDebugLocation
         {
-            get
-            {
-                MDNode.TryGetFromHandle<DILocation>( LLVMGetCurrentDebugLocation2( BuilderHandle ), out DILocation? retVal );
-                return retVal;
-            }
+            get => MDNode.FromHandle<DILocation>( LLVMGetCurrentDebugLocation2( BuilderHandle ) );
 
-            set
-            {
-                value.ValidateNotNull( nameof( value ) );
-                LLVMSetCurrentDebugLocation2( BuilderHandle, value!.MetadataHandle );
-            }
+            set => LLVMSetCurrentDebugLocation2( BuilderHandle, value.ValidateNotNull( nameof( value ) )!.MetadataHandle );
         }
 
         /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>

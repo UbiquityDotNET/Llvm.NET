@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
+using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
@@ -23,7 +24,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// </remarks>
     [SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Collection doesn't make sense for this type" )]
     public class TupleTypedArrayWrapper<T>
-        : IReadOnlyList<T>
+        : IReadOnlyList<T?>
         where T : LlvmMetadata
     {
         /// <summary>Gets the underlying tuple for this wrapper</summary>
@@ -33,26 +34,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public int Count => Tuple?.Operands.Count ?? 0;
 
         /// <inheritdoc />
-        public T this[ int index ]
+        public T? this[ int index ]
         {
             get
             {
-                if( Tuple == null )
-                {
-                    throw new InvalidOperationException( Resources.Wrapped_node_is_null );
-                }
-
-                if( index > Tuple.Operands.Count )
-                {
-                    throw new ArgumentOutOfRangeException( nameof( index ) );
-                }
-
-                return ( T )Tuple.Operands[ index ];
+                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                return Tuple!.Operands.GetOperand<T>( index );
             }
         }
 
         /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator( )
+        public IEnumerator<T?> GetEnumerator( )
         {
             return Tuple is null
                 ? Enumerable.Empty<T>( ).GetEnumerator( )

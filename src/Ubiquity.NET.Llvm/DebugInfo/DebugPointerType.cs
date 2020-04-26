@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, BitcodeModule module, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( debugElementType.ValidateNotNull( nameof( debugElementType ) ).NativeType
                   , module
-                  , debugElementType.ValidateNotNull( nameof( debugElementType ) ).DIType
+                  , debugElementType.DIType
                   , addressSpace
                   , name
                   , alignment
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment of pointer</param>
-        public DebugPointerType( ITypeRef llvmElementType, BitcodeModule module, DIType elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
+        public DebugPointerType( ITypeRef llvmElementType, BitcodeModule module, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( llvmElementType.ValidateNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
                   , module
                   , elementType
@@ -55,7 +55,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment for pointer type</param>
-        public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType elementType, string? name = null, uint alignment = 0 )
+        public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType? elementType, string? name = null, uint alignment = 0 )
             : base( llvmPtrType,
                     module.ValidateNotNull( nameof( module ) )
                           .DIBuilder

@@ -45,7 +45,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         TNative NativeType { get; }
 
         /// <summary>Gets the debug information type this interface is associating with <see cref="NativeType"/></summary>
-        TDebug DIType { get; }
+        TDebug? DIType { get; }
 
         /// <summary>Creates a pointer to this type for a given module and address space</summary>
         /// <param name="bitcodeModule">Module the debug type information belongs to</param>
@@ -76,26 +76,26 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <para>Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
         /// is <see langword="true"/>. If the debug type node is a temporary setting the type will replace all uses
         /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/></para>
-        /// <para>Since setting this property will replace all uses with (RAUW) the new value setting this property with <see langword="null"/>
-        /// is not allowed. However, until set this property will be <see  langword="null"/></para>
+        /// <para>Since setting this property will replace all uses with (RAUW) the new value then setting this property
+        /// with <see langword="null"/> is not allowed. However, until set this property will be <see  langword="null"/></para>
         /// </remarks>
         /// <exception cref="System.InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
-        public TDebug DIType
+        public TDebug? DIType
         {
             get => RawDebugInfoType;
             set
             {
-                value.ValidateNotNull( nameof( value ) );
+                TDebug v = value.ValidateNotNull( nameof( value ) )!;
                 if( ( RawDebugInfoType != null ) && RawDebugInfoType.IsTemporary )
                 {
-                    if( value.IsTemporary )
+                    if( v.IsTemporary )
                     {
                         throw new InvalidOperationException( Resources.Cannot_replace_a_temporary_with_another_temporary );
                     }
 
-                    RawDebugInfoType.ReplaceAllUsesWith( value );
-                    RawDebugInfoType = value;
+                    RawDebugInfoType.ReplaceAllUsesWith( v );
+                    RawDebugInfoType = v;
                 }
                 else
                 {
@@ -197,7 +197,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         }
 
         /// <inheritdoc/>
-        public bool TryGetExtendedPropertyValue<TProperty>( string id, out TProperty value )
+        public bool TryGetExtendedPropertyValue<TProperty>( string id, [MaybeNullWhen(false)] out TProperty value )
         {
             return PropertyContainer.TryGetExtendedPropertyValue( id, out value )
                 || NativeType.TryGetExtendedPropertyValue( id, out value );
@@ -212,9 +212,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessing the <see cref="DIType"/> property</summary>
         /// <param name="self">The type to convert</param>
         [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "DIType is available as a property, this is for convenience" )]
-        public static implicit operator TDebug( DebugType<TNative, TDebug> self ) => self.ValidateNotNull( nameof( self ) ).DIType;
+        public static implicit operator TDebug?( DebugType<TNative, TDebug> self ) => self.ValidateNotNull( nameof( self ) ).DIType;
 
-        internal DebugType( TNative llvmType, TDebug debugInfoType )
+        internal DebugType( TNative llvmType, TDebug? debugInfoType )
         {
             llvmType.ValidateNotNull( nameof( llvmType ) );
 
@@ -222,7 +222,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             RawDebugInfoType = debugInfoType;
         }
 
-        private TDebug RawDebugInfoType;
+        private TDebug? RawDebugInfoType;
 
         // This can't be an auto property as the setter needs Enforce Set Once semantics
         [SuppressMessage( "StyleCop.CSharp.NamingRules"
@@ -242,10 +242,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <typeparam name="TNative">Type of the Native LLVM type for the association</typeparam>
         /// <typeparam name="TDebug">Type of the debug information type for the association</typeparam>
         /// <param name="nativeType"><typeparamref name="TNative"/> type instance for this association</param>
-        /// <param name="debugType"><typeparamref name="TDebug"/> type instance for this association (use <see cref="DITypeVoid.Instance"/> for void)</param>
+        /// <param name="debugType"><typeparamref name="TDebug"/> type instance for this association (use <see langword="null"/> for void)</param>
         /// <returns><see cref="IDebugType{NativeT, DebugT}"/> implementation for the specified association</returns>
         public static IDebugType<TNative, TDebug> Create<TNative, TDebug>( TNative nativeType
-                                                                         , TDebug debugType
+                                                                         , TDebug? debugType
                                                                          )
             where TNative : class, ITypeRef
             where TDebug : DIType

@@ -60,7 +60,7 @@ namespace Ubiquity.NET.Llvm
 
             Behavior = ( ModuleFlagBehavior )( behaviorConst.ZeroExtendedValue );
             Name = nameMd.ToString( );
-            Metadata = node.Operands[ 2 ];
+            Metadata = node.Operands[ 2 ]!;
         }
     }
 }
