@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +24,13 @@ namespace Ubiquity.NET.Llvm.Instructions
     {
         /// <summary>Gets the target function of the invocation</summary>
         public IrFunction TargetFunction => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
+
+        /// <summary>Gets or sets the normal destination for the invoke</summary>
+        public BasicBlock NormalDestination
+        {
+            get => BasicBlock.FromHandle( LLVMGetNormalDest( ValueHandle ).ThrowIfInvalid() )!;
+            set => LLVMSetNormalDest( ValueHandle, value.ValidateNotNull( nameof( value ) ).BlockHandle );
+        }
 
         /// <summary>Gets the attributes for this call site</summary>
         public IAttributeDictionary Attributes { get; }
