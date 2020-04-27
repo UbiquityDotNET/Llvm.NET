@@ -37,6 +37,7 @@ extern "C" {
 
     void LibLLVMGetVersionInfo( LibLLVMVersionInfo* pVersionInfo );
 
+    LLVMBool LibLLVMHasUnwindDest( LLVMValueRef Invoke );
 #ifdef __cplusplus
 }
 #endif

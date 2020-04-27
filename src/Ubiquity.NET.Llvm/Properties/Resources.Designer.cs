@@ -351,6 +351,15 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot set UnwindDestination for instruction that unwinds to caller.
+        /// </summary>
+        internal static string Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller {
+            get {
+                return ResourceManager.GetString("Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Condition value must be an i1 or vector of i1.
         /// </summary>
         internal static string Condition_value_must_be_an_i1_or_vector_of_i1 {

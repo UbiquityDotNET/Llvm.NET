@@ -4,9 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
+
+using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Instructions
 {
@@ -25,26 +30,42 @@ namespace Ubiquity.NET.Llvm.Instructions
             set => Operands[ 0 ] = value.ValidateNotNull( nameof(value) );
         }
 
-        /* TODO: Enable UnwindDestination once the non-operand properties are enabled
-            LLVMGetUnwindDest is available now...
-            BasicBlock UnwindDestination
-            {
-                get => HasUnwindDestination ? GetOperand<BasicBlock>( 1 );
-                set
-                {
-                    if(!HasUnwindDestination)
-                    {
-                        throw new ArgumentException();
-                    }
-                    SetOperand(1, value);
-                }
-            }
-        */
+        /// <summary>Gets a value indicating whether this <see cref="CatchSwitch"/> has an unwind destination</summary>
+        public bool HasUnwindDestination => LibLLVMHasUnwindDest( ValueHandle );
 
-        /* TODO: non-operand properties
-            bool HasUnwindDestination { get; }
-            bool UnwindsToCaller => !HasUnwindDestination;
-        */
+        /// <summary>Gets a value indicating whether this <see cref="CatchSwitch"/> unwinds to the caller</summary>
+        public bool UnwindsToCaller => !HasUnwindDestination;
+
+        /// <summary>Gets or sets the Unwind destination for this <see cref="CatchSwitch"/></summary>
+        /// <remarks>
+        /// While retrieving the destination may return null, setting with null will generate
+        /// an exception. In particular if <see cref="HasUnwindDestination"/> is <see langword="false"/>
+        /// then the UnwindDestination is <see langword="null"/>.
+        /// </remarks>
+        public BasicBlock? UnwindDestination
+        {
+            get
+            {
+                if( !HasUnwindDestination )
+                {
+                    return null;
+                }
+
+                var handle = LLVMGetUnwindDest( ValueHandle );
+                return handle == default ? null : BasicBlock.FromHandle( handle );
+            }
+
+            set
+            {
+                value.ValidateNotNull( nameof( value ) );
+                if(!HasUnwindDestination)
+                {
+                    throw new InvalidOperationException( Resources.Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller );
+                }
+
+                LLVMSetUnwindDest( ValueHandle, value!.BlockHandle );
+            }
+        }
 
         internal CatchSwitch( LLVMValueRef valueRef )
             : base( valueRef )

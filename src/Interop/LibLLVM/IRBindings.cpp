@@ -24,4 +24,18 @@ extern "C"
     {
         *pVersionInfo = { LLVM_VERSION_MAJOR, LLVM_VERSION_MINOR, LLVM_VERSION_PATCH };
     }
+
+    LLVMBool LibLLVMHasUnwindDest( LLVMValueRef Invoke )
+    {
+        if ( CleanupReturnInst* CRI = dyn_cast< CleanupReturnInst >( unwrap( Invoke ) ) )
+        {
+            return CRI->hasUnwindDest( );
+        }
+        else if ( CatchSwitchInst* CSI = dyn_cast< CatchSwitchInst >( unwrap( Invoke ) ) )
+        {
+            return CSI->hasUnwindDest( );
+        }
+        return 0;
+    }
+
 }
