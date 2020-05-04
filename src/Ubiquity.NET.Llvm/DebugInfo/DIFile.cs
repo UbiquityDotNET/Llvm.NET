@@ -20,13 +20,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the file name for this file</summary>
-        public string FileName => MetadataHandle == default ? string.Empty : LLVMDIFileGetFilename( MetadataHandle, out uint _ );
+        public string FileName => MetadataHandle == default ? string.Empty : LLVMDIFileGetFilename( MetadataHandle, out uint _ ) ?? string.Empty;
 
         /// <summary>Gets the Directory for this file</summary>
-        public string Directory => MetadataHandle == default ? string.Empty : LLVMDIFileGetDirectory( MetadataHandle, out uint _ );
+        public string Directory => MetadataHandle == default ? string.Empty : LLVMDIFileGetDirectory( MetadataHandle, out uint _ ) ?? string.Empty;
 
         /// <summary>Gets the source of the file or an empty string if not available</summary>
-        public string Source => MetadataHandle == default ? string.Empty : LLVMDIFileGetSource( MetadataHandle, out uint _ );
+        public string Source => MetadataHandle == default ? string.Empty : LLVMDIFileGetSource( MetadataHandle, out uint _ ) ?? string.Empty;
 
         /// <summary>Gets the Checksum for this file</summary>
         public string CheckSum => MetadataHandle == default ? string.Empty : GetOperandString( 2 );

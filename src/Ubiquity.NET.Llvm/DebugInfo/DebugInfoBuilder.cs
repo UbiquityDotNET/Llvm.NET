@@ -80,12 +80,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see cref="DICompileUnit"/></returns>
         public DICompileUnit CreateCompileUnit( SourceLanguage language
                                               , string sourceFilePath
-                                              , string producer
+                                              , string? producer
                                               , bool optimized
-                                              , string compilationFlags
+                                              , string? compilationFlags
                                               , uint runtimeVersion
                                               )
         {
+            sourceFilePath.ValidateNotNullOrWhiteSpace( nameof( sourceFilePath ) );
             return CreateCompileUnit( language
                                     , Path.GetFileName( sourceFilePath )
                                     , Path.GetDirectoryName( sourceFilePath ) ?? Environment.CurrentDirectory
@@ -109,9 +110,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DICompileUnit CreateCompileUnit( SourceLanguage language
                                               , string fileName
                                               , string fileDirectory
-                                              , string producer
+                                              , string? producer
                                               , bool optimized
-                                              , string compilationFlags
+                                              , string? compilationFlags
                                               , uint runtimeVersion
                                               )
         {
@@ -231,10 +232,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="DIFile"/> or <see langword="null"/> if <paramref name="path"/>
         /// is <see langword="null"/> empty, or all whitespace
         /// </returns>
-        public DIFile CreateFile( string path )
+        public DIFile CreateFile( string? path )
         {
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
-            return CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
+            string? fileName = path is null ? null : Path.GetFileName( path );
+            string? directory = path is null ? null : Path.GetDirectoryName( path );
+            return CreateFile( fileName, directory );
         }
 
         /// <summary>Creates a <see cref="DIFile"/></summary>
@@ -243,19 +245,18 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns>
         /// <see cref="DIFile"/> created
         /// </returns>
-        public DIFile CreateFile( string fileName, string directory )
+        public DIFile CreateFile( string? fileName, string? directory )
         {
-            fileName.ValidateNotNullOrWhiteSpace( nameof( fileName ) );
-            directory.ValidateNotNull( nameof( directory ) );
-
             var handle = LLVMDIBuilderCreateFile( BuilderHandle
                                                 , fileName
-                                                , fileName.Length
+                                                , fileName?.Length ?? 0
                                                 , directory
-                                                , ( long )( directory.Length )
+                                                , directory?.Length ?? 0
                                                 );
             return MDNode.FromHandle<DIFile>( handle.ThrowIfInvalid( ) )!;
         }
+
+        /* TODO: Extend CreateFile with checksum info and source text params (both optional) */
 
         /// <summary>Creates a new <see cref="DILexicalBlock"/></summary>
         /// <param name="scope"><see cref="DIScope"/> for the block</param>
@@ -616,7 +617,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                , UInt64 bitSize
                                                , UInt32 bitAlign
                                                , DebugInfoFlags debugFlags
-                                               , DIType derivedFrom
+                                               , DIType? derivedFrom
                                                , params DINode[ ] elements
                                                 )
         {
@@ -1392,7 +1393,16 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             long[ ] args = operations.Cast<long>( ).ToArray( );
             var handle = LLVMDIBuilderCreateExpression( BuilderHandle, args, args.LongLength );
-            return new DIExpression( handle );
+            return MDNode.FromHandle<DIExpression>( handle.ThrowIfInvalid( ) )!;
+        }
+
+        /// <summary>Creates a <see cref="DIExpression"/> for a constant value</summary>
+        /// <param name="value">Value of the expression</param>
+        /// <returns><see cref="DIExpression"/></returns>
+        public DIExpression CreateConstantValueExpression( Int64 value )
+        {
+            LLVMMetadataRef handle = LLVMDIBuilderCreateConstantValueExpression( BuilderHandle, value );
+            return MDNode.FromHandle<DIExpression>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a replaceable composite type</summary>

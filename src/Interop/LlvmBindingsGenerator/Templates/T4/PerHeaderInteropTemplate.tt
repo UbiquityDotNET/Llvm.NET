@@ -12,6 +12,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
+#nullable disable
 
 <#foreach(var import in Imports ) {#>
 using <#=import#>;

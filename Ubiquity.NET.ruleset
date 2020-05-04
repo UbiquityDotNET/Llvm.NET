@@ -590,7 +590,7 @@
     <Rule Id="RECS0129" Action="None" />
     <Rule Id="RECS0145" Action="None" />
     <Rule Id="RECS0147" Action="Warning" />
-    <Rule Id="RECS0154" Action="Info" />
+    <Rule Id="RECS0154" Action="None" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA0001" Action="Hidden" />
