@@ -24,13 +24,12 @@ namespace Ubiquity.NET.Llvm
 
         internal static bool Remove( LLVMContextRef h )
         {
-            return Instance.Value.Remove( h );
+            return Instance.Value.TryRemove( h, out Context _ );
         }
 
         internal static Context Add( Context context )
         {
-            Instance.Value.Add( context.ContextHandle, context );
-            return context;
+            return Instance.Value.GetOrAdd( context.ContextHandle, context );
         }
 
         internal static Context GetContextFor( LLVMContextRef contextRef )
@@ -44,15 +43,16 @@ namespace Ubiquity.NET.Llvm
 
             // Context constructor will add itself to this cache
             // and remove itself on Dispose/finalize
+            // TODO: resolve thread safety bug (https://github.com/UbiquityDotNET/Llvm.NET/issues/179)
             return new Context( contextRef );
         }
 
-        private static IDictionary<LLVMContextRef, Context> CreateInstance( )
+        private static ConcurrentDictionary<LLVMContextRef, Context> CreateInstance( )
         {
             return new ConcurrentDictionary<LLVMContextRef, Context>( EqualityComparer<LLVMContextRef>.Default );
         }
 
-        private static readonly Lazy<IDictionary<LLVMContextRef, Context>> Instance
-            = new Lazy<IDictionary<LLVMContextRef, Context>>( CreateInstance, LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly Lazy<ConcurrentDictionary<LLVMContextRef, Context>> Instance
+            = new Lazy<ConcurrentDictionary<LLVMContextRef, Context>>( CreateInstance, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
       <TargetFramework>netcoreapp3.1</TargetFramework>
       <IsPackable>false</IsPackable>
-      <LangVersion>8.0</LangVersion>
+      <RunSettingsFilePath>$(BuildRootDir)\src\x64.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj">

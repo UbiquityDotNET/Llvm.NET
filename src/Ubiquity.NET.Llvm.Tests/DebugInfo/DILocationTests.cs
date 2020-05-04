@@ -6,8 +6,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
+using Ubiquity.NET.LlvmTests;
 
 namespace Ubiquity.NET.Llvm.Tests.DebugInfo
 {
@@ -15,15 +15,41 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
     public class DILocationTests
     {
         [TestMethod]
-        public void ToString_StateUnderTest_ExpectedBehavior( )
+        [ExpectedArgumentException( "scope" )]
+        public void DILocation_ctor_with_null_scope_throws( )
         {
-            // using var context = new Context();
-            // var location = new DILocation( context, 0, 0, null!, null );
+            using var context = new Context();
+            var location = new DILocation( context, 0, 0, null!, null );
+            Assert.Fail( "Shouldn't get here" );
+        }
 
-            // string result = location.ToString( );
+        [TestMethod]
+        public void DILocation_ctor_with_valid_args_succeeds( )
+        {
+            // Create a function to use as scope for a new DILocation
+            using var context = new Context();
+            using var module = context.CreateBitcodeModule("test", SourceLanguage.C, "test.c", "UnitTest");
+            var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
+            var function = module.CreateFunction( scope: module.DICompileUnit
+                                                , name: "test"
+                                                , linkageName: null
+                                                , file: module.DICompileUnit!.File
+                                                , line: 1
+                                                , signature: context.CreateFunctionType(module.DIBuilder, i32)
+                                                , isLocalToUnit: false
+                                                , isDefinition: true
+                                                , scopeLine: 1
+                                                , debugFlags: DebugInfoFlags.None
+                                                , isOptimized: false
+                                                );
+            Assert.IsNotNull( function.DISubProgram );
 
-            // Assert.Fail( );
-            Assert.Inconclusive( );
+            // Create and test the DILocation
+            var location = new DILocation( context, 12, 34, function.DISubProgram! );
+            Assert.AreEqual( 12U, location.Line );
+            Assert.AreEqual( 34U, location.Column );
+            Assert.AreSame( context, location.Context );
+            Assert.AreEqual( function.DISubProgram, location.Scope );
         }
     }
 }

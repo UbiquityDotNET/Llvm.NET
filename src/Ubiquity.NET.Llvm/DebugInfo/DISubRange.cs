@@ -15,6 +15,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /* TODO: non-operand properties need direct API to extract...
         public int64 LowerBound {get;}
+        // count is Operands[0] and could be ConstantInt wrapped in ConstantAsMetadata
+        // or DIVariable (e.g. count is either ConstantInt or DIVariable)
         public int64 Count {get;}
         */
 

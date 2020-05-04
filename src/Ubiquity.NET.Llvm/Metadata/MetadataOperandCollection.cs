@@ -43,13 +43,7 @@ namespace Ubiquity.NET.Llvm
         {
             for( int i = 0; i < Count; ++i )
             {
-                var element = GetOperand<LlvmMetadata>( i );
-                if( element is null )
-                {
-                    yield break;
-                }
-
-                yield return element;
+                yield return GetOperand<LlvmMetadata>( i );
             }
         }
 
