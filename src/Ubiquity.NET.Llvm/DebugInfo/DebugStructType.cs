@@ -25,11 +25,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="module">Module to contain the debug meta data</param>
         /// <param name="nativeName">Name of the type in LLVM IR</param>
         /// <param name="scope">Debug scope for the structure</param>
-        /// <param name="name">Source/debug name of the struct</param>
+        /// <param name="sourceName">Source/debug name of the struct</param>
         /// <param name="file">File containing the definition of this type</param>
         /// <param name="line">line number this type is defined at</param>
         /// <param name="debugFlags">debug flags for this type</param>
-        /// <param name="debugElements">Description of all the members of this structure</param>
+        /// <param name="members">Description of all the members of this structure</param>
         /// <param name="derivedFrom">Base type, if any for this type</param>
         /// <param name="packed">Indicates if this type is packed or not</param>
         /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
@@ -37,33 +37,33 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DebugStructType( BitcodeModule module
                               , string nativeName
                               , DIScope? scope
-                              , string name
+                              , string sourceName
                               , DIFile? file
                               , uint line
                               , DebugInfoFlags debugFlags
-                              , IEnumerable<DebugMemberInfo> debugElements
+                              , IEnumerable<DebugMemberInfo> members
                               , DIType? derivedFrom = null
                               , bool packed = false
                               , uint? bitSize = null
                               , uint bitAlignment = 0
                               )
             : base( module.ValidateNotNull( nameof( module ) )
-                          .Context.CreateStructType( nativeName, packed, debugElements.Select( e => e.DebugType ).ToArray( ) )
+                          .Context.CreateStructType( nativeName, packed, members.Select( e => e.DebugType ).ToArray( ) )
                   , module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
-                                                                   , name
+                                                                   , sourceName
                                                                    , scope
                                                                    , file
                                                                    , line
                                                                    )
             )
         {
-            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
+            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( members as IList<DebugMemberInfo> ?? members.ToList( ) );
 
             var memberTypes = from memberInfo in DebugMembers
                               select CreateMemberType( module, memberInfo );
 
             var concreteType = module.DIBuilder.CreateStructType( scope: scope
-                                                                , name: name
+                                                                , name: sourceName
                                                                 , file: file
                                                                 , line: line
                                                                 , bitSize: bitSize ?? module.Layout.BitSizeOf( NativeType )
@@ -191,6 +191,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <inheritdoc/>
         public void SetBody( bool packed, params ITypeRef[ ] elements )
+        {
+            NativeType.SetBody( packed, elements );
+        }
+
+        /// <inheritdoc/>
+        public void SetBody( bool packed, IEnumerable<ITypeRef> elements)
         {
             NativeType.SetBody( packed, elements );
         }
