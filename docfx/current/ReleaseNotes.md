@@ -63,6 +63,16 @@ Some APIs had inconsistent, misspelled or confusing names and were updated.
 |---------------------------|--------------------------------|---------------|
 | BitcodeModule.AddFunction | BitcodeModule.CreateFunction() | The Create vs Add between debug info and raw native was always confusing |
 
+### Altered Behavior
+#### Context.CreateStructType()
+As part of resolving [bug #184](https://github.com/UbiquityDotNET/Llvm.NET/issues/184) the CreateStructType
+methods were re-evaluated and found lacking in functionality (the bug) and clarity. The docs were misleading
+and the implementations overly restrictive in some cases. Thus these have been re-worked to make it more clear
+when a Sized vs. Opaque structure type is created, in particular, for **ALL** overloads taking a 'packed' parameter
+a sized type is created, even if the size is 0 because no members are provided. This allows creation of named or 
+anonymous empty structs, used in many languages. To create a named opaque type then the overload with just the
+name is used. This isn't expected to impact many consumers, other than the tests, but it is a breaking change.
+
 ### Removed redundant APIs
 LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality equivalent to 
 APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some

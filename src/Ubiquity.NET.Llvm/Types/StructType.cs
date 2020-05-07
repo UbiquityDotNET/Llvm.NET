@@ -40,22 +40,27 @@ namespace Ubiquity.NET.Llvm.Types
 
         /// <summary>Sets the body of the structure</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
-        /// <param name="elements">Optional types of each element</param>
-        /// <remarks>
-        /// To set the body, at least one element type is required. If none are provided this is a NOP.
-        /// </remarks>
+        /// <param name="elements">Types of each element (may be empty)</param>
         void SetBody( bool packed, params ITypeRef[ ] elements );
+
+        /// <summary>Sets the body of the structure</summary>
+        /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
+        /// <param name="elements">Types of each element (may be empty)</param>
+        void SetBody( bool packed, IEnumerable<ITypeRef> elements );
     }
 
     internal class StructType
         : TypeRef
         , IStructType
     {
-        public void SetBody( bool packed, params ITypeRef[ ] elements )
+        public void SetBody( bool packed, IEnumerable<ITypeRef> elements )
         {
             LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
             LLVMStructSetBody( TypeRefHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
         }
+
+        public void SetBody( bool packed, params ITypeRef[ ] elements )
+            => SetBody(packed, (IEnumerable<ITypeRef>)elements);
 
         public string Name => LLVMGetStructName( TypeRefHandle );
 

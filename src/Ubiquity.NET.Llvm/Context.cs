@@ -390,8 +390,14 @@ namespace Ubiquity.NET.Llvm
             return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }
 
-        /// <summary>Create an empty structure type</summary>
+        /// <summary>Create an opaque structure type (e.g. a forward reference)</summary>
         /// <param name="name">Name of the type</param>
+        /// <remarks>
+        /// This method creates an opaque type. The <see cref="IStructType.SetBody(bool, ITypeRef[])"/>
+        /// method provides a means to add a body, including indication of packed status, to an opaque
+        /// type at a later time if the details of the body are required. (If only pointers to the type
+        /// are required then the body isn't required)
+        /// </remarks>
         /// <returns>New type</returns>
         public IStructType CreateStructType( string name )
         {
@@ -402,23 +408,15 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
         /// <param name="packed">Flag to indicate if the structure is "packed"</param>
-        /// <param name="element0">Type of the first field of the structure</param>
-        /// <param name="elements">Types of any additional fields of the structure</param>
+        /// <param name="elements">Types of the fields of the structure</param>
         /// <returns>
         /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
-        public IStructType CreateStructType( bool packed, [ValidatedNotNull] ITypeRef element0, params ITypeRef[ ] elements )
+        public IStructType CreateStructType( bool packed, params ITypeRef[ ] elements )
         {
-            element0.ValidateNotNull( nameof( element0 ) );
             elements.ValidateNotNull( nameof( elements ) );
 
-            var llvmArgs = new LLVMTypeRef[ elements.Length + 1 ];
-            llvmArgs[ 0 ] = element0.GetTypeRef( );
-            for( int i = 1; i < llvmArgs.Length; ++i )
-            {
-                llvmArgs[ i ] = elements[ i - 1 ].GetTypeRef( );
-            }
-
+            LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
             var handle = LLVMStructTypeInContext( ContextHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
             return TypeRef.FromHandle<IStructType>( handle.ThrowIfInvalid( ) )!;
         }
@@ -431,21 +429,28 @@ namespace Ubiquity.NET.Llvm
         /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
         /// <remarks>
-        /// If the elements argument list is empty then an opaque type is created (e.g. a forward reference)
-        /// The <see cref="IStructType.SetBody(bool, ITypeRef[])"/> method provides a means to add a body to
-        /// an opaque type at a later time if the details of the body are required. (If only pointers to
-        /// to the type are required the body isn't required)
+        /// If the elements argument list is empty then a complete 0 sized struct is created
         /// </remarks>
         public IStructType CreateStructType( string name, bool packed, params ITypeRef[ ] elements )
+            => CreateStructType( name, packed, ( IEnumerable<ITypeRef> )elements );
+
+        /// <summary>Creates a new structure type in this <see cref="Context"/></summary>
+        /// <param name="name">Name of the structure</param>
+        /// <param name="packed">Flag indicating if the structure is packed</param>
+        /// <param name="elements">Types for the structures elements in layout order</param>
+        /// <returns>
+        /// <see cref="IStructType"/> with the specified body defined.
+        /// </returns>
+        /// <remarks>
+        /// If the elements argument list is empty then a complete 0 sized struct is created
+        /// </remarks>
+        public IStructType CreateStructType( string name, bool packed, IEnumerable<ITypeRef> elements )
         {
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             elements.ValidateNotNull( nameof( elements ) );
 
             var retVal = TypeRef.FromHandle<IStructType>( LLVMStructCreateNamed( ContextHandle, name ).ThrowIfInvalid( ) )!;
-            if( elements.Length > 0 )
-            {
-                retVal.SetBody( packed, elements );
-            }
+            retVal.SetBody( packed, elements );
 
             return retVal;
         }
