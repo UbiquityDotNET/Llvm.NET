@@ -237,4 +237,10 @@ extern "C"
         *len = S->getString( ).size( );
         return S->getString( ).data( );
     }
+
+    int64_t LibLLVMDISubRangeGetLowerBounds( LLVMMetadataRef /*DISubRange*/ sr )
+    {
+        DISubrange const* range = unwrap<DISubrange>( sr );
+        return range->getLowerBound( );
+    }
 }
