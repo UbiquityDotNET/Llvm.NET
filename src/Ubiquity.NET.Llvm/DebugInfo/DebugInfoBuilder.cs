@@ -915,12 +915,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         }
 
         /// <summary>Creates a new <see cref="DISubRange"/></summary>
-        /// <param name="lowerBounds">Lower bounds of the <see cref="DISubRange"/></param>
+        /// <param name="lowerBound">Lower bounds of the <see cref="DISubRange"/></param>
         /// <param name="count">Count of elements in the sub range</param>
         /// <returns><see cref="DISubRange"/></returns>
-        public DISubRange CreateSubRange( long lowerBounds, long count )
+        public DISubRange CreateSubRange( long lowerBound, long count )
         {
-            var handle = LLVMDIBuilderGetOrCreateSubrange( BuilderHandle, lowerBounds, count );
+            var handle = LLVMDIBuilderGetOrCreateSubrange( BuilderHandle, lowerBound, count );
             return MDNode.FromHandle<DISubRange>( handle.ThrowIfInvalid( ) )!;
         }
 

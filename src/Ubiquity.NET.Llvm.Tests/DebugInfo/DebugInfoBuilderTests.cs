@@ -268,37 +268,131 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         }
         #endregion
 
+        #region DIBuilder.CreateSubRange
         [TestMethod]
         [TestCategory("DIBuilder.CreateSubRange")]
-        public void CreateSubRange_StateUnderTest_ExpectedBehavior( )
+        public void CreateSubRange_create_empty_subrange_should_succeed( )
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
             var bldr = testModule.DIBuilder;
 
-            long lowerBounds = 0;
+            long lowerBound = 0;
             long count = 0;
 
-            var subRange = bldr.CreateSubRange(lowerBounds, count);
+            var subRange = bldr.CreateSubRange(lowerBound, count);
             Assert.IsNotNull( subRange );
+            Assert.AreSame( context, subRange.Context );
+            Assert.IsNull( subRange.VariableCount );
+            Assert.IsTrue( subRange.ConstantCount.HasValue );
+            Assert.AreEqual( lowerBound, subRange.LowerBound );
+            Assert.AreEqual( count, subRange.ConstantCount!.Value );
         }
+
+        [TestMethod]
+        [TestCategory( "DIBuilder.CreateSubRange" )]
+        public void CreateSubRange_create_subrange_with_nonzero_length_should_succeed( )
+        {
+            using var context = new Context( );
+            using var testModule = context.CreateBitcodeModule( "test" );
+            var bldr = testModule.DIBuilder;
+
+            long lowerBound = 10;
+            long count = 20;
+
+            var subRange = bldr.CreateSubRange(lowerBound, count);
+            Assert.IsNotNull( subRange );
+            Assert.AreSame( context, subRange.Context );
+            Assert.IsNull( subRange.VariableCount );
+            Assert.IsTrue( subRange.ConstantCount.HasValue );
+            Assert.AreEqual( lowerBound, subRange.LowerBound );
+            Assert.AreEqual( count, subRange.ConstantCount!.Value );
+        }
+        #endregion
+
+        #region DIBuilder.CreateTempMacroFile
+        [TestMethod]
+        [TestCategory( "DIBuilder.CreateTempMacroFile" )]
+        public void CreateTempMacroFile_with_nulls_succeeds( )
+        {
+            using var context = new Context( );
+            using var testModule = context.CreateBitcodeModule( "test" );
+            var bldr = testModule.DIBuilder;
+
+            DIMacroFile? parent = null;
+            uint line = 0;
+            DIFile? file = null;
+
+            var result = bldr.CreateTempMacroFile( parent
+                                                 , line
+                                                 , file
+                                                 );
+
+            Assert.IsNotNull( result );
+            Assert.AreSame( context, result.Context );
+            Assert.AreEqual( 0, result.Elements.Count );
+            Assert.IsNull( result.File );
+        }
+
+        [TestMethod]
+        [TestCategory( "DIBuilder.CreateTempMacroFile" )]
+        public void CreateTempMacroFile_with_nonnull_parent_succeeds( )
+        {
+            using var context = new Context( );
+            using var testModule = context.CreateBitcodeModule( "test" );
+            var bldr = testModule.DIBuilder;
+
+            DIMacroFile parent = bldr.CreateTempMacroFile( null
+                                                         , 1
+                                                         , null
+                                                         );
+            uint line = 0;
+            DIFile? file = null;
+
+            var result = bldr.CreateTempMacroFile( parent
+                                                 , line
+                                                 , file
+                                                 );
+
+            Assert.IsNotNull( result );
+            Assert.AreEqual( MetadataKind.DIMacroFile, result.Kind );
+            Assert.AreSame( context, result.Context );
+            Assert.AreEqual( 0, result.Elements.Count );
+            Assert.IsNull( result.File );
+            /* LLVM doesn't provide a way to access the parent, child relationship of a DIMacroFile (even at the C++ level) */
+        }
+
+        [TestMethod]
+        [TestCategory( "DIBuilder.CreateTempMacroFile" )]
+        public void CreateTempMacroFile_with_nonnull_parent_and_file_succeeds( )
+        {
+            using var context = new Context( );
+            using var testModule = context.CreateBitcodeModule( "test" );
+            var bldr = testModule.DIBuilder;
+
+            DIMacroFile parent = bldr.CreateTempMacroFile( null
+                                                         , 1
+                                                         , null
+                                                         );
+            DIFile file = bldr.CreateFile( "test.inc" );
+
+            uint line = 123;
+
+            var result = bldr.CreateTempMacroFile( parent
+                                                 , line
+                                                 , file
+                                                 );
+
+            Assert.IsNotNull( result );
+            Assert.AreSame( context, result.Context );
+            Assert.AreEqual( MetadataKind.DIMacroFile, result.Kind );
+            Assert.AreEqual( 0, result.Elements.Count );
+            Assert.AreSame( file, result.File );
+            /* LLVM doesn't provide a way to access the parent : child relationship of a DIMacroFile (even at the C++ level) */
+        }
+        #endregion
 
 #if AUTO_GENERATED_NOT_YET_READY
-        [TestMethod]
-        public void CreateTempMacroFile_StateUnderTest_ExpectedBehavior( )
-        {
-            DIMacroFile parent = null;
-            uint line = 0;
-            DIFile file = null;
-
-            var result = DiBuilder.CreateTempMacroFile( parent
-                                                      , line
-                                                      , file
-                                                      );
-
-            Assert.Inconclusive( );
-        }
-
         [TestMethod]
         public void CreateMacro_StateUnderTest_ExpectedBehavior( )
         {
