@@ -505,4 +505,10 @@ Types are:
   <data name="Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller" xml:space="preserve">
     <value>Cannot set UnwindDestination for instruction that unwinds to caller</value>
   </data>
+  <data name="APInt_exceeds_size_of_Int64" xml:space="preserve">
+    <value>Arbitrary precision integer exceeds size of System.Int64 integer</value>
+  </data>
+  <data name="APInt_exceeds_size_of_UInt64" xml:space="preserve">
+    <value>Arbitrary precision integer exceeds size of System.UInt64 integer</value>
+  </data>
 </root>

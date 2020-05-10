@@ -18,7 +18,7 @@ underlying LLVM model while fitting naturally into .NET programming patterns.
 
 # Details
 ## Interning (Uniquing in LLVM)
-Many if the underlying object instances in LLVM are interned/Uniqued. That is,
+Many of the underlying object instances in LLVM are interned/Uniqued. That is,
 there will only be one instance of a type with a given value within some scope.
 
 In LLVM the most common scope for uniqueing is the LLVMContext type. In essence

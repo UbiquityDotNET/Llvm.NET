@@ -130,7 +130,7 @@ Ready>
 ```
 
 ## Conclusion
-Kaleidoscope is a simple yet complete language with a good deal of functionality. This serves as
+Kaleidoscope is a simple, yet complete, language with a good deal of functionality. This serves as
 a great language to study the use of Ubiquity.NET.Llvm for code generation and Domain Specific
 Languages. While, generally speaking, the functionality of the Ubiquity.NET.Llvm version of this
 tutorial differs only slightly from that of the official LLVM version, it serves well as an example

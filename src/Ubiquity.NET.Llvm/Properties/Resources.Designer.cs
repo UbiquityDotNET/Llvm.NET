@@ -97,6 +97,24 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arbitrary precision integer exceeds size of System.Int64 integer.
+        /// </summary>
+        internal static string APInt_exceeds_size_of_Int64 {
+            get {
+                return ResourceManager.GetString("APInt_exceeds_size_of_Int64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arbitrary precision integer exceeds size of System.UInt64 integer.
+        /// </summary>
+        internal static string APInt_exceeds_size_of_UInt64 {
+            get {
+                return ResourceManager.GetString("APInt_exceeds_size_of_UInt64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 	Argument {0} does not contain debug type information.
         /// </summary>
         internal static string Argument_0_does_not_contain_debug_type_information {

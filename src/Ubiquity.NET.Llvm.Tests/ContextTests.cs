@@ -21,6 +21,7 @@ namespace Ubiquity.NET.Llvm.Tests
     public class ContextTests
     {
         [TestMethod]
+        [TestCategory( "Constructor" )]
         public void SimpleConstructorDisposeTest( )
         {
             var context = new Context( );
@@ -34,6 +35,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Primitive Types" )]
         public void GetPointerTypeForTest( )
         {
             using var context = new Context( );
@@ -47,6 +49,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Primitive Types" )]
         public void VoidTypePropertyTest( )
         {
             using var context = new Context( );
@@ -66,6 +69,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Primitive Types" )]
         public void IntegerTypePropertiesTest( )
         {
             using var context = new Context( );
@@ -77,6 +81,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Primitive Types" )]
         public void GetIntTypeTest( )
         {
             using var context = new Context( );
@@ -106,6 +111,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Function Type" )]
         public void GetFunctionTypeTest( )
         {
             using var context = new Context( );
@@ -135,6 +141,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory("Function Type")]
         public void CreateFunctionTypeTest( )
         {
             var targetMachine = TargetTests.GetTargetMachine( );
@@ -183,6 +190,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Function Type" )]
         public void VerifyCreateFunctionTypeWithSameSigIsSameInstanceTest( )
         {
             var targetMachine = TargetTests.GetTargetMachine( );
@@ -203,6 +211,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory("Function Type")]
         public void VerifySameFunctionSigRetrievesTheSameType( )
         {
             using var context = new Context( );
@@ -216,6 +225,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Function Type" )]
         public void GetFunctionTypeTest1( )
         {
             using var context = new Context( );
@@ -250,6 +260,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Function Type" )]
         public void GetFunctionTypeTest2( )
         {
             using var context = new Context( );
@@ -757,6 +768,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory("Constants")]
         public void CreateNamedConstantPackedStructTestUsingEnumerable( )
         {
             using var context = new Context( );
@@ -788,6 +800,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Constants" )]
         public void CreateNamedConstantUnpackedStructTestUsingEnumerable( )
         {
             using var context = new Context( );
@@ -824,6 +837,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Constants" )]
         public void CreateNamedConstantPackedStructTestUsingParams( )
         {
             using var context = new Context( );
@@ -860,6 +874,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Constants" )]
         public void CreateNamedConstantUnpackedStructTestUsingParams( )
         {
             using var context = new Context( );
@@ -896,6 +911,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Metadata String" )]
         public void CreateMetadataStringTest( )
         {
             using var context = new Context( );
@@ -906,6 +922,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Metadata String" )]
         public void CreateMetadataStringWithEmptyArgTest( )
         {
             using var context = new Context( );
@@ -915,6 +932,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Metadata String" )]
         public void CreateMetadataStringWithNullArgTest( )
         {
             using var context = new Context( );
@@ -924,6 +942,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [TestCategory( "Constants" )]
         public void CreateConstantStringTest( )
         {
             using var context = new Context( );
