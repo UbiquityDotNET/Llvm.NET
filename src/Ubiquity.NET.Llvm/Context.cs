@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 using Ubiquity.ArgValidators;
@@ -68,6 +69,9 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Gets the LLVM 64 bit integer type for this context</summary>
         public ITypeRef Int64Type => TypeRef.FromHandle( LLVMInt64TypeInContext( ContextHandle ).ThrowIfInvalid( ) )!;
+
+        /// <summary>Gets the LLVM 128 bit integer type for this context</summary>
+        public ITypeRef Int128Type => TypeRef.FromHandle( LLVMInt128TypeInContext( ContextHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the LLVM half precision floating point type for this context</summary>
         public ITypeRef HalfFloatType => TypeRef.FromHandle( LLVMHalfTypeInContext( ContextHandle ).ThrowIfInvalid( ) )!;
@@ -134,6 +138,7 @@ namespace Ubiquity.NET.Llvm
                 16 => Int16Type,
                 32 => Int32Type,
                 64 => Int64Type,
+                128 => Int128Type,
                 _ => TypeRef.FromHandle( LLVMIntTypeInContext( ContextHandle, bitWidth ).ThrowIfInvalid( ) )!,
             };
         }
@@ -508,22 +513,22 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 1</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( bool constValue )
+        public ConstantInt CreateConstant( bool constValue )
         {
             var handle = LLVMConstInt( BoolType.GetTypeRef( )
                                      , ( ulong )( constValue ? 1 : 0 )
                                      , false
                                      );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( byte constValue )
+        public ConstantInt CreateConstant( byte constValue )
         {
             var handle = LLVMConstInt( Int8Type.GetTypeRef( ), constValue, false );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
@@ -532,61 +537,61 @@ namespace Ubiquity.NET.Llvm
         public Constant CreateConstant( sbyte constValue )
         {
             var handle = LLVMConstInt( Int8Type.GetTypeRef( ), ( ulong )constValue, true );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( Int16 constValue )
+        public ConstantInt CreateConstant( Int16 constValue )
         {
             var handle = LLVMConstInt( Int16Type.GetTypeRef( ), ( ulong )constValue, true );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( UInt16 constValue )
+        public ConstantInt CreateConstant( UInt16 constValue )
         {
             var handle = LLVMConstInt( Int16Type.GetTypeRef( ), constValue, false );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( Int32 constValue )
+        public ConstantInt CreateConstant( Int32 constValue )
         {
             var handle = LLVMConstInt( Int32Type.GetTypeRef( ), ( ulong )constValue, true );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( UInt32 constValue )
+        public ConstantInt CreateConstant( UInt32 constValue )
         {
             var handle = LLVMConstInt( Int32Type.GetTypeRef( ), constValue, false );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( Int64 constValue )
+        public ConstantInt CreateConstant( Int64 constValue )
         {
             var handle = LLVMConstInt( Int64Type.GetTypeRef( ), ( ulong )constValue, true );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( UInt64 constValue )
+        public ConstantInt CreateConstant( UInt64 constValue )
         {
             var handle = LLVMConstInt( Int64Type.GetTypeRef( ), constValue, false );
-            return Value.FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
@@ -594,7 +599,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constValue">Value for the constant</param>
         /// <param name="signExtend">flag to indicate if the constant value should be sign extended</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
+        public ConstantInt CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend )
         {
             var intType = GetIntType( bitWidth );
             return CreateConstant( intType, constValue, signExtend );
@@ -605,7 +610,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constValue">value</param>
         /// <param name="signExtend">flag to indicate if <paramref name="constValue"/> is sign extended</param>
         /// <returns>Constant for the specified value</returns>
-        public Constant CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
+        public ConstantInt CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend )
         {
             intType.ValidateNotNull( nameof( intType ) );
 
@@ -620,7 +625,7 @@ namespace Ubiquity.NET.Llvm
             }
 
             LLVMValueRef valueRef = LLVMConstInt( intType.GetTypeRef( ), constValue, signExtend );
-            return Value.FromHandle<Constant>( valueRef.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<ConstantInt>( valueRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a constant floating point value for a given value</summary>
