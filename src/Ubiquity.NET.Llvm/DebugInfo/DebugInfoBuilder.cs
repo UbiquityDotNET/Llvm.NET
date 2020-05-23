@@ -601,7 +601,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates debug description of a structure type</summary>
         /// <param name="scope">Scope containing the structure</param>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the type</param>
         /// <param name="line">Line of the start of the type</param>
         /// <param name="bitSize">Size of the type in bits</param>
@@ -626,7 +626,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates debug description of a structure type</summary>
         /// <param name="scope">Scope containing the structure</param>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the type</param>
         /// <param name="line">Line of the start of the type</param>
         /// <param name="bitSize">Size of the type in bits</param>
@@ -679,7 +679,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates debug description of a union type</summary>
         /// <param name="scope">Scope containing the union</param>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the union</param>
         /// <param name="line">Line of the start of the union</param>
         /// <param name="bitSize">Size of the union in bits</param>
@@ -703,7 +703,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates debug description of a union type</summary>
         /// <param name="scope">Scope containing the union</param>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the union</param>
         /// <param name="line">Line of the start of the union</param>
         /// <param name="bitSize">Size of the union in bits</param>
@@ -726,7 +726,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates debug description of a union type</summary>
         /// <param name="scope">Scope containing the union</param>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the union</param>
         /// <param name="line">Line of the start of the union</param>
         /// <param name="bitSize">Size of the union in bits</param>
@@ -978,7 +978,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates an enumeration type</summary>
         /// <param name="scope">Containing scope for the type</param>
-        /// <param name="name">source language name of the type</param>
+        /// <param name="name">source language name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">Source file containing the type</param>
         /// <param name="lineNumber">Source file line number for the type</param>
         /// <param name="sizeInBits">Size, in bits, for the type</param>
@@ -1407,7 +1407,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Creates a replaceable composite type</summary>
         /// <param name="tag">Debug information <see cref="Tag"/> for the composite type (only values for a composite type are allowed)</param>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="scope">Scope of the type</param>
         /// <param name="file">Source file for the type</param>
         /// <param name="line">Source line for the type</param>

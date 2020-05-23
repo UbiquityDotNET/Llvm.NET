@@ -40,6 +40,31 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             Assert.AreEqual( sourceName, structType.SourceName );
         }
 
+        [TestMethod]
+        public void DebugStructType_constructing_empty_anonymous_struct_succeeds( )
+        {
+            using var context = new Context( );
+            using var testModule = context.CreateBitcodeModule( "test" );
+
+            string sourceName = string.Empty;
+            string linkageName = string.Empty;
+
+            var structType = new DebugStructType( module: testModule
+                                                , nativeName: linkageName
+                                                , scope: null
+                                                , sourceName: sourceName
+                                                , file: null
+                                                , line: 0
+                                                , debugFlags: default
+                                                , members: Enumerable.Empty<DebugMemberInfo>()
+                                                ); // rest of args use defaults...
+            Assert.IsTrue( structType.IsSized );
+            Assert.IsFalse( structType.IsPacked );
+            Assert.IsTrue( structType.IsStruct );
+            Assert.AreEqual( linkageName, structType.Name );
+            Assert.AreEqual( sourceName, structType.SourceName );
+        }
+
 #if NOT_YET_READY_GENERATED
         [TestMethod]
         public void SetBody_StateUnderTest_ExpectedBehavior( )

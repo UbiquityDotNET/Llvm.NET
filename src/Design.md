@@ -11,13 +11,13 @@ Ubiquity.NET.Llvm is designed to provide an OO model that faithfully reflects th
 underlying LLVM model while fitting naturally into .NET programming patterns.
    1) While the underlying extended "C" LLVM API is available in the Ubiquity.NET.Llvm.Interop package
       direct use of those APIs is generally discouraged as there are a lot of subtleties for correct
-      usage that are automatically mnaged by the Ubiquity.NET.Llvm class library.
+      usage that are automatically managed by the Ubiquity.NET.Llvm class library.
 1) FxCop Clean
 4) Leverage existing LLVM-C APIs underneath whenever possible
    1) Extend only when needed with custom wrappers
 
 # Details
-## Interning (Uniquing in LLVM)
+## Interning (Uniqueing in LLVM)
 Many of the underlying object instances in LLVM are interned/Uniqued. That is,
 there will only be one instance of a type with a given value within some scope.
 
