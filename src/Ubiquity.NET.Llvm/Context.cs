@@ -440,7 +440,7 @@ namespace Ubiquity.NET.Llvm
             => CreateStructType( name, packed, ( IEnumerable<ITypeRef> )elements );
 
         /// <summary>Creates a new structure type in this <see cref="Context"/></summary>
-        /// <param name="name">Name of the structure</param>
+        /// <param name="name">Name of the structure (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="packed">Flag indicating if the structure is packed</param>
         /// <param name="elements">Types for the structures elements in layout order</param>
         /// <returns>
@@ -451,7 +451,7 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public IStructType CreateStructType( string name, bool packed, IEnumerable<ITypeRef> elements )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            name.ValidateNotNull( nameof( name ) );
             elements.ValidateNotNull( nameof( elements ) );
 
             var retVal = TypeRef.FromHandle<IStructType>( LLVMStructCreateNamed( ContextHandle, name ).ThrowIfInvalid( ) )!;

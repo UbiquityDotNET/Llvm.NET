@@ -23,9 +23,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
         /// <param name="module">Module to contain the debug meta data</param>
-        /// <param name="nativeName">Name of the type in LLVM IR</param>
+        /// <param name="nativeName">Name of the type in LLVM IR (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="scope">Debug scope for the structure</param>
-        /// <param name="sourceName">Source/debug name of the struct</param>
+        /// <param name="sourceName">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the definition of this type</param>
         /// <param name="line">line number this type is defined at</param>
         /// <param name="debugFlags">debug flags for this type</param>
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="llvmType">LLVM native type to build debug information for</param>
         /// <param name="module">Module to contain the debug meta data</param>
         /// <param name="scope">Debug scope for the structure</param>
-        /// <param name="name">Source/debug name of the struct</param>
+        /// <param name="name">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the definition of this type</param>
         /// <param name="line">line number this type is defined at</param>
         /// <param name="debugFlags">debug flags for this type</param>
@@ -119,7 +119,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="llvmType">LLVM native type to build debug information for</param>
         /// <param name="module">Module to contain the debug meta data</param>
         /// <param name="scope">Debug scope for the structure</param>
-        /// <param name="name">Source/debug name of the struct</param>
+        /// <param name="name">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the definition of this type</param>
         /// <param name="line">line number this type is defined at</param>
         /// <remarks>
@@ -150,7 +150,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="module">Module to contain the debug meta data</param>
         /// <param name="nativeName">Name of the type in LLVM IR</param>
         /// <param name="scope">Debug scope for the structure</param>
-        /// <param name="name">Source/debug name of the struct</param>
+        /// <param name="name">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the definition of this type</param>
         /// <param name="line">line number this type is defined at</param>
         /// <remarks>
@@ -184,7 +184,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public IReadOnlyList<ITypeRef> Members => NativeType.Members;
 
         /// <summary>Gets the name of the type</summary>
-        public string Name => NativeType.Name;
+        public string Name => NativeType.Name ?? string.Empty;
 
         /// <summary>Gets the Source/Debug name</summary>
         public string SourceName => DIType?.Name ?? string.Empty;
