@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
+using Ubiquity.NET.Llvm.Types;
 
 namespace Ubiquity.NET.Llvm.Tests.DebugInfo
 {
@@ -65,20 +66,33 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             Assert.AreEqual( sourceName, structType.SourceName );
         }
 
-#if NOT_YET_READY_GENERATED
         [TestMethod]
-        public void SetBody_StateUnderTest_ExpectedBehavior( )
+        public void SetBody_with_native_elements_succeeds( )
         {
-            var debugStructType = new DebugStructType( TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO );
+            using var context = new Context( );
+            using var testModule = context.CreateBitcodeModule( "test" );
+
+            var file = testModule.DIBuilder.CreateFile( "test.foo" );
+            uint line = 1234;
+            string sourceName = string.Empty;
+            string linkageName = string.Empty;
+
+            var debugStructType = new DebugStructType( testModule, linkageName, file, sourceName, file, line );
             bool packed = false;
-            ITypeRef[ ] elements = null;
+            var elements = new ITypeRef[] { context.Float128Type, context.Int32Type, context.Int64Type };
 
             debugStructType.SetBody(
                 packed,
                 elements );
 
-            Assert.Inconclusive( );
+            Assert.AreEqual( elements.Length, debugStructType.Members.Count );
+            for(int i =0; i < elements.Length; ++i )
+            {
+                Assert.AreSame( elements[ i ], debugStructType.Members[ i ] );
+            }
         }
+
+#if NOT_YET_READY_GENERATED
 
         [TestMethod]
         public void SetBody_StateUnderTest_ExpectedBehavior1( )

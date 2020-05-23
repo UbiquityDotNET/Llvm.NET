@@ -396,7 +396,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Create an opaque structure type (e.g. a forward reference)</summary>
-        /// <param name="name">Name of the type</param>
+        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <remarks>
         /// This method creates an opaque type. The <see cref="IStructType.SetBody(bool, ITypeRef[])"/>
         /// method provides a means to add a body, including indication of packed status, to an opaque
@@ -406,7 +406,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>New type</returns>
         public IStructType CreateStructType( string name )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            name.ValidateNotNull( nameof( name ) );
             var handle = LLVMStructCreateNamed( ContextHandle, name );
             return TypeRef.FromHandle<IStructType>( handle.ThrowIfInvalid( ) )!;
         }
