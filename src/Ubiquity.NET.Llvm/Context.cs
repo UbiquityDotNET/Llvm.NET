@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 
 using Ubiquity.ArgValidators;
@@ -50,6 +49,7 @@ namespace Ubiquity.NET.Llvm
         public Context( )
             : this( LLVMContextCreate( ) )
         {
+            ContextCache.Add( this );
         }
 
         /// <summary>Gets the LLVM void type for this context</summary>
@@ -849,14 +849,14 @@ namespace Ubiquity.NET.Llvm
             }
 
             ContextHandle = contextRef;
-            ContextCache.Add( this );
             ActiveHandler = new WrappedNativeCallback<LLVMDiagnosticHandler>( DiagnosticHandler );
-            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler, IntPtr.Zero );
             ValueCache = new ValueCache( this );
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
             AttributeValueCache = new AttributeValue.InterningFactory( this );
             MetadataCache = new LlvmMetadata.InterningFactory( this );
+
+            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler, IntPtr.Zero );
         }
 
         /// <inheritdoc />
@@ -876,7 +876,7 @@ namespace Ubiquity.NET.Llvm
             LLVMContextSetDiagnosticHandler( ContextHandle, null, IntPtr.Zero );
             ActiveHandler.Dispose( );
 
-            ContextCache.Remove( ContextHandle );
+            ContextCache.TryRemove( ContextHandle );
 
             ContextHandle.Dispose( );
         }
