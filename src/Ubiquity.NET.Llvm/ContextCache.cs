@@ -15,36 +15,30 @@ using Ubiquity.NET.Llvm.Interop;
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Maintains a global cache of <see cref="LLVMContextRef"/> to <see cref="Context"/> mappings</summary>
+    /// <remarks>
+    /// The public constructor <see cref="Context.Context()"/> will add itself to the cache, since it is a new instance
+    /// that is a safe operation. In all other cases a lookup in the cache based on the underlying LLVM handle is
+    /// performed in a thread safe manner.
+    /// </remarks>
     internal static class ContextCache
     {
-        internal static bool TryGetValue( LLVMContextRef h, out Context value )
-        {
-            return Instance.Value.TryGetValue( h, out value );
-        }
-
-        internal static bool Remove( LLVMContextRef h )
+        internal static bool TryRemove( LLVMContextRef h )
         {
             return Instance.Value.TryRemove( h, out Context _ );
         }
 
-        internal static Context Add( Context context )
+        internal static void Add( Context context )
         {
-            return Instance.Value.GetOrAdd( context.ContextHandle, context );
+            if( !Instance.Value.TryAdd( context.ContextHandle, context ) )
+            {
+                throw new InternalCodeGeneratorException( "Internal Error: Can't add context to Cache as it already exists!" );
+            }
         }
 
         internal static Context GetContextFor( LLVMContextRef contextRef )
         {
-            contextRef.ValidateNotNull( nameof( contextRef ) );
-
-            if( TryGetValue( contextRef, out Context retVal ) )
-            {
-                return retVal;
-            }
-
-            // Context constructor will add itself to this cache
-            // and remove itself on Dispose/finalize
-            // TODO: resolve thread safety bug (https://github.com/UbiquityDotNET/Llvm.NET/issues/179)
-            return new Context( contextRef );
+            contextRef.ThrowIfInvalid( );
+            return Instance.Value.GetOrAdd( contextRef, h => new Context( h ) );
         }
 
         private static ConcurrentDictionary<LLVMContextRef, Context> CreateInstance( )
