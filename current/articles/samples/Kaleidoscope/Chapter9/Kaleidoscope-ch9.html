@@ -241,10 +241,10 @@ completing code generation for the module.</p>
 
     if( AnonymousFunctions.Count &gt; 0 )
     {
-        var mainFunction = Module.AddFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
+        var mainFunction = Module.CreateFunction( &quot;main&quot;, Context.GetFunctionType( Context.VoidType ) );
         var block = mainFunction.AppendBasicBlock( &quot;entry&quot; );
         var irBuilder = new InstructionBuilder( block );
-        var printdFunc = Module.AddFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
+        var printdFunc = Module.CreateFunction( &quot;printd&quot;, Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
         foreach( var anonFunc in AnonymousFunctions )
         {
             var value = irBuilder.Call( anonFunc );
@@ -292,7 +292,7 @@ private IrFunction GetOrDeclareFunction( Prototype prototype )
     if( prototype.IsExtern )
     {
         var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
-        retVal = Module.AddFunction( prototype.Name, llvmSignature );
+        retVal = Module.CreateFunction( prototype.Name, llvmSignature );
     }
     else
     {
@@ -514,7 +514,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.2
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.3
             
           </div>
         </div>

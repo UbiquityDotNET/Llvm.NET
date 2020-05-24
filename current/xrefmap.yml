@@ -268,6 +268,12 @@ references:
   fullName.vb: Ubiquity.NET.Llvm.BitcodeModule.CreateFunction(System.String, System.Boolean, Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType)())
   nameWithType: BitcodeModule.CreateFunction(String, Boolean, IDebugType<ITypeRef, DIType>, IDebugType<ITypeRef, DIType>[])
   nameWithType.vb: BitcodeModule.CreateFunction(String, Boolean, IDebugType(Of ITypeRef, DIType), IDebugType(Of ITypeRef, DIType)())
+- uid: Ubiquity.NET.Llvm.BitcodeModule.CreateFunction(System.String,Ubiquity.NET.Llvm.Types.IFunctionType)
+  name: CreateFunction(String, IFunctionType)
+  href: api/Ubiquity.NET.Llvm.BitcodeModule.CreateFunction.html#Ubiquity_NET_Llvm_BitcodeModule_CreateFunction_System_String_Ubiquity_NET_Llvm_Types_IFunctionType_
+  commentId: M:Ubiquity.NET.Llvm.BitcodeModule.CreateFunction(System.String,Ubiquity.NET.Llvm.Types.IFunctionType)
+  fullName: Ubiquity.NET.Llvm.BitcodeModule.CreateFunction(System.String, Ubiquity.NET.Llvm.Types.IFunctionType)
+  nameWithType: BitcodeModule.CreateFunction(String, IFunctionType)
 - uid: Ubiquity.NET.Llvm.BitcodeModule.CreateFunction(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType,System.Boolean,System.Boolean,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.Boolean)
   name: CreateFunction(DIScope, String, String, DIFile, UInt32, DebugFunctionType, Boolean, Boolean, UInt32, DebugInfoFlags, Boolean)
   href: api/Ubiquity.NET.Llvm.BitcodeModule.CreateFunction.html#Ubiquity_NET_Llvm_BitcodeModule_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIScope_System_String_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_
@@ -1355,21 +1361,30 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct
   fullName: Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct
   nameWithType: Context.CreateNamedConstantStruct
-- uid: Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Types.ITypeRef[])
-  name: CreateStructType(Boolean, ITypeRef, ITypeRef[])
-  href: api/Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Types_ITypeRef___
-  commentId: M:Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Types.ITypeRef[])
-  name.vb: CreateStructType(Boolean, ITypeRef, ITypeRef())
-  fullName: Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean, Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Types.ITypeRef[])
-  fullName.vb: Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean, Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Types.ITypeRef())
-  nameWithType: Context.CreateStructType(Boolean, ITypeRef, ITypeRef[])
-  nameWithType.vb: Context.CreateStructType(Boolean, ITypeRef, ITypeRef())
+- uid: Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef[])
+  name: CreateStructType(Boolean, ITypeRef[])
+  href: api/Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef___
+  commentId: M:Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef[])
+  name.vb: CreateStructType(Boolean, ITypeRef())
+  fullName: Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean, Ubiquity.NET.Llvm.Types.ITypeRef[])
+  fullName.vb: Ubiquity.NET.Llvm.Context.CreateStructType(System.Boolean, Ubiquity.NET.Llvm.Types.ITypeRef())
+  nameWithType: Context.CreateStructType(Boolean, ITypeRef[])
+  nameWithType.vb: Context.CreateStructType(Boolean, ITypeRef())
 - uid: Ubiquity.NET.Llvm.Context.CreateStructType(System.String)
   name: CreateStructType(String)
   href: api/Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_String_
   commentId: M:Ubiquity.NET.Llvm.Context.CreateStructType(System.String)
   fullName: Ubiquity.NET.Llvm.Context.CreateStructType(System.String)
   nameWithType: Context.CreateStructType(String)
+- uid: Ubiquity.NET.Llvm.Context.CreateStructType(System.String,System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  name: CreateStructType(String, Boolean, IEnumerable<ITypeRef>)
+  href: api/Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_String_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  commentId: M:Ubiquity.NET.Llvm.Context.CreateStructType(System.String,System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  name.vb: CreateStructType(String, Boolean, IEnumerable(Of ITypeRef))
+  fullName: Ubiquity.NET.Llvm.Context.CreateStructType(System.String, System.Boolean, System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  fullName.vb: Ubiquity.NET.Llvm.Context.CreateStructType(System.String, System.Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  nameWithType: Context.CreateStructType(String, Boolean, IEnumerable<ITypeRef>)
+  nameWithType.vb: Context.CreateStructType(String, Boolean, IEnumerable(Of ITypeRef))
 - uid: Ubiquity.NET.Llvm.Context.CreateStructType(System.String,System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef[])
   name: CreateStructType(String, Boolean, ITypeRef[])
   href: api/Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_String_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef___
@@ -1514,6 +1529,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Context.HalfFloatType
   fullName: Ubiquity.NET.Llvm.Context.HalfFloatType
   nameWithType: Context.HalfFloatType
+- uid: Ubiquity.NET.Llvm.Context.Int128Type
+  name: Int128Type
+  href: api/Ubiquity.NET.Llvm.Context.Int128Type.html#Ubiquity_NET_Llvm_Context_Int128Type
+  commentId: P:Ubiquity.NET.Llvm.Context.Int128Type
+  fullName: Ubiquity.NET.Llvm.Context.Int128Type
+  nameWithType: Context.Int128Type
+- uid: Ubiquity.NET.Llvm.Context.Int128Type*
+  name: Int128Type
+  href: api/Ubiquity.NET.Llvm.Context.Int128Type.html
+  commentId: Overload:Ubiquity.NET.Llvm.Context.Int128Type
+  fullName: Ubiquity.NET.Llvm.Context.Int128Type
+  nameWithType: Context.Int128Type
 - uid: Ubiquity.NET.Llvm.Context.Int16Type
   name: Int16Type
   href: api/Ubiquity.NET.Llvm.Context.Int16Type.html#Ubiquity_NET_Llvm_Context_Int16Type
@@ -2141,6 +2168,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateCompileUnit
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateCompileUnit
   nameWithType: DebugInfoBuilder.CreateCompileUnit
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression(System.Int64)
+  name: CreateConstantValueExpression(Int64)
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateConstantValueExpression_System_Int64_
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression(System.Int64)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression(System.Int64)
+  nameWithType: DebugInfoBuilder.CreateConstantValueExpression(Int64)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression*
+  name: CreateConstantValueExpression
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression.html
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateConstantValueExpression
+  nameWithType: DebugInfoBuilder.CreateConstantValueExpression
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateEnumerationType(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DIEnumerator},Ubiquity.NET.Llvm.DebugInfo.DIType)
   name: CreateEnumerationType(DIScope, String, DIFile, UInt32, UInt64, UInt32, IEnumerable<DIEnumerator>, DIType)
   href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateEnumerationType.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateEnumerationType_Ubiquity_NET_Llvm_DebugInfo_DIScope_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIEnumerator__Ubiquity_NET_Llvm_DebugInfo_DIType_
@@ -2330,27 +2369,27 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateQualifiedType
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateQualifiedType
   nameWithType: DebugInfoBuilder.CreateQualifiedType
-- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType(Ubiquity.NET.Llvm.DebugInfo.Tag,System.String,Ubiquity.NET.Llvm.DebugInfo.DINode,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.String)
-  name: CreateReplaceableCompositeType(Tag, String, DINode, DIFile, UInt32, UInt32, UInt64, UInt32, DebugInfoFlags, String)
-  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateReplaceableCompositeType_Ubiquity_NET_Llvm_DebugInfo_Tag_System_String_Ubiquity_NET_Llvm_DebugInfo_DINode_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_String_
-  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType(Ubiquity.NET.Llvm.DebugInfo.Tag,System.String,Ubiquity.NET.Llvm.DebugInfo.DINode,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.String)
-  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType(Ubiquity.NET.Llvm.DebugInfo.Tag, System.String, Ubiquity.NET.Llvm.DebugInfo.DINode, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, System.UInt32, System.UInt64, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, System.String)
-  nameWithType: DebugInfoBuilder.CreateReplaceableCompositeType(Tag, String, DINode, DIFile, UInt32, UInt32, UInt64, UInt32, DebugInfoFlags, String)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType(Ubiquity.NET.Llvm.DebugInfo.Tag,System.String,Ubiquity.NET.Llvm.DebugInfo.DIScope,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.String)
+  name: CreateReplaceableCompositeType(Tag, String, DIScope, DIFile, UInt32, UInt32, UInt64, UInt32, DebugInfoFlags, String)
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateReplaceableCompositeType_Ubiquity_NET_Llvm_DebugInfo_Tag_System_String_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_String_
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType(Ubiquity.NET.Llvm.DebugInfo.Tag,System.String,Ubiquity.NET.Llvm.DebugInfo.DIScope,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.String)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType(Ubiquity.NET.Llvm.DebugInfo.Tag, System.String, Ubiquity.NET.Llvm.DebugInfo.DIScope, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, System.UInt32, System.UInt64, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, System.String)
+  nameWithType: DebugInfoBuilder.CreateReplaceableCompositeType(Tag, String, DIScope, DIFile, UInt32, UInt32, UInt64, UInt32, DebugInfoFlags, String)
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType*
   name: CreateReplaceableCompositeType
   href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType.html
   commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateReplaceableCompositeType
   nameWithType: DebugInfoBuilder.CreateReplaceableCompositeType
-- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DINode},System.UInt32,Ubiquity.NET.Llvm.LlvmMetadata,System.String)
-  name: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable<DINode>, UInt32, LlvmMetadata, String)
-  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateStructType_Ubiquity_NET_Llvm_DebugInfo_DIScope_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__System_UInt32_Ubiquity_NET_Llvm_LlvmMetadata_System_String_
-  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DINode},System.UInt32,Ubiquity.NET.Llvm.LlvmMetadata,System.String)
-  name.vb: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DINode), UInt32, LlvmMetadata, String)
-  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, Ubiquity.NET.Llvm.DebugInfo.DIType, System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.DebugInfo.DINode>, System.UInt32, Ubiquity.NET.Llvm.LlvmMetadata, System.String)
-  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, Ubiquity.NET.Llvm.DebugInfo.DIType, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.DebugInfo.DINode), System.UInt32, Ubiquity.NET.Llvm.LlvmMetadata, System.String)
-  nameWithType: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable<DINode>, UInt32, LlvmMetadata, String)
-  nameWithType.vb: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DINode), UInt32, LlvmMetadata, String)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DINode},System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DIType,System.String)
+  name: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable<DINode>, UInt32, DIType, String)
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateStructType_Ubiquity_NET_Llvm_DebugInfo_DIScope_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_String_
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DIType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DINode},System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DIType,System.String)
+  name.vb: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DINode), UInt32, DIType, String)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, Ubiquity.NET.Llvm.DebugInfo.DIType, System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.DebugInfo.DINode>, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DIType, System.String)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, System.UInt64, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, Ubiquity.NET.Llvm.DebugInfo.DIType, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.DebugInfo.DINode), System.UInt32, Ubiquity.NET.Llvm.DebugInfo.DIType, System.String)
+  nameWithType: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable<DINode>, UInt32, DIType, String)
+  nameWithType.vb: DebugInfoBuilder.CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, IEnumerable(Of DINode), UInt32, DIType, String)
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType(Ubiquity.NET.Llvm.DebugInfo.DIScope,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,System.UInt64,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DIType,Ubiquity.NET.Llvm.DebugInfo.DINode[])
   name: CreateStructType(DIScope, String, DIFile, UInt32, UInt64, UInt32, DebugInfoFlags, DIType, DINode[])
   href: api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateStructType.html#Ubiquity_NET_Llvm_DebugInfo_DebugInfoBuilder_CreateStructType_Ubiquity_NET_Llvm_DebugInfo_DIScope_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_DINode___
@@ -2882,15 +2921,15 @@ references:
   commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo
   nameWithType: DebugMemberInfo
-- uid: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.#ctor(System.UInt32,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags)
-  name: DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType<ITypeRef, DIType>, DebugInfoFlags)
-  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.-ctor.html#Ubiquity_NET_Llvm_DebugInfo_DebugMemberInfo__ctor_System_UInt32_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_
-  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.#ctor(System.UInt32,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags)
-  name.vb: DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType(Of ITypeRef, DIType), DebugInfoFlags)
-  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.DebugMemberInfo(System.UInt32, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags)
-  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.DebugMemberInfo(System.UInt32, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags)
-  nameWithType: DebugMemberInfo.DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType<ITypeRef, DIType>, DebugInfoFlags)
-  nameWithType.vb: DebugMemberInfo.DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType(Of ITypeRef, DIType), DebugInfoFlags)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.#ctor(System.UInt32,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DebugMemberLayout)
+  name: DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType<ITypeRef, DIType>, DebugInfoFlags, DebugMemberLayout)
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.-ctor.html#Ubiquity_NET_Llvm_DebugInfo_DebugMemberInfo__ctor_System_UInt32_System_String_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DebugMemberLayout_
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.#ctor(System.UInt32,System.String,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,Ubiquity.NET.Llvm.DebugInfo.DebugMemberLayout)
+  name.vb: DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType(Of ITypeRef, DIType), DebugInfoFlags, DebugMemberLayout)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.DebugMemberInfo(System.UInt32, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>, Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, Ubiquity.NET.Llvm.DebugInfo.DebugMemberLayout)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.DebugMemberInfo(System.UInt32, System.String, Ubiquity.NET.Llvm.DebugInfo.DIFile, System.UInt32, Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags, Ubiquity.NET.Llvm.DebugInfo.DebugMemberLayout)
+  nameWithType: DebugMemberInfo.DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType<ITypeRef, DIType>, DebugInfoFlags, DebugMemberLayout)
+  nameWithType.vb: DebugMemberInfo.DebugMemberInfo(UInt32, String, DIFile, UInt32, IDebugType(Of ITypeRef, DIType), DebugInfoFlags, DebugMemberLayout)
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.#ctor*
   name: DebugMemberInfo
   href: api/Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.-ctor.html
@@ -3200,6 +3239,15 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugStructType.Name
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugStructType.Name
   nameWithType: DebugStructType.Name
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  name: SetBody(Boolean, IEnumerable<ITypeRef>)
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody.html#Ubiquity_NET_Llvm_DebugInfo_DebugStructType_SetBody_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  name.vb: SetBody(Boolean, IEnumerable(Of ITypeRef))
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody(System.Boolean, System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody(System.Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  nameWithType: DebugStructType.SetBody(Boolean, IEnumerable<ITypeRef>)
+  nameWithType.vb: DebugStructType.SetBody(Boolean, IEnumerable(Of ITypeRef))
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody(System.Boolean,Ubiquity.NET.Llvm.BitcodeModule,Ubiquity.NET.Llvm.DebugInfo.DIScope,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo})
   name: SetBody(Boolean, BitcodeModule, DIScope, DIFile, UInt32, DebugInfoFlags, IEnumerable<DebugMemberInfo>)
   href: api/Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody.html#Ubiquity_NET_Llvm_DebugInfo_DebugStructType_SetBody_System_Boolean_Ubiquity_NET_Llvm_BitcodeModule_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DebugMemberInfo__
@@ -4883,6 +4931,42 @@ references:
   commentId: T:Ubiquity.NET.Llvm.DebugInfo.DISubRange
   fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange
   nameWithType: DISubRange
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount
+  name: ConstantCount
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount.html#Ubiquity_NET_Llvm_DebugInfo_DISubRange_ConstantCount
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount
+  nameWithType: DISubRange.ConstantCount
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount*
+  name: ConstantCount
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount.html
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange.ConstantCount
+  nameWithType: DISubRange.ConstantCount
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound
+  name: LowerBound
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound.html#Ubiquity_NET_Llvm_DebugInfo_DISubRange_LowerBound
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound
+  nameWithType: DISubRange.LowerBound
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound*
+  name: LowerBound
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound.html
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange.LowerBound
+  nameWithType: DISubRange.LowerBound
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount
+  name: VariableCount
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount.html#Ubiquity_NET_Llvm_DebugInfo_DISubRange_VariableCount
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount
+  nameWithType: DISubRange.VariableCount
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount*
+  name: VariableCount
+  href: api/Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount.html
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubRange.VariableCount
+  nameWithType: DISubRange.VariableCount
 - uid: Ubiquity.NET.Llvm.DebugInfo.DISubroutineType
   name: DISubroutineType
   href: api/Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html
@@ -5192,24 +5276,6 @@ references:
   commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UTF
   fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UTF
   nameWithType: DiTypeKind.UTF
-- uid: Ubiquity.NET.Llvm.DebugInfo.DITypeVoid
-  name: DITypeVoid
-  href: api/Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.html
-  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DITypeVoid
-  fullName: Ubiquity.NET.Llvm.DebugInfo.DITypeVoid
-  nameWithType: DITypeVoid
-- uid: Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance
-  name: Instance
-  href: api/Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance.html#Ubiquity_NET_Llvm_DebugInfo_DITypeVoid_Instance
-  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance
-  fullName: Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance
-  nameWithType: DITypeVoid.Instance
-- uid: Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance*
-  name: Instance
-  href: api/Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance.html
-  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance
-  fullName: Ubiquity.NET.Llvm.DebugInfo.DITypeVoid.Instance
-  nameWithType: DITypeVoid.Instance
 - uid: Ubiquity.NET.Llvm.DebugInfo.DIVariable
   name: DIVariable
   href: api/Ubiquity.NET.Llvm.DebugInfo.DIVariable.html
@@ -7751,30 +7817,6 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.Branch.IsConditional
   fullName: Ubiquity.NET.Llvm.Instructions.Branch.IsConditional
   nameWithType: Branch.IsConditional
-- uid: Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional
-  name: IsUnconitional
-  href: api/Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional.html#Ubiquity_NET_Llvm_Instructions_Branch_IsUnconitional
-  commentId: P:Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional
-  fullName: Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional
-  nameWithType: Branch.IsUnconitional
-- uid: Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional*
-  name: IsUnconitional
-  href: api/Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional.html
-  commentId: Overload:Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional
-  fullName: Ubiquity.NET.Llvm.Instructions.Branch.IsUnconitional
-  nameWithType: Branch.IsUnconitional
-- uid: Ubiquity.NET.Llvm.Instructions.Branch.Successors
-  name: Successors
-  href: api/Ubiquity.NET.Llvm.Instructions.Branch.Successors.html#Ubiquity_NET_Llvm_Instructions_Branch_Successors
-  commentId: P:Ubiquity.NET.Llvm.Instructions.Branch.Successors
-  fullName: Ubiquity.NET.Llvm.Instructions.Branch.Successors
-  nameWithType: Branch.Successors
-- uid: Ubiquity.NET.Llvm.Instructions.Branch.Successors*
-  name: Successors
-  href: api/Ubiquity.NET.Llvm.Instructions.Branch.Successors.html
-  commentId: Overload:Ubiquity.NET.Llvm.Instructions.Branch.Successors
-  fullName: Ubiquity.NET.Llvm.Instructions.Branch.Successors
-  nameWithType: Branch.Successors
 - uid: Ubiquity.NET.Llvm.Instructions.CallBr
   name: CallBr
   href: api/Ubiquity.NET.Llvm.Instructions.CallBr.html
@@ -8069,24 +8111,24 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.CatchReturn.CatchSwitchParentPad
   fullName: Ubiquity.NET.Llvm.Instructions.CatchReturn.CatchSwitchParentPad
   nameWithType: CatchReturn.CatchSwitchParentPad
-- uid: Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors
-  name: Successors
-  href: api/Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors.html#Ubiquity_NET_Llvm_Instructions_CatchReturn_Successors
-  commentId: P:Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors
-  fullName: Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors
-  nameWithType: CatchReturn.Successors
-- uid: Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors*
-  name: Successors
-  href: api/Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors.html
-  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors
-  fullName: Ubiquity.NET.Llvm.Instructions.CatchReturn.Successors
-  nameWithType: CatchReturn.Successors
 - uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch
   name: CatchSwitch
   href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.html
   commentId: T:Ubiquity.NET.Llvm.Instructions.CatchSwitch
   fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch
   nameWithType: CatchSwitch
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination
+  name: HasUnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination.html#Ubiquity_NET_Llvm_Instructions_CatchSwitch_HasUnwindDestination
+  commentId: P:Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination
+  nameWithType: CatchSwitch.HasUnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination*
+  name: HasUnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.HasUnwindDestination
+  nameWithType: CatchSwitch.HasUnwindDestination
 - uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.ParentPad
   name: ParentPad
   href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.ParentPad.html#Ubiquity_NET_Llvm_Instructions_CatchSwitch_ParentPad
@@ -8099,6 +8141,30 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.CatchSwitch.ParentPad
   fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.ParentPad
   nameWithType: CatchSwitch.ParentPad
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination
+  name: UnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination.html#Ubiquity_NET_Llvm_Instructions_CatchSwitch_UnwindDestination
+  commentId: P:Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination
+  nameWithType: CatchSwitch.UnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination*
+  name: UnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindDestination
+  nameWithType: CatchSwitch.UnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller
+  name: UnwindsToCaller
+  href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller.html#Ubiquity_NET_Llvm_Instructions_CatchSwitch_UnwindsToCaller
+  commentId: P:Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller
+  nameWithType: CatchSwitch.UnwindsToCaller
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller*
+  name: UnwindsToCaller
+  href: api/Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch.UnwindsToCaller
+  nameWithType: CatchSwitch.UnwindsToCaller
 - uid: Ubiquity.NET.Llvm.Instructions.CleanupPad
   name: CleanupPad
   href: api/Ubiquity.NET.Llvm.Instructions.CleanupPad.html
@@ -8123,6 +8189,42 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.CleanupReturn.CleanupPad
   fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.CleanupPad
   nameWithType: CleanupReturn.CleanupPad
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination
+  name: HasUnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination.html#Ubiquity_NET_Llvm_Instructions_CleanupReturn_HasUnwindDestination
+  commentId: P:Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination
+  nameWithType: CleanupReturn.HasUnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination*
+  name: HasUnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.HasUnwindDestination
+  nameWithType: CleanupReturn.HasUnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination
+  name: UnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination.html#Ubiquity_NET_Llvm_Instructions_CleanupReturn_UnwindDestination
+  commentId: P:Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination
+  nameWithType: CleanupReturn.UnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination*
+  name: UnwindDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindDestination
+  nameWithType: CleanupReturn.UnwindDestination
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller
+  name: UnwindsToCaller
+  href: api/Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller.html#Ubiquity_NET_Llvm_Instructions_CleanupReturn_UnwindsToCaller
+  commentId: P:Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller
+  nameWithType: CleanupReturn.UnwindsToCaller
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller*
+  name: UnwindsToCaller
+  href: api/Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn.UnwindsToCaller
+  nameWithType: CleanupReturn.UnwindsToCaller
 - uid: Ubiquity.NET.Llvm.Instructions.Cmp
   name: Cmp
   href: api/Ubiquity.NET.Llvm.Instructions.Cmp.html
@@ -8378,6 +8480,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.Instruction.Opcode
   fullName: Ubiquity.NET.Llvm.Instructions.Instruction.Opcode
   nameWithType: Instruction.Opcode
+- uid: Ubiquity.NET.Llvm.Instructions.Instruction.Successors
+  name: Successors
+  href: api/Ubiquity.NET.Llvm.Instructions.Instruction.Successors.html#Ubiquity_NET_Llvm_Instructions_Instruction_Successors
+  commentId: P:Ubiquity.NET.Llvm.Instructions.Instruction.Successors
+  fullName: Ubiquity.NET.Llvm.Instructions.Instruction.Successors
+  nameWithType: Instruction.Successors
+- uid: Ubiquity.NET.Llvm.Instructions.Instruction.Successors*
+  name: Successors
+  href: api/Ubiquity.NET.Llvm.Instructions.Instruction.Successors.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.Instruction.Successors
+  fullName: Ubiquity.NET.Llvm.Instructions.Instruction.Successors
+  nameWithType: Instruction.Successors
 - uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder
   name: InstructionBuilder
   href: api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html
@@ -9797,6 +9911,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.Invoke.GetAttributesAtIndex
   fullName: Ubiquity.NET.Llvm.Instructions.Invoke.GetAttributesAtIndex
   nameWithType: Invoke.GetAttributesAtIndex
+- uid: Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination
+  name: NormalDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination.html#Ubiquity_NET_Llvm_Instructions_Invoke_NormalDestination
+  commentId: P:Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination
+  nameWithType: Invoke.NormalDestination
+- uid: Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination*
+  name: NormalDestination
+  href: api/Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination
+  fullName: Ubiquity.NET.Llvm.Instructions.Invoke.NormalDestination
+  nameWithType: Invoke.NormalDestination
 - uid: Ubiquity.NET.Llvm.Instructions.Invoke.RemoveAttributeAtIndex(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.String)
   name: RemoveAttributeAtIndex(FunctionAttributeIndex, String)
   href: api/Ubiquity.NET.Llvm.Instructions.Invoke.RemoveAttributeAtIndex.html#Ubiquity_NET_Llvm_Instructions_Invoke_RemoveAttributeAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_System_String_
@@ -10694,6 +10820,79 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.Store.IsVolatile
   fullName: Ubiquity.NET.Llvm.Instructions.Store.IsVolatile
   nameWithType: Store.IsVolatile
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection
+  name: SuccessorBlockCollection
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.html
+  commentId: T:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection
+  nameWithType: SuccessorBlockCollection
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains(Ubiquity.NET.Llvm.Values.BasicBlock)
+  name: Contains(BasicBlock)
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains.html#Ubiquity_NET_Llvm_Instructions_SuccessorBlockCollection_Contains_Ubiquity_NET_Llvm_Values_BasicBlock_
+  commentId: M:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains(Ubiquity.NET.Llvm.Values.BasicBlock)
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains(Ubiquity.NET.Llvm.Values.BasicBlock)
+  nameWithType: SuccessorBlockCollection.Contains(BasicBlock)
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains*
+  name: Contains
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Contains
+  nameWithType: SuccessorBlockCollection.Contains
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count
+  name: Count
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count.html#Ubiquity_NET_Llvm_Instructions_SuccessorBlockCollection_Count
+  commentId: P:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count
+  nameWithType: SuccessorBlockCollection.Count
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count*
+  name: Count
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Count
+  nameWithType: SuccessorBlockCollection.Count
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator
+  name: GetEnumerator()
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator.html#Ubiquity_NET_Llvm_Instructions_SuccessorBlockCollection_GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator()
+  nameWithType: SuccessorBlockCollection.GetEnumerator()
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator*
+  name: GetEnumerator
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.GetEnumerator
+  nameWithType: SuccessorBlockCollection.GetEnumerator
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item(System.Int32)
+  name: Item[Int32]
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item.html#Ubiquity_NET_Llvm_Instructions_SuccessorBlockCollection_Item_System_Int32_
+  commentId: P:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item[System.Int32]
+  fullName.vb: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item(System.Int32)
+  nameWithType: SuccessorBlockCollection.Item[Int32]
+  nameWithType.vb: SuccessorBlockCollection.Item(Int32)
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item*
+  name: Item
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.Item
+  nameWithType: SuccessorBlockCollection.Item
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System-Collections-IEnumerable-GetEnumerator.html#Ubiquity_NET_Llvm_Instructions_SuccessorBlockCollection_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: SuccessorBlockCollection.IEnumerable.GetEnumerator()
+  nameWithType.vb: SuccessorBlockCollection.System.Collections.IEnumerable.GetEnumerator()
+- uid: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System-Collections-IEnumerable-GetEnumerator.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Instructions.SuccessorBlockCollection.System.Collections.IEnumerable.GetEnumerator
+  nameWithType: SuccessorBlockCollection.IEnumerable.GetEnumerator
+  nameWithType.vb: SuccessorBlockCollection.System.Collections.IEnumerable.GetEnumerator
 - uid: Ubiquity.NET.Llvm.Instructions.Switch
   name: Switch
   href: api/Ubiquity.NET.Llvm.Instructions.Switch.html
@@ -10820,6 +11019,64 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.InternalCodeGeneratorException.#ctor
   fullName: Ubiquity.NET.Llvm.InternalCodeGeneratorException.InternalCodeGeneratorException
   nameWithType: InternalCodeGeneratorException.InternalCodeGeneratorException
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1
+  name: IOperandCollection<T>
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.html
+  commentId: T:Ubiquity.NET.Llvm.IOperandCollection`1
+  name.vb: IOperandCollection(Of T)
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T)
+  nameWithType: IOperandCollection<T>
+  nameWithType.vb: IOperandCollection(Of T)
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+  name: Contains(T)
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.Contains.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  commentId: M:Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Contains(T)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Contains(T)
+  nameWithType: IOperandCollection<T>.Contains(T)
+  nameWithType.vb: IOperandCollection(Of T).Contains(T)
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Contains*
+  name: Contains
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.Contains.html
+  commentId: Overload:Ubiquity.NET.Llvm.IOperandCollection`1.Contains
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Contains
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Contains
+  nameWithType: IOperandCollection<T>.Contains
+  nameWithType.vb: IOperandCollection(Of T).Contains
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Item(System.Int32)
+  name: Item[Int32]
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.Item.html#Ubiquity_NET_Llvm_IOperandCollection_1_Item_System_Int32_
+  commentId: P:Ubiquity.NET.Llvm.IOperandCollection`1.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Item[System.Int32]
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Item(System.Int32)
+  nameWithType: IOperandCollection<T>.Item[Int32]
+  nameWithType.vb: IOperandCollection(Of T).Item(Int32)
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Item*
+  name: Item
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.Item.html
+  commentId: Overload:Ubiquity.NET.Llvm.IOperandCollection`1.Item
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Item
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Item
+  nameWithType: IOperandCollection<T>.Item
+  nameWithType.vb: IOperandCollection(Of T).Item
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Slice(System.Int32,System.Int32)
+  name: Slice(Int32, Int32)
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.Slice.html#Ubiquity_NET_Llvm_IOperandCollection_1_Slice_System_Int32_System_Int32_
+  commentId: M:Ubiquity.NET.Llvm.IOperandCollection`1.Slice(System.Int32,System.Int32)
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Slice(System.Int32, System.Int32)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Slice(System.Int32, System.Int32)
+  nameWithType: IOperandCollection<T>.Slice(Int32, Int32)
+  nameWithType.vb: IOperandCollection(Of T).Slice(Int32, Int32)
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Slice*
+  name: Slice
+  href: api/Ubiquity.NET.Llvm.IOperandCollection-1.Slice.html
+  commentId: Overload:Ubiquity.NET.Llvm.IOperandCollection`1.Slice
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Slice
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Slice
+  nameWithType: IOperandCollection<T>.Slice
+  nameWithType.vb: IOperandCollection(Of T).Slice
 - uid: Ubiquity.NET.Llvm.JIT
   name: Ubiquity.NET.Llvm.JIT
   href: api/Ubiquity.NET.Llvm.JIT.html
@@ -11444,6 +11701,18 @@ references:
   commentId: T:Ubiquity.NET.Llvm.MetadataAsValue
   fullName: Ubiquity.NET.Llvm.MetadataAsValue
   nameWithType: MetadataAsValue
+- uid: Ubiquity.NET.Llvm.MetadataAsValue.Operands
+  name: Operands
+  href: api/Ubiquity.NET.Llvm.MetadataAsValue.Operands.html#Ubiquity_NET_Llvm_MetadataAsValue_Operands
+  commentId: P:Ubiquity.NET.Llvm.MetadataAsValue.Operands
+  fullName: Ubiquity.NET.Llvm.MetadataAsValue.Operands
+  nameWithType: MetadataAsValue.Operands
+- uid: Ubiquity.NET.Llvm.MetadataAsValue.Operands*
+  name: Operands
+  href: api/Ubiquity.NET.Llvm.MetadataAsValue.Operands.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataAsValue.Operands
+  fullName: Ubiquity.NET.Llvm.MetadataAsValue.Operands
+  nameWithType: MetadataAsValue.Operands
 - uid: Ubiquity.NET.Llvm.MetadataKind
   name: MetadataKind
   href: api/Ubiquity.NET.Llvm.MetadataKind.html
@@ -11630,6 +11899,94 @@ references:
   commentId: F:Ubiquity.NET.Llvm.MetadataKind.MDTuple
   fullName: Ubiquity.NET.Llvm.MetadataKind.MDTuple
   nameWithType: MetadataKind.MDTuple
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection
+  name: MetadataOperandCollection
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.html
+  commentId: T:Ubiquity.NET.Llvm.MetadataOperandCollection
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection
+  nameWithType: MetadataOperandCollection
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.Contains(Ubiquity.NET.Llvm.LlvmMetadata)
+  name: Contains(LlvmMetadata)
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.Contains.html#Ubiquity_NET_Llvm_MetadataOperandCollection_Contains_Ubiquity_NET_Llvm_LlvmMetadata_
+  commentId: M:Ubiquity.NET.Llvm.MetadataOperandCollection.Contains(Ubiquity.NET.Llvm.LlvmMetadata)
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.Contains(Ubiquity.NET.Llvm.LlvmMetadata)
+  nameWithType: MetadataOperandCollection.Contains(LlvmMetadata)
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.Contains*
+  name: Contains
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.Contains.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataOperandCollection.Contains
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.Contains
+  nameWithType: MetadataOperandCollection.Contains
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.Count
+  name: Count
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.Count.html#Ubiquity_NET_Llvm_MetadataOperandCollection_Count
+  commentId: P:Ubiquity.NET.Llvm.MetadataOperandCollection.Count
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.Count
+  nameWithType: MetadataOperandCollection.Count
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.Count*
+  name: Count
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.Count.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataOperandCollection.Count
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.Count
+  nameWithType: MetadataOperandCollection.Count
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator
+  name: GetEnumerator()
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator.html#Ubiquity_NET_Llvm_MetadataOperandCollection_GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator()
+  nameWithType: MetadataOperandCollection.GetEnumerator()
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator*
+  name: GetEnumerator
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.GetEnumerator
+  nameWithType: MetadataOperandCollection.GetEnumerator
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand*
+  name: GetOperand
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand
+  nameWithType: MetadataOperandCollection.GetOperand
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand``1(System.Index)
+  name: GetOperand<TItem>(Index)
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand.html#Ubiquity_NET_Llvm_MetadataOperandCollection_GetOperand__1_System_Index_
+  commentId: M:Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand``1(System.Index)
+  name.vb: GetOperand(Of TItem)(Index)
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand<TItem>(System.Index)
+  fullName.vb: Ubiquity.NET.Llvm.MetadataOperandCollection.GetOperand(Of TItem)(System.Index)
+  nameWithType: MetadataOperandCollection.GetOperand<TItem>(Index)
+  nameWithType.vb: MetadataOperandCollection.GetOperand(Of TItem)(Index)
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.Item(System.Int32)
+  name: Item[Int32]
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.Item.html#Ubiquity_NET_Llvm_MetadataOperandCollection_Item_System_Int32_
+  commentId: P:Ubiquity.NET.Llvm.MetadataOperandCollection.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.Item[System.Int32]
+  fullName.vb: Ubiquity.NET.Llvm.MetadataOperandCollection.Item(System.Int32)
+  nameWithType: MetadataOperandCollection.Item[Int32]
+  nameWithType.vb: MetadataOperandCollection.Item(Int32)
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.Item*
+  name: Item
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.Item.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataOperandCollection.Item
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.Item
+  nameWithType: MetadataOperandCollection.Item
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.System-Collections-IEnumerable-GetEnumerator.html#Ubiquity_NET_Llvm_MetadataOperandCollection_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.MetadataOperandCollection.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: MetadataOperandCollection.IEnumerable.GetEnumerator()
+  nameWithType.vb: MetadataOperandCollection.System.Collections.IEnumerable.GetEnumerator()
+- uid: Ubiquity.NET.Llvm.MetadataOperandCollection.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/Ubiquity.NET.Llvm.MetadataOperandCollection.System-Collections-IEnumerable-GetEnumerator.html
+  commentId: Overload:Ubiquity.NET.Llvm.MetadataOperandCollection.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.MetadataOperandCollection.System.Collections.IEnumerable.GetEnumerator
+  nameWithType: MetadataOperandCollection.IEnumerable.GetEnumerator
+  nameWithType.vb: MetadataOperandCollection.System.Collections.IEnumerable.GetEnumerator
 - uid: Ubiquity.NET.Llvm.ModuleFlag
   name: ModuleFlag
   href: api/Ubiquity.NET.Llvm.ModuleFlag.html
@@ -15270,6 +15627,15 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Types.IStructType.IsPacked
   fullName: Ubiquity.NET.Llvm.Types.IStructType.IsPacked
   nameWithType: IStructType.IsPacked
+- uid: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  name: SetBody(Boolean, IEnumerable<ITypeRef>)
+  href: api/Ubiquity.NET.Llvm.Types.IStructType.SetBody.html#Ubiquity_NET_Llvm_Types_IStructType_SetBody_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  commentId: M:Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  name.vb: SetBody(Boolean, IEnumerable(Of ITypeRef))
+  fullName: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean, System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  fullName.vb: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  nameWithType: IStructType.SetBody(Boolean, IEnumerable<ITypeRef>)
+  nameWithType.vb: IStructType.SetBody(Boolean, IEnumerable(Of ITypeRef))
 - uid: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef[])
   name: SetBody(Boolean, ITypeRef[])
   href: api/Ubiquity.NET.Llvm.Types.IStructType.SetBody.html#Ubiquity_NET_Llvm_Types_IStructType_SetBody_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef___
@@ -18285,21 +18651,6 @@ references:
   commentId: T:Ubiquity.NET.Llvm.Values.User
   fullName: Ubiquity.NET.Llvm.Values.User
   nameWithType: User
-- uid: Ubiquity.NET.Llvm.Values.User.GetOperand*
-  name: GetOperand
-  href: api/Ubiquity.NET.Llvm.Values.User.GetOperand.html
-  commentId: Overload:Ubiquity.NET.Llvm.Values.User.GetOperand
-  fullName: Ubiquity.NET.Llvm.Values.User.GetOperand
-  nameWithType: User.GetOperand
-- uid: Ubiquity.NET.Llvm.Values.User.GetOperand``1(System.Int32)
-  name: GetOperand<T>(Int32)
-  href: api/Ubiquity.NET.Llvm.Values.User.GetOperand.html#Ubiquity_NET_Llvm_Values_User_GetOperand__1_System_Int32_
-  commentId: M:Ubiquity.NET.Llvm.Values.User.GetOperand``1(System.Int32)
-  name.vb: GetOperand(Of T)(Int32)
-  fullName: Ubiquity.NET.Llvm.Values.User.GetOperand<T>(System.Int32)
-  fullName.vb: Ubiquity.NET.Llvm.Values.User.GetOperand(Of T)(System.Int32)
-  nameWithType: User.GetOperand<T>(Int32)
-  nameWithType.vb: User.GetOperand(Of T)(Int32)
 - uid: Ubiquity.NET.Llvm.Values.User.Operands
   name: Operands
   href: api/Ubiquity.NET.Llvm.Values.User.Operands.html#Ubiquity_NET_Llvm_Values_User_Operands
@@ -18312,21 +18663,6 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Values.User.Operands
   fullName: Ubiquity.NET.Llvm.Values.User.Operands
   nameWithType: User.Operands
-- uid: Ubiquity.NET.Llvm.Values.User.SetOperand*
-  name: SetOperand
-  href: api/Ubiquity.NET.Llvm.Values.User.SetOperand.html
-  commentId: Overload:Ubiquity.NET.Llvm.Values.User.SetOperand
-  fullName: Ubiquity.NET.Llvm.Values.User.SetOperand
-  nameWithType: User.SetOperand
-- uid: Ubiquity.NET.Llvm.Values.User.SetOperand``1(System.Int32,``0)
-  name: SetOperand<T>(Int32, T)
-  href: api/Ubiquity.NET.Llvm.Values.User.SetOperand.html#Ubiquity_NET_Llvm_Values_User_SetOperand__1_System_Int32___0_
-  commentId: M:Ubiquity.NET.Llvm.Values.User.SetOperand``1(System.Int32,``0)
-  name.vb: SetOperand(Of T)(Int32, T)
-  fullName: Ubiquity.NET.Llvm.Values.User.SetOperand<T>(System.Int32, T)
-  fullName.vb: Ubiquity.NET.Llvm.Values.User.SetOperand(Of T)(System.Int32, T)
-  nameWithType: User.SetOperand<T>(Int32, T)
-  nameWithType.vb: User.SetOperand(Of T)(Int32, T)
 - uid: Ubiquity.NET.Llvm.Values.User.Uses
   name: Uses
   href: api/Ubiquity.NET.Llvm.Values.User.Uses.html#Ubiquity_NET_Llvm_Values_User_Uses
@@ -18513,6 +18849,115 @@ references:
   fullName.vb: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName(Of T)(T, System.String)
   nameWithType: ValueExtensions.RegisterName<T>(T, String)
   nameWithType.vb: ValueExtensions.RegisterName(Of T)(T, String)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  name: ValueOperandListCollection<T>
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.html
+  commentId: T:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  name.vb: ValueOperandListCollection(Of T)
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T)
+  nameWithType: ValueOperandListCollection<T>
+  nameWithType.vb: ValueOperandListCollection(Of T)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains(`0)
+  name: Contains(T)
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.Contains.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_Contains__0_
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains(`0)
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Contains(T)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Contains(T)
+  nameWithType: ValueOperandListCollection<T>.Contains(T)
+  nameWithType.vb: ValueOperandListCollection(Of T).Contains(T)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains*
+  name: Contains
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.Contains.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Contains
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Contains
+  nameWithType: ValueOperandListCollection<T>.Contains
+  nameWithType.vb: ValueOperandListCollection(Of T).Contains
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  name: Count
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.Count.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_Count
+  commentId: P:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Count
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Count
+  nameWithType: ValueOperandListCollection<T>.Count
+  nameWithType.vb: ValueOperandListCollection(Of T).Count
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count*
+  name: Count
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.Count.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Count
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Count
+  nameWithType: ValueOperandListCollection<T>.Count
+  nameWithType.vb: ValueOperandListCollection(Of T).Count
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  name: GetEnumerator()
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.GetEnumerator.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetEnumerator()
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetEnumerator()
+  nameWithType: ValueOperandListCollection<T>.GetEnumerator()
+  nameWithType.vb: ValueOperandListCollection(Of T).GetEnumerator()
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator*
+  name: GetEnumerator
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.GetEnumerator.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetEnumerator
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetEnumerator
+  nameWithType: ValueOperandListCollection<T>.GetEnumerator
+  nameWithType.vb: ValueOperandListCollection(Of T).GetEnumerator
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand*
+  name: GetOperand
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.GetOperand.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetOperand
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetOperand
+  nameWithType: ValueOperandListCollection<T>.GetOperand
+  nameWithType.vb: ValueOperandListCollection(Of T).GetOperand
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand``1(System.Index)
+  name: GetOperand<TItem>(Index)
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.GetOperand.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_GetOperand__1_System_Index_
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand``1(System.Index)
+  name.vb: GetOperand(Of TItem)(Index)
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetOperand<TItem>(System.Index)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetOperand(Of TItem)(System.Index)
+  nameWithType: ValueOperandListCollection<T>.GetOperand<TItem>(Index)
+  nameWithType.vb: ValueOperandListCollection(Of T).GetOperand(Of TItem)(Index)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item(System.Int32)
+  name: Item[Int32]
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.Item.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_Item_System_Int32_
+  commentId: P:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Item[System.Int32]
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Item(System.Int32)
+  nameWithType: ValueOperandListCollection<T>.Item[Int32]
+  nameWithType.vb: ValueOperandListCollection(Of T).Item(Int32)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item*
+  name: Item
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.Item.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Item
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Item
+  nameWithType: ValueOperandListCollection<T>.Item
+  nameWithType.vb: ValueOperandListCollection(Of T).Item
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.System-Collections-IEnumerable-GetEnumerator.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.System.Collections.IEnumerable.GetEnumerator()
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: ValueOperandListCollection<T>.IEnumerable.GetEnumerator()
+  nameWithType.vb: ValueOperandListCollection(Of T).System.Collections.IEnumerable.GetEnumerator()
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.System-Collections-IEnumerable-GetEnumerator.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.System.Collections.IEnumerable.GetEnumerator
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).System.Collections.IEnumerable.GetEnumerator
+  nameWithType: ValueOperandListCollection<T>.IEnumerable.GetEnumerator
+  nameWithType.vb: ValueOperandListCollection(Of T).System.Collections.IEnumerable.GetEnumerator
 - uid: Ubiquity.NET.Llvm.Values.Visibility
   name: Visibility
   href: api/Ubiquity.NET.Llvm.Values.Visibility.html

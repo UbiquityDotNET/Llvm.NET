@@ -270,7 +270,7 @@ using var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, 
 module.SourceFileName = Path.GetFileName( srcPath );
 module.TargetTriple = TargetDetails.TargetMachine.Triple;
 module.Layout = TargetDetails.TargetMachine.TargetData;
-System.Diagnostics.Debug.Assert( !( module.DICompileUnit is null ), &quot;Expected module with non-null compile unit&quot; );
+Debug.Assert( !( module.DICompileUnit is null ), &quot;Expected module with non-null compile unit&quot; );
 
 TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
 </code></pre><h2 id="creating-the-dicompileunit">Creating the DICompileUnit</h2>
@@ -296,7 +296,7 @@ used in the generated code with appropriate debug information.</p>
 <pre><code class="lang-csharp" name="Main">// Create basic types used in this compilation
 var i32 = new DebugBasicType( module.Context.Int32Type, module, &quot;int&quot;, DiTypeKind.Signed );
 var f32 = new DebugBasicType( module.Context.FloatType, module, &quot;float&quot;, DiTypeKind.Float );
-var voidType = DebugType.Create&lt;ITypeRef,DIType&gt;( module.Context.VoidType, DITypeVoid.Instance );
+var voidType = DebugType.Create&lt;ITypeRef,DIType&gt;( module.Context.VoidType, null );
 var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
 </code></pre><p>This constructs several basic types and assigns them to variables:</p>
 <table>
@@ -644,7 +644,7 @@ attributes #2 = { argmemonly nounwind }
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.2
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.3
             
           </div>
         </div>

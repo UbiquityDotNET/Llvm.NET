@@ -122,10 +122,6 @@ to make nullability more explicit. This necessitated a few minor breaking change
 <td>DebugMemberInfo</td>
 <td>Removed setters of non-nullable properties and added constructor to allow building the type with non-null values</td>
 </tr>
-<tr>
-<td>DIType</td>
-<td>null is no longer used to represent a void type, instead a new singleton DITypeVoid.Instance is used.</td>
-</tr>
 </tbody>
 </table>
 <h3 id="renamed-instruction-predicate-enumerator-values">Renamed instruction predicate enumerator values</h3>
@@ -190,6 +186,32 @@ and clarity (Some of the float predicates had &#39;Than&#39; in the name while t
 </tr>
 </tbody>
 </table>
+<h3 id="obsoleted-apis">Obsoleted APIs</h3>
+<table>
+<thead>
+<tr>
+<th>Obsolete API</th>
+<th>Alternative API</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BitcodeModule.AddFunction</td>
+<td>BitcodeModule.CreateFunction()</td>
+<td>The Create vs Add between debug info and raw native was always confusing</td>
+</tr>
+</tbody>
+</table>
+<h3 id="altered-behavior">Altered Behavior</h3>
+<h4 id="contextcreatestructtype">Context.CreateStructType()</h4>
+<p>As part of resolving <a href="https://github.com/UbiquityDotNET/Llvm.NET/issues/184">bug #184</a> the CreateStructType
+methods were re-evaluated and found lacking in functionality (the bug) and clarity. The docs were misleading
+and the implementations overly restrictive in some cases. Thus these have been re-worked to make it more clear
+when a Sized vs. Opaque structure type is created, in particular, for <strong>ALL</strong> overloads taking a &#39;packed&#39; parameter
+a sized type is created, even if the size is 0 because no members are provided. This allows creation of named or 
+anonymous empty structs, used in many languages. To create a named opaque type then the overload with just the
+name is used. This isn&#39;t expected to impact many consumers, other than the tests, but it is a breaking change.</p>
 <h3 id="removed-redundant-apis">Removed redundant APIs</h3>
 <p>LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality equivalent to 
 APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some
@@ -203,8 +225,8 @@ of the custom APIs were removed and replaced with the official ones.</p>
 </thead>
 <tbody>
 <tr>
-<td>LibLLVMFoo{TBD}</td>
-<td>LLVMFoo{TBD}</td>
+<td>LibLLVMFoo [TBD]</td>
+<td>LLVMFoo [TBD]</td>
 </tr>
 </tbody>
 </table>
@@ -420,7 +442,7 @@ ILazyCompileExecutionEngine interfaces.</li>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.2
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.3
             
           </div>
         </div>
