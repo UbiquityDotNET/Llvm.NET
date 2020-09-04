@@ -1,2 +1,5 @@
 build/
 out/
+
+.fake
+.ionide

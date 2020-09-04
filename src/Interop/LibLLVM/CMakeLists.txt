@@ -2,28 +2,34 @@ cmake_minimum_required(VERSION 3.0.0)
 project(LibLLVM VERSION 0.1.0)
 
 # message("CMAKE version is " ${CMAKE_VERSION})
+# message("Project binary dir is " ${PROJECT_BINARY_DIR})
+set(CMAKE_VERBOSE_MAKEFILE TRUE)
+set(LLVM_VERSION_STRING "10.0.0" PARENT)
+set(LLVM_VERSION_MAJOR "10" PARENT)
+set(LLVM_VERSION_MINOR "0" PARENT)
+set(LLVM_VERSION_PATCH "0" PARENT)
 
 configure_file(
         "../../../llvm/include/llvm/Config/config.h.cmake"
-        "LLVM/Config/config.h")
+        "llvm/Config/config.h")
 configure_file(
         "../../../llvm/include/llvm/Config/llvm-config.h.cmake"
-        "LLVM/Config/llvm-config.h")
+        "llvm/Config/llvm-config.h")
 configure_file(
         "../../../llvm/include/llvm/Config/abi-breaking.h.cmake"
-        "LLVM/Config/abi-breaking.h")
+        "llvm/Config/abi-breaking.h")
 configure_file(
         "../../../llvm/include/llvm/Config/AsmParsers.def.in"
-        "LLVM/Config/AsmParsers.def")
+        "llvm/Config/AsmParsers.def")
 configure_file(
         "../../../llvm/include/llvm/Config/AsmPrinters.def.in"
-        "LLVM/Config/AsmPrinters.def")
+        "llvm/Config/AsmPrinters.def")
 configure_file(
         "../../../llvm/include/llvm/Config/Disassemblers.def.in"
-        "LLVM/Config/Disassemblers.def")
+        "llvm/Config/Disassemblers.def")
 configure_file(
         "../../../llvm/include/llvm/Config/Targets.def.in"
-        "LLVM/Config/Targets.def")
+        "llvm/Config/Targets.def")
 
 include(CTest)
 enable_testing()
@@ -36,10 +42,11 @@ target_include_directories(LibLLVM PRIVATE "../../../llvm/x64-Release/include")
 target_include_directories(LibLLVM PRIVATE "../../../llvm/include")
 target_include_directories(LibLLVM PRIVATE "../../../llvm/include/llvm/ExecutionEngine/Orc")
 target_include_directories(LibLLVM PRIVATE "include")
-target_include_directories(LibLLVM PRIVATE "${PROJECT_BINARY_DIR}")
+target_include_directories(LibLLVM PRIVATE ".")
 
 add_compile_definitions("NDEBUG" "_USRDLL" "LIBLLVM_EXPORTS")
 add_compile_definitions("_ITERATOR_DEBUG_LEVEL=0")
+add_compile_options("/LD")
 
 target_sources(LibLLVM PRIVATE 
     "AnalysisBindings" 

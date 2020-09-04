@@ -159,3 +159,6 @@ Tools/
 **/GeneratedDocs/
 **/GeneratedCode/
 /src/Interop/LibLLVM/EXPORTS.g.DEF
+
+.fake
+.ionide
