@@ -112,8 +112,9 @@ try
         Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
 
         Write-Information "Building LibLLVM"
-        $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
-        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
+      #   $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
+      #   Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
+        cmake --build src\Interop\LibLLVM --target ALL_BUILD --config Release
 
         Write-Information "Building Ubiquity.NET.Llvm.Interop"
         $interopSlnBinLog = Join-Path $buildInfo['BinLogsPath'] Interop.sln.binlog

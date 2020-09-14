@@ -2,34 +2,38 @@ cmake_minimum_required(VERSION 3.0.0)
 project(LibLLVM VERSION 0.1.0)
 
 # message("CMAKE version is " ${CMAKE_VERSION})
-# message("Project binary dir is " ${PROJECT_BINARY_DIR})
-set(CMAKE_VERBOSE_MAKEFILE TRUE)
-set(LLVM_VERSION_STRING "10.0.0" PARENT)
-set(LLVM_VERSION_MAJOR "10" PARENT)
-set(LLVM_VERSION_MINOR "0" PARENT)
-set(LLVM_VERSION_PATCH "0" PARENT)
+# message("Host system name is " ${CMAKE_HOST_SYSTEM_NAME})
+# message("Host system processor is " ${CMAKE_HOST_SYSTEM_PROCESSOR})
+# message("C++ compiler is " ${CMAKE_CXX_COMPILER})
+# message("C++ compiler ID is " ${CMAKE_CXX_COMPILER_ID})
 
-configure_file(
-        "../../../llvm/include/llvm/Config/config.h.cmake"
-        "llvm/Config/config.h")
-configure_file(
-        "../../../llvm/include/llvm/Config/llvm-config.h.cmake"
-        "llvm/Config/llvm-config.h")
-configure_file(
-        "../../../llvm/include/llvm/Config/abi-breaking.h.cmake"
-        "llvm/Config/abi-breaking.h")
-configure_file(
-        "../../../llvm/include/llvm/Config/AsmParsers.def.in"
-        "llvm/Config/AsmParsers.def")
-configure_file(
-        "../../../llvm/include/llvm/Config/AsmPrinters.def.in"
-        "llvm/Config/AsmPrinters.def")
-configure_file(
-        "../../../llvm/include/llvm/Config/Disassemblers.def.in"
-        "llvm/Config/Disassemblers.def")
-configure_file(
-        "../../../llvm/include/llvm/Config/Targets.def.in"
-        "llvm/Config/Targets.def")
+set(CMAKE_VERBOSE_MAKEFILE TRUE)
+set(LLVM_VERSION_STRING "10.0.0")
+set(LLVM_VERSION_MAJOR "10")
+set(LLVM_VERSION_MINOR "0")
+set(LLVM_VERSION_PATCH "0")
+
+# configure_file(
+#         "../../../llvm/include/llvm/Config/config.h.cmake"
+#         "llvm/Config/config.h")
+# configure_file(
+#         "../../../llvm/include/llvm/Config/llvm-config.h.cmake"
+#         "llvm/Config/llvm-config.h")
+# configure_file(
+#         "../../../llvm/include/llvm/Config/abi-breaking.h.cmake"
+#         "llvm/Config/abi-breaking.h")
+# configure_file(
+#         "../../../llvm/include/llvm/Config/AsmParsers.def.in"
+#         "llvm/Config/AsmParsers.def")
+# configure_file(
+#         "../../../llvm/include/llvm/Config/AsmPrinters.def.in"
+#         "llvm/Config/AsmPrinters.def")
+# configure_file(
+#         "../../../llvm/include/llvm/Config/Disassemblers.def.in"
+#         "llvm/Config/Disassemblers.def")
+# configure_file(
+#         "../../../llvm/include/llvm/Config/Targets.def.in"
+#         "llvm/Config/Targets.def")
 
 include(CTest)
 enable_testing()
@@ -40,11 +44,11 @@ add_library(LibLLVM SHARED "")
 
 target_include_directories(LibLLVM PRIVATE "../../../llvm/x64-Release/include")
 target_include_directories(LibLLVM PRIVATE "../../../llvm/include")
-target_include_directories(LibLLVM PRIVATE "../../../llvm/include/llvm/ExecutionEngine/Orc")
+target_include_directories(LibLLVM PRIVATE "../../../llvm/lib/ExecutionEngine/Orc")
 target_include_directories(LibLLVM PRIVATE "include")
 target_include_directories(LibLLVM PRIVATE ".")
 
-add_compile_definitions("NDEBUG" "_USRDLL" "LIBLLVM_EXPORTS")
+add_compile_definitions("NDEBUG" "_USRDLL" "LIBLLVM_EXPORTS" "LibLLVM_EXPORTS")
 add_compile_definitions("_ITERATOR_DEBUG_LEVEL=0")
 add_compile_options("/LD")
 
