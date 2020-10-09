@@ -240,7 +240,7 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
     if(!$existingModule)
     {
         Write-Information "Installing VSSetup module"
-        Install-Module VSSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
+        Install-Module VsSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
     }
 
     $vs = Get-VSSetupInstance -Prerelease:$PreRelease |
@@ -253,6 +253,17 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
 function Find-MSBuild([switch]$AllowVsPreReleases)
 {
     $foundOnPath = $true
+
+    if ($IsLinux)
+    {
+        Write-Information "On Linux, using dotnet msbuild"
+        $versionInfo = & dotnet msbuild -version
+        return @{ FullPath="dotnet msbuild"
+                  FoundOnPath=$true
+                  Version = $versionInfo[-1]
+                }
+    }
+
     $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
     if( !$msBuildPath )
     {
@@ -317,7 +328,14 @@ function Invoke-MSBuild([string]$project, [hashtable]$properties, $targets, $log
     }
 
     Write-Information "msbuild $($msbuildArgs -join ' ')"
-    msbuild $msbuildArgs
+    if ($IsLinux)
+    {
+        dotnet msbuild $msbuildArgs
+    }
+    else
+    {
+        msbuild $msbuildArgs        
+    }
     if($LASTEXITCODE -ne 0)
     {
         Write-Error "Error running msbuild: $LASTEXITCODE"
