@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(LibLLVM VERSION 0.1.0)
 
-# message("CMAKE version is " ${CMAKE_VERSION})
-# message("Host system name is " ${CMAKE_HOST_SYSTEM_NAME})
-# message("Host system processor is " ${CMAKE_HOST_SYSTEM_PROCESSOR})
-# message("C++ compiler is " ${CMAKE_CXX_COMPILER})
-# message("C++ compiler ID is " ${CMAKE_CXX_COMPILER_ID})
+message("CMAKE version is " ${CMAKE_VERSION})
+message("Host system name is " ${CMAKE_HOST_SYSTEM_NAME})
+message("Host system processor is " ${CMAKE_HOST_SYSTEM_PROCESSOR})
+message("C++ compiler is " ${CMAKE_CXX_COMPILER})
+message("C++ compiler ID is " ${CMAKE_CXX_COMPILER_ID})
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 set(LLVM_VERSION_STRING "10.0.0")
@@ -13,6 +13,7 @@ set(LLVM_VERSION_MAJOR "10")
 set(LLVM_VERSION_MINOR "0")
 set(LLVM_VERSION_PATCH "0")
 
+# We don't need to do this as the LLVM version we compile against has already been configured
 # configure_file(
 #         "../../../llvm/include/llvm/Config/config.h.cmake"
 #         "llvm/Config/config.h")
@@ -50,7 +51,8 @@ target_include_directories(LibLLVM PRIVATE ".")
 
 add_compile_definitions("NDEBUG" "_USRDLL" "LIBLLVM_EXPORTS" "LibLLVM_EXPORTS")
 add_compile_definitions("_ITERATOR_DEBUG_LEVEL=0")
-add_compile_options("/LD")
+# add_compile_options("/LD")
+# add_compile_options("/DEF:EXPORTS.g.DEF")
 
 target_sources(LibLLVM PRIVATE 
     "AnalysisBindings" 
@@ -69,7 +71,7 @@ target_sources(LibLLVM PRIVATE
     "TripleBindings" 
     "ValueBindings")
 
-target_link_libraries(LibLLVM PRIVATE
+target_link_libraries(LibLLVM PUBLIC
         "LLVMAArch64AsmParser"
         "LLVMAArch64CodeGen"
         "LLVMAArch64Desc"

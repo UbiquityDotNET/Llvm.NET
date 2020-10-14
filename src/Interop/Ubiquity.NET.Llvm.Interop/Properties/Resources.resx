@@ -140,4 +140,7 @@
   <data name="Llvm_not_initialized" xml:space="preserve">
     <value>LLVM library is not initialized - nothing to shut down.</value>
   </data>
+  <data name="LoadLibrary_not_found" xml:space="preserve">
+    <value>Library {0} not found on search path {1}</value>
+  </data>
 </root>

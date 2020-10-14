@@ -2,6 +2,7 @@
 #include <llvm/ADT/Triple.h>
 #include <llvm/Support/CBindingWrapping.h>
 #include <llvm/Support/TargetParser.h>
+#include <llvm/Config/llvm-config.h>
 
 #include "libllvm-c/TripleBindings.h"
 

@@ -32,31 +32,52 @@ namespace Ubiquity.NET.Llvm.Interop
                 throw new ArgumentNullException( nameof( moduleName ) );
             }
 
-            var searchCookies = ( from path in alternatePaths
-                                  where Directory.Exists( path )
-                                  select (Cookie: AddDllDirectory( path ), Path: path)
-                                ).ToList( );
-
-            try
+            foreach ( string path in alternatePaths )
             {
-                IntPtr moduleHandle = LoadLibraryExW( moduleName, IntPtr.Zero, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS );
-                if( moduleHandle != IntPtr.Zero )
+                string? modulePath = Path.Combine( path, moduleName );
+                try
                 {
-                    return moduleHandle;
+                    var moduleHandle = NativeLibrary.Load( moduleName );
+                    if ( moduleHandle != IntPtr.Zero )
+                    {
+                        return moduleHandle;
+                    }
                 }
-
-                int lastError = Marshal.GetLastWin32Error( );
-                string msgFmt = Resources.LoadWin32Library_Error_0_occured_loading_1_search_paths_2;
-                string errMessage = string.Format( CultureInfo.CurrentCulture, msgFmt, lastError, moduleName, string.Join( "\n", searchCookies.Select( p => p.Path ) ) );
-                throw new Win32Exception( lastError, errMessage );
-            }
-            finally
-            {
-                foreach( var c in searchCookies )
+                catch ( DllNotFoundException _ )
                 {
-                    RemoveDllDirectory( c.Cookie );
                 }
             }
+
+            string locations = string.Join( "\n", alternatePaths );
+            string msgFmt = Resources.LoadLibrary_not_found;
+            string errMessage = string.Format( CultureInfo.CurrentCulture, msgFmt, moduleName, locations );
+            throw new DllNotFoundException( errMessage );
+
+            //var searchCookies = ( from path in alternatePaths
+            //                      where Directory.Exists( path )
+            //                      select (Cookie: AddDllDirectory( path ), Path: path)
+            //                    ).ToList( );
+
+            //try
+            //{
+            //    IntPtr moduleHandle = LoadLibraryExW( moduleName, IntPtr.Zero, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS );
+            //    if( moduleHandle != IntPtr.Zero )
+            //    {
+            //        return moduleHandle;
+            //    }
+
+            //    int lastError = Marshal.GetLastWin32Error( );
+            //    string msgFmt = Resources.LoadWin32Library_Error_0_occured_loading_1_search_paths_2;
+            //    string errMessage = string.Format( CultureInfo.CurrentCulture, msgFmt, lastError, moduleName, string.Join( "\n", searchCookies.Select( p => p.Path ) ) );
+            //    throw new Win32Exception( lastError, errMessage );
+            //}
+            //finally
+            //{
+            //    foreach( var c in searchCookies )
+            //    {
+            //        RemoveDllDirectory( c.Cookie );
+            //    }
+            //}
         }
 
         [DllImport( "kernel32", SetLastError = true )]
