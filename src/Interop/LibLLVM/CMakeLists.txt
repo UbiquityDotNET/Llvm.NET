@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(LibLLVM VERSION 0.1.0)
 
+if(POLICY CMP0076)
+  cmake_policy(SET CMP0076 NEW)
+endif()
+
 message("CMAKE version is " ${CMAKE_VERSION})
 message("Host system name is " ${CMAKE_HOST_SYSTEM_NAME})
 message("Host system processor is " ${CMAKE_HOST_SYSTEM_PROCESSOR})
@@ -12,29 +16,6 @@ set(LLVM_VERSION_STRING "10.0.0")
 set(LLVM_VERSION_MAJOR "10")
 set(LLVM_VERSION_MINOR "0")
 set(LLVM_VERSION_PATCH "0")
-
-# We don't need to do this as the LLVM version we compile against has already been configured
-# configure_file(
-#         "../../../llvm/include/llvm/Config/config.h.cmake"
-#         "llvm/Config/config.h")
-# configure_file(
-#         "../../../llvm/include/llvm/Config/llvm-config.h.cmake"
-#         "llvm/Config/llvm-config.h")
-# configure_file(
-#         "../../../llvm/include/llvm/Config/abi-breaking.h.cmake"
-#         "llvm/Config/abi-breaking.h")
-# configure_file(
-#         "../../../llvm/include/llvm/Config/AsmParsers.def.in"
-#         "llvm/Config/AsmParsers.def")
-# configure_file(
-#         "../../../llvm/include/llvm/Config/AsmPrinters.def.in"
-#         "llvm/Config/AsmPrinters.def")
-# configure_file(
-#         "../../../llvm/include/llvm/Config/Disassemblers.def.in"
-#         "llvm/Config/Disassemblers.def")
-# configure_file(
-#         "../../../llvm/include/llvm/Config/Targets.def.in"
-#         "llvm/Config/Targets.def")
 
 include(CTest)
 enable_testing()
@@ -51,8 +32,10 @@ target_include_directories(LibLLVM PRIVATE ".")
 
 add_compile_definitions("NDEBUG" "_USRDLL" "LIBLLVM_EXPORTS" "LibLLVM_EXPORTS")
 add_compile_definitions("_ITERATOR_DEBUG_LEVEL=0")
-# add_compile_options("/LD")
-# add_compile_options("/DEF:EXPORTS.g.DEF")
+
+if (WIN32)
+    target_sources(LibLLVM PUBLIC "EXPORTS.g.DEF")
+endif()
 
 target_sources(LibLLVM PRIVATE 
     "AnalysisBindings" 
@@ -71,7 +54,7 @@ target_sources(LibLLVM PRIVATE
     "TripleBindings" 
     "ValueBindings")
 
-target_link_libraries(LibLLVM PUBLIC
+target_link_libraries(LibLLVM PRIVATE
         "LLVMAArch64AsmParser"
         "LLVMAArch64CodeGen"
         "LLVMAArch64Desc"
