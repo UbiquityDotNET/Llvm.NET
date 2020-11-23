@@ -8,7 +8,7 @@ $oldPath = $env:Path
 try
 {
     . .\buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment
 
     $packProperties = @{ version=$($buildInfo['PackageVersion'])
                          llvmversion=$($buildInfo['LlvmVersion'])
@@ -20,11 +20,9 @@ try
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
-    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
-
-    .\Build-DotNet.ps1
-
-    .\Pack-NuGet.ps1
+    $buildLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.binlog
+    Write-Information "Building Ubiquity.NET.Llvm"
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Ubiquity.NET.Llvm.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
 }
 catch
 {
@@ -35,3 +33,5 @@ finally
     Pop-Location
     $env:Path = $oldPath
 }
+
+Write-Information "Done build"

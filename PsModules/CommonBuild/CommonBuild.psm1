@@ -88,6 +88,38 @@ function Find-OnPath
     return $path
 }
 
+enum Platform { Windows; Linux; Mac }
+
+function Get-Platform
+{
+<#
+.SYNOPSIS
+    Returns the platform we're currently running on one of Windows, Linux, and Mac
+
+.NOTES
+    This should work for both Windows PowerShell and PowerShell Core
+#>
+    if ($PSVersionTable.PSEdition -ne "Core")
+    {
+        return [Platform]::Windows
+    }
+    else 
+    {
+        if ($IsLinux)
+        {
+            return [Platform]::Linux
+        }
+        elseif ($IsMacOS)
+        {
+            return [Platform]::Mac
+        }
+        else 
+        {
+            return [Platform]::Windows
+        }
+    }
+}
+
 function ConvertTo-NormalizedPath([string]$path )
 {
 <#

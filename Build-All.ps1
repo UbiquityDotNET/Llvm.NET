@@ -6,7 +6,7 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-pushd $PSScriptRoot
+Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
@@ -47,7 +47,7 @@ catch
 }
 finally
 {
-    popd
+    Pop-Location
     $env:Path = $oldPath
 }
 
