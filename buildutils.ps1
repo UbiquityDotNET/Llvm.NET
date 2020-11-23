@@ -13,6 +13,8 @@ function Get-BuildInformation($DefaultVerbosity='Minimal')
     $buildInfo['LlvmVersion'] = "10.0.0"
     $buildInfo['MsBuildLoggerArgs'] = @("/clp:Verbosity=$DefaultVerbosity")
     $buildInfo['LlvmLibsPackageReleaseName'] = "$($buildInfo['LlvmVersion'])-msvc-16.5"
+    $buildInfo['Platform'] = Get-Platform
+    $global:Platform = $buildInfo['Platform']
     return $buildInfo
 }
 
@@ -23,7 +25,7 @@ function Install-LlvmLibs($destPath, $packageReleaseName)
     {
         if(!(Test-Path -PathType Container $buildInfo['DownloadsPath']))
         {
-            md $buildInfo['DownloadsPath'] | Out-Null
+            New-Item -Path $buildInfo['DownloadsPath'] -Type Directory -Force | Out-Null
         }
 
         $localLlvmLibs7zPath = Join-Path $buildInfo['DownloadsPath'] "llvm-libs-$packageReleaseName.7z"

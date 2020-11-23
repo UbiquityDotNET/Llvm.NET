@@ -1,9 +1,41 @@
 # Repository neutral common build support utilities
 
+enum Platform { Windows; Linux; Mac }
+
+function Get-Platform
+{
+<#
+.SYNOPSIS
+    Returns the platform we're currently running on one of Windows, Linux, and Mac
+
+.NOTES
+    This should work for both Windows PowerShell and PowerShell Core
+#>
+    if ($PSVersionTable.PSEdition -ne "Core")
+    {
+        return [Platform]::Windows
+    }
+    else 
+    {
+        if ($IsLinux)
+        {
+            return [Platform]::Linux
+        }
+        elseif ($IsMacOS)
+        {
+            return [Platform]::Mac
+        }
+        else 
+        {
+            return [Platform]::Windows
+        }
+    }
+}
+
 function Ensure-PathExists
 {
     param([Parameter(Mandatory=$true, ValueFromPipeLine)]$path)
-    md -Force -ErrorAction SilentlyContinue $path | Out-Null
+    New-Item -ItemType Directory -Force -ErrorAction SilentlyContinue $path | Out-Null
 }
 
 function Get-DefaultBuildPaths([string]$repoRoot)
@@ -69,7 +101,7 @@ function Find-OnPath
     The executable to search for
 
 .NOTES
-    This is a simple wrapper around the command line 'where' utility to select the first location found
+    This is a simple wrapper around the Get-Command applet to adjust the executable name for the platform
 #>
     [CmdletBinding()]
     Param( [Parameter(Mandatory=$True,Position=0)][string]$exeName)
@@ -77,7 +109,14 @@ function Find-OnPath
     Write-Information "Searching for $exeName..."
     try
     {
-        $path = where.exe $exeName 2>$null | select -First 1
+        if ($global:Platform -ne [Platform]::Windows)
+        {
+            if ($exeName.EndsWith(".exe"))
+            {
+                $exeName = $exeName.Substring(0, $ExeName.Length - 4)
+            }
+        }
+        $path = (Get-Command -Name $exeName).Source
     }
     catch
     {}
@@ -86,38 +125,6 @@ function Find-OnPath
         Write-Information "Found $exeName at: '$path'"
     }
     return $path
-}
-
-enum Platform { Windows; Linux; Mac }
-
-function Get-Platform
-{
-<#
-.SYNOPSIS
-    Returns the platform we're currently running on one of Windows, Linux, and Mac
-
-.NOTES
-    This should work for both Windows PowerShell and PowerShell Core
-#>
-    if ($PSVersionTable.PSEdition -ne "Core")
-    {
-        return [Platform]::Windows
-    }
-    else 
-    {
-        if ($IsLinux)
-        {
-            return [Platform]::Linux
-        }
-        elseif ($IsMacOS)
-        {
-            return [Platform]::Mac
-        }
-        else 
-        {
-            return [Platform]::Windows
-        }
-    }
 }
 
 function ConvertTo-NormalizedPath([string]$path )
