@@ -1,9 +1,9 @@
-﻿class CMakeConfig
+﻿# Helpers for cmake builds
+using module 'PsModules\CommonBuild\CommonBuild.psd1'
+
+class CMakeConfig
 {
     [string]$Name;
-
-    [ValidateSet('x86','x64')]
-    [string]$Platform;
 
     [ValidateSet('Debug', 'Release', 'MinSizeRel', 'RelWithDebInfo')]
     [string]$ConfigurationType;
@@ -16,19 +16,26 @@
     [System.Collections.ArrayList]$InheritEnvironments;
     [hashtable]$CMakeBuildVariables;
 
-    CMakeConfig([string]$plat, [string]$config, [string]$baseBuild, [string]$srcRoot, [object]$VsInstance)
+    CMakeConfig([string]$config, [string]$baseBuild, [string]$srcRoot)
     {
-        $this.Platform = $Plat.ToLowerInvariant()
-        if (!$VsInstance)
+        if ($global:Platform -ne [Platform]::Windows)
         {
             $this.Generator = "Unix Makefiles"
         }
         else 
         {
-            switch($VsInstance.InstallationVersion.Major)
+            $VsInstance = Find-VSInstance
+            if ($VsInstance)
             {
-                15 { $this.Generator = "Visual Studio 15 2017" }
-                16 { $this.Generator = "Visual Studio 16 2019" }
+                $this.Generator = "Unix Makefiles"
+            }
+            else 
+            {
+                switch($VsInstance.InstallationVersion.Major)
+                {
+                    15 { $this.Generator = "Visual Studio 15 2017" }
+                    16 { $this.Generator = "Visual Studio 16 2019" }
+                }
             }
         }
 
