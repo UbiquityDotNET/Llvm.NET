@@ -1,6 +1,8 @@
 ﻿# Helpers for cmake builds
 using module 'PsModules\CommonBuild\CommonBuild.psd1'
 
+$InformationPreference = "Continue"
+
 class CMakeConfig
 {
     [string]$Name;
@@ -8,25 +10,32 @@ class CMakeConfig
     [ValidateSet('Debug', 'Release', 'MinSizeRel', 'RelWithDebInfo')]
     [string]$ConfigurationType;
 
+    [string]$Platform;
     [string]$BuildRoot;
     [string]$SrcRoot;
     [string]$Generator;
     [System.Collections.ArrayList]$CMakeCommandArgs;
+    [System.Collections.ArrayList]$GenerateCommandArgs;
     [System.Collections.ArrayList]$BuildCommandArgs;
     [System.Collections.ArrayList]$InheritEnvironments;
     [hashtable]$CMakeBuildVariables;
 
-    CMakeConfig([string]$config, [string]$baseBuild, [string]$srcRoot)
+    CMakeConfig([string]$plat, [string]$config, [string]$baseBuild, [string]$srcRoot)
     {
-        if ($global:Platform -ne [Platform]::Windows)
+        $this.Platform = $plat.ToLowerInvariant()
+
+        $plat = Get-Platform
+        if ($plat -ne [Platform]::Windows)
         {
+            Write-Information "On Linux or Mac, using Unix makefiles"
             $this.Generator = "Unix Makefiles"
         }
         else 
         {
-            $VsInstance = Find-VSInstance
-            if ($VsInstance)
+            $VsInstance = Find-VSInstance -Prerelease:$false
+            if (!$VsInstance)
             {
+                Write-Information "On Windows, no Visual Studio found"
                 $this.Generator = "Unix Makefiles"
             }
             else 
@@ -36,6 +45,7 @@ class CMakeConfig
                     15 { $this.Generator = "Visual Studio 15 2017" }
                     16 { $this.Generator = "Visual Studio 16 2019" }
                 }
+                Write-Information "On Windows, using $($this.Generator)"
             }
         }
 
@@ -52,10 +62,11 @@ class CMakeConfig
         $this.BuildRoot = Join-Path $baseBuild $this.Name
         $this.SrcRoot = $srcRoot
         $this.CMakeCommandArgs = [System.Collections.ArrayList]@()
+        $this.GenerateCommandArgs = [System.Collections.ArrayList]@()
         $this.BuildCommandArgs = [System.Collections.ArrayList]@()
         $this.InheritEnvironments = [System.Collections.ArrayList]@()
 
-        if ($global:IsWindowsPS)
+        if ($this.Generator.StartsWith("Visual Studio"))
         {
             if( $this.Platform -eq "x64" )
             {
@@ -73,6 +84,7 @@ class CMakeConfig
             }
 
             $this.BuildCommandArgs.Add('/m')
+            $this.GenerateCommandArgs.Add("--config " + $this.ConfigurationType)
         }
 
         $this.CMakeBuildVariables = @{}
@@ -158,6 +170,11 @@ function global:Invoke-CMakeGenerate( [CMakeConfig]$config )
         $cmakeArgs.Add( $param ) | Out-Null
     }
 
+    foreach( $param in $config.GenerateCommandArgs )
+    {
+        $cmakeArgs.Add( $param ) | Out-Null
+    }
+
     foreach( $var in $config.CMakeBuildVariables.GetEnumerator() )
     {
         $cmakeArgs.Add( "-D$($var.Key)=$($var.Value)" ) | Out-Null
@@ -195,7 +212,7 @@ function global:Invoke-CMakeBuild([CMakeConfig]$config)
     Write-Information "CMake Building $($config.Name)"
     $cmakePath = Find-OnPath 'cmake'
 
-    $cmakeArgs = @('--build', "$($config.BuildRoot)", '--config', "$($config.ConfigurationType)", '--', "$($config.BuildCommandArgs)")
+    $cmakeArgs = @('--build', "$($config.BuildRoot)", '--', "$($config.BuildCommandArgs)")
 
     Write-Information "cmake $([string]::Join(' ', $cmakeArgs))"
     Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs

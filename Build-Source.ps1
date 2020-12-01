@@ -20,6 +20,8 @@ try
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
+    .\Build-Llvm.ps1
+
     .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
 
     .\Build-DotNet.ps1

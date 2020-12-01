@@ -1,5 +1,7 @@
 # Repository neutral common build support utilities
 
+$InformationPreference = "Continue"
+
 enum Platform { Windows; Linux; Mac }
 
 function Get-Platform
@@ -13,20 +15,24 @@ function Get-Platform
 #>
     if ($PSVersionTable.PSEdition -ne "Core")
     {
+        Write-Debug "Using Windows PowerShell"
         return [Platform]::Windows
     }
     else 
     {
         if ($IsLinux)
         {
+            Write-Debug "Using PowerShell Core on Linux"
             return [Platform]::Linux
         }
         elseif ($IsMacOS)
         {
+            Write-Debug "Using PowerShell Core on Mac"
             return [Platform]::Mac
         }
         else 
         {
+            Write-Debug "Using PowerShell Core on Windows"
             return [Platform]::Windows
         }
     }
@@ -271,31 +277,45 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
     The set of required components to search for. [Default is an empty array]
 
 .DESCRIPTION
+    Returns $null if not running on Windows.
     Uses the official MS provided PowerShell module to find a VS instance. If the VSSetup
     module is not loaded it is loaded first. If it isn't installed, then the module is installed.
 #>
-    $forceModuleInstall = [System.Convert]::ToBoolean($env:IsAutomatedBuild)
-    $existingModule = Get-InstalledModule -ErrorAction SilentlyContinue VSSetup
-    if(!$existingModule)
+    $plat = Get-Platform
+    Write-Debug "Running on $plat"
+
+    if ($plat -eq [Platform]::Windows)
     {
-        Write-Information "Installing VSSetup module"
-        Install-Module VsSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
+        $forceModuleInstall = [System.Convert]::ToBoolean($env:IsAutomatedBuild)
+        $existingModule = Get-InstalledModule -ErrorAction SilentlyContinue VSSetup
+        if(!$existingModule)
+        {
+            Write-Debug "Installing VSSetup module"
+            Install-Module VsSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
+        }
+    
+        Write-Debug "Looking for VS"
+        $vs = Get-VsSetupInstance -Prerelease:$PreRelease |
+                Select-VsSetupInstance -Version $Version -Require $requiredComponents |
+                select -Last 1
+        Write-Debug "Found $($vs)"
+        return $vs
     }
-
-    $vs = Get-VSSetupInstance -Prerelease:$PreRelease |
-          Select-VSSetupInstance -Version $Version -Require $requiredComponents |
-          select -Last 1
-
-    return $vs
+    else 
+    {
+        Write-Debug "Not on Windows, no VS"
+        return $null
+    }
 }
 
 function Find-MSBuild([switch]$AllowVsPreReleases)
 {
     $foundOnPath = $true
 
-    if ($IsLinux)
+    $plat = Get-Platform
+    if ($plat -ne [Platform]::Windows)
     {
-        Write-Information "On Linux, using dotnet msbuild"
+        Write-Debug "On Linux or Mac, using dotnet msbuild"
         $versionInfo = & dotnet msbuild -version
         return @{ FullPath="dotnet msbuild"
                   FoundOnPath=$true
@@ -313,7 +333,7 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
             throw "MSBuild not found on PATH and No instances of VS found to use"
         }
 
-        Write-Information "VS installation found: $($vsInstall | Format-List | Out-String)"
+        Write-Debug "VS installation found: $($vsInstall | Format-List | Out-String)"
         $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', '15.0', 'bin', 'MSBuild.exe')
         if(!(Test-Path -PathType Leaf $msBuildPath))
         {
@@ -325,7 +345,7 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
 
     if( !(Test-Path -PathType Leaf $msBuildPath ) )
     {
-        Write-Information 'MSBuild not found'
+        Write-Debug 'MSBuild not found'
         return $null
     }
 

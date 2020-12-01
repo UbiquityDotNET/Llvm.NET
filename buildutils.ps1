@@ -83,11 +83,11 @@ function Initialize-BuildEnvironment
         }
     }
 
-    $msbuildInfo = Find-MSBuild -AllowVsPreReleases:$AllowVsPreReleases
-    if( !$msbuildInfo['FoundOnPath'] )
-    {
-        $env:Path = "$env:Path;$($msbuildInfo['BinPath'])"
-    }
+    # $msbuildInfo = Find-MSBuild
+    # if( !$msbuildInfo['FoundOnPath'] )
+    # {
+    #     $env:Path = "$env:Path;$($msbuildInfo['BinPath'])"
+    # }
 
     $buildInfo = Get-BuildInformation
 
