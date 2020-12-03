@@ -1,0 +1,18 @@
+jobs:
+- job: Build
+  strategy:
+    matrix:
+      linux:
+        imageName: 'ubuntu-latest'
+      mac:
+        imageName: 'macOS-latest'
+      windows:
+        imageName: 'windows-latest'
+  pool: 
+    vmImage: $(imageName)
+
+  timeoutInMinutes: 180
+
+  steps:
+  - pwsh: ./Build-Llvm.ps1
+    displayName: 'Run Build-Llvm.ps1 script'
