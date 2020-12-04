@@ -157,10 +157,12 @@ function global:Invoke-CMakeGenerate( [CMakeConfig]$config )
 {
     $activity = "Generating solution for $($config.Name)"
     Write-Information $activity
-    if(!(Test-Path -PathType Container $config.BuildRoot ))
+
+    if(Test-Path -PathType Container $config.BuildRoot )
     {
-        New-Item -ItemType Container $config.BuildRoot | Out-Null
+        Remove-Item -Recurse $config.BuildRoot | Out-Null
     }
+    New-Item -ItemType Container $config.BuildRoot | Out-Null
 
     # Construct full set of args from fixed options and configuration variables
     $cmakeArgs = New-Object System.Collections.ArrayList
@@ -213,6 +215,12 @@ function global:Invoke-CMakeBuild([CMakeConfig]$config)
     $cmakePath = Find-OnPath 'cmake'
 
     $cmakeArgs = @('--build', "$($config.BuildRoot)", '--', "$($config.BuildCommandArgs)")
+
+    $plat = Get-Platform
+    if ($plat -ne [Platform]::Windows)
+    {
+        $cmakeArgs.Add( "--parallel" ) | Out-Null
+    }
 
     Write-Information "cmake $([string]::Join(' ', $cmakeArgs))"
     Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs

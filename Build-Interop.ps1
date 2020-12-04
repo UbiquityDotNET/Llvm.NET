@@ -82,7 +82,7 @@ try
     # and incompatibilities libs are generally not something published in a package. However, since the build time
     # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
     # automated builds.
-    Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmLibsPackageReleaseName']
+    #Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmLibsPackageReleaseName']
 
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
