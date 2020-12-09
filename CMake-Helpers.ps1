@@ -165,24 +165,24 @@ function global:Invoke-CMakeGenerate( [CMakeConfig]$config )
     New-Item -ItemType Container $config.BuildRoot | Out-Null
 
     # Construct full set of args from fixed options and configuration variables
-    $cmakeArgs = New-Object System.Collections.ArrayList
-    $cmakeArgs.Add("-G`"$($config.Generator)`"" ) | Out-Null
+    $cmakeArgs = @()
+    $cmakeArgs += "-G`"$($config.Generator)`""
     foreach( $param in $config.CMakeCommandArgs )
     {
-        $cmakeArgs.Add( $param ) | Out-Null
+        $cmakeArgs += $param
     }
 
     foreach( $param in $config.GenerateCommandArgs )
     {
-        $cmakeArgs.Add( $param ) | Out-Null
+        $cmakeArgs += $param
     }
 
     foreach( $var in $config.CMakeBuildVariables.GetEnumerator() )
     {
-        $cmakeArgs.Add( "-D$($var.Key)=$($var.Value)" ) | Out-Null
+        $cmakeArgs += "-D$($var.Key)=$($var.Value)"
     }
 
-    $cmakeArgs.Add( $config.SrcRoot ) | Out-Null
+    $cmakeArgs += $config.SrcRoot
 
     $timer = [System.Diagnostics.Stopwatch]::StartNew()
     $cmakePath = Find-OnPath 'cmake'
@@ -191,13 +191,14 @@ function global:Invoke-CMakeGenerate( [CMakeConfig]$config )
     {
         # need to use start-process as CMAKE scripts may write to STDERR and PsCore considers that an error
         # using start-process allows forcing the error handling to ignore (Continue) such cases consistently
-        # between PS variants and versions.
+        # between PS variants and versions. Since start-process doesn't set $LASTEXITCODE in the normal way,
+        # we need to check the exit code on the process object explicitly.
         Write-Information "starting process: cmake $cmakeArgs"
-        Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs
+        $p = Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs -PassThru
 
-        if($LASTEXITCODE -ne 0 )
+        if($p.ExitCode -ne 0 )
         {
-            Write-Information "CMake generation exited with code: $LASTEXITCODE"
+            Write-Information "CMake generation exited with code: $($p.ExitCode)"
         }
     }
     finally
@@ -219,15 +220,15 @@ function global:Invoke-CMakeBuild([CMakeConfig]$config)
     $plat = Get-Platform
     if ($plat -ne [Platform]::Windows)
     {
-        $cmakeArgs.Add( "--parallel" ) | Out-Null
+        $cmakeArgs += "--parallel"
     }
 
     Write-Information "cmake $([string]::Join(' ', $cmakeArgs))"
-    Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs
+    $p = Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs -PassThru
 
-    if($LASTEXITCODE -ne 0 )
+    if($p.ExitCode -ne 0 )
     {
-        Write-Information "CMake build exited with code: $LASTEXITCODE"
+        Write-Information "CMake build exited with code: $($p.ExitCode)"
     }
 
     $timer.Stop()
