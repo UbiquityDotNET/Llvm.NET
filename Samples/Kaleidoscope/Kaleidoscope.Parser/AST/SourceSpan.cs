@@ -27,7 +27,7 @@ namespace Kaleidoscope.Grammar
 
         public int EndColumn { get; }
 
-        public override bool Equals( object obj )
+        public override bool Equals( object? obj )
         {
             return obj is SourceSpan span
                 && Equals( span );

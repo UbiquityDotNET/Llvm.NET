@@ -20,6 +20,7 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+CMakeFiles/
 
 # Docs updated only by CI builds for GitHub Pages
 [Dd]ocs/
@@ -137,6 +138,7 @@ FakesAssemblies/
 #build output locations
 BuildOutput/
 IntermediateOutput/
+/xplat/
 
 
 Tools/
@@ -155,10 +157,12 @@ Tools/
 *.binlog
 *.7z
 
-/llvm
+# Ignore the unpacked llvm binaries
+/llvm/lib/*
+/llvm/include/*
+
 **/GeneratedDocs/
 **/GeneratedCode/
-/src/Interop/LibLLVM/EXPORTS.g.DEF
 
 .fake
 .ionide

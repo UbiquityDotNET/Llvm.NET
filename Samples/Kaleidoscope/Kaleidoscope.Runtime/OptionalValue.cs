@@ -48,7 +48,7 @@ namespace Kaleidoscope.Runtime
         [MaybeNull]
         public T Value { get; }
 
-        public override bool Equals( object obj )
+        public override bool Equals( object? obj )
         {
             return obj is OptionalValue<T> other && Equals( other );
         }

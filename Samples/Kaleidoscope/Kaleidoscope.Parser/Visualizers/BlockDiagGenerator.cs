@@ -47,7 +47,7 @@ namespace Kaleidoscope.Grammar
             foreach( var node in graph.Nodes )
             {
                 writer.Write( "N{0} [label= \"{1}\"", node.Id, node.Label );
-                if( node.Properties.TryGetValue( "Precedence", out object precedence ) )
+                if( node.Properties.TryGetValue( "Precedence", out object? precedence ) )
                 {
                     writer.Write( ", numbered = {0}", precedence );
                 }

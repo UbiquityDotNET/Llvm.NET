@@ -95,26 +95,18 @@ try
     # as CppSharp NuGet package is basically hostile to the newer SDK project format.
     Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorBuildLogPath"))
 
-    # At present CppSharp only supports the "desktop" framework, so limiting this to net47 for now
+    .\Repair-intrin.ps1
+
+    # At present CppSharp only supports the "desktop" framework, so limiting this to net48 for now
     # Hopefully they will support .NET Core soon, if not, the generation stage may need to move out
     # to a manual step with the results checked in.
     Write-Information "Generating P/Invoke Bindings"
     Write-Information "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
 
-    & "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
+    & "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net48\LlvmBindingsGenerator.exe" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the projects that consume generated output for the bindings
-
-        # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
-        # and PackageReference isn't supported for native projects... [Sigh...]
-        Write-Information "Restoring LibLLVM"
-        Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
-
-        Write-Information "Building LibLLVM"
-      #   $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
-      #   Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
-        cmake --build src\Interop\LibLLVM --target ALL_BUILD --config Release
 
         Write-Information "Building Ubiquity.NET.Llvm.Interop"
         $interopSlnBinLog = Join-Path $buildInfo['BinLogsPath'] Interop.sln.binlog
@@ -124,10 +116,6 @@ try
     {
         Write-Error "Generating LLVM Bindings failed"
     }
-}
-catch
-{
-    Write-Error $_.Exception.Message
 }
 finally
 {

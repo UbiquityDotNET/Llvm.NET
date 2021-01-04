@@ -1,3 +1,9 @@
+variables:
+  Drops.Dir: $(Build.ArtifactStagingDirectory)/drops
+  Drop.Native: $(System.DefaultWorkingDirectory)/xplat
+  Output.Llvm: "false"
+  Build.Llvm: "false"
+
 jobs:
 - job: Build
   strategy:
@@ -11,8 +17,20 @@ jobs:
   pool: 
     vmImage: $(imageName)
 
-  timeoutInMinutes: 180
+  timeoutInMinutes: 240
 
   steps:
-  - pwsh: ./Build-Llvm.ps1
-    displayName: 'Run Build-Llvm.ps1 script'
+  - pwsh: ./Build-Xplat.ps1
+    displayName: 'Run Build-Xplat.ps1 script'
+  - pwsh: ./Build-Source.ps1
+    displayName: 'Run Build-Source.ps1 script (Windows Only)'
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
+  - pwsh: ./Invoke-UnitTests.ps1
+    displayName: 'Run Invoke-UnitTests.ps1 script (Windows Only)'
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Ubiquity.NET.Llvm'
+    condition: succeededOrFailed()
+    inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: Ubiquity.NET.Llvm

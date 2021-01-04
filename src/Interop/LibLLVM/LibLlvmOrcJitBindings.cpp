@@ -1,4 +1,4 @@
-#include "libllvm-c\LibLlvmOrcJitBindings.h"
+#include "libllvm-c/LibLlvmOrcJitBindings.h"
 #include "OrcCBindingsStack.h"
 
 using namespace llvm;

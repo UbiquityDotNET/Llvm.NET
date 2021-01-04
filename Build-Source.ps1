@@ -1,8 +1,3 @@
-Param(
-    [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases
-)
-
 Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
@@ -10,21 +5,14 @@ try
     . .\buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
-    $packProperties = @{ version=$($buildInfo['PackageVersion'])
-                         llvmversion=$($buildInfo['LlvmVersion'])
-                         buildbinoutput=(Join-path $($buildInfo['BuildOutputPath']) 'bin')
-                         configuration=$Configuration
-                       }
-
-    $msBuildProperties = @{ Configuration = $Configuration
-                            LlvmVersion = $buildInfo['LlvmVersion']
-                          }
-
-    .\Build-Llvm.ps1
-
-    .\Move-LlvmBuild.ps1
+    if ($env:OUTPUT_LLVM -eq "true") {
+        Write-Host '##vso[task.logissue type=warning;]Exiting early after building LLVM'
+        return
+    }
 
     .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+
+    Remove-Item -Force -Recurse -Path (Join-Path $buildInfo["BuildOutputPath"] bin)
 
     .\Build-DotNet.ps1
 
@@ -32,7 +20,8 @@ try
 }
 catch
 {
-    Write-Error $_.Exception.Message
+    Write-Host "##vso[task.logissue type=error;]Build-Source.ps1 failed: $($_.Exception.Message)"
+    Write-Error "Build-Source.ps1 failed: $($_.Exception.Message)"
 }
 finally
 {

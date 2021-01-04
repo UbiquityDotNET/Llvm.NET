@@ -50,14 +50,14 @@ class CMakeConfig
         }
 
         $this.Name="$($this.Platform)-$config"
-        if($config -ieq "Release" )
-        {
-            $this.ConfigurationType = "RelWithDebInfo"
-        }
-        else
-        {
+        # if($config -ieq "Release" )
+        # {
+        #     $this.ConfigurationType = "RelWithDebInfo"
+        # }
+        # else
+        # {
             $this.ConfigurationType = $config
-        }
+        # }
 
         $this.BuildRoot = Join-Path $baseBuild $this.Name
         $this.SrcRoot = $srcRoot
@@ -70,23 +70,23 @@ class CMakeConfig
         {
             if( $this.Platform -eq "x64" )
             {
-                $this.CMakeCommandArgs.Add('-A x64')
+                $this.CMakeCommandArgs += '-A', 'x64'
             }
     
             if([Environment]::Is64BitOperatingSystem)
             {
-                $this.CMakeCommandArgs.Add('-Thost=x64')
-                $this.InheritEnvironments.Add('msvc_x64_x64')
+                $this.CMakeCommandArgs += '-Thost=x64'
+                $this.InheritEnvironments += 'msvc_x64_x64'
             }
             else
             {
-                $this.InheritEnvironments.Add('msvc_x64')
+                $this.InheritEnvironments += 'msvc_x64'
             }
 
-            $this.BuildCommandArgs.Add('/m')
-            $this.GenerateCommandArgs.Add("--config " + $this.ConfigurationType)
+            $this.BuildCommandArgs += '/m'
         }
 
+        $this.GenerateCommandArgs += "--config", $this.ConfigurationType
         $this.CMakeBuildVariables = @{}
     }
 
@@ -189,24 +189,20 @@ function global:Invoke-CMakeGenerate( [CMakeConfig]$config )
     pushd $config.BuildRoot
     try
     {
-        # need to use start-process as CMAKE scripts may write to STDERR and PsCore considers that an error
-        # using start-process allows forcing the error handling to ignore (Continue) such cases consistently
-        # between PS variants and versions. Since start-process doesn't set $LASTEXITCODE in the normal way,
-        # we need to check the exit code on the process object explicitly.
-        Write-Information "starting process: cmake $cmakeArgs"
-        $p = Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs -PassThru
+        Write-Information "running: $cmakePath $cmakeArgs"
+        . $cmakePath @cmakeArgs
 
-        if($p.ExitCode -ne 0 )
+        if($LASTEXITCODE -ne 0 )
         {
-            Write-Information "CMake generation exited with code: $($p.ExitCode)"
+            throw "CMake generation exited with code: $LASTEXITCODE"
         }
     }
     finally
     {
         $timer.Stop()
+        Write-Information "Generation Time: $($timer.Elapsed.ToString())"
         popd
     }
-    Write-Information "Generation Time: $($timer.Elapsed.ToString())"
 }
 
 function global:Invoke-CMakeBuild([CMakeConfig]$config)
@@ -215,24 +211,21 @@ function global:Invoke-CMakeBuild([CMakeConfig]$config)
     Write-Information "CMake Building $($config.Name)"
     $cmakePath = Find-OnPath 'cmake'
 
-    $cmakeArgs = @('--build', "$($config.BuildRoot)", '--', "$($config.BuildCommandArgs)")
+    $cmakeArgs = @('--build', "$($config.BuildRoot)", '--config', "$($config.ConfigurationType)", '--', "$($config.BuildCommandArgs)")
 
-    $plat = Get-Platform
-    if ($plat -ne [Platform]::Windows)
-    {
-        $cmakeArgs += "--parallel"
+    try {
+        Write-Information "running: $cmakePath $cmakeArgs"
+        . $cmakePath @cmakeArgs
+
+        if($LASTEXITCODE -ne 0 )
+        {
+            throw "CMake build exited with code: $LASTEXITCODE"
+        }
     }
-
-    Write-Information "cmake $([string]::Join(' ', $cmakeArgs))"
-    $p = Start-Process -ErrorAction Continue -NoNewWindow -Wait -FilePath $cmakePath -ArgumentList $cmakeArgs -PassThru
-
-    if($p.ExitCode -ne 0 )
-    {
-        Write-Information "CMake build exited with code: $($p.ExitCode)"
+    finally {
+        $timer.Stop()
+        Write-Information "Build Time: $($timer.Elapsed.ToString())"
     }
-
-    $timer.Stop()
-    Write-Information "Build Time: $($timer.Elapsed.ToString())"
 }
 
 function New-CMakeSettings( [Parameter(Mandatory, ValueFromPipeline)][CMakeConfig] $configuration )

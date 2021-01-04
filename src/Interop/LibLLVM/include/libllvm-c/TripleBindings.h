@@ -1,6 +1,6 @@
 #ifndef LLVM_TRIPLE_BINDINGS_H
 #define LLVM_TRIPLE_BINDINGS_H
-#include <llvm-c\Types.h>
+#include <llvm-c/Types.h>
 
 #ifdef __cplusplus
 extern "C" {

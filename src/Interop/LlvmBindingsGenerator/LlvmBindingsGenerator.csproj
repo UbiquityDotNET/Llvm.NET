@@ -11,8 +11,8 @@
         Due to current limitations of the CppSharp library NUGET package, this only supports the Windows Desktop .NET Framework (64 bit)
         This means that this project can't use language features > 7.3 (Limits for .NET Framework)
         -->
-        <TargetFramework>net47</TargetFramework>
-        <Nullable />
+        <TargetFramework>net48</TargetFramework>
+        <Nullable/>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CommandLineParser" />

@@ -14,7 +14,6 @@ function Get-BuildInformation($DefaultVerbosity='Minimal')
     $buildInfo['MsBuildLoggerArgs'] = @("/clp:Verbosity=$DefaultVerbosity")
     $buildInfo['LlvmLibsPackageReleaseName'] = "$($buildInfo['LlvmVersion'])-msvc-16.5"
     $buildInfo['Platform'] = Get-Platform
-    $global:Platform = $buildInfo['Platform']
     return $buildInfo
 }
 

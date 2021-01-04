@@ -22,12 +22,19 @@
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
-        <PackagePath>runtimes\win-x64\native</PackagePath>
+    <Content Include="..\..\..\xplat\win-x64\*">
+        <Link>runtimes\win-x64\native\%(FileName)%(Extension)</Link>
+        <PackagePath>runtimes\win-x64\native\%(FileName)%(Extension)</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.pdb" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.pdb">
-        <PackagePath>runtimes\win-x64\native</PackagePath>
+    <Content Include="..\..\..\xplat\osx-x64\*">
+        <Link>runtimes\osx-x64\native\%(FileName)%(Extension)</Link>
+        <PackagePath>runtimes\osx-x64\native\%(FileName)%(Extension)</PackagePath>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\xplat\linux-x64\*">
+        <Link>runtimes\linux-x64\native\%(FileName)%(Extension)</Link>
+        <PackagePath>runtimes\linux-x64\native\%(FileName)%(Extension)</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="NugetPkg\build\Ubiquity.NET.Llvm.Interop.props">

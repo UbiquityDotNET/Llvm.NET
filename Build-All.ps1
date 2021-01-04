@@ -33,6 +33,7 @@ try
 
     if($BuildSource)
     {
+        .\Build-Xplat.ps1
         .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
     }
 

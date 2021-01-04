@@ -68,11 +68,17 @@ try
 {
     . .\buildutils.ps1
 
+    $plat = Get-Platform
+    if ($plat -eq [Platform]::Windows) {
+        .\Repair-WinBuild.ps1
+    }
+
     cd llvm-project\llvm
     Invoke-Build 
 }
 catch
 {
+    Write-Host "##vso[task.logissue type=error;]$($_.Exception.Message)"
     Write-Error $_.Exception.Message
 }
 finally
