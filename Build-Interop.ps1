@@ -44,7 +44,7 @@ $oldPath = $env:Path
 try
 {
     . .\buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment
+    $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
     # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
     # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the

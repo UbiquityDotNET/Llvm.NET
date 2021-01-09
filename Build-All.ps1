@@ -11,7 +11,7 @@ $oldPath = $env:Path
 try
 {
     . .\buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit
+    $buildInfo = Initialize-BuildEnvironment -FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
     $BuildSource = $false
     $BuildDocs = $false;
@@ -33,12 +33,12 @@ try
 
     if($BuildSource)
     {
-        .\Build-Source.ps1
+        .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1
+        .\Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases
     }
 }
 catch

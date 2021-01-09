@@ -243,9 +243,11 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
         Install-Module VSSetup -Scope CurrentUser -Force:$forceModuleInstall | Out-Null
     }
 
-    Get-VSSetupInstance -Prerelease:$PreRelease |
-        Select-VSSetupInstance -Version $Version -Require $requiredComponents |
-        select -First 1
+    $vs = Get-VSSetupInstance -Prerelease:$PreRelease |
+          Select-VSSetupInstance -Version $Version -Require $requiredComponents |
+          select -Last 1
+
+    return $vs
 }
 
 function Find-MSBuild([switch]$AllowVsPreReleases)
