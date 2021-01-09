@@ -49,7 +49,7 @@ function Initialize-BuildEnvironment
 {
     # support common parameters
     [cmdletbinding()]
-    Param([switch]$FullInit)
+    Param([switch]$FullInit, [switch]$AllowVsPreReleases)
 
     # Script code should ALWAYS use the global CurrentBuildKind
     $currentBuildKind = Get-CurrentBuildKind
@@ -81,7 +81,7 @@ function Initialize-BuildEnvironment
         }
     }
 
-    $msbuildInfo = Find-MSBuild
+    $msbuildInfo = Find-MSBuild -AllowVsPreReleases:$AllowVsPreReleases
     if( !$msbuildInfo['FoundOnPath'] )
     {
         $env:Path = "$env:Path;$($msbuildInfo['BinPath'])"

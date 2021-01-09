@@ -8,7 +8,7 @@ $oldPath = $env:Path
 try
 {
     . .\buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment
+    $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
     $packProperties = @{ version=$($buildInfo['PackageVersion'])
                          llvmversion=$($buildInfo['LlvmVersion'])
@@ -20,7 +20,7 @@ try
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
-    .\Build-Interop.ps1
+    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
 
     $buildLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.binlog
     Write-Information "Building Ubiquity.NET.Llvm"

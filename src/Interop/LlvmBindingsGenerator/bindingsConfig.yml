@@ -10,8 +10,8 @@
 #        - ...
 # ----
 # Some functions are exported, but not projected into Ubiquity.NET.Llvm.Interop.NativeMethods. While this may seem strange, it is
-# generally used only for dipose functions that are only used by the hadle wrappers. Exposing such APIs for random callers
-# would introduce undefined behavior that most likely results i hard to diagnose crashes. So, they have private PInvoke
+# generally used only for dipose functions that are only used by the handle wrappers. Exposing such APIs for random callers
+# would introduce undefined behavior that most likely results in hard to diagnose crashes. So, they have private PInvoke
 # signatures in the handle types themselves, but are ignored for generating the public NativeMethods API surface
 #
 # Marshaling Info has a base type and multiple derived types
@@ -1144,11 +1144,6 @@ AnonymousEnums:
   LLVMAttributeReturnIndex: LLVMAttributeIndex
   LLVMMDStringMetadataKind: LLVMMetadataKind
 
-#IgnoredHeaders:
-#    - lto.h
-#    - LinkTimeOptimizer.h
-#    - OptRemarks.h
-#
 IgnoredHeaders:
   - llvm-c/LinkTimeOptimizer.h
   - llvm-c/lto.h
