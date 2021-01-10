@@ -46,6 +46,36 @@ try
     . .\buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
+    # <HACK>
+    # for details of why this is needed, see src\PatchVsForLibClang\readme.md
+    # min version with fix (VS 2019 16.9 preview 2)
+    $minOfficialVersion = [System.Version]('16.9.30803.129')
+
+    Write-Information "Building PatchVsForLibClang.exe"
+    $msBuildProperties = @{ Configuration = 'Release'}
+    $buildLogPath = Join-Path $buildInfo['BinLogsPath'] PatchVsForLibClang.binlog
+    Invoke-MSBuild -Targets 'Restore;Build' -Project src\PatchVsForLibClang\PatchVsForLibClang.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
+
+    $vs = Find-VSInstance -AllowVsPreReleases:$AllowVsPreReleases
+    if($vs.InstallationVersion -lt $minOfficialVersion)
+    {
+        pushd (Join-Path $buildInfo.BuildOutputPath 'bin\PatchVsForLibClang\Release\netcoreapp3.1')
+        try
+        {
+            Write-Information "Patching VS CRT for parsing with LibClang..."
+            .\PatchVsForLibClang.exe $vs.InstallationPath
+        }
+        finally
+        {
+            popd
+        }
+    }
+    else
+    {
+        Write-Information "$($vs.DisplayName) ($($vs.InstallationVersion)) already includes the official patch - skipping manual patch"
+    }
+    #</HACK>
+
     # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
     # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
     # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
@@ -69,6 +99,8 @@ try
     # Hopefully they will support .NET Core soon, if not, the generation stage may need to move out
     # to a manual step with the results checked in.
     Write-Information "Generating P/Invoke Bindings"
+    Write-Information "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
+
     & "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {

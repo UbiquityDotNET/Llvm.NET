@@ -22,5 +22,7 @@
         <PackageReference Update="memberpage" Version="2.49.0" />
         <PackageReference Update="msdn.4.5.2" Version="0.1.0-alpha-1611021200" />
         <PackageReference Update="YamlDotNet" Version="8.1.0" />
+        <PackageReference Update="google-diff-match-patch" Version="1.1.24" />
+        <PackageReference Update="CommandLineParser" Version="2.8.0" />
     </ItemGroup>
 </Project>
