@@ -18,6 +18,7 @@
 #include <llvm/IR/Module.h>
 #include <llvm/Transforms/Instrumentation.h>
 #include <llvm/PassRegistry.h>
+#include <llvm/LinkAllPasses.h>
 #include "llvm/Transforms/Instrumentation/AddressSanitizer.h"
 #include <llvm/Transforms/Instrumentation/MemorySanitizer.h>
 #include <llvm/Transforms/Instrumentation/ThreadSanitizer.h>

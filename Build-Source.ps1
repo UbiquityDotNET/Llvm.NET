@@ -2,7 +2,7 @@ Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . ./buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
     if ($env:OUTPUT_LLVM -eq "true") {
@@ -10,13 +10,9 @@ try
         return
     }
 
-    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+    ./Build-Interop.ps1 -Configuration $env:BUILD_CONFIG -AllowVsPreReleases:$AllowVsPreReleases
 
-    Remove-Item -Force -Recurse -Path (Join-Path $buildInfo["BuildOutputPath"] bin)
-
-    .\Build-DotNet.ps1
-
-    .\Pack-NuGet.ps1
+    ./Build-DotNet.ps1 -Configuration $env:BUILD_CONFIG
 }
 catch
 {

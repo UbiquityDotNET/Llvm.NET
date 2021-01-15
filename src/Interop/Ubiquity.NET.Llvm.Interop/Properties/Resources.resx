@@ -129,11 +129,6 @@
   <data name="Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5" xml:space="preserve">
     <value>Mismatched LibLLVM version - Expected: {0}.{1}.{2} Actual: {3}.{4}.{5}</value>
   </data>
-  <data name="LoadWin32Library_Error_0_occured_loading_1_search_paths_2" xml:space="preserve">
-    <value>System error (0x{0:X08}) occurred trying to load DLL {1}.
- Search paths:
- {2}</value>
-  </data>
   <data name="Llvm_already_initialized" xml:space="preserve">
     <value>LLVM library was already initialized in this process - re-initialization is not allowed (This is a limitation of the underlying LLVM library)</value>
   </data>

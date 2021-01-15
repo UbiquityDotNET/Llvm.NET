@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar.ANTLR
 {
     // partial extension to handle creating virtual tokens/Identifiers depending
     // on language features enabled.
-    internal partial class KaleidoscopeLexer
+    public partial class KaleidoscopeLexer
     {
         public KaleidoscopeLexer( char[ ] input, LanguageLevel languageLevel, IParseErrorListener errorListener )
             : this( new AntlrInputStream( input.ValidateNotNull( nameof( input ) ), input.Length ) )

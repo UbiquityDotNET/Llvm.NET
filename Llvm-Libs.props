@@ -17,10 +17,10 @@
         <LlvmVersionBuild>0</LlvmVersionBuild>
         <LlvmVersion>$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionBuild)</LlvmVersion>
         <LlvmLibsMetaPackageRoot>$(MSBuildThisFileDirectory)</LlvmLibsMetaPackageRoot>
-        <LlvmPlatformConfigLibRoot>$(LlvmLibsMetaPackageRoot)$(LlvmPlatformConfig)\$(Configuration)\lib\</LlvmPlatformConfigLibRoot>
-        <LlvmPlatformConfigIncRoot>$(LlvmLibsMetaPackageRoot)$(LlvmPlatformConfig)\include\</LlvmPlatformConfigIncRoot>
-        <LlvmCommonIncRoot>$(LlvmLibsMetaPackageRoot)include\</LlvmCommonIncRoot>
-        <LlvmExecutionEngineOrcRoot>$(LlvmLibsMetaPackageRoot)lib\ExecutionEngine\Orc</LlvmExecutionEngineOrcRoot>
+        <LlvmPlatformConfigLibRoot>$(LlvmLibsMetaPackageRoot)$(LlvmPlatformConfig)/$(Configuration)/lib/</LlvmPlatformConfigLibRoot>
+        <LlvmPlatformConfigIncRoot>$(LlvmLibsMetaPackageRoot)$(LlvmPlatformConfig)/include/</LlvmPlatformConfigIncRoot>
+        <LlvmCommonIncRoot>$(LlvmLibsMetaPackageRoot)include/</LlvmCommonIncRoot>
+        <LlvmExecutionEngineOrcRoot>$(LlvmLibsMetaPackageRoot)lib/ExecutionEngine/Orc</LlvmExecutionEngineOrcRoot>
     </PropertyGroup>
     <PropertyGroup>
         <AllLlvmLibs>$(AllLlvmLibs);LLVMAArch64AsmParser.lib</AllLlvmLibs>

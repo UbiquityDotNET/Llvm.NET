@@ -1,6 +1,6 @@
 try
 {
-    . .\buildutils.ps1
+    . ./buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment
 
     if ($env:OUTPUT_LLVM -eq "true") {
@@ -9,21 +9,21 @@ try
     }
 
     Write-Information 'Running Interop tests as x64'
-    Invoke-DotNetTest $buildInfo 'src\Interop\InteropTests\InteropTests.csproj'
+    Invoke-DotNetTest $buildInfo 'src/Interop/InteropTests/InteropTests.csproj' $env:BUILD_CONFIG
 
     Write-Information 'Running Core library tests as x64'
-    Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj'
+    Invoke-DotNetTest $buildInfo 'src/Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.Tests.csproj' $env:BUILD_CONFIG
 
     Write-Information 'Running tests for Kaleidoscope Samples as x64'
-    Invoke-DotNetTest $buildInfo 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj'
+    Invoke-DotNetTest $buildInfo 'Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj' $env:BUILD_CONFIG
 
     Write-Information 'Running sample app for .NET Core'
-    pushd (Join-path $buildInfo['BuildOutputPath'] bin\CodeGenWithDebugInfo\Release\netcoreapp3.1)
+    pushd (Join-path Samples CodeGenWithDebugInfo)
     try
     {
-        dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $buildInfo['TestResultsPath']
+        dotnet run M3 'Support Files/test.c' $buildInfo['TestResultsPath']
         if ($LASTEXITCODE -ne 0) {
-            throw "'dotnet CodeGenWithDebugInfo.dll' exited with code: $LASTEXITCODE"
+            throw "'dotnet run' of CodeGenWithDebugInfo exited with code: $LASTEXITCODE"
         }
     }
     finally
@@ -33,6 +33,7 @@ try
 }
 catch
 {
+    $env:LD_DEBUG = $null
     Write-Host "##vso[task.logissue type=error;]Invoke-UnitTests.ps1 failed: $($_.Exception.Message)"
     Write-Error $_.Exception.Message
 }

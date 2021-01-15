@@ -15,6 +15,7 @@
 #include "llvm/IR/DebugLoc.h"
 #include "llvm/IR/Function.h"
 #include "llvm/IR/IRBuilder.h"
+#include "llvm/LinkAllIR.h"
 
 using namespace llvm;
 

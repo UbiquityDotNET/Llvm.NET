@@ -6,9 +6,9 @@
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class ExternalDeclarationContext
+        public partial class ExternalDeclarationContext
         {
             public PrototypeContext Signature => prototype( );
         }

@@ -15,6 +15,7 @@ namespace Ubiquity.NET.Llvm.Tests
     [TestClass]
     public class OrcJitTests
     {
+        [Ignore("Orc JIT unreliable")]
         [TestMethod]
         public void TestEagerIRCompilation( )
         {

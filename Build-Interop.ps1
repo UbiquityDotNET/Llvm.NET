@@ -76,14 +76,6 @@ try
     }
     #</HACK>
 
-    # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
-    # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
-    # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
-    # and incompatibilities libs are generally not something published in a package. However, since the build time
-    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
-    # automated builds.
-    #Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmLibsPackageReleaseName']
-
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
@@ -94,8 +86,6 @@ try
     # manual restore needed so that the CppSharp libraries are available during the build phase
     # as CppSharp NuGet package is basically hostile to the newer SDK project format.
     Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorBuildLogPath"))
-
-    .\Repair-intrin.ps1
 
     # At present CppSharp only supports the "desktop" framework, so limiting this to net48 for now
     # Hopefully they will support .NET Core soon, if not, the generation stage may need to move out

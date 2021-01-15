@@ -10,7 +10,7 @@
   will ensure the folder exists during restore so that it won't fail.
   -->
   <Target Name="CreateBuildOutputNuget" BeforeTargets="Restore;Build;Rebuild">
-      <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet" />
+      <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput/NuGet" />
   </Target>
 
   <Target Name="SetProjectSpecficVersionDependentProperties" AfterTargets="SetVersionDependentProperties">
@@ -23,16 +23,16 @@
   <!-- Download nuget.exe if it isn't found-->
   <Target Name="_DownloadNugetExe" >
     <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
-    <DownloadFile Condition="!EXISTS('$(PackageOutputPath)\NuGet.exe')"
+    <DownloadFile Condition="!EXISTS('$(PackageOutputPath)/NuGet.exe')"
                   SourceUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-                  DestinationPath="$(PackageOutputPath)\NuGet.exe"
+                  DestinationPath="$(PackageOutputPath)/NuGet.exe"
                   />
   </Target>
 
   <!-- Custom task to download a file from a web URL -->
   <UsingTask TaskName="DownloadFile"
              TaskFactory="CodeTaskFactory"
-             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
+             AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.v4.0.dll"
            >
       <ParameterGroup>
           <SourceUrl ParameterType="System.String" Required="true"/>

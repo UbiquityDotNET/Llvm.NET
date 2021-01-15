@@ -1,7 +1,7 @@
 #ifndef _INLINED_EXPORTS_H_
 #define _INLINED_EXPORTS_H_
 
-#include "llvm-c\Support.h"
+#include "llvm-c/Support.h"
 
 #ifdef __cplusplus
 extern "C" {

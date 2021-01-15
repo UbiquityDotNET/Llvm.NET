@@ -6,7 +6,7 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . ./buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment
 
     # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
@@ -45,11 +45,11 @@ try
     } elseif ($buildInfo['Platform'] -eq [platform]::Linux) {
         New-Item -ErrorAction SilentlyContinue -ItemType Container -Path (Join-Path $buildInfo["NativeXplat"] linux-x64)
         ls $buildOutputDir
-        Copy-Item -Force -Path (Join-Path $buildOutputDir libUbiquity.NET.LibLlvm.so) (Join-Path $buildInfo["NativeXplat"] linux-x64 Ubiquity.NET.LibLlvm.dll)
+        Copy-Item -Force -Path (Join-Path $buildOutputDir libUbiquity.NET.LibLlvm.so) (Join-Path $buildInfo["NativeXplat"] linux-x64)
     } else {
         New-Item -ErrorAction SilentlyContinue -ItemType Container -Path (Join-Path $buildInfo["NativeXplat"] osx-x64)
         ls $buildOutputDir
-        Copy-Item -Force -Path (Join-Path $buildOutputDir libUbiquity.NET.LibLlvm.dylib) (Join-Path $buildInfo["NativeXplat"] osx-x64 Ubiquity.NET.LibLlvm.dll)
+        Copy-Item -Force -Path (Join-Path $buildOutputDir libUbiquity.NET.LibLlvm.dylib) (Join-Path $buildInfo["NativeXplat"] osx-x64)
     }
 }
 finally

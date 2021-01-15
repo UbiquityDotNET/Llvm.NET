@@ -1,36 +1,143 @@
 variables:
-  Drops.Dir: $(Build.ArtifactStagingDirectory)/drops
+  Drop.NuGet: $(System.DefaultWorkingDirectory)/BuildOutput/NuGet
   Drop.Native: $(System.DefaultWorkingDirectory)/xplat
-  Output.Llvm: "false"
-  Build.Llvm: "false"
+  Llvm.Includes: $(System.DefaultWorkingDirectory)/llvm/include
+#   Build.Config: "Release" -> Defined on pipeline.
+#   Build.Llvm: "false" -> Defined on pipeline.
 
-jobs:
-- job: Build
-  strategy:
-    matrix:
-      linux:
-        imageName: 'ubuntu-latest'
-      mac:
-        imageName: 'macOS-latest'
-      windows:
-        imageName: 'windows-latest'
-  pool: 
-    vmImage: $(imageName)
+stages:
+- stage: Win_Native
+  displayName: "Build Windows Native components"
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool: 
+      vmImage: 'windows-latest'
 
-  timeoutInMinutes: 240
+    timeoutInMinutes: 240
 
-  steps:
-  - pwsh: ./Build-Xplat.ps1
-    displayName: 'Run Build-Xplat.ps1 script'
-  - pwsh: ./Build-Source.ps1
-    displayName: 'Run Build-Source.ps1 script (Windows Only)'
-    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
-  - pwsh: ./Invoke-UnitTests.ps1
-    displayName: 'Run Invoke-UnitTests.ps1 script (Windows Only)'
-    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: Ubiquity.NET.Llvm'
-    condition: succeededOrFailed()
-    inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    steps:
+    - checkout: self
+      fetchDepth: 1
+      submodules: true
+    - pwsh: ./Build-Xplat.ps1
+      displayName: 'Run Build-Xplat.ps1 script'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Drop.Native)/win-x64'
+        artifact: 'win-x64'
+        publishLocation: 'pipeline'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Llvm.Includes)'
+        artifact: 'llvm_include'
+        publishLocation: 'pipeline'
+
+- stage: Linux_Native
+  displayName: "Build Linux Native components"
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool: 
+      vmImage: 'ubuntu-20.04'
+
+    timeoutInMinutes: 240
+
+    steps:
+    - checkout: self
+      fetchDepth: 1
+      submodules: true
+    - pwsh: ./Build-Xplat.ps1
+      displayName: 'Run Build-Xplat.ps1 script'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Drop.Native)/linux-x64'
+        artifact: 'linux-x64'
+        publishLocation: 'pipeline'
+
+- stage: OsX_Native
+  displayName: "Build Os X Native components"
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool: 
+      vmImage: 'macOS-latest'
+
+    timeoutInMinutes: 240
+
+    steps:
+    - checkout: self
+      fetchDepth: 1
+      submodules: true
+    - pwsh: ./Build-Xplat.ps1
+      displayName: 'Run Build-Xplat.ps1 script'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Drop.Native)/osx-x64'
+        artifact: 'osx-x64'
+        publishLocation: 'pipeline'
+
+- stage: Llvm_NET
+  displayName: "Build Llvm.NET"
+  dependsOn: ['Win_Native', 'Linux_Native', 'OsX_Native']
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'windows-latest'
+
+    steps:
+    - checkout: self
+      fetchDepth: 1
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'win-x64'
+        targetPath: '$(Drop.Native)/win-x64'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'linux-x64'
+        targetPath: '$(Drop.Native)/linux-x64'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'osx-x64'
+        targetPath: '$(Drop.Native)/osx-x64'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'llvm_include'
+        targetPath: '$(Llvm.Includes)'
+    - pwsh: ./Build-Source.ps1
+      displayName: 'Run Build-Source.ps1 script'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: Ubiquity.NET.Llvm'
+      inputs:
+        PathtoPublish: '$(Drop.NuGet)'
         artifactName: Ubiquity.NET.Llvm
+        
+- stage: Test
+  displayName: "Test Packages"
+  dependsOn: ['Llvm_NET']
+  jobs:
+  - job: Test
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-20.04'
+        osx:
+          imageName: 'macOs-latest'
+        windows:
+          imageName: 'windows-latest'
+    pool:
+      vmImage: $(imageName)
+    
+    steps:
+    - checkout: self
+      fetchDepth: 1
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'Ubiquity.NET.Llvm'
+        targetPath: '$(System.DefaultWorkingDirectory)/BuildOutput/NuGet'
+    - pwsh: ./Invoke-UnitTests.ps1

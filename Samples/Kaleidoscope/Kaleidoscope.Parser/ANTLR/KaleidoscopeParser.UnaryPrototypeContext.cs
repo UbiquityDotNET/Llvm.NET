@@ -10,9 +10,9 @@ using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class UnaryPrototypeContext
+        public partial class UnaryPrototypeContext
         {
             public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
             {

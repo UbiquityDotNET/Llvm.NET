@@ -1,5 +1,5 @@
 # Helpers for cmake builds
-using module 'PsModules\CommonBuild\CommonBuild.psd1'
+using module 'PsModules/CommonBuild/CommonBuild.psd1'
 
 Param(
     [string]$Configuration="Release",
@@ -17,7 +17,9 @@ function New-LlvmCMakeConfig(
 {
     [CMakeConfig]$cmakeConfig = New-Object CMakeConfig -ArgumentList $platform, $config, $baseBuild, $srcRoot
     $cmakeConfig.CMakeBuildVariables = @{
-        LLVM_ENABLE_RTTI = "ON"
+        CMAKE_BUILD_TYPE = $Configuration
+        LLVM_ENABLE_RTTI = "OFF"
+        LLVM_ENABLE_ASSERTIONS = "OFF"
         LLVM_BUILD_TOOLS = "OFF"
         LLVM_BUILD_UTILS = "OFF"
         LLVM_BUILD_DOCS = "OFF"
@@ -34,6 +36,9 @@ function New-LlvmCMakeConfig(
         LLVM_INCLUDE_TOOLS = "OFF"
         LLVM_INCLUDE_UTILS = "OFF"
         LLVM_ADD_NATIVE_VISUALIZERS_TO_SOLUTION = "ON"
+    }
+    if ($Configuration -eq "Debug" -or $Configuration -eq "RelWithDebInfo") {
+        $cmakeConfig.CMakeBuildVariables["LLVM_ENABLE_RTTI"] = "ON"
     }
     return $cmakeConfig
 }
@@ -66,14 +71,14 @@ Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . ./buildutils.ps1
 
     $plat = Get-Platform
     if ($plat -eq [Platform]::Windows) {
-        .\Repair-WinBuild.ps1
+        ./Repair-WinBuild.ps1
     }
 
-    cd llvm-project\llvm
+    cd llvm-project/llvm
     Invoke-Build 
 }
 catch

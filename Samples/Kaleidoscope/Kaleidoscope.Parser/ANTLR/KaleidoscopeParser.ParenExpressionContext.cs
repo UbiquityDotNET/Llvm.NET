@@ -6,9 +6,9 @@
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class ParenExpressionContext
+        public partial class ParenExpressionContext
         {
             public ExpressionContext Expression => ( ExpressionContext )GetChild( 1 );
         }

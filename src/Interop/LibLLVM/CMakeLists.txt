@@ -28,8 +28,6 @@ enable_testing()
 
 add_library(Ubiquity.NET.LibLlvm SHARED "")
 
-set_target_properties(Ubiquity.NET.LibLlvm PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
-
 target_include_directories(Ubiquity.NET.LibLlvm PRIVATE "../../../llvm/include")
 target_include_directories(Ubiquity.NET.LibLlvm PRIVATE "../../../llvm/lib/ExecutionEngine/Orc")
 target_include_directories(Ubiquity.NET.LibLlvm PRIVATE "include")
@@ -40,16 +38,13 @@ target_link_directories(Ubiquity.NET.LibLlvm BEFORE PRIVATE "../../../llvm/lib")
 add_compile_definitions("NDEBUG" "_USRDLL" "LIBLLVM_EXPORTS" "LibLLVM_EXPORTS")
 add_compile_definitions("_ITERATOR_DEBUG_LEVEL=0")
 
-if (WIN32)
-    target_sources(Ubiquity.NET.LibLlvm PUBLIC "EXPORTS.g.DEF")
+if (NOT WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti -pthread")
 endif()
 
-if (APPLE)
-    # Explicitly add a link to libz and libncurses
-    target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE "z" "ncurses")
-
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
-endif()
+target_sources(Ubiquity.NET.LibLlvm PUBLIC 
+    "InlinedExports"
+    "EXPORTS.g.DEF")
 
 target_sources(Ubiquity.NET.LibLlvm PRIVATE 
     "AnalysisBindings" 
@@ -57,7 +52,6 @@ target_sources(Ubiquity.NET.LibLlvm PRIVATE
     "ContextBindings" 
     "DIBuilderBindings"
     "ObjectFileBindings"
-    "InlinedExports" 
     "IRBindings" 
     "LibLlvmOrcJitBindings"
     "MetadataBindings" 
@@ -65,6 +59,12 @@ target_sources(Ubiquity.NET.LibLlvm PRIVATE
     "ModuleBindings" 
     "TripleBindings" 
     "ValueBindings")
+
+if (APPLE)
+    target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE "-Wl,-all_load")
+elseif (UNIX)
+    target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE "-Wl,--whole-archive")
+endif()
 
 target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE
         "LLVMAArch64AsmParser"
@@ -212,6 +212,17 @@ target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE
         "LLVMXCoreInfo"
         "LLVMXRay"
     )
+
+if (APPLE)
+    target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE "z" "edit" "xml2")
+elseif (UNIX)
+    target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE "-Wl,--no-whole-archive")
+endif()
+
+if (NOT WIN32)
+    target_link_libraries(Ubiquity.NET.LibLlvm PRIVATE "ncurses" "pthread" "dl")
+endif()
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

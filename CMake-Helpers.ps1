@@ -1,5 +1,5 @@
 ﻿# Helpers for cmake builds
-using module 'PsModules\CommonBuild\CommonBuild.psd1'
+using module 'PsModules/CommonBuild/CommonBuild.psd1'
 
 $InformationPreference = "Continue"
 

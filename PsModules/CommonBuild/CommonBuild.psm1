@@ -83,12 +83,6 @@ function Get-DefaultBuildPaths([string]$repoRoot)
         ToolsPath = Join-Path $repoRoot 'Tools'
     }
 
-    if ($env:DROPS_DIR) {
-        $buildPaths["ArtifactDrops"] = $env:DROPS_DIR
-    } else {
-        $buildPaths["ArtifactDrops"] = Join-Path $buildOutputPath drops
-    }
-
     if ($env:DROP_NATIVE) {
         $buildPaths["NativeXplat"] = $env:DROP_NATIVE
     } else {
@@ -250,7 +244,7 @@ function Invoke-NuGet
     This will attempt to find Nuget on the current path, and if not found will download the latest
     version from NuGet.org before running the command.
 #>
-    $buildPaths = Get-DefaultBuildPaths ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..')))
+    $buildPaths = Get-DefaultBuildPaths ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..' '..')))
     $NuGetPaths = Find-OnPath nuget -ErrorAction Continue
     if( !$NuGetPaths )
     {
@@ -405,7 +399,7 @@ function Invoke-MSBuild([string]$project, [hashtable]$properties, $targets, $log
     . $msbuild.FullPath @msbuildArgs
     if($LASTEXITCODE -ne 0)
     {
-        Write-Error "Error running msbuild: $LASTEXITCODE"
+        throw "Error running msbuild for '$project': $LASTEXITCODE"
     }
 }
 
@@ -549,11 +543,14 @@ function Get-GitHubTaggedRelease($org, $project, $tag)
     Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
 }
 
-function Invoke-DotNetTest($buildInfo, $projectRelativePath)
+function Invoke-DotNetTest($buildInfo, $projectRelativePath, $configuration)
 {
+    if ([string]::IsNullOrEmpty($configuration)) {
+        $configuration = "Release"
+    }
     $testProj = Join-Path $buildInfo['RepoRootPath'] $projectRelativePath
     $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
-    dotnet test $testProj -v m -s $runSettings --logger trx
+    dotnet test $testProj -v m -s $runSettings --logger trx -c $configuration
     if ($LASTEXITCODE -ne 0) {
         throw "'dotnet test $testproj' exited with code: $LASTEXITCODE"
     }

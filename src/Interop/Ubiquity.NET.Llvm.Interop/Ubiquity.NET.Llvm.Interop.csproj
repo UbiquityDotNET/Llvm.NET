@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <LangVersion>8.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
@@ -22,37 +22,37 @@
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\..\xplat\win-x64\*">
-        <Link>runtimes\win-x64\native\%(FileName)%(Extension)</Link>
-        <PackagePath>runtimes\win-x64\native\%(FileName)%(Extension)</PackagePath>
+    <Content Include="../../../xplat/win-x64/*">
+        <Link>runtimes/win-x64/native/%(FileName)%(Extension)</Link>
+        <PackagePath>runtimes/win-x64/native/%(FileName)%(Extension)</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\xplat\osx-x64\*">
-        <Link>runtimes\osx-x64\native\%(FileName)%(Extension)</Link>
-        <PackagePath>runtimes\osx-x64\native\%(FileName)%(Extension)</PackagePath>
+    <Content Include="../../../xplat/osx-x64/*">
+        <Link>runtimes/osx-x64/native/%(FileName)%(Extension)</Link>
+        <PackagePath>runtimes/osx-x64/native/%(FileName)%(Extension)</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\xplat\linux-x64\*">
-        <Link>runtimes\linux-x64\native\%(FileName)%(Extension)</Link>
-        <PackagePath>runtimes\linux-x64\native\%(FileName)%(Extension)</PackagePath>
+    <Content Include="../../../xplat/linux-x64/*">
+        <Link>runtimes/linux-x64/native/%(FileName)%(Extension)</Link>
+        <PackagePath>runtimes/linux-x64/native/%(FileName)%(Extension)</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="NugetPkg\build\Ubiquity.NET.Llvm.Interop.props">
-        <PackagePath>build\Ubiquity.NET.Llvm.Interop.props</PackagePath>
+    <Content Include="NugetPkg/build/Ubiquity.NET.Llvm.Interop.props">
+        <PackagePath>build/Ubiquity.NET.Llvm.Interop.props</PackagePath>
     </Content>
-    <Content Include="NugetPkg\buildMultiTargeting\Ubiquity.NET.Llvm.Interop.props">
-        <PackagePath>buildMultiTargeting\Ubiquity.NET.Llvm.Interop.props</PackagePath>
+    <Content Include="NugetPkg/buildMultiTargeting/Ubiquity.NET.Llvm.Interop.props">
+        <PackagePath>buildMultiTargeting/Ubiquity.NET.Llvm.Interop.props</PackagePath>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
+    <Compile Update="Properties/Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties/Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

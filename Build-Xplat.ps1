@@ -2,17 +2,17 @@ Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . ./buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment
 
     if ($env:OUTPUT_LLVM -eq "true" -or $env:BUILD_LLVM -eq "true") {
-        .\Build-Llvm.ps1
+        ./Build-Llvm.ps1 -Configuration $env:BUILD_CONFIG
     }
 
-    .\Move-LlvmBuild.ps1
+    ./Move-LlvmBuild.ps1  -Configuration $env:BUILD_CONFIG
 
     if ($env:OUTPUT_LLVM -ne "true") {
-        .\Build-LibLlvm.ps1
+        ./Build-LibLlvm.ps1 -Configuration $env:BUILD_CONFIG
     }
 }
 catch

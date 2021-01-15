@@ -10,15 +10,15 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Support Files\ClangCompile.cmd">
+    <None Include="Support Files/ClangCompile.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Support Files\test.c">
+    <None Include="Support Files/test.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="$(BuildRootDir)src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj">
+        <ProjectReference Include="$(BuildRootDir)src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj">
             <Name>Llvm.NET</Name>
         </ProjectReference>
     </ItemGroup>

@@ -13,7 +13,7 @@
         <PackageReference Include="Ubiquity.ArgValidators" />
     </ItemGroup>
 
-    <!-- inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild -->
+    <!-- inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild
     <UsingTask TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
         <ParameterGroup>
             <InputFilename ParameterType="System.String" Required="true" />
@@ -39,5 +39,5 @@
 
     <Target Name="ForceAntlrGeneratedCodeToInternal" AfterTargets="Antlr4Compile;Antlr4DesignTimeGrammarCompilation">
         <ReplaceFileText Condition="'%(Antlr4GeneratedCodeFiles.FullPath)'!=''" InputFileName="%(Antlr4GeneratedCodeFiles.FullPath)" OutputFileName="%(Antlr4GeneratedCodeFiles.FullPath)" MatchExpression="public (partial class|interface)" ReplacementText="internal $1" />
-    </Target>
+    </Target> -->
 </Project>

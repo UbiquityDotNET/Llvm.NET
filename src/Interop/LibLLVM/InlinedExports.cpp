@@ -1,6 +1,7 @@
 #include <llvm-c/Target.h>
 #include <llvm-c/Remarks.h>
 
+#include "InlinedExports.h"
 
 extern "C"
 {

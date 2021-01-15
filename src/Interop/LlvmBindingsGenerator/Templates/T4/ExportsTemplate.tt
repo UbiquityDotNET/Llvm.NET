@@ -20,7 +20,7 @@ EXPORTS
 
 ; Inlined Functions in LLVM Headers wrapped as non-inlined *Export functions in LibLLVM
 <#foreach(var inlineFunc in InlinedFunctions) {#>
-<#=inlineFunc.Name#> = <#=inlineFunc.Name#>Export
+<#=inlineFunc.Name#>Export
 <#}#>
 
 ; Standard Official LLVM-C APIs

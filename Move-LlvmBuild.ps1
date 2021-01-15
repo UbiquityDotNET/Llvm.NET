@@ -26,6 +26,10 @@ function Get-RelativePath ([string]$base, [string]$path)
 
 function Copy-Tree ([string]$source, [string]$dest, [string[]]$filter = @("*"), [string[]]$exclude = @())
 {
+    if (!(Test-Path $source)) {
+        Write-Warning "Directory '$source' not found. Skipping copy..."
+        return
+    }
     $items = Get-ChildItem $source -Recurse -Include $filter -Exclude $exclude | %{ Get-RelativePath $source $_ }
     ForEach ($itemSrc in $items)
     {
@@ -36,12 +40,16 @@ function Copy-Tree ([string]$source, [string]$dest, [string[]]$filter = @("*"), 
             Write-Verbose "Creating directory $($destDir)"
             New-Item -Path $destDir -ItemType "directory" -Force
         }
-        Copy-Item -Path (Join-Path $source $itemSrc) -Destination $itemDest -Force
+        Copy-Item -Path (Join-Path $source $itemSrc) -Destination $itemDest -Verbose -Force
     }
 }
 
 function Move-Tree ([string]$source, [string]$dest, [string[]]$filter = @("*"), [string[]]$exclude = @())
 {
+    if (!(Test-Path $source)) {
+        Write-Warning "Directory '$source' not found. Skipping copy..."
+        return
+    }
     $items = Get-ChildItem $source -Recurse -Include $filter -Exclude $exclude -Attributes !Directory | %{ Get-RelativePath $source $_ }
     ForEach ($itemSrc in $items)
     {
@@ -58,7 +66,7 @@ function Move-Tree ([string]$source, [string]$dest, [string[]]$filter = @("*"), 
 
 Write-Information "Moving LLVM build outputs to the expected location"
 
-. $PSScriptRoot\buildutils.ps1
+. $PSScriptRoot/buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment
 if ($buildInfo['Platform'] -eq [platform]::Windows) {
     $plat = "win32"
@@ -68,7 +76,7 @@ if ($buildInfo['Platform'] -eq [platform]::Windows) {
     $plat = "mac"
 }
 
-if ($env:OUTPUT_LLVM -ne "true" -and $env:BUILD_LLVM -ne "true") {
+if ($env:BUILD_LLVM -ne "true") {
     # Copy from cached headers.
     $basePath = Join-Path $PSScriptRoot llvm
     Copy-Item -Force -Recurse (Join-Path $basePath xplat $plat include) $basePath -Verbose
@@ -85,17 +93,7 @@ if ($env:OUTPUT_LLVM -ne "true" -and $env:BUILD_LLVM -ne "true") {
 
     Copy-Item -Force -Recurse (Join-Path $basePath xplat ExecutionEngine) (Join-Path $basePath lib) -Verbose
 } else {
-    if ($env:BUILD_LLVM -eq "true") {
-        $destBase = (Join-Path $PSScriptRoot "llvm")
-
-        if (Test-Path $destBase) {
-            Write-Verbose "Cleaning out the old data from $($destbase)"
-            Remove-Item -Path $destbase -Recurse -Force | Out-Null
-        }
-    } else {
-        # Copy to build output
-        $destBase = Join-Path $buildInfo["ArtifactDrops"] $plat
-    }
+    $destBase = (Join-Path $PSScriptRoot "llvm")
 
     if (Test-Path $destBase) {
         Write-Verbose "Cleaning out the old data from $($destbase)"
@@ -110,10 +108,7 @@ if ($env:OUTPUT_LLVM -ne "true" -and $env:BUILD_LLVM -ne "true") {
     } elseif ($buildInfo['Platform'] -eq [platform]::Mac) {
         $sourceConfiguration = ""
         $libIncFilter = @("*.a", "*.dylib")
-    # } elseif ($sourceConfiguration = "Release") {
-    #     $sourceConfiguration = "RelWithDebInfo"
     }
-
 
     $libSource = (Join-Path ($BuildRoot) ($BuildName) ($sourceConfiguration) "lib")
     $libDest = (Join-Path ($destBase) "lib")
@@ -130,7 +125,7 @@ if ($env:OUTPUT_LLVM -ne "true" -and $env:BUILD_LLVM -ne "true") {
     $incDest = (Join-Path ($destbase) "include")
     $incFilter = @( '*.h', '*.gen', '*.def', '*.inc' )
     Write-Verbose "Moving headers from $($incSource) to $($incDest)"
-    Move-Tree $incSource $incDest ($incFilter)
+    Copy-Tree $incSource $incDest ($incFilter)
 
     $cfgSource = (Join-Path $BuildRoot ($BuildName) "NATIVE" "include" "llvm" "Config")
     $cfgDest = (Join-Path ($destbase) "include" "llvm" "Config")

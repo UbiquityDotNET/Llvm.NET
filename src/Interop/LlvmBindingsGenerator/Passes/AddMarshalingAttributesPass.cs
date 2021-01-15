@@ -262,6 +262,11 @@ namespace LlvmBindingsGenerator.Passes
                 Diagnostics.Error( "Function '{0}' has unsupported calling convention '{1}'", function.Name, function.CallingConvention );
             }
 
+            if( function.IsInline )
+            {
+                pinvokeArgs.Add( string.Format( "EntryPoint = \"{0}\"", function.Name + "Export" ) );
+            }
+
             string args = string.Join( ", ", pinvokeArgs );
             function.Attributes.Add( new TargetedAttribute( typeof( DllImportAttribute ), args ) );
         }

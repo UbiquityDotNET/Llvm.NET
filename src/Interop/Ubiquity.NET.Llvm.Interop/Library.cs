@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 using Ubiquity.NET.Llvm.Interop.Properties;
@@ -118,17 +119,6 @@ namespace Ubiquity.NET.Llvm.Interop
             string packageRoot = Path.GetFullPath( Path.Combine( thisModulePath, "..", ".." ) );
             var paths = new List<string>( );
 
-            // TODO: support other non-windows runtimes via .NET CORE
-            string osArch = Environment.Is64BitProcess ? "Win-x64" : "win-x86";
-            string runTimePath = Path.Combine( "runtimes", osArch, "native" );
-
-            // .NET core apps will actually run with references directly from the NuGet install
-            // but full framework apps (including unit tests will have CopyLocal applied)
-            paths.Add( Path.Combine( packageRoot, runTimePath ) );
-            paths.Add( Path.Combine( thisModulePath, runTimePath ) );
-            paths.Add( thisModulePath );
-            IntPtr hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
-
             // Verify the version of LLVM in LibLLVM
             LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
             if( versionInfo.Major != VersionMajor
@@ -154,7 +144,7 @@ namespace Ubiquity.NET.Llvm.Interop
             FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
             LLVMInstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
             Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.Initialized );
-            return new Library( hLibLLVM );
+            return new Library( );
         }
 
         // TODO: Figure out how to read targets.def to get the full set of target architectures
@@ -833,15 +823,12 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
-            InternalShutdownLLVM( ModuleHandle );
+            InternalShutdownLLVM( );
         }
 
-        private Library( IntPtr moduleHandle )
+        private Library( )
         {
-            ModuleHandle = moduleHandle;
         }
-
-        private IntPtr ModuleHandle;
 
         private enum InitializationState
         {
@@ -865,7 +852,7 @@ namespace Ubiquity.NET.Llvm.Interop
             Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", reason );
         }
 
-        private static void InternalShutdownLLVM( IntPtr hLibLLVM )
+        private static void InternalShutdownLLVM( )
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
                                                                                 , (int)InitializationState.ShuttingDown
@@ -877,10 +864,6 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             LLVMShutdown( );
-            if( hLibLLVM != IntPtr.Zero )
-            {
-                FreeLibrary( hLibLLVM );
-            }
 
             Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.ShutDown );
         }

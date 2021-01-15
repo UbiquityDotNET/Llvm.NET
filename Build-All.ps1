@@ -10,7 +10,7 @@ Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . ./buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
     $BuildSource = $false
@@ -31,15 +31,17 @@ try
 
     md $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
+    $env:BUILD_CONFIG = $Configuration
+
     if($BuildSource)
     {
-        .\Build-Xplat.ps1
-        .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        ./Build-Xplat.ps1
+        ./Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        ./Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases
     }
 }
 catch

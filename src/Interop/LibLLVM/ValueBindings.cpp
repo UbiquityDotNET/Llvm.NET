@@ -10,7 +10,6 @@
 
 #include "ValueCache.h"
 
-
 using namespace llvm;
 
 DEFINE_SIMPLE_CONVERSION_FUNCTIONS( ValueCache, LibLLVMValueCacheRef );
