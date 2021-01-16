@@ -70,7 +70,7 @@
 #
 #   !Array
 #       SubType - the unmanaged type of the elements of the array (See: System.Runtime.InteropServices.UnmanagedType enum for details)
-#       SizeParam - optional integer index of an out parmater that contains the size of the array
+#       SizeParam - optional integer index of an out parmater that contains the size of the array [for out params]
 #
 FunctionBindings:
   - Name: LLVMMDStringInContext
@@ -191,10 +191,12 @@ FunctionBindings:
   - Name: LLVMStartMultithreaded
     IsObsolete: True
     DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
+    IsProjected: False
 
   - Name: LLVMStopMultithreaded
     IsObsolete: True
     DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
+    IsProjected: False
 
   - Name: LLVMCreateBinary
     ParamTransforms:
@@ -1075,6 +1077,16 @@ FunctionBindings:
 
   - Name: LLVMSymbolLookupCallback
     ReturnTransform: !String {Kind: CopyAlias}
+
+    # lifetime management of shared ownership between managed and unmanaged semantics in .NET is dodgy at best
+    # so this is exported, but not projected to allow for experimentation until a safe way of managing
+    # the shared/pinned nature of things is determined
+  - Name: LLVMCreateMemoryBufferWithMemoryRange
+    IsProjected: false
+
+  - Name: LLVMCreateMemoryBufferWithMemoryRangeCopy
+    ParamTransforms:
+      - !Array { Name: InputData, Semantics: In }
 
 # The HandleMap Lists the types of handles and their disposal semantics
 #HandleMap:

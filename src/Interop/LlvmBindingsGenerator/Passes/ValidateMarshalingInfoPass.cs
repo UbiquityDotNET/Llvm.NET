@@ -53,7 +53,7 @@ namespace LlvmBindingsGenerator.Passes
                                            ).Any( );
                 if( !hasCustomMarshaling )
                 {
-                    Diagnostics.Error( "ERROR: Function {0} has string return type, but does not have string custom marshaling attribute to define marshaling behavior!", function.Name );
+                    Diagnostics.Error( "ERROR: Function '{0}' has string return type, but does not have string custom marshaling attribute to define marshaling behavior!", function.Name );
                 }
             }
             else if( function.ReturnType.Type is PointerType pt )
@@ -69,7 +69,7 @@ namespace LlvmBindingsGenerator.Passes
 
                     if( !allowUnsafeReturn )
                     {
-                        Diagnostics.Error( "ERROR: Function {0} has unsafe return type '{1}', without a marshaling attribute - (Possible missing FunctionBindings entry)"
+                        Diagnostics.Error( "ERROR: Function '{0}' has unsafe return type '{1}', without a marshaling attribute - (Possible missing FunctionBindings entry)"
                                          , function.Name
                                          , pt.ToString( )
                                          );
@@ -85,7 +85,22 @@ namespace LlvmBindingsGenerator.Passes
 
             foreach( var param in outStrings )
             {
-                Diagnostics.Error( "ERROR: Parameter {0} of function {1} is an out string but has no custom marshaling attribute to define marshaling behavior", param.Name, function.Name );
+                Diagnostics.Error( "ERROR: Parameter '{0}' of function '{1}' is an out string but has no custom marshaling attribute to define marshaling behavior", param.Name, function.Name );
+            }
+
+            // indicate input char* params without marshalling.
+            // Generally these are legitimately strings (and there are a LOT of them) so this is a debug diagnostic
+            // to use when updating the bindings generation for a new version of LLVM or detecting cases where the
+            // signature is wrong.
+            var inStrings = from p in function.Parameters
+                             where p.IsIn
+                                && ( p.Type.ToString( ) == "string" || p.Type.ToString() == "sbyte")
+                                && !p.Attributes.Any( a=> IsStringMarshalingAttribute(a) || IsArrayMarshalingAttribute(a) )
+                             select p;
+
+            foreach( var param in inStrings )
+            {
+                Diagnostics.Debug( "NOTE: Parameter '{0}' of function '{1}' is an in pointer but has no custom marshaling attribute to define marshaling behavior, string is assumed", param.Name, function.Name );
             }
 
             return true;
@@ -95,6 +110,12 @@ namespace LlvmBindingsGenerator.Passes
         {
             return attribute.Type.Name == "MarshalAsAttribute"
                 && attribute.Value.StartsWith( "UnmanagedType.CustomMarshaler", System.StringComparison.InvariantCulture );
+        }
+
+        private static bool IsArrayMarshalingAttribute( CppSharp.AST.Attribute attribute )
+        {
+            return attribute.Type.Name == "MarshalAsAttribute"
+                && attribute.Value.StartsWith( "UnmanagedType.LPArray", System.StringComparison.InvariantCulture );
         }
 
         private readonly IGeneratorConfig Config;

@@ -56,7 +56,26 @@ namespace LlvmBindingsGenerator.Configuration
 
         public override QualifiedType TransformType( QualifiedType type )
         {
-            return new QualifiedType( new ArrayType( ) { QualifiedType = ( type.Type as PointerType ).QualifiedPointee } );
+            // attempt to get a more precise type than sbyte* for byte sized values and bool
+            QualifiedType elementType;
+            switch(SubType)
+            {
+            case UnmanagedType.Bool:
+                elementType = new QualifiedType( new BuiltinType( PrimitiveType.Bool ), type.Qualifiers);
+                break;
+
+            case UnmanagedType.I1:
+                elementType = new QualifiedType( new BuiltinType( PrimitiveType.SChar ), type.Qualifiers );
+                break;
+            case UnmanagedType.U1:
+                elementType = new QualifiedType( new BuiltinType( PrimitiveType.UChar ), type.Qualifiers );
+                break;
+            default:
+                elementType = ( type.Type as PointerType ).QualifiedPointee;
+                break;
+            }
+
+            return new QualifiedType( new ArrayType( ) { QualifiedType = elementType } );
         }
     }
 }

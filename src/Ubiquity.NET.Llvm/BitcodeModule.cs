@@ -924,12 +924,9 @@ namespace Ubiquity.NET.Llvm
             buffer.ValidateNotNull( nameof( buffer ) );
             context.ValidateNotNull( nameof( context ) );
 
-            if( LLVMParseBitcodeInContext2( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef ).Failed )
-            {
-                throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer );
-            }
-
-            return context.GetModuleFor( modRef );
+            return LLVMParseBitcodeInContext2( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef ).Failed
+                ? throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer )
+                : context.GetModuleFor( modRef );
         }
 
         internal LLVMModuleRef? ModuleHandle { get; private set; }
@@ -943,7 +940,6 @@ namespace Ubiquity.NET.Llvm
             return retVal!; // can't be null as ThrowIfDisposed would consider it disposed
         }
 
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         internal static BitcodeModule? FromHandle( LLVMModuleRef nativeHandle )
         {
             nativeHandle.ValidateNotDefault( nameof( nativeHandle ) );
@@ -996,16 +992,12 @@ namespace Ubiquity.NET.Llvm
             private protected override BitcodeModule ItemFactory( LLVMModuleRef handle )
             {
                 var contextRef = LLVMGetModuleContext( handle );
-                if( Context.ContextHandle != contextRef )
-                {
-                    throw new ArgumentException( Resources.Context_mismatch_cannot_cache_modules_from_multiple_contexts );
-                }
-
-                return new BitcodeModule( handle );
+                return Context.ContextHandle != contextRef
+                    ? throw new ArgumentException( Resources.Context_mismatch_cannot_cache_modules_from_multiple_contexts )
+                    : new BitcodeModule( handle );
             }
         }
 
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private BitcodeModule( LLVMModuleRef handle )
         {
             handle.ValidateNotDefault( nameof( handle ) );

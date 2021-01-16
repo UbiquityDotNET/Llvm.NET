@@ -32,6 +32,20 @@ namespace Ubiquity.NET.Llvm
             BufferHandle = handle;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a byte array</summary>
+        /// <param name="data">Array of bytes to copy into the memory buffer</param>
+        /// <param name="name">Name of the buffer (for diagnostics)</param>
+        /// <remarks>
+        /// This constructor makes a copy of the data array as a <see cref="MemoryBuffer"/> the memory in the buffer
+        /// is unmanaged memory usable by the LLVM native code. It is released in the Dispose method
+        /// </remarks>
+        public MemoryBuffer( byte[] data, string? name = null)
+        {
+            data.ValidateNotNull( nameof( data ) );
+            BufferHandle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, data.Length, name ?? string.Empty )
+                          .ThrowIfInvalid( );
+        }
+
         /// <summary>Gets the size of the buffer</summary>
         public int Size => BufferHandle.IsInvalid ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
 
