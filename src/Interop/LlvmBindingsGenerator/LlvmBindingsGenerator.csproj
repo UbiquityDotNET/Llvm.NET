@@ -12,9 +12,10 @@
         This means that this project can't use language features > 7.3 (Limits for .NET Framework)
         -->
         <TargetFramework>net47</TargetFramework>
-        <Nullable/>
+        <Nullable />
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="CommandLineParser" />
         <PackageReference Include="Ubiquity.ArgValidators" />
         <PackageReference Include="CppSharp" />
         <PackageReference Include="YamlDotNet" />

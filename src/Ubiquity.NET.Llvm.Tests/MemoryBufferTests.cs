@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -83,6 +84,43 @@ namespace Ubiquity.NET.Llvm.Tests
 
             byte[ ] expected = Encoding.ASCII.GetBytes( TestData );
             Assert.IsTrue( expected.AsSpan( 5, 2 ).SequenceEqual( result ) );
+        }
+
+        [TestMethod]
+        public void Buffer_from_array_with_null_name_succeeds( )
+        {
+            byte[ ] data = Range(0, 255);
+            var buffer = new MemoryBuffer(data, null);
+            Assert.IsNotNull( buffer );
+            Assert.AreEqual( 255, buffer.Size );
+        }
+
+        [TestMethod]
+        public void Buffer_from_array_with_valid_name_succeeds( )
+        {
+            byte[ ] data = Range(0, 255);
+            var buffer = new MemoryBuffer(data, "testName");
+            Assert.IsNotNull( buffer );
+            Assert.AreEqual( 255, buffer.Size );
+        }
+
+        [TestMethod]
+        public void Buffer_from_array_contains_correct_data( )
+        {
+            byte[ ] data = Range(0, 255);
+            var buffer = new MemoryBuffer(data);
+            Assert.IsNotNull( buffer );
+            Assert.AreEqual( 255, buffer.Size );
+            var span = buffer.Slice();
+            for(int i = 0; i < data.Length; ++i )
+            {
+                Assert.AreEqual( data[ i ], span[ i ], $"Index {i}" );
+            }
+        }
+
+        private static byte[] Range(byte start, byte length)
+        {
+            return Enumerable.Range( start, length ).Select( n => ( byte )n ).ToArray( );
         }
     }
 }

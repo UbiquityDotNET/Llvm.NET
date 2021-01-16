@@ -11,7 +11,7 @@
         "namingRules":
         {
             "allowCommonHungarianPrefixes": false,
-            "allowedHungarianPrefixes": ["h", "di", "op", "os", "ir", "is", "do", "un", "on", "to", "if", "no", "v"]
+            "allowedHungarianPrefixes": ["h", "di", "op", "os", "ir", "is", "do", "un", "on", "to", "if", "no", "v","in"]
         },
         "orderingRules":
         {

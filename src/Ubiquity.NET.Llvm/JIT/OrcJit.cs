@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -22,6 +23,7 @@ namespace Ubiquity.NET.Llvm.JIT
     /// The LLVM OrcJIT supports lazy compilation and better resource management for
     /// clients. For more details on the implementation see the LLVM Documentation.
     /// </remarks>
+    [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "multiple levels of the ternary conditional expression is anything but a simplification" )]
     public class OrcJit
         : DisposableObject
         , ILazyCompileExecutionEngine
@@ -107,9 +109,12 @@ namespace Ubiquity.NET.Llvm.JIT
                     throw new InvalidOperationException( string.Format( CultureInfo.CurrentCulture, Resources.Unresolved_Symbol_0_1, name, LLVMOrcGetErrorMsg( JitStackHandle ) ) );
                 }
 
-                return retAddr != 0
-                    ? retAddr
-                    : GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback callBack ) ? ( ulong )callBack.ToIntPtr( ).ToInt64( ) : 0;
+                if( retAddr != 0)
+                {
+                    return retAddr;
+                }
+
+                return GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback callBack ) ? ( ulong )callBack.ToIntPtr( ).ToInt64( ) : 0;
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch

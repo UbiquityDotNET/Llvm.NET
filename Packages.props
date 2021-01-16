@@ -18,8 +18,8 @@
         <PackageReference Update="OpenSoftware.DgmlBuilder" Version="1.14.0" />
         <PackageReference Update="System.Collections.Immutable" Version="1.7.0" />
         <!-- See: https://github.com/dotnet/docfx/issues/5536 before updating...-->
-        <PackageReference Update="docfx.console" Version="2.48.1" />
-        <PackageReference Update="memberpage" Version="2.49.0" />
+        <PackageReference Update="docfx.console" Version="2.56.6" />
+        <PackageReference Update="memberpage" Version="2.56.6" />
         <PackageReference Update="msdn.4.5.2" Version="0.1.0-alpha-1611021200" />
         <PackageReference Update="YamlDotNet" Version="8.1.0" />
         <PackageReference Update="google-diff-match-patch" Version="1.1.24" />

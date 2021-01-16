@@ -7,8 +7,9 @@
 using System.IO;
 using System.Reflection;
 
-using CppSharp;
+using CommandLine;
 
+using CppSharp;
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Configuration.Yaml;
 
@@ -18,25 +19,24 @@ namespace LlvmBindingsGenerator
     {
         public static int Main( string[ ] args )
         {
-            var diagnostics = new ErrorTrackingDiagnostics( );
-            Diagnostics.Implementation = diagnostics;
+            return Parser.Default.ParseArguments<Options>( args ).MapResult( Run, _ => -1 );
+        }
 
-            if( args.Length < 2 )
+        private static int Run( Options options )
+        {
+            var diagnostics = new ErrorTrackingDiagnostics( )
             {
-                Diagnostics.Error( "USAGE: LlvmBindingsGenerator <llvmRoot> <extensionsRoot> [OutputPath]" );
-                return -1;
-            }
+                Level = options.Diagnostics
+            };
 
-            string llvmRoot = args[ 0 ];
-            string extensionsRoot = args[ 1 ];
-            string outputPath = args.Length > 2 ? args[ 2 ] : System.Environment.CurrentDirectory;
+            Diagnostics.Implementation = diagnostics;
 
             // read in the binding configuration from the YAML file
             // It is hoped, that going forward, the YAML file is the only thing that needs to change
-            // but either way, helps keep the declarative part in a more easily understood format.
+            // but either way, it helps keep the declarative part in a more easily edited format.
             string configPath = Path.Combine( Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location ), "BindingsConfig.yml");
             var config = new ReadOnlyConfig( YamlConfiguration.ParseFrom( configPath ) );
-            var library = new LibLlvmGeneratorLibrary( config, llvmRoot, extensionsRoot, outputPath );
+            var library = new LibLlvmGeneratorLibrary( config, options.LlvmRoot, options.ExtensionsRoot, options.OutputPath );
             Driver.Run( library );
             return diagnostics.ErrorCount;
             /* TODO:
