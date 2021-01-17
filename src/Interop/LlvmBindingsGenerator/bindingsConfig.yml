@@ -1088,6 +1088,9 @@ FunctionBindings:
     ParamTransforms:
       - !Array { Name: InputData, Semantics: In }
 
+  - Name: LibLLVMGetConstantDataSequentialRawData
+    ReturnTransform: !Unsafe {}
+
 # The HandleMap Lists the types of handles and their disposal semantics
 #HandleMap:
 #    - !ContextHandle { HandleName: LLVMTypeRef}

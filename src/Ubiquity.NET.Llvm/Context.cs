@@ -485,15 +485,11 @@ namespace Ubiquity.NET.Llvm
         /// <returns>new <see cref="ConstantDataArray"/></returns>
         /// <remarks>
         /// This converts the string to ANSI form and creates an LLVM constant array of i8
-        /// characters for the data without any terminating null character.
+        /// characters for the data with a terminating null character. To control the enforcement
+        /// of a terminating null character, use the <see cref="CreateConstantString(string, bool)"/>
+        /// overload to specify the intended behavior.
         /// </remarks>
-        public ConstantDataArray CreateConstantString( string value )
-        {
-            value.ValidateNotNull( nameof( value ) );
-
-            var handle = LLVMConstStringInContext( ContextHandle, value, ( uint )value.Length, true );
-            return Value.FromHandle<ConstantDataArray>( handle.ThrowIfInvalid( ) )!;
-        }
+        public ConstantDataArray CreateConstantString( string value ) => CreateConstantString( value, true );
 
         /// <summary>Create a constant data string value</summary>
         /// <param name="value">string to convert into an LLVM constant value</param>
@@ -501,7 +497,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>new <see cref="ConstantDataArray"/></returns>
         /// <remarks>
         /// This converts the string to ANSI form and creates an LLVM constant array of i8
-        /// characters for the data without any terminating null character.
+        /// characters for the data. Enforcement of a null terminator depends on the value of <paramref name="nullTerminate"/>
         /// </remarks>
         public ConstantDataArray CreateConstantString( string value, bool nullTerminate )
         {
@@ -780,7 +776,7 @@ namespace Ubiquity.NET.Llvm
         internal LLVMContextRef ContextHandle { get; }
 
         /* These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
-        // The mapping ensures that any LibLLVM handle is always re-mappable to a exactly one wrapper instance.
+        // The mapping ensures that any LibLLVM handle is always re-mappable to exactly one wrapper instance.
         // This helps reduce the number of wrapper instances created and also allows reference equality to work
         // as expected for managed types.
         */

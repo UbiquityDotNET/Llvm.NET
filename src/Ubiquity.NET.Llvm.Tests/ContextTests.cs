@@ -141,7 +141,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
-        [TestCategory("Function Type")]
+        [TestCategory( "Function Type" )]
         public void CreateFunctionTypeTest( )
         {
             var targetMachine = TargetTests.GetTargetMachine( );
@@ -211,7 +211,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
-        [TestCategory("Function Type")]
+        [TestCategory( "Function Type" )]
         public void VerifySameFunctionSigRetrievesTheSameType( )
         {
             using var context = new Context( );
@@ -600,10 +600,10 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var value = context.CreateConstantStruct( true
-                                                        , context.CreateConstant( ( byte )1)
-                                                        , context.CreateConstant( 2.0f )
-                                                        , context.CreateConstant( ( short )-3 )
-                                                        );
+                                                    , context.CreateConstant( ( byte )1)
+                                                    , context.CreateConstant( 2.0f )
+                                                    , context.CreateConstant( ( short )-3 )
+                                                    );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -631,16 +631,16 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var nestedValue = context.CreateConstantStruct( false
-                                                              , context.CreateConstant( 5 )
-                                                              , context.CreateConstantString("Hello")
-                                                              , context.CreateConstant( 6 )
-                                                              );
+                                                          , context.CreateConstant( 5 )
+                                                          , context.CreateConstantString("Hello")
+                                                          , context.CreateConstant( 6 )
+                                                          );
             var value = context.CreateConstantStruct( true
-                                                        , context.CreateConstant( ( byte )1)
-                                                        , context.CreateConstant( 2.0f )
-                                                        , nestedValue
-                                                        , context.CreateConstant( ( short )-3 )
-                                                        );
+                                                    , context.CreateConstant( ( byte )1)
+                                                    , context.CreateConstant( 2.0f )
+                                                    , nestedValue
+                                                    , context.CreateConstant( ( short )-3 )
+                                                    );
             Assert.AreEqual( 4, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -678,10 +678,10 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var value = context.CreateConstantStruct( false
-                                                        , context.CreateConstant( ( byte )1)
-                                                        , context.CreateConstant( 2.0f )
-                                                        , context.CreateConstant( ( short )-3 )
-                                                        );
+                                                    , context.CreateConstant( ( byte )1)
+                                                    , context.CreateConstant( 2.0f )
+                                                    , context.CreateConstant( ( short )-3 )
+                                                    );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -742,9 +742,9 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var fields = new List<Constant> { context.CreateConstant( ( byte )1 )
-                                                , context.CreateConstant( 2.0f )
-                                                , context.CreateConstant( ( short )-3 )
-                                                };
+                                            , context.CreateConstant( 2.0f )
+                                            , context.CreateConstant( ( short )-3 )
+                                            };
             var value = context.CreateConstantStruct( false, fields );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
@@ -768,15 +768,15 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
-        [TestCategory("Constants")]
+        [TestCategory( "Constants" )]
         public void CreateNamedConstantPackedStructTestUsingEnumerable( )
         {
             using var context = new Context( );
             var structType = context.CreateStructType( "struct.test", true, context.Int8Type, context.FloatType, context.Int16Type );
             var fields = new List<Constant> { context.CreateConstant( ( byte )1 )
-                                                , context.CreateConstant( 2.0f )
-                                                , context.CreateConstant( ( short )-3 )
-                                                };
+                                            , context.CreateConstant( 2.0f )
+                                            , context.CreateConstant( ( short )-3 )
+                                            };
             var value = context.CreateNamedConstantStruct( structType, fields );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
@@ -805,15 +805,15 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var structType = context.CreateStructType( "struct.test"
-                                                         , false
-                                                         , context.Int8Type
-                                                         , context.FloatType
-                                                         , context.Int16Type
-                                                         );
+                                                     , false
+                                                     , context.Int8Type
+                                                     , context.FloatType
+                                                     , context.Int16Type
+                                                     );
             var fields = new List<Constant> { context.CreateConstant( ( byte )1 )
-                                                , context.CreateConstant( 2.0f )
-                                                , context.CreateConstant( ( short )-3 )
-                                                };
+                                            , context.CreateConstant( 2.0f )
+                                            , context.CreateConstant( ( short )-3 )
+                                            };
             var value = context.CreateNamedConstantStruct( structType, fields );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
@@ -842,16 +842,16 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var structType = context.CreateStructType( "struct.test"
-                                                         , true
-                                                         , context.Int8Type
-                                                         , context.FloatType
-                                                         , context.Int16Type
-                                                         );
+                                                     , true
+                                                     , context.Int8Type
+                                                     , context.FloatType
+                                                     , context.Int16Type
+                                                     );
             var value = context.CreateNamedConstantStruct( structType
-                                                             , context.CreateConstant( ( byte )1 )
-                                                             , context.CreateConstant( 2.0f )
-                                                             , context.CreateConstant( ( short )-3 )
-                                                             );
+                                                         , context.CreateConstant( ( byte )1 )
+                                                         , context.CreateConstant( 2.0f )
+                                                         , context.CreateConstant( ( short )-3 )
+                                                         );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -879,16 +879,16 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             var structType = context.CreateStructType( "struct.test"
-                                                         , false
-                                                         , context.Int8Type
-                                                         , context.FloatType
-                                                         , context.Int16Type
-                                                         );
+                                                     , false
+                                                     , context.Int8Type
+                                                     , context.FloatType
+                                                     , context.Int16Type
+                                                     );
             var value = context.CreateNamedConstantStruct( structType
-                                                             , context.CreateConstant( ( byte )1 )
-                                                             , context.CreateConstant( 2.0f )
-                                                             , context.CreateConstant( ( short )-3 )
-                                                             );
+                                                         , context.CreateConstant( ( byte )1 )
+                                                         , context.CreateConstant( 2.0f )
+                                                         , context.CreateConstant( ( short )-3 )
+                                                         );
             Assert.AreEqual( 3, value.Operands.Count );
             Assert.IsInstanceOfType( value.Operands[ 0 ], typeof( ConstantInt ) );
             Assert.IsInstanceOfType( value.Operands[ 1 ], typeof( ConstantFP ) );
@@ -943,15 +943,64 @@ namespace Ubiquity.NET.Llvm.Tests
 
         [TestMethod]
         [TestCategory( "Constants" )]
-        public void CreateConstantStringTest( )
+        public void CreateConstantCStringTest( )
         {
             using var context = new Context( );
             string str = "hello world";
             ConstantDataArray value = context.CreateConstantString( str );
             Assert.IsNotNull( value );
-            Assert.IsTrue( value.IsString );
+            Assert.IsTrue( value.IsString ); // Has terminating null, so it is a C String
+            Assert.IsTrue( value.IsI8Sequence );
+
             Assert.IsFalse( value.IsNull );
             Assert.IsFalse( value.IsUndefined );
+            Assert.IsFalse( value.IsInstruction );
+            Assert.IsFalse( value.IsFunction );
+            Assert.IsFalse( value.IsCallSite );
+            Assert.IsFalse( value.IsZeroValue );
+
+            Assert.AreSame( string.Empty, value.Name );
+            Assert.IsNotNull( value.NativeType );
+
+            var arrayType = value.NativeType as IArrayType;
+            Assert.IsNotNull( arrayType );
+            Assert.AreSame( context, arrayType!.Context );
+            Assert.AreSame( context.Int8Type, arrayType.ElementType );
+            Assert.AreEqual( ( uint )str.Length + 1 , arrayType.Length ); // +1 for terminating \0
+            string valueStr = value.ExtractAsString( );
+            Assert.IsFalse( string.IsNullOrWhiteSpace( valueStr ) );
+            Assert.AreEqual( str, valueStr );
+
+            var span = value.RawData;
+            byte[ ] strBytes = System.Text.Encoding.ASCII.GetBytes(str);
+
+            Assert.AreEqual( strBytes.Length + 1, span.Length ); // +1 for terminating \0
+            for( int i = 0; i < strBytes.Length; ++i )
+            {
+                Assert.AreEqual( strBytes[ i ], span[ i ], $"At index {i}" );
+            }
+
+            Assert.AreEqual( 0, span[ ^1 ] );
+        }
+
+        [TestMethod]
+        [TestCategory( "Constants" )]
+        public void CreateConstantStringTest( )
+        {
+            using var context = new Context( );
+            string str = "hello world";
+            ConstantDataArray value = context.CreateConstantString( str, false );
+            Assert.IsNotNull( value );
+            Assert.IsFalse( value.IsString ); // No terminating null, so it is not a C String
+            Assert.IsTrue( value.IsI8Sequence );
+
+            Assert.IsFalse( value.IsNull );
+            Assert.IsFalse( value.IsUndefined );
+            Assert.IsFalse( value.IsInstruction );
+            Assert.IsFalse( value.IsFunction );
+            Assert.IsFalse( value.IsCallSite );
+            Assert.IsFalse( value.IsZeroValue );
+
             Assert.AreSame( string.Empty, value.Name );
             Assert.IsNotNull( value.NativeType );
 
@@ -963,6 +1012,15 @@ namespace Ubiquity.NET.Llvm.Tests
             string valueStr = value.ExtractAsString( );
             Assert.IsFalse( string.IsNullOrWhiteSpace( valueStr ) );
             Assert.AreEqual( str, valueStr );
+
+            var span = value.RawData;
+            byte[ ] strBytes = System.Text.Encoding.ASCII.GetBytes(str);
+
+            Assert.AreEqual( strBytes.Length, span.Length );
+            for( int i = 0; i < strBytes.Length; ++i )
+            {
+                Assert.AreEqual( strBytes[ i ], span[ i ], $"At index {i}" );
+            }
         }
 
         private static void VerifyIntegerType( ITypeRef integerType, uint bitWidth )

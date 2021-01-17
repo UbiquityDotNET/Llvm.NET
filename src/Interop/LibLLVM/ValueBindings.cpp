@@ -26,7 +26,7 @@ extern "C"
     LLVMBool LibLLVMIsConstantZeroValue( LLVMValueRef valueRef )
     {
         auto pConstant = dyn_cast< Constant >( unwrap( valueRef ) );
-        if( pConstant == nullptr )
+        if ( pConstant == nullptr )
             return 0;
 
         return pConstant->isZeroValue( ) ? 1 : 0;
@@ -35,7 +35,7 @@ extern "C"
     void LibLLVMRemoveGlobalFromParent( LLVMValueRef valueRef )
     {
         auto pGlobal = dyn_cast< GlobalVariable >( unwrap( valueRef ) );
-        if( pGlobal == nullptr )
+        if ( pGlobal == nullptr )
             return;
 
         pGlobal->removeFromParent( );
@@ -43,7 +43,7 @@ extern "C"
 
     LibLLVMValueKind LibLLVMGetValueKind( LLVMValueRef valueRef )
     {
-        return static_cast<LibLLVMValueKind>( unwrap( valueRef )->getValueID( ) );
+        return static_cast< LibLLVMValueKind >( unwrap( valueRef )->getValueID( ) );
     }
 
     LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val )
@@ -55,7 +55,7 @@ extern "C"
     void LibLLVMGlobalVariableAddDebugExpression( LLVMValueRef /*GlobalVariable*/ globalVar, LLVMMetadataRef exp )
     {
         auto gv = unwrap<GlobalVariable>( globalVar );
-        gv->addDebugInfo( unwrap<DIGlobalVariableExpression>( exp ));
+        gv->addDebugInfo( unwrap<DIGlobalVariableExpression>( exp ) );
     }
 
     void LibLLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block )
@@ -87,5 +87,22 @@ extern "C"
     intptr_t LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef )
     {
         return unwrap( cacheRef )->lookup( unwrap( valueRef ) );
+    }
+
+    LLVMBool LibLLVMIsConstantCString( LLVMValueRef C )
+    {
+        return unwrap<ConstantDataSequential>( C )->isCString( );
+    }
+
+    uint32_t LibLLVMGetConstantDataSequentialElementCount( LLVMValueRef C )
+    {
+        return unwrap<ConstantDataSequential>( C )->getNumElements( );
+    }
+
+    const char* LibLLVMGetConstantDataSequentialRawData( LLVMValueRef C, size_t* Length )
+    {
+        StringRef Str = unwrap<ConstantDataSequential>( C )->getRawDataValues( );
+        *Length = Str.size( );
+        return Str.data( );
     }
 }
