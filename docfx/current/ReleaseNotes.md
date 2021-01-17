@@ -3,7 +3,7 @@
 
 ## Breaking changes
 With the 10.* release the Ubiquity.NET.Llvm.* libs have made a number of breaking changes.
-While these are mostly small and easily adapted to they are still a breaking change. Thus,
+While these are mostly small and easily adapted to, they are still a breaking change. Thus,
 these changes were held to only occur on a Major release. Despite the pain of updating code
 we think the changes are worth the effort to create a cleaner simpler and more consistent library.
 
@@ -16,7 +16,7 @@ projects no longer maintained.
 | Old Name                  | New Name     |
 |---------------------------|--------------|
 | Ubiquity.NET.Llvm.Interop | Ubiquity.Net.Llvm.Interop |
-| LibLLVM.dll               | Ubiquity.Net.LibLLVM.dll  |
+| LibLLVM.dll               | Ubiquity.Net.LibLLVM      |
 | Ubiquity.NET.Llvm         | Ubiquity.Net.Llvm         |
 
 ### Library initialization
@@ -27,8 +27,9 @@ is done through this interface. This prevents accidental use of the registration
 initializing the library (as that's a guaranteed app crash!)
 
 ### C#8 and non-Nullable references
-With the 10.* release the Ubiquity.NET.Llvm.* libs all updated to target .NET Standard 2.1 and C#8. This allows use of nullable types
-to make nullability more explicit. This necessitated a few minor breaking changes in the object model surface.
+With the 10.* release the Ubiquity.NET.Llvm.* libs all updated to target .NET Standard 2.1 and C#8. This allows
+use of nullable types to make nullability more explicit. This necessitated a few minor breaking changes in the
+object model surface.
 
 | Name            | Description  |
 |-----------------|--------------|
@@ -36,8 +37,8 @@ to make nullability more explicit. This necessitated a few minor breaking change
 
 
 ### Renamed instruction predicate enumerator values
-The comparison instruction predicates `Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]`were renamed for greater consistency
-and clarity (Some of the float predicates had 'Than' in the name while the integer counterparts did not. (See:
+The comparison instruction predicates `Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]`were renamed for greater
+consistency and clarity (Some of the float predicates had 'Than' in the name while the integer counterparts did not. (See:
 [Bug #152](https://github.com/UbiquityDotNET/Llvm.NET/issues/152) for details.)
 
 | Old Name               | New Name     |
@@ -73,21 +74,30 @@ a sized type is created, even if the size is 0 because no members are provided. 
 anonymous empty structs, used in many languages. To create a named opaque type then the overload with just the
 name is used. This isn't expected to impact many consumers, other than the tests, but it is a breaking change.
 
+#### Context.CreateConstantString()
+The behavior of Context.CreateConstantString(string) has changed slightly. It now constructs a valid C string with
+a null terminator, which is generally what would be expected of something called "string". (The (string,bool)
+overload remains, to allow apps to be explicit with intent) Additionally, the ConstantDataSequential.IsString
+property now reflects whether the string is a C string (terminating null but no embedded nulls) and the
+ConstantDataSequential.IsI8Sequence was added to provide the previous behavior of IsString, which was simply that
+the underlying sequence element type was i8 (with or without a terminator)
+
 ### Removed redundant APIs
-LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality equivalent to 
-APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at the interop library layer where some
-of the custom APIs were removed and replaced with the official ones.
+LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality
+equivalent to APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at
+the interop library layer where some of the custom APIs were removed and replaced with the official ones.
 
 | Removed custom API | New Official API |
 |--------------------|------------------|
 | LibLLVMFoo [TBD]   | LLVMFoo [TBD]    |
 
 ### Disabled ORCJIT LazyFunction binding
-Unfortunately, the ORCJIT truly lazy function generation callback support is currently disabled. LLVM itself is transitioning to the ORCJIT v2 and in the process
-broke the lazy function binding support (At least for Windows+COFF). Previously a workaround for the issue of the COFF exports was applied in the 
-Llvm.NET ORCJIT library code for symbol lookups. However, with ORCJIT v2 the JIT itself is doing lookups and it does so only for external symbols
-assuming the symbols it generates internally will be exports, but are not (at least for COFF modules anyway).
-For more details see the LLVM bugs [25493](https://bugs.llvm.org/show_bug.cgi?id=25493) and [28699](https://bugs.llvm.org/show_bug.cgi?id=28699)
+Unfortunately, the ORCJIT truly lazy function generation callback support is currently disabled. LLVM itself is
+transitioning to the ORCJIT v2 and in the process broke the lazy function binding support (At least for Windows+COFF).
+Previously a workaround for the issue of the COFF exports was applied in the Llvm.NET ORCJIT library code for symbol
+lookups. However, with ORCJIT v2 the JIT itself is doing lookups and it does so only for external symbols assuming the
+symbols it generates internally will be exports, but are not (at least for COFF modules anyway). For more details see
+the LLVM bugs [25493](https://bugs.llvm.org/show_bug.cgi?id=25493) and [28699](https://bugs.llvm.org/show_bug.cgi?id=28699)
 
 ## v8.0.1
 ### Bug Fixes
