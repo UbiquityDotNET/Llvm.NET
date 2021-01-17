@@ -1864,12 +1864,15 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.A_pointer_to_a_function_is_required_for_an_indirect_call, nameof( func ) );
             }
 
-            if( args.Count != signatureType.ParameterTypes.Count )
+            // validate arg count; too few or too many (unless the signature supports varargs) is an error
+            if( args.Count < signatureType.ParameterTypes.Count
+                || ( args.Count > signatureType.ParameterTypes.Count && !signatureType.IsVarArg )
+              )
             {
                 throw new ArgumentException( Resources.Mismatched_parameter_count_with_call_site, nameof( args ) );
             }
 
-            for( int i = 0; i < args.Count; ++i )
+            for( int i = 0; i < signatureType.ParameterTypes.Count; ++i )
             {
                 if( args[ i ].NativeType != signatureType.ParameterTypes[ i ] )
                 {

@@ -113,7 +113,6 @@
     <Rule Id="CA1715" Action="Error" />
     <Rule Id="CA1717" Action="Warning" />
     <Rule Id="CA1719" Action="Warning" />
-    <Rule Id="CA1720" Action="None" />
     <Rule Id="CA1721" Action="Warning" />
     <Rule Id="CA1722" Action="Warning" />
     <Rule Id="CA1724" Action="Warning" />
@@ -580,9 +579,17 @@
     <Rule Id="IDE0034" Action="Warning" />
     <Rule Id="IDE0058" Action="None" />
     <Rule Id="IDE0067" Action="None" />
+    <Rule Id="IDE0079" Action="Error" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.VisualBasic" RuleNamespace="Microsoft.CodeAnalysis.VisualBasic">
     <Rule Id="AD0001" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
+    <Rule Id="CA1062" Action="Error" />
+    <Rule Id="CA1720" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.NetCore.Analyzers" RuleNamespace="Microsoft.NetCore.Analyzers">
+    <Rule Id="CA1303" Action="Hidden" />
   </Rules>
   <Rules AnalyzerId="RefactoringEssentials" RuleNamespace="RefactoringEssentials">
     <Rule Id="RECS0070" Action="None" />
@@ -732,12 +739,5 @@
     <Rule Id="SA1651" Action="Error" />
     <Rule Id="SA1652" Action="Warning" />
     <Rule Id="SX1101" Action="Error" />
-  </Rules>
-  <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
-    <Rule Id="CA1720" Action="None" />
-    <Rule Id="CA1062" Action="Error" />
-  </Rules>
-  <Rules AnalyzerId="Microsoft.NetCore.Analyzers" RuleNamespace="Microsoft.NetCore.Analyzers">
-    <Rule Id="CA1303" Action="Hidden" />
   </Rules>
 </RuleSet>
