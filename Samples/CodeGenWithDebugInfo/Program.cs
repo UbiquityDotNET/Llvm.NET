@@ -171,7 +171,7 @@ namespace TestDebugInfo
                     // The ordering of passes can matter depending on the pass, and passes may be added more than once
                     // the caller has full control of ordering, this is just a sample of effectively randomly picked
                     // passes and not necessarily a reflection of any particular use case.
-                    using var pm = new ModulePassManager( );
+                    var pm = new ModulePassManager( );
                     pm.AddAlwaysInlinerPass( )
                         .AddAggressiveDCEPass( )
                         .AddArgumentPromotionPass( )

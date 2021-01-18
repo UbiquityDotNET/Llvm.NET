@@ -64,6 +64,13 @@ Some APIs had inconsistent, misspelled or confusing names and were updated.
 |---------------------------|--------------------------------|---------------|
 | BitcodeModule.AddFunction | BitcodeModule.CreateFunction() | The Create vs Add between debug info and raw native was always confusing |
 
+### Types no longer disposable
+Some types are no longer disposable. The LLVMObjectRef type uses SafeHandle, which eliminates the need
+for Dispose for top level global objects. The following types no longer support IDispose:
+* Transforms.ModulePassManager
+* Transforms.FunctionPassManager
+* ObjectFile.TargetBinary
+
 ### Altered Behavior
 #### Context.CreateStructType()
 As part of resolving [bug #184](https://github.com/UbiquityDotNET/Llvm.NET/issues/184) the CreateStructType

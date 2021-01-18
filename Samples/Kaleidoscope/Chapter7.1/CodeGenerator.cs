@@ -55,7 +55,6 @@ namespace Kaleidoscope.Chapter71
         {
             JIT.Dispose( );
             Module?.Dispose( );
-            FunctionPassManager?.Dispose( );
             Context.Dispose( );
         }
         #endregion

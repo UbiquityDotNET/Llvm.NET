@@ -56,6 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		Push-Nuget.ps1 = Push-Nuget.ps1
 		..\README.md = ..\README.md
 		..\.github\workflows\release-build.yml = ..\.github\workflows\release-build.yml
+		..\docfx\current\ReleaseNotes.md = ..\docfx\current\ReleaseNotes.md
 		..\stylecop.json = ..\stylecop.json
 		..\Ubiquity.NET.ruleset = ..\Ubiquity.NET.ruleset
 		x64.runsettings = x64.runsettings
@@ -67,7 +68,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter7.1", "..\Samples\Ka
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.Tests", "Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj", "{50AB0DAA-77B1-4C02-9A1F-2C8E7E7D9A88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaleidoscope.Tests", "..\Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj", "{752FFF38-2B50-4341-ABF5-CCAE013388AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Tests", "..\Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj", "{752FFF38-2B50-4341-ABF5-CCAE013388AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

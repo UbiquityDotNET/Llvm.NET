@@ -12,9 +12,6 @@ using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Types;
 
-// signatures required by test framework
-#pragma warning disable IDE0060 // Remove unused parameter
-
 namespace Ubiquity.NET.Llvm.Tests
 {
     [TestClass]
@@ -79,7 +76,7 @@ namespace Ubiquity.NET.Llvm.Tests
         public void LoadObjFileTest( )
         {
             using var llvmContext = new Context( );
-            using var obj = llvmContext.OpenBinary( TestObjFileName );
+            var obj = llvmContext.OpenBinary( TestObjFileName );
         }
 
         [TestMethod]
@@ -87,7 +84,7 @@ namespace Ubiquity.NET.Llvm.Tests
         public void DeclaredSectionsTest( )
         {
             using var llvmContext = new Context( );
-            using var obj = llvmContext.OpenBinary( TestObjFileName );
+            var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // all the declared section names should be present (There may be additional obj format specific sections as well)
             Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == AddSectionName ) != default );
@@ -101,7 +98,7 @@ namespace Ubiquity.NET.Llvm.Tests
         public void DeclaredSymbolsTest( )
         {
             using var llvmContext = new Context( );
-            using var obj = llvmContext.OpenBinary( TestObjFileName );
+            var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // symbols should be present for all the declared functions
             Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == AddFuncName ) != default );
@@ -115,7 +112,7 @@ namespace Ubiquity.NET.Llvm.Tests
         public void DeclaredFunctionRelocationTest( )
         {
             using var llvmContext = new Context( );
-            using var obj = llvmContext.OpenBinary( TestObjFileName );
+            var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // all the declared section names should be present (There may be additional obj format specific sections as well)
             var declaredSections = from sec in obj.Sections
