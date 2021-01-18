@@ -67,10 +67,13 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the address of the section</summary>
         public ulong Address => LLVMGetSectionAddress( IteratorRef );
 
-        /// <inheritdoc/>
+        /// <summary>Tests an <see cref="object"/> for equality</summary>
+        /// <param name="obj"><see cref="object"/> to compare with this instance</param>
+        /// <returns><see langword="true"/> if the </returns>
         public override bool Equals( object obj ) => ( obj is Section other ) && Equals( other );
 
-        /// <inheritdoc/>
+        /// <summary>Gets a hash code for this <see cref="Section"/></summary>
+        /// <returns>Hash code</returns>
         public override int GetHashCode( ) => IteratorRef.GetHashCode( );
 
         /// <summary>Equality comparison</summary>
@@ -85,7 +88,9 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <returns>Result of inequality test</returns>
         public static bool operator !=( Section left, Section right ) => !( left == right );
 
-        /// <inheritdoc/>
+        /// <summary>Tests an <see cref="Section"/> for equality</summary>
+        /// <param name="other"><see cref="Section"/> to compare with this instance</param>
+        /// <returns><see langword="true"/> if the </returns>
         public bool Equals( Section other ) => IteratorRef.Equals( other.IteratorRef );
 
         internal Section( TargetBinary objFile, LLVMSectionIteratorRef iterator )

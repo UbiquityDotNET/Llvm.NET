@@ -250,7 +250,8 @@ namespace Ubiquity.NET.Llvm.JIT
         }
 #endif
 
-        /// <inheritdoc/>
+        /// <summary>Releases unmanaged resources for this instance</summary>
+        /// <param name="disposing">Indicates if this is from a Dispose (<see langword="true"/>) or a finalizer</param>
         protected override void Dispose( bool disposing )
         {
             JitStackHandle?.Dispose( );

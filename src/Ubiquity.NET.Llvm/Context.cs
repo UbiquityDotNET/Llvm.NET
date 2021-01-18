@@ -855,7 +855,12 @@ namespace Ubiquity.NET.Llvm
             LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler, IntPtr.Zero );
         }
 
-        /// <inheritdoc />
+        /// <summary>Disposes the context to release unmanaged resources deterministically</summary>
+        /// <param name="disposing">Indicates whether this is from a call to Dispose (<see langword="true"/>) or if from a finalizer</param>
+        /// <remarks>
+        /// If <paramref name="disposing"/> is <see langword="true"/> then this will release managed and unmanaged resources.
+        /// Otherwise, this will only release the native/unmanaged resources.
+        /// </remarks>
         protected override void Dispose( bool disposing )
         {
             // disconnect all modules so that any future critical finalization has no impact

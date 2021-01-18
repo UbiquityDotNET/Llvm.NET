@@ -2,6 +2,5 @@
     BuildMajor = "10"
     BuildMinor = "0"
     BuildPatch = "0"
-    PreReleaseName = "alpha"
-    PreReleaseNumber ="3"
+    PreReleaseName = "rc"
 />

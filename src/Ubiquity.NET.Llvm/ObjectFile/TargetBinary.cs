@@ -64,7 +64,6 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
     /// <summary>Object file information</summary>
     public class TargetBinary
-        : DisposableObject
     {
         /*
         TODO: (Needs extension C APIs)
@@ -124,14 +123,5 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         }
 
         internal LLVMBinaryRef BinaryRef { get; }
-
-        /// <inheritdoc/>
-        protected override void Dispose( bool disposing )
-        {
-            if( disposing )
-            {
-                BinaryRef.Dispose( );
-            }
-        }
     }
 }

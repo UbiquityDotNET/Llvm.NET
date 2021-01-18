@@ -4,14 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Properties;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
@@ -30,10 +28,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets the underlying tuple for this wrapper</summary>
         public MDTuple? Tuple { get; }
 
-        /// <inheritdoc />
+        /// <summary>Gets the count of operands in the <see cref="MDTuple"/></summary>
         public int Count => Tuple?.Operands.Count ?? 0;
 
-        /// <inheritdoc />
+        /// <summary>Gets an item from the tuple</summary>
+        /// <param name="index">Index of the item to retrieve</param>
+        /// <returns>The element at <paramref name="index"/> in the tuple</returns>
         public T? this[ int index ]
         {
             get
@@ -43,7 +43,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>Gets an enumerator for the items in the <see cref="MDTuple"/></summary>
+        /// <returns>Enumerator</returns>
+        /// <remarks>If the underlying tuple is empty this is an empty enumeration</remarks>
         public IEnumerator<T?> GetEnumerator( )
         {
             return Tuple is null
@@ -53,7 +55,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                         .GetEnumerator( );
         }
 
-        /// <inheritdoc />
+        /// <summary>Gets an enumerator for the items in the <see cref="MDTuple"/></summary>
+        /// <returns>Enumerator</returns>
+        /// <remarks>If the underlying tuple is empty this is an empty enumeration</remarks>
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         internal TupleTypedArrayWrapper( MDTuple? tuple )

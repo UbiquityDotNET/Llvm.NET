@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 

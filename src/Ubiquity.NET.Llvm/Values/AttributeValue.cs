@@ -26,26 +26,21 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets the context that owns this <see cref="AttributeValue"/></summary>
         public Context Context { get; }
 
-        /// <inheritdoc/>
+        /// <summary>Gets a hash code for this instance</summary>
+        /// <returns>Hash code</returns>
         public override int GetHashCode( ) => NativeAttribute.GetHashCode( );
 
-        /// <inheritdoc/>
+        /// <summary>Performs equality checks against an <see cref="object"/></summary>
+        /// <param name="obj">object to test for equality with this instance</param>
+        /// <returns><see langword="true"/> if <paramref name="obj"/> is equal to this instance</returns>
         public override bool Equals( object obj )
         {
-            if( obj is AttributeValue attrib )
-            {
-                return Equals( attrib );
-            }
-
-            if( obj is UIntPtr )
-            {
-                return NativeAttribute.Equals( obj );
-            }
-
-            return false;
+            return obj is AttributeValue attrib ? Equals( attrib ) : obj is UIntPtr && NativeAttribute.Equals( obj );
         }
 
-        /// <inheritdoc/>
+        /// <summary>Performs equality checks against an <see cref="AttributeValue"/></summary>
+        /// <param name="other">object to test for equality with this instance</param>
+        /// <returns><see langword="true"/> if <paramref name="other"/> is equal to this instance</returns>
         public bool Equals( AttributeValue other )
         {
             return NativeAttribute.Equals( other.NativeAttribute );

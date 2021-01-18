@@ -26,7 +26,10 @@ namespace Ubiquity.NET.Llvm.Values
         : IOperandCollection<T?>
         where T : Value
     {
-        /// <inheritdoc/>
+        /// <summary>Gets the operand at the specified index</summary>
+        /// <param name="index">Index of the operand to receive</param>
+        /// <returns>Item at the specified index</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is out of range for this collection</exception>
         public T? this[ int index ]
         {
             get => GetOperand<T>( index );
@@ -37,10 +40,11 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets the count of operands in this collection</summary>
         public int Count => LLVMGetNumOperands( Container.ValueHandle );
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for this collection</summary>
+        /// <returns>Enumerator for the operands in this collection</returns>
         public IEnumerator<T?> GetEnumerator( )
         {
             for( int i = 0; i < Count; ++i )
@@ -55,7 +59,8 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for this collection</summary>
+        /// <returns>Enumerator for the operands in this collection</returns>
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>

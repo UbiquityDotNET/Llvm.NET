@@ -70,10 +70,12 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see langword="true"/> if the entry is present and <see langword="false"/> if not</returns>
         public bool Contains( string key ) => InternalComdatMap.ContainsKey( key );
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for all the <see cref="Comdat"/>s in the collection</summary>
+        /// <returns>Enumerator</returns>
         public IEnumerator<Comdat> GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for all the <see cref="Comdat"/>s in the collection</summary>
+        /// <returns>Enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
 
         /// <summary>Removes a <see cref="Comdat"/> entry from the module</summary>
