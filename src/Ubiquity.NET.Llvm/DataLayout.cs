@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
@@ -200,7 +199,6 @@ namespace Ubiquity.NET.Llvm
         /// <param name="structType">Type of the structure</param>
         /// <param name="offset">Offset to determine the index of</param>
         /// <returns>Index of the element</returns>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public uint ElementAtOffset( IStructType structType, ulong offset )
         {
             VerifySized( structType, nameof( structType ) );
@@ -211,14 +209,15 @@ namespace Ubiquity.NET.Llvm
         /// <param name="structType">Type of the structure</param>
         /// <param name="element">index of the element in the structure</param>
         /// <returns>Offset of the element from the beginning of the structure</returns>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public ulong OffsetOfElement( IStructType structType, uint element )
         {
             VerifySized( structType, nameof( structType ) );
             return LLVMOffsetOfElement( DataLayoutHandle, structType.GetTypeRef( ), element );
         }
 
-        /// <inheritdoc/>
+        /// <summary>Converts the layout to a string representation of the layout data</summary>
+        /// <returns>Data layout as a string</returns>
+        /// <seealso href="xref:llvm_langref#data-layout">DICompositeType</seealso>
         public override string ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle );
 
         /// <summary>Gets the byte size of a type</summary>
@@ -265,7 +264,6 @@ namespace Ubiquity.NET.Llvm
 
         internal LLVMTargetDataRef DataLayoutHandle { get; }
 
-        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private static void VerifySized( [ValidatedNotNull] ITypeRef type, string name )
         {
             if( type == null )

@@ -25,10 +25,6 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="BitcodeModule"/></summary>
-    [SuppressMessage( "Microsoft.Naming"
-                    , "CA1726:UsePreferredTerms"
-                    , MessageId = "Flag"
-                    , Justification = "Enum for the behavior of the LLVM ModuleFlag (Flag in middle doesn't imply the enum is Bit Flags)" )]
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It isn't a flags enum" )]
     public enum ModuleFlagBehavior
     {
@@ -288,17 +284,13 @@ namespace Ubiquity.NET.Llvm
             LLVMAppendModuleInlineAsm( ModuleHandle, asm, string.IsNullOrEmpty( asm ) ? 0 : asm.Length );
         }
 
-        /// <inheritdoc/>
+        /// <summary>Disposes the <see cref="BitcodeModule"/>, releasing resources associated with the module in native code</summary>
         public void Dispose( )
         {
-            // if not already disposed, dispose the module
-            // Do this only on dispose. The containing context
-            // will clean up the module when it is disposed or
-            // finalized. Since finalization order isn't
-            // deterministic it is possible that the module is
-            // finalized after the context has already run its
-            // finalizer, which would cause an access violation
-            // in the native LLVM layer.
+            // if not already disposed, dispose the module. Do this only on dispose. The containing context
+            // will clean up the module when it is disposed or finalized. Since finalization order isn't
+            // deterministic it is possible that the module is finalized after the context has already run its
+            // finalizer, which would cause an access violation in the native LLVM layer.
             if( !IsDisposed )
             {
                 // remove the module handle from the module cache.

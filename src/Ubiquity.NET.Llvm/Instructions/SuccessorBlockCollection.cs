@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,10 +40,11 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets the count of elements in this collection</summary>
         public int Count => checked((int)LLVMGetNumSuccessors( Container.ValueHandle ));
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for the <see cref="BasicBlock"/>s in this collection</summary>
+        /// <returns>Enumerator for the collection</returns>
         public IEnumerator<BasicBlock> GetEnumerator( )
         {
             for( int i = 0; i < Count; ++i )
@@ -53,7 +53,8 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for the <see cref="BasicBlock"/>s in this collection</summary>
+        /// <returns>Enumerator for the collection</returns>
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>

@@ -41,10 +41,13 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the size of the symbol</summary>
         public ulong Size => LLVMGetSymbolSize( IteratorRef );
 
-        /// <inheritdoc/>
+        /// <summary>Tests an <see cref="object"/> for equality</summary>
+        /// <param name="obj"><see cref="object"/> to compare with this instance</param>
+        /// <returns><see langword="true"/> if the </returns>
         public override bool Equals( object obj ) => ( obj is Symbol other ) && Equals( other );
 
-        /// <inheritdoc/>
+        /// <summary>Gets a hash code for this <see cref="Section"/></summary>
+        /// <returns>Hash code</returns>
         public override int GetHashCode( ) => IteratorRef.GetHashCode( );
 
         /// <summary>Equality comparison</summary>
@@ -59,7 +62,9 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <returns>Result of inequality test</returns>
         public static bool operator !=( Symbol left, Symbol right ) => !( left.IteratorRef.Equals( right ) );
 
-        /// <inheritdoc/>
+        /// <summary>Tests an <see cref="Symbol"/> for equality</summary>
+        /// <param name="other"><see cref="Symbol"/> to compare with this instance</param>
+        /// <returns><see langword="true"/> if the </returns>
         public bool Equals( Symbol other ) => IteratorRef.Equals( other.IteratorRef );
 
         internal Symbol( TargetBinary objFile, LLVMSymbolIteratorRef iterator )

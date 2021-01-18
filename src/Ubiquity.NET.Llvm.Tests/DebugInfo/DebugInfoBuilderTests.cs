@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -13,8 +11,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Values;
 using Ubiquity.NET.LlvmTests;
 
 namespace Ubiquity.NET.Llvm.Tests.DebugInfo

@@ -134,7 +134,8 @@ namespace Ubiquity.NET.Llvm
             MetadataHandle = default;
         }
 
-        /// <inheritdoc/>
+        /// <summary>Formats the metadata as a string</summary>
+        /// <returns>Metadata as a string</returns>
         public override string ToString( )
         {
             return MetadataHandle == default ? string.Empty : LibLLVMMetadataAsString( MetadataHandle );

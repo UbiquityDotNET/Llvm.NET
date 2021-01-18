@@ -40,7 +40,6 @@ namespace Ubiquity.NET.Llvm
         : IEquatable<Triple>
     {
         /// <summary>Enumeration for the Architecture portion of a target triple</summary>
-        [SuppressMessage( "Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Not actually flags" )]
         [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to read without them" )]
         public enum ArchType
         {
@@ -205,7 +204,6 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Processor sub architecture type</summary>
         [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Harder to understand without them" )]
-        [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "These are NOT flags" )]
         public enum SubArchType
         {
             /// <summary>No sub architecture</summary>
@@ -640,10 +638,9 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Equality test for a triple</summary>
         /// <param name="other">triple to compare this triple to</param>
         /// <returns><see langword="true"/> if the two triples are equivalent</returns>
-        [SuppressMessage( "Common Practices and Code Improvements", "RECS0059:Conditional expression can be simplified", Justification = "Over 'simplification' makes it more complex" )]
         public bool Equals( Triple? other )
         {
-            return other == null ? false : ReferenceEquals( this, other ) || LibLLVMTripleOpEqual( TripleHandle, other.TripleHandle );
+            return other != null && ( ReferenceEquals( this, other ) || LibLLVMTripleOpEqual( TripleHandle, other.TripleHandle ) );
         }
 
         /// <summary>Equality test for a triple</summary>
@@ -654,7 +651,8 @@ namespace Ubiquity.NET.Llvm
             return Equals( obj as Triple );
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets a hash code for this <see cref="Triple"/></summary>
+        /// <returns>Hashcode</returns>
         public override int GetHashCode( )
         {
             return ToString( ).GetHashCode( StringComparison.Ordinal );

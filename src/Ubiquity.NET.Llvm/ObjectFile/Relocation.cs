@@ -37,10 +37,13 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile.Section"/> this relocation belongs to</summary>
         public Section Section { get; }
 
-        /// <inheritdoc/>
+        /// <summary>Performs equality checks against an <see cref="object"/></summary>
+        /// <param name="obj">object to test for equality with this instance</param>
+        /// <returns><see langword="true"/> if <paramref name="obj"/> is equal to this instance</returns>
         public override bool Equals( object obj ) => ( obj is Relocation other ) && Equals( other );
 
-        /// <inheritdoc/>
+        /// <summary>Gets a hash code for this <see cref="Relocation"/></summary>
+        /// <returns>Hash code</returns>
         public override int GetHashCode( ) => IteratorRef.GetHashCode( );
 
         /// <summary>Equality comparison</summary>
@@ -55,7 +58,9 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <returns>Result of inequality test</returns>
         public static bool operator !=( Relocation left, Relocation right ) => !( left == right );
 
-        /// <inheritdoc/>
+        /// <summary>Performs equality checks against another <see cref="Relocation"/></summary>
+        /// <param name="other">object to test for equality with this instance</param>
+        /// <returns><see langword="true"/> if <paramref name="other"/> is equal to this instance</returns>
         public bool Equals( Relocation other ) => IteratorRef.Equals( other.IteratorRef );
 
         internal Relocation( Section owningSection, LLVMRelocationIteratorRef iterator )

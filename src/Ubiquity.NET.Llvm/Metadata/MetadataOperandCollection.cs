@@ -35,10 +35,11 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets the count of operands in this collection</summary>
         public int Count => checked(( int )LibLLVMMDNodeGetNumOperands( Container.MetadataHandle ));
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for the operands in this collection</summary>
+        /// <returns>Enumerator of operands</returns>
         public IEnumerator<LlvmMetadata?> GetEnumerator( )
         {
             for( int i = 0; i < Count; ++i )
@@ -47,7 +48,8 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>Gets an enumerator for the operands in this collection</summary>
+        /// <returns>Enumerator of operands</returns>
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>
