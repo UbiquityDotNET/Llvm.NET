@@ -78,7 +78,6 @@ namespace Kaleidoscope.Chapter9
         #region Dispose
         public void Dispose( )
         {
-            FunctionPassManager?.Dispose( );
             Module.Dispose( );
             Context.Dispose( );
         }
@@ -109,7 +108,7 @@ namespace Kaleidoscope.Chapter9
                 // and inlines each of the anonymous functions directly into main, dropping the now
                 // unused original anonymous functions all while retaining all of the original source
                 // debug information locations.
-                using var mpm = new ModulePassManager( );
+                var mpm = new ModulePassManager( );
                 mpm.AddAlwaysInlinerPass( )
                    .AddGlobalDCEPass( )
                    .Run( Module );
