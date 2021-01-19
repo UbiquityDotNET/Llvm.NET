@@ -81,7 +81,7 @@ if ($env:BUILD_LLVM -ne "true") {
 
     # Copy from cached headers.
     Write-Information "Unzipping include files..."
-    Expand-Archive -LiteralPath (Join-path $basePath xplat $plat include.zip) -DestinationPath $basePath
+    Expand-Archive -LiteralPath (Join-path $basePath xplat $plat include.zip) -DestinationPath $basePath -Force
 
     # Copy from cached binaries.
     $libDir = Join-Path $basePath lib
