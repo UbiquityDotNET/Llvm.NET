@@ -1,3 +1,7 @@
+Param(
+    [switch]$AllowVsPreReleases
+)
+
 Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
