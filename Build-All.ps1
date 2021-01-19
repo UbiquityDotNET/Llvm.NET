@@ -29,6 +29,17 @@ try
         rd -Recurse -Force -Path $buildInfo['BuildOutputPath']
     }
 
+    $includePath = (Join-Path $PSScriptRoot llvm include)
+    $libPath = (Join-Path $PSScriptRoot llvm lib)
+    if ((Test-Path -PathType Container $includePath) -and $ForceClean) {
+        Write-Information "Cleaning headers folder from previous builds"
+        rd -Recurse -Force -Path $includePath
+    }
+    if ((Test-Path -PathType Container $libPath) -and $ForceClean) {
+        Write-Information "Cleaning headers folder from previous builds"
+        rd -Recurse -Force -Path $libPath
+    }
+
     md $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
     $env:BUILD_CONFIG = $Configuration

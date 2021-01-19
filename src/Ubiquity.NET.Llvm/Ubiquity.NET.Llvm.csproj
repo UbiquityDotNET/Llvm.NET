@@ -37,7 +37,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.Memory" />
-        <PackageReference Include="Ubiquity.NET.Llvm.Interop" VersionOverride="[10.0.0-alpha*,11)" />
+        <PackageReference Include="Ubiquity.NET.Llvm.Interop" VersionOverride="[10.0.0-rc*,11)" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties/Resources.Designer.cs">
