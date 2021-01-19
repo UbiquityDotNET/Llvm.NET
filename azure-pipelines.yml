@@ -18,7 +18,7 @@ stages:
 
     steps:
     - checkout: self
-      fetchDepth: 1
+      fetchDepth: 0
       submodules: true
     - pwsh: ./Build-Xplat.ps1
       displayName: 'Run Build-Xplat.ps1 script'
@@ -45,7 +45,7 @@ stages:
 
     steps:
     - checkout: self
-      fetchDepth: 1
+      fetchDepth: 0
       submodules: true
     - pwsh: ./Build-Xplat.ps1
       displayName: 'Run Build-Xplat.ps1 script'
@@ -67,7 +67,7 @@ stages:
 
     steps:
     - checkout: self
-      fetchDepth: 1
+      fetchDepth: 0
       submodules: true
     - pwsh: ./Build-Xplat.ps1
       displayName: 'Run Build-Xplat.ps1 script'
@@ -87,7 +87,7 @@ stages:
 
     steps:
     - checkout: self
-      fetchDepth: 1
+      fetchDepth: 0
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
@@ -134,7 +134,7 @@ stages:
     
     steps:
     - checkout: self
-      fetchDepth: 1
+      fetchDepth: 0
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
