@@ -8,11 +8,18 @@ try
         return
     }
 
+    $additionalArgs = @()
+    if ($buildInfo['Platform'] -ne [Platform]::Windows) {
+        # Skip the Orc JIT and Obj Files tests on non-Windows since those APIs don't work there.
+        # Note that escaping the "!" is needed on *nix systems, but won't work right on Windows.
+        $additionalArgs = "--filter", "`"TestCategory\!=OrcJIT&TestCategory\!=ObjFiles`""
+    }
+
     Write-Information 'Running Interop tests as x64'
-    Invoke-DotNetTest $buildInfo 'src/Interop/InteropTests/InteropTests.csproj'
+    Invoke-DotNetTest $buildInfo 'src/Interop/InteropTests/InteropTests.csproj' -additionalArgs $additionalArgs
 
     Write-Information 'Running Core library tests as x64'
-    Invoke-DotNetTest $buildInfo 'src/Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.Tests.csproj'
+    Invoke-DotNetTest $buildInfo 'src/Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.Tests.csproj' -additionalArgs $additionalArgs
 
     Write-Information 'Running tests for Kaleidoscope Samples as x64'
     Invoke-DotNetTest $buildInfo 'Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj'
