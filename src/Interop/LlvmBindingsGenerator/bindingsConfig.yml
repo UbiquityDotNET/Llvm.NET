@@ -994,13 +994,13 @@ FunctionBindings:
   - Name: LLVMGetBitcodeModuleInContext2
     ReturnTransform: !Status {}
 
-  - Name: LLVMInitializeNativeAsmParserExport
+  - Name: LLVMInitializeNativeAsmParser
     ReturnTransform: !Status {}
 
-  - Name: LLVMInitializeNativeAsmPrinterExport
+  - Name: LLVMInitializeNativeAsmPrinter
     ReturnTransform: !Status {}
 
-  - Name: LLVMInitializeNativeDisassemblerExport
+  - Name: LLVMInitializeNativeDisassembler
     ReturnTransform: !Status {}
 
   - Name: LLVMInitializeNativeTargetExport
