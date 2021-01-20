@@ -86,7 +86,6 @@ jobs:
 
       - name: Build .NET Packages
         run: ./Build-Source.ps1
-        shell: pwsh
 
       - name: Publish Build Logs
         if: always() && github.event_name == 'pull_request'
