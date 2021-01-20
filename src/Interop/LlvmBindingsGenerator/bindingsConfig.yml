@@ -1003,7 +1003,7 @@ FunctionBindings:
   - Name: LLVMInitializeNativeDisassembler
     ReturnTransform: !Status {}
 
-  - Name: LLVMInitializeNativeTargetExport
+  - Name: LLVMInitializeNativeTarget
     ReturnTransform: !Status {}
 
   - Name: LLVMLinkModules2
