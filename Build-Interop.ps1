@@ -54,7 +54,7 @@ try
     $vs = Find-VSInstance -AllowVsPreReleases:$AllowVsPreReleases
     if($vs.InstallationVersion -lt $minOfficialVersion)
     {
-        Write-Information "Building PatchVsForLibClang.exe to path VS version '$($vs.InstallationVersion)' at path '$($vs.InstallationPath)'"
+        Write-Information "Building PatchVsForLibClang.exe to patch VS version '$($vs.InstallationVersion)' at path '$($vs.InstallationPath)'"
         $msBuildProperties = @{ Configuration = 'Release'}
         $buildLogPath = Join-Path $buildInfo['BinLogsPath'] PatchVsForLibClang.binlog
         Invoke-MSBuild -Targets 'Restore;Build' -Project src\PatchVsForLibClang\PatchVsForLibClang.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )

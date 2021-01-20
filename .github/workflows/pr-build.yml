@@ -31,6 +31,12 @@ jobs:
           name: win-x64
           path: ./xplat/win-x64
 
+      - name: Publish Llvm headers
+        uses: actions/upload-artifact@v1
+        with:
+          name: include
+          path: ./llvm/include
+
   build_native_linux:
     runs-on: ubuntu-20.04
     steps:
@@ -84,8 +90,12 @@ jobs:
         with:
           path: ./xplat
 
+      - name: Move include files
+        run: mkdir llvm ; Move-Item -Path ./xplat/include -Destination ./llvm/
+
       - name: Build .NET Packages
         run: ./Build-Source.ps1
+        shell: pwsh
 
       - name: Publish Build Logs
         if: always() && github.event_name == 'pull_request'
