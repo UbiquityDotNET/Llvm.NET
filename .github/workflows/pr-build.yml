@@ -91,7 +91,7 @@ jobs:
           path: ./xplat
 
       - name: Move include files
-        run: mkdir llvm ; Move-Item -Path ./xplat/include -Destination ./llvm/
+        run: Move-Item -Path ./xplat/include -Destination ./llvm/
 
       - name: Build .NET Packages
         run: ./Build-Source.ps1
