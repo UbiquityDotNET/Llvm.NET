@@ -545,8 +545,13 @@ function Get-GitHubTaggedRelease($org, $project, $tag)
 
 function Invoke-DotNetTest($buildInfo, $projectRelativePath, $configuration)
 {
-    # $blameMode = @()
+    # Blame mode for dotnet test will execute tests in sequence instead of parallel and on a crash
+    # output Sequence.xml file that shows which tests were run before the crash to help with debugging.
+    # This slows tests down but is very handy for determining which test is the source of an intermittent
+    # crash.
     $blameMode = @("--blame")
+    # $blameMode = @()
+
     if ([string]::IsNullOrEmpty($configuration)) {
         $configuration = "Release"
     }
