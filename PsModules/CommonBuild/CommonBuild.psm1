@@ -128,7 +128,7 @@ function Find-OnPath
                 $exeName = $exeName.Substring(0, $ExeName.Length - 4)
             }
         }
-        $path = (Get-Command -Name $exeName).Source
+        $path = (Get-Command -Name $exeName -ErrorAction SilentlyContinue).Source
     }
     catch
     {}
@@ -303,7 +303,7 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
     
         Write-Debug "Looking for VS"
         $vs = Get-VsSetupInstance -Prerelease:$PreRelease |
-                Select-VsSetupInstance -Product * -Version $Version -Require $requiredComponents |
+                Select-VsSetupInstance -Version $Version -Require $requiredComponents |
                 select -Last 1
         Write-Debug "Found $($vs)"
         return $vs

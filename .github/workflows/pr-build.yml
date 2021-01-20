@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          persistent-credentials: false
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Build Xplat
@@ -37,7 +37,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          persistent-credentials: false
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Build Xplat
@@ -56,7 +56,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          persistent-credentials: false
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Build Xplat
