@@ -14,9 +14,9 @@ try
         return
     }
 
-    ./Build-Interop.ps1 -Configuration $env:BUILD_CONFIG -AllowVsPreReleases:$AllowVsPreReleases
+    ./Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
 
-    ./Build-DotNet.ps1 -Configuration $env:BUILD_CONFIG
+    ./Build-DotNet.ps1
 }
 catch
 {

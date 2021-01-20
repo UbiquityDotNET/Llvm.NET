@@ -9,13 +9,13 @@ try
     }
 
     Write-Information 'Running Interop tests as x64'
-    Invoke-DotNetTest $buildInfo 'src/Interop/InteropTests/InteropTests.csproj' $env:BUILD_CONFIG
+    Invoke-DotNetTest $buildInfo 'src/Interop/InteropTests/InteropTests.csproj'
 
     Write-Information 'Running Core library tests as x64'
-    Invoke-DotNetTest $buildInfo 'src/Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.Tests.csproj' $env:BUILD_CONFIG
+    Invoke-DotNetTest $buildInfo 'src/Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.Tests.csproj'
 
     Write-Information 'Running tests for Kaleidoscope Samples as x64'
-    Invoke-DotNetTest $buildInfo 'Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj' $env:BUILD_CONFIG
+    Invoke-DotNetTest $buildInfo 'Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj'
 
     Write-Information 'Running sample app for .NET Core'
     pushd (Join-path Samples CodeGenWithDebugInfo)
@@ -33,7 +33,6 @@ try
 }
 catch
 {
-    $env:LD_DEBUG = $null
     Write-Host "##vso[task.logissue type=error;]Invoke-UnitTests.ps1 failed: $($_.Exception.Message)"
     Write-Error $_.Exception.Message
 }

@@ -11,8 +11,67 @@ on:
       - develop
       - llvm_10
 jobs:
-  build:
+
+  build_native_windows:
     runs-on: windows-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          persistent-credentials: false
+          fetch-depth: 0
+
+      - name: Build Xplat
+        run: ./Build-Xplat.ps1
+        shell: pwsh
+
+      - name: Publish native binary
+        uses: actions/upload-artifact@v1
+        with:
+          name: win-x64
+          path: ./xplat/win-x64
+
+  build_native_linux:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          persistent-credentials: false
+          fetch-depth: 0
+
+      - name: Build Xplat
+        run: ./Build-Xplat.ps1
+        shell: pwsh
+
+      - name: Publish native binary
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux-x64
+          path: ./xplat/linux-x64
+
+  build_native_macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          persistent-credentials: false
+          fetch-depth: 0
+
+      - name: Build Xplat
+        run: ./Build-Xplat.ps1
+        shell: pwsh
+
+      - name: Publish native binary
+        uses: actions/upload-artifact@v1
+        with:
+          name: osx-x64
+          path: ./xplat/osx-x64
+
+  build_dotnet:
+    runs-on: windows-latest
+    needs: [build_native_windows, build_native_linux, build_native_macos]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -20,31 +79,108 @@ jobs:
            persist-credentials: false
            fetch-depth: 0
 
-      - name: Build Source
-        run: .\Build-All.ps1 -ForceClean -BuildMode Source
+      - name: Download Native Binaries
+        uses: actions/download-artifact@v2
+        with:
+          path: ./xplat
 
-      - name: Publish build logs
+      - name: Build .NET Packages
+        run: ./Build-Source.ps1
+        shell: pwsh
+
+      - name: Publish Build Logs
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v1
         with:
             name: Build Logs
             path: .\BuildOutput\BinLogs
 
-      - name: Publish NuGET Packages
+      - name: Publish NuGet Packages
         uses: actions/upload-artifact@v1
         with:
-            name: Nuget Packages
-            path: .\BuildOutput\Nuget
+          name: NuGet Packages
+          path: ./BuildOutput/NuGet
 
-      - name: Run Tests
-        run: .\Invoke-UnitTests.ps1
+  test_windows:
+    runs-on: windows-latest
+    needs: build_dotnet
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+           persist-credentials: false
+           fetch-depth: 0
 
-      - name: Publish test logs
+      - name: Download NuGet Packages
+        uses: actions/download-artifact@v2
+        with:
+          name: NuGet Packages
+          path: ./BuildOutput/NuGet
+
+      - name: Invoke Unit Tests
+        run: ./Invoke-UnitTests.ps1
+        shell: pwsh
+
+      - name: Publish Test Logs
         if: always()
         uses: actions/upload-artifact@v1
         with:
-            name: Test Logs
-            path: .\BuildOutput\Test-Results
+          name: Windows Test Logs
+          path: ./BuildOutput/Test-Results
+
+  test_linux:
+    runs-on: ubuntu-20.04
+    needs: build_dotnet
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+           persist-credentials: false
+           fetch-depth: 0
+
+      - name: Download NuGet Packages
+        uses: actions/download-artifact@v2
+        with:
+          name: NuGet Packages
+          path: ./BuildOutput/NuGet
+
+      - name: Invoke Unit Tests
+        run: ./Invoke-UnitTests.ps1
+        shell: pwsh
+
+      - name: Publish Test Logs
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: Linux Test Logs
+          path: ./BuildOutput/Test-Results
+
+  test_macos:
+    runs-on: macos-latest
+    needs: build_dotnet
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+           persist-credentials: false
+           fetch-depth: 0
+
+      - name: Download NuGet Packages
+        uses: actions/download-artifact@v2
+        with:
+          name: NuGet Packages
+          path: ./BuildOutput/NuGet
+
+      - name: Invoke Unit Tests
+        run: ./Invoke-UnitTests.ps1
+        shell: pwsh
+
+      - name: Publish Test Logs
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: MacOS Test Logs
+          path: ./BuildOutput/Test-Results
 
   build-docs:
     runs-on: windows-latest
@@ -58,7 +194,7 @@ jobs:
       - name: Build Docs
         run: .\Build-All.ps1 -ForceClean -BuildMode Docs
 
-      - name: Upload docs artifact
+      - name: Upload Docs
         uses: actions/upload-artifact@v1
         with:
             name: Docs
@@ -68,7 +204,7 @@ jobs:
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v1
         with:
-            name: Build Logs
+            name: Doc Build Logs
             path: .\BuildOutput\BinLogs
 
 

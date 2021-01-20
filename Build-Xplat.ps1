@@ -6,13 +6,13 @@ try
     $buildInfo = Initialize-BuildEnvironment
 
     if ($env:OUTPUT_LLVM -eq "true" -or $env:BUILD_LLVM -eq "true") {
-        ./Build-Llvm.ps1 -Configuration $env:BUILD_CONFIG
+        ./Build-Llvm.ps1
     }
 
-    ./Move-LlvmBuild.ps1  -Configuration $env:BUILD_CONFIG
+    ./Move-LlvmBuild.ps1
 
     if ($env:OUTPUT_LLVM -ne "true") {
-        ./Build-LibLlvm.ps1 -Configuration $env:BUILD_CONFIG
+        ./Build-LibLlvm.ps1
     }
 }
 catch
