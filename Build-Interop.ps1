@@ -54,7 +54,7 @@ try
     $vs = Find-VSInstance -AllowVsPreReleases:$AllowVsPreReleases
     if($vs.InstallationVersion -lt $minOfficialVersion)
     {
-        Write-Information "Building PatchVsForLibClang.exe"
+        Write-Information "Building PatchVsForLibClang.exe to path VS version '$($vs.InstallationVersion)' at path '$($vs.InstallationPath)'"
         $msBuildProperties = @{ Configuration = 'Release'}
         $buildLogPath = Join-Path $buildInfo['BinLogsPath'] PatchVsForLibClang.binlog
         Invoke-MSBuild -Targets 'Restore;Build' -Project src\PatchVsForLibClang\PatchVsForLibClang.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
@@ -64,6 +64,10 @@ try
         {
             Write-Information "Patching VS CRT for parsing with LibClang..."
             .\PatchVsForLibClang.exe $vs.InstallationPath
+            if ($LASTEXITCODE -ne 0) {
+               write-error "PatchVsForLibClang failed with exit code: $LASTEXITCODE"
+               throw "PatchVsForLibClang failed with exit code: $LASTEXITCODE"
+            }
         }
         finally
         {
@@ -105,6 +109,7 @@ try
     else
     {
         Write-Error "Generating LLVM Bindings failed"
+        throw "Generating LLVM Bindings failed"
     }
 }
 finally
