@@ -38,7 +38,7 @@ function Copy-Tree ([string]$source, [string]$dest, [string[]]$filter = @("*"), 
         if (!(Test-Path $destDir))
         {
             Write-Verbose "Creating directory $($destDir)"
-            New-Item -Path $destDir -ItemType "directory" -Force
+            New-Item -Path $destDir -ItemType Directory -Force
         }
         Copy-Item -Path (Join-Path $source $itemSrc) -Destination $itemDest -Verbose -Force
     }
@@ -58,7 +58,7 @@ function Move-Tree ([string]$source, [string]$dest, [string[]]$filter = @("*"), 
         if (!(Test-Path $destDir))
         {
             Write-Verbose "Creating directory $($destDir)"
-            New-Item -Path $destDir -ItemType "directory" -Force
+            New-Item -Path $destDir -ItemType Directory -Force
         }
         Move-Item -Path (Join-Path $source $itemSrc) -Destination $itemDest -Verbose -Force
     }
@@ -86,7 +86,7 @@ if ($env:BUILD_LLVM -ne "true") {
     # Copy from cached binaries.
     $libDir = Join-Path $basePath lib
     if (!(Test-Path $libDir)) {
-        New-Item -ItemType Container $libDir
+        New-Item -ItemType Directory $libDir
     }
     foreach ($zip in (Get-ChildItem (Join-Path $basePath xplat $plat) -Recurse -Include "lib.*.zip")) {
         Write-Information "Unzipping $($zip.fullname)..."
@@ -140,7 +140,7 @@ if ($env:BUILD_LLVM -ne "true") {
     if (!(Test-Path $orcDest))
     {
         Write-Verbose "Creating directory $($orcDest)"
-        New-Item -Path $orcDest -ItemType "directory" -Force
+        New-Item -Path $orcDest -ItemType Directory -Force
     }
     Copy-Item -Path $orcSource -Destination $orcDest -Force
 }

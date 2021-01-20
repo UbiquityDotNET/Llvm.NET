@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 using Ubiquity.NET.Llvm.Interop.Properties;

@@ -1,3 +1,10 @@
+<#
+    This helper script will compress a folder into numbered zip files with the goal of keeping
+    each file to around 50mb if possible (the recommended file size limit for GitHub). It does NOT
+    split up a single uncompressed file across multiple zip files in order to make decompression
+    easier later, which limits its effectiveness on large files.
+#>
+
 [CmdletBinding()]
 param (
     [Parameter()]

@@ -88,15 +88,6 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Library {0} not found on search path {1}.
-        /// </summary>
-        internal static string LoadLibrary_not_found {
-            get {
-                return ResourceManager.GetString("LoadLibrary_not_found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Marshaling of Generic delegate types to a native callback is not supported.
         /// </summary>
         internal static string Marshaling_of_Generic_delegate_types_to_a_native_callback_is_not_supported {

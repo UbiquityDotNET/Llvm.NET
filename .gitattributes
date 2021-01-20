@@ -1,4 +1,0 @@
-* text=auto
-*.a -text
-*.so -text
-*.dylib -text

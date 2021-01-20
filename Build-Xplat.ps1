@@ -1,23 +1,24 @@
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [String]
+    $Configuration = "Release"
+)
+
 Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . ./buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment
-
-    if ($env:OUTPUT_LLVM -eq "true" -or $env:BUILD_LLVM -eq "true") {
-        ./Build-Llvm.ps1
+    if ($env:BUILD_LLVM -eq "true") {
+        ./Build-Llvm.ps1 -Configuration $Configuration
     }
 
-    ./Move-LlvmBuild.ps1
+    ./Move-LlvmBuild.ps1 -Configuration $Configuration
 
-    if ($env:OUTPUT_LLVM -ne "true") {
-        ./Build-LibLlvm.ps1
-    }
+    ./Build-LibLlvm.ps1 -Configuration $Configuration
 }
 catch
 {
-    Write-Host "##vso[task.logissue type=error;]Build-Xplat.ps1 failed: $($_.Exception.Message)"
     Write-Error "Build-Xplat.ps1 failed: $($_.Exception.Message)"
 }
 finally

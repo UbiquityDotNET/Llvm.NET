@@ -81,12 +81,7 @@ function Get-DefaultBuildPaths([string]$repoRoot)
         TestResultsPath = Join-Path $buildOutputPath 'Test-Results'
         DownloadsPath = Join-Path $repoRoot 'Downloads'
         ToolsPath = Join-Path $repoRoot 'Tools'
-    }
-
-    if ($env:DROP_NATIVE) {
-        $buildPaths["NativeXplat"] = $env:DROP_NATIVE
-    } else {
-        $buildPaths["NativeXplat"] = Join-Path $buildOutputPath .. xplat
+        NativeXplat = Join-Path $buildOutputPath .. xplat
     }
 
     $buildPaths.GetEnumerator() | %{ Ensure-PathExists $_.Value }

@@ -1,4 +1,3 @@
-# Helpers for cmake builds
 using module 'PsModules/CommonBuild/CommonBuild.psd1'
 
 Param(
@@ -78,13 +77,8 @@ try
         ./Repair-WinBuild.ps1
     }
 
-    cd llvm-project/llvm
+    Set-Location llvm-project/llvm
     Invoke-Build 
-}
-catch
-{
-    Write-Host "##vso[task.logissue type=error;]$($_.Exception.Message)"
-    Write-Error $_.Exception.Message
 }
 finally
 {

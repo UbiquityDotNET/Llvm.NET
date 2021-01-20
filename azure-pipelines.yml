@@ -1,10 +1,3 @@
-variables:
-  Drop.NuGet: $(System.DefaultWorkingDirectory)/BuildOutput/NuGet
-  Drop.Native: $(System.DefaultWorkingDirectory)/xplat
-  Llvm.Includes: $(System.DefaultWorkingDirectory)/llvm/include
-#   Build.Config: "Release" -> Defined on pipeline.
-#   Build.Llvm: "false" -> Defined on pipeline.
-
 stages:
 - stage: Win_Native
   displayName: "Build Windows Native components"
@@ -24,12 +17,12 @@ stages:
       displayName: 'Run Build-Xplat.ps1 script'
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Drop.Native)/win-x64'
+        targetPath: '$(System.DefaultWorkingDirectory)/xplat/win-x64'
         artifact: 'win-x64'
         publishLocation: 'pipeline'
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Llvm.Includes)'
+        targetPath: '$(System.DefaultWorkingDirectory)/llvm/include'
         artifact: 'llvm_include'
         publishLocation: 'pipeline'
 
@@ -51,7 +44,7 @@ stages:
       displayName: 'Run Build-Xplat.ps1 script'
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Drop.Native)/linux-x64'
+        targetPath: '$(System.DefaultWorkingDirectory)/xplat/linux-x64'
         artifact: 'linux-x64'
         publishLocation: 'pipeline'
 
@@ -73,7 +66,7 @@ stages:
       displayName: 'Run Build-Xplat.ps1 script'
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Drop.Native)/osx-x64'
+        targetPath: '$(System.DefaultWorkingDirectory)/xplat/osx-x64'
         artifact: 'osx-x64'
         publishLocation: 'pipeline'
 
@@ -92,28 +85,28 @@ stages:
       inputs:
         buildType: 'current'
         artifactName: 'win-x64'
-        targetPath: '$(Drop.Native)/win-x64'
+        targetPath: '$(System.DefaultWorkingDirectory)/xplat/win-x64'
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
         artifactName: 'linux-x64'
-        targetPath: '$(Drop.Native)/linux-x64'
+        targetPath: '$(System.DefaultWorkingDirectory)/xplat/linux-x64'
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
         artifactName: 'osx-x64'
-        targetPath: '$(Drop.Native)/osx-x64'
+        targetPath: '$(System.DefaultWorkingDirectory)/xplat/osx-x64'
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
         artifactName: 'llvm_include'
-        targetPath: '$(Llvm.Includes)'
+        targetPath: '$(System.DefaultWorkingDirectory)/llvm/include'
     - pwsh: ./Build-Source.ps1
       displayName: 'Run Build-Source.ps1 script'
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: Ubiquity.NET.Llvm'
       inputs:
-        PathtoPublish: '$(Drop.NuGet)'
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/BuildOutput/NuGet'
         artifactName: Ubiquity.NET.Llvm
         
 - stage: Test

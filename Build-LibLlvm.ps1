@@ -19,7 +19,7 @@ try
         Write-Verbose "Cleaning out the old data from $buildOutputDir"
         Remove-Item -Path $buildOutputDir -Recurse -Force | Out-Null
     }
-    New-Item -Path $buildOutputDir -ItemType Container
+    New-Item -Path $buildOutputDir -ItemType Directory
 
     $target = "all"
     if ($buildInfo['Platform'] -eq [platform]::Windows) {
@@ -40,14 +40,14 @@ try
     cd $PSScriptRoot
 
     if ($buildInfo['Platform'] -eq [platform]::Windows) {
-        New-Item -ErrorAction SilentlyContinue -ItemType Container -Path (Join-Path $buildInfo["NativeXplat"] win-x64)
+        New-Item -ErrorAction SilentlyContinue -ItemType Directory -Path (Join-Path $buildInfo["NativeXplat"] win-x64)
         Copy-Item -Force -Path (Join-Path $buildOutputDir $Configuration *) (Join-Path $buildInfo["NativeXplat"] win-x64)
     } elseif ($buildInfo['Platform'] -eq [platform]::Linux) {
-        New-Item -ErrorAction SilentlyContinue -ItemType Container -Path (Join-Path $buildInfo["NativeXplat"] linux-x64)
+        New-Item -ErrorAction SilentlyContinue -ItemType Directory -Path (Join-Path $buildInfo["NativeXplat"] linux-x64)
         ls $buildOutputDir
         Copy-Item -Force -Path (Join-Path $buildOutputDir libUbiquity.NET.LibLlvm.so) (Join-Path $buildInfo["NativeXplat"] linux-x64)
     } else {
-        New-Item -ErrorAction SilentlyContinue -ItemType Container -Path (Join-Path $buildInfo["NativeXplat"] osx-x64)
+        New-Item -ErrorAction SilentlyContinue -ItemType Directory -Path (Join-Path $buildInfo["NativeXplat"] osx-x64)
         ls $buildOutputDir
         Copy-Item -Force -Path (Join-Path $buildOutputDir libUbiquity.NET.LibLlvm.dylib) (Join-Path $buildInfo["NativeXplat"] osx-x64)
     }

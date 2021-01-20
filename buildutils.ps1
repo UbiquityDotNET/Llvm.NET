@@ -82,12 +82,6 @@ function Initialize-BuildEnvironment
         }
     }
 
-    # $msbuildInfo = Find-MSBuild
-    # if( !$msbuildInfo['FoundOnPath'] )
-    # {
-    #     $env:Path = "$env:Path;$($msbuildInfo['BinPath'])"
-    # }
-
     $buildInfo = Get-BuildInformation
 
     if($FullInit)

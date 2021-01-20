@@ -3,11 +3,6 @@ try
     . ./buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment
 
-    if ($env:OUTPUT_LLVM -eq "true") {
-        Write-Host '##vso[task.logissue type=warning;]Exiting early after building LLVM'
-        return
-    }
-
     $additionalArgs = @()
     if ($buildInfo['Platform'] -ne [Platform]::Windows) {
         # Skip the Orc JIT and Obj Files tests on non-Windows since those APIs don't work there.
@@ -25,7 +20,7 @@ try
     Invoke-DotNetTest $buildInfo 'Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj'
 
     Write-Information 'Running sample app for .NET Core'
-    pushd (Join-path Samples CodeGenWithDebugInfo)
+    Push-Location (Join-path Samples CodeGenWithDebugInfo)
     try
     {
         dotnet run M3 'Support Files/test.c' $buildInfo['TestResultsPath']
@@ -35,12 +30,11 @@ try
     }
     finally
     {
-        popd
+        Pop-Location
     }
 }
 catch
 {
-    Write-Host "##vso[task.logissue type=error;]Invoke-UnitTests.ps1 failed: $($_.Exception.Message)"
-    Write-Error $_.Exception.Message
+    Write-Error "Invoke-UnitTests.ps1 failed: $($_.Exception.Message)"
 }
 
