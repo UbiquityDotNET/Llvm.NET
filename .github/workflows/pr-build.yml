@@ -191,7 +191,7 @@ jobs:
           name: MacOS Test Logs
           path: ./BuildOutput/Test-Results
 
-  build-docs:
+  build_docs:
     runs-on: windows-latest
     steps:
       - name: Checkout Repo
