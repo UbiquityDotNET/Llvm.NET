@@ -51,14 +51,14 @@ try
     # min version with fix (VS 2019 16.9 preview 2)
     $minOfficialVersion = [System.Version]('16.9.30803.129')
 
-    Write-Information "Building PatchVsForLibClang.exe"
-    $msBuildProperties = @{ Configuration = 'Release'}
-    $buildLogPath = Join-Path $buildInfo['BinLogsPath'] PatchVsForLibClang.binlog
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\PatchVsForLibClang\PatchVsForLibClang.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
-
     $vs = Find-VSInstance -AllowVsPreReleases:$AllowVsPreReleases
     if($vs.InstallationVersion -lt $minOfficialVersion)
     {
+        Write-Information "Building PatchVsForLibClang.exe"
+        $msBuildProperties = @{ Configuration = 'Release'}
+        $buildLogPath = Join-Path $buildInfo['BinLogsPath'] PatchVsForLibClang.binlog
+        Invoke-MSBuild -Targets 'Restore;Build' -Project src\PatchVsForLibClang\PatchVsForLibClang.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
+
         pushd (Join-Path $buildInfo.BuildOutputPath 'bin\PatchVsForLibClang\Release\netcoreapp3.1')
         try
         {
