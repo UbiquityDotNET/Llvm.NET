@@ -158,7 +158,7 @@ function global:Invoke-CMakeGenerate( [CMakeConfig]$config )
     $activity = "Generating solution for $($config.Name)"
     Write-Information $activity
 
-    if(Test-Path -PathType Directory $config.BuildRoot )
+    if(Test-Path -PathType Container $config.BuildRoot )
     {
         Remove-Item -Recurse $config.BuildRoot | Out-Null
     }

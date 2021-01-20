@@ -23,7 +23,7 @@ try
     'Docs' { $BuildDocs = $true }
     }
 
-    if((Test-Path -PathType Directory $buildInfo['BuildOutputPath']) -and $ForceClean )
+    if((Test-Path -PathType Container $buildInfo['BuildOutputPath']) -and $ForceClean )
     {
         Write-Information "Cleaning output folder from previous builds"
         Remove-Item -Recurse -Force -Path $buildInfo['BuildOutputPath']
@@ -31,16 +31,16 @@ try
 
     $includePath = (Join-Path $PSScriptRoot llvm include)
     $libPath = (Join-Path $PSScriptRoot llvm lib)
-    if ((Test-Path -PathType Directory $includePath) -and $ForceClean) {
+    if ((Test-Path -PathType Container $includePath) -and $ForceClean) {
         Write-Information "Cleaning headers folder from previous builds"
         Remove-Item -Recurse -Force -Path $includePath
     }
-    if ((Test-Path -PathType Directory $libPath) -and $ForceClean) {
+    if ((Test-Path -PathType Container $libPath) -and $ForceClean) {
         Write-Information "Cleaning libs folder from previous builds"
         Remove-Item -Recurse -Force -Path $libPath
     }
 
-    New-Item -ItemType Diretory $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
+    New-Item -ItemType Directory $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
     if($BuildSource)
     {
