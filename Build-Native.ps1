@@ -12,21 +12,35 @@ try
 
     .\Move-LlvmBuild.ps1
 
-    $msBuildProperties = @{ Configuration = $Configuration
-        LlvmVersion = $buildInfo['LlvmVersion']
+    $buildOutputDir = Join-Path src Interop LibLLVM BuildOutput
+    if (Test-Path $buildOutputDir) {
+        Write-Verbose "Cleaning out the old data from $buildOutputDir"
+        Remove-Item -Path $buildOutputDir -Recurse -Force | Out-Null
     }
-
-    # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
-    # and PackageReference isn't supported for native projects... [Sigh...]
-    Write-Information "Restoring LibLLVM"
-    Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
+    New-Item -Path $buildOutputDir -ItemType Directory
 
     Write-Information "Building LibLLVM"
-    $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
-    Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
+    pushd $buildOutputDir
+    try
+    {
+        cmake (Resolve-Path ..)
+        if($LASTEXITCODE -ne 0 )
+        {
+            throw "LibLLVM CMake generate exited with code: $LASTEXITCODE"
+        }
+        cmake --build . --target "ALL_BUILD" --config $Configuration
+        if($LASTEXITCODE -ne 0 )
+        {
+            throw "LibLLVM CMake build exited with code: $LASTEXITCODE"
+        }
+    }
+    finally
+    {
+        popd
+    }
 
     New-Item -ErrorAction SilentlyContinue -ItemType Directory -Path (Join-Path $buildInfo['BuildOutputPath'] xplat win-x64)
-    Copy-Item -Force -Path (Join-Path $buildInfo['BuildOutputPath'] bin LibLLVM $Configuration x64 *) (Join-Path $buildInfo['BuildOutputPath'] xplat win-x64)
+    Copy-Item -Force -Path (Join-Path $buildOutputDir $Configuration *) (Join-Path $buildInfo['BuildOutputPath'] xplat win-x64)
 }
 finally
 {
