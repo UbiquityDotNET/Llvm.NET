@@ -25,6 +25,8 @@ try
     $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
     Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
 
+    New-Item -ErrorAction SilentlyContinue -ItemType Directory -Path (Join-Path $buildInfo['BuildOutputPath'] xplat win-x64)
+    Copy-Item -Force -Path (Join-Path $buildInfo['BuildOutputPath'] bin LibLLVM $Configuration x64 *) (Join-Path $buildInfo['BuildOutputPath'] xplat win-x64)
 }
 finally
 {
