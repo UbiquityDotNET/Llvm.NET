@@ -14,8 +14,14 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Build Native
+        run: .\Build-Native.ps1
+
       - name: Build Source
-        run: .\Build-All.ps1
+        run: .\Build-Source.ps1
+
+      - name: Build Docs
+        run: .\Build-Docs.ps1
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v1

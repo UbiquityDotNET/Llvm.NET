@@ -35,8 +35,7 @@ This script is unfortunately necessary due to several factors:
 #>
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
-    [switch]$NoClean
+    [switch]$AllowVsPreReleases
 )
 
 pushd $PSScriptRoot
@@ -79,8 +78,6 @@ try
     }
     #</HACK>
 
-    .\Move-LlvmBuild.ps1
-
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
@@ -101,17 +98,6 @@ try
     & "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\Release\net47\LlvmBindingsGenerator.exe" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
-        # now build the projects that consume generated output for the bindings
-
-        # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
-        # and PackageReference isn't supported for native projects... [Sigh...]
-        Write-Information "Restoring LibLLVM"
-        Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
-
-        Write-Information "Building LibLLVM"
-        $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
-        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
-
         Write-Information "Building Ubiquity.NET.Llvm.Interop"
         $interopSlnBinLog = Join-Path $buildInfo['BinLogsPath'] Interop.sln.binlog
         Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\Interop.sln' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopSlnBinLog") )

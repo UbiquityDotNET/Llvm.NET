@@ -33,12 +33,13 @@ try
 
     if($BuildSource)
     {
-        .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        .\Build-Native.ps1 -Configuration $Configuration
+        .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases -Configuration $Configuration
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        .\Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases -Configuration $Configuration
     }
 }
 catch

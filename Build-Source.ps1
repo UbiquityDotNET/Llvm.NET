@@ -20,7 +20,7 @@ try
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
 
-    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases -Configuration $Configuration
 
     $buildLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.binlog
     Write-Information "Building Ubiquity.NET.Llvm"
