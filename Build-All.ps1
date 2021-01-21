@@ -33,7 +33,7 @@ try
 
     if($BuildSource)
     {
-        .\Build-Native.ps1 -Configuration $Configuration
+        .\Build-Native.ps1 -AllowVsPreReleases:$AllowVsPreReleases -Configuration $Configuration
         .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases -Configuration $Configuration
     }
 

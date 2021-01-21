@@ -1,5 +1,6 @@
 Param(
-    [string]$Configuration="Release"
+    [string]$Configuration="Release",
+    [switch]$AllowVsPreReleases
 )
 
 pushd $PSScriptRoot
