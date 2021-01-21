@@ -155,7 +155,10 @@ Tools/
 *.binlog
 *.7z
 
-/llvm
+# Ignore the unpacked llvm binaries
+/llvm/lib/*
+/llvm/include/*
+
 **/GeneratedDocs/
 **/GeneratedCode/
 /src/Interop/LibLLVM/EXPORTS.g.DEF

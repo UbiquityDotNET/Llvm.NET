@@ -49,16 +49,6 @@ function Get-DefaultBuildPaths([string]$repoRoot)
     return $buildPaths
 }
 
-function Update-Submodules
-{
-<#
-.SYNOPSIS
-    Updates Git submodules
-#>
-    Write-Information "Updating submodules"
-    git submodule -q update --init --recursive
-}
-
 function Find-OnPath
 {
 <#
@@ -120,67 +110,6 @@ function ConvertTo-PropertyList([hashtable]$hashTable)
     Converts a hash table into a semi-colon delimited property list
 #>
     return ( $hashTable.GetEnumerator() | %{ @{$true=$_.Key;$false= $_.Key + "=" + $_.Value }[[string]::IsNullOrEmpty($_.Value) ] } ) -join ';'
-}
-
-function Invoke-TimedBlock([string]$activity, [ScriptBlock]$block)
-{
-<#
-.SYNOPSIS
-    Invokes a script block with a timer
-
-.PARAMETER activity
-    Name of the activity to output as part of Write-Information messages for the timer
-
-.PARAMETER block
-    Script block to execute with the timer
-
-.DESCRIPTION
-    This will print a start (via Write-Information), start the timer, run the script block stop the timer
-    then print a finish message indicating the total time the script block took to run.
-#>
-    $timer = [System.Diagnostics.Stopwatch]::StartNew()
-    Write-Information "Starting: $activity"
-    try
-    {
-        $block.Invoke()
-    }
-    finally
-    {
-        $timer.Stop()
-        Write-Information "Finished: $activity - Time: $($timer.Elapsed.ToString())"
-    }
-}
-
-function Expand-ArchiveStream([Parameter(Mandatory=$true, ValueFromPipeLine)]$src, [Parameter(Mandatory=$true)]$OutputPath)
-{
-<#
-.SYNOPSIS
-    Expands an archive stream
-
-.PARAMETER src
-    Input stream containing compressed ZIP archive data to expand
-
-.PARAMETER OutputPath
-    Out put destination for the decompressed data
-#>
-    $zipArchive = [System.IO.Compression.ZipArchive]::new($src)
-    [System.IO.Compression.ZipFileExtensions]::ExtractToDirectory( $zipArchive, $OutputPath)
-}
-
-function Expand-StreamFromUri([Parameter(Mandatory=$true, ValueFromPipeLine)]$uri, [Parameter(Mandatory=$true)]$OutputPath)
-{
-<#
-.SYNOPSIS
-    Downloads and expands a ZIP file to the specified destination
-
-.PARAMETER uri
-    URI of the ZIP file to download and expand
-
-.PARAMETER OutputPath
-    Output folder to expand the ZIP contents into
-#>
-    $strm = (Invoke-WebRequest -UseBasicParsing -Uri $uri).RawContentStream
-    Expand-ArchiveStream $strm $OutputPath
 }
 
 function Invoke-NuGet
@@ -322,60 +251,6 @@ function Invoke-MSBuild([string]$project, [hashtable]$properties, $targets, $log
     {
         Write-Error "Error running msbuild: $LASTEXITCODE"
     }
-}
-
-function Find-7Zip()
-{
-<#
-.SYNOPSIS
-    Attempts to find 7zip console command
-
-.DESCRIPTION
-    This will try to find 7z.exe on the current path, and if not found tries to find the registered install location
-#>
-    $path7Z = Find-OnPath '7z.exe' -ErrorAction SilentlyContinue
-    if(!$path7Z)
-    {
-        if( Test-Path -PathType Container HKLM:\SOFTWARE\7-Zip )
-        {
-            $path7Z = Join-Path (Get-ItemProperty HKLM:\SOFTWARE\7-Zip\ 'Path').Path '7z.exe'
-        }
-
-        if( !$path7Z -and ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64") )
-        {
-            $hklm = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine, [Microsoft.Win32.RegistryView]::Registry64)
-            $subKey = $hklm.OpenSubKey("SOFTWARE\7-Zip")
-            $root = $subKey.GetValue("Path")
-            if($root)
-            {
-                $path7Z = Join-Path $root '7z.exe'
-            }
-        }
-    }
-
-    if(!$path7Z -or !(Test-Path -PathType Leaf $path7Z ) )
-    {
-        throw "Can't find 7-zip command line executable"
-    }
-
-    return $path7Z
-}
-
-Function Expand-7zArchive([string]$Path, [string]$Destination)
-{
-<#
-.SYNOPSIS
-    Expands an archive packed with 7-Zip
-#>
-    $7zPath = Find-7Zip
-    $7zArgs = @(
-        'x'  # eXtract with full path
-        '-y' # auto apply Yes for all prompts
-        "`"-o$($Destination)`""  # Output directory
-        "`"$($Path)`"" # 7z file name
-    )
-    Write-Information "Expanding '$Path' to '$Destination'"
-    & $7zPath $7zArgs | Out-Null
 }
 
 enum BuildKind

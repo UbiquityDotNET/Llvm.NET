@@ -51,7 +51,7 @@ try
     # min version with fix (VS 2019 16.9 preview 2)
     $minOfficialVersion = [System.Version]('16.9.30803.129')
 
-    $vs = Find-VSInstance -AllowVsPreReleases:$AllowVsPreReleases
+    $vs = Find-VSInstance -PreRelease:$AllowVsPreReleases
     if($vs.InstallationVersion -lt $minOfficialVersion)
     {
         Write-Information "Building PatchVsForLibClang.exe"
@@ -64,6 +64,9 @@ try
         {
             Write-Information "Patching VS CRT for parsing with LibClang..."
             .\PatchVsForLibClang.exe $vs.InstallationPath
+            if ($LASTEXITCODE -ne 0) {
+                throw "PatchVsForLibClang exited with code: $LASTEXITCODE"
+            }
         }
         finally
         {
@@ -76,13 +79,7 @@ try
     }
     #</HACK>
 
-    # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
-    # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
-    # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
-    # and incompatibilities libs are generally not something published in a package. However, since the build time
-    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
-    # automated builds.
-    Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmLibsPackageReleaseName']
+    .\Move-LlvmBuild.ps1
 
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']

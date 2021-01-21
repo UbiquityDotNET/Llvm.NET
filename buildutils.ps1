@@ -16,35 +16,6 @@ function Get-BuildInformation($DefaultVerbosity='Minimal')
     return $buildInfo
 }
 
-function Install-LlvmLibs($destPath, $packageReleaseName)
-{
-    $buildInfo = Get-BuildInformation
-    if(!(Test-Path -PathType Container $destPath))
-    {
-        if(!(Test-Path -PathType Container $buildInfo['DownloadsPath']))
-        {
-            md $buildInfo['DownloadsPath'] | Out-Null
-        }
-
-        $localLlvmLibs7zPath = Join-Path $buildInfo['DownloadsPath'] "llvm-libs-$packageReleaseName.7z"
-        if( !( test-path -PathType Leaf $localLlvmLibs7zPath ) )
-        {
-            $release = Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$packageReleaseName"
-            if($release)
-            {
-                $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$packageReleaseName").assets[0]
-                Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile $localLlvmLibs7zPath
-            }
-            else
-            {
-                throw "LLVM library package release 'v$packageReleaseName' not found!"
-            }
-        }
-
-        Expand-7zArchive $localLlvmLibs7zPath $destPath
-    }
-}
-
 function Initialize-BuildEnvironment
 {
     # support common parameters
