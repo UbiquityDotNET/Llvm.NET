@@ -1,15 +1,4 @@
 <Project>
-    <!-- VS doesn't like user macros in a property sheet with conditions -->
-    <PropertyGroup>
-        <!--
-        Classic VS installations don't have an "x86" platform - the official name of the platform is Win32,
-        However, the default VS 2017 CMake support uses x86 as a platform name. So this adapts and adjusts
-        to allow for compatibility across VS tool versions.
-        -->
-        <LlvmPlatform Condition="'$(LlvmPlatform)'==''">$(Platform)</LlvmPlatform>
-        <LlvmPlatform Condition="'$(LlvmPlatform)'=='Win32'">x86</LlvmPlatform>
-        <LlvmPlatformConfig Condition="'$(LlvmPlatformConfig)'==''">$(LlvmPlatform)-$(Configuration)</LlvmPlatformConfig>
-    </PropertyGroup>
     <PropertyGroup Label="UserMacros">
         <!-- These are not conditional as the version is bound directly to the version of LLVM built into the libraries -->
         <LlvmVersionMajor>10</LlvmVersionMajor>
@@ -17,9 +6,8 @@
         <LlvmVersionBuild>0</LlvmVersionBuild>
         <LlvmVersion>$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionBuild)</LlvmVersion>
         <LlvmLibsMetaPackageRoot>$(MSBuildThisFileDirectory)</LlvmLibsMetaPackageRoot>
-        <LlvmPlatformConfigLibRoot>$(LlvmLibsMetaPackageRoot)$(LlvmPlatformConfig)\$(Configuration)\lib\</LlvmPlatformConfigLibRoot>
-        <LlvmPlatformConfigIncRoot>$(LlvmLibsMetaPackageRoot)$(LlvmPlatformConfig)\include\</LlvmPlatformConfigIncRoot>
-        <LlvmCommonIncRoot>$(LlvmLibsMetaPackageRoot)include\</LlvmCommonIncRoot>
+        <LlvmLibRoot>$(LlvmLibsMetaPackageRoot)lib\</LlvmLibRoot>
+        <LlvmIncRoot>$(LlvmLibsMetaPackageRoot)include\</LlvmIncRoot>
         <LlvmExecutionEngineOrcRoot>$(LlvmLibsMetaPackageRoot)lib\ExecutionEngine\Orc</LlvmExecutionEngineOrcRoot>
     </PropertyGroup>
     <PropertyGroup>
@@ -173,7 +161,7 @@
         <ClCompile>
             <AdditionalOptions>%(AdditionalOptions) /Zc:sizedDealloc-</AdditionalOptions>
             <DisableSpecificWarnings>4141;4146;4267;4244;4800;4291;4996;4624;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-            <AdditionalIncludeDirectories>$(LlvmCommonIncRoot);$(LlvmPlatformConfigIncRoot);$(LlvmExecutionEngineOrcRoot)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <AdditionalIncludeDirectories>$(LlvmIncRoot);$(LlvmExecutionEngineOrcRoot)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         </ClCompile>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup>
@@ -184,7 +172,7 @@
         the directory to the list of library paths.
         -->
         <Link>
-            <AdditionalLibraryDirectories>$(LlvmPlatformConfigLibRoot);%(Link.AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalLibraryDirectories>$(LlvmLibRoot);%(Link.AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
             <AdditionalDependencies>$(AllLlvmLibs);%(Link.AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
