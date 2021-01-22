@@ -343,7 +343,7 @@ function Invoke-DotNetTest($buildInfo, $projectRelativePath)
 {
     $testProj = Join-Path $buildInfo['RepoRootPath'] $projectRelativePath
     $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
-    $result = dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath'] `
+    $result = dotnet test $testProj -s $runSettings --logger "trx" -r $buildInfo['TestResultsPath'] `
             | Out-String
     Write-Information $result
     return $LASTEXITCODE -ne 0
