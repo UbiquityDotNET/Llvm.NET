@@ -339,14 +339,28 @@ function Get-GitHubTaggedRelease($org, $project, $tag)
     Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
 }
 
-function Invoke-DotNetTest($buildInfo, $projectRelativePath)
+function Invoke-DotNetTest($buildInfo, $projectRelativePath, $configuration, $additionalArgs = @())
 {
+    # Blame mode for dotnet test will execute tests in sequence instead of parallel and on a crash
+    # output Sequence.xml file that shows which tests were run before the crash to help with debugging.
+    # This slows tests down but is very handy for determining which test is the source of an intermittent
+    # crash.
+    $blameMode = @("--blame")
+    # $blameMode = @()
+
+    if ([string]::IsNullOrEmpty($configuration)) {
+        $configuration = "Release"
+    }
     $testProj = Join-Path $buildInfo['RepoRootPath'] $projectRelativePath
     $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
-    $result = dotnet test $testProj -s $runSettings --logger "trx" -r $buildInfo['TestResultsPath'] `
-            | Out-String
-    Write-Information $result
-    return $LASTEXITCODE -ne 0
+    dotnet test $testProj -v m -s $runSettings --logger trx -c $configuration @blameMode @additionalArgs
+    if ($LASTEXITCODE -ne 0) {
+        if ($blameMode.Count -gt 0) {
+            Get-ChildItem (Join-Path $buildInfo['TestResultsPath'] '*' '*Sequence*.xml*') |`
+                ForEach-Object {write-information $_.fullname ; Get-Content $_ ; write-information "__END__"}
+        }
+        throw "'dotnet test $testproj' exited with code: $LASTEXITCODE"
+    }
 }
 
 function Get-BuildVersionXML
