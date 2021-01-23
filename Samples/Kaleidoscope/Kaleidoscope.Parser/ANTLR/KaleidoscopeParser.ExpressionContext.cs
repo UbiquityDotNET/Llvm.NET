@@ -10,9 +10,9 @@ using Antlr4.Runtime.Tree;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class ExpressionContext
+        public partial class ExpressionContext
         {
             public PrimaryExpressionContext Atom => primaryExpression( );
 

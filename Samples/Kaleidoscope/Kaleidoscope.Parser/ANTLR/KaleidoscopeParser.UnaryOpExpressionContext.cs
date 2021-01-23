@@ -8,9 +8,9 @@ using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class UnaryOpExpressionContext
+        public partial class UnaryOpExpressionContext
         {
             public IToken OpToken => unaryop( ).start;
 

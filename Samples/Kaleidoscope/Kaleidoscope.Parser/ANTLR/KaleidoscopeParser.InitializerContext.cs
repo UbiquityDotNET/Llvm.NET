@@ -6,9 +6,9 @@
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class InitializerContext
+        public partial class InitializerContext
         {
             public string Name => Identifier( ).GetText( );
 

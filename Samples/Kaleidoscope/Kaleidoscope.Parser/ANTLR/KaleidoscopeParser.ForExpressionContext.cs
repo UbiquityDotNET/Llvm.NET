@@ -8,9 +8,9 @@ using System.Collections.Generic;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class ForExpressionContext
+        public partial class ForExpressionContext
         {
             public InitializerContext Initializer => initializer( );
 

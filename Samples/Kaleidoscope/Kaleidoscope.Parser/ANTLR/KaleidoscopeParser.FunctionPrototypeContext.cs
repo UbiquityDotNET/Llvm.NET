@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class FunctionPrototypeContext
+        public partial class FunctionPrototypeContext
         {
             public override string Name => Identifier( 0 ).GetText( );
 

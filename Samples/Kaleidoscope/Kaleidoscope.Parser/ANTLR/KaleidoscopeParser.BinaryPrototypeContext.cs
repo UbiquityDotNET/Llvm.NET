@@ -13,10 +13,10 @@ using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
         [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Nesting is generated, this is just the non-generated partial" )]
-        internal partial class BinaryPrototypeContext
+        public partial class BinaryPrototypeContext
         {
             public IToken OpToken => userdefinedop( ).start;
 

@@ -6,9 +6,9 @@
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class ConditionalExpressionContext
+        public partial class ConditionalExpressionContext
         {
             public ExpressionContext Condition => expression( 0 );
 

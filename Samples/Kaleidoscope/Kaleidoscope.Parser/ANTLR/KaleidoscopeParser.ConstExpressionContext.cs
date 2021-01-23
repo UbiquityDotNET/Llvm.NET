@@ -8,9 +8,9 @@ using System.Globalization;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
-    internal partial class KaleidoscopeParser
+    public partial class KaleidoscopeParser
     {
-        internal partial class ConstExpressionContext
+        public partial class ConstExpressionContext
         {
             public double Value => double.Parse( Number( ).GetText( ), CultureInfo.InvariantCulture );
         }

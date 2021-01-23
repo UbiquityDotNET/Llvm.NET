@@ -13,31 +13,4 @@
         <PackageReference Include="Ubiquity.ArgValidators" />
     </ItemGroup>
 
-    <!-- inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild -->
-    <UsingTask TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-        <ParameterGroup>
-            <InputFilename ParameterType="System.String" Required="true" />
-            <OutputFilename ParameterType="System.String" Required="true" />
-            <MatchExpression ParameterType="System.String" Required="true" />
-            <ReplacementText ParameterType="System.String" Required="true" />
-        </ParameterGroup>
-        <Task>
-            <Reference Include="System.Core" />
-            <Using Namespace="System" />
-            <Using Namespace="System.IO" />
-            <Using Namespace="System.Text.RegularExpressions" />
-            <Code Type="Fragment" Language="cs">
-                <![CDATA[
-            File.WriteAllText(
-                OutputFilename,
-                Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, ReplacementText)
-                );
-          ]]>
-            </Code>
-        </Task>
-    </UsingTask>
-
-    <Target Name="ForceAntlrGeneratedCodeToInternal" AfterTargets="Antlr4Compile;Antlr4DesignTimeGrammarCompilation">
-        <ReplaceFileText Condition="'%(Antlr4GeneratedCodeFiles.FullPath)'!=''" InputFileName="%(Antlr4GeneratedCodeFiles.FullPath)" OutputFileName="%(Antlr4GeneratedCodeFiles.FullPath)" MatchExpression="public (partial class|interface)" ReplacementText="internal $1" />
-    </Target>
 </Project>
