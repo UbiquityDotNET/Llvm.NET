@@ -76,7 +76,11 @@ namespace LlvmBindingsGenerator
 
         private IEnumerable<ICodeGenerator> CreateHandleTypeTemplates( BindingContext ctx )
         {
-            var handles = ctx.ASTContext.GetHandleTypeDefs( );
+            // filter out known handle types with non-templated implementations
+            var handles = from handle in ctx.ASTContext.GetHandleTypeDefs( )
+                          where handle.Name != "LLVMErrorRef"
+                          select handle;
+
             foreach( var handle in handles )
             {
                 if( HandleToTemplateMap.TryGetValue( handle.Name, out IHandleCodeTemplate template ) )

@@ -1,4 +1,7 @@
 # Repository neutral common build support utilities
+# This library is intended for use across multiple repositories
+# and therefore, should only contain functionality that is independent
+# of the particulars of any given repository.
 
 function Ensure-PathExists
 {
@@ -53,7 +56,7 @@ function Update-Submodules
 {
 <#
 .SYNOPSIS
-    Updates Git submodules
+    Updates Git submodules for this repository
 #>
     Write-Information "Updating submodules"
     git submodule -q update --init --recursive
@@ -252,6 +255,17 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
 
 function Find-MSBuild([switch]$AllowVsPreReleases)
 {
+<#
+.SYNOPSIS
+    Locates MSBuild if not already in the environment path
+
+.DESCRIPTION
+    Attempts to find MSBuild on the current environment path, if not found uses Find-VSInstance
+    to locate a Visual Studio instance that can provide an MSBuild.
+
+.PARAMETER AllowVsPreReleases
+    Switch to indicate if the search for a VS Instance should include pre-release versions.
+#>
     $foundOnPath = $true
     $msBuildPath = Find-OnPath msbuild.exe -ErrorAction Continue
     if( !$msBuildPath )
@@ -402,7 +416,7 @@ function Get-CurrentBuildKind
     | LocalBuild       | This is a local developer build (e.g. not an automated build)
     | PullRequestBuild | This is a build from a PullRequest with untrusted changes, so build should limit the steps appropriately |
     | CiBuild          | This build is from a Continuous Integration (CI) process, usually after a PR is accepted and merged to the branch |
-    | ReleaseBuild     | This is an official release build, the output ready for publication (Automated builds may use this to automatically publish) |
+    | ReleaseBuild     | This is an official release build, the output is ready for publication (Automated builds may use this to automatically publish) |
 #>
     [OutputType([BuildKind])]
     param()
@@ -450,6 +464,20 @@ function Get-CurrentBuildKind
 
 function Get-GitHubReleases($org, $project)
 {
+<#
+.SYNOPSIS
+    Gets a collection of the GitHub releases for a project
+
+.DESCRIPTION
+    This function retrieves a collection of releases from a given GitHub organization and project.
+    The result is a collection of GitHub releases as JSON data.
+
+.PARAMETER org
+    GitHub organization name that owns the project
+
+.PARAMETER project
+    GitHub project to retrieve releases from
+#>
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
     $releases = Invoke-RestMethod -Uri "https://api.github.com/repos/$org/$project/releases"
@@ -461,11 +489,47 @@ function Get-GitHubReleases($org, $project)
 
 function Get-GitHubTaggedRelease($org, $project, $tag)
 {
+<#
+.SYNOPSIS
+    Gets a specific tagged release for a GitHub project
+
+.DESCRIPTION
+    This function retrieves a single tagged release from a given GitHub organization and project.
+    The result is a GitHub release as JSON data.
+
+.PARAMETER org
+    GitHub organization name that owns the project
+
+.PARAMETER project
+    GitHub project to retrieve releases from
+
+.PARAMETER tag
+    Tag to find the specific release for
+#>
+
     Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
 }
 
 function Invoke-DotNetTest($buildInfo, $projectRelativePath)
 {
+<#
+.SYNOPSIS
+    Invokes specified .NET tests for a project
+
+.DESCRIPTION
+    This invokes 'dotnet.exe test ...' for the relative project path. The absolute path for the test to
+    run is derived from the buildInfo parameter.
+
+.PARAMETER buildInfo
+    Hashtable of properties for the build. This function only requires two properties: "RepoRootPath", which is the Root
+    of the repository this build is for and "SrcRootPath" that refers to the root of the source code of the repository. The
+    relative project path is combined with the "RepoRootPath" to get the absolute path of the project to test. Additionally,
+    there must be an 'x64.runsettings' file in the "SrcRootPath" to configure the proper settings for an x64 run.
+
+.PARAMETER projectRelativePath
+    Relative path to the project to test. The absolute path is computed by combining $buildInfo['RepoRootPath'] with the relative
+    path provided.
+#>
     $testProj = Join-Path $buildInfo['RepoRootPath'] $projectRelativePath
     $runSettings = Join-Path $buildInfo['SrcRootPath'] 'x64.runsettings'
     $result = dotnet test $testProj -s $runSettings --no-build --no-restore --logger "trx" -r $buildInfo['TestResultsPath'] `
@@ -476,17 +540,45 @@ function Invoke-DotNetTest($buildInfo, $projectRelativePath)
 
 function Get-BuildVersionXML
 {
-    [OutputType([xml])]
-    param ()
+<#
+.SYNOPSIS
+    Retrieves the contents of the BuildVersion.XML file in the RepoRootPath
 
-    [xml]$buildVersionXml = Get-Content ([System.IO.Path]::Combine($PSScriptRoot, '..', '..', 'BuildVersion.xml'))
-    return $buildVersionXml
+.DESCRIPTION
+    Reads the contents of the BuildVersion.xml file and returns it as XML
+    for additional processing.
+
+.PARAMETER buildInfo
+    Hashtable containing Information about the repository and build. This function
+    requires the presence of a 'RepoRootPath' property to indicate the root of the
+    repository containing the BuildVersion.xml file.
+#>
+    [OutputType([xml])]
+    param ($buildInfo)
+
+    return [xml](Get-Content (Join-Path $buildInfo['RepoRootPath'] 'BuildVersion.xml'))
 }
 
 function Get-BuildVersionTag
 {
+<#
+.SYNOPSIS
+    Retrieves the git tag name to apply for this build.
+
+.DESCRIPTION
+    Reads the contents of the BuildVersion.xml file and generates a git
+    release tag name for the current build.
+
+.PARAMETER buildInfo
+    Hashtable containing Information about the repository and build. This function
+    requires the presence of a 'RepoRootPath' property to indicate the root of the
+    repository containing the BuildVersion.xml file.
+#>
+    [OutputType([string])]
+    param($buildInfo)
+
     # determine release tag from the build version XML file in the branch
-    Param([xml]$buildVersionXml = (Get-BuildVersionXML))
+    Param([xml]$buildVersionXml = (Get-BuildVersionXML $buildInfo))
     $buildVersionData = $buildVersionXml.BuildVersionData
     $preReleaseSuffix=""
     if($buildVersionData.PSObject.Properties['PreReleaseName'])

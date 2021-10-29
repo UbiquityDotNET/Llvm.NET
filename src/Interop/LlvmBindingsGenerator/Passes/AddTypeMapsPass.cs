@@ -9,7 +9,7 @@ using CppSharp.Passes;
 
 namespace LlvmBindingsGenerator.Passes
 {
-    // Add TypeMaps for the typedef handles to use the generated SafeHandle derived types and other well known mappings.
+    /// <summary>Translation unit pass to add TypeMaps for the typedef handles to use the generated SafeHandle derived types and other well known mappings.</summary>
     internal class AddTypeMapsPass
         : TranslationUnitPass
     {

@@ -16,6 +16,12 @@ using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to provide validation/feedback for a configuration file</summary>
+    /// <remarks>
+    /// This pass will test the entries in the configuration to detect any referencing code not
+    /// present in the parsed AST. This aids in detecting redundant entries in an attempt to keep
+    /// the YAML config as lean and mean as possible.
+    /// </remarks>
     internal class IdentifyReduntantConfigurationEntriesPass
         : TranslationUnitPass
     {

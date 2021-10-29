@@ -1,6 +1,6 @@
 try
 {
-    . .\buildutils.ps1
+    . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment
 
     $testsFailed = $false

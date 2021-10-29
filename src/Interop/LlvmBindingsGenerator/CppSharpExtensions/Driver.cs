@@ -26,7 +26,7 @@ namespace LlvmBindingsGenerator
     /// Notable differences:
     /// 1. The driver does not setup ANY passes, it is entirely up to the library to do that
     /// 2. There is no intermediate "Generator" needed
-    /// 3. Deals in interface rather than concretes
+    /// 3. Deals in interfaces rather than concretes
     /// 4. The code generation types are interfaces with names that more accurately reflect what they do
     /// </remarks>
     internal sealed class Driver
@@ -232,7 +232,11 @@ namespace LlvmBindingsGenerator
 
         public void Dispose( )
         {
-            Context.TargetInfo.Dispose( );
+            if(Context!=null)
+            {
+                Context.TargetInfo.Dispose( );
+            }
+
             ParserOptions.Dispose( );
             CppSharp.AST.Type.TypePrinterDelegate = null;
         }
@@ -243,7 +247,6 @@ namespace LlvmBindingsGenerator
             {
                 var options = driver.Options;
                 library.Setup( driver );
-
                 driver.Setup( );
 
                 if( options.Verbose )
@@ -260,7 +263,7 @@ namespace LlvmBindingsGenerator
                 Diagnostics.Message( "Parsing code..." );
                 if( !driver.ParseCode( ) )
                 {
-                    Diagnostics.Error( "CppSharp has encountered an error while parsing code." );
+                    Diagnostics.Error( "Encountered one or more errors while parsing source code - no code generation performed." );
                     return;
                 }
 

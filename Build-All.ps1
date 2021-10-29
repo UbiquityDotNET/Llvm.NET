@@ -10,7 +10,7 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
     $BuildSource = $false

@@ -19,6 +19,7 @@
         <PackageReference Include="Ubiquity.ArgValidators" />
         <PackageReference Include="CppSharp" />
         <PackageReference Include="YamlDotNet" />
+        <PackageReference Include="Microsoft.VisualStudio.Setup.Configuration.Interop"/>
     </ItemGroup>
     <ItemGroup>
       <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -46,11 +47,6 @@
         <None Update="Templates\T4\GlobalHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
             <LastGenOutput>GlobalHandleTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
-        <None Update="Templates\T4\LLVMErrorRefTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>LLVMErrorRefTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
         <None Update="Templates\T4\PerHeaderInteropTemplate.tt">
@@ -84,11 +80,6 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>GlobalHandleTemplate.tt</DependentUpon>
-        </Compile>
-        <Compile Update="Templates\T4\LLVMErrorRefTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>LLVMErrorRefTemplate.tt</DependentUpon>
         </Compile>
         <Compile Update="Templates\T4\PerHeaderInteropTemplate.cs">
             <DesignTime>True</DesignTime>

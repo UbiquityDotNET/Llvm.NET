@@ -14,6 +14,13 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to validate marshaling info details are present and valid in the YAML configuration</summary>
+    /// <remarks>
+    /// This pass helps to ensure that there are no functions in the headers that need marshaling support, but none is defined in
+    /// the YAML configuration. All string types must have marshaling details provided to ensure proper cleanup is performed. Additionally,
+    /// any pointer types need careful marshaling/mapping to projected types so any unsafe return types without marshaling details are
+    /// flagged here.
+    /// </remarks>
     internal class ValidateMarshalingInfoPass
         : TranslationUnitPass
     {

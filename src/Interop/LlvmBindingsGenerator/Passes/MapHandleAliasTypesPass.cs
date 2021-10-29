@@ -7,7 +7,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
 
@@ -15,6 +14,13 @@ using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to map handle aliases to the projected handle type</summary>
+    /// <remarks>
+    /// Reads the Function Bindings information from the YAML configuration to determine the
+    /// handle mapping for any "alias" type handles (e.g. a projected handle that is not owned
+    /// by the projection - so it is an alias) These, are projected into specific types with the
+    /// "Alias" suffix so it is clear that it is only an alias.
+    /// </remarks>
     internal class MapHandleAliasTypesPass
         : TranslationUnitPass
     {

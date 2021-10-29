@@ -11,6 +11,7 @@ using CppSharp.Passes;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to mark duplicate function names as ignored</summary>
     internal class IgnoreDuplicateNamesPass
         : TranslationUnitPass
     {

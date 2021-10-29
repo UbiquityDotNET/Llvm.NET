@@ -13,7 +13,11 @@ using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
 {
-    // should always be the first pass so that other passes can rely on IsGenerated etc...
+    /// <summary>Translation unit pass to mark system headers as ignored</summary>
+    /// <remarks>
+    /// should always be the first pass so that other passes can rely on IsGenerated
+    /// properly to correctly ignore the header.
+    /// </remarks>
     internal class IgnoreSystemHeadersPass
         : TranslationUnitPass
     {

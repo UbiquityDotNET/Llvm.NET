@@ -14,6 +14,7 @@ using CppSharp;
 namespace LlvmBindingsGenerator
 {
     [SuppressMessage("Build", "CA1812", Justification = "Instantiated via reflection from commandline parser" )]
+    [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is necessary, tooling can't agree on the point. (removing it generates a warning)" )]
     internal class Options
     {
         public Options( string llvmRoot, string extensionsRoot, string outputPath, DiagnosticKind diagnostics )

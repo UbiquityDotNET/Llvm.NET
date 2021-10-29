@@ -38,7 +38,7 @@ namespace LlvmBindingsGenerator
 
         public static bool IsExtensionHeader( this TranslationUnit tu )
         {
-            return !tu.IsCoreHeader( )
+            return !tu.IsCoreHeader()
                 && tu.IsValid
                 && !tu.IsSystemHeader
                 && tu.FileNameWithoutExtension.EndsWith( "Bindings", StringComparison.Ordinal );
@@ -46,9 +46,9 @@ namespace LlvmBindingsGenerator
 
         public static IEnumerable<TypedefNameDecl> GetHandleTypeDefs( this ASTContext ctx )
         {
-            return from tu in ctx.GeneratedUnits( )
+            return from tu in ctx.GeneratedUnits()
                    from td in tu.Typedefs
-                   where td.IsHandleTypeDef( )
+                   where td.IsHandleTypeDef()
                    select td;
         }
 
@@ -56,11 +56,11 @@ namespace LlvmBindingsGenerator
         {
             switch( astType )
             {
-            case TypedefType tdt when( tdt.Declaration.IsHandleTypeDef( ) ):
+            case TypedefType tdt when( tdt.Declaration.IsHandleTypeDef() ):
                 decl = tdt.Declaration;
                 return true;
 
-            case PointerType pt when( pt.Pointee is TypedefType tdt && tdt.Declaration.IsHandleTypeDef( ) ):
+            case PointerType pt when( pt.Pointee is TypedefType tdt && tdt.Declaration.IsHandleTypeDef() ):
                 decl = tdt.Declaration;
                 return true;
 
@@ -83,18 +83,18 @@ namespace LlvmBindingsGenerator
         public static bool IsOpaquHandleTypeDef( this TypedefNameDecl td )
         {
             // bad form, declaration is the opaque struct, not a pointer to the struct
-            return td.Type is TagType tt2 && tt2.IsOpaqueStruct( );
+            return td.Type is TagType tt2 && tt2.IsOpaqueStruct();
         }
 
         public static bool IsCannonicalHandleTypeDef( this TypedefNameDecl td )
         {
             // Canonical form, declaration is a pointer to an opaque struct
-            if( !( td.Type is PointerType pt ) )
+            if( !(td.Type is PointerType pt) )
             {
                 return false;
             }
 
-            return ( pt.Pointee is TagType tt && tt.IsOpaqueStruct( ) )
+            return ( pt.Pointee is TagType tt && tt.IsOpaqueStruct() )
                 || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
         }
 
@@ -104,7 +104,7 @@ namespace LlvmBindingsGenerator
             var bldr = new StringBuilder( "[" );
             if( attr is TargetedAttribute ta && ta.Target != AttributeTarget.Default )
             {
-                bldr.Append( ta.Target.ToString( ).ToLowerInvariant( ) );
+                bldr.Append( ta.Target.ToString().ToLowerInvariant() );
                 bldr.Append( ": " );
             }
 
@@ -117,7 +117,7 @@ namespace LlvmBindingsGenerator
             }
 
             bldr.Append( "]" );
-            return bldr.ToString( );
+            return bldr.ToString();
         }
 
         public static bool IsDelegateTypeDef( this TypedefNameDecl td )
@@ -146,7 +146,7 @@ namespace LlvmBindingsGenerator
         {
             return ( from tu in context.TranslationUnits
                      from td in tu.Typedefs
-                     let ft = td.GetFunctionPointerType( )
+                     let ft = td.GetFunctionPointerType()
                      where ft != null
                      select (td.Name, Signature: ft)
                    ).ToDictionary( item => item.Name, item => item.Signature );

@@ -22,6 +22,7 @@ using YamlDotNet.Serialization.NodeDeserializers;
 namespace LlvmBindingsGenerator.Configuration
 {
     [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via de-serialization" )]
+    [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is necessary, tooling can't agree on the point. (removing it generates a warning)" )]
     internal class YamlConfiguration
     {
         public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection( );
@@ -74,10 +75,7 @@ namespace LlvmBindingsGenerator.Configuration
             var handleTemplates = from h in HandleMap
                                   select Transform(h);
 
-            var retVal = new HandleTemplateMap( )
-            {
-               new LLVMErrorRefTemplate() // error ref is always present so just add it
-            };
+            var retVal = new HandleTemplateMap( );
 
             foreach( var h in handleTemplates )
             {
@@ -96,9 +94,6 @@ namespace LlvmBindingsGenerator.Configuration
 
             case YamlContextHandle ych:
                 return new ContextHandleTemplate( ych.HandleName );
-
-            case YamlErrorRef _:
-                return new LLVMErrorRefTemplate( );
 
             default:
                 throw new InvalidOperationException( "Unknown handle info kind encountered" );

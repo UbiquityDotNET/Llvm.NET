@@ -16,6 +16,7 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to mark any deprecated functions as Obsolete</summary>
     internal class MarkDeprecatedFunctionsAsObsoletePass
         : TranslationUnitPass
     {

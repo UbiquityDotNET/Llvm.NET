@@ -14,8 +14,8 @@ namespace LlvmBindingsGenerator.Passes
     /// <summary>Mark functions as internal or ignored</summary>
     /// <remarks>
     /// This pass will mark all Implicit functions from the headers ignored (i.e. an implicit constructor
-    /// for a struct). Additionally, it uses a provided collection of name, ignored tuples to
-    /// mark functions as either internal of ignored.
+    /// for a struct). Additionally, it uses the function bindings in the YAML configuration to mark
+    /// functions as either internal of ignored.
     /// </remarks>
     internal class MarkFunctionsInternalPass
         : TranslationUnitPass

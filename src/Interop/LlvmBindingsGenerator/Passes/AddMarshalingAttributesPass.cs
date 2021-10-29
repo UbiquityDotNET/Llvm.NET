@@ -19,6 +19,10 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to add marshaling attributes to function parameters and return types</summary>
+    /// <remarks>
+    /// Marshalling attributes needed are determined from the YAML configuration file.
+    /// </remarks>
     internal class AddMarshalingAttributesPass
         : TranslationUnitPass
     {
@@ -313,7 +317,7 @@ namespace LlvmBindingsGenerator.Passes
         private static readonly TargetedAttribute GeneratedCodeAttrib
             = new TargetedAttribute( typeof( GeneratedCodeAttribute )
                                    , "\"LlvmBindingsGenerator\""
-                                   , $"\"{typeof(AddMarshalingAttributesPass).Assembly.GetName( ).Version.ToString()}\""
+                                   , $"\"{typeof(AddMarshalingAttributesPass).Assembly.GetName( ).Version}\""
                                    );
     }
 }

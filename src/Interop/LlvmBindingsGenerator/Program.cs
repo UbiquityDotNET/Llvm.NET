@@ -20,7 +20,9 @@ namespace LlvmBindingsGenerator
     {
         public static int Main( string[ ] args )
         {
-            return Parser.Default.ParseArguments<Options>( args ).MapResult( Run, _ => -1 );
+            return Parser.Default
+                         .ParseArguments<Options>( args )
+                         .MapResult( Run, _ => -1 );
         }
 
         private static int Run( Options options )
