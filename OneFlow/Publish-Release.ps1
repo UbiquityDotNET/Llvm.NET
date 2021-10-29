@@ -1,4 +1,16 @@
-. .\buildutils.ps1
+<#
+.SYNOPSIS
+    Publishes the current branch state as an official release tag
+
+.DESCRIPTION
+    This function ensures that no changes exist in the local repository so that only the tag is pushed.
+    Pushing a release tag should trigger GitHub actions that starts the official build via a GitHub action
+    or other such automated build processes. These, normally, also include publication of the resulting
+    binaries as appropriate. This function only pushes the tag, the rest is up to the back-end configuration
+    of the repository.
+#>
+
+. .\repo-buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment
 
 # Release tags must only be pushed from a repository with the official GitHub repository as the origin remote.
@@ -14,7 +26,7 @@ if($remoteUrl -ine "https://github.com/UbiquityDotNET/Llvm.NET.git")
 }
 
 # pushing the tag to GitHub triggers the official build and release of the Nuget Packages
-$tagName = Get-BuildVersionTag
+$tagName = Get-BuildVersionTag $buildInfo
 $releaseBranch = "release/$tagName"
 $currentBranch = git rev-parse --abbrev-ref HEAD
 if( $releaseBranch -ne $currentBranch )

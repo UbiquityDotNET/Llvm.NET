@@ -1,4 +1,11 @@
 # Project/Repo specific extensions to common support
+# it is expected that the various build scrips will
+# "dot source" this one to consume common functionality
+
+# reference the common build library. This library is intended
+# for re-use across multiple repositories so should remain independent
+# of the particular details of any specific repository. Over time, this
+# may migrate to a git sub module.
 using module 'PSModules\CommonBuild\CommonBuild.psd1'
 
 Set-StrictMode -version 3.0

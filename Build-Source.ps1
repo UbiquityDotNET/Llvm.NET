@@ -7,7 +7,7 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
     $packProperties = @{ version=$($buildInfo['PackageVersion'])

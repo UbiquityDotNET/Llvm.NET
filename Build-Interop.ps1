@@ -30,8 +30,8 @@ This script is unfortunately necessary due to several factors:
   3. This script to control the ordering of the build so that the native code is built, then the
      interop lib is restored and finally the interop lib is built with multi-targeting.
   4. The interop assembly project includes the NuGet packing with "content" references to the
-     native assemblies to place the in the correct "native" "runtimes" folder for NuGet to handle
-     them.
+     native assemblies to place the binaries in the correct "native" "runtimes" folder for NuGet
+     to handle them.
 #>
 Param(
     [string]$Configuration="Release",
@@ -43,7 +43,7 @@ pushd $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\buildutils.ps1
+    . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
 
     # <HACK>

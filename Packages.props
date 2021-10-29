@@ -24,5 +24,6 @@
         <PackageReference Update="YamlDotNet" Version="8.1.0" />
         <PackageReference Update="google-diff-match-patch" Version="1.1.24" />
         <PackageReference Update="CommandLineParser" Version="2.8.0" />
+        <PackageReference Update="Microsoft.VisualStudio.Setup.Configuration.interop" Version="1.16.30"/>
     </ItemGroup>
 </Project>

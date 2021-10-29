@@ -15,6 +15,15 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to handle the status vs. bool return type problems/ambiguity in LLVM-C APIs</summary>
+    /// <remarks>
+    /// LLVM-C uses an LLVMBool type for boolean results, however, the meaning of the value (success vs failure) depends on
+    /// the actual API used. In some cases success is 0 and any non-zero value is a failure code. Others, a non-zero value is
+    /// a literal TRUE (e.g. success) and 0 is FALSE (Failure). The managed projection handles this by using the YAML configuration
+    /// to disambiguate the usage. For any real boolean values, the .NET type is System.Boolean, for others, it is LlvmStatus.
+    /// This pass handles conversions of the return type to either bool or LlvmStatus depending on the information in the YAML
+    /// configuration file.
+    /// </remarks>
     internal class ConvertLLVMBoolPass
         : TranslationUnitPass
     {

@@ -2,7 +2,7 @@ Param(
     [switch]$SkipPush
 )
 
-. .\buildutils.ps1
+. .\repo-buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment
 
 Write-Information "Preparing to PUSH updated docs to GitHub IO"
@@ -61,7 +61,7 @@ try
         throw "git add failed"
     }
 
-    $msg = "CI Docs Update $(Get-BuildVersionTag)"
+    $msg = "CI Docs Update $(Get-BuildVersionTag $buildInfo)"
     Write-Information "Committing changes to git [$msg]"
     git commit -m"$msg"
     if(!$?)

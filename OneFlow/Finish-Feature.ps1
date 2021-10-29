@@ -1,6 +1,17 @@
+<#
+.SYNOPSIS
+    Encapsulates the steps for finishing a feature branch using OneFlow
+
+.DESCRIPTION
+    Completes a feature branch using OneFlow. This requires that the remote for the branch is the official repository
+    as it needs to push the feature branch changes into the "develop" branch after merging the changes.
+
+.PARAMETER featurename
+    Name of the feature to finalize. This is the relative name under the feature\* path.
+#>
 param($featurename)
 
-. .\buildutils.ps1
+. .\repo-buildutils.ps1
 $buildInfo = Initialize-BuildEnvironment
 
 # feature branch merges must only be pushed from a repository with the official GitHub repository as the origin remote.

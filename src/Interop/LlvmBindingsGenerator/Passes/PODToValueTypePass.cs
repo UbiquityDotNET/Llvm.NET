@@ -9,6 +9,7 @@ using CppSharp.Passes;
 
 namespace LlvmBindingsGenerator.Passes
 {
+    /// <summary>Translation unit pass to mark all POD types as a ValueType</summary>
     internal class PODToValueTypePass
         : TranslationUnitPass
     {

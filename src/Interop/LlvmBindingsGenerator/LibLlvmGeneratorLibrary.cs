@@ -11,6 +11,7 @@ using CppSharp.AST;
 using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
+using LlvmBindingsGenerator.CppSharpExtensions;
 using LlvmBindingsGenerator.Passes;
 
 namespace LlvmBindingsGenerator
@@ -46,6 +47,15 @@ namespace LlvmBindingsGenerator
             driver.Options.GenerateSingleCSharpFile = false;
 
             driver.Options.OutputDir = OutputPath;
+
+            // Limit to VS2019 As VS2022 headers will #error out if CLANG version is < 12 and current CppSharp used in this project
+            // is only at 11. Ultimately that needs updating so this all works with VS2022.
+            //
+            // NOTE: This still needs a fix in the STL headers for some older versions of VS2019 (https://github.com/microsoft/STL/issues/1300)
+            //       First available VS version that contains the fix is VS 2019 16.9 Preview 2.
+            //       The PatchVsForLibClang project contains the code to "patch" older versions based on a patch published by MS
+            //       (Attached to the bug)
+            driver.ParserOptions.SetupMSVC2(VisualStudioVersion.VS2019);
             driver.ParserOptions.AddIncludeDirs( CommonInclude );
             driver.ParserOptions.AddIncludeDirs( ArchInclude );
             driver.ParserOptions.AddIncludeDirs( ExtensionsInclude );

@@ -66,12 +66,7 @@ namespace Ubiquity.NET.Llvm.Interop
             string sourceFilePath = "",
             int sourceLineNumber = 0 )
         {
-            if( IsInvalid )
-            {
-                throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " );
-            }
-
-            return this;
+            return IsInvalid ? throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " ) : this;
         }
 
         /// <summary>Initializes a new instance of the <see cref="LlvmObjectRef"/> class with the specified value</summary>
