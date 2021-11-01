@@ -19,25 +19,6 @@ namespace LlvmBindingsGenerator.Passes
     internal class AddMissingParameterNamesPass
         : TranslationUnitPass
     {
-        public AddMissingParameterNamesPass( )
-        {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassMethods = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = true;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEnums = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = true;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-        }
-
         public override bool VisitASTContext( ASTContext context )
         {
             foreach( TranslationUnit unit in context.GeneratedUnits( ) )

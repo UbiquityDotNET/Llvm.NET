@@ -33,22 +33,6 @@ namespace LlvmBindingsGenerator.Passes
         /// </remarks>
         public DeAnonymizeEnumsPass( IReadOnlyDictionary<string, string> firstItemToNameMap )
         {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassMethods = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = false;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEnums = true;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = false;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-
             FirstItemToNameMap = firstItemToNameMap;
         }
 

@@ -22,21 +22,6 @@ namespace LlvmBindingsGenerator.Passes
     {
         public MarkFunctionsInternalPass( IGeneratorConfig config )
         {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = false;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEnums = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = false;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-
             Configuration = config;
         }
 

@@ -42,20 +42,12 @@ namespace LlvmBindingsGenerator
         public void Setup( IDriver driver )
         {
             Driver = driver;
-            driver.Options.Quiet = true;
             driver.Options.UseHeaderDirectories = true;
-            driver.Options.GenerateSingleCSharpFile = false;
+            driver.Options.GenerationOutputMode = CppSharp.GenerationOutputMode.FilePerUnit;
 
             driver.Options.OutputDir = OutputPath;
 
-            // Limit to VS2019 As VS2022 headers will #error out if CLANG version is < 12 and current CppSharp used in this project
-            // is only at 11. Ultimately that needs updating so this all works with VS2022.
-            //
-            // NOTE: This still needs a fix in the STL headers for some older versions of VS2019 (https://github.com/microsoft/STL/issues/1300)
-            //       First available VS version that contains the fix is VS 2019 16.9 Preview 2.
-            //       The PatchVsForLibClang project contains the code to "patch" older versions based on a patch published by MS
-            //       (Attached to the bug)
-            driver.ParserOptions.SetupMSVC2(VisualStudioVersion.VS2019);
+            driver.ParserOptions.SetupMSVC();
             driver.ParserOptions.AddIncludeDirs( CommonInclude );
             driver.ParserOptions.AddIncludeDirs( ArchInclude );
             driver.ParserOptions.AddIncludeDirs( ExtensionsInclude );
@@ -69,16 +61,17 @@ namespace LlvmBindingsGenerator
 
         public void SetupPasses( )
         {
-            // configuration validation - generates warnings for entries in configuration that
-            // have no corresponding elements in the source AST. (either from typos in the config
-            // or version to version changes in the underlying LLVM source)
-            Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
-
             // Analysis passes that markup, but don't otherwise modify the AST run first
             // always start the passes with the IgnoreSystemHeaders pass to ensure that
             // transformation only occurs for the desired headers. Other passes depend on
             // TranslationUnit.IsGenerated to ignore headers.
             Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
+
+            // configuration validation - generates warnings for entries in configuration that
+            // have no corresponding elements in the source AST. (either from typos in the config
+            // or version to version changes in the underlying LLVM source)
+            Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
+
             Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
             Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
             Driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );

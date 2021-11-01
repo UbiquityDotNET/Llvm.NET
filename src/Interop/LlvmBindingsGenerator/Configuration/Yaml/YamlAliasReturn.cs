@@ -18,6 +18,7 @@ namespace LlvmBindingsGenerator.Configuration
     {
         public YamlAliasReturn( )
         {
+            Semantics = ParamSemantics.Return;
             IsAlias = true;
         }
 

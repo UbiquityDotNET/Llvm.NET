@@ -7,7 +7,7 @@
 namespace LlvmBindingsGenerator.Configuration
 {
     internal interface IHandleInfo
-        : IYamlConfigLocation
+        : IYamlNodeLocation
     {
         string HandleName { get; }
     }

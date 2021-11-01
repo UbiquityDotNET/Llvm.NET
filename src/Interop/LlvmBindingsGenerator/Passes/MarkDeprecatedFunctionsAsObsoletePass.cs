@@ -22,22 +22,6 @@ namespace LlvmBindingsGenerator.Passes
     {
         public MarkDeprecatedFunctionsAsObsoletePass( IGeneratorConfig config, bool ignoreObsolete = false )
         {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassMethods = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = false;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEnums = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = false;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-
             Map = ( from f in config.FunctionBindings.Values
                     where f.IsObsolete && f.IsProjected
                     select f

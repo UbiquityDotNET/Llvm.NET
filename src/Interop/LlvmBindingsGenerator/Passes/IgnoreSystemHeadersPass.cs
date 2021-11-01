@@ -7,8 +7,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using CppSharp;
 using CppSharp.AST;
 using CppSharp.Passes;
+
 using LlvmBindingsGenerator.Configuration;
 
 namespace LlvmBindingsGenerator.Passes
@@ -27,29 +29,11 @@ namespace LlvmBindingsGenerator.Passes
                              select entry.Path;
         }
 
-        public IgnoreSystemHeadersPass( )
-        {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassMethods = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = false;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEnums = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = false;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-        }
-
         public override bool VisitTranslationUnit( TranslationUnit unit )
         {
             if( unit.IncludePath == null || !unit.IsValid || unit.IsInvalid )
             {
+                Diagnostics.Debug("Translation Unit '{0}' is invalid - marked to ignore.", unit);
                 unit.GenerationKind = GenerationKind.None;
                 return true;
             }
@@ -58,10 +42,13 @@ namespace LlvmBindingsGenerator.Passes
             if( isExplicitlyIgnored )
             {
                 unit.Ignore = true;
+                unit.GenerationKind = GenerationKind.None;
+                Diagnostics.Debug("Translation unit '{0}' is explicitly ignored", unit);
             }
             else
             {
-                unit.GenerationKind = ( unit.IsCoreHeader( ) || unit.IsExtensionHeader( ) ) ? GenerationKind.Generate : GenerationKind.None;
+                unit.GenerationKind = ( unit.IsCoreHeader() || unit.IsExtensionHeader() ) ? GenerationKind.Generate : GenerationKind.None;
+                Diagnostics.Debug("Translation unit '{0}' GenerationKind == {1}", unit, unit.GenerationKind);
             }
 
             return true;

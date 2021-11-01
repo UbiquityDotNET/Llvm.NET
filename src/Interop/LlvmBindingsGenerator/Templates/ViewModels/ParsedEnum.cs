@@ -31,53 +31,39 @@ namespace LlvmBindingsGenerator.Templates
 
         public IEnumerable<(string Name, string Value, ParsedComment Comment)> Members { get; }
 
-        private string GetBaseTypeName( BuiltinType t )
+        private static string GetBaseTypeName( BuiltinType t )
         {
-            switch( t.Type )
+            return t.Type switch
             {
-            case PrimitiveType.Short:
-                return "global::System.Int16";
+                PrimitiveType.Short => "global::System.Int16",
+                PrimitiveType.UShort => "global::System.UInt16",
+                PrimitiveType.Int or PrimitiveType.Long => "global::System.Int32",
+                PrimitiveType.ULong or PrimitiveType.UInt => "global::System.UInt32",
+                PrimitiveType.LongLong => "global::System.Int64",
+                PrimitiveType.ULongLong => "global::System.UInt64",
 
-            case PrimitiveType.UShort:
-                return "global::System.UInt16";
-
-            case PrimitiveType.Int:
-            case PrimitiveType.Long:
-                return "global::System.Int32";
-
-            case PrimitiveType.ULong:
-            case PrimitiveType.UInt:
-                return "global::System.UInt32";
-
-            case PrimitiveType.LongLong:
-                return "global::System.Int64";
-
-            case PrimitiveType.ULongLong:
-                return "global::System.UInt64";
-
-            // case PrimitiveType.Int128:
-            // case PrimitiveType.UInt128:
-            // case PrimitiveType.Half:
-            // case PrimitiveType.Float:
-            // case PrimitiveType.Double:
-            // case PrimitiveType.LongDouble:
-            // case PrimitiveType.Float128:
-            // case PrimitiveType.IntPtr:
-            // case PrimitiveType.UIntPtr:
-            // case PrimitiveType.String:
-            // case PrimitiveType.Decimal:
-            // case PrimitiveType.Null:
-            // case PrimitiveType.Void:
-            // case PrimitiveType.Bool:
-            // case PrimitiveType.WideChar:
-            // case PrimitiveType.Char:
-            // case PrimitiveType.SChar:
-            // case PrimitiveType.UChar:
-            // case PrimitiveType.Char16:
-            // case PrimitiveType.Char32:
-            default:
-                throw new ArgumentException( "Unsupported enum base type", nameof( t ) );
-            }
+                // PrimitiveType.Int128:
+                // PrimitiveType.UInt128:
+                // PrimitiveType.Half:
+                // PrimitiveType.Float:
+                // PrimitiveType.Double:
+                // PrimitiveType.LongDouble:
+                // PrimitiveType.Float128:
+                // PrimitiveType.IntPtr:
+                // PrimitiveType.UIntPtr:
+                // PrimitiveType.String:
+                // PrimitiveType.Decimal:
+                // PrimitiveType.Null:
+                // PrimitiveType.Void:
+                // PrimitiveType.Bool:
+                // PrimitiveType.WideChar:
+                // PrimitiveType.Char:
+                // PrimitiveType.SChar:
+                // PrimitiveType.UChar:
+                // PrimitiveType.Char16:
+                // PrimitiveType.Char32:
+                _ => throw new ArgumentException( "Unsupported enum base type", nameof( t ) ),
+            };
         }
     }
 }
