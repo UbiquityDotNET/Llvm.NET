@@ -88,7 +88,7 @@ operator. The normal code generator pattern for the binary operators is:
 #### Assignment
 Assignment is a special kind of binary operator to represent "store" semantics for a variable. (e.g. mutable variables).
 Code generation for the assignment must handle the left side operand with a slightly different pattern. In particular,
-the left hand side is not an evaluated expression. Instead, it is the variable to assign the right had value to. Thus,
+the left hand side is not an evaluated expression. Instead, it is the variable to assign the right hand value to. Thus,
 there isn't anything to evaluate for the left hand side as it is always a Variable Reference for the variable to assign
 the value to.
 
