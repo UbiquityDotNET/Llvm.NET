@@ -7,7 +7,8 @@ ambiguities of generating the code. The configuration is an instance of the
 The GeneratorConfig class holds all the data used by the various passes in
 LlvmBindingsGenerator to transform the AST so that subsequent stages will 
 generate correct .NET interop code. There are several tables of information
-used in the various passes.
+used in the various passes. (See: [YAML Configuration format](LlvmBindingsGenerator-YAML-Config-format.md)
+For details of the configuration file YAML format)
 
 ## StatusReturningFunctions
 This table is a simple [SortedSet](xref:System.Collections.Generic.SortedSet`1) of
@@ -22,7 +23,7 @@ This is a collection of `LlvmBindingsGenerator.IMarshalInfo` instances
 used to transform function parameter and return types as well as add appropriate marshaling
 attributes for them. This is the most complex implementations of all the passes. Though
 declaring the table is made a lot easier by the various IMarshalInfo implementation types.
-(see: [MarshalingInfo Table](LlvmBindingsGenerator-MarshalingInfo-Table.md) for details)
+(see: [YAML Configuration format](LlvmBindingsGenerator-YAML-Config-format.md) for details)
 
 ## DeprecatedFunctionToMessageMap
 This property consists of a dictionary that maps the name of a deprecated LLVM-C API to
@@ -34,20 +35,20 @@ declaration with the Obsolete attribute in .NET.
 
 ## InternalFunctions
 This property contains a dictionary of functions that are considered internal or just completely
-ignored for the interop layer. Generally these are the disposal methods that are used in the handle generated handle
-types or custom string marshalers. Sometimes they are for functions declared int the headers but
-not implemented in the library. (the LTO APIs for instance are not included as they are intended for
-use in an actual linker) The values in the dictionary are a boolean that indicates if the function
-is just completely ignored (true) or used internally only (false). The MarkFunctionsInternalPass
-uses this information to mark the functions appropriately for subsequent passes.
+ignored for the interop layer. Generally these are the disposal methods that are used in the
+generated handle types or custom string marshalers. Sometimes they are for functions declared in
+the headers but not implemented in the library. (the LTO APIs for instance are not included as they
+are intended for use in an actual linker) The values in the dictionary are a boolean that indicates
+if the function is just completely ignored (true) or used internally only (false). The
+MarkFunctionsInternalPass uses this information to mark the functions appropriately for subsequent
+passes.
 
 ## HandleToTemplateMap
 The LlvmBindings generator supports creating safe handles for all of the LLVM object handle types.
 Since there are a few distinct patterns for handles the HandleToTemplate map is used to map between
 the LLVM-C typedef handle name and the actual template that will generate the code for that
 particular handle. The HandleToTemplateMap property is a keyed collection of IHandleCodeTemplate
-that is keyed by the HandleName. There are, at present two general template types and one very
-specialized template:
+that is keyed by the HandleName. There are, at present two general template types:
 
 ### GlobalHandleTemplate
 This is used for handles that have a global application defined lifetime and therefore have a
@@ -65,11 +66,6 @@ should never dispose the handle as it doesn't own it.
 Contextual handles are those that are always references to objects owned by a parent container
 of some sort. Most objects in LLVM are owned by an LLVM Context or module and only disposed of
 when the parent container itself is disposed.
-
-### LLVMErrorRefTemplate
-This is a very specialized template to handle the LLVMErrorRef type which actually has multiple
-disposal APIs. Just getting the error message out of the handle, actually disposes the handle
-underneath, so the interop handle type requires very specialized support.
 
 ## AnonymousEnumNames
 The AnonymousEnumNames is a dictionary that maps the name of the first enumerated value of an
