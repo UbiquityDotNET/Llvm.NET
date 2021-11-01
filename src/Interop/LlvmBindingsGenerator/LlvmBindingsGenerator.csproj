@@ -13,9 +13,9 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CommandLineParser" />
+        <PackageReference Include="CppSharp" />
         <PackageReference Include="System.CodeDom" />
         <PackageReference Include="Ubiquity.ArgValidators" />
-        <PackageReference Include="CppSharp" />
         <PackageReference Include="YamlDotNet" />
     </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->

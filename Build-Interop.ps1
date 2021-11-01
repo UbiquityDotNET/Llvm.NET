@@ -101,11 +101,12 @@ try
                           }
 
     Write-Information "Building LllvmBindingsGenerator"
+    $generatorRestoreBuildLogPath = Join-Path $buildInfo['BinLogsPath'] LlvmBindingsGeneratorRestore.binlog
     $generatorBuildLogPath = Join-Path $buildInfo['BinLogsPath'] LlvmBindingsGenerator.binlog
 
     # manual restore needed so that the CppSharp libraries are available during the build phase
-    # as CppSharp NuGet package is basically hostile to the newer SDK project format.
-    Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorBuildLogPath"))
+    Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorRestoreBuildLogPath"))
+    Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorBuildLogPath"))
 
     # At present CppSharp only supports the "desktop" framework, so limiting this to net47 for now
     # Hopefully they will support .NET Core soon, if not, the generation stage may need to move out
