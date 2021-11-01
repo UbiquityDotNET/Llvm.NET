@@ -188,6 +188,7 @@ namespace LlvmBindingsGenerator.Passes
                                  select td
                                ).ToDictionary(t=>t.Name);
 
+            // anything listed in the config that isn't found in source as a function or delegate is is "missing"
             var missingFunctions = ( from declaredFunc in configFunctions
                                      where !allFunctions.ContainsKey( declaredFunc.Key ) && !allDelegates.ContainsKey( declaredFunc.Key )
                                      select declaredFunc
@@ -214,6 +215,7 @@ namespace LlvmBindingsGenerator.Passes
         {
             public bool Equals( Function x, Function y ) => string.CompareOrdinal( x.Name, y.Name ) == 0;
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1307:Specify StringComparison for clarity", Justification = "It's a Has code it's supposed to be runtime-stable already" )]
             public int GetHashCode( Function obj ) => obj.Name.GetHashCode( );
         }
 

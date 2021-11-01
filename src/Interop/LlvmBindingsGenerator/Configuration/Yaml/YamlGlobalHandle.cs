@@ -15,7 +15,7 @@ namespace LlvmBindingsGenerator.Configuration
     [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via de-serialization" )]
     [DebuggerDisplay( "GlobalHandle({HandleName},{Disposer}, Alias:{Alias})" )]
     internal class YamlGlobalHandle
-        : IYamlConfigLocation
+        : IYamlNodeLocation
         , IHandleInfo
     {
         public string HandleName { get; set; }

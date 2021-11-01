@@ -23,12 +23,6 @@ namespace LlvmBindingsGenerator.Configuration
             return TryGetValue( key, out YamlBindingTransform _ );
         }
 
-        public bool TryGetValue( string key, out YamlBindingTransform value )
-        {
-            value = null;
-            return Dictionary != null && Dictionary.TryGetValue( key, out value );
-        }
-
         IEnumerator<KeyValuePair<string, YamlBindingTransform>> IEnumerable<KeyValuePair<string, YamlBindingTransform>>.GetEnumerator( )
         {
             return Items.Select( i => new KeyValuePair<string, YamlBindingTransform>( GetKeyForItem( i ), i ) )

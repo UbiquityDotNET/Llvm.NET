@@ -20,7 +20,7 @@ namespace LlvmBindingsGenerator.Configuration
     [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via de-serialization" )]
     [DebuggerDisplay( "{Name}" )]
     internal class YamlFunctionBinding
-        : IYamlConfigLocation
+        : IYamlNodeLocation
     {
         public string Name { get; set; }
 

@@ -6,18 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
 using CppSharp;
 using CppSharp.AST;
 using CppSharp.Generators;
+using CppSharp.Parser;
 using CppSharp.Passes;
 using CppSharp.Types;
 using CppSharp.Utils;
 
 using LlvmBindingsGenerator.Templates;
+
+using ClangParser = CppSharp.ClangParser;
 
 namespace LlvmBindingsGenerator
 {
@@ -26,22 +28,22 @@ namespace LlvmBindingsGenerator
     /// Notable differences:
     /// 1. The driver does not setup ANY passes, it is entirely up to the library to do that
     /// 2. There is no intermediate "Generator" needed
-    /// 3. Deals in interfaces rather than concretes
+    /// 3. Deals in interfaces rather than concrete types so it is more extensible
     /// 4. The code generation types are interfaces with names that more accurately reflect what they do
     /// </remarks>
     internal sealed class Driver
         : IDriver
         , IDisposable
     {
-        public Driver( )
-            : this( new DriverOptions( ) )
+        public Driver()
+            : this( new DriverOptions() )
         {
         }
 
         public Driver( DriverOptions options )
         {
             Options = options;
-            ParserOptions = new CppSharp.Parser.ParserOptions( );
+            ParserOptions = new CppSharp.Parser.ParserOptions();
         }
 
         public DriverOptions Options { get; }
@@ -60,129 +62,78 @@ namespace LlvmBindingsGenerator
             }
         }
 
-        public void SetupTypeMaps( ) =>
+        public void SetupTypeMaps() =>
             Context.TypeMaps = new TypeMapDatabase( Context );
 
-        public void Setup( )
+        public void Setup()
         {
-            ValidateOptions( );
-            ParserOptions.Setup( );
+            ValidateOptions();
+            ParserOptions.Setup();
             Context = new BindingContext( Options, ParserOptions );
         }
 
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "context ownership is transfered to wrapper ASTContext" )]
-        public bool ParseCode( )
+        public bool ParseCode()
         {
-            var astContext = new CppSharp.Parser.AST.ASTContext( );
-            var parser = new ClangParser( astContext );
-            parser.SourcesParsed += OnSourceFileParsed;
+            ClangParser.SourcesParsed += OnSourceFileParsed;
 
-            var sourceFiles = Options.Modules.SelectMany( m => m.Headers );
+            var files = Options.Modules.SelectMany( m => m.Headers );
+            ParserOptions.BuildForSourceFile( Options.Modules );
 
-            if( ParserOptions.UnityBuild )
+            using( CppSharp.Parser.ParserResult result = ClangParser.ParseSourceFiles( files, ParserOptions ) )
             {
-                using( var parserOptions = ParserOptions.BuildForSourceFile( Options.Modules ) )
-                {
-                    using( var result = parser.ParseSourceFiles( sourceFiles, parserOptions ) )
-                    {
-                        Context.TargetInfo = result.TargetInfo;
-                    }
-
-                    if( string.IsNullOrEmpty( ParserOptions.TargetTriple ) )
-                    {
-                        ParserOptions.TargetTriple = parserOptions.TargetTriple;
-                    }
-                }
-            }
-            else
-            {
-                foreach( string sourceFile in sourceFiles )
-                {
-                    using( var parserOptions = ParserOptions.BuildForSourceFile( Options.Modules, sourceFile ) )
-                    using( CppSharp.Parser.ParserResult result = parser.ParseSourceFile( sourceFile, parserOptions ) )
-                    {
-                        if( Context.TargetInfo == null )
-                        {
-                            Context.TargetInfo = result.TargetInfo;
-                        }
-                        else if( result.TargetInfo != null )
-                        {
-                            result.TargetInfo.Dispose( );
-                        }
-
-                        if( string.IsNullOrEmpty( ParserOptions.TargetTriple ) )
-                        {
-                            ParserOptions.TargetTriple = parserOptions.TargetTriple;
-                        }
-                    }
-                }
+                Context.TargetInfo = result.TargetInfo;
             }
 
-            Context.ASTContext = ClangParser.ConvertASTContext( astContext );
-
+            Context.ASTContext = ClangParser.ConvertASTContext( ParserOptions.ASTContext );
+            ClangParser.SourcesParsed -= OnSourceFileParsed;
             return !hasParsingErrors;
         }
 
-        public void SortModulesByDependencies( )
+        public void SortModulesByDependencies()
         {
             var sortedModules = Options.Modules.TopologicalSort( GetAndAddDependencies );
-            Options.Modules.Clear( );
+            Options.Modules.Clear();
             Options.Modules.AddRange( sortedModules );
         }
 
-        public bool ParseLibraries( )
+        public bool ParseLibraries()
         {
-            foreach( var module in Options.Modules )
+            ClangParser.LibraryParsed += OnFileParsed;
+            foreach( Module module in Options.Modules )
             {
+                using var linkerOptions = new LinkerOptions(Context.LinkerOptions);
                 foreach( string libraryDir in module.LibraryDirs )
                 {
-                    ParserOptions.AddLibraryDirs( libraryDir );
+                    linkerOptions.AddLibraryDirs( libraryDir );
                 }
 
                 foreach( string library in module.Libraries )
                 {
-                    if( Context.Symbols.Libraries.Any( l => l.FileName == library ) )
+                    if( !Context.Symbols.Libraries.Any( ( NativeLibrary l ) => l.FileName == library ) )
                     {
-                        continue;
+                        linkerOptions.AddLibraries( library );
                     }
+                }
 
-                    var parser = new ClangParser( );
-                    parser.LibraryParsed += OnFileParsed;
-
-                    using( var res = parser.ParseLibrary( library, ParserOptions ) )
+                using ParserResult parserResult = ClangParser.ParseLibrary(linkerOptions);
+                if( parserResult.Kind == ParserResultKind.Success )
+                {
+                    for( uint num = 0u; num < parserResult.LibrariesCount; num++ )
                     {
-                        if( res.Kind != CppSharp.Parser.ParserResultKind.Success )
-                        {
-                            continue;
-                        }
-
-                        Context.Symbols.Libraries.Add( ClangParser.ConvertLibrary( res.Library ) );
+                        Context.Symbols.Libraries.Add( ClangParser.ConvertLibrary( parserResult.GetLibraries( num ) ) );
                     }
                 }
             }
 
-            Context.Symbols.IndexSymbols( );
-            SortModulesByDependencies( );
-
+            ClangParser.LibraryParsed -= OnFileParsed;
+            Context.Symbols.IndexSymbols();
+            SortModulesByDependencies();
             return true;
         }
 
-        public void ProcessCode( )
+        public void ProcessCode()
         {
-            Context.TranslationUnitPasses.RunPasses( delegate ( TranslationUnitPass pass )
-            {
-                Diagnostics.Debug( "Pass '{0}'", pass );
-                Diagnostics.PushIndent( );
-                try
-                {
-                    pass.Context = Context;
-                    pass.VisitASTContext( Context.ASTContext );
-                }
-                finally
-                {
-                    Diagnostics.PopIndent( );
-                }
-            } );
+            Context.RunPasses();
         }
 
         public void GenerateCode( IEnumerable<ICodeGenerator> generators )
@@ -218,7 +169,7 @@ namespace LlvmBindingsGenerator
                         string fileName = $"{generator.FileNameWithoutExtension}.{template.FileExtension}";
 
                         string fullFilePathfile = Path.Combine( templateOutputPath, fileName );
-                        File.WriteAllText( fullFilePathfile, template.Generate( ) );
+                        File.WriteAllText( fullFilePathfile, template.Generate() );
 
                         Diagnostics.Debug( "Generated '{0}'", fileName );
                     }
@@ -230,71 +181,64 @@ namespace LlvmBindingsGenerator
             }
         }
 
-        public void Dispose( )
+        public void Dispose()
         {
-            if(Context!=null)
+            if( Context != null )
             {
-                Context.TargetInfo.Dispose( );
+                Context.TargetInfo.Dispose();
             }
 
-            ParserOptions.Dispose( );
+            ParserOptions.Dispose();
             CppSharp.AST.Type.TypePrinterDelegate = null;
         }
 
         public static void Run( ILibrary library )
         {
-            using( var driver = new Driver( ) )
+            using var driver = new Driver();
+            var options = driver.Options;
+            library.Setup( driver );
+            driver.Setup();
+
+            Diagnostics.Message( "Parsing libraries..." );
+            if( !driver.ParseLibraries() )
             {
-                var options = driver.Options;
-                library.Setup( driver );
-                driver.Setup( );
+                return;
+            }
 
-                if( options.Verbose )
+            Diagnostics.Message( "Parsing code..." );
+            if( !driver.ParseCode() )
+            {
+                Diagnostics.Error( "Encountered one or more errors while parsing source code - no code generation performed." );
+                return;
+            }
+
+            new CleanUnitPass { Context = driver.Context }.VisitASTContext( driver.Context.ASTContext );
+            options.Modules.RemoveAll( m => m != options.SystemModule && !m.Units.GetGenerated().Any() );
+
+            Diagnostics.Message( "Processing code..." );
+
+            library.SetupPasses();
+            driver.SetupTypeMaps();
+
+            library.Preprocess( driver.Context.ASTContext );
+
+            driver.ProcessCode();
+            library.Postprocess( driver.Context.ASTContext );
+
+            if( !options.DryRun )
+            {
+                bool hasErrors = Diagnostics.Implementation is ErrorTrackingDiagnostics etd && etd.ErrorCount > 0;
+
+                if( hasErrors )
                 {
-                    Diagnostics.Level = DiagnosticKind.Debug;
+                    Diagnostics.Error( "Errors in previous stages, skipping code generation" );
                 }
-
-                Diagnostics.Message( "Parsing libraries..." );
-                if( !driver.ParseLibraries( ) )
+                else
                 {
-                    return;
-                }
+                    Diagnostics.Message( "Generating code..." );
 
-                Diagnostics.Message( "Parsing code..." );
-                if( !driver.ParseCode( ) )
-                {
-                    Diagnostics.Error( "Encountered one or more errors while parsing source code - no code generation performed." );
-                    return;
-                }
-
-                new CleanUnitPass { Context = driver.Context }.VisitASTContext( driver.Context.ASTContext );
-                options.Modules.RemoveAll( m => m != options.SystemModule && !m.Units.GetGenerated( ).Any( ) );
-
-                Diagnostics.Message( "Processing code..." );
-
-                library.SetupPasses( );
-                driver.SetupTypeMaps( );
-
-                library.Preprocess( driver.Context.ASTContext );
-
-                driver.ProcessCode( );
-                library.Postprocess( driver.Context.ASTContext );
-
-                if( !options.DryRun )
-                {
-                    bool hasErrors = Diagnostics.Implementation is ErrorTrackingDiagnostics etd && etd.ErrorCount > 0;
-
-                    if( hasErrors )
-                    {
-                        Diagnostics.Error( "Errors in previous stages, skipping code generation" );
-                    }
-                    else
-                    {
-                        Diagnostics.Message( "Generating code..." );
-
-                        var generators = library.CreateGenerators( );
-                        driver.GenerateCode( generators );
-                    }
+                    var generators = library.CreateGenerators( );
+                    driver.GenerateCode( generators );
                 }
             }
         }
@@ -315,7 +259,7 @@ namespace LlvmBindingsGenerator
             return m.Dependencies;
         }
 
-        private void ValidateOptions( )
+        private void ValidateOptions()
         {
             if( !Options.Compilation.Platform.HasValue )
             {
@@ -351,7 +295,7 @@ namespace LlvmBindingsGenerator
 
         private void OnFileParsed( string file, CppSharp.Parser.ParserResult result )
         {
-            OnFileParsed( new[ ] { file }, result );
+            OnFileParsed( new[] { file }, result );
         }
 
         private void OnFileParsed( IEnumerable<string> files, CppSharp.Parser.ParserResult result )
@@ -373,7 +317,7 @@ namespace LlvmBindingsGenerator
 
             case CppSharp.Parser.ParserResultKind.FileNotFound:
                 Diagnostics.Error( "File{0} not found: '{1}'"
-                                 , ( files.Count( ) > 1 ) ? "s" : string.Empty
+                                 , ( files.Count() > 1 ) ? "s" : string.Empty
                                  , string.Join( ",", files )
                                  );
                 hasParsingErrors = true;
@@ -398,7 +342,7 @@ namespace LlvmBindingsGenerator
                                    , diag.FileName
                                    , diag.LineNumber
                                    , diag.ColumnNumber
-                                   , diag.Level.ToString( ).ToUpperInvariant( )
+                                   , diag.Level.ToString().ToUpperInvariant()
                                    , diag.Message
                                    );
             }

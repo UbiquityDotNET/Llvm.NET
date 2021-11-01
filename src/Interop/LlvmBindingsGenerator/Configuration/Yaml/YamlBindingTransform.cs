@@ -25,7 +25,7 @@ namespace LlvmBindingsGenerator.Configuration
     }
 
     internal abstract class YamlBindingTransform
-        : IYamlConfigLocation
+        : IYamlNodeLocation
     {
         public const uint ReturnParamIndex = uint.MaxValue;
 

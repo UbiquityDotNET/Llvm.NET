@@ -71,7 +71,7 @@ namespace LlvmBindingsGenerator.Templates
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
-            if( ReturnType.Contains( "*" ) )
+            if( ReturnType.Contains( "*", StringComparison.InvariantCulture ) )
             {
                 bldr.Append( "unsafe " );
             }

@@ -14,18 +14,6 @@ namespace LlvmBindingsGenerator.Templates
         : KeyedCollection<string, IHandleCodeTemplate>
         , IReadOnlyDictionary<string, IHandleCodeTemplate>
     {
-        public bool TryGetValue( string name, out IHandleCodeTemplate item )
-        {
-            item = null;
-            if( !Contains( name ) )
-            {
-                return false;
-            }
-
-            item = this[ name ];
-            return true;
-        }
-
         public IEnumerable<string> DisposeFunctionNames
             => from item in Items
                let ght = item as GlobalHandleTemplate

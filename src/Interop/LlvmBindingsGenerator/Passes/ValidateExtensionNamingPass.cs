@@ -20,21 +20,6 @@ namespace LlvmBindingsGenerator.Passes
     internal class ValidateExtensionNamingPass
         : TranslationUnitPass
     {
-        public ValidateExtensionNamingPass( )
-        {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = false;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-        }
-
         public override bool VisitASTContext( ASTContext context )
         {
             var extensionHeaders = from tu in context.TranslationUnits

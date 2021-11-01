@@ -28,21 +28,6 @@ namespace LlvmBindingsGenerator.Passes
     {
         public AddMarshalingAttributesPass( IGeneratorConfig configuration )
         {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassMethods = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = true;
-            VisitOptions.VisitFunctionReturnType = true;
-            VisitOptions.VisitNamespaceEnums = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = true;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-
             Configuration = configuration;
         }
 

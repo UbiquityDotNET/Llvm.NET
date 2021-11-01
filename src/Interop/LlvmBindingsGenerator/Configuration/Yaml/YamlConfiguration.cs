@@ -6,10 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 
 using LlvmBindingsGenerator.Templates;
 
@@ -18,6 +19,7 @@ using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization.NodeDeserializers;
+using YamlDotNet.Serialization.Utilities;
 
 namespace LlvmBindingsGenerator.Configuration
 {
@@ -25,20 +27,20 @@ namespace LlvmBindingsGenerator.Configuration
     [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is necessary, tooling can't agree on the point. (removing it generates a warning)" )]
     internal class YamlConfiguration
     {
-        public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection( );
+        public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection();
 
-        public List<IncludeRef> IgnoredHeaders { get; set; } = new List<IncludeRef>( );
+        public List<IncludeRef> IgnoredHeaders { get; set; } = new List<IncludeRef>();
 
-        public List<IHandleInfo> HandleMap { get; set; } = new List<IHandleInfo>( );
+        public List<IHandleInfo> HandleMap { get; set; } = new List<IHandleInfo>();
 
         public Dictionary<string, string> AnonymousEnums { get; set; }
 
         public static YamlConfiguration ParseFrom( string path )
         {
-            using( var input = File.OpenText( path ) )
-            {
-                var deserializer = new DeserializerBuilder( )
-                                  .WithNodeDeserializer( inner => new YamlConfigNodeDeserializer(inner)
+            using var input = File.OpenText( path );
+            var deserializer = new DeserializerBuilder( )
+
+                                  .WithNodeDeserializer( inner => new YamlLocationNodeDeserializer(inner)
                                                        , s => s.InsteadOf<ObjectNodeDeserializer>()
                                                        )
                                   .WithTypeConverter( new IncludeRefConverter())
@@ -53,24 +55,23 @@ namespace LlvmBindingsGenerator.Configuration
                                   .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
                                   .Build( );
 
-                var retVal = deserializer.Deserialize<YamlConfiguration>( input );
+            var retVal = deserializer.Deserialize<YamlConfiguration>( input );
 
-                // Force all return transforms to use Return semantics so that
-                // transform passes will generate correct attributes for the
-                // return value.
-                var returnTransforms = from x in retVal.FunctionBindings.Values
-                                       where x.ReturnTransform != null
-                                       select x.ReturnTransform;
-                foreach( YamlBindingTransform xform in returnTransforms )
-                {
-                    xform.Semantics = ParamSemantics.Return;
-                }
-
-                return retVal;
+            // Force all return transforms to use Return semantics so that
+            // transform passes will generate correct attributes for the
+            // return value.
+            var returnTransforms = from x in retVal.FunctionBindings.Values
+                                   where x.ReturnTransform != null
+                                   select x.ReturnTransform;
+            foreach( YamlBindingTransform xform in returnTransforms )
+            {
+                xform.Semantics = ParamSemantics.Return;
             }
+
+            return retVal;
         }
 
-        public HandleTemplateMap BuildTemplateMap( )
+        public HandleTemplateMap BuildTemplateMap()
         {
             var handleTemplates = from h in HandleMap
                                   select Transform(h);
@@ -111,48 +112,18 @@ namespace LlvmBindingsGenerator.Configuration
             public object ReadYaml( IParser parser, Type type )
             {
                 var scalarEvent = parser.Consume<Scalar>();
-                return new IncludeRef( ) { Path = NormalizePathSep( scalarEvent.Value ), Start = scalarEvent.Start };
+                return new IncludeRef() { Path = NormalizePathSep( scalarEvent.Value ), Start = scalarEvent.Start };
             }
 
             public void WriteYaml( IEmitter emitter, object value, Type type )
             {
-                throw new NotSupportedException( );
+                throw new NotSupportedException();
             }
 
-            internal string NormalizePathSep( string path )
+            internal static string NormalizePathSep( string path )
             {
                 return path.Replace( Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar );
             }
-        }
-
-        private class YamlConfigNodeDeserializer
-            : INodeDeserializer
-        {
-            public YamlConfigNodeDeserializer( INodeDeserializer inner )
-            {
-                Inner = inner;
-            }
-
-            public bool Deserialize( IParser reader, Type expectedType, Func<IParser, Type, object> nestedObjectDeserializer, out object value )
-            {
-                // System.Diagnostics.Debug.WriteLine( "ExpectedType: {0} @[{1},{2}]", expectedType.Name, reader.Current.Start.Line, reader.Current.Start.Column );
-                var start = reader.Current.Start;
-                if( Inner.Deserialize( reader, expectedType, nestedObjectDeserializer, out value ) )
-                {
-                    var ctx = new ValidationContext(value, null, null);
-                    Validator.ValidateObject( value, ctx, true );
-                    if( value is IYamlConfigLocation node )
-                    {
-                        node.Start = start;
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }
-
-            private readonly INodeDeserializer Inner;
         }
     }
 }

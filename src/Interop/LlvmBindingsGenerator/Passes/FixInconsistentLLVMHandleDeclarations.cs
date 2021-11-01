@@ -31,25 +31,6 @@ namespace LlvmBindingsGenerator.Passes
     internal class FixInconsistentLLVMHandleDeclarations
         : TranslationUnitPass
     {
-        public FixInconsistentLLVMHandleDeclarations( )
-        {
-            VisitOptions.VisitClassBases = false;
-            VisitOptions.VisitClassFields = false;
-            VisitOptions.VisitClassMethods = false;
-            VisitOptions.VisitClassProperties = false;
-            VisitOptions.VisitClassTemplateSpecializations = false;
-            VisitOptions.VisitEventParameters = false;
-            VisitOptions.VisitFunctionParameters = true;
-            VisitOptions.VisitFunctionReturnType = false;
-            VisitOptions.VisitNamespaceEnums = false;
-            VisitOptions.VisitNamespaceEvents = false;
-            VisitOptions.VisitNamespaceTemplates = false;
-            VisitOptions.VisitNamespaceTypedefs = true;
-            VisitOptions.VisitNamespaceVariables = false;
-            VisitOptions.VisitPropertyAccessors = false;
-            VisitOptions.VisitTemplateArguments = false;
-        }
-
         public override bool VisitTypedefDecl( TypedefDecl typedef )
         {
             if( typedef.IsOpaquHandleTypeDef( ) )

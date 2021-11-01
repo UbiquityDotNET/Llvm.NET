@@ -45,12 +45,12 @@ namespace LlvmBindingsGenerator
                     .Concat( CreateMiscTemplates( bindingContext ) );
         }
 
-        private IEnumerable<ICodeGenerator> CreateMiscTemplates( BindingContext bindingContext )
+        private static IEnumerable<ICodeGenerator> CreateMiscTemplates( BindingContext bindingContext )
         {
             yield return new TemplateCodeGenerator( true, "EXPORTS", Path.Combine( "..", "LibLLVM" ), new[ ] { new ExportsTemplate( bindingContext.ASTContext ) } );
         }
 
-        private IEnumerable<ICodeGenerator> CreateStringMarhsallingTemplates( )
+        private static IEnumerable<ICodeGenerator> CreateStringMarhsallingTemplates( )
         {
             foreach( StringDisposal kind in GetEnumValues<StringDisposal>( ) )
             {
@@ -60,7 +60,7 @@ namespace LlvmBindingsGenerator
             }
         }
 
-        private IEnumerable<ICodeGenerator> CreatePerHeaderInterop( BindingContext ctx )
+        private static IEnumerable<ICodeGenerator> CreatePerHeaderInterop( BindingContext ctx )
         {
             foreach( var tu in ctx.ASTContext.GeneratedUnits( ) )
             {

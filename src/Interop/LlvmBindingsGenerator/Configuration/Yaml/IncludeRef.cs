@@ -9,7 +9,7 @@ using YamlDotNet.Core;
 namespace LlvmBindingsGenerator.Configuration
 {
     internal class IncludeRef
-        : IYamlConfigLocation
+        : IYamlNodeLocation
     {
         public string Path { get; set; }
 
