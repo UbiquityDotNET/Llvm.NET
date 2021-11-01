@@ -277,7 +277,7 @@ function Find-MSBuild([switch]$AllowVsPreReleases)
             throw "MSBuild not found on PATH and No instances of VS found to use"
         }
 
-        Write-Information "VS installation found: $($vsInstall | Format-List | Out-String)"
+        Write-Verbose "VS installation found: $($vsInstall | Format-List | Out-String)"
         $msBuildPath = [System.IO.Path]::Combine( $vsInstall.InstallationPath, 'MSBuild', '15.0', 'bin', 'MSBuild.exe')
         if(!(Test-Path -PathType Leaf $msBuildPath))
         {
@@ -334,7 +334,7 @@ function Invoke-MSBuild([string]$project, [hashtable]$properties, $targets, $log
     msbuild $msbuildArgs
     if($LASTEXITCODE -ne 0)
     {
-        Write-Error "Error running msbuild: $LASTEXITCODE"
+        Write-Error "Error running msbuild: $LASTEXITCODE"  -ErrorAction Stop
     }
 }
 
@@ -569,16 +569,21 @@ function Get-BuildVersionTag
     Reads the contents of the BuildVersion.xml file and generates a git
     release tag name for the current build.
 
+    This is a standalone function instead of a property on the build
+    information Hashtable so that it is always dynamically evaluated
+    based on the current contents of the BuildVersion.XML file as that
+    is generally updated when this is needed.
+
 .PARAMETER buildInfo
     Hashtable containing Information about the repository and build. This function
     requires the presence of a 'RepoRootPath' property to indicate the root of the
     repository containing the BuildVersion.xml file.
 #>
     [OutputType([string])]
-    param($buildInfo)
+    Param($buildInfo)
 
     # determine release tag from the build version XML file in the branch
-    Param([xml]$buildVersionXml = (Get-BuildVersionXML $buildInfo))
+    $buildVersionXml = (Get-BuildVersionXML $buildInfo)
     $buildVersionData = $buildVersionXml.BuildVersionData
     $preReleaseSuffix=""
     if($buildVersionData.PSObject.Properties['PreReleaseName'])
@@ -596,3 +601,153 @@ function Get-BuildVersionTag
 
     return "v$($buildVersionData.BuildMajor).$($buildVersionData.BuildMinor).$($buildVersionData.BuildPatch)$preReleaseSuffix"
 }
+
+function Initialize-CommonBuildEnvironment
+{
+<#
+.SYNOPSIS
+    Initializes the build environment for the build scripts
+
+.PARAMETER FullInit
+    Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
+    as well as writes details of the initialization to the information and verbose streams.
+
+.PARAMETER AllowVsPreReleases
+    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
+    useful when adding support for new versions during the pre-release stages.
+
+.PARAMETER DefaultMsBuildVerbosity
+    Default MSBuild verbosity for the console logger output, default value for this is 'Minimal'.
+
+.DESCRIPTION
+    This script is used to initialize the build environment in a central place, it returns the
+    build info Hashtable with properties determined for the build. Script code should use these
+    properties instead of any environment variables. While this script does setup some environment
+    variables for non-script tools (i.e., MSBuild) script code should not rely on those.
+
+    This script will setup the PATH environment variable to contain the path to MSBuild so it is
+    readily available for all subsequent script code.
+
+    Environment variables set for non-script tools:
+
+    | Name               | Description |
+    |--------------------|-------------|
+    | IsAutomatedBuild   | "true" if in an automated build environment "false" for local developer builds |
+    | IsPullRequestBuild | "true" if this is a build from an untrusted pull request (limited build, no publish etc...) |
+    | IsReleaseBuild     | "true" if this is an official release build |
+    | CiBuildName        | Name of the build for Constrained Semantic Version construction |
+    | BuildTime          | ISO-8601 formatted time stamp for the build (local builds are based on current time, automated builds use the time from the HEAD commit)
+
+    This function returns a Hashtable containing properties for the current build with the following properties:
+
+    | Name                | Description                          |
+    |---------------------|--------------------------------------|
+    | RepoRootPath        | Root of the repository for the build |
+    | BuildOutputPath     | Base directory for all build output during the build |
+    | NuGetRepositoryPath | NuGet 'packages' directory for C++ projects using packages.config |
+    | NuGetOutputPath     | Location where NuGet packages created during the build are placed |
+    | SrcRootPath         | Root of the source code for this repository |
+    | DocsOutputPath      | Root path for the generated documentation for the project |
+    | BinLogsPath         | Path to where the binlogs are generated for PR builds to allow diagnosing failures in the automated builds |
+    | TestResultsPath     | Path to where test results are placed. |
+    | DownloadsPath       | Location where any downloaded files, used by the build are placed |
+    | ToolsPath           | Location of any executable tools downloaded for the build (Typically expanded from a compressed download) |
+    | CurrentBuildKind    | Results of a call to Get-CurrentBuildKind |
+    | MsBuildLoggerArgs   | Array of MSBuild arguments, normally this only contains the Logger parameters for the console logger verbosity |
+    | MSBuildInfo         | Information about the found version of MSBuild (from a call to Find-MSBuild) |
+    | VersionTag          | Git tag name for this build if released |
+#>
+    # support common parameters
+    [cmdletbinding()]
+    Param([switch]$FullInit,
+          [switch]$AllowVsPreReleases,
+          $AddRepoSpecificPropertiesFunc,
+          $DefaultMsBuildVerbosity="Minimal"
+         )
+
+    # Script code should ALWAYS use the global CurrentBuildKind
+    $currentBuildKind = Get-CurrentBuildKind
+
+    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
+    $env:IsAutomatedBuild = $currentBuildKind -ne [BuildKind]::LocalBuild
+    $env:IsPullRequestBuild = $currentBuildKind -eq [BuildKind]::PullRequestBuild
+    $env:IsReleaseBuild = $currentBuildKind -eq [BuildKind]::ReleaseBuild
+
+    switch($currentBuildKind)
+    {
+        ([BuildKind]::LocalBuild) { $env:CiBuildName = 'ZZZ' }
+        ([BuildKind]::PullRequestBuild) { $env:CiBuildName = 'PRQ' }
+        ([BuildKind]::CiBuild) { $env:CiBuildName = 'BLD' }
+        ([BuildKind]::ReleaseBuild) { $env:CiBuildName = '' }
+        default { throw "Invalid build kind" }
+    }
+
+    # get the ISO-8601 formatted time stamp of the HEAD commit or the current UTC time for local builds
+    # for FullInit force a re-capture of the time stamp.
+    if(!$env:BuildTime -or $FullInit)
+    {
+        if($currentBuildKind -ne [BuildKind]::LocalBuild)
+        {
+            $env:BuildTime = (git show -s --format=%cI)
+        }
+        else
+        {
+            $env:BuildTime = ([System.DateTime]::UtcNow.ToString("o"))
+        }
+    }
+
+    $msbuildInfo = Find-MSBuild -AllowVsPreReleases:$AllowVsPreReleases
+    if( !$msbuildInfo['FoundOnPath'] )
+    {
+        $env:Path = "$env:Path;$($msbuildInfo['BinPath'])"
+    }
+
+    $buildInfo = Get-DefaultBuildPaths ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..')))
+    if(![string]::IsNullOrEmpty($DefaultMsBuildVerbosity))
+    {
+        $buildInfo['MsBuildLoggerArgs'] = @("/clp:Verbosity=$DefaultMsBuildVerbosity")
+    }
+    else
+    {
+        $buildInfo['MsBuildLoggerArgs'] = @()
+    }
+    $buildInfo['CurrentBuildKind'] = $currentBuildKind
+    $buildInfo['MSBuildInfo'] = $msbuildInfo
+    $buildInfo['VersionTag'] = Get-BuildVersionTag $buildInfo
+    return $buildInfo
+}
+
+function Show-FullBuildInfo
+{
+<#
+.SYNOPSIS
+    Displays details of the build information and environment to the information and verbose streams
+
+.PARAMETER buildInfo
+    The build information Hashtable for the build. This normally contains the standard and repo specific
+    properties so that the full details are available in logs.
+
+.DESCRIPTION
+    This function displays all the properties of the buildinfo to the information stream. Additionally,
+    details of the current PATH, the .NET SDKs and runtimes installed is logged to the Verbose stream.
+#>
+    Param($buildInfo)
+
+    Write-Information 'Build Info:'
+    Write-Information ($buildInfo | Format-Table | Out-String)
+
+    Write-Information "MSBUILD:`n$($buildInfo['MsbuildInfo'] | Format-Table -AutoSize | Out-String)"
+    Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
+    Write-Information (dir env:GITHUB* | Format-Table -Property Name, value | Out-String)
+    Write-Information "BuildKind: $($buildInfo['CurrentBuildKind'])"
+    Write-Information "CiBuildName: $env:CiBuildName"
+    Write-Verbose 'PATH:'
+    $($env:Path -split ';') | %{ Write-Verbose $_ }
+
+    Write-Verbose ".NET Runtimes:"
+    Write-Verbose (dotnet --list-runtimes | Out-String)
+
+    Write-Verbose ".NET SDKs:"
+    Write-Verbose (dotnet --list-sdks | Out-String)
+}
+
