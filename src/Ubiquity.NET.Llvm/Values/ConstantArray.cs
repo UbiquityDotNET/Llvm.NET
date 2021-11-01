@@ -47,6 +47,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static Constant From( ITypeRef elementType, int len, params Constant[ ] values )
         {
             elementType.ValidateNotNull( nameof( elementType ) );
+            values.ValidateNotNull( nameof( values ) );
             var zeroFilledValues = ZeroFill( elementType, len, values ).ToList( );
             return From( elementType, zeroFilledValues );
         }

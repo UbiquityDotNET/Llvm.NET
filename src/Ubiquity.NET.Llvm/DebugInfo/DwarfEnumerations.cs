@@ -206,8 +206,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// The three accessibility flags are mutually exclusive and rolled together
     /// in the first two bits.
     /// </remarks>
-    [SuppressMessage( "Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "Matches the underlying wrapped API" )]
     [Flags]
+    [SuppressMessage( "Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Matches the underlying wrapped API" )]
+    [SuppressMessage( "Naming", "CA1700:Do not name enum values 'Reserved'", Justification = "Matches the underlying wrapped API" )]
     public enum DebugInfoFlags
     {
         None = LLVMDIFlags.LLVMDIFlagZero,

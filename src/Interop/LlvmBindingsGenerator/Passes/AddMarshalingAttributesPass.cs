@@ -39,8 +39,17 @@ namespace LlvmBindingsGenerator.Passes
                 return false;
             }
 
-            @class.Attributes.Add( StructLayoutAttr );
-            @class.Attributes.Add( GeneratedCodeAttrib );
+            // Don't add the attributes if they are already present
+            if( !@class.Attributes.Contains( StructLayoutAttr ))
+            {
+                @class.Attributes.Add( StructLayoutAttr );
+            }
+
+            if( !@class.Attributes.Contains( GeneratedCodeAttrib ))
+            {
+                @class.Attributes.Add( GeneratedCodeAttrib );
+            }
+
             return base.VisitClassDecl( @class );
         }
 
