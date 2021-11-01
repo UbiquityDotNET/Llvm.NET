@@ -2,6 +2,17 @@
 .SYNOPSIS
     Builds the native code Extended LLVM C API DLL along with the interop .NET assembly for it
 
+.PARAMETER Configuration
+    This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
+
+.PARAMETER AllowVsPreReleases
+    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
+    useful when adding support for new versions during the pre-release stages.
+
+.PARAMETER FullInit
+    Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
+    as well as writes details of the initialization to the information and verbose streams.
+
 .NOTE
 This script is unfortunately necessary due to several factors:
   1. SDK projects cannot reference VCXPROJ files correctly since they are multi-targeting
@@ -33,10 +44,11 @@ This script is unfortunately necessary due to several factors:
      native assemblies to place the binaries in the correct "native" "runtimes" folder for NuGet
      to handle them.
 #>
+
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$NoClean
+    [switch]$FullInit
 )
 
 pushd $PSScriptRoot
@@ -44,7 +56,7 @@ $oldPath = $env:Path
 try
 {
     . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
     # <HACK>
     # for details of why this is needed, see src\PatchVsForLibClang\readme.md
@@ -82,7 +94,7 @@ try
     # and incompatibilities libs are generally not something published in a package. However, since the build time
     # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
     # automated builds.
-    Install-LlvmLibs $buildInfo['LlvmLibsRoot'] $buildInfo['LlvmLibsPackageReleaseName']
+    Install-LlvmLibs $buildInfo
 
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
@@ -121,12 +133,17 @@ try
     }
     else
     {
-        Write-Error "Generating LLVM Bindings failed"
+        Write-Error "Generating LLVM Bindings failed" -ErrorAction Stop
     }
 }
 catch
 {
-    Write-Error $_.Exception.Message
+    # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+    # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+    # information is retained and the error reported will include the correct source file and line number
+    # data for the error. Without this, only the error message is retained and the location information is
+    # Line 1, Column 1, of the outer most script file, which is, of course, completely useless.
+    throw
 }
 finally
 {
