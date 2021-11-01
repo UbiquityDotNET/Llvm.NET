@@ -47,67 +47,38 @@ namespace LlvmBindingsGenerator
 
         public override string ToString( Type type )
         {
-            string retVal;
-            switch( type )
+            string retVal = type switch
             {
-            case TypedefType tdt when tdt.Declaration.Name == "LLVMBool":
-                retVal = "bool";
-                break;
-
-            case PointerType pt when pt.Pointee is BuiltinType:
-                retVal = $"{ToString(pt.Pointee)}*";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "intptr_t":
-                retVal = "global::System.IntPtr";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "uintptr_t":
-                retVal = "global::System.UIntPtr";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "uint8_t":
-                retVal = "global::System.Byte";
-                break;
-
-            case TypedefType tdt when( tdt.Declaration.Name == "uint32_t" || tdt.Declaration.Name == "LLVMDWARFTypeEncoding" ):
-                retVal = "global::System.UInt32";
-                break;
-
-            case TypedefType tdt when( tdt.Declaration.Name == "uint64_t" || tdt.Declaration.Name == "LLVMOrcModuleHandle" || tdt.Declaration.Name == "LLVMOrcTargetAddress" ):
-                retVal = "global::System.UInt64";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "int8_t":
-                retVal = "global::System.SByte";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "int32_t":
-                retVal = "global::System.Int32";
-                break;
-
-            case TypedefType tdt when tdt.Declaration.Name == "int64_t":
-                retVal = "global::System.Int64";
-                break;
-
-            case TypedefType tdt:
-                retVal = tdt.Declaration.Name;
-                break;
-
-            case CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ):
-                retVal = decl.Name;
-                break;
-
-            case ArrayType at:
-                retVal = $"{ToString( at.Type )}[]";
-                break;
-
-            default:
-                retVal = base.ToString( type );
-                break;
-            }
-
+                TypedefType tdt when tdt.Declaration.Name == "LLVMBool" => "bool",
+                PointerType pt when pt.Pointee is BuiltinType => $"{ToString( pt.Pointee )}*",
+                TypedefType tdt when tdt.Declaration.Name == "intptr_t" => "global::System.IntPtr",
+                TypedefType tdt when tdt.Declaration.Name == "uintptr_t" => "global::System.UIntPtr",
+                TypedefType tdt when tdt.Declaration.Name == "uint8_t" => "global::System.Byte",
+                TypedefType tdt when( ShouldBeUInt32(tdt) ) => "global::System.UInt32",
+                TypedefType tdt when( ShouldBeUInt64(tdt) ) => "global::System.UInt64",
+                TypedefType tdt when tdt.Declaration.Name == "int8_t" => "global::System.SByte",
+                TypedefType tdt when tdt.Declaration.Name == "int32_t" => "global::System.Int32",
+                TypedefType tdt when tdt.Declaration.Name == "int64_t" => "global::System.Int64",
+                TypedefType tdt => tdt.Declaration.Name,
+                BuiltinType bit when bit.Type == PrimitiveType.IntPtr => "global::System.IntPtr",
+                CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ) => decl.Name,
+                ArrayType at => $"{ToString( at.Type )}[]",
+                _ => base.ToString( type ),
+            };
             return retVal;
+        }
+
+        private static bool ShouldBeUInt32(TypedefType tdt)
+        {
+            return tdt.Declaration.Name == "uint32_t"
+                || tdt.Declaration.Name == "LLVMDWARFTypeEncoding";
+        }
+
+        private static bool ShouldBeUInt64(TypedefType tdt)
+        {
+            return tdt.Declaration.Name == "uint64_t"
+                || tdt.Declaration.Name == "LLVMOrcModuleHandle"
+                || tdt.Declaration.Name == "LLVMOrcTargetAddress";
         }
     }
 }

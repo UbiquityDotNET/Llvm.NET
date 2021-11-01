@@ -415,7 +415,6 @@ namespace Ubiquity.NET.Llvm
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         [Obsolete( "Use CreateFunction( string name, IFunctionType signature ) instead" )]
         public IrFunction AddFunction( string name, IFunctionType signature )
         {
@@ -432,7 +431,6 @@ namespace Ubiquity.NET.Llvm
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public IrFunction CreateFunction( string name, IFunctionType signature )
         {
             ThrowIfDisposed( );
@@ -836,6 +834,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Function declaration</returns>
         public IrFunction GetIntrinsicDeclaration( UInt32 id, params ITypeRef[ ] args )
         {
+            args.ValidateNotNull( nameof( args ) );
             if( !LLVMIntrinsicIsOverloaded( id ) && args.Length > 0 )
             {
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Intrinsic_0_is_not_overloaded_and_therefore_does_not_require_type_arguments, id ) );

@@ -7,4 +7,4 @@
 # LLVMBindingsGenerator
 ## [Bindings Overview](LlvmBindingsGenerator-Overview.md)
 ## [Configuration](LlvmBindingsGenerator-Configuration.md)
-### [Marshaling Info Table](LlvmBindingsGenerator-MarshalingInfo-Table.md)
+### [Marshaling Info Table](LlvmBindingsGenerator-YAML-Config-format.md)

@@ -153,7 +153,7 @@ namespace Ubiquity.NET.Llvm.Tests
         public void ModuleCloneInContextTest( )
         {
             using var context1 = new Context( );
-            var m1 = CreateSimpleModule( context1, "module1" );
+            using var m1 = CreateSimpleModule( context1, "module1" );
             using var context2 = new Context( );
             var m2 = m1.Clone( context2 );
             Assert.AreNotSame( context2, m1 );
@@ -523,7 +523,7 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
         }
 
-        private BitcodeModule CreateSimpleModule( Context ctx, string name )
+        private static BitcodeModule CreateSimpleModule( Context ctx, string name )
         {
             var retVal = ctx.CreateBitcodeModule( name );
             CreateSimpleVoidNopTestFunction( retVal, name );

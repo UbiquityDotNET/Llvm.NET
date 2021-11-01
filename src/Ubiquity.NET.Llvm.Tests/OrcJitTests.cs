@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm.Tests
             }
         }
 
-        private void AddAndExecuteTestModule( OrcJit orcJit, BitcodeModule module, int magicNumber )
+        private static void AddAndExecuteTestModule( OrcJit orcJit, BitcodeModule module, int magicNumber )
         {
             ulong orcHandle = orcJit.AddEagerlyCompiledModule( module );
             var main = orcJit.GetFunctionDelegate<TestMain>("main");

@@ -159,7 +159,7 @@ namespace Ubiquity.NET.Llvm.Tests
         // typing
         [SuppressMessage( "Globalization", "CA1308:Normalize strings to uppercase", Justification = "Uppercase is WRONG for this" )]
         [Conditional( "DEBUG" )]
-        internal void GenerateExpectedTargets( )
+        internal static void GenerateExpectedTargets( )
         {
             var bldr = new System.Text.StringBuilder( "internal static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
             bldr.AppendLine( );
