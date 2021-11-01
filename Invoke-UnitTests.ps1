@@ -16,7 +16,7 @@
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$FullInit,
+    [switch]$FullInit
 )
 
 try
