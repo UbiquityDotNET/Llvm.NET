@@ -7,7 +7,6 @@
 using System;
 
 using CppSharp;
-using CppSharp.AST;
 using CppSharp.Generators;
 using CppSharp.Parser;
 using CppSharp.Passes;
@@ -22,8 +21,6 @@ namespace LlvmBindingsGenerator
         ParserOptions ParserOptions { get; }
 
         BindingContext Context { get; }
-
-        ITypePrinter TypePrinter { get; set; }
     }
 
     internal static class DriverExtensions

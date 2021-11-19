@@ -12,15 +12,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 using CppSharp.AST;
-
-using LlvmBindingsGenerator.CppSharpExtensions;
+using CppSharp.AST.Extensions;
 
 namespace LlvmBindingsGenerator.Templates
 {
     internal class ParsedFunctionSignature
     {
-        public ParsedFunctionSignature( Function f )
+        public ParsedFunctionSignature( Function f, ITypePrinter2 typePrinter )
         {
+            TypePrinter = typePrinter;
             if( f.IsOperator || f.IsThisCall )
             {
                 throw new ArgumentException( "Unsupported function type", nameof( f ) );
@@ -33,8 +33,9 @@ namespace LlvmBindingsGenerator.Templates
             Introducer = "public static extern ";
         }
 
-        public ParsedFunctionSignature( TypedefNameDecl td )
+        public ParsedFunctionSignature( TypedefNameDecl td, ITypePrinter2 typePrinter )
         {
+            TypePrinter = typePrinter;
             if( td.TryGetFunctionSignature( out FunctionType signature ) )
             {
                 if( signature.CallingConvention != CppSharp.AST.CallingConvention.C )
@@ -60,9 +61,9 @@ namespace LlvmBindingsGenerator.Templates
 
         public IEnumerable<CppSharp.AST.Attribute> Attributes { get; }
 
-        public bool HasNonVoidReturn => ReturnType != "void";
+        public bool HasNonVoidReturn => !Signature.ReturnType.Type.IsPrimitiveType(PrimitiveType.Void);
 
-        public string ReturnType => Signature.ReturnType.Type.ToString( );
+        public string ReturnType => TypePrinter.GetName(Signature.ReturnType.Type, TypeNameKind.Managed);
 
         public IEnumerable<string> Parameters => GetParameters( Signature.Parameters );
 
@@ -98,7 +99,7 @@ namespace LlvmBindingsGenerator.Templates
             return CodeDom.CreateEscapedIdentifier( p.Name );
         }
 
-        private static IEnumerable<string> GetParameters( IList<Parameter> parameters )
+        private IEnumerable<string> GetParameters( IList<Parameter> parameters )
         {
             var bldr = new StringBuilder( );
             for( int i = 0; i < parameters.Count; ++i )
@@ -113,7 +114,7 @@ namespace LlvmBindingsGenerator.Templates
                 if( arg.IsOut )
                 {
                     bldr.Append( "out " );
-                    if( argType.ToString( ) != "string" && argType is PointerType pt )
+                    if( !argType.IsConstCharString() && argType is PointerType pt )
                     {
                         argType = pt.Pointee;
                     }
@@ -122,13 +123,13 @@ namespace LlvmBindingsGenerator.Templates
                 if( arg.IsInOut )
                 {
                     bldr.Append( "ref " );
-                    if( argType.ToString( ) != "string" && argType is PointerType pt )
+                    if( argType.IsConstCharString( ) && argType is PointerType pt )
                     {
                         argType = pt.Pointee;
                     }
                 }
 
-                bldr.Append( argType.ToString( ) )
+                bldr.Append( TypePrinter.GetName(argType, TypeNameKind.Managed ) )
                     .Append( ' ' )
                     .Append( CreateEscapedIdentifier( arg ) );
 
@@ -142,6 +143,7 @@ namespace LlvmBindingsGenerator.Templates
             }
         }
 
+        private readonly ITypePrinter2 TypePrinter;
         private readonly string Introducer;
 
         private static readonly CodeDomProvider CodeDom

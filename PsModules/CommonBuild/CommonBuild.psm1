@@ -219,7 +219,7 @@ function Invoke-NuGet
     }
 }
 
-function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
+function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 18.0)', [string[]]$requiredComponents = @('Microsoft.Component.MSBuild'))
 {
 <#
 .SYNOPSIS
@@ -229,7 +229,7 @@ function Find-VSInstance([switch]$PreRelease, $Version = '[15.0, 17.0)', [string
     Indicates if the search should include pre-release versions of Visual Studio
 
 .PARAMETER version
-    The version range to search for. [Default is '[15.0, 17.0)']
+    The version range to search for. [Default is '[15.0, 18.0)']
 
 .PARAMETER requiredComponents
     The set of required components to search for. [Default is an empty array]

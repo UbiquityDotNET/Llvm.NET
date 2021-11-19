@@ -27,9 +27,10 @@ namespace LlvmBindingsGenerator
     internal class LibLlvmTemplateFactory
         : ICodeGeneratorTemplateFactory
     {
-        public LibLlvmTemplateFactory( IGeneratorConfig config )
+        public LibLlvmTemplateFactory( IGeneratorConfig config, ITypePrinter2 typePrinter )
         {
             HandleToTemplateMap = config.BuildTemplateMap( );
+            TypePrinter = typePrinter;
         }
 
         public void SetupPasses( BindingContext bindingContext )
@@ -60,12 +61,12 @@ namespace LlvmBindingsGenerator
             }
         }
 
-        private static IEnumerable<ICodeGenerator> CreatePerHeaderInterop( BindingContext ctx )
+        private IEnumerable<ICodeGenerator> CreatePerHeaderInterop( BindingContext ctx )
         {
             foreach( var tu in ctx.ASTContext.GeneratedUnits( ) )
             {
-                var t4Template = new PerHeaderInteropTemplate( tu );
-                var t4XmlDocsTemplate = new ExternalDocXmlTemplate( tu );
+                var t4Template = new PerHeaderInteropTemplate( tu, TypePrinter );
+                var t4XmlDocsTemplate = new ExternalDocXmlTemplate( tu, TypePrinter );
                 yield return new TemplateCodeGenerator( tu.IsValid
                                                       , tu.FileNameWithoutExtension
                                                       , tu.IncludePath == null ? GeneratedCodePath : Path.Combine( GeneratedCodePath, tu.FileRelativeDirectory )
@@ -95,6 +96,7 @@ namespace LlvmBindingsGenerator
         }
 
         private readonly HandleTemplateMap HandleToTemplateMap;
+        private readonly ITypePrinter2 TypePrinter;
 
         private const string GeneratedCodePath = "GeneratedCode";
     }

@@ -11,8 +11,6 @@ using System.Runtime.InteropServices;
 
 using CppSharp.AST;
 
-using LlvmBindingsGenerator.CppSharpExtensions;
-
 namespace LlvmBindingsGenerator.Configuration
 {
     [SuppressMessage( "Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "De-serialized from YAML" )]

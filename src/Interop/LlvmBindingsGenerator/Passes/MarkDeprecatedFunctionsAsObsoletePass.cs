@@ -12,7 +12,6 @@ using CppSharp.AST;
 using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {

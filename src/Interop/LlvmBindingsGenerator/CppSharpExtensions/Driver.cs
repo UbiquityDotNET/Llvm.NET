@@ -52,16 +52,6 @@ namespace LlvmBindingsGenerator
 
         public BindingContext Context { get; private set; }
 
-        public ITypePrinter TypePrinter
-        {
-            get => InternalTypePrinter;
-            set
-            {
-                InternalTypePrinter = value;
-                CppSharp.AST.Type.TypePrinterDelegate = InternalTypePrinter.ToString;
-            }
-        }
-
         public void SetupTypeMaps() =>
             Context.TypeMaps = new TypeMapDatabase( Context );
 
@@ -86,7 +76,7 @@ namespace LlvmBindingsGenerator
 
             Context.ASTContext = ClangParser.ConvertASTContext( ParserOptions.ASTContext );
             ClangParser.SourcesParsed -= OnSourceFileParsed;
-            return !hasParsingErrors;
+            return !HasParsingErrors;
         }
 
         public void SortModulesByDependencies()
@@ -222,6 +212,11 @@ namespace LlvmBindingsGenerator
 
             library.Preprocess( driver.Context.ASTContext );
 
+            if( CppSharp.AST.Type.TypePrinterDelegate is null)
+            {
+                throw new InvalidOperationException("Type.TypePrinterDelegate is null; Library must configure it to a non-null value to prevent null reference crashes");
+            }
+
             driver.ProcessCode();
             library.Postprocess( driver.Context.ASTContext );
 
@@ -302,7 +297,7 @@ namespace LlvmBindingsGenerator
         {
             switch( result.Kind )
             {
-            case CppSharp.Parser.ParserResultKind.Success:
+            case ParserResultKind.Success:
                 if( !Options.Quiet )
                 {
                     Diagnostics.Message( "Parsed '{0}'", string.Join( ", ", files ) );
@@ -310,17 +305,17 @@ namespace LlvmBindingsGenerator
 
                 break;
 
-            case CppSharp.Parser.ParserResultKind.Error:
+            case ParserResultKind.Error:
                 Diagnostics.Error( "Error parsing '{0}'", string.Join( ", ", files ) );
-                hasParsingErrors = true;
+                HasParsingErrors = true;
                 break;
 
-            case CppSharp.Parser.ParserResultKind.FileNotFound:
+            case ParserResultKind.FileNotFound:
                 Diagnostics.Error( "File{0} not found: '{1}'"
                                  , ( files.Count() > 1 ) ? "s" : string.Empty
                                  , string.Join( ",", files )
                                  );
-                hasParsingErrors = true;
+                HasParsingErrors = true;
                 break;
             }
 
@@ -328,12 +323,12 @@ namespace LlvmBindingsGenerator
             {
                 var diag = result.GetDiagnostics( i );
 
-                if( diag.Level == CppSharp.Parser.ParserDiagnosticLevel.Warning && !Options.Verbose )
+                if( diag.Level == ParserDiagnosticLevel.Warning && !Options.Verbose )
                 {
                     continue;
                 }
 
-                if( diag.Level == CppSharp.Parser.ParserDiagnosticLevel.Note )
+                if( diag.Level == ParserDiagnosticLevel.Note )
                 {
                     continue;
                 }
@@ -348,7 +343,6 @@ namespace LlvmBindingsGenerator
             }
         }
 
-        private ITypePrinter InternalTypePrinter;
-        private bool hasParsingErrors;
+        private bool HasParsingErrors;
     }
 }

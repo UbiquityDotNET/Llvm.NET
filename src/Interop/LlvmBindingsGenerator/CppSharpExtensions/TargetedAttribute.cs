@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LlvmBindingsGenerator.CppSharpExtensions
+namespace LlvmBindingsGenerator
 {
     internal enum AttributeTarget
     {

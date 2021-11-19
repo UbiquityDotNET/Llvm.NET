@@ -23,7 +23,7 @@
 
 .DESCRIPTION
     This script is used by the automated build to perform the actual build. The Ubiquity.NET
-    family of projects all a PowerShell driven build that is generally divorced from the
+    family of projects all employ a PowerShell driven build that is generally divorced from the
     automated build infrastructure used. This is done for several reasons, but the most
     important ones are the ability to reproduce the build locally for inner development and
     for flexibility in selecting the actual back end. The back ends have changed a few times

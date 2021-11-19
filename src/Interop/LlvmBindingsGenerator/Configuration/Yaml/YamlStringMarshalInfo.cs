@@ -12,7 +12,6 @@ using System.Text;
 
 using CppSharp.AST;
 
-using LlvmBindingsGenerator.CppSharpExtensions;
 using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration
