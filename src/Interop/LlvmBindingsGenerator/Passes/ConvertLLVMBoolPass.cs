@@ -11,7 +11,6 @@ using CppSharp.AST;
 using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
@@ -85,9 +84,9 @@ namespace LlvmBindingsGenerator.Passes
         }
 
         private readonly IGeneratorConfig Configuration;
-        private static QualifiedType BoolType = new QualifiedType( new CILType( typeof(bool ) ) );
+        private static QualifiedType BoolType = new( new CILType( typeof(bool ) ) );
         private static QualifiedType LlvmStatusType =
-            new QualifiedType(
+            new(
                 new TypedefType(
                     new TypedefDecl
                     {

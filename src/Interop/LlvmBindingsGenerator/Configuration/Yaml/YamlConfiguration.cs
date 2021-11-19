@@ -7,10 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 
 using LlvmBindingsGenerator.Templates;
 
@@ -19,7 +17,6 @@ using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization.NodeDeserializers;
-using YamlDotNet.Serialization.Utilities;
 
 namespace LlvmBindingsGenerator.Configuration
 {

@@ -15,7 +15,6 @@ using CppSharp.AST.Extensions;
 using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
@@ -58,7 +57,7 @@ namespace LlvmBindingsGenerator.Passes
             var (usage, type) = TryAddImplicitMarahalingAttributesForType( field.QualifiedType, field.Attributes );
             if( usage != ParameterUsage.Unknown )
             {
-                Diagnostics.Debug( "Converting type of field {0}.{1} to {2}", field.Namespace, field.Name, type.ToString( ) );
+                Diagnostics.Debug( "Converting type of field {0}.{1} to {2}", field.Namespace, field.Name, type);
                 field.QualifiedType = new QualifiedType( type, field.QualifiedType.Qualifiers );
             }
 
@@ -181,7 +180,7 @@ namespace LlvmBindingsGenerator.Passes
             var (usage, type) = TryAddImplicitMarahalingAttributesForType( p.QualifiedType, p.Attributes );
             if( usage != ParameterUsage.Unknown )
             {
-                Diagnostics.Debug( "Converting type of parameter {0}::{1} to {2} [Usage: {3}]", p.Namespace, p.Name, type.ToString( ), usage );
+                Diagnostics.Debug( "Converting type of parameter {0}::{1} to {2} [Usage: {3}]", p.Namespace, p.Name, type, usage );
                 p.Usage = usage;
                 p.QualifiedType = new QualifiedType( type, p.QualifiedType.Qualifiers );
                 return;
@@ -228,23 +227,13 @@ namespace LlvmBindingsGenerator.Passes
         {
             parameter.Attributes.AddRange( marshaling.Attributes );
             parameter.QualifiedType = marshaling.TransformType( parameter.QualifiedType );
-            switch( marshaling.Semantics )
+            parameter.Usage = marshaling.Semantics switch
             {
-            case ParamSemantics.In:
-                parameter.Usage = ParameterUsage.In;
-                break;
-
-            case ParamSemantics.Out:
-                parameter.Usage = ParameterUsage.Out;
-                break;
-
-            case ParamSemantics.InOut:
-                parameter.Usage = parameter.Type is ArrayType ? ParameterUsage.In : ParameterUsage.InOut;
-                break;
-
-            default:
-                throw new InvalidOperationException( );
-            }
+                ParamSemantics.In => ParameterUsage.In,
+                ParamSemantics.Out => ParameterUsage.Out,
+                ParamSemantics.InOut => parameter.Type is ArrayType ? ParameterUsage.In : ParameterUsage.InOut,
+                _ => throw new InvalidOperationException( ),
+            };
         }
 
         private static void ApplyDllImportAttribute( Function function )
@@ -297,7 +286,7 @@ namespace LlvmBindingsGenerator.Passes
 
         private readonly IGeneratorConfig Configuration;
 
-        private readonly Stack<Declaration> DeclarationStack = new Stack<Declaration>();
+        private readonly Stack<Declaration> DeclarationStack = new();
 
         private static readonly CppSharp.AST.Attribute MarshalAsLPStrAttrib
             = new TargetedAttribute( typeof( MarshalAsAttribute ), "UnmanagedType.LPStr" );
@@ -307,11 +296,11 @@ namespace LlvmBindingsGenerator.Passes
 
         private static readonly CppSharp.AST.Type StringType = new CILType( typeof(string) );
         private static readonly CppSharp.AST.Type StringArrayType = new CILType( typeof(string[]) );
-        private static readonly TargetedAttribute StructLayoutAttr = new TargetedAttribute( typeof(StructLayoutAttribute ), "LayoutKind.Sequential" );
+        private static readonly TargetedAttribute StructLayoutAttr = new( typeof(StructLayoutAttribute ), "LayoutKind.Sequential" );
         private static readonly TargetedAttribute GeneratedCodeAttrib
-            = new TargetedAttribute( typeof( GeneratedCodeAttribute )
-                                   , "\"LlvmBindingsGenerator\""
-                                   , $"\"{typeof(AddMarshalingAttributesPass).Assembly.GetName( ).Version}\""
-                                   );
+            = new( typeof( GeneratedCodeAttribute )
+                 , "\"LlvmBindingsGenerator\""
+                 , $"\"{typeof(AddMarshalingAttributesPass).Assembly.GetName( ).Version}\""
+                 );
     }
 }

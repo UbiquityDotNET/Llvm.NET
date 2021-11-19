@@ -9,8 +9,6 @@ using System.Runtime.InteropServices;
 
 using CppSharp.AST;
 
-using LlvmBindingsGenerator.CppSharpExtensions;
-
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 

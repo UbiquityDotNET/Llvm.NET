@@ -14,9 +14,10 @@ namespace LlvmBindingsGenerator.Templates
     internal partial class ExternalDocXmlTemplate
         : ICodeGenTemplate
     {
-        public ExternalDocXmlTemplate( TranslationUnit tu )
+        public ExternalDocXmlTemplate( TranslationUnit tu, ITypePrinter2 typePrinter )
         {
             Unit = tu;
+            TypePrinter = typePrinter;
         }
 
         public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
@@ -37,12 +38,12 @@ namespace LlvmBindingsGenerator.Templates
         public IEnumerable<ParsedFunctionSignature> Functions
             => from f in Unit.Functions
                where f.IsGenerated
-               select new ParsedFunctionSignature( f );
+               select new ParsedFunctionSignature( f, TypePrinter );
 
         public IEnumerable<ParsedFunctionSignature> Delegates
             => from td in Unit.Typedefs
                where td.IsDelegateTypeDef( )
-               select new ParsedFunctionSignature( td );
+               select new ParsedFunctionSignature( td, TypePrinter );
 
         public IEnumerable<Class> ValueTypes
             => from cls in Unit.Classes
@@ -50,5 +51,6 @@ namespace LlvmBindingsGenerator.Templates
                select cls;
 
         private readonly TranslationUnit Unit;
+        private readonly ITypePrinter2 TypePrinter;
     }
 }

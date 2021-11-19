@@ -11,7 +11,6 @@ using CppSharp.AST;
 using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.CppSharpExtensions;
 using LlvmBindingsGenerator.Passes;
 
 namespace LlvmBindingsGenerator
@@ -37,6 +36,8 @@ namespace LlvmBindingsGenerator
             ArchInclude = Path.Combine( llvmRoot, "x64-Release", "include" );
             ExtensionsInclude = Path.Combine( extensionsRoot, "include" );
             OutputPath = Path.GetFullPath( outputPath );
+            InternalTypePrinter = new LibLLVMTypePrinter();
+            Type.TypePrinterDelegate = t => InternalTypePrinter.GetName( t, TypeNameKind.Native );
         }
 
         public void Setup( IDriver driver )
@@ -66,20 +67,19 @@ namespace LlvmBindingsGenerator
             // transformation only occurs for the desired headers. Other passes depend on
             // TranslationUnit.IsGenerated to ignore headers.
             Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
+            Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
 
             // configuration validation - generates warnings for entries in configuration that
             // have no corresponding elements in the source AST. (either from typos in the config
             // or version to version changes in the underlying LLVM source)
             Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
 
-            Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
-            Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
-            Driver.AddTranslationUnitPass( new AddTypeMapsPass( ) );
-            Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
             Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
-            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
 
             // General transformations - These passes may alter the in memory AST
+            Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
+            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
+            Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
             Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
             Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration ) );
             Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnums ) );
@@ -94,22 +94,24 @@ namespace LlvmBindingsGenerator
 
         public void Preprocess( ASTContext ctx )
         {
-            Driver.TypePrinter = new LibLLVMTypePrinter( Driver.Context );
-            return;
+            // purge all the CppSharp type mapping to prevent any conversions/mapping
+            // Only the raw source should be in the AST until later stages adjust it.
+            Driver.Context.TypeMaps.TypeMaps.Clear();
+            InternalTypePrinter.Context = Driver.Context;
         }
 
         public void Postprocess( ASTContext ctx )
         {
-            return;
         }
 
         public IEnumerable<ICodeGenerator> CreateGenerators( )
         {
-            var templateFactory = new LibLlvmTemplateFactory( Configuration );
+            var templateFactory = new LibLlvmTemplateFactory( Configuration, InternalTypePrinter );
             return templateFactory.CreateTemplates( Driver.Context );
         }
 
         private IDriver Driver;
+        private readonly LibLLVMTypePrinter InternalTypePrinter;
         private readonly IGeneratorConfig Configuration;
         private readonly string CommonInclude;
         private readonly string ArchInclude;

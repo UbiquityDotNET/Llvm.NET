@@ -61,7 +61,7 @@ foreach(var d in Delegates) {#>
 <#  foreach(var fa in fld.Attributes) {#>
         <#=fa.AsString()#>
 <#  }#>
-        public <#=fld.Type#> <#=fld.Name#>;
+        public <#=GetManagedName(fld.Type)#> <#=fld.Name#>;
 <#}#>
     }
 

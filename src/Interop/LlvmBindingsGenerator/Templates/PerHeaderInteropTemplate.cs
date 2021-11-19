@@ -16,9 +16,10 @@ namespace LlvmBindingsGenerator.Templates
     internal partial class PerHeaderInteropTemplate
         : ICodeGenTemplate
     {
-        public PerHeaderInteropTemplate( TranslationUnit tu )
+        public PerHeaderInteropTemplate( TranslationUnit tu, ITypePrinter2 typePrinter )
         {
             Unit = tu;
+            TypePrinter = typePrinter;
         }
 
         public string ToolVersion => GetType( ).Assembly.GetAssemblyInformationalVersion( );
@@ -97,6 +98,11 @@ namespace LlvmBindingsGenerator.Templates
             }
         }
 
+        public string GetManagedName(Type t)
+        {
+            return TypePrinter.GetName(t, TypeNameKind.Managed);
+        }
+
         public IEnumerable<ParsedEnum> Enums
             => from e in Unit.Enums
                select new ParsedEnum( e );
@@ -104,12 +110,12 @@ namespace LlvmBindingsGenerator.Templates
         public IEnumerable<ParsedFunctionSignature> Functions
             => from f in Unit.Functions
                where f.IsGenerated
-               select new ParsedFunctionSignature( f );
+               select new ParsedFunctionSignature( f, TypePrinter );
 
         public IEnumerable<ParsedFunctionSignature> Delegates
             => from td in Unit.Typedefs
                where td.IsDelegateTypeDef( )
-               select new ParsedFunctionSignature( td );
+               select new ParsedFunctionSignature( td, TypePrinter );
 
         public IEnumerable<Class> ValueTypes
             => from cls in Unit.Classes
@@ -117,5 +123,7 @@ namespace LlvmBindingsGenerator.Templates
                select cls;
 
         public TranslationUnit Unit { get; }
+
+        private readonly ITypePrinter2 TypePrinter;
     }
 }

@@ -67,7 +67,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /* private const UInt32 LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400; */
 
         [DllImport( "kernel32", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern IntPtr LoadLibraryExW( [MarshalAs( UnmanagedType.LPTStr )]string lpFileName, IntPtr hFile, UInt32 dwFlags );
+        private static extern IntPtr LoadLibraryExW( [MarshalAs( UnmanagedType.LPWStr )]string lpFileName, IntPtr hFile, UInt32 dwFlags );
 
         [DllImport( "kernel32", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true )]
         private static extern IntPtr AddDllDirectory( [MarshalAs( UnmanagedType.LPWStr )]string lp );

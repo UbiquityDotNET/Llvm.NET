@@ -6,12 +6,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
 using CppSharp.AST;
-
-using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator
 {
@@ -86,10 +85,11 @@ namespace LlvmBindingsGenerator
             return td.Type is TagType tt2 && tt2.IsOpaqueStruct();
         }
 
+        [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Result is anything but simplified!" )]
         public static bool IsCannonicalHandleTypeDef( this TypedefNameDecl td )
         {
             // Canonical form, declaration is a pointer to an opaque struct
-            if( !(td.Type is PointerType pt) )
+            if( td.Type is not PointerType pt )
             {
                 return false;
             }
@@ -108,7 +108,7 @@ namespace LlvmBindingsGenerator
                 bldr.Append( ": " );
             }
 
-            bldr.Append( useFullNamespace ? attr.Type.FullName : attr.Type.Name.Substring( 0, attr.Type.Name.Length - 9 /*Len(Attribute)*/ ) );
+            bldr.Append( useFullNamespace ? attr.Type.FullName : attr.Type.Name[ 0..^9 ] );
             if( !string.IsNullOrWhiteSpace( attr.Value ) )
             {
                 bldr.Append( "( " );
@@ -116,7 +116,7 @@ namespace LlvmBindingsGenerator
                 bldr.Append( " )" );
             }
 
-            bldr.Append( "]" );
+            bldr.Append( ']' );
             return bldr.ToString();
         }
 

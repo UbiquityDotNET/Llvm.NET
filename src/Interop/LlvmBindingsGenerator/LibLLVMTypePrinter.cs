@@ -4,11 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using CppSharp.AST;
-using CppSharp.Generators;
-using CppSharp.Generators.CSharp;
+using System;
 
-using Ubiquity.ArgValidators;
+using CppSharp.AST;
+using CppSharp.Generators.CSharp;
 
 namespace LlvmBindingsGenerator
 {
@@ -39,18 +38,24 @@ namespace LlvmBindingsGenerator
     /// </remarks>
     internal class LibLLVMTypePrinter
         : CSharpTypePrinter
+        , ITypePrinter2
     {
-        public LibLLVMTypePrinter( BindingContext context )
-            : base( context.ValidateNotNull( nameof( context ) ) )
+        public override string ToString( CppSharp.AST.Type type )
         {
+            throw new NotSupportedException("Direct calls to ToString are not supported, instead call GetName with the appropriate kind");
         }
 
-        public override string ToString( Type type )
+        public string GetName( CppSharp.AST.Type type, TypeNameKind kind = TypeNameKind.Native)
         {
+            if(kind == TypeNameKind.Native)
+            {
+                return type.Visit(NativePrinter);
+            }
+
             string retVal = type switch
             {
                 TypedefType tdt when tdt.Declaration.Name == "LLVMBool" => "bool",
-                PointerType pt when pt.Pointee is BuiltinType => $"{ToString( pt.Pointee )}*",
+                PointerType pt when pt.Pointee is BuiltinType => $"{base.ToString( pt.Pointee )}*", // shouldn't see this... Should be caught as an error...
                 TypedefType tdt when tdt.Declaration.Name == "intptr_t" => "global::System.IntPtr",
                 TypedefType tdt when tdt.Declaration.Name == "uintptr_t" => "global::System.UIntPtr",
                 TypedefType tdt when tdt.Declaration.Name == "uint8_t" => "global::System.Byte",
@@ -62,7 +67,7 @@ namespace LlvmBindingsGenerator
                 TypedefType tdt => tdt.Declaration.Name,
                 BuiltinType bit when bit.Type == PrimitiveType.IntPtr => "global::System.IntPtr",
                 CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ) => decl.Name,
-                ArrayType at => $"{ToString( at.Type )}[]",
+                ArrayType at => $"{GetName( at.Type, kind )}[]",
                 _ => base.ToString( type ),
             };
             return retVal;
@@ -71,14 +76,16 @@ namespace LlvmBindingsGenerator
         private static bool ShouldBeUInt32(TypedefType tdt)
         {
             return tdt.Declaration.Name == "uint32_t"
-                || tdt.Declaration.Name == "LLVMDWARFTypeEncoding";
+                || tdt.Declaration.Name == "LLVMDWARFTypeEncoding"; // TODO: This should be mapped as a record struct (Closest equivalent to a typedef uint32_t foo;)
         }
 
         private static bool ShouldBeUInt64(TypedefType tdt)
         {
             return tdt.Declaration.Name == "uint64_t"
-                || tdt.Declaration.Name == "LLVMOrcModuleHandle"
-                || tdt.Declaration.Name == "LLVMOrcTargetAddress";
+                || tdt.Declaration.Name == "LLVMOrcModuleHandle" // TODO: This should be mapped as a record struct
+                || tdt.Declaration.Name == "LLVMOrcTargetAddress"; // TODO: This should be mapped as a record struct
         }
+
+        private readonly NativeTypePrinter NativePrinter = new();
     }
 }

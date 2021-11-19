@@ -8,9 +8,9 @@ using System.Linq;
 
 using CppSharp;
 using CppSharp.AST;
+using CppSharp.AST.Extensions;
 using CppSharp.Passes;
 using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Passes
 {
@@ -70,7 +70,7 @@ namespace LlvmBindingsGenerator.Passes
 
             var outStrings = from p in function.Parameters
                              where (p.IsOut || p.IsInOut)
-                                && ( p.Type.ToString( ) == "string" || p.Type.ToString() == "sbyte")
+                                && p.Type.IsConstCharString()
                                 && !p.Attributes.Any( IsStringMarshalingAttribute )
                              select p;
 
@@ -85,7 +85,7 @@ namespace LlvmBindingsGenerator.Passes
             // signature is wrong.
             var inStrings = from p in function.Parameters
                              where p.IsIn
-                                && ( p.Type.ToString( ) == "string" || p.Type.ToString() == "sbyte")
+                                && p.Type.IsConstCharString()
                                 && !p.Attributes.Any( a=> IsStringMarshalingAttribute(a) || IsArrayMarshalingAttribute(a) )
                              select p;
 
