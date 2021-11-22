@@ -79,7 +79,8 @@ FunctionsToExport = @(
     'Update-Submodules',
     'Invoke-DotNetTest',
     'Initialize-CommonBuildEnvironment',
-    'Show-FullBuildInfo'
+    'Show-FullBuildInfo',
+    'Get-BuildVersionTag'
 )
 
 # Cmdlets to export from this module
