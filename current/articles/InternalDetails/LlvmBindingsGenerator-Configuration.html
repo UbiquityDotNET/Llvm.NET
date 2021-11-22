@@ -8,7 +8,7 @@
     <title>LlvmBindings Configuration | Ubiquity.NET.Llvm </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="LlvmBindings Configuration | Ubiquity.NET.Llvm ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.5.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -115,7 +115,7 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="LlvmBindingsGenerator-MarshalingInfo-Table.html" title="Marshaling Info Table" class="">Marshaling Info Table</a>
+                                  <a href="LlvmBindingsGenerator-YAML-Config-format.html" title="Marshaling Info Table" class="">Marshaling Info Table</a>
                                 </li>
                               </ul>  </li>
                         </ul>  </li>
@@ -136,9 +136,10 @@ ambiguities of generating the code. The configuration is an instance of the
 <p>The GeneratorConfig class holds all the data used by the various passes in
 LlvmBindingsGenerator to transform the AST so that subsequent stages will 
 generate correct .NET interop code. There are several tables of information
-used in the various passes.</p>
+used in the various passes. (See: <a href="LlvmBindingsGenerator-YAML-Config-format.html">YAML Configuration format</a>
+For details of the configuration file YAML format)</p>
 <h2 id="statusreturningfunctions">StatusReturningFunctions</h2>
-<p>This table is a simple <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd412070(v=vs.110).aspx">SortedSet</a> of
+<p>This table is a simple <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.sortedset-1">SortedSet</a> of
 strings. Each entry is the name of an LLVM function that semantically returns a status.
 The return type is transformed to an LLVMStatus to differentiate such types from a
 boolean or other integral values (in the case of a C Declaration that simply returns an
@@ -149,7 +150,7 @@ consistent, without actually breaking the ABI of the LLVM-C APIs. </p>
 used to transform function parameter and return types as well as add appropriate marshaling
 attributes for them. This is the most complex implementations of all the passes. Though
 declaring the table is made a lot easier by the various IMarshalInfo implementation types.
-(see: <a href="LlvmBindingsGenerator-MarshalingInfo-Table.html">MarshalingInfo Table</a> for details)</p>
+(see: <a href="LlvmBindingsGenerator-YAML-Config-format.html">YAML Configuration format</a> for details)</p>
 <h2 id="deprecatedfunctiontomessagemap">DeprecatedFunctionToMessageMap</h2>
 <p>This property consists of a dictionary that maps the name of a deprecated LLVM-C API to
 a message explaining what the alternative is, if there is one. This is used to create the
@@ -159,19 +160,19 @@ do not even appear in the generated output or EXPORTS.</p>
 </div>
 <h2 id="internalfunctions">InternalFunctions</h2>
 <p>This property contains a dictionary of functions that are considered internal or just completely
-ignored for the interop layer. Generally these are the disposal methods that are used in the handle generated handle
-types or custom string marshalers. Sometimes they are for functions declared int the headers but
-not implemented in the library. (the LTO APIs for instance are not included as they are intended for
-use in an actual linker) The values in the dictionary are a boolean that indicates if the function
-is just completely ignored (true) or used internally only (false). The MarkFunctionsInternalPass
-uses this information to mark the functions appropriately for subsequent passes.</p>
+ignored for the interop layer. Generally these are the disposal methods that are used in the
+generated handle types or custom string marshalers. Sometimes they are for functions declared in
+the headers but not implemented in the library. (the LTO APIs for instance are not included as they
+are intended for use in an actual linker) The values in the dictionary are a boolean that indicates
+if the function is just completely ignored (true) or used internally only (false). The
+MarkFunctionsInternalPass uses this information to mark the functions appropriately for subsequent
+passes.</p>
 <h2 id="handletotemplatemap">HandleToTemplateMap</h2>
 <p>The LlvmBindings generator supports creating safe handles for all of the LLVM object handle types.
 Since there are a few distinct patterns for handles the HandleToTemplate map is used to map between
 the LLVM-C typedef handle name and the actual template that will generate the code for that
 particular handle. The HandleToTemplateMap property is a keyed collection of IHandleCodeTemplate
-that is keyed by the HandleName. There are, at present two general template types and one very
-specialized template:</p>
+that is keyed by the HandleName. There are, at present two general template types:</p>
 <h3 id="globalhandletemplate">GlobalHandleTemplate</h3>
 <p>This is used for handles that have a global application defined lifetime and therefore have a
 distinct disposal method. The generated handle types derive from the .NET SafeHandle types for
@@ -186,10 +187,6 @@ should never dispose the handle as it doesn&#39;t own it.</p>
 <p>Contextual handles are those that are always references to objects owned by a parent container
 of some sort. Most objects in LLVM are owned by an LLVM Context or module and only disposed of
 when the parent container itself is disposed.</p>
-<h3 id="llvmerrorreftemplate">LLVMErrorRefTemplate</h3>
-<p>This is a very specialized template to handle the LLVMErrorRef type which actually has multiple
-disposal APIs. Just getting the error message out of the handle, actually disposes the handle
-underneath, so the interop handle type requires very specialized support.</p>
 <h2 id="anonymousenumnames">AnonymousEnumNames</h2>
 <p>The AnonymousEnumNames is a dictionary that maps the name of the first enumerated value of an
 anonymous enum with the typedef type that is used to represent it. This table is used to
@@ -223,7 +220,7 @@ alias that the caller <strong>MUST NOT</strong> destroy/dispose.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.3
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0
             
           </div>
         </div>

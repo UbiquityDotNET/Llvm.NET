@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Method CreateConstantString
    | Ubiquity.NET.Llvm ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.5.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -2865,9 +2865,6 @@
                               
                               <ul class="nav level3">
                                 <li class="">
-                                  <a href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose.html" title="Dispose" class="">Dispose</a>
-                                </li>
-                                <li class="">
                                   <a href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Kind.html" title="Kind" class="">Kind</a>
                                 </li>
                                 <li class="">
@@ -2965,14 +2962,8 @@
                                 </li>
                               </ul>  </li>
                           <li class="">
-                            <span class="expand-stub"></span>
                             <a href="Ubiquity.NET.Llvm.Transforms.PassManager.html" title="PassManager" class="">PassManager</a>
-                              
-                              <ul class="nav level3">
-                                <li class="">
-                                  <a href="Ubiquity.NET.Llvm.Transforms.PassManager.Dispose.html" title="Dispose" class="">Dispose</a>
-                                </li>
-                              </ul>  </li>
+                          </li>
                           <li class="">
                             <span class="expand-stub"></span>
                             <a href="Ubiquity.NET.Llvm.Transforms.Sanitizers.html" title="Sanitizers" class="">Sanitizers</a>
@@ -3513,10 +3504,19 @@
                               
                               <ul class="nav level3">
                                 <li class="">
+                                  <a href="Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count.html" title="Count" class="">Count</a>
+                                </li>
+                                <li class="">
                                   <a href="Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString.html" title="ExtractAsString" class="">ExtractAsString</a>
                                 </li>
                                 <li class="">
+                                  <a href="Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence.html" title="IsI8Sequence" class="">IsI8Sequence</a>
+                                </li>
+                                <li class="">
                                   <a href="Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsString.html" title="IsString" class="">IsString</a>
+                                </li>
+                                <li class="">
+                                  <a href="Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData.html" title="RawData" class="">RawData</a>
                                 </li>
                               </ul>  </li>
                           <li class="">
@@ -3962,7 +3962,7 @@
   <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Context_CreateConstantString_System_String_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Context.CreateConstantString(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/a9b26a1bc89602e3e213f12b7ad79c4a0e49a932/src/Ubiquity.NET.Llvm/Context.cs/#L490" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/aabdd51f52a5a7ea634a2d0beeed42e7a6f2132a/src/Ubiquity.NET.Llvm/Context.cs/#L492" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
 </span>
 <a id="Ubiquity_NET_Llvm_Context_CreateConstantString_" data-uid="Ubiquity.NET.Llvm.Context.CreateConstantString*"></a>
 <h2 id="Ubiquity_NET_Llvm_Context_CreateConstantString_System_String_" data-uid="Ubiquity.NET.Llvm.Context.CreateConstantString(System.String)">CreateConstantString(String)</h2>
@@ -3976,7 +3976,7 @@
 <h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+      <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
       <td><span class="parametername">value</span></td>
       <td><p>string to convert into an LLVM constant value</p>
 </td>
@@ -3992,14 +3992,16 @@
 </table>
 <h2 id="Ubiquity_NET_Llvm_Context_CreateConstantString_System_String__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This converts the string to ANSI form and creates an LLVM constant array of i8
-characters for the data without any terminating null character.</p>
+characters for the data with a terminating null character. To control the enforcement
+of a terminating null character, use the <a class="xref" href="Ubiquity.NET.Llvm.Context.CreateConstantString.html#Ubiquity_NET_Llvm_Context_CreateConstantString_System_String_System_Boolean_">CreateConstantString(String, Boolean)</a>
+overload to specify the intended behavior.</p>
 </div>
 <span class="small pull-right mobile-hide">
   <span class="divider">&nbsp;</span>
   <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Context_CreateConstantString_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Context.CreateConstantString(System.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab-small btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
 </span>
 <span class="small pull-right mobile-hide">
-  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/a9b26a1bc89602e3e213f12b7ad79c4a0e49a932/src/Ubiquity.NET.Llvm/Context.cs/#L506" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
+  <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/aabdd51f52a5a7ea634a2d0beeed42e7a6f2132a/src/Ubiquity.NET.Llvm/Context.cs/#L502" title="View Source" class="fab-small btn-info pull-right"><i class="fa fa-code"></i></a>
 </span>
 <a id="Ubiquity_NET_Llvm_Context_CreateConstantString_" data-uid="Ubiquity.NET.Llvm.Context.CreateConstantString*"></a>
 <h2 id="Ubiquity_NET_Llvm_Context_CreateConstantString_System_String_System_Boolean_" data-uid="Ubiquity.NET.Llvm.Context.CreateConstantString(System.String,System.Boolean)">CreateConstantString(String, Boolean)</h2>
@@ -4013,13 +4015,13 @@ characters for the data without any terminating null character.</p>
 <h2 class="parameters">Parameters</h2>
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+      <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
       <td><span class="parametername">value</span></td>
       <td><p>string to convert into an LLVM constant value</p>
 </td>
     </tr>
     <tr>
-      <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
+      <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
       <td><span class="parametername">nullTerminate</span></td>
       <td><p>flag to indicate if the string should include a null terminator</p>
 </td>
@@ -4035,13 +4037,13 @@ characters for the data without any terminating null character.</p>
 </table>
 <h2 id="Ubiquity_NET_Llvm_Context_CreateConstantString_System_String_System_Boolean__remarks">Remarks</h2>
 <div class="markdown level1 remarks"><p>This converts the string to ANSI form and creates an LLVM constant array of i8
-characters for the data without any terminating null character.</p>
+characters for the data. Enforcement of a null terminator depends on the value of <code data-dev-comment-type="paramref" class="paramref">nullTerminate</code></p>
 </div>
 </h3></h3></article>
           </div>
           <div class="contribution-panel mobile-hide">
               <a href="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Context_CreateConstantString_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Context.CreateConstantString*%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/a9b26a1bc89602e3e213f12b7ad79c4a0e49a932/src/Ubiquity.NET.Llvm/Context.cs/#L490" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/aabdd51f52a5a7ea634a2d0beeed42e7a6f2132a/src/Ubiquity.NET.Llvm/Context.cs/#L492" title="View Source" class="fab btn-info pull-right"><i class="fa fa-code"></i></a>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -4060,7 +4062,7 @@ characters for the data without any terminating null character.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.3
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0
             
           </div>
         </div>

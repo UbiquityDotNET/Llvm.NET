@@ -10443,11 +10443,11 @@ references:
   name: AddIncoming((Value Value, BasicBlock Block), (Value Value, BasicBlock Block)[])
   href: api/Ubiquity.NET.Llvm.Instructions.PhiNode.AddIncoming.html#Ubiquity_NET_Llvm_Instructions_PhiNode_AddIncoming_System_ValueTuple_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_BasicBlock__System_ValueTuple_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_BasicBlock____
   commentId: M:Ubiquity.NET.Llvm.Instructions.PhiNode.AddIncoming(System.ValueTuple{Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.BasicBlock},System.ValueTuple{Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.BasicBlock}[])
-  name.vb: AddIncoming((Value As Value, Block As BasicBlock), (Value As Value, Block As BasicBlock)())
+  name.vb: AddIncoming((Value As Value, Block As BasicBlock)(Of Value, BasicBlock), (Value As Value, Block As BasicBlock)(Of Value, BasicBlock)())
   fullName: Ubiquity.NET.Llvm.Instructions.PhiNode.AddIncoming(System.ValueTuple<Ubiquity.NET.Llvm.Values.Value, Ubiquity.NET.Llvm.Values.BasicBlock>, System.ValueTuple<Ubiquity.NET.Llvm.Values.Value, Ubiquity.NET.Llvm.Values.BasicBlock>[])
   fullName.vb: Ubiquity.NET.Llvm.Instructions.PhiNode.AddIncoming(System.ValueTuple(Of Ubiquity.NET.Llvm.Values.Value, Ubiquity.NET.Llvm.Values.BasicBlock), System.ValueTuple(Of Ubiquity.NET.Llvm.Values.Value, Ubiquity.NET.Llvm.Values.BasicBlock)())
   nameWithType: PhiNode.AddIncoming((Value Value, BasicBlock Block), (Value Value, BasicBlock Block)[])
-  nameWithType.vb: PhiNode.AddIncoming((Value As Value, Block As BasicBlock), (Value As Value, Block As BasicBlock)())
+  nameWithType.vb: PhiNode.AddIncoming((Value As Value, Block As BasicBlock)(Of Value, BasicBlock), (Value As Value, Block As BasicBlock)(Of Value, BasicBlock)())
 - uid: Ubiquity.NET.Llvm.Instructions.PhiNode.AddIncoming(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.BasicBlock)
   name: AddIncoming(Value, BasicBlock)
   href: api/Ubiquity.NET.Llvm.Instructions.PhiNode.AddIncoming.html#Ubiquity_NET_Llvm_Instructions_PhiNode_AddIncoming_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_BasicBlock_
@@ -11617,6 +11617,15 @@ references:
   commentId: T:Ubiquity.NET.Llvm.MemoryBuffer
   fullName: Ubiquity.NET.Llvm.MemoryBuffer
   nameWithType: MemoryBuffer
+- uid: Ubiquity.NET.Llvm.MemoryBuffer.#ctor(System.Byte[],System.String)
+  name: MemoryBuffer(Byte[], String)
+  href: api/Ubiquity.NET.Llvm.MemoryBuffer.-ctor.html#Ubiquity_NET_Llvm_MemoryBuffer__ctor_System_Byte___System_String_
+  commentId: M:Ubiquity.NET.Llvm.MemoryBuffer.#ctor(System.Byte[],System.String)
+  name.vb: MemoryBuffer(Byte(), String)
+  fullName: Ubiquity.NET.Llvm.MemoryBuffer.MemoryBuffer(System.Byte[], System.String)
+  fullName.vb: Ubiquity.NET.Llvm.MemoryBuffer.MemoryBuffer(System.Byte(), System.String)
+  nameWithType: MemoryBuffer.MemoryBuffer(Byte[], String)
+  nameWithType.vb: MemoryBuffer.MemoryBuffer(Byte(), String)
 - uid: Ubiquity.NET.Llvm.MemoryBuffer.#ctor(System.String)
   name: MemoryBuffer(String)
   href: api/Ubiquity.NET.Llvm.MemoryBuffer.-ctor.html#Ubiquity_NET_Llvm_MemoryBuffer__ctor_System_String_
@@ -12647,18 +12656,6 @@ references:
   commentId: T:Ubiquity.NET.Llvm.ObjectFile.TargetBinary
   fullName: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
   nameWithType: TargetBinary
-- uid: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose(System.Boolean)
-  name: Dispose(Boolean)
-  href: api/Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose.html#Ubiquity_NET_Llvm_ObjectFile_TargetBinary_Dispose_System_Boolean_
-  commentId: M:Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose(System.Boolean)
-  fullName: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose(System.Boolean)
-  nameWithType: TargetBinary.Dispose(Boolean)
-- uid: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose*
-  name: Dispose
-  href: api/Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose.html
-  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose
-  fullName: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Dispose
-  nameWithType: TargetBinary.Dispose
 - uid: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Kind
   name: Kind
   href: api/Ubiquity.NET.Llvm.ObjectFile.TargetBinary.Kind.html#Ubiquity_NET_Llvm_ObjectFile_TargetBinary_Kind
@@ -13419,18 +13416,6 @@ references:
   commentId: T:Ubiquity.NET.Llvm.Transforms.PassManager
   fullName: Ubiquity.NET.Llvm.Transforms.PassManager
   nameWithType: PassManager
-- uid: Ubiquity.NET.Llvm.Transforms.PassManager.Dispose(System.Boolean)
-  name: Dispose(Boolean)
-  href: api/Ubiquity.NET.Llvm.Transforms.PassManager.Dispose.html#Ubiquity_NET_Llvm_Transforms_PassManager_Dispose_System_Boolean_
-  commentId: M:Ubiquity.NET.Llvm.Transforms.PassManager.Dispose(System.Boolean)
-  fullName: Ubiquity.NET.Llvm.Transforms.PassManager.Dispose(System.Boolean)
-  nameWithType: PassManager.Dispose(Boolean)
-- uid: Ubiquity.NET.Llvm.Transforms.PassManager.Dispose*
-  name: Dispose
-  href: api/Ubiquity.NET.Llvm.Transforms.PassManager.Dispose.html
-  commentId: Overload:Ubiquity.NET.Llvm.Transforms.PassManager.Dispose
-  fullName: Ubiquity.NET.Llvm.Transforms.PassManager.Dispose
-  nameWithType: PassManager.Dispose
 - uid: Ubiquity.NET.Llvm.Transforms.Sanitizers
   name: Sanitizers
   href: api/Ubiquity.NET.Llvm.Transforms.Sanitizers.html
@@ -17424,18 +17409,48 @@ references:
   commentId: T:Ubiquity.NET.Llvm.Values.ConstantDataSequential
   fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential
   nameWithType: ConstantDataSequential
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count
+  name: Count
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count.html#Ubiquity_NET_Llvm_Values_ConstantDataSequential_Count
+  commentId: P:Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count
+  nameWithType: ConstantDataSequential.Count
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count*
+  name: Count
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.Count
+  nameWithType: ConstantDataSequential.Count
 - uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString
   name: ExtractAsString()
   href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString.html#Ubiquity_NET_Llvm_Values_ConstantDataSequential_ExtractAsString
   commentId: M:Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString
   fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString()
   nameWithType: ConstantDataSequential.ExtractAsString()
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString(System.Text.Encoding)
+  name: ExtractAsString(Encoding)
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString.html#Ubiquity_NET_Llvm_Values_ConstantDataSequential_ExtractAsString_System_Text_Encoding_
+  commentId: M:Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString(System.Text.Encoding)
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString(System.Text.Encoding)
+  nameWithType: ConstantDataSequential.ExtractAsString(Encoding)
 - uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString*
   name: ExtractAsString
   href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString.html
   commentId: Overload:Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString
   fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.ExtractAsString
   nameWithType: ConstantDataSequential.ExtractAsString
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence
+  name: IsI8Sequence
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence.html#Ubiquity_NET_Llvm_Values_ConstantDataSequential_IsI8Sequence
+  commentId: P:Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence
+  nameWithType: ConstantDataSequential.IsI8Sequence
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence*
+  name: IsI8Sequence
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsI8Sequence
+  nameWithType: ConstantDataSequential.IsI8Sequence
 - uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsString
   name: IsString
   href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsString.html#Ubiquity_NET_Llvm_Values_ConstantDataSequential_IsString
@@ -17448,6 +17463,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsString
   fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.IsString
   nameWithType: ConstantDataSequential.IsString
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData
+  name: RawData
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData.html#Ubiquity_NET_Llvm_Values_ConstantDataSequential_RawData
+  commentId: P:Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData
+  nameWithType: ConstantDataSequential.RawData
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData*
+  name: RawData
+  href: api/Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataSequential.RawData
+  nameWithType: ConstantDataSequential.RawData
 - uid: Ubiquity.NET.Llvm.Values.ConstantDataVector
   name: ConstantDataVector
   href: api/Ubiquity.NET.Llvm.Values.ConstantDataVector.html

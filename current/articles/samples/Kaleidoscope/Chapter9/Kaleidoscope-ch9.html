@@ -8,7 +8,7 @@
     <title>9. Kaleidoscope: Adding Debug Information | Ubiquity.NET.Llvm </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="9. Kaleidoscope: Adding Debug Information | Ubiquity.NET.Llvm ">
-    <meta name="generator" content="docfx 2.48.1.0">
+    <meta name="generator" content="docfx 2.58.5.0">
     
     <link rel="shortcut icon" href="../../../../favicon.ico">
     <link rel="stylesheet" href="../../../../styles/docfx.vendor.css">
@@ -258,7 +258,7 @@ completing code generation for the module.</p>
         // and inlines each of the anonymous functions directly into main, dropping the now
         // unused original anonymous functions all while retaining all of the original source
         // debug information locations.
-        using var mpm = new ModulePassManager( );
+        var mpm = new ModulePassManager( );
         mpm.AddAlwaysInlinerPass( )
            .AddGlobalDCEPass( )
            .Run( Module );
@@ -514,7 +514,7 @@ compiler for custom languages, including debug support a lot easier.</p>
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0-alpha.3
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0
             
           </div>
         </div>
