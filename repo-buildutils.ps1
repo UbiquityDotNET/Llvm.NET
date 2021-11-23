@@ -112,6 +112,7 @@ function Initialize-BuildEnvironment
 
     # use common repo-neutral function to perform most of the initialization
     $buildInfo = Initialize-CommonBuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo['OfficialGitRemoteUrl'] = 'https://github.com/UbiquityDotNET/Llvm.NET.git'
     $buildInfo['LlvmLibsRoot'] = Join-Path $PSScriptRoot 'llvm'
     $buildInfo['LlvmVersion'] = "10.0.0"
     $buildInfo['LlvmLibsPackageReleaseName'] = "$($buildInfo['LlvmVersion'])-msvc-16.5"

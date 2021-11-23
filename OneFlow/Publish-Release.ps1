@@ -1,65 +1,48 @@
 <#
 .SYNOPSIS
-    Publishes the current branch state as an official release tag
+    Publishes the current release as a new branch to the upstream repository
 
 .DESCRIPTION
-    This function ensures that no changes exist in the local repository so that only the tag is pushed.
-    Pushing a release tag should trigger GitHub actions that starts the official build via a GitHub action
+    Generally, this function will finalize the changes for the release and create a new "merge-back"
+    branch to manage any conflicts to prevent commits "AFTER" the tag is applied to the origin repository.
+    After this completes it is still required to create a PR for the resulting branch to the origin's "develop"
+    branch to merge any changes in this branch - including the release tag.
+
+    Completing the PR with a release tag should trigger the start the official build via a GitHub action
     or other such automated build processes. These, normally, also include publication of the resulting
     binaries as appropriate. This function only pushes the tag, the rest is up to the back-end configuration
     of the repository.
+
+.NOTE
+    For the gory details of this process see: https://www.endoflineblog.com/implementing-oneflow-on-github-bitbucket-and-gitlab
 #>
 
-. .\repo-buildutils.ps1
+Param([switch]$TagOnly)
+$repoRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, ".."))
+. (join-path $repoRoot repo-buildutils.ps1)
 $buildInfo = Initialize-BuildEnvironment
 
-# Release tags must only be pushed from a repository with the official GitHub repository as the origin remote.
-# This ensures that the links to source in the generated docs will have the correct URLs
-# (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
-$remoteUrl = git ls-remote --get-url
+# create script scoped alias for git that throws a PowerShell exception if the command fails
+Set-Alias git Invoke-git -scope Script -option Private
 
-Write-Information "Remote URL: $remoteUrl"
-
-if($remoteUrl -ine "https://github.com/UbiquityDotNET/Llvm.NET.git")
-{
-    throw "Publishing a release tag is only allowed when the origin remote is the official source release current remote is '$remoteUrl'"
-}
-
-# pushing the tag to GitHub triggers the official build and release of the Nuget Packages
+# merging the tag to develop branch on the official repository triggers the official build and release of the Nuget Packages
 $tagName = Get-BuildVersionTag $buildInfo
 $releaseBranch = "release/$tagName"
-$currentBranch = git rev-parse --abbrev-ref HEAD
-if( $releaseBranch -ne $currentBranch )
-{
-    throw "Current branch '$currentBranch' doesn't match the expected release branch from BuildVersion.xml, expected '$releaseBranch'"
-}
+$mergeBackBranchName = "merge-back-$tagName"
 
-$localCommitSha = git rev-parse --verify $releaseBranch
-$remoteCommitSha = git rev-parse --verify "origin/$releaseBranch"
-if( $localCommitSha -ne $remoteCommitSha )
-{
-    throw "Local HEAD is not the same as origin, these must be in sync so that only the tag itself is pushed"
-}
+# check out and tag the release branch
+git checkout $releasebranch
+git tag $tagname -m "Official release: $tagname"
+git push --tags
 
-Write-Information "tagging $tagname on $releasebranch"
+# create a "merge-back" child branch to handle any updates/conflict resolutions
+# the tag from the parent will flow through to the final commit of the PR For
+# the merge. Otherwise, the tag is locked to the commit on the release branch
+# and any conflict resolution commits are "AFTER" the tag (and thus, not included
+# in the tagged commit)
+# This PR **MUST** be merged to origin with the --no-ff strategy
+git checkout -b $mergeBackBranchName $releasebranch
+git push $mergeBackBranchName
 
-git tag -a $tagname -m "Official release: $tagname"
-if(!$?) {throw 'GIT tag command failed'}
-git checkout develop
-if(!$?) {throw 'GIT co develop command failed'}
-git merge $releaseBranch
-if(!$?) {throw 'GIT merge command failed'}
-git push --tags origin develop
-if(!$?) {throw 'GIT push --tags origin develop command failed'}
-git branch -d $releaseBranch
-if(!$?) {throw 'GIT delete local release branch command failed'}
-git push origin --delete $releaseBranch
-if(!$?) {throw 'GIT delete remote release branch command failed'}
-
-# update master branch to point to the latest release for full releases
-git checkout master
-if(!$?) {throw 'GIT checkout master command failed'}
-git merge --ff-only $tagName
-if(!$?) {throw 'GIT merge --ff-only command failed'}
-git push
-if(!$?) {throw 'GIT push (master update) command failed'}
+Write-Output "Created and published $mergeBackBranchName to your forked repository, you must create a PR for this change to the Official repository"
+Write-Output "Additionally, these changes **MUST** be merged back without squashing"
