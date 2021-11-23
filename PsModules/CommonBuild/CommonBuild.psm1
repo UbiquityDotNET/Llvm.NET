@@ -6,7 +6,7 @@
 function Ensure-PathExists
 {
     param([Parameter(Mandatory=$true, ValueFromPipeLine)]$path)
-    md -Force -ErrorAction SilentlyContinue $path | Out-Null
+    mkdir -Force -ErrorAction SilentlyContinue $path | Out-Null
 }
 
 function Get-DefaultBuildPaths([string]$repoRoot)
@@ -17,8 +17,8 @@ function Get-DefaultBuildPaths([string]$repoRoot)
 
 .DESCRIPTION
     This function initializes a hash table with the default paths for a build. This
-    allows for standardization of build output locations etc... across builds. The
-    values set are as follows:
+    allows for standardization of build output locations etc... across builds and repositories
+    in the organization. The values set are as follows:
 
     | Name                | Description                          |
     |---------------------|--------------------------------------|
@@ -83,7 +83,15 @@ function Find-OnPath
         $path = where.exe $exeName 2>$null | select -First 1
     }
     catch
-    {}
+    {
+        # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+        # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+        # information is retained and the error reported will include the correct source file and line number
+        # data for the error. Without this, only the error message is retained and the location information is
+        # Line 1, Column 1, of the outer most script file, which is, of course, completely useless.
+        throw
+    }
+
     if($path)
     {
         Write-Information "Found $exeName at: '$path'"
@@ -146,6 +154,15 @@ function Invoke-TimedBlock([string]$activity, [ScriptBlock]$block)
     try
     {
         $block.Invoke()
+    }
+    catch
+    {
+        # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+        # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+        # information is retained and the error reported will include the correct source file and line number
+        # data for the error. Without this, only the error message is retained and the location information is
+        # Line 1, Column 1, of the outer most script file, which is, of course, completely useless.
+        throw
     }
     finally
     {
@@ -210,6 +227,7 @@ function Invoke-NuGet
 
         $env:Path = "$env:Path;$($buildPaths['ToolsPath'])"
     }
+
     Write-Information "NuGet $args"
     NuGet.exe $args
     $err = $LASTEXITCODE
@@ -711,6 +729,7 @@ function Initialize-CommonBuildEnvironment
     {
         $buildInfo['MsBuildLoggerArgs'] = @()
     }
+
     $buildInfo['CurrentBuildKind'] = $currentBuildKind
     $buildInfo['MSBuildInfo'] = $msbuildInfo
     $buildInfo['VersionTag'] = Get-BuildVersionTag $buildInfo
