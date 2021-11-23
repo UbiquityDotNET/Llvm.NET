@@ -28,6 +28,6 @@ namespace Kaleidoscope.Grammar.AST
         /// <summary>Gets a singleton null node instance</summary>
         public static NullNode Instance => LazyInstance.Value;
 
-        private static readonly Lazy<NullNode> LazyInstance = new Lazy<NullNode>(LazyThreadSafetyMode.PublicationOnly);
+        private static readonly Lazy<NullNode> LazyInstance = new(LazyThreadSafetyMode.PublicationOnly);
     }
 }

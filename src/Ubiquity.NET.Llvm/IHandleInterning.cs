@@ -7,10 +7,6 @@
 using System;
 using System.Collections.Generic;
 
-// Internal types don't require XML docs, despite settings in stylecop.json the analyzer still
-// gripes about these for interfaces...
-#pragma warning disable SA1600
-
 namespace Ubiquity.NET.Llvm
 {
     internal interface IHandleInterning<THandle, TMappedType>

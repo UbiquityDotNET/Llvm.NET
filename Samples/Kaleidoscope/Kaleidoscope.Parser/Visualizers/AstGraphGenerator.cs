@@ -176,6 +176,6 @@ namespace Kaleidoscope.Grammar.AST
             return $"{node.GetType( ).GUID}-{node.GetHashCode( )}";
         }
 
-        private readonly Stack<Node> NodeStack = new Stack<Node>();
+        private readonly Stack<Node> NodeStack = new();
     }
 }

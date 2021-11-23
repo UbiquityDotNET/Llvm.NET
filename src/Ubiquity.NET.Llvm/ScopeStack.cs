@@ -67,7 +67,7 @@ namespace Ubiquity.NET.Llvm
         /// <exception cref="KeyNotFoundException">If the <paramref name="name"/> wasn't found in the active or parent scopes</exception>
         public T this[ string name ]
         {
-            get => TryGetValue( name, out T retVal ) ? retVal : throw new KeyNotFoundException( name );
+            get => TryGetValue( name, out T? retVal ) ? retVal : throw new KeyNotFoundException( name );
             set => Scopes.Peek( )[ name ] = value;
         }
 
@@ -89,6 +89,6 @@ namespace Ubiquity.NET.Llvm
             return false;
         }
 
-        private readonly Stack<IDictionary<string, T>> Scopes = new Stack<IDictionary<string, T>>();
+        private readonly Stack<IDictionary<string, T>> Scopes = new();
     }
 }

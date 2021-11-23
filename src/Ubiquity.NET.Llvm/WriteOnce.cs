@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public override string ToString( )
         {
-            return HasValue ? Convert.ToString( ActualValue, CultureInfo.CurrentCulture ) : string.Empty;
+            return (HasValue && ActualValue is not null) ? Convert.ToString( ActualValue, CultureInfo.CurrentCulture )! : string.Empty;
         }
 
         /// <summary>Gets or sets the value for this instance</summary>
@@ -35,15 +35,7 @@ namespace Ubiquity.NET.Llvm
         [MaybeNull]
         public T Value
         {
-            get
-            {
-                if( !HasValue )
-                {
-                    throw new InvalidOperationException( Resources.Value_not_set );
-                }
-
-                return ActualValue;
-            }
+            get => HasValue ? ActualValue : throw new InvalidOperationException( Resources.Value_not_set );
 
             set
             {

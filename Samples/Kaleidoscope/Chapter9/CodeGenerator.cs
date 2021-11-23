@@ -195,7 +195,7 @@ namespace Kaleidoscope.Chapter9
             string targetName = functionCall.FunctionPrototype.Name;
 
             IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
             {
                 function = GetOrDeclareFunction( target );
             }
@@ -649,13 +649,13 @@ namespace Kaleidoscope.Chapter9
         private readonly Context Context;
         private readonly BitcodeModule Module;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
+        private readonly ScopeStack<Alloca> NamedValues = new( );
         private readonly FunctionPassManager FunctionPassManager;
         private readonly bool DisableOptimizations;
         private readonly TargetMachine TargetMachine;
-        private readonly List<IrFunction> AnonymousFunctions = new List<IrFunction>( );
+        private readonly List<IrFunction> AnonymousFunctions = new( );
         private readonly DebugBasicType DoubleType;
-        private readonly Stack<DILocalScope> LexicalBlocks = new Stack<DILocalScope>( );
+        private readonly Stack<DILocalScope> LexicalBlocks = new( );
         #endregion
     }
 }

@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentNullException( nameof( self ) );
             }
 
-            if( !self.ParentModule.Comdats.TryGetValue( name, out Comdat comdat ) )
+            if( !self.ParentModule.Comdats.TryGetValue( name, out Comdat? comdat ) )
             {
                 comdat = self.ParentModule.Comdats.InsertOrUpdate( name, kind );
             }

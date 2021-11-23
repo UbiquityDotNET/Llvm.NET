@@ -24,7 +24,7 @@ Param(
     [switch]$NoClone
 )
 
-pushd $PSScriptRoot
+Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
@@ -34,6 +34,7 @@ try
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
+    $msBuildPropertyList = ConvertTo-PropertyList $msBuildProperties
 
     $docsOutputPath = $buildInfo['DocsOutputPath']
 
@@ -43,7 +44,7 @@ try
     {
         if(Test-Path -PathType Container $docsOutputPath)
         {
-            del -Path $docsOutputPath -Recurse -Force
+            Remove-Item -Path $docsOutputPath -Recurse -Force
         }
 
         Write-Information "Cloning Docs repository"
@@ -58,16 +59,21 @@ try
     $currentVersionDocsPath = Join-Path $docsOutputPath 'current'
     if(Test-Path -PathType Container $currentVersionDocsPath)
     {
-        del -Path $currentVersionDocsPath -Recurse -Force
+        Remove-Item -Path $currentVersionDocsPath -Recurse -Force
     }
 
     $docfxRestoreBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Restore.binlog
     $docfxBuildBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.binlog
 
-    Write-Information "Building Docs Solution"
+    Write-Information "Building top level docs index"
+    dotnet build 'docfx\index\Ubiquity.NET.Llvm.Docfx.Index.csproj' -p:$msBuildPropertyList
+
+    Write-Information "Building current version library docs"
+    dotnet build 'docfx\current\Ubiquity.NET.Llvm.Docfx.API.csproj' -p:$msBuildPropertyList
+
     # NOTE: Current state of DocFX requires a distinct restore pass.
-    Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxRestoreBinLogPath") )
-    Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBuildBinLogPath") )
+    #Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxRestoreBinLogPath") )
+    #Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBuildBinLogPath") )
 }
 catch
 {
@@ -80,6 +86,6 @@ catch
 }
 finally
 {
-    popd
+    Push-Location
     $env:Path = $oldPath
 }

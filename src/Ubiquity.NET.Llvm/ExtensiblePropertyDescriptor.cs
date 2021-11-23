@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Default value factory for a property in the container</summary>
         /// <returns>Default value for the property, <see langword="null"/> is allowed as the return for nullable types</returns>
         [return: MaybeNull]
-        public delegate T LazyDefaultFactory( );
+        public delegate T? LazyDefaultFactory( );
 
         /// <summary>Gets a value for the property from the container</summary>
         /// <param name="container">container</param>
@@ -67,7 +67,7 @@ namespace Ubiquity.NET.Llvm
             container.ValidateNotNull( nameof( container ) );
             lazyDefaultFactory.ValidateNotNull( nameof( lazyDefaultFactory ) );
 
-            if( container.TryGetExtendedPropertyValue( Name, out T existingValue ) )
+            if( container.TryGetExtendedPropertyValue( Name, out T? existingValue ) )
             {
                 return existingValue;
             }

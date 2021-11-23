@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Tests an <see cref="object"/> for equality</summary>
         /// <param name="obj"><see cref="object"/> to compare with this instance</param>
         /// <returns><see langword="true"/> if the </returns>
-        public override bool Equals( object obj ) => ( obj is Symbol other ) && Equals( other );
+        public override bool Equals( object? obj ) => ( obj is Symbol other ) && Equals( other );
 
         /// <summary>Gets a hash code for this <see cref="Section"/></summary>
         /// <returns>Hash code</returns>

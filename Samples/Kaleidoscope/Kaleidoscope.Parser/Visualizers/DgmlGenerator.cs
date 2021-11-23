@@ -136,6 +136,6 @@ namespace Kaleidoscope.Grammar
         private const string ContextTypeNameSuffix = "Context";
 
         private readonly KaleidoscopeParser Recognizer;
-        private readonly Stack<Node> NodeStack = new Stack<Node>();
+        private readonly Stack<Node> NodeStack = new();
     }
 }

@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DIFile? File => GetOperand<DIFile>( 0 );
 
         /// <summary>Gets the elements of this macro file</summary>
-        public DIMacroNodeArray Elements => new DIMacroNodeArray( GetOperand<MDTuple>( 1 ) );
+        public DIMacroNodeArray Elements => new( GetOperand<MDTuple>( 1 ) );
 
         internal DIMacroFile( LLVMMetadataRef handle )
             : base( handle )

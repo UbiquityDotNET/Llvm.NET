@@ -197,7 +197,7 @@ namespace TestDebugInfo
 
         private static void ShowUsage( )
         {
-            Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).CodeBase ) );
+            Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).Location ) );
         }
 
         #region FunctionDeclarations

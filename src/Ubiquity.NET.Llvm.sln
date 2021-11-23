@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28714.193
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm", "Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj", "{0162C8CE-6641-4922-8664-F8A44356FBF7}"
 EndProject
@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\README.md = ..\README.md
 		..\.github\workflows\release-build.yml = ..\.github\workflows\release-build.yml
 		..\docfx\current\ReleaseNotes.md = ..\docfx\current\ReleaseNotes.md
-		..\repo_buildutils.ps1 = ..\repo_buildutils.ps1
+		..\repo-buildutils.ps1 = ..\repo-buildutils.ps1
 		..\stylecop.json = ..\stylecop.json
 		..\Ubiquity.NET.ruleset = ..\Ubiquity.NET.ruleset
 		x64.runsettings = x64.runsettings

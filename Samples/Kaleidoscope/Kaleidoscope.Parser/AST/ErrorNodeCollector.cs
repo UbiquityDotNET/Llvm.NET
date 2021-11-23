@@ -24,6 +24,6 @@ namespace Kaleidoscope.Grammar.AST
 
         public IReadOnlyCollection<ErrorNode> Errors => ErrorList.AsReadOnly( );
 
-        private readonly List<ErrorNode> ErrorList = new List<ErrorNode>();
+        private readonly List<ErrorNode> ErrorList = new();
     }
 }

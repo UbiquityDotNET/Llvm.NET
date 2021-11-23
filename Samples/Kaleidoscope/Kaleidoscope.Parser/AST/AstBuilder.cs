@@ -15,8 +15,6 @@ using Kaleidoscope.Grammar.ANTLR;
 
 using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
-#pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
-
 namespace Kaleidoscope.Grammar.AST
 {
     /// <summary>Parse tree Visitor to construct the AST from a parse tree</summary>
@@ -46,12 +44,9 @@ namespace Kaleidoscope.Grammar.AST
         public override IAstNode VisitVariableExpression( VariableExpressionContext context )
         {
             string varName = context.Name;
-            if( !NamedValues.TryGetValue( varName, out IVariableDeclaration? declaration ) )
-            {
-                return new ErrorNode( context.GetSourceSpan( ), $"Unknown variable name: {varName}" );
-            }
-
-            return new VariableReferenceExpression( context.GetSourceSpan( ), declaration );
+            return NamedValues.TryGetValue( varName, out IVariableDeclaration? declaration )
+                ? new VariableReferenceExpression( context.GetSourceSpan( ), declaration )
+                : new ErrorNode( context.GetSourceSpan( ), $"Unknown variable name: {varName}" );
         }
 
         public override IAstNode VisitFunctionCallExpression( FunctionCallExpressionContext context )
@@ -123,6 +118,7 @@ namespace Kaleidoscope.Grammar.AST
                 // as the definition has errors
                 RuntimeState.FunctionDeclarations.Remove( sig );
             }
+
             return retVal;
         }
 
@@ -139,6 +135,7 @@ namespace Kaleidoscope.Grammar.AST
             {
                 RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
             }
+
             return retVal;
         }
 
@@ -167,7 +164,7 @@ namespace Kaleidoscope.Grammar.AST
         public override IAstNode VisitFullsrc( FullsrcContext context )
         {
             var children = from child in context.children
-                           where !(child is TopLevelSemicolonContext)
+                           where child is not TopLevelSemicolonContext
                            select child.Accept( this );
 
             return new RootNode( context.GetSourceSpan( ), children );
@@ -272,13 +269,13 @@ namespace Kaleidoscope.Grammar.AST
         private Prototype? FindCallTarget( string calleeName )
         {
             // search defined functions first as they override extern declarations
-            if( RuntimeState.FunctionDefinitions.TryGetValue( calleeName, out FunctionDefinition definition ) )
+            if( RuntimeState.FunctionDefinitions.TryGetValue( calleeName, out FunctionDefinition? definition ) )
             {
                 return definition.Signature;
             }
 
             // search extern declarations
-            return RuntimeState.FunctionDeclarations.TryGetValue( calleeName, out Prototype declaration )
+            return RuntimeState.FunctionDeclarations.TryGetValue( calleeName, out Prototype? declaration )
                  ? declaration
                  : null;
         }
@@ -322,7 +319,7 @@ namespace Kaleidoscope.Grammar.AST
                     Prototype? callTarget = FindCallTarget( calleeName );
                     return callTarget is null
                         ? new ErrorNode( op.GetSourceSpan( ), $"Unary operator function '{calleeName}' not found" )
-                        : ( IExpression )new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
+                        : new FunctionCallExpression( op.GetSourceSpan( ), callTarget, lhs, rhs );
                 }
                 #endregion
             }
@@ -353,7 +350,7 @@ namespace Kaleidoscope.Grammar.AST
                                       );
 
             // block second incompatible (name + arity ) declaration to prevent issues with in any definitions that may be using it
-            if( RuntimeState.FunctionDeclarations.TryGetValue( name, out Prototype existingPrototype ) )
+            if( RuntimeState.FunctionDeclarations.TryGetValue( name, out Prototype? existingPrototype ) )
             {
                 if( existingPrototype.Parameters.Count != retVal.Parameters.Count )
                 {
@@ -388,8 +385,8 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         private int LocalVarIndex;
-        private readonly List<LocalVariableDeclaration> LocalVariables = new List<LocalVariableDeclaration>();
-        private readonly ScopeStack<IVariableDeclaration> NamedValues = new ScopeStack<IVariableDeclaration>( );
+        private readonly List<LocalVariableDeclaration> LocalVariables = new();
+        private readonly ScopeStack<IVariableDeclaration> NamedValues = new( );
         private readonly DynamicRuntimeState RuntimeState;
     }
 }

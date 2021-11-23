@@ -114,7 +114,7 @@ namespace Ubiquity.NET.Llvm.JIT
                     return retAddr;
                 }
 
-                return GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback callBack ) ? ( ulong )callBack.ToIntPtr( ).ToInt64( ) : 0;
+                return GlobalInteropFunctions.TryGetValue( name, out WrappedNativeCallback? callBack ) ? ( ulong )callBack.ToIntPtr( ).ToInt64( ) : 0;
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch
@@ -173,7 +173,7 @@ namespace Ubiquity.NET.Llvm.JIT
             where T : Delegate
         {
             LLVMOrcGetMangledSymbol( JitStackHandle, out string mangledName, symbolName );
-            if( GlobalInteropFunctions.TryGetValue( mangledName, out WrappedNativeCallback existingCallback ) )
+            if( GlobalInteropFunctions.TryGetValue( mangledName, out WrappedNativeCallback? existingCallback ) )
             {
                 GlobalInteropFunctions.Remove( mangledName );
                 existingCallback.Dispose( );
@@ -274,14 +274,11 @@ namespace Ubiquity.NET.Llvm.JIT
             }
         }
 
-        private readonly Dictionary<string, WrappedNativeCallback> GlobalInteropFunctions
-            = new Dictionary<string, WrappedNativeCallback>();
+        private readonly Dictionary<string, WrappedNativeCallback> GlobalInteropFunctions = new();
 
-        private readonly Dictionary<UInt64, WrappedNativeCallback<LLVMOrcSymbolResolverFn>> SymbolResolvers
-            = new Dictionary<UInt64, WrappedNativeCallback<LLVMOrcSymbolResolverFn>>();
+        private readonly Dictionary<UInt64, WrappedNativeCallback<LLVMOrcSymbolResolverFn>> SymbolResolvers = new();
 
-        private readonly Dictionary<string, WrappedNativeCallback<LLVMOrcLazyCompileCallbackFn>> LazyFunctionGenerators
-            = new Dictionary<string, WrappedNativeCallback<LLVMOrcLazyCompileCallbackFn>>();
+        private readonly Dictionary<string, WrappedNativeCallback<LLVMOrcLazyCompileCallbackFn>> LazyFunctionGenerators = new();
 
         private readonly LLVMOrcJITStackRef JitStackHandle;
     }

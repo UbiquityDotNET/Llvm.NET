@@ -17,7 +17,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DIType? BaseType => GetOperand<DIType>( 3 );
 
         /// <summary>Gets the elements of this <see cref="DICompositeType"/></summary>
-        public DINodeArray Elements => new DINodeArray( GetOperand<MDTuple>( 4 ) );
+        public DINodeArray Elements => new( GetOperand<MDTuple>( 4 ) );
 
         /// <summary>Gets the type that holds the VTable for this type, if any</summary>
         public DIType? VTableHolder => GetOperand<DIType>( 5 );

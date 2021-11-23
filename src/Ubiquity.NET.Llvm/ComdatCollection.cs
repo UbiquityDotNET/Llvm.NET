@@ -6,6 +6,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Ubiquity.ArgValidators;
@@ -44,7 +45,7 @@ namespace Ubiquity.NET.Llvm
             kind.ValidateDefined( nameof( kind ) );
 
             LLVMComdatRef comdatRef = LibLLVMModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
-            if( !InternalComdatMap.TryGetValue( key, out Comdat retVal ) )
+            if( !InternalComdatMap.TryGetValue( key, out Comdat? retVal ) )
             {
                 retVal = new Comdat( Module, comdatRef );
                 InternalComdatMap.Add( retVal.Name, retVal );
@@ -88,7 +89,7 @@ namespace Ubiquity.NET.Llvm
         {
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
 
-            if( !InternalComdatMap.TryGetValue( key, out Comdat value ) )
+            if( !InternalComdatMap.TryGetValue( key, out Comdat? value ) )
             {
                 return false;
             }
@@ -110,7 +111,7 @@ namespace Ubiquity.NET.Llvm
         /// <see langword="true"/> if the value was found
         /// the list or <see langword="false"/> otherwise.
         /// </returns>
-        public bool TryGetValue( string key, out Comdat value )
+        public bool TryGetValue( string key, [MaybeNullWhen(false)] out Comdat value )
         {
             key.ValidateNotNullOrWhiteSpace( nameof( key ) );
             return InternalComdatMap.TryGetValue( key, out value );
@@ -160,6 +161,6 @@ namespace Ubiquity.NET.Llvm
         }
 
         private readonly BitcodeModule Module;
-        private readonly Dictionary<string, Comdat> InternalComdatMap = new Dictionary<string, Comdat>( );
+        private readonly Dictionary<string, Comdat> InternalComdatMap = new( );
     }
 }

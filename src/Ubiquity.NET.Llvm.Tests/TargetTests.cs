@@ -111,7 +111,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
             public bool HasTargetMachine { get; }
 
-            internal static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection
+            internal static readonly TargetInfoCollection ExpectedTargets = new( )
             {
                 new TargetInfo( "xcore", "XCore", false, false, true ),
                 new TargetInfo( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),

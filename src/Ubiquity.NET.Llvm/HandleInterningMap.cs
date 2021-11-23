@@ -15,6 +15,7 @@ namespace Ubiquity.NET.Llvm
 {
     internal abstract class HandleInterningMap<THandle, TMappedType>
         : IHandleInterning<THandle, TMappedType>
+        where THandle : notnull
     {
         public Context Context { get; }
 
@@ -22,7 +23,7 @@ namespace Ubiquity.NET.Llvm
         {
             handle.ValidateNotDefault( nameof( handle ) );
 
-            if( HandleMap.TryGetValue( handle, out TMappedType retVal ) )
+            if( HandleMap.TryGetValue( handle, out TMappedType? retVal ) )
             {
                 foundHandleRelease?.Invoke( handle );
                 return retVal;
@@ -42,7 +43,7 @@ namespace Ubiquity.NET.Llvm
 
         public void Remove( THandle handle )
         {
-            if( HandleMap.TryGetValue( handle, out TMappedType item ) )
+            if( HandleMap.TryGetValue( handle, out TMappedType? item ) )
             {
                 HandleMap.Remove( handle );
                 DisposeItem( item );
