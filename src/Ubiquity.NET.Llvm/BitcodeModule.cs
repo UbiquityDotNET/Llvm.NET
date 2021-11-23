@@ -1007,7 +1007,7 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        private readonly ExtensiblePropertyContainer PropertyBag = new ExtensiblePropertyContainer( );
+        private readonly ExtensiblePropertyContainer PropertyBag = new( );
         private readonly Lazy<DebugInfoBuilder> LazyDiBuilder;
     }
 }

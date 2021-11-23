@@ -2,10 +2,9 @@
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>kls7.1</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

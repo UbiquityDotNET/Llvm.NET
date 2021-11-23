@@ -45,6 +45,6 @@ namespace Kaleidoscope.Tests
         }
 
         private readonly TestContext Context;
-        private readonly StringBuilder Builder = new StringBuilder();
+        private readonly StringBuilder Builder = new();
     }
 }

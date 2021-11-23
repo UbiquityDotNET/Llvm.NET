@@ -5,5 +5,4 @@ model and workflow. With one active long term branch 'develop'. The master
 branch is present and long term but is not active, it only points to the latest
 official release (including preview releases) of the project. This is a convenience
 to allow getting the latests released source quickly. Generally the scripts used here
-are only for release managers with direct push permissions to the repository and are
-not required (or even an option) for most contributors. 
+are only for release managers and are not required (or even an option) for most contributors.

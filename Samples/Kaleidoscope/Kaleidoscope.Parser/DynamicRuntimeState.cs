@@ -130,9 +130,9 @@ namespace Kaleidoscope.Grammar
             }
         }
 
-        private readonly OperatorInfoCollection UnaryOps = new OperatorInfoCollection( );
+        private readonly OperatorInfoCollection UnaryOps = new( );
 
-        private readonly OperatorInfoCollection BinOpPrecedence = new OperatorInfoCollection
+        private readonly OperatorInfoCollection BinOpPrecedence = new( )
         {
             new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
             new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),

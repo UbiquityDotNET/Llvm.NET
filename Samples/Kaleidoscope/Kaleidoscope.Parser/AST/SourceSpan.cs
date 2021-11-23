@@ -8,6 +8,7 @@ using System;
 
 namespace Kaleidoscope.Grammar
 {
+    // FUTURE: COnvert this to C# record for simplification
     public struct SourceSpan
         : IEquatable<SourceSpan>
     {
@@ -27,7 +28,7 @@ namespace Kaleidoscope.Grammar
 
         public int EndColumn { get; }
 
-        public override bool Equals( object obj )
+        public override bool Equals( object? obj )
         {
             return obj is SourceSpan span
                 && Equals( span );

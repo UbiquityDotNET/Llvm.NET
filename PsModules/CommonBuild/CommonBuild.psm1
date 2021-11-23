@@ -6,7 +6,7 @@
 function Ensure-PathExists
 {
     param([Parameter(Mandatory=$true, ValueFromPipeLine)]$path)
-    md -Force -ErrorAction SilentlyContinue $path | Out-Null
+    mkdir -Force -ErrorAction SilentlyContinue $path | Out-Null
 }
 
 function Get-DefaultBuildPaths([string]$repoRoot)
@@ -17,8 +17,8 @@ function Get-DefaultBuildPaths([string]$repoRoot)
 
 .DESCRIPTION
     This function initializes a hash table with the default paths for a build. This
-    allows for standardization of build output locations etc... across builds. The
-    values set are as follows:
+    allows for standardization of build output locations etc... across builds and repositories
+    in the organization. The values set are as follows:
 
     | Name                | Description                          |
     |---------------------|--------------------------------------|
@@ -52,6 +52,43 @@ function Get-DefaultBuildPaths([string]$repoRoot)
     return $buildPaths
 }
 
+function Verify-OfficialGitRemote
+{
+<#
+.SYNOPSIS
+    Verifies the current git remote is the official repository
+
+.PARAMETER OfficialUrl
+    URL of the official remote to Verify
+
+.PARAMETER Activity
+    String describing the activity. This is used in the exception message stating
+    that the activity is only valid with the correct remote URL
+
+.DESCRIPTION
+    Some operations like, Release tags, and docs updates must only be pushed from a repository with the
+    official GitHub repository as the origin remote. This, among other things, ensures that the links
+    to source in the generated docs will have the correct URLs (e.g. docs pushed to the official repository
+    MUST not have links to source in some private fork). This function is used, primarily in OneFlow release
+    management scripts to ensure operations are done using the correct remote.
+#>
+    Param(
+        [Parameter(Mandatory=$True)][string]$OfficialUrl,
+        [Parameter(Mandatory=$True)][string]$Activity
+    )
+
+    # Release tags must only be pushed from a repository with the official GitHub repository as the origin remote.
+    # This ensures that the links to source in the generated docs will have the correct URLs
+    # (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
+    $remoteUrl = Invoke-Git ls-remote --get-url
+
+    if($remoteUrl -ine "https://github.com/UbiquityDotNET/Llvm.NET.git")
+    {
+        throw "$Activity is only allowed when the origin remote is the official repository - current remote is '$remoteUrl'"
+    }
+
+}
+
 function Update-Submodules
 {
 <#
@@ -83,7 +120,15 @@ function Find-OnPath
         $path = where.exe $exeName 2>$null | select -First 1
     }
     catch
-    {}
+    {
+        # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+        # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+        # information is retained and the error reported will include the correct source file and line number
+        # data for the error. Without this, only the error message is retained and the location information is
+        # Line 1, Column 1, of the outer most script file, which is, of course, completely useless.
+        throw
+    }
+
     if($path)
     {
         Write-Information "Found $exeName at: '$path'"
@@ -146,6 +191,15 @@ function Invoke-TimedBlock([string]$activity, [ScriptBlock]$block)
     try
     {
         $block.Invoke()
+    }
+    catch
+    {
+        # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+        # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+        # information is retained and the error reported will include the correct source file and line number
+        # data for the error. Without this, only the error message is retained and the location information is
+        # Line 1, Column 1, of the outer most script file, which is, of course, completely useless.
+        throw
     }
     finally
     {
@@ -210,6 +264,7 @@ function Invoke-NuGet
 
         $env:Path = "$env:Path;$($buildPaths['ToolsPath'])"
     }
+
     Write-Information "NuGet $args"
     NuGet.exe $args
     $err = $LASTEXITCODE
@@ -576,25 +631,34 @@ function Get-BuildVersionTag
 
 .PARAMETER buildInfo
     Hashtable containing Information about the repository and build. This function
-    requires the presence of a 'RepoRootPath' property to indicate the root of the
+    requires the table include an entry for 'RepoRootPath' to indicate the root of the
     repository containing the BuildVersion.xml file.
+
+.PARAMETER ReleaseNameOnly
+    Returns only the final release name of the current version dropping any pre-release
+    if present. This is mostly used in cases that need to determine the release Name
+    before the XML file is updated. Including creation of a release branch where the
+    change to the XML will occur.
 #>
     [OutputType([string])]
-    Param($buildInfo)
+    Param([hashtable]$buildInfo, [switch]$ReleaseNameOnly)
 
     # determine release tag from the build version XML file in the branch
     $buildVersionXml = (Get-BuildVersionXML $buildInfo)
     $buildVersionData = $buildVersionXml.BuildVersionData
     $preReleaseSuffix=""
-    if($buildVersionData.PSObject.Properties['PreReleaseName'])
+    if(!$ReleaseNameOnly)
     {
-        $preReleaseSuffix = "-$($buildVersionData.PreReleaseName)"
-        if($buildVersionData.PSObject.Properties['PreReleaseNumber'])
+        if($buildVersionData.PSObject.Properties['PreReleaseName'])
         {
-            $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
-            if($buildVersionData.PSObject.Properties['PreReleaseFix'])
+            $preReleaseSuffix = "-$($buildVersionData.PreReleaseName)"
+            if($buildVersionData.PSObject.Properties['PreReleaseNumber'])
             {
-                $preReleaseSuffix += ".$($buildVersionData.PreReleaseFix)"
+                $preReleaseSuffix += ".$($buildVersionData.PreReleaseNumber)"
+                if($buildVersionData.PSObject.Properties['PreReleaseFix'])
+                {
+                    $preReleaseSuffix += ".$($buildVersionData.PreReleaseFix)"
+                }
             }
         }
     }
@@ -711,6 +775,7 @@ function Initialize-CommonBuildEnvironment
     {
         $buildInfo['MsBuildLoggerArgs'] = @()
     }
+
     $buildInfo['CurrentBuildKind'] = $currentBuildKind
     $buildInfo['MSBuildInfo'] = $msbuildInfo
     $buildInfo['VersionTag'] = Get-BuildVersionTag $buildInfo
@@ -749,5 +814,14 @@ function Show-FullBuildInfo
 
     Write-Verbose ".NET SDKs:"
     Write-Verbose (dotnet --list-sdks | Out-String)
+}
+
+function Invoke-Git()
+{
+    git $args
+    if(!$?)
+    {
+        throw "'git $args' command failed ($LASTEXITCODE)"
+    }
 }
 

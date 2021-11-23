@@ -135,6 +135,6 @@ namespace Ubiquity.NET.Llvm.Values
             return context.GetValueFor( valueRef ) as T;
         }
 
-        private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
+        private readonly ExtensiblePropertyContainer ExtensibleProperties = new( );
     }
 }

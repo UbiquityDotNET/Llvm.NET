@@ -250,7 +250,7 @@ namespace Ubiquity.NET.Llvm
         {
             lock( TargetDataMap )
             {
-                if( TargetDataMap.TryGetValue( targetDataRef, out DataLayout retVal ) )
+                if( TargetDataMap.TryGetValue( targetDataRef, out DataLayout? retVal ) )
                 {
                     return retVal;
                 }
@@ -277,6 +277,6 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        private static readonly Dictionary<LLVMTargetDataRef, DataLayout> TargetDataMap = new Dictionary<LLVMTargetDataRef, DataLayout>( );
+        private static readonly Dictionary<LLVMTargetDataRef, DataLayout> TargetDataMap = new( );
     }
 }

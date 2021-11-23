@@ -13,6 +13,8 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
+    // FUTURE: Convert to C# record for simplification and automatic implementations
+
     /// <summary>Relocation entry in an <see cref="ObjectFile"/></summary>
     [DebuggerDisplay( "{Symbol.Name,nq}({Description,nq})[{Offset}]:{Value}" )]
     public struct Relocation
@@ -22,7 +24,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         public ulong Offset => LLVMGetRelocationOffset( IteratorRef );
 
         /// <summary>Gets the symbol associated with this relocation</summary>
-        public Symbol Symbol => new Symbol( Section.ContainingBinary, LLVMGetRelocationSymbol( IteratorRef ) );
+        public Symbol Symbol => new( Section.ContainingBinary, LLVMGetRelocationSymbol( IteratorRef ) );
 
         /// <summary>Gets the kind of relocation as a string for display purposes</summary>
         public string Description => LLVMGetRelocationTypeName( IteratorRef );
@@ -40,7 +42,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Performs equality checks against an <see cref="object"/></summary>
         /// <param name="obj">object to test for equality with this instance</param>
         /// <returns><see langword="true"/> if <paramref name="obj"/> is equal to this instance</returns>
-        public override bool Equals( object obj ) => ( obj is Relocation other ) && Equals( other );
+        public override bool Equals( object? obj ) => ( obj is Relocation other ) && Equals( other );
 
         /// <summary>Gets a hash code for this <see cref="Relocation"/></summary>
         /// <returns>Hash code</returns>

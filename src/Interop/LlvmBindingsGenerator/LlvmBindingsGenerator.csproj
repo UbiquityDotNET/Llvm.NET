@@ -7,7 +7,7 @@
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
         <PlatformTarget>x64</PlatformTarget>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <Nullable />
         <IsPublishable>False</IsPublishable>
     </PropertyGroup>

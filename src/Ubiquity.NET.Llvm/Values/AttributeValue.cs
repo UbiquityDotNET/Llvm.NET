@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Performs equality checks against an <see cref="object"/></summary>
         /// <param name="obj">object to test for equality with this instance</param>
         /// <returns><see langword="true"/> if <paramref name="obj"/> is equal to this instance</returns>
-        public override bool Equals( object obj )
+        public override bool Equals( object? obj )
         {
             return obj is AttributeValue attrib ? Equals( attrib ) : obj is UIntPtr && NativeAttribute.Equals( obj );
         }
@@ -64,7 +64,7 @@ namespace Ubiquity.NET.Llvm.Values
         public string? StringValue => !IsString ? null : LLVMGetStringAttributeValue( NativeAttribute, out uint _ );
 
         /// <summary>Gets the Integer value of the attribute or <see lang="null"/> if the attribute doesn't have a value</summary>
-        public UInt64? IntegerValue => HasIntegerVaue ? LLVMGetEnumAttributeValue( NativeAttribute ) : ( UInt64? )null;
+        public UInt64? IntegerValue => HasIntegerVaue ? LLVMGetEnumAttributeValue( NativeAttribute ) : null;
 
         /// <summary>Gets the Type value of this attribute, if any</summary>
         public ITypeRef? TypeValue => TypeRef.FromHandle( LibLLVMGetAttributeTypeValue( NativeAttribute ) );

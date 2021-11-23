@@ -185,6 +185,6 @@ namespace Ubiquity.NET.Llvm.Types
             return ContextCache.GetContextFor( hContext.ThrowIfInvalid( ) );
         }
 
-        private readonly ExtensiblePropertyContainer ExtensibleProperties = new ExtensiblePropertyContainer( );
+        private readonly ExtensiblePropertyContainer ExtensibleProperties = new( );
     }
 }

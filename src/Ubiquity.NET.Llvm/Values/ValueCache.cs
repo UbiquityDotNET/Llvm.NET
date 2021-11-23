@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Llvm.Values
             if( managedHandlePtr != IntPtr.Zero )
             {
                 foundHandleRelease?.Invoke( valueRef );
-                return ( Value )GCHandle.FromIntPtr( managedHandlePtr ).Target;
+                return ( Value )(GCHandle.FromIntPtr( managedHandlePtr ).Target ?? throw new InvalidOperationException( "GC handle returned a null target!" ));
             }
 
             Value instance = CreateValueInstance( valueRef );
@@ -54,7 +54,10 @@ namespace Ubiquity.NET.Llvm.Values
 
         public IEnumerator<Value> GetEnumerator( )
         {
-            return ValueRefToGCHandleMap.Values.Select( gch => ( Value )gch.Target ).GetEnumerator( );
+            var q = from gch in ValueRefToGCHandleMap.Values
+                    select (Value)(gch.Target ?? throw new InvalidOperationException("GC handle returned a null target!"));
+
+            return q.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
@@ -101,7 +104,7 @@ namespace Ubiquity.NET.Llvm.Values
         private readonly WrappedNativeCallback<LibLLVMValueCacheItemReplacedCallback> WrappedOnReplaced;
         /* ReSharper enable PrivateFieldCanBeConvertedToLocalVariable */
 
-        private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = new Dictionary<LLVMValueRef, GCHandle>();
+        private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = new();
 
         private readonly LibLLVMValueCacheRef Handle;
 

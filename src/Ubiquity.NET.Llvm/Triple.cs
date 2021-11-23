@@ -646,7 +646,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Equality test for a triple</summary>
         /// <param name="obj">object to compare this triple to</param>
         /// <returns><see langword="true"/> if the two triples are equivalent</returns>
-        public override bool Equals( object obj )
+        public override bool Equals( object? obj )
         {
             return Equals( obj as Triple );
         }
@@ -766,43 +766,25 @@ namespace Ubiquity.NET.Llvm
         {
             archType.ValidateDefined( nameof( archType ) );
             subArch.ValidateDefined( nameof( subArch ) );
-            switch( archType )
+            return archType switch
             {
-            case ArchType.Kalimba:
-                switch( subArch )
+                ArchType.Kalimba => subArch switch
                 {
-                case SubArchType.NoSubArch:
-                case SubArchType.KalimbaSubArch_v3:
-                case SubArchType.KalimbaSubArch_v4:
-                case SubArchType.KalimbaSubArch_v5:
-                    return ArchType.Kalimba;
-
-                default:
-                    return ArchType.UnknownArch;
-                }
-
-            case ArchType.Arm:
-            case ArchType.Armeb:
-                switch( subArch )
+                    SubArchType.NoSubArch or SubArchType.KalimbaSubArch_v3 or SubArchType.KalimbaSubArch_v4 or SubArchType.KalimbaSubArch_v5 => ArchType.Kalimba,
+                    _ => ArchType.UnknownArch,
+                },
+                ArchType.Arm or ArchType.Armeb => subArch switch
                 {
-                case SubArchType.ARMSubArch_v6m:
-                    return archType == ArchType.Armeb ? ArchType.Thumbeb : ArchType.Thumb;
-                case SubArchType.KalimbaSubArch_v3:
-                case SubArchType.KalimbaSubArch_v4:
-                case SubArchType.KalimbaSubArch_v5:
-                    return ArchType.UnknownArch;
-
-                default:
-                    return archType;
-                }
-
-            default:
-                return archType;
-            }
+                    SubArchType.ARMSubArch_v6m => archType == ArchType.Armeb ? ArchType.Thumbeb : ArchType.Thumb,
+                    SubArchType.KalimbaSubArch_v3 or SubArchType.KalimbaSubArch_v4 or SubArchType.KalimbaSubArch_v5 => ArchType.UnknownArch,
+                    _ => archType,
+                },
+                _ => archType,
+            };
         }
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>
-        public static Triple HostTriple => new Triple( LLVMGetDefaultTargetTriple( ) );
+        public static Triple HostTriple => new( LLVMGetDefaultTargetTriple( ) );
 
         /// <summary>Implicitly converts a triple to a string</summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>
@@ -816,18 +798,11 @@ namespace Ubiquity.NET.Llvm
         private static bool IsOsDarwin( OSType osType )
         {
             osType.ValidateDefined( nameof( osType ) );
-            switch( osType )
+            return osType switch
             {
-            case OSType.Darwin:
-            case OSType.MacOSX:
-            case OSType.IOS:
-            case OSType.TvOS:
-            case OSType.WatchOS:
-                return true;
-
-            default:
-                return false;
-            }
+                OSType.Darwin or OSType.MacOSX or OSType.IOS or OSType.TvOS or OSType.WatchOS => true,
+                _ => false,
+            };
         }
 
         private readonly LibLLVMTripleRef TripleHandle;

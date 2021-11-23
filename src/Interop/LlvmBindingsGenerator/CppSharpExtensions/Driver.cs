@@ -300,7 +300,7 @@ namespace LlvmBindingsGenerator
             case ParserResultKind.Success:
                 if( !Options.Quiet )
                 {
-                    Diagnostics.Message( "Parsed '{0}'", string.Join( ", ", files ) );
+                    Diagnostics.Debug( "Parsed '{0}'", string.Join( ", ", files ) );
                 }
 
                 break;

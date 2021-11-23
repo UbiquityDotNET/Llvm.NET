@@ -1190,6 +1190,8 @@ dotnet_diagnostic.IDE0022WithoutSuggestion.severity = none
 
 dotnet_diagnostic.IDE0034.severity = warning
 
+dotnet_diagnostic.IDE0046.severity = suggestion
+
 dotnet_diagnostic.IDE0058.severity = none
 
 dotnet_diagnostic.IDE0067.severity = none

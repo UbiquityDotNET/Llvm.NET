@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -66,7 +67,7 @@ namespace Kaleidoscope.Chapter71
 
             // Prototypes, including extern are ignored as AST generation
             // adds them to the RuntimeState so that already has the declarations
-            if( !( ast is FunctionDefinition definition ) )
+            if( ast is not FunctionDefinition definition )
             {
                 return default;
             }
@@ -192,7 +193,7 @@ namespace Kaleidoscope.Chapter71
             string targetName = functionCall.FunctionPrototype.Name;
 
             IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
             {
                 function = GetOrDeclareFunction( target );
             }
@@ -526,6 +527,7 @@ namespace Kaleidoscope.Chapter71
         private const string ExpectValidFunc = "Expected a valid function";
 
 #region CloneAndRenameFunction
+        [SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "Truly lazy JIT functionality for Windows is disabled for now..." )]
         private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
         {
             // clone the definition with a new name, note that this is really
@@ -548,11 +550,11 @@ namespace Kaleidoscope.Chapter71
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly ScopeStack<Alloca> NamedValues = new ScopeStack<Alloca>( );
+        private readonly ScopeStack<Alloca> NamedValues = new( );
         private FunctionPassManager? FunctionPassManager;
         private readonly bool DisableOptimizations;
         private BitcodeModule? Module;
-        private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
+        private readonly KaleidoscopeJIT JIT = new( );
 #endregion
     }
 }

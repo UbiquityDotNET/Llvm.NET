@@ -230,9 +230,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                         , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
                         )
         ]
-        private readonly WriteOnce<TNative> NativeType_ = new WriteOnce<TNative>();
+        private readonly WriteOnce<TNative> NativeType_ = new();
 
-        private readonly ExtensiblePropertyContainer PropertyContainer = new ExtensiblePropertyContainer( );
+        private readonly ExtensiblePropertyContainer PropertyContainer = new( );
     }
 
     /// <summary>Utility class to provide mix-in type extensions and support for Debug Types</summary>

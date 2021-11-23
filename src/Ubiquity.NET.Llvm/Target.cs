@@ -177,12 +177,9 @@ namespace Ubiquity.NET.Llvm
         {
             targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
 
-            if( LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed )
-            {
-                throw new InternalCodeGeneratorException( errorMessag );
-            }
-
-            return FromHandle( targetHandle );
+            return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed
+                ? throw new InternalCodeGeneratorException( errorMessag )
+                : FromHandle( targetHandle );
         }
 
         internal Target( LLVMTargetRef targetHandle )
@@ -217,7 +214,7 @@ namespace Ubiquity.NET.Llvm
             targetHandle.ValidateNotDefault( nameof( targetHandle ) );
             lock( TargetMap )
             {
-                if( TargetMap.TryGetValue( targetHandle, out Target retVal ) )
+                if( TargetMap.TryGetValue( targetHandle, out Target? retVal ) )
                 {
                     return retVal;
                 }
@@ -228,6 +225,6 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        private static readonly Dictionary<LLVMTargetRef, Target> TargetMap = new Dictionary<LLVMTargetRef, Target>();
+        private static readonly Dictionary<LLVMTargetRef, Target> TargetMap = new();
     }
 }

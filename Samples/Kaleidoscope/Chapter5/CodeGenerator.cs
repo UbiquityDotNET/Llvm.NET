@@ -66,13 +66,13 @@ namespace Kaleidoscope.Chapter5
 
             // Prototypes, including extern are ignored as AST generation
             // adds them to the RuntimeState so that already has the declarations
-            if( !( ast is FunctionDefinition definition ) )
+            if( ast is not FunctionDefinition definition )
             {
                 return default;
             }
 
             InitializeModuleAndPassManager( );
-            Debug.Assert( !( Module is null ), "Module initialization failed" );
+            Debug.Assert( Module is not null , "Module initialization failed" );
 
             var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
 
@@ -179,7 +179,7 @@ namespace Kaleidoscope.Chapter5
             string targetName = functionCall.FunctionPrototype.Name;
 
             IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
             {
                 function = GetOrDeclareFunction( target );
             }
@@ -465,12 +465,12 @@ namespace Kaleidoscope.Chapter5
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly ScopeStack<Value> NamedValues = new ScopeStack<Value>( );
+        private readonly ScopeStack<Value> NamedValues = new( );
         private FunctionPassManager? FunctionPassManager;
         private readonly bool DisableOptimizations;
         private BitcodeModule? Module;
-        private readonly KaleidoscopeJIT JIT = new KaleidoscopeJIT( );
-        private readonly Dictionary<string, ulong> FunctionModuleMap = new Dictionary<string, ulong>( );
+        private readonly KaleidoscopeJIT JIT = new( );
+        private readonly Dictionary<string, ulong> FunctionModuleMap = new( );
         #endregion
     }
 }

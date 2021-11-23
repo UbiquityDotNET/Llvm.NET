@@ -36,7 +36,7 @@ try
     $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj')
 
     Write-Information 'Running sample app for .NET Core'
-    pushd (Join-path $buildInfo['BuildOutputPath'] bin\CodeGenWithDebugInfo\Release\netcoreapp3.1)
+    Push-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\CodeGenWithDebugInfo\Release\net5.0')
     try
     {
         dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $buildInfo['TestResultsPath']
@@ -44,7 +44,7 @@ try
     }
     finally
     {
-        popd
+        Pop-Location
     }
 
     if($testsFailed)

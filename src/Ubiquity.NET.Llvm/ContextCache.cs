@@ -46,6 +46,6 @@ namespace Ubiquity.NET.Llvm
         }
 
         private static readonly Lazy<ConcurrentDictionary<LLVMContextRef, Context>> Instance
-            = new Lazy<ConcurrentDictionary<LLVMContextRef, Context>>( CreateInstance, LazyThreadSafetyMode.ExecutionAndPublication);
+            = new( CreateInstance, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 }

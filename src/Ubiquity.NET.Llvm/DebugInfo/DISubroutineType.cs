@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the types for the sub routine</summary>
-        public DITypeArray TypeArray => new DITypeArray( GetOperand<MDTuple>( 3 ) );
+        public DITypeArray TypeArray => new( GetOperand<MDTuple>( 3 ) );
 
         internal DISubroutineType( LLVMMetadataRef handle )
             : base( handle )

@@ -51,7 +51,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DISubProgram Declaration => GetOperand<DISubProgram>( 6 )!;
 
         /// <summary>Gets the variables of this <see cref="DISubProgram"/></summary>
-        public DILocalVariableArray Variables => new DILocalVariableArray( GetOperand<MDTuple>( 7 )! );
+        public DILocalVariableArray Variables => new( GetOperand<MDTuple>( 7 )! );
 
         /// <summary>Gets the type that contains this <see cref="DISubProgram"/>, if any</summary>
         public DIType? ContainingType => Operands.Count < 9 ? null : GetOperand<DIType>( 8 );

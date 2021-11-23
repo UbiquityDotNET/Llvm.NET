@@ -59,6 +59,6 @@ namespace Ubiquity.NET.Llvm
             return true;
         }
 
-        private readonly Dictionary<string, object?> Items = new Dictionary<string, object?>();
+        private readonly Dictionary<string, object?> Items = new();
     }
 }

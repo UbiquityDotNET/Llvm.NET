@@ -9,6 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Kaleidoscope.Runtime
 {
+    // FUTURE: Convert this to a C# record for simplification
+
     /// <summary>Simple Value type that provides for null safe optional generic operations</summary>
     /// <typeparam name="T">Type of value</typeparam>
     /// <remarks>
@@ -48,7 +50,7 @@ namespace Kaleidoscope.Runtime
         [MaybeNull]
         public T Value { get; }
 
-        public override bool Equals( object obj )
+        public override bool Equals( object? obj )
         {
             return obj is OptionalValue<T> other && Equals( other );
         }

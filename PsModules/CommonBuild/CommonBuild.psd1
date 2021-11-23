@@ -80,6 +80,7 @@ FunctionsToExport = @(
     'Invoke-DotNetTest',
     'Initialize-CommonBuildEnvironment',
     'Show-FullBuildInfo',
+    'Invoke-Git'
     'Get-BuildVersionTag'
 )
 

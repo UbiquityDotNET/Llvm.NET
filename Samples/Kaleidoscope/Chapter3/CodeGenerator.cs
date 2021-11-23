@@ -138,7 +138,7 @@ namespace Kaleidoscope.Chapter3
             string targetName = functionCall.FunctionPrototype.Name;
 
             IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype target ) )
+            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
             {
                 function = GetOrDeclareFunction( target );
             }

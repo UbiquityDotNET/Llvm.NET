@@ -623,7 +623,7 @@ namespace Ubiquity.NET.Llvm.Values
         private static bool IsPowerOfTwo( ulong x ) => ( x != 0 ) && ( ( x & ( ~x + 1 ) ) == x );
 
         // Lazy initialized one time mapping of LLVM attribute Ids to AttributeKind
-        private static readonly Lazy<Dictionary<uint, AttributeKind>> AttribIdToKindMap = new Lazy<Dictionary<uint, AttributeKind>>( BuildAttribIdToKindMap );
+        private static readonly Lazy<Dictionary<uint, AttributeKind>> AttribIdToKindMap = new( BuildAttribIdToKindMap );
 
         private static Dictionary<uint, AttributeKind> BuildAttribIdToKindMap( )
         {
@@ -633,7 +633,7 @@ namespace Ubiquity.NET.Llvm.Values
                    ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
         }
 
-        private static readonly Lazy<Dictionary<AttributeKind, uint>> KindToAttribIdMap = new Lazy<Dictionary<AttributeKind, uint>>( BuildKindToAttribIdMap );
+        private static readonly Lazy<Dictionary<AttributeKind, uint>> KindToAttribIdMap = new( BuildKindToAttribIdMap );
 
         private static Dictionary<AttributeKind, uint> BuildKindToAttribIdMap( )
         {

@@ -44,49 +44,18 @@ This script is unfortunately necessary due to several factors:
      native assemblies to place the binaries in the correct "native" "runtimes" folder for NuGet
      to handle them.
 #>
-
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
     [switch]$FullInit
 )
 
-pushd $PSScriptRoot
+Push-location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
     . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
-
-    # <HACK>
-    # for details of why this is needed, see src\PatchVsForLibClang\readme.md
-    # min version with fix (VS 2019 16.9 preview 2)
-    $minOfficialVersion = [System.Version]('16.9.30803.129')
-
-    Write-Information "Building PatchVsForLibClang.exe"
-    $msBuildProperties = @{ Configuration = 'Release'}
-    $buildLogPath = Join-Path $buildInfo['BinLogsPath'] PatchVsForLibClang.binlog
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\PatchVsForLibClang\PatchVsForLibClang.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
-
-    $vs = Find-VSInstance -AllowVsPreReleases:$AllowVsPreReleases
-    if($vs.InstallationVersion -lt $minOfficialVersion)
-    {
-        pushd (Join-Path $buildInfo.BuildOutputPath 'bin\PatchVsForLibClang\Release\netcoreapp3.1')
-        try
-        {
-            Write-Information "Patching VS CRT for parsing with LibClang..."
-            .\PatchVsForLibClang.exe $vs.InstallationPath
-        }
-        finally
-        {
-            popd
-        }
-    }
-    else
-    {
-        Write-Information "$($vs.DisplayName) ($($vs.InstallationVersion)) already includes the official patch - skipping manual patch"
-    }
-    #</HACK>
 
     # Download and unpack the LLVM libs if not already present, this doesn't use NuGet as the NuGet compression
     # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
@@ -99,28 +68,27 @@ try
     $msBuildProperties = @{ Configuration = $Configuration
                             LlvmVersion = $buildInfo['LlvmVersion']
                           }
+    $msbuildPropertyList = ConvertTo-PropertyList $msBuildProperties
 
     Write-Information "Building LllvmBindingsGenerator"
-    $generatorRestoreBuildLogPath = Join-Path $buildInfo['BinLogsPath'] LlvmBindingsGeneratorRestore.binlog
-    $generatorBuildLogPath = Join-Path $buildInfo['BinLogsPath'] LlvmBindingsGenerator.binlog
 
-    # manual restore needed so that the CppSharp libraries are available during the build phase
-    Invoke-MSBuild -Targets 'Restore' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorRestoreBuildLogPath"))
-    Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$generatorBuildLogPath"))
+    dotnet build 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -p:$msbuildPropertyList
 
-    # At present CppSharp only supports the "desktop" framework, so limiting this to net47 for now
-    # Hopefully they will support .NET Core soon, if not, the generation stage may need to move out
-    # to a manual step with the results checked in.
     Write-Information "Generating P/Invoke Bindings"
     Write-Information "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
 
-    & "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\Release\net5.0-windows\LlvmBindingsGenerator.exe" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
+    dotnet "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net5.0\LlvmBindingsGenerator.dll" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the projects that consume generated output for the bindings
 
         # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
         # and PackageReference isn't supported for native projects... [Sigh...]
+
+        # TODO: Convert C++ code to CMAKE, this means leveraging CSmeVer build task as a standalone tool so that the version Information
+        # is available to the scripts to provide to the build. Also means dealing with PDBgit in some fashion to establish symbols
+        # correctly to the source, For now leave it on the legacy direct calls to MSBUILD as dotnet msbuild can't find any of the
+        # C++ support - Seems it's using a different set of msbuild props/targets files...
         Write-Information "Restoring LibLLVM"
         Invoke-NuGet restore 'src\Interop\LibLLVM\LibLLVM.vcxproj'
 
@@ -129,8 +97,7 @@ try
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
 
         Write-Information "Building Ubiquity.NET.Llvm.Interop"
-        $interopSlnBinLog = Join-Path $buildInfo['BinLogsPath'] Interop.sln.binlog
-        Invoke-MSBuild -Targets 'Restore;Build' -Project 'src\Interop\Interop.sln' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$interopSlnBinLog") )
+        dotnet build 'src\Interop\Interop.sln' -p:$msbuildPropertyList
     }
     else
     {
@@ -148,6 +115,6 @@ catch
 }
 finally
 {
-    popd
+    Pop-Location
     $env:Path = $oldPath
 }

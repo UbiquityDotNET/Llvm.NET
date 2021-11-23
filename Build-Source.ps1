@@ -19,7 +19,7 @@ Param(
     [switch]$FullInit
 )
 
-pushd $PSScriptRoot
+Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
@@ -29,24 +29,13 @@ try
     . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
-    $packProperties = @{ version=$($buildInfo['PackageVersion'])
-                         llvmversion=$($buildInfo['LlvmVersion'])
-                         buildbinoutput=(Join-path $($buildInfo['BuildOutputPath']) 'bin')
-                         configuration=$Configuration
-                       }
-
-    $msBuildProperties = @{ Configuration = $Configuration
-                            LlvmVersion = $buildInfo['LlvmVersion']
-                          }
-
     # build the interop layer first using the script to manage the complexities of generated marshaling Interop
     # and dependencies between C# and C++ projects.
     .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
 
     # build the Managed code OO Wrapper layer
-    $buildLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm.binlog
-    Write-Information "Building Ubiquity.NET.Llvm"
-    Invoke-MSBuild -Targets 'Restore;Build' -Project src\Ubiquity.NET.Llvm.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$buildLogPath") )
+    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
+    dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
 
     # Create a ZIP file of all the nuget packages
     pushd $buildInfo['NuGetOutputPath']
@@ -63,6 +52,6 @@ catch
 }
 finally
 {
-    popd
+    Pop-Location
     $env:Path = $oldPath
 }
