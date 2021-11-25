@@ -1,4 +1,4 @@
-# Ubiquity.NET.Llvm v10.0.0
+# Ubiquity.NET.Llvm
 >[!Important]
 > It is important to point out that the Ubiquity.NET.Llvm documentation is not a substitute
 > for the official LLVM documentation itself. That is, the content here is focused on

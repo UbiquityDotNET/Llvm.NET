@@ -1,5 +1,12 @@
 # Release Notes
-# v10.0.0-alpha
+# V13.0.0.Alpha
+Split JIT support into a distinct Library. The JIT support is an area undergoing a LOT
+of active development in LLVM. This leaves many aspects of it non-functional or partially
+functional on some platforms. To ensure that the main core of Llvm.NET is able to progress,
+the JIT support now lives in a distinct package (That has a dependency on the core so that
+only one reference is needed.
+
+# v10.0.0
 
 ## Breaking changes
 With the 10.* release the Ubiquity.NET.Llvm.* libs have made a number of breaking changes.

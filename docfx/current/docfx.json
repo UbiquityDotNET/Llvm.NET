@@ -4,7 +4,8 @@
             "src": [
                 {
                     "files": [
-                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj"
+                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj",
+                        "src/Ubiquity.NET.Llvm.JIT/Ubiquity.NET.Llvm.JIT.csproj"
                     ],
                     "src": "../.."
                 }

@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -594,15 +594,6 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Function {0} not found.
-        /// </summary>
-        internal static string Function_0_not_found {
-            get {
-                return ResourceManager.GetString("Function_0_not_found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to GEP index arguments must be integers.
         /// </summary>
         internal static string GEP_index_arguments_must_be_integers {
@@ -1163,15 +1154,6 @@ namespace Ubiquity.NET.Llvm.Properties {
         internal static string Unresolved_Debug_temporary_0 {
             get {
                 return ResourceManager.GetString("Unresolved_Debug_temporary_0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unresolved Symbol: &apos;{0}&apos;; {1}.
-        /// </summary>
-        internal static string Unresolved_Symbol_0_1 {
-            get {
-                return ResourceManager.GetString("Unresolved_Symbol_0_1", resourceCulture);
             }
         }
         
