@@ -5,16 +5,14 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: CLSCompliant( false )]
-
-// This assembly does not expose COM types
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible( false )]
 
-[assembly: NeutralResourcesLanguage( "en" )]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid( "826adb1c-4bdc-4a89-836b-87088e511d6a" )]
 
-// allow use of internal types in the JIT support built on top of this library
-[assembly: InternalsVisibleTo("Ubiquity.NET.Llvm.JIT")]
+[assembly: CLSCompliant( false )]

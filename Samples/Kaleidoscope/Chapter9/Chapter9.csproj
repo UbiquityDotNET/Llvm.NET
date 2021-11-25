@@ -12,9 +12,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(BuildRootDir)src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj">
-        <Name>Llvm.NET</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
   </ItemGroup>

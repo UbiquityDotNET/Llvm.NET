@@ -70,6 +70,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Tests", "..\Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj", "{752FFF38-2B50-4341-ABF5-CCAE013388AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.Llvm.JIT", "Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj", "{36D3ED07-E5D7-4710-81B2-F907A26138C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.JIT.Tests", "Ubiquity.NET.Llvm.JIT.Tests\Ubiquity.NET.Llvm.JIT.Tests.csproj", "{05999102-248A-4682-88E2-CB62FAB29F9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +140,14 @@ Global
 		{752FFF38-2B50-4341-ABF5-CCAE013388AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{752FFF38-2B50-4341-ABF5-CCAE013388AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{752FFF38-2B50-4341-ABF5-CCAE013388AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D3ED07-E5D7-4710-81B2-F907A26138C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D3ED07-E5D7-4710-81B2-F907A26138C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D3ED07-E5D7-4710-81B2-F907A26138C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D3ED07-E5D7-4710-81B2-F907A26138C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05999102-248A-4682-88E2-CB62FAB29F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05999102-248A-4682-88E2-CB62FAB29F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05999102-248A-4682-88E2-CB62FAB29F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05999102-248A-4682-88E2-CB62FAB29F9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -292,12 +292,6 @@
   <data name="Invalid_EngineKind" xml:space="preserve">
     <value>Invalid EngineKind</value>
   </data>
-  <data name="Unresolved_Symbol_0_1" xml:space="preserve">
-    <value>Unresolved Symbol: '{0}'; {1}</value>
-  </data>
-  <data name="Function_0_not_found" xml:space="preserve">
-    <value>Function {0} not found</value>
-  </data>
   <data name="Cannot_Replace_all_uses_of_a_null_descriptor" xml:space="preserve">
     <value>Cannot Replace all uses of a null descriptor</value>
   </data>

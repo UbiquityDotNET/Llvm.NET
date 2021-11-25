@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
+using Ubiquity.NET.Llvm.JIT.Properties;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 

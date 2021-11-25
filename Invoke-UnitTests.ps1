@@ -32,6 +32,9 @@ try
     Write-Information 'Running Core library tests...'
     $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj')
 
+    Write-Information 'Running JIT library tests...'
+    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.JIT.Tests\Ubiquity.NET.Llvm.JIT.Tests.csproj')
+
     Write-Information 'Running tests for Kaleidoscope Samples...'
     $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj')
 
