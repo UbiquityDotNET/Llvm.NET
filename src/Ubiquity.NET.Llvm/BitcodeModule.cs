@@ -293,6 +293,12 @@ namespace Ubiquity.NET.Llvm
             // finalizer, which would cause an access violation in the native LLVM layer.
             if( !IsDisposed )
             {
+                // DI builder is owned by this module, so when it is destroyed so is the builder
+                if(LazyDiBuilder.IsValueCreated)
+                {
+                    LazyDiBuilder.Value.BuilderHandle.SetHandleAsInvalid();
+                }
+
                 // remove the module handle from the module cache.
                 ModuleHandle!.Dispose( );
                 ModuleHandle = default;
