@@ -26,7 +26,7 @@ identical.
 
 ### Brief History
 Ubiquity.NET.Llvm was initially developed as a means to leverage LLVM as the back-end for an Ahead-Of-Time (AOT) compilation
-tool for .NET applications targeting micro-controllers (e.g. An AOT compiler for the [.NET Micro Framework](http://www.netmf.com) ).
+tool for .NET applications targeting micro-controllers (e.g. An AOT compiler for the [.NET Micro Framework](https://github.com/NETMF/netmf-interpreter) ).
 The initial proof of concept built on Ubiquity.NET.Llvm was successful in delivering on a basic application that could
 implement the micro controller equivalent of the classic "Hello World!" application (e.g. Blinky - an app that
 blinks an LED) using LLVM as the back-end code generator. This led to the revival of a former project doing AOT
