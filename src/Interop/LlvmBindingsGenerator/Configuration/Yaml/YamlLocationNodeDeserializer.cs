@@ -13,6 +13,7 @@ using YamlDotNet.Serialization;
 namespace LlvmBindingsGenerator.Configuration
 {
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Interface and class to detect it are a matched pair" )]
+    [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "IDE/Tooling is confused, it is needed" )]
     internal interface IYamlNodeLocation
     {
         Mark Start { get; set; }
@@ -25,17 +26,23 @@ namespace LlvmBindingsGenerator.Configuration
     internal class YamlLocationNodeDeserializer
         : INodeDeserializer
     {
-        public YamlLocationNodeDeserializer( INodeDeserializer inner )
+        public YamlLocationNodeDeserializer(INodeDeserializer inner)
         {
             Inner = inner;
         }
 
-        public bool Deserialize( IParser reader, Type expectedType, Func<IParser, Type, object> nestedObjectDeserializer, out object value )
+        public bool Deserialize(
+            IParser reader,
+            Type expectedType,
+            Func<IParser, Type, object> nestedObjectDeserializer,
+            out object value,
+            ObjectDeserializer rootDeserializer
+            )
         {
             var start = reader.Current.Start;
-            if( Inner.Deserialize( reader, expectedType, nestedObjectDeserializer, out value ) )
+            if(Inner.Deserialize( reader, expectedType, nestedObjectDeserializer, out value, rootDeserializer ))
             {
-                if( value is IYamlNodeLocation node )
+                if(value is IYamlNodeLocation node)
                 {
                     node.Start = start;
                 }

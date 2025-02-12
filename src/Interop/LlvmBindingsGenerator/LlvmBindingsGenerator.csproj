@@ -7,16 +7,16 @@
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
         <PlatformTarget>x64</PlatformTarget>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable />
         <IsPublishable>False</IsPublishable>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CommandLineParser" />
         <PackageReference Include="CppSharp" />
-        <PackageReference Include="System.CodeDom" />
-        <PackageReference Include="Ubiquity.ArgValidators" />
+        <PackageReference Include="Ubiquity.NET.ArgValidators" />
         <PackageReference Include="YamlDotNet" />
+        <PackageReference Include="System.CodeDom" />
     </ItemGroup>
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>

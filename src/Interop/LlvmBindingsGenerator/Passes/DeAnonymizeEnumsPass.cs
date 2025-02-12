@@ -14,7 +14,7 @@ namespace LlvmBindingsGenerator.Passes
 {
     /// <summary>TranslationUnit pass to support creating named enums from anonymous enums</summary>
     /// <remarks>
-    /// C/C++ allow anonymous enums that effectively introduce a const into the parent namespace.
+    /// C and C++ allow anonymous enums that effectively introduce a const into the parent namespace.
     /// Generally, that's not desired for the interop. In fact the only known use cases for this
     /// in the LLVM-C headers is to handle some FLAGS type enums where the language limits the values
     /// of an enum to the range of an int. So what LLVM does is define the anonymous enum, and then

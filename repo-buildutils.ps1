@@ -38,7 +38,7 @@ function Install-LlvmLibs($buildInfo)
     {
         if(!(Test-Path -PathType Container $buildInfo['DownloadsPath']))
         {
-            md $buildInfo['DownloadsPath'] | Out-Null
+            New-Item -ItemType Directory $buildInfo['DownloadsPath'] | Out-Null
         }
 
         $localLlvmLibs7zPath = Join-Path $buildInfo['DownloadsPath'] "llvm-libs-$packageReleaseName.7z"

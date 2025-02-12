@@ -1,3 +1,4 @@
+#if LEGACY_REPLACE_OR_REMOVE
 #include "libllvm-c\LibLlvmOrcJitBindings.h"
 #include "OrcCBindingsStack.h"
 
@@ -40,3 +41,4 @@ extern "C"
         }
     }
 }
+#endif

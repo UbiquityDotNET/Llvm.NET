@@ -43,7 +43,7 @@ try
 }
 catch
 {
-    # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+    # Everything from the official docs to the various articles in the blog-sphere says this isn't needed
     # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
     # information is retained and the error reported will include the correct source file and line number
     # data for the error. Without this, only the error message is retained and the location information is

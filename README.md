@@ -63,7 +63,7 @@ Given all of the above the CI builds are not published to a feed at this time an
 CI build and PR build packages are available as artifacts from the GitHub actions that build them.
 
 ### API Documentation
-The full API documentation on using Ubiquity.NET.Llvm is available on the [Ubiquity.NET.Llvm documentation site](https://ubiquitydotnet.github.io/Ubiquity.NET.Llvm/).
+The full API documentation on using Ubiquity.NET.Llvm is available on the [Ubiquity.NET.Llvm documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
 
 ### Sample Applications
 #### Code Generation With Debug Information

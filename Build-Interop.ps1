@@ -77,7 +77,7 @@ try
     Write-Information "Generating P/Invoke Bindings"
     Write-Information "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
 
-    dotnet "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net5.0\LlvmBindingsGenerator.dll" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
+    dotnet "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net8.0\LlvmBindingsGenerator.dll" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the projects that consume generated output for the bindings

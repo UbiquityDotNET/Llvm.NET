@@ -28,12 +28,12 @@
 #
 # Marhsaling info derived types
 #   !Status {} - [Return only] Force LLVMStatus as the return type
-#   !Alias {}  - [Return only] Return is a GlobalContext handle alias (e.g. caller does not, and cannot destroy the item)
+#   !Alias {}  - [Return only] Return is a GlobalHandle handle alias (e.g. caller does not, and cannot destroy the item)
 #   !Unsafe {} - [Return only] Return is an unsafe pointer type (This basically disables the validation pass check for unsafe types for this function)
 #   !String
 #       Kind - type of marshalling to apply for the string. In all cases the string is copied to a managed string during marshaling
 #           CopyAlias - Copy only, no release of the native string
-#           DisposeMesage - LLVMDisposeMessage() is used to release the native string
+#           DisposeMessage - LLVMDisposeMessage() is used to release the native string
 #           OrcDisposeMangledSymbol - LLVMOrcDisposeMangledSymbol is used to release the native string
 #           DisposeErrorMessage - LLVMDisposeErrorMessage()
 #
@@ -74,67 +74,67 @@
 #       SizeParam - optional integer index of an out parmater that contains the size of the array [for out params]
 #
 FunctionBindings:
-  - Name: LLVMMDStringInContext
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMMDStringInContext2 instead"
+  # - Name: LLVMMDStringInContext
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMMDStringInContext2 instead"
 
-  - Name: LLVMMDString
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMMDStringInContext2"
+  # - Name: LLVMMDString
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMMDStringInContext2"
 
-  - Name: LLVMMDNodeInContext
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMMDNodeInContext2 instead"
+  # - Name: LLVMMDNodeInContext
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMMDNodeInContext2 instead"
 
-  - Name: LLVMMDNode
-    IsObsolete: true
-    DeprecationMessage: "Use LLVMMDNodeInContext2 instead"
+  # - Name: LLVMMDNode
+  #   IsObsolete: true
+  #   DeprecationMessage: "Use LLVMMDNodeInContext2 instead"
 
-  - Name: LLVMSetCurrentDebugLocation
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMSetCurrentDebugLocation2 instead"
+  # - Name: LLVMSetCurrentDebugLocation
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMSetCurrentDebugLocation2 instead"
 
-  - Name: LLVMGetCurrentDebugLocation
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMGetCurrentDebugLocation2 instead"
+  # - Name: LLVMGetCurrentDebugLocation
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMGetCurrentDebugLocation2 instead"
 
-  - Name: LLVMCreateObjectFile
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMCreateBinary instead"
+  # - Name: LLVMCreateObjectFile
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMCreateBinary instead"
 
-  - Name: LLVMIsSectionIteratorAtEnd
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMObjectFileIsSectionIteratorAtEnd instead"
+  # - Name: LLVMIsSectionIteratorAtEnd
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMObjectFileIsSectionIteratorAtEnd instead"
 
-  - Name: LLVMGetSymbols
-    IsObsolete: True
-    DeprecationMessage: "LLVMObjectFileIsSectionIteratorAtEnd"
+  # - Name: LLVMGetSymbols
+  #   IsObsolete: True
+  #   DeprecationMessage: "LLVMObjectFileIsSectionIteratorAtEnd"
 
-  - Name: LLVMParseBitcodeInContext
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMParseBitcodeInContext2 instead"
-    ParamTransforms:
-      - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
+  # - Name: LLVMParseBitcodeInContext
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMParseBitcodeInContext2 instead"
+  #   ParamTransforms:
+  #     - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
-  - Name: LLVMGetBitcodeModuleInContext
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMGetBitcodeModuleInContext2 instead"
-    ParamTransforms:
-      - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
+  # - Name: LLVMGetBitcodeModuleInContext
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMGetBitcodeModuleInContext2 instead"
+  #   ParamTransforms:
+  #     - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
-  - Name: LLVMWriteBitcodeToFileHandle
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMWriteBitcodeToFD instead"
-    ReturnTransform: !Status {}
+  # - Name: LLVMWriteBitcodeToFileHandle
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMWriteBitcodeToFD instead"
+  #   ReturnTransform: !Status {}
 
   - Name: LLVMGetDataLayout
     IsObsolete: True
     DeprecationMessage: "Use LLVMGetDataLayoutStr instead"
     ReturnTransform: !String {Kind: CopyAlias }
 
-  - Name: LLVMSetModuleInlineAsm
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMSetModuleInlineAsm2 instead"
+  # - Name: LLVMSetModuleInlineAsm
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMSetModuleInlineAsm2 instead"
 
   - Name: LLVMGetValueName
     IsObsolete: True
@@ -145,59 +145,59 @@ FunctionBindings:
     IsObsolete: True
     DeprecationMessage: "Use LLVMSetValueName2 instead"
 
-  - Name: LLVMConstInlineAsm
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMGetInlineAsm instead"
+  # - Name: LLVMConstInlineAsm
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMGetInlineAsm instead"
 
-  - Name: LLVMHasUnnamedAddr
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMGetUnnamedAddress instead"
+  # - Name: LLVMHasUnnamedAddr
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMGetUnnamedAddress instead"
 
-  - Name: LLVMSetUnnamedAddr
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMSetUnnamedAddress instead"
+  # - Name: LLVMSetUnnamedAddr
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMSetUnnamedAddress instead"
 
-  - Name: LLVMBuildInvoke
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildInvoke2 instead"
+  # - Name: LLVMBuildInvoke
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildInvoke2 instead"
 
-  - Name: LLVMBuildLoad
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildLoad2 instead"
+  # - Name: LLVMBuildLoad
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildLoad2 instead"
 
-  - Name: LLVMBuildGEP
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildGEP2 instead"
+  # - Name: LLVMBuildGEP
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildGEP2 instead"
 
-  - Name: LLVMBuildInBoundsGEP
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildInBoundsGEP2 instead"
+  # - Name: LLVMBuildInBoundsGEP
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildInBoundsGEP2 instead"
 
-  - Name: LLVMBuildStructGEP
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildStructGEP2 instead"
+  # - Name: LLVMBuildStructGEP
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildStructGEP2 instead"
 
-  - Name: LLVMBuildIntCast
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildIntCast2 instead"
+  # - Name: LLVMBuildIntCast
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildIntCast2 instead"
 
-  - Name: LLVMBuildCall
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMBuildCall2 instead"
+  # - Name: LLVMBuildCall
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMBuildCall2 instead"
 
-  - Name: LLVMCreateFunctionPassManager
-    IsObsolete: True
-    DeprecationMessage: "Use LLVMCreateFunctionPassManagerForModule instead"
+  # - Name: LLVMCreateFunctionPassManager
+  #   IsObsolete: True
+  #   DeprecationMessage: "Use LLVMCreateFunctionPassManagerForModule instead"
 
-  - Name: LLVMStartMultithreaded
-    IsObsolete: True
-    DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
-    IsProjected: False
+  # - Name: LLVMStartMultithreaded
+  #   IsObsolete: True
+  #   DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
+  #   IsProjected: False
 
-  - Name: LLVMStopMultithreaded
-    IsObsolete: True
-    DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
-    IsProjected: False
+  # - Name: LLVMStopMultithreaded
+  #   IsObsolete: True
+  #   DeprecationMessage: "This function is deprecated, multi-threading support is a compile-time variable and cannot be changed at run-time"
+  #   IsProjected: False
 
   - Name: LLVMCreateBinary
     ParamTransforms:
@@ -219,22 +219,22 @@ FunctionBindings:
     IsExported: False
     IsProjected: False
 
-  - Name: LLVMOrcDisposeMangledSymbol
-    IsProjected: False
+  # - Name: LLVMOrcDisposeMangledSymbol
+  #   IsProjected: False
 
-  - Name: LLVMAddInternalizePassWithMustPreservePredicate
-    ParamTransforms:
-      - !Primitive { Name: MustPreserve, Semantics: In, Kind: IntPtr }
+  # - Name: LLVMAddInternalizePassWithMustPreservePredicate
+  #   ParamTransforms:
+  #     - !Primitive { Name: MustPreserve, Semantics: In, Kind: IntPtr }
 
-    # LLVMConstGEP2 appears in Core.h, but has no implementation [Go, Figure!]
-  - Name: LLVMConstGEP2
-    IsExported: False
-    IsProjected: False
+  #   # LLVMConstGEP2 appears in Core.h, but has no implementation [Go, Figure!]
+  # - Name: LLVMConstGEP2
+  #   IsExported: False
+  #   IsProjected: False
 
-    # LLVMConstInBoundsGEP2 appears in Core.h, but has no implementation [Go, Figure!]
-  - Name: LLVMConstInBoundsGEP2
-    IsExported: False
-    IsProjected: False
+  #   # LLVMConstInBoundsGEP2 appears in Core.h, but has no implementation [Go, Figure!]
+  # - Name: LLVMConstInBoundsGEP2
+  #   IsExported: False
+  #   IsProjected: False
 
   - Name: LLVMDisposeMemoryBuffer
     IsProjected: False
@@ -284,11 +284,11 @@ FunctionBindings:
   - Name: LLVMDisposeRelocationIterator
     IsProjected: False
 
-  - Name: LLVMOrcDisposeInstance
-    IsProjected: False
+  # - Name: LLVMOrcDisposeInstance
+  #   IsProjected: False
 
-  - Name: LLVMPassManagerBuilderDispose
-    IsProjected: False
+  # - Name: LLVMPassManagerBuilderDispose
+  #   IsProjected: False
 
   - Name: LLVMDisposeValueMetadataEntries
     IsProjected: False
@@ -379,9 +379,9 @@ FunctionBindings:
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
-  - Name: LLVMOrcGetMangledSymbol
-    ParamTransforms:
-      - !String {Name: MangledSymbol, Semantics: Out, Kind: OrcDisposeMangledSymbol }
+  # - Name: LLVMOrcGetMangledSymbol
+  #   ParamTransforms:
+  #     - !String {Name: MangledSymbol, Semantics: Out, Kind: OrcDisposeMangledSymbol }
 
   - Name: LLVMGetInlineAsm
     ParamTransforms:
@@ -428,9 +428,9 @@ FunctionBindings:
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Subscripts, Semantics: In }
 
-  - Name: LLVMAddInternalizePass
-    ParamTransforms:
-      - !Primitive { Name: AllButMain, Semantics: In, Kind: Bool }
+  # - Name: LLVMAddInternalizePass
+  #   ParamTransforms:
+  #     - !Primitive { Name: AllButMain, Semantics: In, Kind: Bool }
 
   - Name: LLVMGetCallSiteAttributes
     ParamTransforms:
@@ -454,6 +454,8 @@ FunctionBindings:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
   - Name: LLVMIntrinsicCopyOverloadedName
+    IsObsolete: true
+    DeprecationMessage: "Use  LLVMIntrinsicCopyOverloadedName2 instead"
     ReturnTransform: !String {Kind: CopyAlias }
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
@@ -466,9 +468,9 @@ FunctionBindings:
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Indices, Semantics: In }
 
-  - Name: LLVMConstGEP
-    ParamTransforms:
-      - !Array {SubType: SysInt, Name: ConstantIndices, Semantics: In }
+  # - Name: LLVMConstGEP
+  #   ParamTransforms:
+  #     - !Array {SubType: SysInt, Name: ConstantIndices, Semantics: In }
 
   - Name: LLVMBuildGEP2
     ParamTransforms:
@@ -510,9 +512,9 @@ FunctionBindings:
     ParamTransforms:
       - !Array {SubType: SysInt, Name: Args, Semantics: In }
 
-  - Name: LLVMConstInBoundsGEP
-    ParamTransforms:
-      - !Array {SubType: SysInt, Name: ConstantIndices, Semantics: In }
+  # - Name: LLVMConstInBoundsGEP
+  #   ParamTransforms:
+  #     - !Array {SubType: SysInt, Name: ConstantIndices, Semantics: In }
 
   - Name: LLVMGetParamTypes
     ParamTransforms:
@@ -611,8 +613,8 @@ FunctionBindings:
   - Name: LLVMGetRelocationValueString
     ReturnTransform: !String {Kind: DisposeMessage }
 
-  - Name: LLVMOrcGetErrorMsg
-    ReturnTransform: !String {Kind: CopyAlias }
+  # - Name: LLVMOrcGetErrorMsg
+  #   ReturnTransform: !String {Kind: CopyAlias }
 
   - Name: LLVMPrintModuleToString
     ReturnTransform: !String {Kind: DisposeMessage }
@@ -740,8 +742,8 @@ FunctionBindings:
   - Name: LLVMGetExecutionEngineTargetMachine
     ReturnTransform: !Alias {}
 
-  - Name: LLVMGetGlobalContext
-    ReturnTransform: !Alias {}
+  # - Name: LLVMGetGlobalHandle
+  #   ReturnTransform: !Alias {}
 
   - Name: LLVMGetGlobalParent
     ReturnTransform: !Alias {}
@@ -798,7 +800,51 @@ FunctionBindings:
   - Name: LibLLVMGetConstantDataSequentialRawData
     ReturnTransform: !Unsafe {}
 
+  - Name: llvm_blake3_version
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMGetInlineAsmAsmString
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMGetInlineAsmConstraintString
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMGetTargetExtTypeName
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMPrintDbgRecordToString
+    ReturnTransform: !String {Kind: DisposeMessage}
+
+  - Name: LLVMIntrinsicCopyOverloadedName2
+    IsObsolete: true
+    DeprecationMessage: "Use  LLVMIntrinsicCopyOverloadedName2 instead"
+    ReturnTransform: !String {Kind: CopyAlias }
+    ParamTransforms:
+      - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
+
+  - Name: LLVMGetOperandBundleTag
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMOrcLLJITGetTripleString
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMOrcLLJITGetDataLayoutStr
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMOrcSymbolStringPoolEntryStr
+    ReturnTransform: !String {Kind: CopyAlias}
+
+  - Name: LLVMOrcMaterializationResponsibilityGetRequestedSymbols
+    ReturnTransform: !Unsafe {}
+
+  - Name: LLVMOrcJITTargetMachineBuilderGetTargetTriple
+    ReturnTransform: !String {Kind: DisposeMessage}
+
 # The HandleMap Lists the types of handles and their disposal semantics
+# If Alias is True for a global handle then an alias handle is also generated
+# ContextHandle's are owned by the containing context and therefore do not have
+# any sort of Disposer function.
+#
 #HandleMap:
 #    - !ContextHandle { HandleName: LLVMTypeRef}
 #    - !GlobalHandle { HandleName: LLVMModuleRef, Disposer: LLVMDisposeModule, Alias: true }
@@ -816,7 +862,7 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMDIBuilderRef, Disposer: LLVMDisposeDIBuilder, Alias: False}
   - !GlobalHandle {HandleName: LLVMModuleProviderRef, Disposer: LLVMDisposeModuleProvider, Alias: False}
   - !GlobalHandle {HandleName: LLVMPassManagerRef, Disposer: LLVMDisposePassManager, Alias: False}
-  - !GlobalHandle {HandleName: LLVMPassRegistryRef, Disposer: LLVMPassRegistryDispose, Alias: False}
+  # - !GlobalHandle {HandleName: LLVMPassRegistryRef, Disposer: LLVMPassRegistryDispose, Alias: False}
   - !ContextHandle {HandleName: LLVMUseRef }
   - !ContextHandle {HandleName: LLVMAttributeRef }
   - !ContextHandle {HandleName: LLVMDiagnosticInfoRef }
@@ -835,14 +881,39 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMSectionIteratorRef, Disposer: LLVMDisposeSectionIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMSymbolIteratorRef, Disposer: LLVMDisposeSymbolIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMRelocationIteratorRef, Disposer: LLVMDisposeRelocationIterator, Alias: False}
-  - !GlobalHandle {HandleName: LLVMOrcJITStackRef, Disposer: LLVMOrcDisposeInstance, Alias: False}
-  - !GlobalHandle {HandleName: LLVMPassManagerBuilderRef, Disposer: LLVMPassManagerBuilderDispose, Alias: False}
+  #- !GlobalHandle {HandleName: LLVMOrcJITStackRef, Disposer: LLVMOrcDisposeInstance, Alias: False}
+  #- !GlobalHandle {HandleName: LLVMPassManagerBuilderRef, Disposer: LLVMPassManagerBuilderDispose, Alias: False}
   - !GlobalHandle {HandleName: LLVMValueMetadataEntry, Disposer: LLVMDisposeValueMetadataEntries, Alias: False}
   - !GlobalHandle {HandleName: LLVMModuleFlagEntry, Disposer: LLVMDisposeModuleFlagsMetadata, Alias: False}
   - !GlobalHandle {HandleName: LLVMDisasmContextRef, Disposer: LLVMDisasmDispose, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMTripleRef, Disposer: LibLLVMDisposeTriple, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMValueCacheRef, Disposer: LibLLVMDisposeValueCache, Alias: False}
   - !ContextHandle {HandleName: LibLLVMMDOperandRef}
+  - !GlobalHandle {HandleName: LLVMOrcSymbolStringPoolEntryRef, Disposer: LLVMOrcDisposeSymbols, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOperandBundleRef, Disposer: LLVMDisposeOperandBundle, Alias: False}
+  - !ContextHandle {HandleName: LLVMDbgRecordRef}
+  - !GlobalHandle {HandleName: LLVMTargetMachineOptionsRef, Disposer: LLVMDisposeTargetMachineOptions, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcLLJITBuilderRef, Disposer: LLVMOrcDisposeLLJITBuilder, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcLLJITRef, Disposer: LLVMOrcDisposeLLJIT, Alias: False}
+  - !ContextHandle {HandleName: LLVMOrcExecutionSessionRef}
+  - !ContextHandle {HandleName: LLVMOrcSymbolStringPoolRef}
+  - !ContextHandle {HandleName: LLVMOrcJITDylibRef}
+  - !GlobalHandle {HandleName: LLVMOrcMaterializationUnitRef, Disposer: LLVMOrcDisposeMaterializationUnit, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcMaterializationResponsibilityRef, Disposer: LLVMOrcDisposeMaterializationResponsibility, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcResourceTrackerRef, Disposer: LLVMOrcReleaseResourceTracker, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcDefinitionGeneratorRef, Disposer: LLVMOrcDisposeDefinitionGenerator, Alias: False}
+  - !ContextHandle {HandleName: LLVMOrcLookupStateRef}
+  - !GlobalHandle {HandleName: LLVMOrcThreadSafeContextRef, Disposer: LLVMOrcDisposeThreadSafeContext, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcThreadSafeModuleRef, Disposer: LLVMOrcDisposeThreadSafeModule, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcJITTargetMachineBuilderRef, Disposer: LLVMOrcDisposeJITTargetMachineBuilder, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcObjectLayerRef, Disposer: LLVMOrcDisposeObjectLayer, Alias: False}
+  - !ContextHandle {HandleName: LLVMOrcIRTransformLayerRef}
+  - !ContextHandle {HandleName: LLVMOrcObjectTransformLayerRef}
+  - !GlobalHandle {HandleName: LLVMOrcIndirectStubsManagerRef, Disposer: LLVMOrcDisposeIndirectStubsManager, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcLazyCallThroughManagerRef, Disposer: LLVMOrcDisposeLazyCallThroughManager, Alias: False}
+  - !GlobalHandle {HandleName: LLVMOrcDumpObjectsRef, Disposer: LLVMOrcDisposeDumpObjects, Alias: False}
+  - !GlobalHandle {HandleName: LLVMPassBuilderOptionsRef, Disposer: LLVMDisposePassBuilderOptions, Alias: False}
+  - !ContextHandle {HandleName: LLVMOrcObjectLinkingLayerRef}
 
 # C/C++ allow anonymous enums that effectively introduce a const into the parent namespace.
 # Generally, that's not desired for the interop. In fact the only known use cases for this
@@ -852,7 +923,7 @@ HandleMap:
 # example)
 # This table maps the name of the first element of an anonymous enum with the name of the
 # typedef used to represent the enumeration. This is used to find the correct declaration
-# in the AST
+# in the AST for code generation.
 #AnonymousEnums:
 #    LLVMAttributeReturnIndex: LLVMAttributeIndex
 #    LLVMMDStringMetadataKind: LLVMMetadataKind
@@ -860,8 +931,10 @@ HandleMap:
 AnonymousEnums:
   LLVMAttributeReturnIndex: LLVMAttributeIndex
   LLVMMDStringMetadataKind: LLVMMetadataKind
+  LLVMFastMathAllowReassoc: LLVMFastMathFlags
+  LLVMGEPFlagInBounds: LLVMGEPNoWrapFlags
 
 IgnoredHeaders:
-  - llvm-c/LinkTimeOptimizer.h
+  # - llvm-c/LinkTimeOptimizer.h
   - llvm-c/lto.h
   - llvm-c/Remarks.h

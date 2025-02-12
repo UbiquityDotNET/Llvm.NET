@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <DebugType>portable</DebugType>
         <DebugSymbols>true</DebugSymbols>

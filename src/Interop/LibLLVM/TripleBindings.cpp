@@ -1,8 +1,7 @@
 #include <llvm-c/Core.h>
-#include <llvm/ADT/Triple.h>
+#include <llvm/TargetParser/Triple.h>
 #include <llvm/Support/CBindingWrapping.h>
-#include <llvm/Support/TargetParser.h>
-
+#include <llvm/TargetParser/ARMTargetParser.h>
 #include "libllvm-c/TripleBindings.h"
 
 using namespace llvm;
@@ -214,9 +213,12 @@ extern "C"
         return ( LibLLVMTripleEnvironmentType )unwrap( triple )->getEnvironment( );
     }
 
-    void LibLLVMTripleGetEnvironmentVersion( LibLLVMTripleRef triple, unsigned* major, unsigned* minor, unsigned* micro )
+    void LibLLVMTripleGetEnvironmentVersion( LibLLVMTripleRef triple, unsigned* major, unsigned* minor, unsigned* build )
     {
-        unwrap( triple )->getEnvironmentVersion( *major, *minor, *micro );
+        VersionTuple ver = unwrap( triple )->getEnvironmentVersion( );
+         *major = ver.getMajor();
+         *minor = ver.getMinor().value_or(0);
+         *build = ver.getBuild().value_or(0);
     }
 
     LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType( LibLLVMTripleRef triple )

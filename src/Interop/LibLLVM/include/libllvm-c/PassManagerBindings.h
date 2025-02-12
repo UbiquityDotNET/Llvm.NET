@@ -30,9 +30,9 @@ void LibLLVMAddThreadSanitizerPass(LLVMPassManagerRef PM);
 void LibLLVMAddMemorySanitizerPass(LLVMPassManagerRef PM);
 void LibLLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum, const char **ABIListFiles );
 
-LLVMPassRegistryRef LibLLVMCreatePassRegistry( );
-void LibLLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
-
+//LLVMPassRegistryRef LibLLVMCreatePassRegistry( );
+//void LibLLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
+//
 #ifdef __cplusplus
 }
 #endif

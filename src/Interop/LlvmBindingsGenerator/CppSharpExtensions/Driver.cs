@@ -58,7 +58,7 @@ namespace LlvmBindingsGenerator
         public void Setup()
         {
             ValidateOptions();
-            ParserOptions.Setup();
+            ParserOptions.Setup(TargetPlatform.Windows);
             Context = new BindingContext( Options, ParserOptions );
         }
 

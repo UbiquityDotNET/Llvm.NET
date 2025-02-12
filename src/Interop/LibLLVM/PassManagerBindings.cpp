@@ -16,7 +16,7 @@
 #include <llvm-c/Core.h>
 #include <llvm/IR/LegacyPassManager.h>
 #include <llvm/IR/Module.h>
-#include <llvm/Transforms/Instrumentation.h>
+//#include <llvm/Transforms/Instrumentation.h>
 #include <llvm/PassRegistry.h>
 #include "llvm/Transforms/Instrumentation/AddressSanitizer.h"
 #include <llvm/Transforms/Instrumentation/MemorySanitizer.h>
@@ -26,6 +26,7 @@ using namespace llvm;
 
 extern "C"
 {
+#if LEGACY_REMOVE_OR_REPLACE
     LLVMPassRegistryRef LibLLVMCreatePassRegistry( )
     {
         return wrap( new PassRegistry( ) );
@@ -66,4 +67,5 @@ extern "C"
 
         unwrap( PM )->add( createDataFlowSanitizerPass( ABIListFilesVec ) );
     }
+#endif
 }

@@ -15,7 +15,7 @@ using LlvmBindingsGenerator.Passes;
 
 namespace LlvmBindingsGenerator
 {
-    /// <summary>ILibrary implementation for the LUbiquity.NET.Llvm Interop</summary>
+    /// <summary>ILibrary implementation for the Ubiquity.NET.Llvm Interop</summary>
     /// <remarks>
     /// This class provides the library specific bridging from the generalized
     /// CppSharp infrastructure for the specific needs of the Ubiquity.NET.Llvm.Interop library

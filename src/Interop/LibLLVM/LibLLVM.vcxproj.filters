@@ -20,6 +20,9 @@
     <None Include="include\ReadMe.md">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="EXPORTS.g.DEF">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InlinedExports.cpp">

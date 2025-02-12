@@ -60,9 +60,11 @@ namespace LlvmBindingsGenerator.Passes
 
                     if( !allowUnsafeReturn )
                     {
-                        Diagnostics.Error( "ERROR: Function '{0}' has unsafe return type '{1}', without a marshaling attribute - (Possible missing FunctionBindings entry)"
+                        Diagnostics.Error( "ERROR: Function '{0}' has unsafe return type '{1}', without a marshaling attribute - (Possible missing FunctionBindings entry) [{2}({3})]"
                                          , function.Name
                                          , pt.ToString( )
+                                         , function.TranslationUnit.FileRelativePath
+                                         , function.LineNumberStart
                                          );
                     }
                 }

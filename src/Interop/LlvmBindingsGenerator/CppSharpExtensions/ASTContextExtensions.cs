@@ -98,7 +98,8 @@ namespace LlvmBindingsGenerator
                 || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "It's supposed to be all lowercase" )]
+        [SuppressMessage( "Globalization", "CA1308:Normalize strings to uppercase", Justification = "It's supposed to be all lowercase" )]
+        [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is needed, tooling is too stupid to see that..." )]
         public static string AsString( this CppSharp.AST.Attribute attr, bool useFullNamespace = false )
         {
             var bldr = new StringBuilder( "[" );

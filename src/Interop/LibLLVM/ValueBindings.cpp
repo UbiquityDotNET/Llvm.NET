@@ -58,10 +58,11 @@ extern "C"
         gv->addDebugInfo( unwrap<DIGlobalVariableExpression>( exp ) );
     }
 
-    void LibLLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block )
-    {
-        unwrap<Function>( function )->getBasicBlockList( ).push_back( unwrap( block ) );
-    }
+    //void LibLLVMFunctionAppendBasicBlock( LLVMValueRef /*Function*/ function, LLVMBasicBlockRef block )
+    //{
+    // TODO: Use end() function to get end of blocks and insert before that...
+    //    unwrap<Function>( function )->getBasicBlockList( ).push_back( unwrap( block ) );
+    //}
 
     LLVMValueRef LibLLVMValueAsMetadataGetValue( LLVMMetadataRef vmd )
     {

@@ -106,13 +106,13 @@ namespace LlvmBindingsGenerator.Configuration
                 return type == typeof( IncludeRef );
             }
 
-            public object ReadYaml( IParser parser, Type type )
+            public object ReadYaml( IParser parser, Type type, ObjectDeserializer rootDeserializer)
             {
                 var scalarEvent = parser.Consume<Scalar>();
                 return new IncludeRef() { Path = NormalizePathSep( scalarEvent.Value ), Start = scalarEvent.Start };
             }
 
-            public void WriteYaml( IEmitter emitter, object value, Type type )
+            public void WriteYaml( IEmitter emitter, object value, Type type, ObjectSerializer serializer )
             {
                 throw new NotSupportedException();
             }

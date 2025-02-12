@@ -216,7 +216,7 @@ extern "C" {
     LibLLVMTripleOSType LibLLVMTripleGetOsType( LibLLVMTripleRef triple );
     LLVMBool LibLLVMTripleHasEnvironment( LibLLVMTripleRef triple );
     LibLLVMTripleEnvironmentType LibLLVMTripleGetEnvironmentType( LibLLVMTripleRef triple );
-    void LibLLVMTripleGetEnvironmentVersion( LibLLVMTripleRef triple, unsigned* major, unsigned* minor, unsigned* micro );
+    void LibLLVMTripleGetEnvironmentVersion( LibLLVMTripleRef triple, unsigned* major, unsigned* minor, unsigned* build );
     LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType( LibLLVMTripleRef triple );
 
     // Use LLVMDisposeMessage on return for all of these

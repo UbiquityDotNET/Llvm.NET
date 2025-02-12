@@ -2,6 +2,7 @@
 #define _LIBLLVM_ORCJIT_BINDINGS_H_
 
 #include <llvm-c/Core.h>
+#if LEGACY_REPLACE_WITH_CURRENT_SUPPORT_OR_REMOVE
 #include "llvm-c/OrcBindings.h"
 
 #ifdef __cplusplus
@@ -22,5 +23,5 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-
+#endif
 #endif
