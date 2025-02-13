@@ -16,9 +16,9 @@
     <ItemGroup>
         <PackageReference Update="System.CodeDom" Version="9.0.2" />
         <PackageReference Update="Ubiquity.NET.ArgValidators" Version="7.0.0" />
-        <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-        <PackageReference Update="MSTest.TestFramework" Version="3.7.3" />
-        <PackageReference Update="MSTest.TestAdapter" Version="3.7.3" />
+        <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+        <PackageReference Update="MSTest.TestFramework"  Version="3.8.0" />
+        <PackageReference Update="MSTest.TestAdapter" Version="3.8.0" />
         <PackageReference Update="CppSharp" Version="1.1.5.3168" />
         <PackageReference Update="Antlr4" Version="4.6.6"/>
         <PackageReference Update="OpenSoftware.DgmlBuilder" Version="2.1.0" />

@@ -20,6 +20,7 @@
 extern "C" {
 #endif
 
+#if LEGACY_REMOVE_OR_REPLACE
 // FIXME: These bindings shouldn't be language binding-specific and should eventually move to
 // a (somewhat) less stable collection of C APIs for use in creating bindings of
 // LLVM in other languages.
@@ -32,7 +33,8 @@ void LibLLVMAddDataFlowSanitizerPass( LLVMPassManagerRef PM, int ABIListFilesNum
 
 //LLVMPassRegistryRef LibLLVMCreatePassRegistry( );
 //void LibLLVMPassRegistryDispose( LLVMPassRegistryRef passReg );
-//
+#endif
+
 #ifdef __cplusplus
 }
 #endif

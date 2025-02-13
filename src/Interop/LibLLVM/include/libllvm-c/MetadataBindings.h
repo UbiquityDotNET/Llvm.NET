@@ -87,7 +87,8 @@ extern "C" {
     LLVMBool LibLLVMIsResolved( LLVMMetadataRef M );
     LLVMBool LibLLVMIsUniqued( LLVMMetadataRef M );
     LLVMBool LibLLVMIsDistinct( LLVMMetadataRef M );
-    int64_t LibLLVMDISubRangeGetLowerBounds( LLVMMetadataRef /*DISubRange*/ sr );
+
+    //int64_t LibLLVMDISubRangeGetLowerBounds( LLVMMetadataRef /*DISubRange*/ sr );
 #ifdef __cplusplus
 } // extern "C"
 #endif

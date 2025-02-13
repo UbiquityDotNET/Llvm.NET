@@ -1,17 +1,16 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CustomStringMarshalerBase.cs" company="Ubiquity.NET Contributors">
+// <copyright file="CustomStringMarshallerBase.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Base class for custom string marshaling</summary>
-    public class CustomStringMarshalerBase
+    public class CustomStringMarshallerBase
         : ICustomMarshaler
     {
         /// <summary>Performs necessary cleanup of the managed data when it is no longer needed.</summary>
@@ -27,7 +26,6 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>A pointer to the unmanaged data to be destroyed.</summary>
         /// <returns>The size, in bytes, of the native data.</returns>
-        [SuppressMessage( "Design", "CA1024:Use properties where appropriate.", Justification = "Name and signature defined by interface" )]
         public int GetNativeDataSize( ) => -1;
 
         /// <summary>Converts the managed data to unmanaged data.</summary>
@@ -42,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Interop
         public object MarshalNativeToManaged( IntPtr pNativeData )
             => StringNormalizer.NormalizeLineEndings( pNativeData );
 
-        internal CustomStringMarshalerBase( Action<IntPtr>? disposer = null )
+        internal CustomStringMarshallerBase( Action<IntPtr>? disposer = null )
         {
             NativeDisposer = disposer;
         }

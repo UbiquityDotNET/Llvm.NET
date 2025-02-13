@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.JIT
         /// <returns>Handle for the module in the engine</returns>
         /// <remarks>
         /// <note type="warning">
-        /// Ownership of the <paramref name="bitcodeModule"/> is transfered to the JIT engine and therefore,
+        /// Ownership of the <paramref name="bitcodeModule"/> is transferred to the JIT engine and therefore,
         /// after successful completion of this call the module reports as disposed.
         /// </note>
         /// <note type="important">

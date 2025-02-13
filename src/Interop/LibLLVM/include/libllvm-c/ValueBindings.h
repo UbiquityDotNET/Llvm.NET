@@ -68,7 +68,7 @@ extern "C" {
     void LibLLVMValueCacheAdd( LibLLVMValueCacheRef cacheRef, LLVMValueRef value, intptr_t handle );
     intptr_t LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef );
 
-    // Detect if a ConstantDataSequentioal is a C string (i8 sequence terminated with \0 and no embedded \0)
+    // Detect if a ConstantDataSequential is a C string (i8 sequence terminated with \0 and no embedded \0)
     LLVMBool LibLLVMIsConstantCString(LLVMValueRef C);
 
     // Retrieve the number of elements in a ConstantDataSequential

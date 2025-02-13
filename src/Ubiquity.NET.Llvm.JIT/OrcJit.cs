@@ -95,6 +95,7 @@ namespace Ubiquity.NET.Llvm.JIT
         }
 
         /// <inheritdoc/>
+        [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Tooling can't see it is needed [Sigh...]" )]
         public ulong DefaultSymbolResolver( string name, IntPtr ctx )
         {
             try
