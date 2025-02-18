@@ -44,18 +44,21 @@ namespace LlvmBindingsGenerator.Passes
         public override bool VisitFunctionDecl( Function function )
         {
             var signature = ( FunctionType )function.FunctionType.Type;
+            bool hasBinding = Configuration.FunctionBindings.TryGetValue( function.Name, out YamlFunctionBinding binding);
             switch( function.ReturnType.Type )
             {
             // Any function listed in the map is converted regardless of declared return type
             // Some functions use int instead of LLVMBool, apparently to avoid the confusion.
             // Unfortunately since this is not consistent, it creates more confusion.
-            case Type _ when IsStatusReturning( function ):
+            case Type _ when hasBinding && binding.ReturnTransform is YamlReturnStatusMarshalInfo:
                 function.ReturnType = LlvmStatusType;
                 signature.ReturnType = function.ReturnType;
                 Diagnostics.Debug( "Converted return type of function {0} to LLVMStatus", function.Name );
                 break;
 
-            // functions not mapped but having LLVMBool are converted to returning "bool"
+            // Transform return type of functions with explicit mapping to LLVMBool (sometimes it's just "int" [Sigh...])
+            // Functions not mapped but having LLVMBool are converted to returning "bool"
+            case Type _ when hasBinding && binding.ReturnTransform is YamlPrimitiveMarshalInfo ypmi && ypmi.Kind == PrimitiveType.Bool:
             case TypedefType tdt when tdt.Declaration.Name == LLVMBoolTypeName:
                 function.Attributes.Add( ReturnBoolAttribute );
                 function.ReturnType = BoolType;
@@ -75,12 +78,6 @@ namespace LlvmBindingsGenerator.Passes
             }
 
             return true;
-        }
-
-        private bool IsStatusReturning( Function function )
-        {
-            return Configuration.FunctionBindings.TryGetValue( function.Name, out YamlFunctionBinding binding )
-                   && binding.ReturnTransform is YamlReturnStatusMarshalInfo;
         }
 
         private readonly IGeneratorConfig Configuration;

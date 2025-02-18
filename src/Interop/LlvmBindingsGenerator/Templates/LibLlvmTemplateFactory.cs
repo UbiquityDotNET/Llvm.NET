@@ -22,7 +22,7 @@ namespace LlvmBindingsGenerator
     // Factory class for the templates needed in code generation
     // This is essentially a more flexible form of the CppSharp.CodeGenerator,
     // which, despite the name, doesn't generate code, but instead creates
-    // templates in the form of GeneratorOutput. Therefore, IGeneratorCodeTemplate
+    // templates in the form of GeneratorOutput. Therefore, ICodeGenerator
     // here is the functional equivalent to CppSharp's GeneratorOutput.
     internal class LibLlvmTemplateFactory
         : ICodeGeneratorTemplateFactory
@@ -42,42 +42,41 @@ namespace LlvmBindingsGenerator
         {
             return CreateHandleTypeTemplates( bindingContext )
                     .Concat( CreatePerHeaderInterop( bindingContext ) )
-                    .Concat( CreateStringMarhsallingTemplates( ) )
+                    .Concat( CreateStringMarshallingTemplates( ) )
                     .Concat( CreateMiscTemplates( bindingContext ) );
         }
 
         private static IEnumerable<ICodeGenerator> CreateMiscTemplates( BindingContext bindingContext )
         {
-            yield return new TemplateCodeGenerator( true, "EXPORTS", Path.Combine( "..", "LibLLVM" ), new[ ] { new ExportsTemplate( bindingContext.ASTContext ) } );
+            yield return new TemplateCodeGenerator( "EXPORTS", Path.Combine( "..", "LibLLVM" ), [new ExportsTemplate( bindingContext.ASTContext )] );
         }
 
-        private static IEnumerable<ICodeGenerator> CreateStringMarhsallingTemplates( )
+        private static IEnumerable<ICodeGenerator> CreateStringMarshallingTemplates( )
         {
-            foreach( StringDisposal kind in GetEnumValues<StringDisposal>( ) )
-            {
-                var (name, nativeDisposer) = StringDisposalMarshalerMap.LookupMarshaler( kind );
-                var t4Template = new StringMarshalerTemplate( name, nativeDisposer );
-                yield return new TemplateCodeGenerator( true, name, Path.Combine( GeneratedCodePath, "StringMarshaling" ), new[ ] { t4Template } );
-            }
+            return from kind in GetEnumValues<StringDisposal>( )
+                   where kind != StringDisposal.None // standard AnsiStringMarshaller is used; no custom marshaller is needed
+                   let marshalInfo = StringDisposalMarshalerMap.LookupMarshaller( kind )
+                   let template = new StringMarshallerTemplate( marshalInfo.Name, marshalInfo.NativeDisposer )
+                   select new TemplateCodeGenerator( marshalInfo.Name, Path.Combine( GeneratedCodePath, "StringMarshaling" ), [template] );
         }
 
         private IEnumerable<ICodeGenerator> CreatePerHeaderInterop( BindingContext ctx )
         {
-            foreach( var tu in ctx.ASTContext.GeneratedUnits( ) )
-            {
-                var t4Template = new PerHeaderInteropTemplate( tu, TypePrinter );
-                var t4XmlDocsTemplate = new ExternalDocXmlTemplate( tu, TypePrinter );
-                yield return new TemplateCodeGenerator( tu.IsValid
-                                                      , tu.FileNameWithoutExtension
-                                                      , tu.IncludePath == null ? GeneratedCodePath : Path.Combine( GeneratedCodePath, tu.FileRelativeDirectory )
-                                                      , new ICodeGenTemplate[ ] { t4Template, t4XmlDocsTemplate }
-                                                      );
-            }
+            return from tu in ctx.ASTContext.GeneratedUnits( )
+                   let t4 = new PerHeaderInteropTemplate( tu, TypePrinter )
+                   select new TemplateCodeGenerator( tu.IsValid
+                                                   , tu.FileNameWithoutExtension
+                                                   , tu.IncludePath == null ? GeneratedCodePath : Path.Combine( GeneratedCodePath, tu.FileRelativeDirectory )
+                                                   , [t4]
+                                                   );
         }
 
         private IEnumerable<ICodeGenerator> CreateHandleTypeTemplates( BindingContext ctx )
         {
             // filter out known handle types with non-templated implementations
+            // LLVMErrorRef is rather unique with disposal and requires a distinct
+            // implementation. (If the message is retrieved, the handle is destroyed,
+            // and it is destroyed if "consumed" without getting the message.)
             var handles = from handle in ctx.ASTContext.GetHandleTypeDefs( )
                           where handle.Name != "LLVMErrorRef"
                           select handle;
@@ -86,7 +85,7 @@ namespace LlvmBindingsGenerator
             {
                 if( HandleToTemplateMap.TryGetValue( handle.Name, out IHandleCodeTemplate template ) )
                 {
-                    yield return new TemplateCodeGenerator( true, handle.Name, Path.Combine( GeneratedCodePath, "Handles" ), new[ ] { template } );
+                    yield return new TemplateCodeGenerator( handle.Name, Path.Combine( GeneratedCodePath, "Handles" ), [template] );
                 }
                 else
                 {

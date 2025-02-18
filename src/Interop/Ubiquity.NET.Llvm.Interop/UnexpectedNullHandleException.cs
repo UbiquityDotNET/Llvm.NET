@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Runtime.Serialization;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -34,14 +33,6 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Initializes a new instance of the <see cref="UnexpectedNullHandleException"/> class.</summary>
         public UnexpectedNullHandleException( )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="UnexpectedNullHandleException"/> class.</summary>
-        /// <param name="info">Serialization information</param>
-        /// <param name="context">Context for serialization</param>
-        public UnexpectedNullHandleException( SerializationInfo info, StreamingContext context )
-            : base( info, context )
         {
         }
     }

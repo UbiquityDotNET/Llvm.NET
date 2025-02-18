@@ -12,6 +12,9 @@
         <IsPublishable>False</IsPublishable>
     </PropertyGroup>
     <ItemGroup>
+      <None Include="..\readme-first.md" Link="readme-first.md" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="CommandLineParser" />
         <PackageReference Include="CppSharp" />
         <PackageReference Include="Ubiquity.NET.ArgValidators" />
@@ -33,11 +36,6 @@
             <LastGenOutput>ExportsTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
-        <None Update="Templates\T4\ExternalDocXmlTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>ExternalDocXmlTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
         <None Update="Templates\T4\GlobalHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
             <LastGenOutput>GlobalHandleTemplate.cs</LastGenOutput>
@@ -48,9 +46,9 @@
             <LastGenOutput>PerHeaderInteropTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
-        <None Update="Templates\T4\StringMarshalerTemplate.tt">
+        <None Update="Templates\T4\StringMarshallerTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>StringMarshalerTemplate.cs</LastGenOutput>
+            <LastGenOutput>StringMarshallerTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
     </ItemGroup>
@@ -65,11 +63,6 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>ExportsTemplate.tt</DependentUpon>
         </Compile>
-        <Compile Update="Templates\T4\ExternalDocXmlTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>ExternalDocXmlTemplate.tt</DependentUpon>
-        </Compile>
         <Compile Update="Templates\T4\GlobalHandleTemplate.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -80,10 +73,10 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>PerHeaderInteropTemplate.tt</DependentUpon>
         </Compile>
-        <Compile Update="Templates\T4\StringMarshalerTemplate.cs">
+        <Compile Update="Templates\T4\StringMarshallerTemplate.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
-            <DependentUpon>StringMarshalerTemplate.tt</DependentUpon>
+            <DependentUpon>StringMarshallerTemplate.tt</DependentUpon>
         </Compile>
     </ItemGroup>
     <ItemGroup>

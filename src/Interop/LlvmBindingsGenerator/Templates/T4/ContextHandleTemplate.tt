@@ -13,14 +13,13 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------
 
-using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>Simple typesafe handle to wrap a raw pointer for interop with "C" API exported from LibLLVM</summary>
+    /// <summary>Simple type safe handle to wrap an opaque pointer for interop with "C" API exported from LibLLVM</summary>
     /// <remarks>
     ///    This handle is owned by it's container and therefore isn't disposed by the
     ///    calling App.
@@ -32,23 +31,10 @@ namespace Ubiquity.NET.Llvm.Interop
     /// </note>
     /// </remarks>
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
-    public struct <#=HandleName#>
-        : IEquatable<<#=HandleName#>>
+    [NativeMarshalling(typeof(ContextHandleMarshaller<<#=HandleName#>>))]
+    public readonly record struct <#=HandleName#>
+        : IContextHandle<<#=HandleName#>>
     {
-        /// <inheritdoc/>
-        public override int GetHashCode( ) => Handle.GetHashCode( );
-
-        /// <inheritdoc/>
-        public override bool Equals( object obj )
-            => !( obj is null )
-             && ( obj is <#=HandleName#> r )
-             && ( r.Handle == Handle );
-
-        /// <summary>Tests another for reference equality</summary>
-        /// <param name="other">Other block to compare</param>
-        /// <returns><see langword="true"/> if the other handle refers to the same native object (e.g. reference equality)</returns>
-        public bool Equals( <#=HandleName#> other ) => Handle == other.Handle;
-
         /// <summary>Fluent null handle validation</summary>
         /// <param name="message">Message to use for an exception if thrown</param>
         /// <param name="memberName">Name if the member calling this function (usually provided by compiler via <see cref="CallerMemberNameAttribute"/></param>
@@ -61,44 +47,36 @@ namespace Ubiquity.NET.Llvm.Interop
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0 )
         {
-            if( Handle == IntPtr.Zero )
-            {
-                throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " );
-            }
-
-            return this;
+            return DangerousGetHandle() == nint.Zero
+                ? throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " )
+                : this;
         }
 
-        /// <summary>Tests two handles for reference equality</summary>
-        /// <param name="lhs">Left side of comparison</param>
-        /// <param name="rhs">Right side of comparison</param>
-        /// <returns><see langword="true"/> if both handles refer to the same native object (e.g. reference equality)</returns>
-        public static bool operator ==( <#=HandleName#> lhs, <#=HandleName#> rhs )
-            => EqualityComparer<<#=HandleName#>>.Default.Equals( lhs, rhs );
+        /// <summary>Gets a value indicating if this handle is a <see langword="null"/> value</summary>
+        public bool IsNull => Handle == nint.Zero;
 
-        /// <summary>Tests two handles for reference inequality</summary>
-        /// <param name="lhs">Left side of comparison</param>
-        /// <param name="rhs">Right side of comparison</param>
-        /// <returns><see langword="false"/> if both handles refer to the same native object (e.g. reference equality)</returns>
-        public static bool operator !=( <#=HandleName#> lhs, <#=HandleName#> rhs ) => !( lhs == rhs );
+        /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
+        /// <returns>The handle as an <see cref="nint"/></returns>
+        public nint DangerousGetHandle() => Handle;
+
+        /// <summary>Interface defined factory for an instance of <see cref="<#=HandleName#>"/></summary>
+        /// <param name="abiValue">Native ABI value of the handle</param>
+        /// <returns>Type specific wrapper around the native ABI handle</returns>
+        public static <#=HandleName#> FromABI(nint abiValue) => new(abiValue);
 
         /// <summary>Gets a zero (<see langword="null"/>) value handle</summary>
-        public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(IntPtr.Zero);
+        public static <#=HandleName#> Zero => FromABI(nint.Zero);
 
-        /// <summary>Gets the handle as an <see cref="IntPtr"/> suitable for passing to native code</summary>
-        /// <returns>The handle as an <see cref="IntPtr"/></returns>
-        public IntPtr ToIntPtr() => Handle;
-
-        /// <summary>Gets the handle as an <see cref="IntPtr"/> suitable for passing to native code</summary>
+        /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
         /// <param name="value">Handle to convert</param>
-        /// <returns>The handle as an <see cref="IntPtr"/></returns>
-        public static implicit operator IntPtr(<#=HandleName#> value) => value.ToIntPtr();
+        /// <returns>The handle as an <see cref="nint"/></returns>
+        public static implicit operator nint(<#=HandleName#> value) => value.Handle;
 
-        internal <#=HandleName#>( IntPtr p )
+        private <#=HandleName#>( nint p )
         {
             Handle = p;
         }
 
-        private readonly IntPtr Handle;
+        private readonly nint Handle;
     }
 }

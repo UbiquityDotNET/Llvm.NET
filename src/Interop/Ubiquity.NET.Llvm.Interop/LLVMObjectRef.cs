@@ -6,12 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -26,7 +24,6 @@ namespace Ubiquity.NET.Llvm.Interop
     /// value.</note>
     /// </remarks>
     [SecurityCritical]
-    [SecurityPermission( SecurityAction.InheritanceDemand, UnmanagedCode = true )]
     public abstract class LlvmObjectRef
         : SafeHandle
         , IEquatable<LlvmObjectRef>
@@ -42,10 +39,10 @@ namespace Ubiquity.NET.Llvm.Interop
         public override int GetHashCode( ) => DangerousGetHandle( ).GetHashCode( );
 
         /// <inheritdoc/>
-        public override bool Equals( object obj ) => Equals( obj as LlvmObjectRef );
+        public override bool Equals( object? obj ) => Equals( obj as LlvmObjectRef );
 
         /// <inheritdoc/>
-        public bool Equals( LlvmObjectRef? other ) => ( !( other is null ) ) && ( handle == other.handle );
+        public bool Equals( LlvmObjectRef? other ) => (other is not null) && ( handle == other.handle );
 
         /// <summary>Compares two object handles</summary>
         /// <param name="lhs">Left side of comparison</param>
@@ -73,7 +70,6 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
         /// the finalization phase; otherwise, false (not recommended).
         /// </param>
-        [ReliabilityContract( Consistency.WillNotCorruptState, Cer.MayFail )]
         protected LlvmObjectRef( bool ownsHandle )
             : base( IntPtr.Zero, ownsHandle )
         {
@@ -93,7 +89,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="sourceLineNumber">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerLineNumberAttribute"/></param>
         /// <returns>This object for fluent style use</returns>
         public static T ThrowIfInvalid<T>(
-            [ValidatedNotNull] this T self,
+            this T self,
             string message = "",
             [CallerMemberNameAttribute] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

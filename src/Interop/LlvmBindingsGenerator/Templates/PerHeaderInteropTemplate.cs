@@ -33,34 +33,11 @@ namespace LlvmBindingsGenerator.Templates
             return TransformText( );
         }
 
-        public string XDocIncludePath
-        {
-            get
-            {
-                var bldr = new StringBuilder();
-
-                string[ ] pathParts = Unit.FileRelativeDirectory.Split( Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar );
-                int numLevels = 2 + (pathParts.Length > 0 ? pathParts.Length - 1 : 0);
-                for( int i = 0; i < numLevels; ++i )
-                {
-                    bldr.Append( "../" );
-                }
-
-                bldr.Append( "ApiDocs/" )
-                    .Append( Unit.FileRelativeDirectory )
-                    .Append( '/' )
-                    .Append( Unit.FileNameWithoutExtension )
-                    .Append( ".xml" );
-
-                return bldr.ToString( );
-            }
-        }
-
         public ISet<string> Imports
         {
             get
             {
-                var results = new SortedSet<string>( ) { "System.CodeDom.Compiler" };
+                var results = new SortedSet<string>( ) { "System", "System.CodeDom.Compiler" };
 
                 foreach( var f in Unit.Functions )
                 {
@@ -71,26 +48,26 @@ namespace LlvmBindingsGenerator.Templates
 
                     foreach( var p in f.Parameters )
                     {
-                        foreach( var pa in p.Attributes )
-                        {
-                            results.Add( pa.Type.Namespace );
-                        }
+                       AddNamespacesForAttributes( results, p.Attributes );
                     }
                 }
 
                 foreach( var d in Delegates )
                 {
-                    foreach( var da in d.Attributes )
-                    {
-                        results.Add( da.Type.Namespace );
-                    }
+                    AddNamespacesForAttributes( results, d.Attributes );
                 }
 
                 foreach( var e in Unit.Enums )
                 {
-                    foreach( var ea in e.Attributes )
+                    AddNamespacesForAttributes( results, e.Attributes );
+                }
+
+                foreach(var st in Unit.Classes.Where(cls=>cls.IsValueType))
+                {
+                    AddNamespacesForAttributes( results, st.Attributes);
+                    foreach(var fld in st.Fields)
                     {
-                        results.Add( ea.Type.Namespace );
+                        AddNamespacesForAttributes( results, fld.Attributes);
                     }
                 }
 
@@ -123,6 +100,16 @@ namespace LlvmBindingsGenerator.Templates
                select cls;
 
         public TranslationUnit Unit { get; }
+
+        public bool HasNativeMethods => Unit.Functions.Any(f=>f.IsGenerated);
+
+        private static void AddNamespacesForAttributes(SortedSet<string> results, IEnumerable<Attribute> attribs)
+        {
+            foreach(var attrib in attribs)
+            {
+                results.Add( attrib.Type.Namespace );
+            }
+        }
 
         private readonly ITypePrinter2 TypePrinter;
     }

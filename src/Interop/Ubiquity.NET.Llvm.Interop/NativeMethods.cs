@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="moduleName">name of the DLL</param>
         /// <param name="alternatePaths">alternate path locations to use to search for the DLL</param>
         /// <returns>Handle for the DLL</returns>
-        internal static IntPtr LoadWin32Library( string moduleName, IEnumerable<string> alternatePaths )
+        internal static IDisposable LoadWin32Library( string moduleName, IEnumerable<string> alternatePaths )
         {
             if( string.IsNullOrWhiteSpace( moduleName ) )
             {
@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 IntPtr moduleHandle = LoadLibraryExW( moduleName, IntPtr.Zero, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS );
                 if( moduleHandle != IntPtr.Zero )
                 {
-                    return moduleHandle;
+                    return new DisposableAction(()=> FreeLibrary(moduleHandle));
                 }
 
                 int lastError = Marshal.GetLastWin32Error( );
@@ -59,21 +59,21 @@ namespace Ubiquity.NET.Llvm.Interop
             }
         }
 
-        [DllImport( "kernel32", SetLastError = true )]
+        [LibraryImport( "kernel32", SetLastError = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        internal static extern bool FreeLibrary( IntPtr hModule );
+        private static unsafe partial bool FreeLibrary( IntPtr hModule );
 
         private const UInt32 LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000;
         /* private const UInt32 LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400; */
 
-        [DllImport( "kernel32", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern IntPtr LoadLibraryExW( [MarshalAs( UnmanagedType.LPWStr )]string lpFileName, IntPtr hFile, UInt32 dwFlags );
+        [LibraryImport( "kernel32", SetLastError = true, StringMarshalling = StringMarshalling.Utf16 )]
+        private static unsafe partial nint LoadLibraryExW(string lpFileName, IntPtr hFile, UInt32 dwFlags );
 
-        [DllImport( "kernel32", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true )]
-        private static extern IntPtr AddDllDirectory( [MarshalAs( UnmanagedType.LPWStr )]string lp );
+        [LibraryImport( "kernel32", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        private static unsafe partial nint AddDllDirectory( string lp );
 
-        [DllImport( "kernel32", SetLastError = true )]
+        [LibraryImport( "kernel32", SetLastError = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        private static extern bool RemoveDllDirectory( IntPtr dwCookie );
+        private static unsafe partial bool RemoveDllDirectory( IntPtr dwCookie );
     }
 }

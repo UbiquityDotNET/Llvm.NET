@@ -13,70 +13,73 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------
 
-using System;
 using System.CodeDom.Compiler;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Threading;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle</summary>
-    [SecurityCritical]
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
-    public class <#=HandleName#>
+    public partial class <#=HandleName#>
         : LlvmObjectRef
     {
-        /// <summary>Creates a new instance of an <#=HandleName#></summary>
+        /// <summary>Initializes an instance of <see cref="<#=HandleName#>"/> with default values</summary>
+        public <#=HandleName#>()
+            : base(ownsHandle: true)
+        {
+        }
+
+        /// <summary>Initializes an instance of <see cref="<#=HandleName#>"/></summary>
         /// <param name="handle">Raw native pointer for the handle</param>
         /// <param name="owner">Value to indicate whether the handle is owned or not</param>
-        public <#=HandleName#>( IntPtr handle, bool owner )
+        public <#=HandleName#>( nint handle, bool owner )
             : base( owner )
         {
             SetHandle( handle );
         }
 
         /// <summary>Gets a Zero (<see langword="null"/>) value handle</summary>
-        public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(IntPtr.Zero, false);
+        public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(nint.Zero, false);
 
         /// <inheritdoc/>
-        [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            // ensure handle appears invalid from this point forward
-            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
-            SetHandleAsInvalid( );
-
-            if( prevHandle != IntPtr.Zero )
+            // critical safety check, base should never call ReleaseHandle on an invalid handle
+            // but ABI usually can't handle that and would just crash the app, so make it
+            // a NOP just in case.
+            if( handle != nint.Zero )
             {
-                <#=HandleDisposeFunction#>( prevHandle );
+                <#=HandleDisposeFunction#>( handle );
             }
             return true;
         }
 
-        private <#=HandleName#>( )
-            : base( true )
-        {
-        }
-
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void <#=HandleDisposeFunction#>( IntPtr p );
+        [LibraryImport( NativeMethods.LibraryPath )]
+        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+        private static unsafe partial void <#=HandleDisposeFunction#>( nint p );
     }
 <#if(NeedsAlias){#>
 
-    /// <summary>Alias handle for an LLVM object</summary>
+    // CONSIDER: Make the alias a `ref struct` to prevent boxing or heap allocation.
+    //           This would model the intended semantics in code and enforce the
+    //           lifetime rules better. (Not perfectly as a ref struct could still
+    //           escape the lifetime of the owner, but compile time catching most
+    //           cases is still WAY better than random runtime bugs.
+
+    /// <summary>Alias (non-owning) handle for a <see cref="<#=HandleName#>"/></summary>
     ///<remarks>
     /// Sometimes a global object is exposed via a child that maintains a reference to the parent.
     /// In such cases, the handle isn't owned by the App (it's an alias) and therefore should not be
     /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
-    /// perform any automatic cleanup.
+    /// perform any automatic cleanup. [That is, this is a PURE reference to an object]
     ///</remarks>
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public class <#=HandleName#>Alias
         : <#=HandleName#>
     {
-        private <#=HandleName#>Alias()
-            : base( IntPtr.Zero, false )
+        public <#=HandleName#>Alias()
+            : base( nint.Zero, false )
         {
         }
     }

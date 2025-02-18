@@ -12,6 +12,15 @@ namespace LlvmBindingsGenerator.Templates
         : ICodeGenerator
     {
         public TemplateCodeGenerator(
+            string fileNameWithoutExtension,
+            string fileRelativeDirectory,
+            IEnumerable<ICodeGenTemplate> templates
+            )
+            : this( true, fileNameWithoutExtension, fileRelativeDirectory, templates)
+        {
+        }
+
+        public TemplateCodeGenerator(
             bool isValid,
             string fileNameWithoutExtension,
             string fileRelativeDirectory,

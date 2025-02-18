@@ -4,6 +4,7 @@
 
 using System;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant( false )]
@@ -12,3 +13,6 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible( false )]
 
 [assembly: NeutralResourcesLanguage( "en" )]
+
+// FULLY AOT compatible, NO runtime marshalling support enabled
+[assembly: DisableRuntimeMarshalling]

@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+#if REWRITE_TO_SUPPORT_LLJIT
 
 using System;
 using System.Diagnostics;
@@ -13,11 +14,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
-[assembly: CLSCompliant( false )]
-
-#pragma warning disable SA1600
-#pragma warning disable CA1801 // externally defined signature
 
 namespace InteropTests
 {
@@ -99,3 +95,4 @@ namespace InteropTests
         private delegate int TestMain( );
     }
 }
+#endif

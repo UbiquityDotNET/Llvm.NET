@@ -8,6 +8,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 
 using Ubiquity.NET.Llvm.Interop.Properties;
@@ -83,6 +86,8 @@ namespace Ubiquity.NET.Llvm.Interop
             }
         }
 
+        // TODO: Does LLVM 20 fix the problem of re-init from same process? [Some static init wasn't re-run and stale data left in place]
+
         /// <summary>Initializes the native LLVM library support</summary>
         /// <returns>
         /// <see cref="System.IDisposable"/> implementation for the library
@@ -90,7 +95,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <remarks>
         /// This can only be called once per application to initialize the
         /// LLVM library. <see cref="System.IDisposable.Dispose()"/> will release
-        /// any resources allocated by the library. The current LLVM library does
+        /// any resources allocated by the library. The V10 LLVM library does
         /// *NOT* support re-initialization within the same process. Thus, this
         /// is best used at the top level of the application and released at or
         /// near process exit.
@@ -109,7 +114,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // force loading the appropriate architecture specific
             // DLL before any use of the wrapped interop APIs to
             // allow building this library as ANYCPU
-            string thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
+            string? thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
             if( string.IsNullOrWhiteSpace( thisModulePath ) )
             {
                 throw new InvalidOperationException( Resources.Cannot_determine_assembly_location );
@@ -127,32 +132,44 @@ namespace Ubiquity.NET.Llvm.Interop
             paths.Add( Path.Combine( packageRoot, runTimePath ) );
             paths.Add( Path.Combine( thisModulePath, runTimePath ) );
             paths.Add( thisModulePath );
-            IntPtr hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
+            var hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
 
-            // Verify the version of LLVM in LibLLVM
-            LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
-            if( versionInfo.Major != VersionMajor
-             || versionInfo.Minor != VersionMinor
-             || versionInfo.Patch < VersionPatch
-              )
+            // dispose the library in the unlikely event of an exception here
+            try
             {
-                string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
-                string msg = string.Format( CultureInfo.CurrentCulture
-                                          , msgFmt
-                                          , VersionMajor
-                                          , VersionMinor
-                                          , VersionPatch
-                                          , versionInfo.Major
-                                          , versionInfo.Minor
-                                          , versionInfo.Patch
-                                          );
+                // Verify the version of LLVM in LibLLVM
+                LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
+                if( versionInfo.Major != VersionMajor
+                 || versionInfo.Minor != VersionMinor
+                 || versionInfo.Patch < VersionPatch
+                  )
+                {
+                    string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
+                    string msg = string.Format( CultureInfo.CurrentCulture
+                                              , msgFmt
+                                              , VersionMajor
+                                              , VersionMinor
+                                              , VersionPatch
+                                              , versionInfo.Major
+                                              , versionInfo.Minor
+                                              , versionInfo.Patch
+                                              );
 
-                throw new InvalidOperationException( msg );
+                    throw new InvalidOperationException( msg );
+                }
+
+                // initialize the static fields
+                unsafe
+                {
+                    LLVMInstallFatalErrorHandler( &FatalErrorHandler );
+                }
+            }
+            catch
+            {
+                hLibLLVM.Dispose();
+                throw;
             }
 
-            // initialize the static fields
-            FatalErrorHandlerDelegate = new Lazy<LLVMFatalErrorHandler>( ( ) => FatalErrorHandler, LazyThreadSafetyMode.PublicationOnly );
-            LLVMInstallFatalErrorHandler( FatalErrorHandlerDelegate.Value );
             Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.Initialized );
             return new Library( hLibLLVM );
         }
@@ -836,12 +853,12 @@ namespace Ubiquity.NET.Llvm.Interop
             InternalShutdownLLVM( ModuleHandle );
         }
 
-        private Library( IntPtr moduleHandle )
+        private Library( IDisposable moduleHandle )
         {
             ModuleHandle = moduleHandle;
         }
 
-        private IntPtr ModuleHandle;
+        private readonly IDisposable ModuleHandle;
 
         private enum InitializationState
         {
@@ -859,13 +876,14 @@ namespace Ubiquity.NET.Llvm.Interop
 
         private static int CurrentInitializationState;
 
-        private static void FatalErrorHandler( string reason )
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static unsafe void FatalErrorHandler( byte* reason )
         {
             // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
-            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", reason );
+            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", AnsiStringMarshaller.ConvertToManaged(reason) );
         }
 
-        private static void InternalShutdownLLVM( IntPtr hLibLLVM )
+        private static void InternalShutdownLLVM( IDisposable hLibLLVM )
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
                                                                                 , (int)InitializationState.ShuttingDown
@@ -877,15 +895,9 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             LLVMShutdown( );
-            if( hLibLLVM != IntPtr.Zero )
-            {
-                FreeLibrary( hLibLLVM );
-            }
+            hLibLLVM?.Dispose();
 
             Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.ShutDown );
         }
-
-        // lazy initialized singleton unmanaged delegate so it is never collected
-        private static Lazy<LLVMFatalErrorHandler>? FatalErrorHandlerDelegate;
     }
 }

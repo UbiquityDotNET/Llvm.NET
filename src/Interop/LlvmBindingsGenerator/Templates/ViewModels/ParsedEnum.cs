@@ -16,20 +16,17 @@ namespace LlvmBindingsGenerator.Templates
     {
         public ParsedEnum( Enumeration e )
         {
-            Comments = new ParsedComment( e );
             Name = !string.IsNullOrWhiteSpace( e.Name ) ? e.Name : throw new ArgumentException( "Enum name cannot be blank" );
             BaseType = GetBaseTypeName( e.BuiltinType );
             Members = from i in e.Items
-                      select (i.Name, e.GetItemValueAsString( i ), new ParsedComment( i ));
+                      select (i.Name, e.GetItemValueAsString( i ));
         }
-
-        public ParsedComment Comments { get; }
 
         public string Name { get; }
 
         public string BaseType { get; }
 
-        public IEnumerable<(string Name, string Value, ParsedComment Comment)> Members { get; }
+        public IEnumerable<(string Name, string Value)> Members { get; }
 
         private static string GetBaseTypeName( BuiltinType t )
         {

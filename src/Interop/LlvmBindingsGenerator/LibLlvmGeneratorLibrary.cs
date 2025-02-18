@@ -81,11 +81,11 @@ namespace LlvmBindingsGenerator
             Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
             Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
             Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
-            Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration ) );
             Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnums ) );
             Driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration ) );
             Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration ) );
             Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( Configuration ) );
+            Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration ) );
 
             // validations to apply after all transforms complete
             Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( Configuration ) );

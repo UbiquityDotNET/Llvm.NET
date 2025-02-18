@@ -238,9 +238,12 @@ extern "C"
         return S->getString( ).data( );
     }
 
-    //int64_t LibLLVMDISubRangeGetLowerBounds( LLVMMetadataRef /*DISubRange*/ sr )
-    //{
-    //    DISubrange const* range = unwrap<DISubrange>( sr );
-    //    return range->getLowerBound( );
-    //}
+    int64_t LibLLVMDISubRangeGetLowerBounds( LLVMMetadataRef /*DISubRange*/ sr, int64_t defaultLowerBound )
+    {
+        DISubrange const* subRange = unwrap<DISubrange>( sr );
+
+        // Node might not have a subrange, it's optional
+        ConstantInt* pBound = dyn_cast_if_present<ConstantInt*>(subRange->getLowerBound());
+        return (pBound) ? pBound->getSExtValue() : defaultLowerBound;
+    }
 }

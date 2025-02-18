@@ -19,7 +19,11 @@
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="ABI\Handles\LLVMContextRef.cs~RF17f12e50.TMP" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
         <PackagePath>runtimes\win-x64\native</PackagePath>
@@ -52,6 +56,9 @@
   <ItemGroup>
       <PackageReference Include="Ubiquity.NET.ArgValidators" />
   </ItemGroup>
+  <!--<ItemGroup>
+    <ProjectReference Include="..\LlvmHandleGenerator\LlvmHandleGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+  </ItemGroup>-->
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated
     so this is needed to update the NuSpec properties with the dynamically generated values

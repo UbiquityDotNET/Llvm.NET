@@ -5,18 +5,26 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Threading;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle</summary>
     [SecurityCritical]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "private to this class and MUST never be used anywhere else" )]
-    public class LLVMErrorRef
+    [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Not for use by any other callers" )]
+    public partial class LLVMErrorRef
         : LlvmObjectRef
     {
+        /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class with default values for marshalling</summary>
+        public LLVMErrorRef( )
+            : base( true )
+        {
+            LazyMessage = new Lazy<string>( InternalGetMessage );
+        }
+
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class.</summary>
         /// <param name="handle">Raw native pointer for the handle</param>
         /// <param name="owner">Value to indicate whether the handle is owned or not</param>
@@ -37,23 +45,12 @@ namespace Ubiquity.NET.Llvm.Interop
         [SecurityCritical]
         protected override bool ReleaseHandle( )
         {
-            // ensure handle appears invalid from this point forward
-            var prevHandle = Interlocked.Exchange( ref handle, IntPtr.Zero );
-            SetHandleAsInvalid( );
-
-            if( prevHandle != IntPtr.Zero )
+            if( handle != nint.Zero )
             {
                 LLVMConsumeError( handle );
             }
 
             return true;
-        }
-
-        // during marshaling the runtime always calls the default constructor and calls SetHandle()
-        private LLVMErrorRef( )
-            : base( true )
-        {
-            LazyMessage = new Lazy<string>( InternalGetMessage );
         }
 
         private string InternalGetMessage( )
@@ -63,8 +60,9 @@ namespace Ubiquity.NET.Llvm.Interop
                 return string.Empty;
             }
 
+            // LLVMGetErrorMessage is explicitly defined as NOT idempotent.
+            // so once the value is retrieved the pointer is no longer valid
             string retVal = LLVMGetErrorMessage( handle );
-            SetHandle( IntPtr.Zero );
             SetHandleAsInvalid( );
             return retVal;
         }
@@ -72,11 +70,12 @@ namespace Ubiquity.NET.Llvm.Interop
         // use Lazy to cache result of the underlying destructive get
         private readonly Lazy<string> LazyMessage;
 
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl )]
-        private static extern void LLVMConsumeError( IntPtr p );
+        [LibraryImport( NativeMethods.LibraryPath)]
+        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+        private static unsafe partial void LLVMConsumeError( nint p );
 
-        [DllImport( NativeMethods.LibraryPath, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode )]
-        [return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( ErrorMessageMarshaler ) )]
-        private static extern string LLVMGetErrorMessage( IntPtr p );
+        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(ErrorMessageMarshaller))]
+        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+        private static unsafe partial string LLVMGetErrorMessage( nint p );
     }
 }

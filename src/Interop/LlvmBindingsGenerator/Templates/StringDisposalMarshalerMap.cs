@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Runtime.InteropServices.Marshalling;
 
 using LlvmBindingsGenerator.Configuration;
 
@@ -12,7 +13,7 @@ namespace LlvmBindingsGenerator.Templates
 {
     internal static class StringDisposalMarshalerMap
     {
-        public static (string Name, string NativeDisposer) LookupMarshaler( StringDisposal disposal )
+        public static (string Name, string NativeDisposer) LookupMarshaller( StringDisposal disposal )
         {
             return StringMarshalerMap[ disposal ];
         }
@@ -20,10 +21,10 @@ namespace LlvmBindingsGenerator.Templates
         private static readonly IReadOnlyDictionary<StringDisposal, (string Name, string NativeDisposer)> StringMarshalerMap
             = new Dictionary<StringDisposal, (string Name, string NativeDisposer)>
             {
-                [ StringDisposal.CopyAlias ] = ("AliasStringMarshaler", string.Empty),
-                [ StringDisposal.DisposeMessage ] = ("DisposeMessageMarshaler", "LLVMDisposeMessage"),
-                [ StringDisposal.OrcDisposeMangledSymbol ] = ("OrcDisposeMangledSymbolMarshaler", "LLVMOrcDisposeMangledSymbol"),
-                [ StringDisposal.DisposeErrorMesage ] = ("ErrorMessageMarshaler", "LLVMDisposeErrorMessage")
+                [ StringDisposal.None ] = ($"{nameof(AnsiStringMarshaller)}", string.Empty),
+                [ StringDisposal.DisposeMessage ] = ("DisposeMessageMarshaller", "LLVMDisposeMessage"),
+                [ StringDisposal.OrcDisposeMangledSymbol ] = ("OrcDisposeMangledSymbolMarshaller", "LLVMOrcDisposeMangledSymbol"),
+                [ StringDisposal.DisposeErrorMessage ] = ("ErrorMessageMarshaller", "LLVMDisposeErrorMessage")
             };
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 
 using CppSharp;
 using CppSharp.AST;
@@ -44,17 +45,12 @@ namespace LlvmBindingsGenerator.Passes
                 @class.Attributes.Add( StructLayoutAttr );
             }
 
-            if( !@class.Attributes.Contains( GeneratedCodeAttrib ))
-            {
-                @class.Attributes.Add( GeneratedCodeAttrib );
-            }
-
             return base.VisitClassDecl( @class );
         }
 
         public override bool VisitFieldDecl( Field field )
         {
-            var (usage, type) = TryAddImplicitMarahalingAttributesForType( field.QualifiedType, field.Attributes );
+            var (usage, type) = TryAddImplicitMarshallingAttributesForType( field.QualifiedType, field.Attributes );
             if( usage != ParameterUsage.Unknown )
             {
                 Diagnostics.Debug( "Converting type of field {0}.{1} to {2}", field.Namespace, field.Name, type);
@@ -96,8 +92,7 @@ namespace LlvmBindingsGenerator.Passes
             DeclarationStack.Push( function );
             try
             {
-                function.Attributes.Add( SuppressUnmanagedSecAttrib );
-                ApplyDllImportAttribute( function );
+                ApplyLibraryImportAttribute( function );
                 QualifiedType returnType = function.ReturnType;
 
                 if( returnType.Type != null )
@@ -177,7 +172,7 @@ namespace LlvmBindingsGenerator.Passes
 
         private static void ApplyImplicitParamsUsage( Parameter p )
         {
-            var (usage, type) = TryAddImplicitMarahalingAttributesForType( p.QualifiedType, p.Attributes );
+            var (usage, type) = TryAddImplicitMarshallingAttributesForType( p.QualifiedType, p.Attributes );
             if( usage != ParameterUsage.Unknown )
             {
                 Diagnostics.Debug( "Converting type of parameter {0}::{1} to {2} [Usage: {3}]", p.Namespace, p.Name, type, usage );
@@ -190,10 +185,8 @@ namespace LlvmBindingsGenerator.Passes
             {
                 switch( pt.Pointee.Desugar( ) )
                 {
-                // void* => IntPtr
+                // void* => nint
                 case BuiltinType bt when bt.Type == PrimitiveType.Void:
-                    Diagnostics.Debug( "Converting void* parameter {0}::{1} to IntPtr [In]", p.Namespace, p.Name );
-                    p.QualifiedType = new QualifiedType( new CILType( typeof( IntPtr ) ) );
                     break;
 
                 // Pointer to Pointer and Pointer to built in types are out parameters
@@ -205,18 +198,24 @@ namespace LlvmBindingsGenerator.Passes
             }
         }
 
-        private static (ParameterUsage, CppSharp.AST.Type) TryAddImplicitMarahalingAttributesForType( QualifiedType type, IList<CppSharp.AST.Attribute> attributes )
+        private static (ParameterUsage, CppSharp.AST.Type) TryAddImplicitMarshallingAttributesForType( QualifiedType type, IList<CppSharp.AST.Attribute> attributes )
         {
             // currently only handle strings and arrays of strings by default
             switch( type.Type )
             {
             case PointerType pt when pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Char:
-                attributes.Add( MarshalAsLPStrAttrib );
+                attributes.Add( MarshalUsingAnsiString );
                 return (ParameterUsage.In, StringType);
 
             case PointerType pt when pt.Pointee is PointerType pt2 && pt2.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Char:
                 attributes.Add( MarshalAsLPStrArrayAttrib );
                 return (ParameterUsage.In, StringArrayType);
+
+            // This assumes that LLVMBool as an out parameter is never a status... That seems legit to
+            // assume as it is ALWAYS the case of this implementation (and makes sense) but one never knows...
+            case PointerType pt when pt.Pointee is TypedefType tdt && tdt.Declaration.Name == "LLVMBool":
+                attributes.Add(MarshalAsBooleanAttribute);
+                return (ParameterUsage.Out, BooleanType);
 
             default:
                 return (ParameterUsage.Unknown, null);
@@ -236,21 +235,20 @@ namespace LlvmBindingsGenerator.Passes
             };
         }
 
-        private static void ApplyDllImportAttribute( Function function )
+        private static void ApplyLibraryImportAttribute( Function function )
         {
-            // add DllImportAttribute
-            var pinvokeArgs = new List<string>( ) { "LibraryPath" };
+            // add LibraryImportAttribute
+            function.Attributes.Add( new TargetedAttribute( typeof( LibraryImportAttribute ), "LibraryPath" ) );
+
+            // add calling convention attribute (if supported)
             if( function.CallingConvention == CppSharp.AST.CallingConvention.C )
             {
-                pinvokeArgs.Add( "CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Cdecl" );
+                function.Attributes.Add( new TargetedAttribute( typeof( UnmanagedCallConvAttribute ), "CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)]" ) );
             }
             else
             {
                 Diagnostics.Error( "Function '{0}' has unsupported calling convention '{1}'", function.Name, function.CallingConvention );
             }
-
-            string args = string.Join( ", ", pinvokeArgs );
-            function.Attributes.Add( new TargetedAttribute( typeof( DllImportAttribute ), args ) );
         }
 
         private bool TryGetTransformInfo( string functionName, string paramName, out YamlBindingTransform xform )
@@ -277,30 +275,22 @@ namespace LlvmBindingsGenerator.Passes
             return true;
         }
 
-        private static CppSharp.AST.Attribute SuppressUnmanagedSecAttrib { get; }
-            = new CppSharp.AST.Attribute( )
-            {
-                Type = typeof( System.Security.SuppressUnmanagedCodeSecurityAttribute ),
-                Value = string.Empty
-            };
-
         private readonly IGeneratorConfig Configuration;
 
         private readonly Stack<Declaration> DeclarationStack = new();
 
-        private static readonly CppSharp.AST.Attribute MarshalAsLPStrAttrib
-            = new TargetedAttribute( typeof( MarshalAsAttribute ), "UnmanagedType.LPStr" );
+        private static readonly CppSharp.AST.Attribute MarshalUsingAnsiString
+            = new TargetedAttribute( typeof( MarshalUsingAttribute ), $"typeof({nameof(AnsiStringMarshaller)})" );
 
         private static readonly CppSharp.AST.Attribute MarshalAsLPStrArrayAttrib
-            = new TargetedAttribute(typeof(MarshalAsAttribute), "UnmanagedType.LPStr", "ArraySubType = UnmanagedType.LPStr");
+            = new TargetedAttribute(typeof(MarshalAsAttribute), "UnmanagedType.LPArray", "ArraySubType = UnmanagedType.LPStr");
+
+        private static readonly CppSharp.AST.Attribute MarshalAsBooleanAttribute
+            = new TargetedAttribute(typeof(MarshalAsAttribute), "UnmanagedType.Bool");
 
         private static readonly CppSharp.AST.Type StringType = new CILType( typeof(string) );
         private static readonly CppSharp.AST.Type StringArrayType = new CILType( typeof(string[]) );
+        private static readonly CppSharp.AST.Type BooleanType = new CILType( typeof(bool) );
         private static readonly TargetedAttribute StructLayoutAttr = new( typeof(StructLayoutAttribute ), "LayoutKind.Sequential" );
-        private static readonly TargetedAttribute GeneratedCodeAttrib
-            = new( typeof( GeneratedCodeAttribute )
-                 , "\"LlvmBindingsGenerator\""
-                 , $"\"{typeof(AddMarshalingAttributesPass).Assembly.GetName( ).Version}\""
-                 );
     }
 }

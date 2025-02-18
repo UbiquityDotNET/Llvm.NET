@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    internal static class StringNormalizer
+    internal static partial class StringNormalizer
     {
         // LLVM doesn't use environment/OS specific line endings, so this will
         // normalize the line endings from strings provided by LLVM into the current
@@ -21,7 +21,8 @@ namespace Ubiquity.NET.Llvm.Interop
                 return string.Empty;
             }
 
-            string str = Marshal.PtrToStringAnsi( llvmString );
+            // PtrToStringAnsi only returns null if input is null, but that is already tested above.
+            string str = Marshal.PtrToStringAnsi( llvmString )!;
             return NormalizeLineEndings( str );
         }
 
@@ -33,6 +34,9 @@ namespace Ubiquity.NET.Llvm.Interop
                 : LineEndingNormalizingRegEx.Replace( txt, Environment.NewLine );
         }
 
-        private static readonly Regex LineEndingNormalizingRegEx = new Regex( "(\r\n|\n\r|\r|\n)" );
+        private static readonly Regex LineEndingNormalizingRegEx = GeneratedRegExForLineEndings();
+
+        [GeneratedRegex( "(\r\n|\n\r|\r|\n)" )]
+        private static partial Regex GeneratedRegExForLineEndings();
     }
 }

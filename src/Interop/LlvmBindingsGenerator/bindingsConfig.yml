@@ -32,7 +32,7 @@
 #   !Unsafe {} - [Return only] Return is an unsafe pointer type (This basically disables the validation pass check for unsafe types for this function)
 #   !String
 #       Kind - type of marshalling to apply for the string. In all cases the string is copied to a managed string during marshaling
-#           CopyAlias - Copy only, no release of the native string
+#           None - Copy only, no release of the native string
 #           DisposeMessage - LLVMDisposeMessage() is used to release the native string
 #           OrcDisposeMangledSymbol - LLVMOrcDisposeMangledSymbol is used to release the native string
 #           DisposeErrorMessage - LLVMDisposeErrorMessage()
@@ -130,7 +130,7 @@ FunctionBindings:
   - Name: LLVMGetDataLayout
     IsObsolete: True
     DeprecationMessage: "Use LLVMGetDataLayoutStr instead"
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   # - Name: LLVMSetModuleInlineAsm
   #   IsObsolete: True
@@ -139,7 +139,7 @@ FunctionBindings:
   - Name: LLVMGetValueName
     IsObsolete: True
     DeprecationMessage: "Use LLVMGetValueName2 instead"
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMSetValueName
     IsObsolete: True
@@ -216,7 +216,6 @@ FunctionBindings:
     IsProjected: False
 
   - Name: LLVMCreateMessage
-    IsExported: False
     IsProjected: False
 
   # - Name: LLVMOrcDisposeMangledSymbol
@@ -367,7 +366,7 @@ FunctionBindings:
     ReturnTransform: !Status {}
     ParamTransforms:
       - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
-      - !String {Name: Filename, Semantics: In, Kind: CopyAlias }
+      - !String {Name: Filename, Semantics: In, Kind: None }
 
   - Name: LLVMTargetMachineEmitToMemoryBuffer
     ReturnTransform: !Status {}
@@ -385,12 +384,12 @@ FunctionBindings:
 
   - Name: LLVMGetInlineAsm
     ParamTransforms:
-      - !String {Name: AsmString, Semantics: In, Kind: CopyAlias }
-      - !String {Name: Constraints, Semantics: In, Kind: CopyAlias }
+      - !String {Name: AsmString, Semantics: In, Kind: None }
+      - !String {Name: Constraints, Semantics: In, Kind: None }
 
   - Name: LLVMDisasmInstruction
     ParamTransforms:
-      - !String {Name: OutString, Semantics: InOut, Kind: CopyAlias }
+      - !String {Name: OutString, Semantics: InOut, Kind: None }
       - !Primitive { Name: Bytes, Semantics: In, Kind: IntPtr }
 
   - Name: LibLLVMVerifyFunctionEx
@@ -456,7 +455,7 @@ FunctionBindings:
   - Name: LLVMIntrinsicCopyOverloadedName
     IsObsolete: true
     DeprecationMessage: "Use  LLVMIntrinsicCopyOverloadedName2 instead"
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
@@ -536,76 +535,76 @@ FunctionBindings:
     ReturnTransform: !String {Kind: DisposeMessage }
 
   - Name: LLVMGetStringAttributeKind
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetStringAttributeValue
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetModuleIdentifier
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetSourceFileName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetDataLayoutStr
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetTarget
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMModuleFlagEntriesGetKey
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetModuleInlineAsm
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetNamedMetadataName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetDebugLocDirectory
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetDebugLocFilename
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetStructName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetValueName2
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetAsString
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetSection
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMIntrinsicGetName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetGC
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetMDString
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetBasicBlockName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMDITypeGetName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetTargetName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetTargetDescription
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetSectionName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetSymbolName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LLVMGetRelocationTypeName
     ReturnTransform: !String {Kind: DisposeMessage }
@@ -614,7 +613,7 @@ FunctionBindings:
     ReturnTransform: !String {Kind: DisposeMessage }
 
   # - Name: LLVMOrcGetErrorMsg
-  #   ReturnTransform: !String {Kind: CopyAlias }
+  #   ReturnTransform: !String {Kind: None }
 
   - Name: LLVMPrintModuleToString
     ReturnTransform: !String {Kind: DisposeMessage }
@@ -638,19 +637,19 @@ FunctionBindings:
     ReturnTransform: !Primitive {Kind: IntPtr }
 
   - Name: LibLLVMGetMDStringText
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LibLLVMAttributeToString
-    ReturnTransform: !String {Kind: DisposeErrorMesage }
+    ReturnTransform: !String {Kind: DisposeErrorMessage }
 
   - Name: LibLLVMGetModuleSourceFileName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LibLLVMGetModuleName
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
 
   - Name: LibLLVMComdatGetName
-    ReturnTransform: !String {Kind: DisposeErrorMesage }
+    ReturnTransform: !String {Kind: DisposeErrorMessage }
 
   - Name: LibLLVMTripleAsString
     ReturnTransform: !String {Kind: DisposeMessage }
@@ -758,13 +757,13 @@ FunctionBindings:
     ReturnTransform: !Alias {}
 
   - Name: LLVMDIFileGetDirectory
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMDIFileGetFilename
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMDIFileGetSource
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMGetPointerToGlobal
     ReturnTransform: !Primitive {Kind: IntPtr}
@@ -785,7 +784,7 @@ FunctionBindings:
     ReturnTransform: !Unsafe {}
 
   - Name: LLVMSymbolLookupCallback
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
     # lifetime management of shared ownership between managed and unmanaged semantics in .NET is dodgy at best
     # so this is exported, but not projected to allow for experimentation until a safe way of managing
@@ -801,16 +800,16 @@ FunctionBindings:
     ReturnTransform: !Unsafe {}
 
   - Name: llvm_blake3_version
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMGetInlineAsmAsmString
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMGetInlineAsmConstraintString
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMGetTargetExtTypeName
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMPrintDbgRecordToString
     ReturnTransform: !String {Kind: DisposeMessage}
@@ -818,21 +817,21 @@ FunctionBindings:
   - Name: LLVMIntrinsicCopyOverloadedName2
     IsObsolete: true
     DeprecationMessage: "Use  LLVMIntrinsicCopyOverloadedName2 instead"
-    ReturnTransform: !String {Kind: CopyAlias }
+    ReturnTransform: !String {Kind: None }
     ParamTransforms:
       - !Array {SubType: SysInt, Name: ParamTypes, Semantics: In }
 
   - Name: LLVMGetOperandBundleTag
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMOrcLLJITGetTripleString
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMOrcLLJITGetDataLayoutStr
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMOrcSymbolStringPoolEntryStr
-    ReturnTransform: !String {Kind: CopyAlias}
+    ReturnTransform: !String {Kind: None}
 
   - Name: LLVMOrcMaterializationResponsibilityGetRequestedSymbols
     ReturnTransform: !Unsafe {}

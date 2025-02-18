@@ -8,7 +8,8 @@ using namespace llvm;
 
 namespace
 {
-    template <typename DIT> DIT* unwrap_maybenull( LLVMMetadataRef Ref )
+    template <typename DIT>
+    DIT* unwrap_maybenull( LLVMMetadataRef Ref )
     {
         return (DIT* )( Ref ? unwrap<MDNode>( Ref ) : nullptr );
     }

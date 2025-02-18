@@ -21,59 +21,46 @@ using <#=import#>;
 namespace Ubiquity.NET.Llvm.Interop
 {
 <#foreach(var e in Enums){#>
-    /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/Enumeration[@name="<#=e.Name#>"]/*[not(self::Item)]' />
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public enum <#=e.Name#> : <#=e.BaseType#>
     {
-<#foreach(var m in e.Members) {#>
-<#foreach(var commentLine in e.Comments){#>
-        // <#=commentLine#>
-<#}#>
-        /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/Enumeration[@name="<#=e.Name#>"]/Item[@name="<#=m.Name#>"]/*' />
+<#    foreach(var m in e.Members) {#>
         <#=m.Name#> = <#=m.Value#>,
-<#}#>
+<#    }#>
     }
 
-<#}
-foreach(var d in Delegates) {#>
-<#foreach(var commentLine in d.Comments){#>
-        // <#=commentLine#>
 <#}#>
-    /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/Delegate[@name="<#=d.Name#>"]/*' />
-<#foreach( var attrib in d.Attributes) {#>
+<#foreach(var d in Delegates) {#>
+<#    foreach( var attrib in d.Attributes) {#>
     <#=attrib.AsString()#>
-<#}#>
+<#    }#>
     <#=d#>
-<#}#>
-<#foreach(var s in ValueTypes){
-     var parsedComment = new ParsedComment(s);
-     foreach(var commentLine in parsedComment){#>
-        // <#=commentLine#>
-<#}#>
-    /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/Struct[@name="<#=s.Name#>"]/*[not(self::Field)]' />
+<#}
+foreach(var s in ValueTypes){#>
 <#    foreach(var sa in s.Attributes) {#>
     <#=sa.AsString()#>
-<#}#>
+<#    }#>
     public struct <#=s.Name#>
     {
-<#foreach(var fld in s.Fields){#>
-        /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/struct[@name="<#=s.Name#>"]/Field[@name="<#=fld.Name#>"]/*' />
-<#  foreach(var fa in fld.Attributes) {#>
+<#    foreach(var fld in s.Fields){#>
+<#      foreach(var fa in fld.Attributes) {#>
         <#=fa.AsString()#>
-<#  }#>
+<#      }#>
         public <#=GetManagedName(fld.Type)#> <#=fld.Name#>;
-<#}#>
+<#    }#>
     }
 
 <#}#>
+<#if(HasNativeMethods){#>
+
     public static partial class NativeMethods
     {
-<#foreach(var f in Functions) {#>
-        /// <include file="<#=XDocIncludePath#>" path='LibLlvmAPI/Function[@name="<#=f.Name#>"]/*' />
-<#foreach(var a in f.Attributes) {#>
+<#    foreach(var f in Functions) {#>
+<#        foreach(var a in f.Attributes) {#>
         <#=a.AsString()#>
-<#}#>
+<#        }#>
         <#=f#>
-<#}#>
+<#    }#>
     }
+<#}#>
 }
