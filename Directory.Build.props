@@ -34,7 +34,8 @@
 
         <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''" >$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)", "Intermediate", "$(MSBuildProjectName)"))</BaseIntermediateOutputPath>
         <IntDir Condition="'$(IntDir)'==''">$([MSBuild]::NormalizeDirectory("$(BaseIntermediateOutputPath)", "$(UnifiedPlatformPathName)", "$(Configuration)"))</IntDir>
-        <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)","bin", "$(MSBuildProjectName)"))</BaseOutputPath>
+        <BaseBuildOutputBinPath Condition="'$(BaseBuildOutputBinPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)", "bin"))</BaseBuildOutputBinPath>
+        <BaseOutputPath Condition="'$(BaseOutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputBinPath)", "$(MSBuildProjectName)"))</BaseOutputPath>
         <PackageOutputPath Condition="'$(PackageOutputPath)'==''">$([MSBuild]::NormalizeDirectory("$(BaseBuildOutputPath)","NuGet"))</PackageOutputPath>
 
         <BuildOutputPackagesDir Condition="'$(BuildOutputPackagesDir)'==''">$(BaseBuildOutputPath)packages\</BuildOutputPackagesDir>
@@ -44,8 +45,8 @@
         <IsPullRequestBuild Condition="'$(IsPullRequestBuild)'==''">false</IsPullRequestBuild>
         <IsReleaseBuild Condition="'$(IsReleaseBuild)'==''">false</IsReleaseBuild>
         <BuildTime Condition="'$(BuildTime)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTime>
-        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">10</LlvmVersionMajor>
-        <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">0</LlvmVersionMinor>
+        <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">20</LlvmVersionMajor>
+        <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">1</LlvmVersionMinor>
         <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
         <!--<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>-->
     </PropertyGroup>
@@ -58,6 +59,12 @@
                 <Determenistic>true</Determenistic>
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
                 <Nullable>enable</Nullable>
+                <!--
+                DO NOT ALLOW Implicit using statements - EVIL; causes mass issues and frustration moving code between projects when one doesn't support it.
+                Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.
+                -->
+                <ImplicitUsings>disable</ImplicitUsings>
+                <!-- NOTE: Top-Level statements blocked as an error in .editorconfig and Implicit using statements VERIFIED in the targets file -->
             </PropertyGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />

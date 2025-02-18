@@ -1,19 +1,19 @@
-<Project>
+<Project InitialTargets="VerifyProjectSettings;SetProjectSpecficVersionDependentProperties;ShowBuildParameters">
     <!--
     It is tempting to place the SDK ref here so that all the projects benefit from it
     However, since this repo has C++ VCXPROJ projects, that doesn't work. It will pull
     in requirements that break a VCXPROJ (or anything still stuck in the dark ages with Packages.config)
     <Sdk Name="Microsoft.Build.CentralPackageVersions"/>
-  -->
+    -->
     <!--
-  Since Nuget.config is configured to include the build output location this
-  will ensure the folder exists during restore so that it won't fail.
-  -->
+    Since Nuget.config is configured to include the build output location this
+    will ensure the folder exists during restore so that it won't fail.
+    -->
     <Target Name="CreateBuildOutputNuget" BeforeTargets="Restore;Build;Rebuild">
         <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet" />
     </Target>
 
-    <Target Name="SetProjectSpecficVersionDependentProperties" AfterTargets="SetVersionDependentProperties">
+    <Target Name="SetProjectSpecficVersionDependentProperties">
         <PropertyGroup>
             <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
             <NuspecProperties Condition="'$(NuspecFile)'!=''" >version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
@@ -62,9 +62,9 @@
             <Using Namespace="System.Net"/>
             <Code Type="Fragment" Language="cs">
                 <![CDATA[
-        var client = new WebClient();
-        client.DownloadFile( SourceUrl, DestinationPath );
-      ]]>
+                    var client = new WebClient();
+                    client.DownloadFile( SourceUrl, DestinationPath );
+                ]]>
             </Code>
         </Task>
     </UsingTask>
@@ -79,9 +79,10 @@
         <MakeDir Directories="$(PackageOutputPath)"/>
     </Target>
 
-    <Target Name="ShowBuildParameters" AfterTargets="SetProjectSpecficVersionDependentProperties">
+    <Target Name="ShowBuildParameters">
         <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
         <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
+        <Message Importance="normal" Text="    BaseBuildOutputBinPath: $(BaseBuildOutputBinPath)" />
         <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />
         <Message Importance="normal" Text="                    IntDir: $(IntDir)" />
         <Message Importance="normal" Text="            BaseOutputPath: $(BaseOutputPath)" />
@@ -91,5 +92,15 @@
         <Message Importance="normal" Text="               LlvmVersion: $(LlvmVersion)"/>
         <Message Importance="normal" Text="                  Platform: $(Platform)"/>
         <Message Importance="normal" Text="             Configuration: $(Configuration)"/>
+    </Target>
+
+    <Target Name="VerifyProjectSettings" Condition="'$(MSBuildProjectExtension)'=='.csproj'">
+        <!--
+        Detect if something has this horrible non-feature enabled. It is a blight on the language that should never have been added
+        let alone used as the default for projects with no way to block/disable it all up... [Only a subtle, default on, per project option is available]
+        NOTE:
+        .editorconfig in this repo includes `csharp_style_prefer_top_level_statements = false:error` to ensure that bad design choice isn't used either.
+        -->
+        <Error Condition="'$(ImplicitUsings)'!='disable'" Text="$(MSBuildProjectFile) - Projects in this repository MUST NOT have ImplicitUsings enabled!"/>
     </Target>
 </Project>

@@ -56,9 +56,6 @@
   <ItemGroup>
       <PackageReference Include="Ubiquity.NET.ArgValidators" />
   </ItemGroup>
-  <!--<ItemGroup>
-    <ProjectReference Include="..\LlvmHandleGenerator\LlvmHandleGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-  </ItemGroup>-->
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated
     so this is needed to update the NuSpec properties with the dynamically generated values
