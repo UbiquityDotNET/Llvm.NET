@@ -132,7 +132,7 @@ namespace Ubiquity.NET.Llvm.Interop
             paths.Add( Path.Combine( packageRoot, runTimePath ) );
             paths.Add( Path.Combine( thisModulePath, runTimePath ) );
             paths.Add( thisModulePath );
-            var hLibLLVM = LoadWin32Library( "Ubiquity.NET.LibLlvm.dll", paths );
+            var hLibLLVM = LoadLibrary( "Ubiquity.NET.LibLlvm.dll", paths );
 
             // dispose the library in the unlikely event of an exception here
             try

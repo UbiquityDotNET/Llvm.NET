@@ -21,11 +21,11 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         internal const string LibraryPath = "Ubiquity.NET.LibLLVM";
 
-        /// <summary>Dynamically loads a DLL from a directory dependent on the current architecture</summary>
+        /// <summary>Dynamically loads a library from a directory dependent on the current architecture</summary>
         /// <param name="moduleName">name of the DLL</param>
         /// <param name="alternatePaths">alternate path locations to use to search for the DLL</param>
         /// <returns>Handle for the DLL</returns>
-        internal static IDisposable LoadWin32Library(string moduleName, IEnumerable<string> alternatePaths)
+        internal static IDisposable LoadLibrary(string moduleName, IEnumerable<string> alternatePaths)
         {
             if(string.IsNullOrWhiteSpace( moduleName ))
             {

@@ -2,6 +2,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
+#if SUPPORT_LEGACY_DELEGATES_AS_CALLBACKS
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -117,3 +118,4 @@ namespace Ubiquity.NET.Llvm.Interop
         public static implicit operator T(WrappedNativeCallback<T> cb) => cb.ValidateNotNull( nameof( cb ) ).ToDelegate();
     }
 }
+#endif

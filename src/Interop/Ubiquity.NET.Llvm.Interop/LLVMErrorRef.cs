@@ -12,7 +12,13 @@ using System.Security;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>Global LLVM object handle</summary>
+    /// <summary>Global LLVM object handle for an error</summary>
+    /// <remarks>
+    /// Lifetime control of an LLVM error message is tricky as there are
+    /// calls that can "consume" the error which "invalidates" the handle
+    /// making it an error to release it later. This class wraps those
+    /// scenarios.
+    /// </remarks>
     [SecurityCritical]
     [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Not for use by any other callers" )]
     public partial class LLVMErrorRef
@@ -28,7 +34,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class.</summary>
         /// <param name="handle">Raw native pointer for the handle</param>
         /// <param name="owner">Value to indicate whether the handle is owned or not</param>
-        public LLVMErrorRef(IntPtr handle, bool owner)
+        public LLVMErrorRef(nint handle, bool owner)
             : base( owner )
         {
             SetHandle( handle );
