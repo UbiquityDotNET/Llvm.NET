@@ -17,62 +17,62 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Converts a size to an int</summary>
         /// <returns>Size as an int</returns>
-        public Int32 ToInt32( ) => Size.ToInt32( );
+        public Int32 ToInt32() => Size.ToInt32();
 
         /// <summary>Converts the size to an Int64</summary>
         /// <returns>Size as an Int64</returns>
-        public Int64 ToInt64( ) => Size.ToInt64( );
+        public Int64 ToInt64() => Size.ToInt64();
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromInt32( int size ) => new( size );
+        public static size_t FromInt32(int size) => new( size );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int64"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromInt64( Int64 size ) => new( checked( ( nint )size) );
+        public static size_t FromInt64(Int64 size) => new( checked((nint)size) );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromUInt32( UInt32 size ) => new( ( nint )size );
+        public static size_t FromUInt32(UInt32 size) => new( (nint)size );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.UInt64"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromUInt64( UInt64 size ) => new( ( IntPtr )size );
+        public static size_t FromUInt64(UInt64 size) => new( (IntPtr)size );
 
         /// <summary>Converts a <see cref="System.Int32"/> int to a <see cref="size_t"/></summary>
         /// <param name="size">Value to convert</param>
-        public static implicit operator size_t( Int32 size ) => FromInt32( size );
+        public static implicit operator size_t(Int32 size) => FromInt32( size );
 
         /// <summary>Converts a <see cref="System.Int64"/> to a <see cref="size_t"/></summary>
         /// <param name="size">Value to convert</param>
-        public static implicit operator size_t( Int64 size ) => FromInt64( size );
+        public static implicit operator size_t(Int64 size) => FromInt64( size );
 
         /// <summary>Converts a <see cref="System.UInt32"/> to a <see cref="size_t"/></summary>
         /// <param name="size">Value to convert</param>
-        public static implicit operator size_t( UInt32 size ) => FromUInt32( size );
+        public static implicit operator size_t(UInt32 size) => FromUInt32( size );
 
         /// <summary>Converts a <see cref="System.UInt64"/> to a <see cref="size_t"/></summary>
         /// <param name="size">Value to convert</param>
-        public static implicit operator size_t( UInt64 size ) => FromUInt64( size );
+        public static implicit operator size_t(UInt64 size) => FromUInt64( size );
 
         /// <summary>Converts the size to a <see cref="System.Int32"/></summary>
         /// <returns>Size as an Int32</returns>
         /// <param name="size">size to convert</param>
-        public static implicit operator int( size_t size ) => size.ToInt32( );
+        public static implicit operator int(size_t size) => size.ToInt32();
 
         /// <summary>Converts the size to a <see cref="System.Int64"/></summary>
         /// <returns>Size as an Int64</returns>
         /// <param name="size">size to convert</param>
-        public static implicit operator long( size_t size ) => size.ToInt64( );
+        public static implicit operator long(size_t size) => size.ToInt64();
 
         /// <summary>Gets a 0 size value</summary>
         public static size_t Zero { get; } = FromInt32( 0 );
 
-        private size_t( nint size )
+        private size_t(nint size)
         {
             Size = size;
         }

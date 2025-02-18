@@ -28,18 +28,18 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Gets the raw native function pointer for the pinned delegate</summary>
         /// <returns>Native callable function pointer</returns>
-        public IntPtr ToIntPtr( ) => NativeFuncPtr;
+        public IntPtr ToIntPtr() => NativeFuncPtr;
 
         /// <summary>Converts a callback to an IntPtr suitable for passing to native code</summary>
         /// <param name="cb">Callback to cast to an <see cref="IntPtr"/></param>
-        public static implicit operator IntPtr( WrappedNativeCallback cb ) => cb.ValidateNotNull( nameof( cb ) ).ToIntPtr( );
+        public static implicit operator IntPtr(WrappedNativeCallback cb) => cb.ValidateNotNull( nameof( cb ) ).ToIntPtr();
 
         /// <summary>Initializes a new instance of the <see cref="WrappedNativeCallback"/> class.</summary>
         /// <param name="d">Delegate</param>
-        protected internal WrappedNativeCallback( Delegate d )
+        protected internal WrappedNativeCallback(Delegate d)
         {
             d.ValidateNotNull( nameof( d ) );
-            if( d.GetType( ).IsGenericType )
+            if(d.GetType().IsGenericType)
             {
                 // Marshal.GetFunctionPointerForDelegate will create an exception for this but the
                 // error message is, pardon the pun, a bit too generic. Hopefully, this makes it a
@@ -47,7 +47,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 throw new ArgumentException( Resources.Marshaling_of_Generic_delegate_types_to_a_native_callback_is_not_supported );
             }
 
-            if( d.GetType( ).GetCustomAttributes( typeof( UnmanagedFunctionPointerAttribute ), true ).Length == 0 )
+            if(d.GetType().GetCustomAttributes( typeof( UnmanagedFunctionPointerAttribute ), true ).Length == 0)
             {
                 throw new ArgumentException( Resources.Marshalling_a_delegate_to_a_native_callback_requires_an_UnmanagedFunctionPointerAttribute_for_the_delegate_type );
             }
@@ -58,19 +58,19 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         /// <inheritdoc/>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            Handle.Free( );
+            Handle.Free();
             UnpinnedDelegate = null;
         }
 
         /// <summary>Gets a delegate from the raw native callback</summary>
         /// <typeparam name="T">Type of delegate to convert to</typeparam>
         /// <returns>Delegate suitable for passing as an "in" parameter to native methods</returns>
-        protected T ToDelegate<T>( )
+        protected T ToDelegate<T>()
             where T : Delegate
         {
-            return ( T )Marshal.GetDelegateForFunctionPointer( ToIntPtr( ), typeof( T ) );
+            return (T)Marshal.GetDelegateForFunctionPointer( ToIntPtr(), typeof( T ) );
         }
 
         private readonly IntPtr NativeFuncPtr;
@@ -101,19 +101,19 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Initializes a new instance of the <see cref="WrappedNativeCallback{T}"/> class.</summary>
         /// <param name="d">Delegate to keep alive until this instance is disposed</param>
-        public WrappedNativeCallback( T d )
+        public WrappedNativeCallback(T d)
             : base( d )
         {
         }
 
         /// <summary>Gets a delegate from the raw native callback</summary>
         /// <returns>Delegate suitable for passing as an "in" parameter to native methods</returns>
-        public T ToDelegate( ) => ToDelegate<T>( );
+        public T ToDelegate() => ToDelegate<T>();
 
         /// <summary>Gets a delegate from the raw native callback</summary>
         /// <param name="cb">Callback to get the delegate for</param>
         /// <returns>Delegate suitable for passing as an "in" parameter to native methods</returns>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "ToDelegate serves the purpose without confusion on generic parameter name" )]
-        public static implicit operator T( WrappedNativeCallback<T> cb ) => cb.ValidateNotNull( nameof( cb ) ).ToDelegate( );
+        public static implicit operator T(WrappedNativeCallback<T> cb) => cb.ValidateNotNull( nameof( cb ) ).ToDelegate();
     }
 }

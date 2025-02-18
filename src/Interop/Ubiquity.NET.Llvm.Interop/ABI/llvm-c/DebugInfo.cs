@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.CodeDom.Compiler;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -188,376 +187,376 @@ namespace Ubiquity.NET.Llvm.Interop
     public static partial class NativeMethods
     {
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial uint LLVMDebugMetadataVersion();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMGetModuleDebugMetadataVersion( LLVMModuleRef Module );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMGetModuleDebugMetadataVersion(LLVMModuleRef Module);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMStripModuleDebugInfo( LLVMModuleRef Module );
+        public static unsafe partial bool LLVMStripModuleDebugInfo(LLVMModuleRef Module);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilderDisallowUnresolved( LLVMModuleRef M );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilderDisallowUnresolved(LLVMModuleRef M);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilder( LLVMModuleRef M );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilder(LLVMModuleRef M);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMDIBuilderFinalize( LLVMDIBuilderRef Builder );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMDIBuilderFinalize(LLVMDIBuilderRef Builder);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMDIBuilderFinalizeSubprogram( LLVMDIBuilderRef Builder, LLVMMetadataRef Subprogram );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMDIBuilderFinalizeSubprogram(LLVMDIBuilderRef Builder, LLVMMetadataRef Subprogram);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateCompileUnit( LLVMDIBuilderRef Builder, LLVMDWARFSourceLanguage Lang, LLVMMetadataRef FileRef, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Producer, size_t ProducerLen, [MarshalAs( UnmanagedType.Bool )]bool isOptimized, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Flags, size_t FlagsLen, uint RuntimeVer, [MarshalUsing( typeof(AnsiStringMarshaller) )]string SplitName, size_t SplitNameLen, LLVMDWARFEmissionKind Kind, uint DWOId, [MarshalAs( UnmanagedType.Bool )]bool SplitDebugInlining, [MarshalAs( UnmanagedType.Bool )]bool DebugInfoForProfiling, [MarshalUsing( typeof(AnsiStringMarshaller) )]string SysRoot, size_t SysRootLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string SDK, size_t SDKLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateCompileUnit(LLVMDIBuilderRef Builder, LLVMDWARFSourceLanguage Lang, LLVMMetadataRef FileRef, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Producer, size_t ProducerLen, [MarshalAs( UnmanagedType.Bool )] bool isOptimized, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Flags, size_t FlagsLen, uint RuntimeVer, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string SplitName, size_t SplitNameLen, LLVMDWARFEmissionKind Kind, uint DWOId, [MarshalAs( UnmanagedType.Bool )] bool SplitDebugInlining, [MarshalAs( UnmanagedType.Bool )] bool DebugInfoForProfiling, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string SysRoot, size_t SysRootLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string SDK, size_t SDKLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef Builder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Filename, size_t FilenameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Directory, size_t DirectoryLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFile(LLVMDIBuilderRef Builder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Filename, size_t FilenameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Directory, size_t DirectoryLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateModule( LLVMDIBuilderRef Builder, LLVMMetadataRef ParentScope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string ConfigMacros, size_t ConfigMacrosLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string IncludePath, size_t IncludePathLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string APINotesFile, size_t APINotesFileLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateModule(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentScope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string ConfigMacros, size_t ConfigMacrosLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string IncludePath, size_t IncludePathLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string APINotesFile, size_t APINotesFileLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNameSpace( LLVMDIBuilderRef Builder, LLVMMetadataRef ParentScope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, [MarshalAs( UnmanagedType.Bool )]bool ExportSymbols );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNameSpace(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentScope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, [MarshalAs( UnmanagedType.Bool )] bool ExportSymbols);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFunction( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string LinkageName, size_t LinkageNameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool IsLocalToUnit, [MarshalAs( UnmanagedType.Bool )]bool IsDefinition, uint ScopeLine, LLVMDIOption Flags, [MarshalAs( UnmanagedType.Bool )]bool IsOptimized );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFunction(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string LinkageName, size_t LinkageNameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool IsLocalToUnit, [MarshalAs( UnmanagedType.Bool )] bool IsDefinition, uint ScopeLine, LLVMDIOption Flags, [MarshalAs( UnmanagedType.Bool )] bool IsOptimized);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint Column );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint Column);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlockFile( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Discriminator );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Discriminator);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromNamespace( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef NS, LLVMMetadataRef File, uint Line );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromNamespace(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef NS, LLVMMetadataRef File, uint Line);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef ImportedEntity, LLVMMetadataRef File, uint Line, out LLVMMetadataRef Elements, uint NumElements );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef ImportedEntity, LLVMMetadataRef File, uint Line, out LLVMMetadataRef Elements, uint NumElements);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef M, LLVMMetadataRef File, uint Line, out LLVMMetadataRef Elements, uint NumElements );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef M, LLVMMetadataRef File, uint Line, out LLVMMetadataRef Elements, uint NumElements);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedDeclaration( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef Decl, LLVMMetadataRef File, uint Line, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, out LLVMMetadataRef Elements, uint NumElements );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedDeclaration(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef Decl, LLVMMetadataRef File, uint Line, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, out LLVMMetadataRef Elements, uint NumElements);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateDebugLocation( LLVMContextRef Ctx, uint Line, uint Column, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateDebugLocation(LLVMContextRef Ctx, uint Line, uint Column, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMDILocationGetLine( LLVMMetadataRef Location );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMDILocationGetLine(LLVMMetadataRef Location);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMDILocationGetColumn( LLVMMetadataRef Location );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMDILocationGetColumn(LLVMMetadataRef Location);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDILocationGetScope( LLVMMetadataRef Location );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDILocationGetScope(LLVMMetadataRef Location);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDILocationGetInlinedAt( LLVMMetadataRef Location );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDILocationGetInlinedAt(LLVMMetadataRef Location);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIScopeGetFile( LLVMMetadataRef Scope );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIScopeGetFile(LLVMMetadataRef Scope);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
-        public static unsafe partial string LLVMDIFileGetDirectory( LLVMMetadataRef File, out uint Len );
+        public static unsafe partial string LLVMDIFileGetDirectory(LLVMMetadataRef File, out uint Len);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
-        public static unsafe partial string LLVMDIFileGetFilename( LLVMMetadataRef File, out uint Len );
+        public static unsafe partial string LLVMDIFileGetFilename(LLVMMetadataRef File, out uint Len);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
-        public static unsafe partial string LLVMDIFileGetSource( LLVMMetadataRef File, out uint Len );
+        public static unsafe partial string LLVMDIFileGetSource(LLVMMetadataRef File, out uint Len);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray( LLVMDIBuilderRef Builder, [In]LLVMMetadataRef[] Data, size_t NumElements );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef Builder, [In] LLVMMetadataRef[] Data, size_t NumElements);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType( LLVMDIBuilderRef Builder, LLVMMetadataRef File, [In]LLVMMetadataRef[] ParameterTypes, uint NumParameterTypes, LLVMDIOption Flags );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(LLVMDIBuilderRef Builder, LLVMMetadataRef File, [In] LLVMMetadataRef[] ParameterTypes, uint NumParameterTypes, LLVMDIOption Flags);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMacro( LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMDWARFMacinfoRecordType RecordType, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Value, size_t ValueLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMacro(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMDWARFMacinfoRecordType RecordType, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Value, size_t ValueLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile( LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMMetadataRef File );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMMetadataRef File);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerator( LLVMDIBuilderRef Builder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, Int64 Value, [MarshalAs( UnmanagedType.Bool )]bool IsUnsigned );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerator(LLVMDIBuilderRef Builder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, Int64 Value, [MarshalAs( UnmanagedType.Bool )] bool IsUnsigned);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerationType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, [In]LLVMMetadataRef[] Elements, uint NumElements, LLVMMetadataRef ClassTy );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerationType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, [In] LLVMMetadataRef[] Elements, uint NumElements, LLVMMetadataRef ClassTy);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnionType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags, [In]LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, [MarshalUsing( typeof(AnsiStringMarshaller) )]string UniqueId, size_t UniqueIdLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnionType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags, [In] LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string UniqueId, size_t UniqueIdLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArrayType( LLVMDIBuilderRef Builder, UInt64 Size, UInt32 AlignInBits, LLVMMetadataRef Ty, [In]LLVMMetadataRef[] Subscripts, uint NumSubscripts );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArrayType(LLVMDIBuilderRef Builder, UInt64 Size, UInt32 AlignInBits, LLVMMetadataRef Ty, [In] LLVMMetadataRef[] Subscripts, uint NumSubscripts);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateVectorType( LLVMDIBuilderRef Builder, UInt64 Size, UInt32 AlignInBits, LLVMMetadataRef Ty, [In]LLVMMetadataRef[] Subscripts, uint NumSubscripts );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateVectorType(LLVMDIBuilderRef Builder, UInt64 Size, UInt32 AlignInBits, LLVMMetadataRef Ty, [In] LLVMMetadataRef[] Subscripts, uint NumSubscripts);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnspecifiedType( LLVMDIBuilderRef Builder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnspecifiedType(LLVMDIBuilderRef Builder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBasicType( LLVMDIBuilderRef Builder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, UInt64 SizeInBits, UInt32 Encoding, LLVMDIOption Flags );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBasicType(LLVMDIBuilderRef Builder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, UInt64 SizeInBits, UInt32 Encoding, LLVMDIOption Flags);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreatePointerType( LLVMDIBuilderRef Builder, LLVMMetadataRef PointeeTy, UInt64 SizeInBits, UInt32 AlignInBits, uint AddressSpace, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreatePointerType(LLVMDIBuilderRef Builder, LLVMMetadataRef PointeeTy, UInt64 SizeInBits, UInt32 AlignInBits, uint AddressSpace, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStructType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags, LLVMMetadataRef DerivedFrom, [In]LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, LLVMMetadataRef VTableHolder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string UniqueId, size_t UniqueIdLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStructType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags, LLVMMetadataRef DerivedFrom, [In] LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, LLVMMetadataRef VTableHolder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string UniqueId, size_t UniqueIdLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIOption Flags, LLVMMetadataRef Ty );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIOption Flags, LLVMMetadataRef Ty);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStaticMemberType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, LLVMMetadataRef Type, LLVMDIOption Flags, LLVMValueRef ConstantVal, UInt32 AlignInBits );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStaticMemberType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, LLVMMetadataRef Type, LLVMDIOption Flags, LLVMValueRef ConstantVal, UInt32 AlignInBits);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberPointerType( LLVMDIBuilderRef Builder, LLVMMetadataRef PointeeType, LLVMMetadataRef ClassType, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberPointerType(LLVMDIBuilderRef Builder, LLVMMetadataRef PointeeType, LLVMMetadataRef ClassType, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCIVar( LLVMDIBuilderRef Builder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIOption Flags, LLVMMetadataRef Ty, LLVMMetadataRef PropertyNode );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCIVar(LLVMDIBuilderRef Builder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIOption Flags, LLVMMetadataRef Ty, LLVMMetadataRef PropertyNode);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCProperty( LLVMDIBuilderRef Builder, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, [MarshalUsing( typeof(AnsiStringMarshaller) )]string GetterName, size_t GetterNameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string SetterName, size_t SetterNameLen, uint PropertyAttributes, LLVMMetadataRef Ty );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCProperty(LLVMDIBuilderRef Builder, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string GetterName, size_t GetterNameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string SetterName, size_t SetterNameLen, uint PropertyAttributes, LLVMMetadataRef Ty);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjectPointerType( LLVMDIBuilderRef Builder, LLVMMetadataRef Type, [MarshalAs( UnmanagedType.Bool )]bool Implicit );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjectPointerType(LLVMDIBuilderRef Builder, LLVMMetadataRef Type, [MarshalAs( UnmanagedType.Bool )] bool Implicit);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateQualifiedType( LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateQualifiedType(LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReferenceType( LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReferenceType(LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNullPtrType( LLVMDIBuilderRef Builder );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNullPtrType(LLVMDIBuilderRef Builder);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTypedef( LLVMDIBuilderRef Builder, LLVMMetadataRef Type, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Scope, UInt32 AlignInBits );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTypedef(LLVMDIBuilderRef Builder, LLVMMetadataRef Type, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Scope, UInt32 AlignInBits);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateInheritance( LLVMDIBuilderRef Builder, LLVMMetadataRef Ty, LLVMMetadataRef BaseTy, UInt64 BaseOffset, UInt32 VBPtrOffset, LLVMDIOption Flags );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateInheritance(LLVMDIBuilderRef Builder, LLVMMetadataRef Ty, LLVMMetadataRef BaseTy, UInt64 BaseOffset, UInt32 VBPtrOffset, LLVMDIOption Flags);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateForwardDecl( LLVMDIBuilderRef Builder, uint Tag, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, UInt64 SizeInBits, UInt32 AlignInBits, [MarshalUsing( typeof(AnsiStringMarshaller) )]string UniqueIdentifier, size_t UniqueIdentifierLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateForwardDecl(LLVMDIBuilderRef Builder, uint Tag, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, UInt64 SizeInBits, UInt32 AlignInBits, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string UniqueIdentifier, size_t UniqueIdentifierLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType( LLVMDIBuilderRef Builder, uint Tag, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags, [MarshalUsing( typeof(AnsiStringMarshaller) )]string UniqueIdentifier, size_t UniqueIdentifierLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType(LLVMDIBuilderRef Builder, uint Tag, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIOption Flags, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string UniqueIdentifier, size_t UniqueIdentifierLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBitFieldMemberType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt64 OffsetInBits, UInt64 StorageOffsetInBits, LLVMDIOption Flags, LLVMMetadataRef Type );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBitFieldMemberType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt64 OffsetInBits, UInt64 StorageOffsetInBits, LLVMDIOption Flags, LLVMMetadataRef Type);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateClassType( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIOption Flags, LLVMMetadataRef DerivedFrom, out LLVMMetadataRef Elements, uint NumElements, LLVMMetadataRef VTableHolder, LLVMMetadataRef TemplateParamsNode, [MarshalUsing( typeof(AnsiStringMarshaller) )]string UniqueIdentifier, size_t UniqueIdentifierLen );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateClassType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIOption Flags, LLVMMetadataRef DerivedFrom, out LLVMMetadataRef Elements, uint NumElements, LLVMMetadataRef VTableHolder, LLVMMetadataRef TemplateParamsNode, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string UniqueIdentifier, size_t UniqueIdentifierLen);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArtificialType( LLVMDIBuilderRef Builder, LLVMMetadataRef Type );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArtificialType(LLVMDIBuilderRef Builder, LLVMMetadataRef Type);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
-        public static unsafe partial string LLVMDITypeGetName( LLVMMetadataRef DType, out size_t Length );
+        public static unsafe partial string LLVMDITypeGetName(LLVMMetadataRef DType, out size_t Length);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial UInt64 LLVMDITypeGetSizeInBits( LLVMMetadataRef DType );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMDITypeGetSizeInBits(LLVMMetadataRef DType);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial UInt64 LLVMDITypeGetOffsetInBits( LLVMMetadataRef DType );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMDITypeGetOffsetInBits(LLVMMetadataRef DType);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial UInt32 LLVMDITypeGetAlignInBits( LLVMMetadataRef DType );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt32 LLVMDITypeGetAlignInBits(LLVMMetadataRef DType);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMDITypeGetLine( LLVMMetadataRef DType );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMDITypeGetLine(LLVMMetadataRef DType);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDIOption LLVMDITypeGetFlags( LLVMMetadataRef DType );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDIOption LLVMDITypeGetFlags(LLVMMetadataRef DType);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateSubrange( LLVMDIBuilderRef Builder, Int64 LowerBound, Int64 Count );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateSubrange(LLVMDIBuilderRef Builder, Int64 LowerBound, Int64 Count);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateArray( LLVMDIBuilderRef Builder, [In]LLVMMetadataRef[] Data, size_t NumElements );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef Builder, [In] LLVMMetadataRef[] Data, size_t NumElements);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateExpression( LLVMDIBuilderRef Builder, [In]UInt64[] Addr, size_t Length );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateExpression(LLVMDIBuilderRef Builder, [In] UInt64[] Addr, size_t Length);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateConstantValueExpression( LLVMDIBuilderRef Builder, UInt64 Value );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateConstantValueExpression(LLVMDIBuilderRef Builder, UInt64 Value);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Linkage, size_t LinkLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool LocalToUnit, LLVMMetadataRef Expr, LLVMMetadataRef Decl, UInt32 AlignInBits );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Linkage, size_t LinkLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool LocalToUnit, LLVMMetadataRef Expr, LLVMMetadataRef Decl, UInt32 AlignInBits);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial UInt16 LLVMGetDINodeTag( LLVMMetadataRef MD );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt16 LLVMGetDINodeTag(LLVMMetadataRef MD);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetVariable( LLVMMetadataRef GVE );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetVariable(LLVMMetadataRef GVE);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetExpression( LLVMMetadataRef GVE );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetExpression(LLVMMetadataRef GVE);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetFile( LLVMMetadataRef Var );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetFile(LLVMMetadataRef Var);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetScope( LLVMMetadataRef Var );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetScope(LLVMMetadataRef Var);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMDIVariableGetLine( LLVMMetadataRef Var );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMDIVariableGetLine(LLVMMetadataRef Var);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRef Ctx, out LLVMMetadataRef Data, size_t NumElements );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRef Ctx, out LLVMMetadataRef Data, size_t NumElements);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMDisposeTemporaryMDNode( LLVMMetadataRef TempNode );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMDisposeTemporaryMDNode(LLVMMetadataRef TempNode);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef TempTargetMetadata, LLVMMetadataRef Replacement );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMMetadataReplaceAllUsesWith(LLVMMetadataRef TempTargetMetadata, LLVMMetadataRef Replacement);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempGlobalVariableFwdDecl( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Linkage, size_t LnkLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool LocalToUnit, LLVMMetadataRef Decl, UInt32 AlignInBits );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempGlobalVariableFwdDecl(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Linkage, size_t LnkLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool LocalToUnit, LLVMMetadataRef Decl, UInt32 AlignInBits);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordBefore( LLVMDIBuilderRef Builder, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMValueRef Instr );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordBefore(LLVMDIBuilderRef Builder, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMValueRef Instr);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordAtEnd( LLVMDIBuilderRef Builder, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMBasicBlockRef Block );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordAtEnd(LLVMDIBuilderRef Builder, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMBasicBlockRef Block);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordBefore( LLVMDIBuilderRef Builder, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMValueRef Instr );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordBefore(LLVMDIBuilderRef Builder, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMValueRef Instr);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordAtEnd( LLVMDIBuilderRef Builder, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMBasicBlockRef Block );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordAtEnd(LLVMDIBuilderRef Builder, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMBasicBlockRef Block);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateAutoVariable( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool AlwaysPreserve, LLVMDIOption Flags, UInt32 AlignInBits );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateAutoVariable(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve, LLVMDIOption Flags, UInt32 AlignInBits);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateParameterVariable( LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, uint ArgNo, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )]bool AlwaysPreserve, LLVMDIOption Flags );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateParameterVariable(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, uint ArgNo, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve, LLVMDIOption Flags);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMGetSubprogram( LLVMValueRef Func );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMGetSubprogram(LLVMValueRef Func);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMSetSubprogram( LLVMValueRef Func, LLVMMetadataRef SP );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMSetSubprogram(LLVMValueRef Func, LLVMMetadataRef SP);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMDISubprogramGetLine( LLVMMetadataRef Subprogram );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMDISubprogramGetLine(LLVMMetadataRef Subprogram);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMInstructionGetDebugLoc( LLVMValueRef Inst );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMInstructionGetDebugLoc(LLVMValueRef Inst);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMInstructionSetDebugLoc( LLVMValueRef Inst, LLVMMetadataRef Loc );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMInstructionSetDebugLoc(LLVMValueRef Inst, LLVMMetadataRef Loc);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLabel( LLVMDIBuilderRef Builder, LLVMMetadataRef Context, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, [MarshalAs( UnmanagedType.Bool )]bool AlwaysPreserve );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLabel(LLVMDIBuilderRef Builder, LLVMMetadataRef Context, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelBefore( LLVMDIBuilderRef Builder, LLVMMetadataRef LabelInfo, LLVMMetadataRef Location, LLVMValueRef InsertBefore );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelBefore(LLVMDIBuilderRef Builder, LLVMMetadataRef LabelInfo, LLVMMetadataRef Location, LLVMValueRef InsertBefore);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelAtEnd( LLVMDIBuilderRef Builder, LLVMMetadataRef LabelInfo, LLVMMetadataRef Location, LLVMBasicBlockRef InsertAtEnd );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelAtEnd(LLVMDIBuilderRef Builder, LLVMMetadataRef LabelInfo, LLVMMetadataRef Location, LLVMBasicBlockRef InsertAtEnd);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMetadataKind LLVMGetMetadataKind( LLVMMetadataRef Metadata );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataKind LLVMGetMetadataKind(LLVMMetadataRef Metadata);
     }
 }

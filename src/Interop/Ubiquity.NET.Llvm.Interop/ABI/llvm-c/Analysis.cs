@@ -22,20 +22,20 @@ namespace Ubiquity.NET.Llvm.Interop
     public static partial class NativeMethods
     {
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMVerifyModule( LLVMModuleRef M, LLVMVerifierFailureAction Action, [MarshalUsing( typeof( DisposeMessageMarshaller ) )]out string OutMessage );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMVerifyModule(LLVMModuleRef M, LLVMVerifierFailureAction Action, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutMessage);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMVerifyFunction( LLVMValueRef Fn, LLVMVerifierFailureAction Action );
+        public static unsafe partial bool LLVMVerifyFunction(LLVMValueRef Fn, LLVMVerifierFailureAction Action);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMViewFunctionCFG( LLVMValueRef Fn );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMViewFunctionCFG(LLVMValueRef Fn);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMViewFunctionCFGOnly( LLVMValueRef Fn );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMViewFunctionCFGOnly(LLVMValueRef Fn);
     }
 }

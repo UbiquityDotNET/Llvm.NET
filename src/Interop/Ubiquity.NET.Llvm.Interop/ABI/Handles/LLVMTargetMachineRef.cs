@@ -18,29 +18,29 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Initializes an instance of <see cref="LLVMTargetMachineRef"/> with default values</summary>
         public LLVMTargetMachineRef()
-            : base(ownsHandle: true)
+            : base( ownsHandle: true )
         {
         }
 
         /// <summary>Initializes an instance of <see cref="LLVMTargetMachineRef"/></summary>
         /// <param name="handle">Raw native pointer for the handle</param>
         /// <param name="owner">Value to indicate whether the handle is owned or not</param>
-        public LLVMTargetMachineRef( nint handle, bool owner )
+        public LLVMTargetMachineRef(nint handle, bool owner)
             : base( owner )
         {
             SetHandle( handle );
         }
 
         /// <summary>Gets a Zero (<see langword="null"/>) value handle</summary>
-        public static LLVMTargetMachineRef Zero { get; } = new LLVMTargetMachineRef(nint.Zero, false);
+        public static LLVMTargetMachineRef Zero { get; } = new LLVMTargetMachineRef( nint.Zero, false );
 
         /// <inheritdoc/>
-        protected override bool ReleaseHandle( )
+        protected override bool ReleaseHandle()
         {
             // critical safety check, base should never call ReleaseHandle on an invalid handle
             // but ABI usually can't handle that and would just crash the app, so make it
             // a NOP just in case.
-            if( handle != nint.Zero )
+            if(handle != nint.Zero)
             {
                 LLVMDisposeTargetMachine( handle );
             }
@@ -49,8 +49,8 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         [LibraryImport( NativeMethods.LibraryPath )]
-        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-        private static unsafe partial void LLVMDisposeTargetMachine( nint p );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial void LLVMDisposeTargetMachine(nint p);
     }
 
     // CONSIDER: Make the alias a `ref struct` to prevent boxing or heap allocation.
@@ -66,7 +66,7 @@ namespace Ubiquity.NET.Llvm.Interop
     /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
     /// perform any automatic cleanup. [That is, this is a PURE reference to an object]
     ///</remarks>
-    [GeneratedCode("LlvmBindingsGenerator","20.1.0-alpha.0.0.ci-ZZZ.601495633+d1254fe9f1777d1dc7521c608b84dde1ba5175e0")]
+    [GeneratedCode( "LlvmBindingsGenerator", "20.1.0-alpha.0.0.ci-ZZZ.601495633+d1254fe9f1777d1dc7521c608b84dde1ba5175e0" )]
     public class LLVMTargetMachineRefAlias
         : LLVMTargetMachineRef
     {

@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     // NOTE: Context handles are just value types that wrap around a runtime nint (basically a strong typedef)
     //       Therefore, they are blittable value types and don't need any marshaling.
-// Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
+    // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
     using unsafe LLVMOrcCAPIDefinitionGeneratorTryToGenerateFunction = delegate* unmanaged[Cdecl]<
         nint /*LLVMOrcDefinitionGeneratorRef*/ /*GeneratorObj*/,
@@ -163,23 +163,23 @@ namespace Ubiquity.NET.Llvm.Interop
     public static partial class NativeMethods
     {
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcExecutionSessionSetErrorReporter( LLVMOrcExecutionSessionRef ES, LLVMOrcErrorReporterFunction ReportError, void* Ctx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcExecutionSessionSetErrorReporter(LLVMOrcExecutionSessionRef ES, LLVMOrcErrorReporterFunction ReportError, void* Ctx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolRef LLVMOrcExecutionSessionGetSymbolStringPool( LLVMOrcExecutionSessionRef ES );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcSymbolStringPoolRef LLVMOrcExecutionSessionGetSymbolStringPool(LLVMOrcExecutionSessionRef ES);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcSymbolStringPoolClearDeadEntries( LLVMOrcSymbolStringPoolRef SSP );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcSymbolStringPoolClearDeadEntries(LLVMOrcSymbolStringPoolRef SSP);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcExecutionSessionIntern( LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcExecutionSessionIntern(LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcExecutionSessionLookup(
             LLVMOrcExecutionSessionRef ES,
             LLVMOrcLookupKind K,
@@ -192,257 +192,257 @@ namespace Ubiquity.NET.Llvm.Interop
             );
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcRetainSymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef S );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcRetainSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef S );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
-        public static unsafe partial string LLVMOrcSymbolStringPoolEntryStr( LLVMOrcSymbolStringPoolEntryRef S );
+        public static unsafe partial string LLVMOrcSymbolStringPoolEntryStr(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcReleaseResourceTracker( LLVMOrcResourceTrackerRef RT );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcReleaseResourceTracker(LLVMOrcResourceTrackerRef RT);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcResourceTrackerTransferTo( LLVMOrcResourceTrackerRef SrcRT, LLVMOrcResourceTrackerRef DstRT );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcResourceTrackerTransferTo(LLVMOrcResourceTrackerRef SrcRT, LLVMOrcResourceTrackerRef DstRT);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcResourceTrackerRemove( LLVMOrcResourceTrackerRef RT );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcResourceTrackerRemove(LLVMOrcResourceTrackerRef RT);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeDefinitionGenerator( LLVMOrcDefinitionGeneratorRef DG );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeDefinitionGenerator(LLVMOrcDefinitionGeneratorRef DG);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeMaterializationUnit( LLVMOrcMaterializationUnitRef MU );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeMaterializationUnit(LLVMOrcMaterializationUnitRef MU);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit( [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, void* Ctx, LLVMOrcCSymbolFlagsMapPair* Syms, size_t NumSyms, LLVMOrcSymbolStringPoolEntryRef InitSym, LLVMOrcMaterializationUnitMaterializeFunction Materialize, LLVMOrcMaterializationUnitDiscardFunction Discard, LLVMOrcMaterializationUnitDestroyFunction Destroy );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, void* Ctx, LLVMOrcCSymbolFlagsMapPair* Syms, size_t NumSyms, LLVMOrcSymbolStringPoolEntryRef InitSym, LLVMOrcMaterializationUnitMaterializeFunction Materialize, LLVMOrcMaterializationUnitDiscardFunction Discard, LLVMOrcMaterializationUnitDestroyFunction Destroy);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcAbsoluteSymbols( LLVMOrcCSymbolMapPair* Syms, size_t NumPairs );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcAbsoluteSymbols(LLVMOrcCSymbolMapPair* Syms, size_t NumPairs);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcLazyReexports( LLVMOrcLazyCallThroughManagerRef LCTM, LLVMOrcIndirectStubsManagerRef ISM, LLVMOrcJITDylibRef SourceRef, LLVMOrcCSymbolAliasMapPair* CallableAliases, size_t NumPairs );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcLazyReexports(LLVMOrcLazyCallThroughManagerRef LCTM, LLVMOrcIndirectStubsManagerRef ISM, LLVMOrcJITDylibRef SourceRef, LLVMOrcCSymbolAliasMapPair* CallableAliases, size_t NumPairs);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeMaterializationResponsibility( LLVMOrcMaterializationResponsibilityRef MR );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeMaterializationResponsibility(LLVMOrcMaterializationResponsibilityRef MR);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcMaterializationResponsibilityGetTargetDylib( LLVMOrcMaterializationResponsibilityRef MR );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcMaterializationResponsibilityGetTargetDylib(LLVMOrcMaterializationResponsibilityRef MR);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcExecutionSessionRef LLVMOrcMaterializationResponsibilityGetExecutionSession( LLVMOrcMaterializationResponsibilityRef MR );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcExecutionSessionRef LLVMOrcMaterializationResponsibilityGetExecutionSession(LLVMOrcMaterializationResponsibilityRef MR);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcCSymbolFlagsMapPair* LLVMOrcMaterializationResponsibilityGetSymbols( LLVMOrcMaterializationResponsibilityRef MR, out size_t NumPairs );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcCSymbolFlagsMapPair* LLVMOrcMaterializationResponsibilityGetSymbols(LLVMOrcMaterializationResponsibilityRef MR, out size_t NumPairs);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeCSymbolFlagsMap( LLVMOrcCSymbolFlagsMapPair* Pairs );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeCSymbolFlagsMap(LLVMOrcCSymbolFlagsMapPair* Pairs);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcMaterializationResponsibilityGetInitializerSymbol( LLVMOrcMaterializationResponsibilityRef MR );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcMaterializationResponsibilityGetInitializerSymbol(LLVMOrcMaterializationResponsibilityRef MR);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcMaterializationResponsibilityGetRequestedSymbols( LLVMOrcMaterializationResponsibilityRef MR, out size_t NumSymbols );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcMaterializationResponsibilityGetRequestedSymbols(LLVMOrcMaterializationResponsibilityRef MR, out size_t NumSymbols);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeSymbols( out LLVMOrcSymbolStringPoolEntryRef Symbols );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeSymbols(out LLVMOrcSymbolStringPoolEntryRef Symbols);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityNotifyResolved( LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcCSymbolFlagsMapPair* Symbols, size_t NumPairs );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityNotifyResolved(LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcCSymbolFlagsMapPair* Symbols, size_t NumPairs);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityNotifyEmitted( LLVMOrcMaterializationResponsibilityRef MR, out LLVMOrcCSymbolDependenceGroup SymbolDepGroups, size_t NumSymbolDepGroups );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityNotifyEmitted(LLVMOrcMaterializationResponsibilityRef MR, out LLVMOrcCSymbolDependenceGroup SymbolDepGroups, size_t NumSymbolDepGroups);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDefineMaterializing( LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcCSymbolFlagsMapPair* Pairs, size_t NumPairs );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDefineMaterializing(LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcCSymbolFlagsMapPair* Pairs, size_t NumPairs);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcMaterializationResponsibilityFailMaterialization( LLVMOrcMaterializationResponsibilityRef MR );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcMaterializationResponsibilityFailMaterialization(LLVMOrcMaterializationResponsibilityRef MR);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityReplace( LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcMaterializationUnitRef MU );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityReplace(LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcMaterializationUnitRef MU);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate( LLVMOrcMaterializationResponsibilityRef MR, out LLVMOrcSymbolStringPoolEntryRef Symbols, size_t NumSymbols, out LLVMOrcMaterializationResponsibilityRef Result );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(LLVMOrcMaterializationResponsibilityRef MR, out LLVMOrcSymbolStringPoolEntryRef Symbols, size_t NumSymbols, out LLVMOrcMaterializationResponsibilityRef Result);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionCreateBareJITDylib( LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionCreateBareJITDylib(LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcExecutionSessionCreateJITDylib( LLVMOrcExecutionSessionRef ES, out LLVMOrcJITDylibRef Result, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcExecutionSessionCreateJITDylib(LLVMOrcExecutionSessionRef ES, out LLVMOrcJITDylibRef Result, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionGetJITDylibByName( LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionGetJITDylibByName(LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcResourceTrackerRef LLVMOrcJITDylibCreateResourceTracker( LLVMOrcJITDylibRef JD );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcResourceTrackerRef LLVMOrcJITDylibCreateResourceTracker(LLVMOrcJITDylibRef JD);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcResourceTrackerRef LLVMOrcJITDylibGetDefaultResourceTracker( LLVMOrcJITDylibRef JD );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcResourceTrackerRef LLVMOrcJITDylibGetDefaultResourceTracker(LLVMOrcJITDylibRef JD);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcJITDylibDefine( LLVMOrcJITDylibRef JD, LLVMOrcMaterializationUnitRef MU );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcJITDylibDefine(LLVMOrcJITDylibRef JD, LLVMOrcMaterializationUnitRef MU);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcJITDylibClear( LLVMOrcJITDylibRef JD );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcJITDylibClear(LLVMOrcJITDylibRef JD);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcJITDylibAddGenerator( LLVMOrcJITDylibRef JD, LLVMOrcDefinitionGeneratorRef DG );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcJITDylibAddGenerator(LLVMOrcJITDylibRef JD, LLVMOrcDefinitionGeneratorRef DG);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcDefinitionGeneratorRef LLVMOrcCreateCustomCAPIDefinitionGenerator( LLVMOrcCAPIDefinitionGeneratorTryToGenerateFunction F, void* Ctx, LLVMOrcDisposeCAPIDefinitionGeneratorFunction Dispose );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcDefinitionGeneratorRef LLVMOrcCreateCustomCAPIDefinitionGenerator(LLVMOrcCAPIDefinitionGeneratorTryToGenerateFunction F, void* Ctx, LLVMOrcDisposeCAPIDefinitionGeneratorFunction Dispose);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcLookupStateContinueLookup( LLVMOrcLookupStateRef S, LLVMErrorRef Err );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcLookupStateContinueLookup(LLVMOrcLookupStateRef S, LLVMErrorRef Err);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForProcess( out LLVMOrcDefinitionGeneratorRef Result, sbyte GlobalPrefx, LLVMOrcSymbolPredicate Filter, void* FilterCtx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForProcess(out LLVMOrcDefinitionGeneratorRef Result, sbyte GlobalPrefx, LLVMOrcSymbolPredicate Filter, void* FilterCtx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForPath( out LLVMOrcDefinitionGeneratorRef Result, [MarshalUsing( typeof(AnsiStringMarshaller) )]string FileName, sbyte GlobalPrefix, LLVMOrcSymbolPredicate Filter, void* FilterCtx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForPath(out LLVMOrcDefinitionGeneratorRef Result, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string FileName, sbyte GlobalPrefix, LLVMOrcSymbolPredicate Filter, void* FilterCtx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateStaticLibrarySearchGeneratorForPath( out LLVMOrcDefinitionGeneratorRef Result, LLVMOrcObjectLayerRef ObjLayer, [MarshalUsing( typeof(AnsiStringMarshaller) )]string FileName, [MarshalUsing( typeof(AnsiStringMarshaller) )]string TargetTriple );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateStaticLibrarySearchGeneratorForPath(out LLVMOrcDefinitionGeneratorRef Result, LLVMOrcObjectLayerRef ObjLayer, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string FileName, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcThreadSafeContextRef LLVMOrcCreateNewThreadSafeContext();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMContextRef LLVMOrcThreadSafeContextGetContext( LLVMOrcThreadSafeContextRef TSCtx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMContextRef LLVMOrcThreadSafeContextGetContext(LLVMOrcThreadSafeContextRef TSCtx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeThreadSafeContext( LLVMOrcThreadSafeContextRef TSCtx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeThreadSafeContext(LLVMOrcThreadSafeContextRef TSCtx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcThreadSafeModuleRef LLVMOrcCreateNewThreadSafeModule( LLVMModuleRef M, LLVMOrcThreadSafeContextRef TSCtx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcThreadSafeModuleRef LLVMOrcCreateNewThreadSafeModule(LLVMModuleRef M, LLVMOrcThreadSafeContextRef TSCtx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeThreadSafeModule( LLVMOrcThreadSafeModuleRef TSM );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeThreadSafeModule(LLVMOrcThreadSafeModuleRef TSM);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcThreadSafeModuleWithModuleDo( LLVMOrcThreadSafeModuleRef TSM, LLVMOrcGenericIRModuleOperationFunction F, void* Ctx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcThreadSafeModuleWithModuleDo(LLVMOrcThreadSafeModuleRef TSM, LLVMOrcGenericIRModuleOperationFunction F, void* Ctx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcJITTargetMachineBuilderDetectHost( out LLVMOrcJITTargetMachineBuilderRef Result );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcJITTargetMachineBuilderDetectHost(out LLVMOrcJITTargetMachineBuilderRef Result);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcJITTargetMachineBuilderRef LLVMOrcJITTargetMachineBuilderCreateFromTargetMachine( LLVMTargetMachineRef TM );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcJITTargetMachineBuilderRef LLVMOrcJITTargetMachineBuilderCreateFromTargetMachine(LLVMTargetMachineRef TM);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeJITTargetMachineBuilder( LLVMOrcJITTargetMachineBuilderRef JTMB );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeJITTargetMachineBuilder(LLVMOrcJITTargetMachineBuilderRef JTMB);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMOrcJITTargetMachineBuilderGetTargetTriple( LLVMOrcJITTargetMachineBuilderRef JTMB );
+        public static unsafe partial string LLVMOrcJITTargetMachineBuilderGetTargetTriple(LLVMOrcJITTargetMachineBuilderRef JTMB);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcJITTargetMachineBuilderSetTargetTriple( LLVMOrcJITTargetMachineBuilderRef JTMB, [MarshalUsing( typeof(AnsiStringMarshaller) )]string TargetTriple );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcJITTargetMachineBuilderSetTargetTriple(LLVMOrcJITTargetMachineBuilderRef JTMB, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcObjectLayerAddObjectFile( LLVMOrcObjectLayerRef ObjLayer, LLVMOrcJITDylibRef JD, LLVMMemoryBufferRef ObjBuffer );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcObjectLayerAddObjectFile(LLVMOrcObjectLayerRef ObjLayer, LLVMOrcJITDylibRef JD, LLVMMemoryBufferRef ObjBuffer);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcObjectLayerAddObjectFileWithRT( LLVMOrcObjectLayerRef ObjLayer, LLVMOrcResourceTrackerRef RT, LLVMMemoryBufferRef ObjBuffer );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcObjectLayerAddObjectFileWithRT(LLVMOrcObjectLayerRef ObjLayer, LLVMOrcResourceTrackerRef RT, LLVMMemoryBufferRef ObjBuffer);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcObjectLayerEmit( LLVMOrcObjectLayerRef ObjLayer, LLVMOrcMaterializationResponsibilityRef R, LLVMMemoryBufferRef ObjBuffer );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcObjectLayerEmit(LLVMOrcObjectLayerRef ObjLayer, LLVMOrcMaterializationResponsibilityRef R, LLVMMemoryBufferRef ObjBuffer);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeObjectLayer( LLVMOrcObjectLayerRef ObjLayer );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeObjectLayer(LLVMOrcObjectLayerRef ObjLayer);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcIRTransformLayerEmit( LLVMOrcIRTransformLayerRef IRTransformLayer, LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcThreadSafeModuleRef TSM );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcIRTransformLayerEmit(LLVMOrcIRTransformLayerRef IRTransformLayer, LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcThreadSafeModuleRef TSM);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcIRTransformLayerSetTransform( LLVMOrcIRTransformLayerRef IRTransformLayer, LLVMOrcIRTransformLayerTransformFunction TransformFunction, void* Ctx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcIRTransformLayerSetTransform(LLVMOrcIRTransformLayerRef IRTransformLayer, LLVMOrcIRTransformLayerTransformFunction TransformFunction, void* Ctx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcObjectTransformLayerSetTransform( LLVMOrcObjectTransformLayerRef ObjTransformLayer, LLVMOrcObjectTransformLayerTransformFunction TransformFunction, void* Ctx );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcObjectTransformLayerSetTransform(LLVMOrcObjectTransformLayerRef ObjTransformLayer, LLVMOrcObjectTransformLayerTransformFunction TransformFunction, void* Ctx);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcIndirectStubsManagerRef LLVMOrcCreateLocalIndirectStubsManager( [MarshalUsing( typeof(AnsiStringMarshaller) )]string TargetTriple );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcIndirectStubsManagerRef LLVMOrcCreateLocalIndirectStubsManager([MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeIndirectStubsManager( LLVMOrcIndirectStubsManagerRef ISM );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeIndirectStubsManager(LLVMOrcIndirectStubsManagerRef ISM);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateLocalLazyCallThroughManager( [MarshalUsing( typeof(AnsiStringMarshaller) )]string TargetTriple, LLVMOrcExecutionSessionRef ES, UInt64 ErrorHandlerAddr, out LLVMOrcLazyCallThroughManagerRef LCTM );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateLocalLazyCallThroughManager([MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple, LLVMOrcExecutionSessionRef ES, UInt64 ErrorHandlerAddr, out LLVMOrcLazyCallThroughManagerRef LCTM);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeLazyCallThroughManager( LLVMOrcLazyCallThroughManagerRef LCTM );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeLazyCallThroughManager(LLVMOrcLazyCallThroughManagerRef LCTM);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMOrcDumpObjectsRef LLVMOrcCreateDumpObjects( [MarshalUsing( typeof(AnsiStringMarshaller) )]string DumpDir, [MarshalUsing( typeof(AnsiStringMarshaller) )]string IdentifierOverride );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcDumpObjectsRef LLVMOrcCreateDumpObjects([MarshalUsing( typeof( AnsiStringMarshaller ) )] string DumpDir, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string IdentifierOverride);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMOrcDisposeDumpObjects( LLVMOrcDumpObjectsRef DumpObjects );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMOrcDisposeDumpObjects(LLVMOrcDumpObjectsRef DumpObjects);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcDumpObjects_CallOperator( LLVMOrcDumpObjectsRef DumpObjects, out LLVMMemoryBufferRef ObjBuffer );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcDumpObjects_CallOperator(LLVMOrcDumpObjectsRef DumpObjects, out LLVMMemoryBufferRef ObjBuffer);
     }
 }

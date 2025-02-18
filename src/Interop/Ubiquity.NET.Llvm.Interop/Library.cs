@@ -25,9 +25,9 @@ namespace Ubiquity.NET.Llvm.Interop
         , ILibLlvm
     {
         /// <inheritdoc/>
-        public void RegisterTarget( CodeGenTarget target, TargetRegistrations registrations = TargetRegistrations.All )
+        public void RegisterTarget(CodeGenTarget target, TargetRegistrations registrations = TargetRegistrations.All)
         {
-            switch( target )
+            switch(target)
             {
             case CodeGenTarget.Native:
                 RegisterNative( registrations );
@@ -100,13 +100,13 @@ namespace Ubiquity.NET.Llvm.Interop
         /// is best used at the top level of the application and released at or
         /// near process exit.
         /// </remarks>
-        public static ILibLlvm InitializeLLVM( )
+        public static ILibLlvm InitializeLLVM()
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
                                                                                 , (int)InitializationState.Initializing
                                                                                 , (int)InitializationState.Uninitialized
                                                                                 );
-            if( previousState != InitializationState.Uninitialized )
+            if(previousState != InitializationState.Uninitialized)
             {
                 throw new InvalidOperationException( Resources.Llvm_already_initialized );
             }
@@ -115,7 +115,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // DLL before any use of the wrapped interop APIs to
             // allow building this library as ANYCPU
             string? thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
-            if( string.IsNullOrWhiteSpace( thisModulePath ) )
+            if(string.IsNullOrWhiteSpace( thisModulePath ))
             {
                 throw new InvalidOperationException( Resources.Cannot_determine_assembly_location );
             }
@@ -139,7 +139,7 @@ namespace Ubiquity.NET.Llvm.Interop
             {
                 // Verify the version of LLVM in LibLLVM
                 LibLLVMGetVersionInfo( out LibLLVMVersionInfo versionInfo );
-                if( versionInfo.Major != VersionMajor
+                if(versionInfo.Major != VersionMajor
                  || versionInfo.Minor != VersionMinor
                  || versionInfo.Patch < VersionPatch
                   )
@@ -170,7 +170,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 throw;
             }
 
-            Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.Initialized );
+            Interlocked.Exchange( ref CurrentInitializationState, (int)InitializationState.Initialized );
             return new Library( hLibLLVM );
         }
 
@@ -217,46 +217,46 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for all available targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterAll( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterAll(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeAllTargets( );
+                LLVMInitializeAllTargets();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeAllTargetInfos( );
+                LLVMInitializeAllTargetInfos();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeAllTargetMCs( );
+                LLVMInitializeAllTargetMCs();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeAllAsmPrinters( );
+                LLVMInitializeAllAsmPrinters();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeAllDisassemblers( );
+                LLVMInitializeAllDisassemblers();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeAllAsmParsers( );
+                LLVMInitializeAllAsmParsers();
             }
         }
 
         /// <summary>Registers components for the target representing the system the calling process is running on</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterNative( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterNative(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeNativeTarget( );
+                LLVMInitializeNativeTarget();
             }
 
             /* Not supported on this platform
@@ -267,324 +267,324 @@ namespace Ubiquity.NET.Llvm.Interop
             //    LLVMInitializeNativeTargetMC( );
             */
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeNativeAsmPrinter( );
+                LLVMInitializeNativeAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeNativeDisassembler( );
+                LLVMInitializeNativeDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeNativeAsmParser( );
+                LLVMInitializeNativeAsmParser();
             }
         }
 
         /// <summary>Registers components for ARM AArch64 target(s)</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterAArch64( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterAArch64(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeAArch64Target( );
+                LLVMInitializeAArch64Target();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeAArch64TargetInfo( );
+                LLVMInitializeAArch64TargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeAArch64TargetMC( );
+                LLVMInitializeAArch64TargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeAArch64AsmPrinter( );
+                LLVMInitializeAArch64AsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeAArch64Disassembler( );
+                LLVMInitializeAArch64Disassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeAArch64AsmParser( );
+                LLVMInitializeAArch64AsmParser();
             }
         }
 
         /// <summary>Registers components for AMDGPU targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterAMDGPU( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterAMDGPU(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeAMDGPUTarget( );
+                LLVMInitializeAMDGPUTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeAMDGPUTargetInfo( );
+                LLVMInitializeAMDGPUTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeAMDGPUTargetMC( );
+                LLVMInitializeAMDGPUTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeAMDGPUAsmPrinter( );
+                LLVMInitializeAMDGPUAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeAMDGPUDisassembler( );
+                LLVMInitializeAMDGPUDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeAMDGPUAsmParser( );
+                LLVMInitializeAMDGPUAsmParser();
             }
         }
 
         /// <summary>Registers components for ARM 32bit and 16bit thumb targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterARM( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterARM(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeARMTarget( );
+                LLVMInitializeARMTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeARMTargetInfo( );
+                LLVMInitializeARMTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeARMTargetMC( );
+                LLVMInitializeARMTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeARMAsmPrinter( );
+                LLVMInitializeARMAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeARMDisassembler( );
+                LLVMInitializeARMDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeARMAsmParser( );
+                LLVMInitializeARMAsmParser();
             }
         }
 
         /// <summary>Registers components for the Berkeley Packet Filter (BPF) target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterBPF( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterBPF(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeBPFTarget( );
+                LLVMInitializeBPFTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeBPFTargetInfo( );
+                LLVMInitializeBPFTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeBPFTargetMC( );
+                LLVMInitializeBPFTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeBPFAsmPrinter( );
+                LLVMInitializeBPFAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeBPFDisassembler( );
+                LLVMInitializeBPFDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeBPFAsmParser( );
+                LLVMInitializeBPFAsmParser();
             }
         }
 
         /// <summary>Registers components for the Hexagon CPU</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterHexagon( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterHexagon(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeHexagonTarget( );
+                LLVMInitializeHexagonTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeHexagonTargetInfo( );
+                LLVMInitializeHexagonTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeHexagonTargetMC( );
+                LLVMInitializeHexagonTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeHexagonAsmPrinter( );
+                LLVMInitializeHexagonAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeHexagonDisassembler( );
+                LLVMInitializeHexagonDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeHexagonAsmParser( );
+                LLVMInitializeHexagonAsmParser();
             }
         }
 
         /// <summary>Registers components for the Lanai target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterLanai( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterLanai(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeLanaiTarget( );
+                LLVMInitializeLanaiTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeLanaiTargetInfo( );
+                LLVMInitializeLanaiTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeLanaiTargetMC( );
+                LLVMInitializeLanaiTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeLanaiAsmPrinter( );
+                LLVMInitializeLanaiAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeLanaiDisassembler( );
+                LLVMInitializeLanaiDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeLanaiAsmParser( );
+                LLVMInitializeLanaiAsmParser();
             }
         }
 
         /// <summary>Registers components for MIPS targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterMips( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterMips(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeMipsTarget( );
+                LLVMInitializeMipsTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeMipsTargetInfo( );
+                LLVMInitializeMipsTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeMipsTargetMC( );
+                LLVMInitializeMipsTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeMipsAsmPrinter( );
+                LLVMInitializeMipsAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeMipsDisassembler( );
+                LLVMInitializeMipsDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeMipsAsmParser( );
+                LLVMInitializeMipsAsmParser();
             }
         }
 
         /// <summary>Registers components for MSP430 targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterMSP430( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterMSP430(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeMSP430Target( );
+                LLVMInitializeMSP430Target();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeMSP430TargetInfo( );
+                LLVMInitializeMSP430TargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeMSP430TargetMC( );
+                LLVMInitializeMSP430TargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeMSP430AsmPrinter( );
+                LLVMInitializeMSP430AsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeMSP430Disassembler( );
+                LLVMInitializeMSP430Disassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeMSP430AsmParser( );
+                LLVMInitializeMSP430AsmParser();
             }
         }
 
         /// <summary>Registers components for the NVPTX targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterNVPTX( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterNVPTX(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeNVPTXTarget( );
+                LLVMInitializeNVPTXTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeNVPTXTargetInfo( );
+                LLVMInitializeNVPTXTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeNVPTXTargetMC( );
+                LLVMInitializeNVPTXTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeNVPTXAsmPrinter( );
+                LLVMInitializeNVPTXAsmPrinter();
             }
 
             /*
@@ -602,206 +602,206 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the PowerPC targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterPowerPC( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterPowerPC(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializePowerPCTarget( );
+                LLVMInitializePowerPCTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializePowerPCTargetInfo( );
+                LLVMInitializePowerPCTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializePowerPCTargetMC( );
+                LLVMInitializePowerPCTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializePowerPCAsmPrinter( );
+                LLVMInitializePowerPCAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializePowerPCDisassembler( );
+                LLVMInitializePowerPCDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializePowerPCAsmParser( );
+                LLVMInitializePowerPCAsmParser();
             }
         }
 
         /// <summary>Registers components for SPARC targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterSparc( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterSparc(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeSparcTarget( );
+                LLVMInitializeSparcTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeSparcTargetInfo( );
+                LLVMInitializeSparcTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeSparcTargetMC( );
+                LLVMInitializeSparcTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeSparcAsmPrinter( );
+                LLVMInitializeSparcAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeSparcDisassembler( );
+                LLVMInitializeSparcDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeSparcAsmParser( );
+                LLVMInitializeSparcAsmParser();
             }
         }
 
         /// <summary>Registers components for SystemZ targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterSystemZ( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterSystemZ(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeSystemZTarget( );
+                LLVMInitializeSystemZTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeSystemZTargetInfo( );
+                LLVMInitializeSystemZTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeSystemZTargetMC( );
+                LLVMInitializeSystemZTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeSystemZAsmPrinter( );
+                LLVMInitializeSystemZAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeSystemZDisassembler( );
+                LLVMInitializeSystemZDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeSystemZAsmParser( );
+                LLVMInitializeSystemZAsmParser();
             }
         }
 
         /// <summary>Registers components for the WebAssembly target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterWebAssembly( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterWebAssembly(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeWebAssemblyTarget( );
+                LLVMInitializeWebAssemblyTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeWebAssemblyTargetInfo( );
+                LLVMInitializeWebAssemblyTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeWebAssemblyTargetMC( );
+                LLVMInitializeWebAssemblyTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeWebAssemblyAsmPrinter( );
+                LLVMInitializeWebAssemblyAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeWebAssemblyDisassembler( );
+                LLVMInitializeWebAssemblyDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeWebAssemblyAsmParser( );
+                LLVMInitializeWebAssemblyAsmParser();
             }
         }
 
         /// <summary>Registers components for X86 targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterX86( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterX86(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeX86Target( );
+                LLVMInitializeX86Target();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeX86TargetInfo( );
+                LLVMInitializeX86TargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeX86TargetMC( );
+                LLVMInitializeX86TargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeX86AsmPrinter( );
+                LLVMInitializeX86AsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeX86Disassembler( );
+                LLVMInitializeX86Disassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeX86AsmParser( );
+                LLVMInitializeX86AsmParser();
             }
         }
 
         /// <summary>Registers components for XCore targets</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterXCore( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterXCore(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeXCoreTarget( );
+                LLVMInitializeXCoreTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeXCoreTargetInfo( );
+                LLVMInitializeXCoreTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeXCoreTargetMC( );
+                LLVMInitializeXCoreTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeXCoreAsmPrinter( );
+                LLVMInitializeXCoreAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeXCoreDisassembler( );
+                LLVMInitializeXCoreDisassembler();
             }
 
             /*
@@ -814,46 +814,46 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Registers components for the RISCV target</summary>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        internal static void RegisterRISCV( TargetRegistrations registrations = TargetRegistrations.All )
+        internal static void RegisterRISCV(TargetRegistrations registrations = TargetRegistrations.All)
         {
-            if( registrations.HasFlag( TargetRegistrations.Target ) )
+            if(registrations.HasFlag( TargetRegistrations.Target ))
             {
-                LLVMInitializeRISCVTarget( );
+                LLVMInitializeRISCVTarget();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetInfo ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetInfo ))
             {
-                LLVMInitializeRISCVTargetInfo( );
+                LLVMInitializeRISCVTargetInfo();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.TargetMachine ) )
+            if(registrations.HasFlag( TargetRegistrations.TargetMachine ))
             {
-                LLVMInitializeRISCVTargetMC( );
+                LLVMInitializeRISCVTargetMC();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmPrinter ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmPrinter ))
             {
-                LLVMInitializeRISCVAsmPrinter( );
+                LLVMInitializeRISCVAsmPrinter();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.Disassembler ) )
+            if(registrations.HasFlag( TargetRegistrations.Disassembler ))
             {
-                LLVMInitializeRISCVDisassembler( );
+                LLVMInitializeRISCVDisassembler();
             }
 
-            if( registrations.HasFlag( TargetRegistrations.AsmParser ) )
+            if(registrations.HasFlag( TargetRegistrations.AsmParser ))
             {
-                LLVMInitializeRISCVAsmParser( );
+                LLVMInitializeRISCVAsmParser();
             }
         }
 
         /// <inheritdoc/>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
             InternalShutdownLLVM( ModuleHandle );
         }
 
-        private Library( IDisposable moduleHandle )
+        private Library(IDisposable moduleHandle)
         {
             ModuleHandle = moduleHandle;
         }
@@ -876,28 +876,28 @@ namespace Ubiquity.NET.Llvm.Interop
 
         private static int CurrentInitializationState;
 
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        private static unsafe void FatalErrorHandler( byte* reason )
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe void FatalErrorHandler(byte* reason)
         {
             // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
-            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", AnsiStringMarshaller.ConvertToManaged(reason) );
+            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", AnsiStringMarshaller.ConvertToManaged( reason ) );
         }
 
-        private static void InternalShutdownLLVM( IDisposable hLibLLVM )
+        private static void InternalShutdownLLVM(IDisposable hLibLLVM)
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
                                                                                 , (int)InitializationState.ShuttingDown
                                                                                 , (int)InitializationState.Initialized
                                                                                 );
-            if( previousState != InitializationState.Initialized )
+            if(previousState != InitializationState.Initialized)
             {
                 throw new InvalidOperationException( Resources.Llvm_not_initialized );
             }
 
-            LLVMShutdown( );
+            LLVMShutdown();
             hLibLLVM?.Dispose();
 
-            Interlocked.Exchange( ref CurrentInitializationState, ( int )InitializationState.ShutDown );
+            Interlocked.Exchange( ref CurrentInitializationState, (int)InitializationState.ShutDown );
         }
     }
 }

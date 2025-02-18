@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm.Interop
         : LlvmObjectRef
     {
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class with default values for marshalling</summary>
-        public LLVMErrorRef( )
+        public LLVMErrorRef()
             : base( true )
         {
             LazyMessage = new Lazy<string>( InternalGetMessage );
@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class.</summary>
         /// <param name="handle">Raw native pointer for the handle</param>
         /// <param name="owner">Value to indicate whether the handle is owned or not</param>
-        public LLVMErrorRef( IntPtr handle, bool owner )
+        public LLVMErrorRef(IntPtr handle, bool owner)
             : base( owner )
         {
             SetHandle( handle );
@@ -43,9 +43,9 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <inheritdoc/>
         [SecurityCritical]
-        protected override bool ReleaseHandle( )
+        protected override bool ReleaseHandle()
         {
-            if( handle != nint.Zero )
+            if(handle != nint.Zero)
             {
                 LLVMConsumeError( handle );
             }
@@ -53,9 +53,9 @@ namespace Ubiquity.NET.Llvm.Interop
             return true;
         }
 
-        private string InternalGetMessage( )
+        private string InternalGetMessage()
         {
-            if( IsInvalid )
+            if(IsInvalid)
             {
                 return string.Empty;
             }
@@ -63,19 +63,19 @@ namespace Ubiquity.NET.Llvm.Interop
             // LLVMGetErrorMessage is explicitly defined as NOT idempotent.
             // so once the value is retrieved the pointer is no longer valid
             string retVal = LLVMGetErrorMessage( handle );
-            SetHandleAsInvalid( );
+            SetHandleAsInvalid();
             return retVal;
         }
 
         // use Lazy to cache result of the underlying destructive get
         private readonly Lazy<string> LazyMessage;
 
-        [LibraryImport( NativeMethods.LibraryPath)]
-        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-        private static unsafe partial void LLVMConsumeError( nint p );
+        [LibraryImport( NativeMethods.LibraryPath )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial void LLVMConsumeError(nint p);
 
-        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(ErrorMessageMarshaller))]
-        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-        private static unsafe partial string LLVMGetErrorMessage( nint p );
+        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof( ErrorMessageMarshaller ) )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial string LLVMGetErrorMessage(nint p);
     }
 }

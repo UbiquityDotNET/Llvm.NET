@@ -21,8 +21,8 @@ namespace Ubiquity.NET.Llvm.Interop
     ///     behavior, including, and most likely, memory access violations.
     /// </note>
     /// </remarks>
-    [GeneratedCode("LlvmBindingsGenerator","20.1.0-alpha.0.0.ci-ZZZ.601495633+d1254fe9f1777d1dc7521c608b84dde1ba5175e0")]
-    [NativeMarshalling(typeof(ContextHandleMarshaller<LLVMComdatRef>))]
+    [GeneratedCode( "LlvmBindingsGenerator", "20.1.0-alpha.0.0.ci-ZZZ.601495633+d1254fe9f1777d1dc7521c608b84dde1ba5175e0" )]
+    [NativeMarshalling( typeof( ContextHandleMarshaller<LLVMComdatRef> ) )]
     public readonly record struct LLVMComdatRef
         : IContextHandle<LLVMComdatRef>
     {
@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Interop
             string message = "",
             [CallerMemberNameAttribute] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0 )
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
             return DangerousGetHandle() == nint.Zero
                 ? throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " )
@@ -53,17 +53,17 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Interface defined factory for an instance of <see cref="LLVMComdatRef"/></summary>
         /// <param name="abiValue">Native ABI value of the handle</param>
         /// <returns>Type specific wrapper around the native ABI handle</returns>
-        public static LLVMComdatRef FromABI(nint abiValue) => new(abiValue);
+        public static LLVMComdatRef FromABI(nint abiValue) => new( abiValue );
 
         /// <summary>Gets a zero (<see langword="null"/>) value handle</summary>
-        public static LLVMComdatRef Zero => FromABI(nint.Zero);
+        public static LLVMComdatRef Zero => FromABI( nint.Zero );
 
         /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
         /// <param name="value">Handle to convert</param>
         /// <returns>The handle as an <see cref="nint"/></returns>
         public static implicit operator nint(LLVMComdatRef value) => value.Handle;
 
-        private LLVMComdatRef( nint p )
+        private LLVMComdatRef(nint p)
         {
             Handle = p;
         }

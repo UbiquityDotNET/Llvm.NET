@@ -17,19 +17,19 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Initializes a new instance of the <see cref="DisposableAction"/> class.</summary>
         /// <param name="onDispose">Action to run when <see cref="Dispose"/>is called.</param>
-        public DisposableAction( Action onDispose )
+        public DisposableAction(Action onDispose)
         {
             OnDispose = onDispose ?? throw new ArgumentNullException( nameof( onDispose ) );
         }
 
         /// <summary>Runs the action provided in the constructor (<see cref="Ubiquity.NET.Llvm.Interop.DisposableAction(System.Action)" /></summary>
-        public void Dispose( )
+        public void Dispose()
         {
-            OnDispose( );
+            OnDispose();
         }
 
         /// <summary>Gets a Default disposable action that does nothing</summary>
-        public static DisposableAction Nop => new( ( ) => { } );
+        public static DisposableAction Nop => new( () => { } );
 
         private readonly Action OnDispose;
     }

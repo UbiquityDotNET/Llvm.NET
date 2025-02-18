@@ -13,17 +13,17 @@ namespace Ubiquity.NET.Llvm.Interop
         : IDisposable
     {
         /// <summary>Finalizes an instance of the <see cref="DisposableObject"/> class. This releases any unmanaged resources it owns</summary>
-        ~DisposableObject( )
+        ~DisposableObject()
         {
             Dispose( false );
         }
 
         /// <inheritdoc/>
         [SuppressMessage( "Design", "CA1063:Implement IDisposable Correctly", Justification = "This guarantees dispose is idempotent" )]
-        public void Dispose( )
+        public void Dispose()
         {
             bool needsDispose = Interlocked.Exchange( ref IsDisposed_, 1 ) == 0;
-            if( needsDispose )
+            if(needsDispose)
             {
                 Dispose( true );
                 GC.SuppressFinalize( this );
@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// is <see langword="true"/> then the implementation should release managed and unmanaged resources, otherwise it should
         /// only release the unmanaged resources
         /// </remarks>
-        protected abstract void Dispose( bool disposing );
+        protected abstract void Dispose(bool disposing);
 
         // do not write directly to this field, it should only be done with interlocked calls in Dispose() to ensure correct behavior
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Indicates the field should never be directly written to" )]

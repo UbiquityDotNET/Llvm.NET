@@ -14,9 +14,9 @@ namespace Ubiquity.NET.Llvm.Interop
         // LLVM doesn't use environment/OS specific line endings, so this will
         // normalize the line endings from strings provided by LLVM into the current
         // environment's normal format.
-        internal static string NormalizeLineEndings( IntPtr llvmString )
+        internal static string NormalizeLineEndings(IntPtr llvmString)
         {
-            if( llvmString == IntPtr.Zero )
+            if(llvmString == IntPtr.Zero)
             {
                 return string.Empty;
             }
@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm.Interop
             return NormalizeLineEndings( str );
         }
 
-        internal static string NormalizeLineEndings( string txt )
+        internal static string NormalizeLineEndings(string txt)
         {
             // shortcut optimization for environments that match the LLVM assumption
             return Environment.NewLine.Length == 1 && Environment.NewLine[ 0 ] == '\n'

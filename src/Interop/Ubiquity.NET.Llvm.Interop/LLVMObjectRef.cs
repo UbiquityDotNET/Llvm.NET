@@ -36,32 +36,32 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => DangerousGetHandle( ).GetHashCode( );
+        public override int GetHashCode() => DangerousGetHandle().GetHashCode();
 
         /// <inheritdoc/>
-        public override bool Equals( object? obj ) => Equals( obj as LlvmObjectRef );
+        public override bool Equals(object? obj) => Equals( obj as LlvmObjectRef );
 
         /// <inheritdoc/>
-        public bool Equals( LlvmObjectRef? other ) => (other is not null) && ( handle == other.handle );
+        public bool Equals(LlvmObjectRef? other) => (other is not null) && (handle == other.handle);
 
         /// <summary>Compares two object handles</summary>
         /// <param name="lhs">Left side of comparison</param>
         /// <param name="rhs">Right side of comparison</param>
         /// <returns><see langword="true"/> if the handles are equal</returns>
-        public static bool operator ==( LlvmObjectRef lhs, LlvmObjectRef rhs )
+        public static bool operator ==(LlvmObjectRef lhs, LlvmObjectRef rhs)
                 => EqualityComparer<LlvmObjectRef>.Default.Equals( lhs, rhs );
 
         /// <summary>Compares two object handles for inequality</summary>
         /// <param name="lhs">Left side of comparison</param>
         /// <param name="rhs">Right side of comparison</param>
         /// <returns><see langword="true"/> if the handles are not equal</returns>
-        public static bool operator !=( LlvmObjectRef lhs, LlvmObjectRef rhs ) => !( lhs == rhs );
+        public static bool operator !=(LlvmObjectRef lhs, LlvmObjectRef rhs) => !(lhs == rhs);
 
         internal LlvmObjectRef ThrowIfInvalid(
             string message = "",
             string memberName = "",
             string sourceFilePath = "",
-            int sourceLineNumber = 0 )
+            int sourceLineNumber = 0)
         {
             return IsInvalid ? throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " ) : this;
         }
@@ -70,7 +70,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
         /// the finalization phase; otherwise, false (not recommended).
         /// </param>
-        protected LlvmObjectRef( bool ownsHandle )
+        protected LlvmObjectRef(bool ownsHandle)
             : base( IntPtr.Zero, ownsHandle )
         {
         }
@@ -93,10 +93,10 @@ namespace Ubiquity.NET.Llvm.Interop
             string message = "",
             [CallerMemberNameAttribute] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0 )
+            [CallerLineNumber] int sourceLineNumber = 0)
             where T : LlvmObjectRef
         {
-            return ( T )self.ValidateNotNull( nameof( self ) ).ThrowIfInvalid( message, memberName, sourceFilePath, sourceLineNumber );
+            return (T)self.ValidateNotNull( nameof( self ) ).ThrowIfInvalid( message, memberName, sourceFilePath, sourceLineNumber );
         }
     }
 }

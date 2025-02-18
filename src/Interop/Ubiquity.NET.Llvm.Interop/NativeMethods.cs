@@ -25,9 +25,9 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="moduleName">name of the DLL</param>
         /// <param name="alternatePaths">alternate path locations to use to search for the DLL</param>
         /// <returns>Handle for the DLL</returns>
-        internal static IDisposable LoadWin32Library( string moduleName, IEnumerable<string> alternatePaths )
+        internal static IDisposable LoadWin32Library(string moduleName, IEnumerable<string> alternatePaths)
         {
-            if( string.IsNullOrWhiteSpace( moduleName ) )
+            if(string.IsNullOrWhiteSpace( moduleName ))
             {
                 throw new ArgumentNullException( nameof( moduleName ) );
             }
@@ -40,9 +40,9 @@ namespace Ubiquity.NET.Llvm.Interop
             try
             {
                 IntPtr moduleHandle = LoadLibraryExW( moduleName, IntPtr.Zero, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS );
-                if( moduleHandle != IntPtr.Zero )
+                if(moduleHandle != IntPtr.Zero)
                 {
-                    return new DisposableAction(()=> FreeLibrary(moduleHandle));
+                    return new DisposableAction( () => FreeLibrary( moduleHandle ) );
                 }
 
                 int lastError = Marshal.GetLastWin32Error( );
@@ -52,7 +52,7 @@ namespace Ubiquity.NET.Llvm.Interop
             }
             finally
             {
-                foreach( var c in searchCookies )
+                foreach(var c in searchCookies)
                 {
                     RemoveDllDirectory( c.Cookie );
                 }
@@ -61,19 +61,19 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( "kernel32", SetLastError = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        private static unsafe partial bool FreeLibrary( IntPtr hModule );
+        private static unsafe partial bool FreeLibrary(IntPtr hModule);
 
         private const UInt32 LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000;
         /* private const UInt32 LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400; */
 
         [LibraryImport( "kernel32", SetLastError = true, StringMarshalling = StringMarshalling.Utf16 )]
-        private static unsafe partial nint LoadLibraryExW(string lpFileName, IntPtr hFile, UInt32 dwFlags );
+        private static unsafe partial nint LoadLibraryExW(string lpFileName, IntPtr hFile, UInt32 dwFlags);
 
-        [LibraryImport( "kernel32", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
-        private static unsafe partial nint AddDllDirectory( string lp );
+        [LibraryImport( "kernel32", SetLastError = true, StringMarshalling = StringMarshalling.Utf16 )]
+        private static unsafe partial nint AddDllDirectory(string lp);
 
         [LibraryImport( "kernel32", SetLastError = true )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        private static unsafe partial bool RemoveDllDirectory( IntPtr dwCookie );
+        private static unsafe partial bool RemoveDllDirectory(IntPtr dwCookie);
     }
 }

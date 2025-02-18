@@ -11,7 +11,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-// Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
+    // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
     using unsafe LLVMMemoryManagerAllocateCodeSectionCallback = delegate* unmanaged[Cdecl]<void* /*Opaque*/, nuint /*Size*/, uint /*Alignment*/, uint /*SectionID*/, byte* /*SectionName*/, byte* /*retVal*/>;
     using unsafe LLVMMemoryManagerAllocateDataSectionCallback = delegate* unmanaged[Cdecl]<void* /*Opaque*/, nuint /*Size*/, uint /*Alignment*/, uint /*SectionID*/, byte* /*SectionName*/, bool /*IsReadOnly*/, byte* /*retVal*/>;
@@ -32,144 +32,144 @@ namespace Ubiquity.NET.Llvm.Interop
     public static partial class NativeMethods
     {
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMLinkInMCJIT();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMLinkInInterpreter();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMGenericValueRef LLVMCreateGenericValueOfInt( LLVMTypeRef Ty, ulong N, [MarshalAs( UnmanagedType.Bool )]bool IsSigned );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMGenericValueRef LLVMCreateGenericValueOfInt(LLVMTypeRef Ty, ulong N, [MarshalAs( UnmanagedType.Bool )] bool IsSigned);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMGenericValueRef LLVMCreateGenericValueOfPointer( void* P );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMGenericValueRef LLVMCreateGenericValueOfPointer(void* P);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMGenericValueRef LLVMCreateGenericValueOfFloat( LLVMTypeRef Ty, double N );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMGenericValueRef LLVMCreateGenericValueOfFloat(LLVMTypeRef Ty, double N);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial uint LLVMGenericValueIntWidth( LLVMGenericValueRef GenValRef );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial uint LLVMGenericValueIntWidth(LLVMGenericValueRef GenValRef);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial ulong LLVMGenericValueToInt( LLVMGenericValueRef GenVal, [MarshalAs( UnmanagedType.Bool )]bool IsSigned );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial ulong LLVMGenericValueToInt(LLVMGenericValueRef GenVal, [MarshalAs( UnmanagedType.Bool )] bool IsSigned);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial nint LLVMGenericValueToPointer( LLVMGenericValueRef GenVal );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial nint LLVMGenericValueToPointer(LLVMGenericValueRef GenVal);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial double LLVMGenericValueToFloat( LLVMTypeRef TyRef, LLVMGenericValueRef GenVal );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial double LLVMGenericValueToFloat(LLVMTypeRef TyRef, LLVMGenericValueRef GenVal);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMCreateExecutionEngineForModule( out LLVMExecutionEngineRef OutEE, LLVMModuleRef M, [MarshalUsing( typeof( DisposeMessageMarshaller ) )]out string OutError );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMCreateExecutionEngineForModule(out LLVMExecutionEngineRef OutEE, LLVMModuleRef M, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutError);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMCreateInterpreterForModule( out LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, [MarshalUsing( typeof( DisposeMessageMarshaller ) )]out string OutError );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMCreateInterpreterForModule(out LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutError);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMCreateJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, [MarshalUsing( typeof( DisposeMessageMarshaller ) )]out string OutError );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMCreateJITCompilerForModule(out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutError);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMInitializeMCJITCompilerOptions( out LLVMMCJITCompilerOptions Options, size_t SizeOfOptions );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMInitializeMCJITCompilerOptions(out LLVMMCJITCompilerOptions Options, size_t SizeOfOptions);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMCreateMCJITCompilerForModule( out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, out global::Ubiquity.NET.Llvm.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, [MarshalUsing( typeof( DisposeMessageMarshaller ) )]out string OutError );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMCreateMCJITCompilerForModule(out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, out global::Ubiquity.NET.Llvm.Interop.LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutError);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMRunStaticConstructors( LLVMExecutionEngineRef EE );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMRunStaticConstructors(LLVMExecutionEngineRef EE);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMRunStaticDestructors( LLVMExecutionEngineRef EE );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMRunStaticDestructors(LLVMExecutionEngineRef EE);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial int LLVMRunFunctionAsMain( LLVMExecutionEngineRef EE, LLVMValueRef F, uint ArgC, [In][MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr )]string[] ArgV, [In][MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr )]string[] EnvP );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial int LLVMRunFunctionAsMain(LLVMExecutionEngineRef EE, LLVMValueRef F, uint ArgC, [In][MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr )] string[] ArgV, [In][MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr )] string[] EnvP);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMGenericValueRef LLVMRunFunction( LLVMExecutionEngineRef EE, LLVMValueRef F, uint NumArgs, out LLVMGenericValueRef Args );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMGenericValueRef LLVMRunFunction(LLVMExecutionEngineRef EE, LLVMValueRef F, uint NumArgs, out LLVMGenericValueRef Args);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMFreeMachineCodeForFunction( LLVMExecutionEngineRef EE, LLVMValueRef F );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMFreeMachineCodeForFunction(LLVMExecutionEngineRef EE, LLVMValueRef F);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMAddModule( LLVMExecutionEngineRef EE, LLVMModuleRef M );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMAddModule(LLVMExecutionEngineRef EE, LLVMModuleRef M);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMRemoveModule( LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, [MarshalUsing( typeof( DisposeMessageMarshaller ) )]out string OutError );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMRemoveModule(LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutError);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMFindFunction( LLVMExecutionEngineRef EE, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name, out LLVMValueRef OutFn );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMFindFunction(LLVMExecutionEngineRef EE, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, out LLVMValueRef OutFn);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial nint LLVMRecompileAndRelinkFunction( LLVMExecutionEngineRef EE, LLVMValueRef Fn );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial nint LLVMRecompileAndRelinkFunction(LLVMExecutionEngineRef EE, LLVMValueRef Fn);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMTargetDataRefAlias LLVMGetExecutionEngineTargetData( LLVMExecutionEngineRef EE );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMTargetDataRefAlias LLVMGetExecutionEngineTargetData(LLVMExecutionEngineRef EE);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMTargetMachineRefAlias LLVMGetExecutionEngineTargetMachine( LLVMExecutionEngineRef EE );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMTargetMachineRefAlias LLVMGetExecutionEngineTargetMachine(LLVMExecutionEngineRef EE);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMAddGlobalMapping( LLVMExecutionEngineRef EE, LLVMValueRef Global, void* Addr );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMAddGlobalMapping(LLVMExecutionEngineRef EE, LLVMValueRef Global, void* Addr);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial nint LLVMGetPointerToGlobal( LLVMExecutionEngineRef EE, LLVMValueRef Global );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial nint LLVMGetPointerToGlobal(LLVMExecutionEngineRef EE, LLVMValueRef Global);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial UInt64 LLVMGetGlobalValueAddress( LLVMExecutionEngineRef EE, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMGetGlobalValueAddress(LLVMExecutionEngineRef EE, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial UInt64 LLVMGetFunctionAddress( LLVMExecutionEngineRef EE, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Name );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMGetFunctionAddress(LLVMExecutionEngineRef EE, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMExecutionEngineGetErrMsg( LLVMExecutionEngineRef EE, [MarshalUsing(typeof(DisposeMessageMarshaller))] out string OutError );
+        public static unsafe partial bool LLVMExecutionEngineGetErrMsg(LLVMExecutionEngineRef EE, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutError);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMMCJITMemoryManagerRef LLVMCreateSimpleMCJITMemoryManager( void* Opaque, LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection, LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection, LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory, LLVMMemoryManagerDestroyCallback Destroy );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMCJITMemoryManagerRef LLVMCreateSimpleMCJITMemoryManager(void* Opaque, LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection, LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection, LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory, LLVMMemoryManagerDestroyCallback Destroy);
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMJITEventListenerRef LLVMCreateGDBRegistrationListener();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMJITEventListenerRef LLVMCreateIntelJITEventListener();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMJITEventListenerRef LLVMCreateOProfileJITEventListener();
 
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMJITEventListenerRef LLVMCreatePerfJITEventListener();
     }
 }

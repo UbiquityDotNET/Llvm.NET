@@ -12,7 +12,7 @@ using System.Runtime.InteropServices.Marshalling;
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Custom string marshalling class for strings using <see cref="LLVMDisposeErrorMessage"/></summary>
-    [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedOut, typeof(ErrorMessageMarshaller))]
+    [CustomMarshaller( typeof( string ), MarshalMode.ManagedToUnmanagedOut, typeof( ErrorMessageMarshaller ) )]
     [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Only called by this class" )]
     public static partial class ErrorMessageMarshaller
     {
@@ -21,18 +21,18 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <returns>Managed code string representation of the native string</returns>
         public static unsafe string? ConvertToManaged(byte* p)
         {
-            return p is null ? null : AnsiStringMarshaller.ConvertToManaged(p);
+            return p is null ? null : AnsiStringMarshaller.ConvertToManaged( p );
         }
 
         /// <summary>Releases the unmanaged pointer</summary>
         /// <param name="p">unmanaged pointer</param>
         public static unsafe void Free(byte* p)
         {
-            LLVMDisposeErrorMessage(p);
+            LLVMDisposeErrorMessage( p );
         }
 
-        [LibraryImport( NativeMethods.LibraryPath)]
-        [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-        private static unsafe partial void LLVMDisposeErrorMessage( byte* p );
+        [LibraryImport( NativeMethods.LibraryPath )]
+        [UnmanagedCallConv( CallConvs = new[] { typeof( CallConvCdecl ) } )]
+        private static unsafe partial void LLVMDisposeErrorMessage(byte* p);
     }
 }

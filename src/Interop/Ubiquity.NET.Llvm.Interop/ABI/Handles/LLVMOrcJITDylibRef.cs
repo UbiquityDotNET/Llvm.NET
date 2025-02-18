@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.Interop
     ///     behavior, including, and most likely, memory access violations.
     /// </note>
     /// </remarks>
-    [NativeMarshalling(typeof(ContextHandleMarshaller<LLVMOrcJITDylibRef>))]
+    [NativeMarshalling( typeof( ContextHandleMarshaller<LLVMOrcJITDylibRef> ) )]
     public readonly record struct LLVMOrcJITDylibRef
         : IContextHandle<LLVMOrcJITDylibRef>
     {
@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.Interop
             string message = "",
             [CallerMemberNameAttribute] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0 )
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
             return DangerousGetHandle() == nint.Zero
                 ? throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " )
@@ -52,10 +52,10 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Interface defined factory for an instance of <see cref="LLVMOrcJITDylibRef"/></summary>
         /// <param name="abiValue">Native ABI value of the handle</param>
         /// <returns>Type specific wrapper around the native ABI handle</returns>
-        public static LLVMOrcJITDylibRef FromABI(nint abiValue) => new(abiValue);
+        public static LLVMOrcJITDylibRef FromABI(nint abiValue) => new( abiValue );
 
         /// <summary>Gets a zero (<see langword="null"/>) value handle</summary>
-        public static LLVMOrcJITDylibRef Zero => FromABI(nint.Zero);
+        public static LLVMOrcJITDylibRef Zero => FromABI( nint.Zero );
 
         /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
         /// <param name="value">Handle to convert</param>
@@ -63,7 +63,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It has one called DangerousGetHandle()" )]
         public static implicit operator nint(LLVMOrcJITDylibRef value) => value.DangerousGetHandle();
 
-        private LLVMOrcJITDylibRef( nint p )
+        private LLVMOrcJITDylibRef(nint p)
         {
             Handle = p;
         }

@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.CodeDom.Compiler;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -21,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop
     public static partial class NativeMethods
     {
         [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial LLVMStatus LLVMLinkModules2( LLVMModuleRef Dest, LLVMModuleRef Src );
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMStatus LLVMLinkModules2(LLVMModuleRef Dest, LLVMModuleRef Src);
     }
 }
