@@ -130,8 +130,8 @@ if(HasNativeDisposer){
             #line default
             #line hidden
             this.Write("        /// <summary>Releases the unmanaged pointer</summary>\r\n        /// <param" +
-                    " name=\"p\">unmanaged pointer</param>\r\n        public static void Free(nint p)\r\n  " +
-                    "      {\r\n            ");
+                    " name=\"p\">unmanaged pointer</param>\r\n        public static unsafe void Free(byte" +
+                    "* p)\r\n        {\r\n            ");
             
             #line 48 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshallerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NativeDisposer));
@@ -139,15 +139,15 @@ if(HasNativeDisposer){
             #line default
             #line hidden
             this.Write("(p);\r\n        }\r\n\r\n        [LibraryImport( NativeMethods.LibraryPath)]\r\n        [" +
-                    "UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]\r\n        private" +
-                    " static unsafe partial void ");
+                    "UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]\r\n        private static " +
+                    "unsafe partial void ");
             
             #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshallerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(NativeDisposer));
             
             #line default
             #line hidden
-            this.Write("( nint p );\r\n");
+            this.Write("( byte* p );\r\n");
             
             #line 54 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\StringMarshallerTemplate.tt"
 }

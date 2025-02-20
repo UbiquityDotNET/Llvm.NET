@@ -7,6 +7,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
@@ -200,7 +201,7 @@ namespace LlvmBindingsGenerator.Passes
 
         private static (ParameterUsage, CppSharp.AST.Type) TryAddImplicitMarshallingAttributesForType( QualifiedType type, IList<CppSharp.AST.Attribute> attributes )
         {
-            // currently only handle strings and arrays of strings by default
+            // currently only handle strings, arrays of strings, and bool by default
             switch( type.Type )
             {
             case PointerType pt when pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Char:
@@ -213,9 +214,13 @@ namespace LlvmBindingsGenerator.Passes
 
             // This assumes that LLVMBool as an out parameter is never a status... That seems legit to
             // assume as it is ALWAYS the case of this implementation (and makes sense) but one never knows...
-            case PointerType pt when pt.Pointee is TypedefType tdt && tdt.Declaration.Name == "LLVMBool":
+            case PointerType pt when pt.Pointee is TypedefType tdt && tdt.Declaration.Name == LlvmBoolTypeName:
                 attributes.Add(MarshalAsBooleanAttribute);
                 return (ParameterUsage.Out, BooleanType);
+
+            case TypedefType tdt when tdt.Declaration.Name == LlvmBoolTypeName:
+                attributes.Add(MarshalAsBooleanAttribute);
+                return (ParameterUsage.In, BooleanType);
 
             default:
                 return (ParameterUsage.Unknown, null);
@@ -243,7 +248,7 @@ namespace LlvmBindingsGenerator.Passes
             // add calling convention attribute (if supported)
             if( function.CallingConvention == CppSharp.AST.CallingConvention.C )
             {
-                function.Attributes.Add( new TargetedAttribute( typeof( UnmanagedCallConvAttribute ), "CallConvs = [typeof(global::System.Runtime.CompilerServices.CallConvCdecl)]" ) );
+                function.Attributes.Add( new TargetedAttribute( typeof( UnmanagedCallConvAttribute ), $"CallConvs = [typeof({nameof(CallConvCdecl)})]" ) );
             }
             else
             {
@@ -278,6 +283,8 @@ namespace LlvmBindingsGenerator.Passes
         private readonly IGeneratorConfig Configuration;
 
         private readonly Stack<Declaration> DeclarationStack = new();
+
+        private const string LlvmBoolTypeName = "LLVMBool";
 
         private static readonly CppSharp.AST.Attribute MarshalUsingAnsiString
             = new TargetedAttribute( typeof( MarshalUsingAttribute ), $"typeof({nameof(AnsiStringMarshaller)})" );

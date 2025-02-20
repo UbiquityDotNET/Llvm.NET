@@ -43,14 +43,14 @@ namespace Ubiquity.NET.Llvm.Interop
 <#if(HasNativeDisposer){#>
         /// <summary>Releases the unmanaged pointer</summary>
         /// <param name="p">unmanaged pointer</param>
-        public static void Free(nint p)
+        public static unsafe void Free(byte* p)
         {
             <#=NativeDisposer#>(p);
         }
 
         [LibraryImport( NativeMethods.LibraryPath)]
-        [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-        private static unsafe partial void <#=NativeDisposer#>( nint p );
+        [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+        private static unsafe partial void <#=NativeDisposer#>( byte* p );
 <#}#>
     }
 }

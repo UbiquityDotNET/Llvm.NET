@@ -72,7 +72,8 @@
 #   !Array
 #       SubType - the unmanaged type of the elements of the array (See: System.Runtime.InteropServices.UnmanagedType enum for details)
 #       SizeParam - optional integer index of an out parmater that contains the size of the array [for out params]
-#
+#       SizeConst - Optional integer value for a fixed size
+
 FunctionBindings:
   # - Name: LLVMMDStringInContext
   #   IsObsolete: True
@@ -110,17 +111,17 @@ FunctionBindings:
   #   IsObsolete: True
   #   DeprecationMessage: "LLVMObjectFileIsSectionIteratorAtEnd"
 
-  # - Name: LLVMParseBitcodeInContext
-  #   IsObsolete: True
-  #   DeprecationMessage: "Use LLVMParseBitcodeInContext2 instead"
-  #   ParamTransforms:
-  #     - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
+  - Name: LLVMParseBitcodeInContext
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMParseBitcodeInContext2 instead"
+    ParamTransforms:
+      - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
-  # - Name: LLVMGetBitcodeModuleInContext
-  #   IsObsolete: True
-  #   DeprecationMessage: "Use LLVMGetBitcodeModuleInContext2 instead"
-  #   ParamTransforms:
-  #     - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
+  - Name: LLVMGetBitcodeModuleInContext
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMGetBitcodeModuleInContext2 instead"
+    ParamTransforms:
+      - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   # - Name: LLVMWriteBitcodeToFileHandle
   #   IsObsolete: True
@@ -310,10 +311,14 @@ FunctionBindings:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMParseBitcode
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMParseBitcode2 instead"
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
   - Name: LLVMGetBitcodeModule
+    IsObsolete: True
+    DeprecationMessage: "Use LLVMGetBitcodeModule2 instead"
     ParamTransforms:
       - !String {Name: OutMessage, Semantics: Out, Kind: DisposeMessage }
 
@@ -838,6 +843,32 @@ FunctionBindings:
 
   - Name: LLVMOrcJITTargetMachineBuilderGetTargetTriple
     ReturnTransform: !String {Kind: DisposeMessage}
+
+  - Name: LLVMCreateConstantRangeAttribute
+    ParamTransforms:
+        - !Array {Name: LowerWords, Semantics: In }
+        - !Array {Name: UpperWords, Semantics: In }
+
+  - Name: llvm_blake3_hasher_init_keyed
+    ParamTransforms:
+        - !Array { SizeConst: 32, Name: key, Semantics: In }
+
+  - Name: LLVMConstIntOfArbitraryPrecision
+    ParamTransforms:
+        - !Array {Name: Words, Semantics: In}
+
+  - Name: LLVMRunFunctionAsMain
+    ParamTransforms:
+        - !Array {Name: ArgV, Semantics: In}
+        - !Array {Name: EnvP, Semantics: In}
+
+  - Name: LLVMExecutionEngineGetErrMsg
+    ParamTransforms:
+        - !String {Name: OutError, Semantics: Out, Kind: DisposeMessage }
+
+  - Name: LLVMMachOUniversalBinaryCopyObjectForArch
+    ParamTransforms:
+        - !String {Name: ErrorMessage, Semantics: Out, Kind: DisposeMessage }
 
 # The HandleMap Lists the types of handles and their disposal semantics
 # If Alias is True for a global handle then an alias handle is also generated

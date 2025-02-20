@@ -20,39 +20,40 @@ namespace LlvmBindingsGenerator.Templates
     {
         public ParsedFunctionSignature(Function f, ITypePrinter2 typePrinter)
         {
+            IsPointer = false;
             TypePrinter = typePrinter;
             if(f.IsOperator || f.IsThisCall)
             {
-                throw new ArgumentException( "Unsupported function type", nameof( f ) );
+                throw new ArgumentException( "Unsupported function type; operators and 'this call' functions are not supported [Strict ISO-C ABI only]", nameof( f ) );
             }
 
             Signature = f.FunctionType.Type as FunctionType;
             Name = f.Name;
             Attributes = f.Attributes;
-            Introducer = "public static unsafe partial ";
         }
 
-        // FUTURE: use C# syntax for an unmanaged function pointer with Cdecl
         public ParsedFunctionSignature(TypedefNameDecl td, ITypePrinter2 typePrinter)
         {
+            IsPointer = true;
             TypePrinter = typePrinter;
             if(td.TryGetFunctionSignature( out FunctionType signature ))
             {
                 if(signature.CallingConvention != CppSharp.AST.CallingConvention.C)
                 {
-                    throw new NotSupportedException( "Only delegates with the 'C' Calling convention are supported" );
+                    throw new NotSupportedException( "Only function pointers with the 'C' Calling convention are supported" );
                 }
 
                 Signature = signature;
                 Name = td.Name;
-                Attributes = [ UnmanagedFunctionPointerAttrib ];
-                Introducer = "public unsafe delegate ";
+                Attributes = [];
             }
             else
             {
                 throw new ArgumentException( "pointer to function type required" );
             }
         }
+
+        public bool IsPointer { get; init; }
 
         public string Name { get; }
 
@@ -64,24 +65,49 @@ namespace LlvmBindingsGenerator.Templates
 
         public IEnumerable<string> Parameters => GetParameters( Signature.Parameters );
 
-        public IEnumerable<string> ParameterNames => Signature.Parameters.Select( p => p.Name );
+        public IEnumerable<string> ManagedParameterTypeNames
+        {
+            get
+            {
+                foreach(var parameter in Signature.Parameters)
+                {
+                    if (parameter.Type.TryGetHandleDecl(out TypedefNameDecl handleNameDecl))
+                    {
+                        yield return $"/*{handleNameDecl.Name} {parameter.Name}*/ nint";
+                    }
+
+                    yield return $"{TypePrinter.GetName(parameter.Type, TypeNameKind.Managed)} /*{parameter.Name}*/";
+                }
+            }
+        }
 
         public override string ToString()
         {
             var bldr = new StringBuilder( );
 
-            bldr.Append( Introducer )
-                .Append( ReturnType )
-                .Append( ' ' )
-                .Append( Name )
-                .Append( "( " );
-
-            foreach(string parameter in Parameters)
+            if(IsPointer)
             {
-                bldr.Append( parameter );
+                bldr.Append( "delegate* unmanaged[Cdecl]<" )
+                    .Append( string.Join( ',', ManagedParameterTypeNames ) )
+                    .Append(',')
+                    .Append( ReturnType )
+                    .Append( "/*retVal*/>" );
+            }
+            else
+            {
+                bldr.Append( ReturnType )
+                    .Append( ' ' )
+                    .Append( Name )
+                    .Append( "( " );
+
+                foreach(string parameter in Parameters)
+                {
+                    bldr.Append( parameter );
+                }
+
+                bldr.AppendLine( " );" );
             }
 
-            bldr.AppendLine( " );" );
             return bldr.ToString();
         }
 
@@ -92,7 +118,7 @@ namespace LlvmBindingsGenerator.Templates
             return CodeDom.CreateEscapedIdentifier( p.Name );
         }
 
-        private IEnumerable<string> GetParameters(IList<Parameter> parameters)
+        private IEnumerable<string> GetParameters(List<Parameter> parameters)
         {
             var bldr = new StringBuilder( );
             for(int i = 0; i < parameters.Count; ++i)
@@ -141,12 +167,8 @@ namespace LlvmBindingsGenerator.Templates
         }
 
         private readonly ITypePrinter2 TypePrinter;
-        private readonly string Introducer;
 
         private static readonly Microsoft.CSharp.CSharpCodeProvider CodeDom
             = new( new Dictionary<string, string> { [ "CompilerVersion" ] = "v7.3" } );
-
-        private static readonly CppSharp.AST.Attribute UnmanagedFunctionPointerAttrib =
-            new TargetedAttribute( typeof( UnmanagedFunctionPointerAttribute ), "global::System.Runtime.InteropServices.CallingConvention.Cdecl" );
     }
 }

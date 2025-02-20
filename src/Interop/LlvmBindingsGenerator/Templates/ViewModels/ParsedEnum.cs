@@ -32,12 +32,12 @@ namespace LlvmBindingsGenerator.Templates
         {
             return t.Type switch
             {
-                PrimitiveType.Short => "global::System.Int16",
-                PrimitiveType.UShort => "global::System.UInt16",
-                PrimitiveType.Int or PrimitiveType.Long => "global::System.Int32",
-                PrimitiveType.ULong or PrimitiveType.UInt => "global::System.UInt32",
-                PrimitiveType.LongLong => "global::System.Int64",
-                PrimitiveType.ULongLong => "global::System.UInt64",
+                PrimitiveType.Short => "Int16",
+                PrimitiveType.UShort => "UInt16",
+                PrimitiveType.Int or PrimitiveType.Long => "Int32",
+                PrimitiveType.ULong or PrimitiveType.UInt => "UInt32",
+                PrimitiveType.LongLong => "Int64",
+                PrimitiveType.ULongLong => "UInt64",
 
                 // PrimitiveType.Int128:
                 // PrimitiveType.UInt128:

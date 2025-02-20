@@ -24,7 +24,7 @@ namespace LlvmBindingsGenerator
         [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "More complicated that way" )]
         public string VisitArrayType( ArrayType array, TypeQualifiers quals )
         {
-            if( array.SizeType == ArrayType.ArraySize.Constant )
+            if( array.SizeType is ArrayType.ArraySize.Constant or ArrayType.ArraySize.Incomplete )
             {
                 return array.Size == 0 ? $"{array.Type}*" : $"{array.QualifiedType}[{array.Size}]";
             }

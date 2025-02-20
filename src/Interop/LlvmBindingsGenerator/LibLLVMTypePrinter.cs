@@ -6,6 +6,7 @@
 
 using System;
 
+using CppSharp;
 using CppSharp.AST;
 using CppSharp.Generators.CSharp;
 

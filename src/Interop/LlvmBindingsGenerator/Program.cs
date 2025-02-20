@@ -16,7 +16,7 @@ using LlvmBindingsGenerator.Configuration.Yaml;
 
 namespace LlvmBindingsGenerator
 {
-    internal static class Program
+    internal static partial class Program
     {
         public static int Main( string[ ] args )
         {
@@ -52,7 +52,7 @@ namespace LlvmBindingsGenerator
             {
                 // Sadly the yaml exception message includes the location info in a format that doesn't match any standard tooling
                 // for parsing error messages, so unpack it to get just the message of interest and re-format
-                var matcher = new Regex(@"\(Line\: \d+, Col\: \d+, Idx\: \d+\) - \(Line\: \d+, Col\: \d+, Idx\: \d+\)\: (.*)\Z");
+                var matcher = YamlErrorMessageRegex();
                 var result = matcher.Match( yamlex.Message );
                 if( result.Success )
                 {
@@ -79,5 +79,8 @@ namespace LlvmBindingsGenerator
                 3) Leave everything else in APIDocs, intact
             */
         }
+
+        [GeneratedRegex( @"\(Line\: \d+, Col\: \d+, Idx\: \d+\) - \(Line\: \d+, Col\: \d+, Idx\: \d+\)\: (.*)\Z" )]
+        private static partial Regex YamlErrorMessageRegex();
     }
 }
