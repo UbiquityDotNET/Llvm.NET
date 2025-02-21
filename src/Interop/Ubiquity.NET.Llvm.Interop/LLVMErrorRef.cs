@@ -5,9 +5,9 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Security;
 
 namespace Ubiquity.NET.Llvm.Interop
@@ -17,71 +17,116 @@ namespace Ubiquity.NET.Llvm.Interop
     /// Lifetime control of an LLVM error message is tricky as there are
     /// calls that can "consume" the error which "invalidates" the handle
     /// making it an error to release it later. This class wraps those
-    /// scenarios.
+    /// scenarios with a lazy approach. That is, no marshalling/copies
+    /// of the underlying string are made until <see cref="ToString"/>
+    /// is called.
     /// </remarks>
     [SecurityCritical]
-    [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Not for use by any other callers" )]
-    public partial class LLVMErrorRef
+    public class LLVMErrorRef
         : LlvmObjectRef
     {
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class with default values for marshalling</summary>
         public LLVMErrorRef()
             : base( true )
         {
-            LazyMessage = new Lazy<string>( InternalGetMessage );
+            LazyMessage = new( LazyGetMessage );
         }
 
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class.</summary>
         /// <param name="handle">Raw native pointer for the handle</param>
-        /// <param name="owner">Value to indicate whether the handle is owned or not</param>
-        public LLVMErrorRef(nint handle, bool owner)
-            : base( owner )
+        public LLVMErrorRef(nint handle)
+            : base( true )
         {
             SetHandle( handle );
-            LazyMessage = new Lazy<string>( InternalGetMessage );
+            LazyMessage = new( LazyGetMessage );
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return LazyMessage.Value;
+            return LazyMessage.Value?.ToString() ?? string.Empty;
+        }
+
+        public LLVMErrorTypeId TypeId
+        {
+            get
+            {
+                return LLVMErrorTypeId.FromABI(LLVMGetErrorTypeId(handle));
+
+                [DllImport( NativeMethods.LibraryPath )]
+                [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+                static extern /*LLVMErrorTypeId*/nint LLVMGetErrorTypeId(/*LLVMErrorRef*/ nint Err);
+            }
+        }
+
+        public void CantFail()
+        {
+            if (!IsClosed && !IsInvalid)
+            {
+                LLVMCantFail(handle);
+            }
+
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static extern void LLVMCantFail(/*LLVMErrorRef*/ nint Err);
+        }
+
+        public static LLVMErrorRef Create(string errMsg)
+        {
+            unsafe
+            {
+                byte* bytes = AnsiStringMarshaller.ConvertToUnmanaged(errMsg);
+                try
+                {
+                    return new(LLVMCreateStringError(bytes));
+                }
+                finally
+                {
+                    AnsiStringMarshaller.Free(bytes);
+                }
+            }
+
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static unsafe extern nint /*LLVMErrorRef*/ LLVMCreateStringError(byte* ErrMsg);
         }
 
         /// <inheritdoc/>
         [SecurityCritical]
         protected override bool ReleaseHandle()
         {
-            if(handle != nint.Zero)
-            {
-                LLVMConsumeError( handle );
-            }
-
+            LLVMConsumeError( handle );
             return true;
+
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static extern void LLVMConsumeError(nint p);
         }
 
-        private string InternalGetMessage()
+        private ErrorMessageString? LazyGetMessage()
         {
-            if(IsInvalid)
+            if(IsClosed || IsInvalid)
             {
-                return string.Empty;
+                return null;
             }
 
             // LLVMGetErrorMessage is explicitly defined as NOT idempotent.
-            // so once the value is retrieved the pointer is no longer valid
-            string retVal = LLVMGetErrorMessage( handle );
+            // So, once the value is retrieved it cannot be retrieved again.
+            // This marshals the string to an ErrorMessageString this one time
+            // only. The ErrorMessageString owns the resulting string of the
+            // message.
+            ErrorMessageString retVal = new(LLVMGetErrorMessage( handle ));
             SetHandleAsInvalid();
             return retVal;
+
+            // As this is a private local func, it must use DllImport AND
+            // cannot allow ANY marshalling. That is done manually by caller.
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static extern /*ErrorMessageString*/ nint LLVMGetErrorMessage(nint p);
         }
 
         // use Lazy to cache result of the underlying destructive get
-        private readonly Lazy<string> LazyMessage;
-
-        [LibraryImport( NativeMethods.LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial void LLVMConsumeError(nint p);
-
-        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof( ErrorMessageMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial string LLVMGetErrorMessage(nint p);
+        private readonly Lazy<ErrorMessageString?> LazyMessage;
     }
 }

@@ -15,22 +15,22 @@ namespace Ubiquity.NET.Llvm.Interop
     // CONSIDER: These APIs are highly questionable in a managed environment. Should they even be published?
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMLoadLibraryPermanently( [MarshalUsing( typeof(AnsiStringMarshaller) )]string Filename );
+        public static unsafe partial bool LLVMLoadLibraryPermanently( string Filename );
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller))]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMParseCommandLineOptions( int argc, [MarshalAs( UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr )]global::System.String[] argv, [MarshalUsing( typeof(AnsiStringMarshaller) )]string Overview );
+        public static unsafe partial void LLVMParseCommandLineOptions( int argc, [In]string[] argv, string Overview );
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial nint LLVMSearchForAddressOfSymbol( [MarshalUsing( typeof(AnsiStringMarshaller) )]string symbolName );
+        public static unsafe partial nint LLVMSearchForAddressOfSymbol( string symbolName );
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
-        public static unsafe partial void LLVMAddSymbol( [MarshalUsing( typeof(AnsiStringMarshaller) )]string symbolName, void* symbolValue );
+        public static unsafe partial void LLVMAddSymbol( string symbolName, void* symbolValue );
     }
 }
 #endif

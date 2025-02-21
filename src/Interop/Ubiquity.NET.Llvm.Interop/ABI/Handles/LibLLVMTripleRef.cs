@@ -4,15 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle</summary>
-    [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Called ONLY by this class" )]
-    public partial class LibLLVMTripleRef
+    public class LibLLVMTripleRef
         : LlvmObjectRef
     {
         /// <summary>Initializes an instance of <see cref="LibLLVMTripleRef"/> with default values</summary>
@@ -45,10 +43,10 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             return true;
-        }
 
-        [LibraryImport( NativeMethods.LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial void LibLLVMDisposeTriple(nint p);
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static extern void LibLLVMDisposeTriple(nint p);
+        }
     }
 }

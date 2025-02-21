@@ -6,7 +6,6 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -14,8 +13,7 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( ErrorMessageMarshaller ) )]
-        public static unsafe partial string LibLLVMAttributeToString(LLVMAttributeRef attribute);
+        public static unsafe partial DisposeMessageString LibLLVMAttributeToString(LLVMAttributeRef attribute);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

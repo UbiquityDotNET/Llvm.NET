@@ -220,7 +220,7 @@ extern "C" {
     LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType( LibLLVMTripleRef triple );
 
     // Use LLVMDisposeMessage on return for all of these
-    char const* LibLLVMTripleAsString( LibLLVMTripleRef triple, bool normalize );
+    char const* LibLLVMTripleAsString( LibLLVMTripleRef triple, LLVMBool normalize );
     char const* LibLLVMTripleGetArchTypeName( LibLLVMTripleArchType type );
     char const* LibLLVMTripleGetArchTypeName( LibLLVMTripleArchType type );
     char const* LibLLVMTripleGetSubArchTypeName( LibLLVMTripleSubArchType type );

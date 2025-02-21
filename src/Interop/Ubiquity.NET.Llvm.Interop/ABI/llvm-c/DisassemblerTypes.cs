@@ -5,26 +5,67 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     [StructLayout( LayoutKind.Sequential )]
-    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "ABI interop struct, equality not relevant" )]
-    public unsafe struct LLVMOpInfoSymbol1
+    public unsafe readonly struct LLVMOpInfoSymbol1
+        : IEquatable<LLVMOpInfoSymbol1>
     {
-        public UInt64 Present;
-        public byte* Name;
-        public UInt64 Value;
+        public readonly UInt64 Present;
+        public readonly byte* Name;
+        public readonly UInt64 Value;
+
+        public override bool Equals(object? obj)
+        {
+            return obj is LLVMOpInfoSymbol1 v && Equals( v );
+        }
+
+        public bool Equals(LLVMOpInfoSymbol1 other)
+            => Present == other.Present
+            && Name == other.Name
+            && Value == other.Value;
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine( Present, (nint)Name, Value );
+        }
+
+        public static bool operator ==(LLVMOpInfoSymbol1 left, LLVMOpInfoSymbol1 right) => left.Equals( right );
+
+        public static bool operator !=(LLVMOpInfoSymbol1 left, LLVMOpInfoSymbol1 right) => !(left == right);
     }
 
     [StructLayout( LayoutKind.Sequential )]
-    public record struct LLVMOpInfo1
+    public unsafe readonly struct LLVMOpInfo1
+            : IEquatable<LLVMOpInfo1>
     {
-        public LLVMOpInfoSymbol1 AddSymbol;
-        public LLVMOpInfoSymbol1 SubtractSymbol;
-        public UInt64 Value;
-        public UInt64 VariantKind;
+        public readonly LLVMOpInfoSymbol1 AddSymbol;
+        public readonly LLVMOpInfoSymbol1 SubtractSymbol;
+        public readonly UInt64 Value;
+        public readonly UInt64 VariantKind;
+
+        public override bool Equals(object? obj)
+        {
+            return obj is LLVMOpInfo1 v && Equals( v );
+        }
+
+        public bool Equals(LLVMOpInfo1 other)
+        {
+            return AddSymbol.Equals( other.AddSymbol )
+                && SubtractSymbol.Equals( other.SubtractSymbol )
+                && Value == other.Value
+                && VariantKind == other.VariantKind;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine( AddSymbol, SubtractSymbol, Value, VariantKind );
+        }
+
+        public static bool operator ==(LLVMOpInfo1 left, LLVMOpInfo1 right) => left.Equals( right );
+
+        public static bool operator !=(LLVMOpInfo1 left, LLVMOpInfo1 right) => !(left == right);
     }
 }

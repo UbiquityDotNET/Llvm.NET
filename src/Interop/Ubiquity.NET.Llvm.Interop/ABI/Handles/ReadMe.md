@@ -27,7 +27,7 @@ owned). It is tempting to make these as `ref` types to let the compiler limit us
 non-heap scenarios. However, it is normally valuable to wrap them in a managed class
 so the types contained here are all `readonly record struct` but NOT marked as ref.
 
-### Cannot use Roslyn source generator
+### Cannot use Roslyn source generator (srot of...)
 It is also tempting (and an early attempt was made) to use a Roslyn source generator
 for each of these. However, since those have no way to specify ordering and the
 `LibraryImportAttribute` is used in the library to support AOT. There is an inherant
@@ -35,3 +35,8 @@ conflict with the `LibraryImportAttribute` requiring marshalling for the handle,
 it isn't fully declared so the `NativeMarshalling` attribute doesn't exist for the
 source generator to see. Thus these were all generated from the `LlvmBindingsGenerator`
 from a basic template to create each distinct type with the proper marshalling attribute.
+
+The "sort of" part of things come from the idea that the handles could move to a distinct
+library where the sourcegen Could work as the code for the handles themseleves can avoid
+the `LibraryImportAttribute` source generator in favor of direct use of `DllImportAttribute`
+using only simple native blittable types.

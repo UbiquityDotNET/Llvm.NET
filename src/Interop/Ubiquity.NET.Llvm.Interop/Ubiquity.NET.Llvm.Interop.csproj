@@ -12,7 +12,7 @@
     <MinClientVersion>4.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
+    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is **STRONGLY** discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
@@ -20,10 +20,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <EmbedAllSources>false</EmbedAllSources>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="ABI\Handles\LLVMContextRef.cs~RF17f12e50.TMP" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
         <PackagePath>runtimes\win-x64\native</PackagePath>
@@ -46,6 +45,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Remove="GeneratedCode\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GeneratedCode\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">

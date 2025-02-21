@@ -7,23 +7,22 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     public enum LLVMVerifierFailureAction
         : Int32
     {
-        AbortProcess = 0,
-        PrintMessage = 1,
-        ReturnStatus = 2,
+        LLVMAbortProcessAction = 0,
+        LLVMPrintMessageAction = 1,
+        LLVMReturnStatusAction = 2,
     }
 
     public static partial class NativeMethods
     {
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMVerifyModule(LLVMModuleRef M, LLVMVerifierFailureAction Action, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutMessage);
+        public static unsafe partial LLVMStatus LLVMVerifyModule(LLVMModuleRef M, LLVMVerifierFailureAction Action, out DisposeMessageString OutMessage);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

@@ -74,6 +74,9 @@ extern "C" {
     // Retrieve the number of elements in a ConstantDataSequential
     uint32_t LibLLVMGetConstantDataSequentialElementCount( LLVMValueRef C );
 
+    // retrieve the contents of a ConstantDataSequential
+    // NOTE: The returned pointer does not gurantee a terminating '\0' the 'OUT'
+    //       Length does contain the valid length of the data.
     const char* LibLLVMGetConstantDataSequentialRawData( LLVMValueRef C, size_t* Length );
 #ifdef __cplusplus
 }

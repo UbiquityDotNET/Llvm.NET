@@ -14,18 +14,6 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorTypeId LLVMGetErrorTypeId(LLVMErrorRef Err);
-
-        [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMCantFail(LLVMErrorRef Err);
-
-        [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorTypeId LLVMGetStringErrorTypeId();
-
-        [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMCreateStringError([MarshalUsing( typeof( AnsiStringMarshaller ) )] string ErrMsg);
     }
 }

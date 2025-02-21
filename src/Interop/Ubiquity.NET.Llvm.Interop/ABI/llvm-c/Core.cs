@@ -19,228 +19,228 @@ namespace Ubiquity.NET.Llvm.Interop
 #pragma warning restore  IDE0065, SA1200
 
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "Not flags, tooling detection of such is broken" )]
+    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Matches ABI" )]
     public enum LLVMOpcode
         : Int32
     {
-        None = 0,
-        Ret = 1,
-        Br = 2,
-        Switch = 3,
-        IndirectBr = 4,
-        Invoke = 5,
-        Unreachable = 7,
-        CallBr = 67,
-        FNeg = 66,
-        Add = 8,
-        FAdd = 9,
-        Sub = 10,
-        FSub = 11,
-        Mul = 12,
-        FMul = 13,
-        UDiv = 14,
-        SDiv = 15,
-        FDiv = 16,
-        URem = 17,
-        SRem = 18,
-        FRem = 19,
-        Shl = 20,
-        LShr = 21,
-        AShr = 22,
-        And = 23,
-        Or = 24,
-        Xor = 25,
-        Alloca = 26,
-        Load = 27,
-        Store = 28,
-        GetElementPtr = 29,
-        Trunc = 30,
-        ZExt = 31,
-        SExt = 32,
-        FPToUI = 33,
-        FPToSI = 34,
-        UIToFP = 35,
-        SIToFP = 36,
-        FPTrunc = 37,
-        FPExt = 38,
-        PtrToInt = 39,
-        IntToPtr = 40,
-        BitCast = 41,
-        AddrSpaceCast = 60,
-        ICmp = 42,
-        FCmp = 43,
-        PHI = 44,
-        Call = 45,
-        Select = 46,
-        UserOp1 = 47,
-        UserOp2 = 48,
-        VAArg = 49,
-        ExtractElement = 50,
-        InsertElement = 51,
-        ShuffleVector = 52,
-        ExtractValue = 53,
-        InsertValue = 54,
-        Freeze = 68,
-        Fence = 55,
-        AtomicCmpXchg = 56,
-        AtomicRMW = 57,
-        Resume = 58,
-        LandingPad = 59,
-        CleanupRet = 61,
-        CatchRet = 62,
-        CatchPad = 63,
-        CleanupPad = 64,
-        CatchSwitch = 65,
+        LLVMRet = 1,
+        LLVMBr = 2,
+        LLVMSwitch = 3,
+        LLVMIndirectBr = 4,
+        LLVMInvoke = 5,
+        LLVMUnreachable = 7,
+        LLVMCallBr = 67,
+        LLVMFNeg = 66,
+        LLVMAdd = 8,
+        LLVMFAdd = 9,
+        LLVMSub = 10,
+        LLVMFSub = 11,
+        LLVMMul = 12,
+        LLVMFMul = 13,
+        LLVMUDiv = 14,
+        LLVMSDiv = 15,
+        LLVMFDiv = 16,
+        LLVMURem = 17,
+        LLVMSRem = 18,
+        LLVMFRem = 19,
+        LLVMShl = 20,
+        LLVMLShr = 21,
+        LLVMAShr = 22,
+        LLVMAnd = 23,
+        LLVMOr = 24,
+        LLVMXor = 25,
+        LLVMAlloca = 26,
+        LLVMLoad = 27,
+        LLVMStore = 28,
+        LLVMGetElementPtr = 29,
+        LLVMTrunc = 30,
+        LLVMZExt = 31,
+        LLVMSExt = 32,
+        LLVMFPToUI = 33,
+        LLVMFPToSI = 34,
+        LLVMUIToFP = 35,
+        LLVMSIToFP = 36,
+        LLVMFPTrunc = 37,
+        LLVMFPExt = 38,
+        LLVMPtrToInt = 39,
+        LLVMIntToPtr = 40,
+        LLVMBitCast = 41,
+        LLVMAddrSpaceCast = 60,
+        LLVMICmp = 42,
+        LLVMFCmp = 43,
+        LLVMPHI = 44,
+        LLVMCall = 45,
+        LLVMSelect = 46,
+        LLVMUserOp1 = 47,
+        LLVMUserOp2 = 48,
+        LLVMVAArg = 49,
+        LLVMExtractElement = 50,
+        LLVMInsertElement = 51,
+        LLVMShuffleVector = 52,
+        LLVMExtractValue = 53,
+        LLVMInsertValue = 54,
+        LLVMFreeze = 68,
+        LLVMFence = 55,
+        LLVMAtomicCmpXchg = 56,
+        LLVMAtomicRMW = 57,
+        LLVMResume = 58,
+        LLVMLandingPad = 59,
+        LLVMCleanupRet = 61,
+        LLVMCatchRet = 62,
+        LLVMCatchPad = 63,
+        LLVMCleanupPad = 64,
+        LLVMCatchSwitch = 65,
     }
 
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "Not flags, tool heuristics are too stupid to deal with it" )]
     public enum LLVMTypeKind
         : Int32
     {
-        Void = 0,
-        Half = 1,
-        Float = 2,
-        Double = 3,
-        X86_FP80 = 4,
-        FP128 = 5,
-        PPC_FP128 = 6,
-        Label = 7,
-        Integer = 8,
-        Function = 9,
-        Struct = 10,
-        Array = 11,
-        Pointer = 12,
-        Vector = 13,
-        Metadata = 14,
-        Token = 16,
-        ScalableVector = 17,
-        BFloat = 18,
-        X86_AMX = 19,
-        TargetExt = 20,
+        LLVMVoidTypeKind = 0,
+        LLVMHalfTypeKind = 1,
+        LLVMFloatTypeKind = 2,
+        LLVMDoubleTypeKind = 3,
+        LLVMX86_FP80TypeKind = 4,
+        LLVMFP128TypeKind = 5,
+        LLVMPPC_FP128TypeKind = 6,
+        LLVMLabelTypeKind = 7,
+        LLVMIntegerTypeKind = 8,
+        LLVMFunctionTypeKind = 9,
+        LLVMStructTypeKind = 10,
+        LLVMArrayTypeKind = 11,
+        LLVMPointerTypeKind = 12,
+        LLVMVectorTypeKind = 13,
+        LLVMMetadataTypeKind = 14,
+        LLVMTokenTypeKind = 16,
+        LLVMScalableVectorTypeKind = 17,
+        LLVMBFloatTypeKind = 18,
+        LLVMX86_AMXTypeKind = 19,
+        LLVMTargetExtTypeKind = 20,
     }
 
     public enum LLVMLinkage
         : Int32
     {
-        External = 0,
-        AvailableExternally = 1,
-        LinkOnceAny = 2,
-        LinkOnceODR = 3,
-        LinkOnceODRAutoHide = 4,
-        WeakAny = 5,
-        WeakODR = 6,
-        Appending = 7,
-        Internal = 8,
-        Private = 9,
-        DLLImport = 10,
-        DLLExport = 11,
-        ExternalWeak = 12,
-        Ghost = 13,
-        Common = 14,
-        LinkerPrivate = 15,
-        LinkerPrivateWeak = 16,
+        LLVMExternalLinkage = 0,
+        LLVMAvailableExternallyLinkage = 1,
+        LLVMLinkOnceAnyLinkage = 2,
+        LLVMLinkOnceODRLinkage = 3,
+        LLVMLinkOnceODRAutoHideLinkage = 4,
+        LLVMWeakAnyLinkage = 5,
+        LLVMWeakODRLinkage = 6,
+        LLVMAppendingLinkage = 7,
+        LLVMInternalLinkage = 8,
+        LLVMPrivateLinkage = 9,
+        LLVMDLLImportLinkage = 10,
+        LLVMDLLExportLinkage = 11,
+        LLVMExternalWeakLinkage = 12,
+        LLVMGhostLinkage = 13,
+        LLVMCommonLinkage = 14,
+        LLVMLinkerPrivateLinkage = 15,
+        LLVMLinkerPrivateWeakLinkage = 16,
     }
 
     public enum LLVMVisibility
         : Int32
     {
-        Default = 0,
-        Hidden = 1,
-        Protected = 2,
+        LLVMDefaultVisibility = 0,
+        LLVMHiddenVisibility = 1,
+        LLVMProtectedVisibility = 2,
     }
 
     public enum LLVMUnnamedAddr
         : Int32
     {
-        None = 0,
-        Local = 1,
-        Global = 2,
+        LLVMNoUnnamedAddr = 0,
+        LLVMLocalUnnamedAddr = 1,
+        LLVMGlobalUnnamedAddr = 2,
     }
 
     public enum LLVMDLLStorageClass
         : Int32
     {
-        Default = 0,
-        DLLImport = 1,
-        DLLExport = 2,
+        LLVMDefaultStorageClass = 0,
+        LLVMDLLImportStorageClass = 1,
+        LLVMDLLExportStorageClass = 2,
     }
 
     public enum LLVMCallConv
         : Int32
     {
-        C = 0,
-        Fast = 8,
-        Cold = 9,
-        GHC = 10,
-        HiPE = 11,
-        AnyReg = 13,
-        PreserveMost = 14,
-        PreserveAll = 15,
-        Swift = 16,
-        CXXFASTTLS = 17,
-        X86Stdcall = 64,
-        X86Fastcall = 65,
-        ARMAPCS = 66,
-        ARMAAPCS = 67,
-        ARMAAPCSVFP = 68,
-        MSP430INTR = 69,
-        X86ThisCall = 70,
-        PTXKernel = 71,
-        PTXDevice = 72,
-        SPIRFUNC = 75,
-        SPIRKERNEL = 76,
-        IntelOCLBI = 77,
-        X8664SysV = 78,
-        Win64 = 79,
-        X86VectorCall = 80,
-        HHVM = 81,
-        HHVMC = 82,
-        X86INTR = 83,
-        AVRINTR = 84,
-        AVRSIGNAL = 85,
-        AVRBUILTIN = 86,
-        AMDGPUVS = 87,
-        AMDGPUGS = 88,
-        AMDGPUPS = 89,
-        AMDGPUCS = 90,
-        AMDGPUKERNEL = 91,
-        X86RegCall = 92,
-        AMDGPUHS = 93,
-        MSP430BUILTIN = 94,
-        AMDGPULS = 95,
-        AMDGPUES = 96,
+        LLVMCCallConv = 0,
+        LLVMFastCallConv = 8,
+        LLVMColdCallConv = 9,
+        LLVMGHCCallConv = 10,
+        LLVMHiPECallConv = 11,
+        LLVMAnyRegCallConv = 13,
+        LLVMPreserveMostCallConv = 14,
+        LLVMPreserveAllCallConv = 15,
+        LLVMSwiftCallConv = 16,
+        LLVMCXXFASTTLSCallConv = 17,
+        LLVMX86StdcallCallConv = 64,
+        LLVMX86FastcallCallConv = 65,
+        LLVMARMAPCSCallConv = 66,
+        LLVMARMAAPCSCallConv = 67,
+        LLVMARMAAPCSVFPCallConv = 68,
+        LLVMMSP430INTRCallConv = 69,
+        LLVMX86ThisCallCallConv = 70,
+        LLVMPTXKernelCallConv = 71,
+        LLVMPTXDeviceCallConv = 72,
+        LLVMSPIRFUNCCallConv = 75,
+        LLVMSPIRKERNELCallConv = 76,
+        LLVMIntelOCLBICallConv = 77,
+        LLVMX8664SysVCallConv = 78,
+        LLVMWin64CallConv = 79,
+        LLVMX86VectorCallCallConv = 80,
+        LLVMHHVMCallConv = 81,
+        LLVMHHVMCCallConv = 82,
+        LLVMX86INTRCallConv = 83,
+        LLVMAVRINTRCallConv = 84,
+        LLVMAVRSIGNALCallConv = 85,
+        LLVMAVRBUILTINCallConv = 86,
+        LLVMAMDGPUVSCallConv = 87,
+        LLVMAMDGPUGSCallConv = 88,
+        LLVMAMDGPUPSCallConv = 89,
+        LLVMAMDGPUCSCallConv = 90,
+        LLVMAMDGPUKERNELCallConv = 91,
+        LLVMX86RegCallCallConv = 92,
+        LLVMAMDGPUHSCallConv = 93,
+        LLVMMSP430BUILTINCallConv = 94,
+        LLVMAMDGPULSCallConv = 95,
+        LLVMAMDGPUESCallConv = 96,
     }
 
     public enum LLVMValueKind
         : Int32
     {
-        Argument = 0,
-        BasicBlock = 1,
-        MemoryUse = 2,
-        MemoryDef = 3,
-        MemoryPhi = 4,
-        Function = 5,
-        GlobalAlias = 6,
-        GlobalIFunc = 7,
-        GlobalVariable = 8,
-        BlockAddress = 9,
-        ConstantExpr = 10,
-        ConstantArray = 11,
-        ConstantStruct = 12,
-        ConstantVector = 13,
-        UndefValue = 14,
-        ConstantAggregateZero = 15,
-        ConstantDataArray = 16,
-        ConstantDataVector = 17,
-        ConstantInt = 18,
-        ConstantFP = 19,
-        ConstantPointerNull = 20,
-        ConstantTokenNone = 21,
-        MetadataAsValue = 22,
-        InlineAsm = 23,
-        Instruction = 24,
-        PoisonValue = 25,
-        ConstantTargetNone = 26,
-        ConstantPtrAuth = 27,
+        LLVMArgumentValueKind = 0,
+        LLVMBasicBlockValueKind = 1,
+        LLVMMemoryUseValueKind = 2,
+        LLVMMemoryDefValueKind = 3,
+        LLVMMemoryPhiValueKind = 4,
+        LLVMFunctionValueKind = 5,
+        LLVMGlobalAliasValueKind = 6,
+        LLVMGlobalIFuncValueKind = 7,
+        LLVMGlobalVariableValueKind = 8,
+        LLVMBlockAddressValueKind = 9,
+        LLVMConstantExprValueKind = 10,
+        LLVMConstantArrayValueKind = 11,
+        LLVMConstantStructValueKind = 12,
+        LLVMConstantVectorValueKind = 13,
+        LLVMUndefValueValueKind = 14,
+        LLVMConstantAggregateZeroValueKind = 15,
+        LLVMConstantDataArrayValueKind = 16,
+        LLVMConstantDataVectorValueKind = 17,
+        LLVMConstantIntValueKind = 18,
+        LLVMConstantFPValueKind = 19,
+        LLVMConstantPointerNullValueKind = 20,
+        LLVMConstantTokenNoneValueKind = 21,
+        LLVMMetadataAsValueValueKind = 22,
+        LLVMInlineAsmValueKind = 23,
+        LLVMInstructionValueKind = 24,
+        LLVMPoisonValueValueKind = 25,
+        LLVMConstantTargetNoneValueKind = 26,
+        LLVMConstantPtrAuthValueKind = 27,
     }
 
     public enum LLVMIntPredicate
@@ -248,159 +248,162 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         None = 0,
 
-        EQ = 32,
-        NE = 33,
-        UGT = 34,
-        UGE = 35,
-        ULT = 36,
-        ULE = 37,
-        SGT = 38,
-        SGE = 39,
-        SLT = 40,
-        SLE = 41,
+        LLVMIntEQ = 32,
+        LLVMIntNE = 33,
+        LLVMIntUGT = 34,
+        LLVMIntUGE = 35,
+        LLVMIntULT = 36,
+        LLVMIntULE = 37,
+        LLVMIntSGT = 38,
+        LLVMIntSGE = 39,
+        LLVMIntSLT = 40,
+        LLVMIntSLE = 41,
     }
 
     public enum LLVMRealPredicate
         : Int32
     {
-        PredicateFalse = 0,
-        OEQ = 1,
-        OGT = 2,
-        OGE = 3,
-        OLT = 4,
-        OLE = 5,
-        ONE = 6,
-        ORD = 7,
-        UNO = 8,
-        UEQ = 9,
-        UGT = 10,
-        UGE = 11,
-        ULT = 12,
-        ULE = 13,
-        UNE = 14,
-        PredicateTrue = 15,
+        LLVMRealPredicateFalse = 0,
+        LLVMRealOEQ = 1,
+        LLVMRealOGT = 2,
+        LLVMRealOGE = 3,
+        LLVMRealOLT = 4,
+        LLVMRealOLE = 5,
+        LLVMRealONE = 6,
+        LLVMRealORD = 7,
+        LLVMRealUNO = 8,
+        LLVMRealUEQ = 9,
+        LLVMRealUGT = 10,
+        LLVMRealUGE = 11,
+        LLVMRealULT = 12,
+        LLVMRealULE = 13,
+        LLVMRealUNE = 14,
+        LLVMRealPredicateTrue = 15,
     }
 
     public enum LLVMLandingPadClauseTy
         : Int32
     {
-        Catch = 0,
-        Filter = 1,
+        LLVMLandingPadCatch = 0,
+        LLVMLandingPadFilter = 1,
     }
 
     public enum LLVMThreadLocalMode
         : Int32
     {
-        NotThreadLocal = 0,
-        GeneralDynamicTLSModel = 1,
-        LocalDynamicTLSModel = 2,
-        InitialExecTLSModel = 3,
-        LocalExecTLSModel = 4,
+        LLVMNotThreadLocal = 0,
+        LLVMGeneralDynamicTLSModel = 1,
+        LLVMLocalDynamicTLSModel = 2,
+        LLVMInitialExecTLSModel = 3,
+        LLVMLocalExecTLSModel = 4,
     }
 
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "NOT flags; tooling is too simplistic" )]
     public enum LLVMAtomicOrdering
         : Int32
     {
-        NotAtomic = 0,
-        Unordered = 1,
-        Monotonic = 2,
-        Acquire = 4,
-        Release = 5,
-        AcquireRelease = 6,
-        SequentiallyConsistent = 7,
+        LLVMAtomicOrderingNotAtomic = 0,
+        LLVMAtomicOrderingUnordered = 1,
+        LLVMAtomicOrderingMonotonic = 2,
+        LLVMAtomicOrderingAcquire = 4,
+        LLVMAtomicOrderingRelease = 5,
+        LLVMAtomicOrderingAcquireRelease = 6,
+        LLVMAtomicOrderingSequentiallyConsistent = 7,
     }
 
     public enum LLVMAtomicRMWBinOp
         : Int32
     {
-        Xchg = 0,
-        Add = 1,
-        Sub = 2,
-        And = 3,
-        Nand = 4,
-        Or = 5,
-        Xor = 6,
-        Max = 7,
-        Min = 8,
-        UMax = 9,
-        UMin = 10,
-        FAdd = 11,
-        FSub = 12,
-        FMax = 13,
-        FMin = 14,
-        UIncWrap = 15,
-        UDecWrap = 16,
-        USubCond = 17,
-        USubSat = 18,
+        LLVMAtomicRMWBinOpXchg = 0,
+        LLVMAtomicRMWBinOpAdd = 1,
+        LLVMAtomicRMWBinOpSub = 2,
+        LLVMAtomicRMWBinOpAnd = 3,
+        LLVMAtomicRMWBinOpNand = 4,
+        LLVMAtomicRMWBinOpOr = 5,
+        LLVMAtomicRMWBinOpXor = 6,
+        LLVMAtomicRMWBinOpMax = 7,
+        LLVMAtomicRMWBinOpMin = 8,
+        LLVMAtomicRMWBinOpUMax = 9,
+        LLVMAtomicRMWBinOpUMin = 10,
+        LLVMAtomicRMWBinOpFAdd = 11,
+        LLVMAtomicRMWBinOpFSub = 12,
+        LLVMAtomicRMWBinOpFMax = 13,
+        LLVMAtomicRMWBinOpFMin = 14,
+        LLVMAtomicRMWBinOpUIncWrap = 15,
+        LLVMAtomicRMWBinOpUDecWrap = 16,
+        LLVMAtomicRMWBinOpUSubCond = 17,
+        LLVMAtomicRMWBinOpUSubSat = 18,
     }
 
     public enum LLVMDiagnosticSeverity
         : Int32
     {
-        Error = 0,
-        Warning = 1,
-        Remark = 2,
-        Note = 3,
+        LLVMDSError = 0,
+        LLVMDSWarning = 1,
+        LLVMDSRemark = 2,
+        LLVMDSNote = 3,
     }
 
     public enum LLVMInlineAsmDialect
         : Int32
     {
-        ATT = 0,
-        Intel = 1,
+        LLVMInlineAsmDialectATT = 0,
+        LLVMInlineAsmDialectIntel = 1,
     }
 
     public enum LLVMModuleFlagBehavior
         : Int32
     {
-        Error = 0,
-        Warning = 1,
-        Require = 2,
-        Override = 3,
-        Append = 4,
-        AppendUnique = 5,
+        LLVMModuleFlagBehaviorError = 0,
+        LLVMModuleFlagBehaviorWarning = 1,
+        LLVMModuleFlagBehaviorRequire = 2,
+        LLVMModuleFlagBehaviorOverride = 3,
+        LLVMModuleFlagBehaviorAppend = 4,
+        LLVMModuleFlagBehaviorAppendUnique = 5,
     }
 
     public enum LLVMAttributeIndex
         : Int32
     {
-        Return = 0,
-        Function = -1,
+        LLVMAttributeReturnIndex = 0,
+        LLVMAttributeFunctionIndex = -1,
     }
 
     public enum LLVMTailCallKind
         : Int32
     {
-        None = 0,
-        Tail = 1,
-        MustTail = 2,
-        NoTail = 3,
+        LLVMTailCallKindNone = 0,
+        LLVMTailCallKindTail = 1,
+        LLVMTailCallKindMustTail = 2,
+        LLVMTailCallKindNoTail = 3,
     }
 
     [Flags]
-    public enum LLVMFastMath
-        : Int32
+    [SuppressMessage( "Design", "CA1028:Enum Storage should be Int32", Justification = "Matches ABI" )]
+    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "It has one, name matches ABI" )]
+    public enum LLVMFastMathFlags
+        : UInt32
     {
-        AllowReassoc = 1,
-        NoNaNs = 2,
-        NoInfs = 4,
-        NoSignedZeros = 8,
-        AllowReciprocal = 16,
-        AllowContract = 32,
-        ApproxFunc = 64,
-        None = 0,
-        All = 127,
+        LLVMFastMathAllowReassoc = 1,
+        LLVMFastMathNoNaNs = 2,
+        LLVMFastMathNoInfs = 4,
+        LLVMFastMathNoSignedZeros = 8,
+        LLVMFastMathAllowReciprocal = 16,
+        LLVMFastMathAllowContract = 32,
+        LLVMFastMathApproxFunc = 64,
+        LLVMFastMathNone = 0,
+        LLVMFastMathAll = 127,
     }
 
     [Flags]
-    public enum LLVMGEPNoWrap
-        : Int32
+    [SuppressMessage( "Design", "CA1028:Enum Storage should be Int32", Justification = "Matches ABI" )]
+    public enum LLVMGEPNoWrapFlags
+        : UInt32
     {
         None = 0,
-        InBounds = 1,
-        NUSW = 2,
-        NUW = 4,
+        LLVMGEPFlagInBounds = 1,
+        LLVMGEPFlagNUSW = 2,
+        LLVMGEPFlagNUW = 4,
     }
 
     public static partial class NativeMethods
@@ -448,28 +451,27 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMGetDiagInfoDescription(LLVMDiagnosticInfoRef DI);
+        public static unsafe partial DisposeMessageString LLVMGetDiagInfoDescription(LLVMDiagnosticInfoRef DI);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMDiagnosticSeverity LLVMGetDiagInfoSeverity(LLVMDiagnosticInfoRef DI);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetMDKindIDInContext(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, uint SLen);
+        public static unsafe partial uint LLVMGetMDKindIDInContext(LLVMContextRef C, string Name, uint SLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetMDKindID([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, uint SLen);
+        public static unsafe partial uint LLVMGetMDKindID(string Name, uint SLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetSyncScopeID(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t SLen);
+        public static unsafe partial uint LLVMGetSyncScopeID(LLVMContextRef C, string Name, size_t SLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetEnumAttributeKindForName([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t SLen);
+        public static unsafe partial uint LLVMGetEnumAttributeKindForName(string Name, size_t SLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -499,18 +501,16 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMAttributeRef LLVMCreateConstantRangeAttribute(LLVMContextRef C, uint KindID, uint NumBits, [In] UInt64[] LowerWords, [In] UInt64[] UpperWords);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMAttributeRef LLVMCreateStringAttribute(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string K, uint KLength, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string V, uint VLength);
+        public static unsafe partial LLVMAttributeRef LLVMCreateStringAttribute(LLVMContextRef C, string K, uint KLength, string V, uint VLength);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetStringAttributeKind(LLVMAttributeRef A, out uint Length);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetStringAttributeValue(LLVMAttributeRef A, out uint Length);
 
         [LibraryImport( LibraryPath )]
@@ -528,17 +528,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMIsTypeAttribute(LLVMAttributeRef A);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMGetTypeByName2(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMTypeRef LLVMGetTypeByName2(LLVMContextRef C, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMModuleRef LLVMModuleCreateWithName([MarshalUsing( typeof( AnsiStringMarshaller ) )] string ModuleID);
+        public static unsafe partial LLVMModuleRef LLVMModuleCreateWithName(string ModuleID);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMModuleRef LLVMModuleCreateWithNameInContext([MarshalUsing( typeof( AnsiStringMarshaller ) )] string ModuleID, LLVMContextRef C);
+        public static unsafe partial LLVMModuleRef LLVMModuleCreateWithNameInContext(string ModuleID, LLVMContextRef C);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -553,47 +553,42 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetIsNewDbgInfoFormat(LLVMModuleRef M, [MarshalAs( UnmanagedType.Bool )] bool UseNewFormat);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetModuleIdentifier(LLVMModuleRef M, out size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetModuleIdentifier(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Ident, size_t Len);
+        public static unsafe partial void LLVMSetModuleIdentifier(LLVMModuleRef M, string Ident, size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetSourceFileName(LLVMModuleRef M, out size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetSourceFileName(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t Len);
+        public static unsafe partial void LLVMSetSourceFileName(LLVMModuleRef M, string Name, size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetDataLayoutStr(LLVMModuleRef M);
 
         [Obsolete( "Use LLVMGetDataLayoutStr instead" )]
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetDataLayout(LLVMModuleRef M);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetDataLayout(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string DataLayoutStr);
+        public static unsafe partial void LLVMSetDataLayout(LLVMModuleRef M, string DataLayoutStr);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetTarget(LLVMModuleRef M);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetTarget(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Triple);
+        public static unsafe partial void LLVMSetTarget(LLVMModuleRef M, string Triple);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -603,61 +598,56 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMModuleFlagBehavior LLVMModuleFlagEntriesGetFlagBehavior(LLVMModuleFlagEntry Entries, uint Index);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMModuleFlagEntriesGetKey(LLVMModuleFlagEntry Entries, uint Index, out size_t Len);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMModuleFlagEntriesGetMetadata(LLVMModuleFlagEntry Entries, uint Index);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMGetModuleFlag(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Key, size_t KeyLen);
+        public static unsafe partial LLVMMetadataRef LLVMGetModuleFlag(LLVMModuleRef M, string Key, size_t KeyLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMAddModuleFlag(LLVMModuleRef M, LLVMModuleFlagBehavior Behavior, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Key, size_t KeyLen, LLVMMetadataRef Val);
+        public static unsafe partial void LLVMAddModuleFlag(LLVMModuleRef M, LLVMModuleFlagBehavior Behavior, string Key, size_t KeyLen, LLVMMetadataRef Val);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMDumpModule(LLVMModuleRef M);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMPrintModuleToFile(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Filename, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string ErrorMessage);
+        public static unsafe partial LLVMStatus LLVMPrintModuleToFile(LLVMModuleRef M, string Filename, out DisposeMessageString ErrorMessage);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMPrintModuleToString(LLVMModuleRef M);
+        public static unsafe partial DisposeMessageString LLVMPrintModuleToString(LLVMModuleRef M);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetModuleInlineAsm(LLVMModuleRef M, out size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetModuleInlineAsm2(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Asm, size_t Len);
+        public static unsafe partial void LLVMSetModuleInlineAsm2(LLVMModuleRef M, string Asm, size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMAppendModuleInlineAsm(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Asm, size_t Len);
+        public static unsafe partial void LLVMAppendModuleInlineAsm(LLVMModuleRef M, string Asm, size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetInlineAsm(LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string AsmString, size_t AsmStringSize, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Constraints, size_t ConstraintsSize, [MarshalAs( UnmanagedType.Bool )] bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )] bool IsAlignStack, LLVMInlineAsmDialect Dialect, [MarshalAs( UnmanagedType.Bool )] bool CanThrow);
+        public static unsafe partial LLVMValueRef LLVMGetInlineAsm(LLVMTypeRef Ty, string AsmString, size_t AsmStringSize, string Constraints, size_t ConstraintsSize, [MarshalAs( UnmanagedType.Bool )] bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )] bool IsAlignStack, LLVMInlineAsmDialect Dialect, [MarshalAs( UnmanagedType.Bool )] bool CanThrow);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetInlineAsmAsmString(LLVMValueRef InlineAsmVal, out size_t Len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetInlineAsmConstraintString(LLVMValueRef InlineAsmVal, out size_t Len);
 
         [LibraryImport( LibraryPath )]
@@ -687,9 +677,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMContextRefAlias LLVMGetModuleContext(LLVMModuleRef M);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMGetTypeByName(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMTypeRef LLVMGetTypeByName(LLVMModuleRef M, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -707,39 +697,36 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMNamedMDNodeRef LLVMGetPreviousNamedMetadata(LLVMNamedMDNodeRef NamedMDNode);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMNamedMDNodeRef LLVMGetNamedMetadata(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
+        public static unsafe partial LLVMNamedMDNodeRef LLVMGetNamedMetadata(LLVMModuleRef M, string Name, size_t NameLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMNamedMDNodeRef LLVMGetOrInsertNamedMetadata(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
+        public static unsafe partial LLVMNamedMDNodeRef LLVMGetOrInsertNamedMetadata(LLVMModuleRef M, string Name, size_t NameLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetNamedMetadataName(LLVMNamedMDNodeRef NamedMD, out size_t NameLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetNamedMetadataNumOperands(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial uint LLVMGetNamedMetadataNumOperands(LLVMModuleRef M, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMGetNamedMetadataOperands(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, out LLVMValueRef Dest);
+        public static unsafe partial void LLVMGetNamedMetadataOperands(LLVMModuleRef M, string Name, out LLVMValueRef Dest);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMAddNamedMetadataOperand(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, LLVMValueRef Val);
+        public static unsafe partial void LLVMAddNamedMetadataOperand(LLVMModuleRef M, string Name, LLVMValueRef Val);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetDebugLocDirectory(LLVMValueRef Val, out uint Length);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetDebugLocFilename(LLVMValueRef Val, out uint Length);
 
         [LibraryImport( LibraryPath )]
@@ -750,17 +737,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial uint LLVMGetDebugLocColumn(LLVMValueRef Val);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMAddFunction(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, LLVMTypeRef FunctionTy);
+        public static unsafe partial LLVMValueRef LLVMAddFunction(LLVMModuleRef M, string Name, LLVMTypeRef FunctionTy);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetNamedFunction(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMGetNamedFunction(LLVMModuleRef M, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetNamedFunctionWithLength(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t Length);
+        public static unsafe partial LLVMValueRef LLVMGetNamedFunctionWithLength(LLVMModuleRef M, string Name, size_t Length);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -778,9 +765,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMGetPreviousFunction(LLVMValueRef Fn);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetModuleInlineAsm(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Asm);
+        public static unsafe partial void LLVMSetModuleInlineAsm(LLVMModuleRef M, string Asm);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -801,8 +788,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMPrintTypeToString(LLVMTypeRef Val);
+        public static unsafe partial DisposeMessageString LLVMPrintTypeToString(LLVMTypeRef Val);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -949,13 +935,12 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTypeRef LLVMStructType(out LLVMTypeRef ElementTypes, uint ElementCount, [MarshalAs( UnmanagedType.Bool )] bool Packed);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMStructCreateNamed(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMTypeRef LLVMStructCreateNamed(LLVMContextRef C, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetStructName(LLVMTypeRef Ty);
 
         [LibraryImport( LibraryPath )]
@@ -1094,13 +1079,12 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTypeRef LLVMX86AMXType();
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMTargetExtTypeInContext(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, out LLVMTypeRef TypeParams, uint TypeParamCount, out uint IntParams, uint IntParamCount);
+        public static unsafe partial LLVMTypeRef LLVMTargetExtTypeInContext(LLVMContextRef C, string Name, out LLVMTypeRef TypeParams, uint TypeParamCount, out uint IntParams, uint IntParamCount);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetTargetExtTypeName(LLVMTypeRef TargetExtTy);
 
         [LibraryImport( LibraryPath )]
@@ -1127,14 +1111,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueKind LLVMGetValueKind(LLVMValueRef Val);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetValueName2(LLVMValueRef Val, out size_t Length);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetValueName2(LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
+        public static unsafe partial void LLVMSetValueName2(LLVMValueRef Val, string Name, size_t NameLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1142,8 +1125,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMPrintValueToString(LLVMValueRef Val);
+        public static unsafe partial DisposeMessageString LLVMPrintValueToString(LLVMValueRef Val);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1151,8 +1133,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMPrintDbgRecordToString(LLVMDbgRecordRef Record);
+        public static unsafe partial DisposeMessageString LLVMPrintDbgRecordToString(LLVMDbgRecordRef Record);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1542,15 +1523,14 @@ namespace Ubiquity.NET.Llvm.Interop
         public static unsafe partial LLVMValueRef LLVMIsAMDString(LLVMValueRef Val);
 
         [Obsolete( "Use LLVMGetValueName2 instead" )]
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetValueName(LLVMValueRef Val);
 
         [Obsolete( "Use LLVMSetValueName2 instead" )]
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetValueName(LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial void LLVMSetValueName(LLVMValueRef Val, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1617,25 +1597,25 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMConstIntOfArbitraryPrecision(LLVMTypeRef IntTy, uint NumWords, [In] UInt64[] Words);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstIntOfString(LLVMTypeRef IntTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Text, byte Radix);
+        public static unsafe partial LLVMValueRef LLVMConstIntOfString(LLVMTypeRef IntTy, string Text, byte Radix);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstIntOfStringAndSize(LLVMTypeRef IntTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Text, uint SLen, byte Radix);
+        public static unsafe partial LLVMValueRef LLVMConstIntOfStringAndSize(LLVMTypeRef IntTy, string Text, uint SLen, byte Radix);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMConstReal(LLVMTypeRef RealTy, double N);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstRealOfString(LLVMTypeRef RealTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Text);
+        public static unsafe partial LLVMValueRef LLVMConstRealOfString(LLVMTypeRef RealTy, string Text);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstRealOfStringAndSize(LLVMTypeRef RealTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Text, uint SLen);
+        public static unsafe partial LLVMValueRef LLVMConstRealOfStringAndSize(LLVMTypeRef RealTy, string Text, uint SLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1649,26 +1629,24 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial double LLVMConstRealGetDouble(LLVMValueRef ConstantVal, [MarshalAs( UnmanagedType.Bool )] out bool losesInfo);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstStringInContext(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, uint Length, [MarshalAs( UnmanagedType.Bool )] bool DontNullTerminate);
+        public static unsafe partial LLVMValueRef LLVMConstStringInContext(LLVMContextRef C, string Str, uint Length, [MarshalAs( UnmanagedType.Bool )] bool DontNullTerminate);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstStringInContext2(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, size_t Length, [MarshalAs( UnmanagedType.Bool )] bool DontNullTerminate);
+        public static unsafe partial LLVMValueRef LLVMConstStringInContext2(LLVMContextRef C, string Str, size_t Length, [MarshalAs( UnmanagedType.Bool )] bool DontNullTerminate);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstString([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, uint Length, [MarshalAs( UnmanagedType.Bool )] bool DontNullTerminate);
+        public static unsafe partial LLVMValueRef LLVMConstString(string Str, uint Length, [MarshalAs( UnmanagedType.Bool )] bool DontNullTerminate);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMIsConstantString(LLVMValueRef c);
 
-        [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetAsString(LLVMValueRef c, out size_t Length);
 
         [LibraryImport( LibraryPath )]
@@ -1785,7 +1763,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstGEPWithNoWrapFlags(LLVMTypeRef Ty, LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices, LLVMGEPNoWrap NoWrapFlags);
+        public static unsafe partial LLVMValueRef LLVMConstGEPWithNoWrapFlags(LLVMTypeRef Ty, LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices, LLVMGEPNoWrapFlags NoWrapFlags);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1839,9 +1817,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMBasicBlockRef LLVMGetBlockAddressBasicBlock(LLVMValueRef BlockAddr);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstInlineAsm(LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string AsmString, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Constraints, [MarshalAs( UnmanagedType.Bool )] bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )] bool IsAlignStack);
+        public static unsafe partial LLVMValueRef LLVMConstInlineAsm(LLVMTypeRef Ty, string AsmString, string Constraints, [MarshalAs( UnmanagedType.Bool )] bool HasSideEffects, [MarshalAs( UnmanagedType.Bool )] bool IsAlignStack);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1860,14 +1838,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetLinkage(LLVMValueRef Global, LLVMLinkage Linkage);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetSection(LLVMValueRef Global);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetSection(LLVMValueRef Global, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Section);
+        public static unsafe partial void LLVMSetSection(LLVMValueRef Global, string Section);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1938,21 +1915,21 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMValueMetadataEntriesGetMetadata(LLVMValueMetadataEntry Entries, uint Index);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMAddGlobal(LLVMModuleRef M, LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMAddGlobal(LLVMModuleRef M, LLVMTypeRef Ty, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMAddGlobalInAddressSpace(LLVMModuleRef M, LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, uint AddressSpace);
+        public static unsafe partial LLVMValueRef LLVMAddGlobalInAddressSpace(LLVMModuleRef M, LLVMTypeRef Ty, string Name, uint AddressSpace);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetNamedGlobal(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMGetNamedGlobal(LLVMModuleRef M, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetNamedGlobalWithLength(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t Length);
+        public static unsafe partial LLVMValueRef LLVMGetNamedGlobalWithLength(LLVMModuleRef M, string Name, size_t Length);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2017,13 +1994,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetExternallyInitialized(LLVMValueRef GlobalVar, [MarshalAs( UnmanagedType.Bool )] bool IsExtInit);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMAddAlias2(LLVMModuleRef M, LLVMTypeRef ValueTy, uint AddrSpace, LLVMValueRef Aliasee, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMAddAlias2(LLVMModuleRef M, LLVMTypeRef ValueTy, uint AddrSpace, LLVMValueRef Aliasee, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetNamedGlobalAlias(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
+        public static unsafe partial LLVMValueRef LLVMGetNamedGlobalAlias(LLVMModuleRef M, string Name, size_t NameLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2066,9 +2043,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetPersonalityFn(LLVMValueRef Fn, LLVMValueRef PersonalityFn);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMLookupIntrinsicID([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
+        public static unsafe partial uint LLVMLookupIntrinsicID(string Name, size_t NameLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2082,21 +2059,18 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTypeRef LLVMIntrinsicGetType(LLVMContextRef Ctx, uint ID, [In] LLVMTypeRef[] ParamTypes, size_t ParamCount);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMIntrinsicGetName(uint ID, out size_t NameLength);
 
-        [Obsolete( "Use  LLVMIntrinsicCopyOverloadedName2 instead" )]
-        [LibraryImport( LibraryPath )]
+        [Obsolete( "Use LLVMIntrinsicCopyOverloadedName2 instead" )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMIntrinsicCopyOverloadedName(uint ID, [In] LLVMTypeRef[] ParamTypes, size_t ParamCount, out size_t NameLength);
 
-        [Obsolete( "Use  LLVMIntrinsicCopyOverloadedName2 instead" )]
-        [LibraryImport( LibraryPath )]
+        [Obsolete( "Use LLVMIntrinsicCopyOverloadedName2 instead" )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMIntrinsicCopyOverloadedName2(LLVMModuleRef Mod, uint ID, [In] LLVMTypeRef[] ParamTypes, size_t ParamCount, out size_t NameLength);
 
         [LibraryImport( LibraryPath )]
@@ -2112,14 +2086,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetFunctionCallConv(LLVMValueRef Fn, uint CC);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetGC(LLVMValueRef Fn);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetGC(LLVMValueRef Fn, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial void LLVMSetGC(LLVMValueRef Fn, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2163,21 +2136,21 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMAttributeRef LLVMGetEnumAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMAttributeRef LLVMGetStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string K, uint KLen);
+        public static unsafe partial LLVMAttributeRef LLVMGetStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, string K, uint KLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMRemoveEnumAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMRemoveStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string K, uint KLen);
+        public static unsafe partial void LLVMRemoveStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, string K, uint KLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMAddTargetDependentFunctionAttr(LLVMValueRef Fn, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string A, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string V);
+        public static unsafe partial void LLVMAddTargetDependentFunctionAttr(LLVMValueRef Fn, string A, string V);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2215,13 +2188,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetParamAlignment(LLVMValueRef Arg, uint Align);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMAddGlobalIFunc(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen, LLVMTypeRef Ty, uint AddrSpace, LLVMValueRef Resolver);
+        public static unsafe partial LLVMValueRef LLVMAddGlobalIFunc(LLVMModuleRef M, string Name, size_t NameLen, LLVMTypeRef Ty, uint AddrSpace, LLVMValueRef Resolver);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMGetNamedGlobalIFunc(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, size_t NameLen);
+        public static unsafe partial LLVMValueRef LLVMGetNamedGlobalIFunc(LLVMModuleRef M, string Name, size_t NameLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2255,9 +2228,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMRemoveGlobalIFunc(LLVMValueRef IFunc);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMMDStringInContext2(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, size_t SLen);
+        public static unsafe partial LLVMMetadataRef LLVMMDStringInContext2(LLVMContextRef C, string Str, size_t SLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2271,9 +2244,8 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMValueAsMetadata(LLVMValueRef Val);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetMDString(LLVMValueRef V, out uint Length);
 
         [LibraryImport( LibraryPath )]
@@ -2288,13 +2260,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMReplaceMDNodeOperandWith(LLVMValueRef V, uint Index, LLVMMetadataRef Replacement);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMMDStringInContext(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, uint SLen);
+        public static unsafe partial LLVMValueRef LLVMMDStringInContext(LLVMContextRef C, string Str, uint SLen);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMMDString([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, uint SLen);
+        public static unsafe partial LLVMValueRef LLVMMDString(string Str, uint SLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2304,17 +2276,16 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMMDNode(out LLVMValueRef Vals, uint Count);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOperandBundleRef LLVMCreateOperandBundle([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Tag, size_t TagLen, out LLVMValueRef Args, uint NumArgs);
+        public static unsafe partial LLVMOperandBundleRef LLVMCreateOperandBundle(string Tag, size_t TagLen, out LLVMValueRef Args, uint NumArgs);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMDisposeOperandBundle(LLVMOperandBundleRef Bundle);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetOperandBundleTag(LLVMOperandBundleRef Bundle, out size_t Len);
 
         [LibraryImport( LibraryPath )]
@@ -2338,9 +2309,8 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMBasicBlockRef LLVMValueAsBasicBlock(LLVMValueRef Val);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMGetBasicBlockName(LLVMBasicBlockRef BB);
 
         [LibraryImport( LibraryPath )]
@@ -2387,25 +2357,25 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMAppendExistingBasicBlock(LLVMValueRef Fn, LLVMBasicBlockRef BB);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBasicBlockRef LLVMCreateBasicBlockInContext(LLVMContextRef C, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMBasicBlockRef LLVMCreateBasicBlockInContext(LLVMContextRef C, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBasicBlockRef LLVMAppendBasicBlockInContext(LLVMContextRef C, LLVMValueRef Fn, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMBasicBlockRef LLVMAppendBasicBlockInContext(LLVMContextRef C, LLVMValueRef Fn, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBasicBlockRef LLVMAppendBasicBlock(LLVMValueRef Fn, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMBasicBlockRef LLVMAppendBasicBlock(LLVMValueRef Fn, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBasicBlockRef LLVMInsertBasicBlockInContext(LLVMContextRef C, LLVMBasicBlockRef BB, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMBasicBlockRef LLVMInsertBasicBlockInContext(LLVMContextRef C, LLVMBasicBlockRef BB, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBasicBlockRef LLVMInsertBasicBlock(LLVMBasicBlockRef InsertBeforeBB, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMBasicBlockRef LLVMInsertBasicBlock(LLVMBasicBlockRef InsertBeforeBB, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2540,17 +2510,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMAttributeRef LLVMGetCallSiteEnumAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMAttributeRef LLVMGetCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string K, uint KLen);
+        public static unsafe partial LLVMAttributeRef LLVMGetCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, string K, uint KLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMRemoveCallSiteEnumAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMRemoveCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string K, uint KLen);
+        public static unsafe partial void LLVMRemoveCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, string K, uint KLen);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2661,11 +2631,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMGEPNoWrap LLVMGEPGetNoWrapFlags(LLVMValueRef GEP);
+        public static unsafe partial LLVMGEPNoWrapFlags LLVMGEPGetNoWrapFlags(LLVMValueRef GEP);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMGEPSetNoWrapFlags(LLVMValueRef GEP, LLVMGEPNoWrap NoWrapFlags);
+        public static unsafe partial void LLVMGEPSetNoWrapFlags(LLVMValueRef GEP, LLVMGEPNoWrapFlags NoWrapFlags);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2731,9 +2701,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMInsertIntoBuilder(LLVMBuilderRef Builder, LLVMValueRef Instr);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMInsertIntoBuilderWithName(LLVMBuilderRef Builder, LLVMValueRef Instr, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial void LLVMInsertIntoBuilderWithName(LLVMBuilderRef Builder, LLVMValueRef Instr, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2799,17 +2769,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildIndirectBr(LLVMBuilderRef B, LLVMValueRef Addr, uint NumDests);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCallBr(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Fn, LLVMBasicBlockRef DefaultDest, out LLVMBasicBlockRef IndirectDests, uint NumIndirectDests, out LLVMValueRef Args, uint NumArgs, out LLVMOperandBundleRef Bundles, uint NumBundles, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCallBr(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Fn, LLVMBasicBlockRef DefaultDest, out LLVMBasicBlockRef IndirectDests, uint NumIndirectDests, out LLVMValueRef Args, uint NumArgs, out LLVMOperandBundleRef Bundles, uint NumBundles, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInvoke2(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, [In] LLVMValueRef[] Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildInvoke2(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, [In] LLVMValueRef[] Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInvokeWithOperandBundles(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, out LLVMOperandBundleRef Bundles, uint NumBundles, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildInvokeWithOperandBundles(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, LLVMBasicBlockRef Then, LLVMBasicBlockRef Catch, out LLVMOperandBundleRef Bundles, uint NumBundles, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2819,9 +2789,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildResume(LLVMBuilderRef B, LLVMValueRef Exn);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildLandingPad(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef PersFn, uint NumClauses, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildLandingPad(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef PersFn, uint NumClauses, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2831,17 +2801,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildCatchRet(LLVMBuilderRef B, LLVMValueRef CatchPad, LLVMBasicBlockRef BB);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCatchPad(LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCatchPad(LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCleanupPad(LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCleanupPad(LLVMBuilderRef B, LLVMValueRef ParentPad, out LLVMValueRef Args, uint NumArgs, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCatchSwitch(LLVMBuilderRef B, LLVMValueRef ParentPad, LLVMBasicBlockRef UnwindBB, uint NumHandlers, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCatchSwitch(LLVMBuilderRef B, LLVMValueRef ParentPad, LLVMBasicBlockRef UnwindBB, uint NumHandlers, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2900,133 +2870,133 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetParentCatchSwitch(LLVMValueRef CatchPad, LLVMValueRef CatchSwitch);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNSWAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNSWAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNUWAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNUWAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFAdd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNSWSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNSWSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNUWSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNUWSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFSub(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNSWMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNSWMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNUWMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNUWMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFMul(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildUDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildUDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildExactUDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildExactUDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildExactSDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildExactSDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFDiv(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildURem(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildURem(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSRem(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSRem(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFRem(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFRem(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildShl(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildShl(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildLShr(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildLShr(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildAShr(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildAShr(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildAnd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildAnd(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildOr(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildOr(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildXor(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildXor(LLVMBuilderRef _0, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildBinOp(LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildBinOp(LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNeg(LLVMBuilderRef _0, LLVMValueRef V, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNeg(LLVMBuilderRef _0, LLVMValueRef V, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNSWNeg(LLVMBuilderRef B, LLVMValueRef V, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNSWNeg(LLVMBuilderRef B, LLVMValueRef V, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNUWNeg(LLVMBuilderRef B, LLVMValueRef V, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNUWNeg(LLVMBuilderRef B, LLVMValueRef V, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFNeg(LLVMBuilderRef _0, LLVMValueRef V, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFNeg(LLVMBuilderRef _0, LLVMValueRef V, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildNot(LLVMBuilderRef _0, LLVMValueRef V, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildNot(LLVMBuilderRef _0, LLVMValueRef V, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3066,11 +3036,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMFastMath LLVMGetFastMathFlags(LLVMValueRef FPMathInst);
+        public static unsafe partial LLVMFastMathFlags LLVMGetFastMathFlags(LLVMValueRef FPMathInst);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetFastMathFlags(LLVMValueRef FPMathInst, LLVMFastMath FMF);
+        public static unsafe partial void LLVMSetFastMathFlags(LLVMValueRef FPMathInst, LLVMFastMathFlags FMF);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3086,13 +3056,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetIsDisjoint(LLVMValueRef Inst, [MarshalAs( UnmanagedType.Bool )] bool IsDisjoint);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildMalloc(LLVMBuilderRef _0, LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildMalloc(LLVMBuilderRef _0, LLVMTypeRef Ty, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildArrayMalloc(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildArrayMalloc(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Val, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3106,49 +3076,49 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildMemMove(LLVMBuilderRef B, LLVMValueRef Dst, uint DstAlign, LLVMValueRef Src, uint SrcAlign, LLVMValueRef Size);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildAlloca(LLVMBuilderRef _0, LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildAlloca(LLVMBuilderRef _0, LLVMTypeRef Ty, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildArrayAlloca(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildArrayAlloca(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef Val, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildFree(LLVMBuilderRef _0, LLVMValueRef PointerVal);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildLoad2(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef PointerVal, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildLoad2(LLVMBuilderRef _0, LLVMTypeRef Ty, LLVMValueRef PointerVal, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildStore(LLVMBuilderRef _0, LLVMValueRef Val, LLVMValueRef Ptr);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildGEP2(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [In] LLVMValueRef[] Indices, uint NumIndices, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildGEP2(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [In] LLVMValueRef[] Indices, uint NumIndices, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInBoundsGEP2(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [In] LLVMValueRef[] Indices, uint NumIndices, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildInBoundsGEP2(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, [In] LLVMValueRef[] Indices, uint NumIndices, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildGEPWithNoWrapFlags(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, out LLVMValueRef Indices, uint NumIndices, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, LLVMGEPNoWrap NoWrapFlags);
+        public static unsafe partial LLVMValueRef LLVMBuildGEPWithNoWrapFlags(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, out LLVMValueRef Indices, uint NumIndices, string Name, LLVMGEPNoWrapFlags NoWrapFlags);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildStructGEP2(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, uint Idx, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildStructGEP2(LLVMBuilderRef B, LLVMTypeRef Ty, LLVMValueRef Pointer, uint Idx, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildGlobalString(LLVMBuilderRef B, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildGlobalString(LLVMBuilderRef B, string Str, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildGlobalStringPtr(LLVMBuilderRef B, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Str, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildGlobalStringPtr(LLVMBuilderRef B, string Str, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3184,165 +3154,165 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetAtomicRMWBinOp(LLVMValueRef AtomicRMWInst, LLVMAtomicRMWBinOp BinOp);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildTrunc(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildTrunc(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildZExt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildZExt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSExt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSExt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFPToUI(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFPToUI(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFPToSI(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFPToSI(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildUIToFP(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildUIToFP(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSIToFP(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSIToFP(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFPTrunc(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFPTrunc(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFPExt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFPExt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildPtrToInt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildPtrToInt(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildIntToPtr(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildIntToPtr(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildAddrSpaceCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildAddrSpaceCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildZExtOrBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildZExtOrBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSExtOrBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSExtOrBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildTruncOrBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildTruncOrBitCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCast(LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCast(LLVMBuilderRef B, LLVMOpcode Op, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildPointerCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildPointerCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildIntCast2(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.Bool )] bool IsSigned, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildIntCast2(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.Bool )] bool IsSigned, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFPCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFPCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildIntCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildIntCast(LLVMBuilderRef _0, LLVMValueRef Val, LLVMTypeRef DestTy, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOpcode LLVMGetCastOpcode(LLVMValueRef Src, [MarshalAs( UnmanagedType.Bool )] bool SrcIsSigned, LLVMTypeRef DestTy, [MarshalAs( UnmanagedType.Bool )] bool DestIsSigned);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildICmp(LLVMBuilderRef _0, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildICmp(LLVMBuilderRef _0, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFCmp(LLVMBuilderRef _0, LLVMRealPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFCmp(LLVMBuilderRef _0, LLVMRealPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildPhi(LLVMBuilderRef _0, LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildPhi(LLVMBuilderRef _0, LLVMTypeRef Ty, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCall2(LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, [In] LLVMValueRef[] Args, uint NumArgs, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCall2(LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, [In] LLVMValueRef[] Args, uint NumArgs, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCallWithOperandBundles(LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, out LLVMOperandBundleRef Bundles, uint NumBundles, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildCallWithOperandBundles(LLVMBuilderRef _0, LLVMTypeRef _1, LLVMValueRef Fn, out LLVMValueRef Args, uint NumArgs, out LLVMOperandBundleRef Bundles, uint NumBundles, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildSelect(LLVMBuilderRef _0, LLVMValueRef If, LLVMValueRef Then, LLVMValueRef Else, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildSelect(LLVMBuilderRef _0, LLVMValueRef If, LLVMValueRef Then, LLVMValueRef Else, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildVAArg(LLVMBuilderRef _0, LLVMValueRef List, LLVMTypeRef Ty, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildVAArg(LLVMBuilderRef _0, LLVMValueRef List, LLVMTypeRef Ty, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildExtractElement(LLVMBuilderRef _0, LLVMValueRef VecVal, LLVMValueRef Index, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildExtractElement(LLVMBuilderRef _0, LLVMValueRef VecVal, LLVMValueRef Index, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInsertElement(LLVMBuilderRef _0, LLVMValueRef VecVal, LLVMValueRef EltVal, LLVMValueRef Index, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildInsertElement(LLVMBuilderRef _0, LLVMValueRef VecVal, LLVMValueRef EltVal, LLVMValueRef Index, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildShuffleVector(LLVMBuilderRef _0, LLVMValueRef V1, LLVMValueRef V2, LLVMValueRef Mask, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildShuffleVector(LLVMBuilderRef _0, LLVMValueRef V1, LLVMValueRef V2, LLVMValueRef Mask, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildExtractValue(LLVMBuilderRef _0, LLVMValueRef AggVal, uint Index, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildExtractValue(LLVMBuilderRef _0, LLVMValueRef AggVal, uint Index, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInsertValue(LLVMBuilderRef _0, LLVMValueRef AggVal, LLVMValueRef EltVal, uint Index, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildInsertValue(LLVMBuilderRef _0, LLVMValueRef AggVal, LLVMValueRef EltVal, uint Index, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFreeze(LLVMBuilderRef _0, LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFreeze(LLVMBuilderRef _0, LLVMValueRef Val, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildIsNull(LLVMBuilderRef _0, LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildIsNull(LLVMBuilderRef _0, LLVMValueRef Val, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildIsNotNull(LLVMBuilderRef _0, LLVMValueRef Val, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildIsNotNull(LLVMBuilderRef _0, LLVMValueRef Val, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildPtrDiff2(LLVMBuilderRef _0, LLVMTypeRef ElemTy, LLVMValueRef LHS, LLVMValueRef RHS, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildPtrDiff2(LLVMBuilderRef _0, LLVMTypeRef ElemTy, LLVMValueRef LHS, LLVMValueRef RHS, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFence(LLVMBuilderRef B, LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )] bool singleThread, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFence(LLVMBuilderRef B, LLVMAtomicOrdering ordering, [MarshalAs( UnmanagedType.Bool )] bool singleThread, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildFenceSyncScope(LLVMBuilderRef B, LLVMAtomicOrdering ordering, uint SSID, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMValueRef LLVMBuildFenceSyncScope(LLVMBuilderRef B, LLVMAtomicOrdering ordering, uint SSID, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3414,17 +3384,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMModuleProviderRef LLVMCreateModuleProviderForExistingModule(LLVMModuleRef M);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Path, out LLVMMemoryBufferRef OutMemBuf, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutMessage);
+        public static unsafe partial LLVMStatus LLVMCreateMemoryBufferWithContentsOfFile(string Path, out LLVMMemoryBufferRef OutMemBuf, out DisposeMessageString OutMessage);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMCreateMemoryBufferWithSTDIN(out LLVMMemoryBufferRef OutMemBuf, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutMessage);
+        public static unsafe partial LLVMStatus LLVMCreateMemoryBufferWithSTDIN(out LLVMMemoryBufferRef OutMemBuf, out DisposeMessageString OutMessage);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy([In] byte[] InputData, size_t InputDataLength, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string BufferName);
+        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy([In] sbyte[] InputData, size_t InputDataLength, string BufferName);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

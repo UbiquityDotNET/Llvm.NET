@@ -13,16 +13,19 @@ using System.Runtime.InteropServices.Marshalling;
 namespace Ubiquity.NET.Llvm.Interop
 {
     // NOTE: Context handles are just value types that wrap around a runtime nint (basically a strong typedef)
-    //       Therefore, they are blittable value types and don't need any marshaling.
+    //       Therefore, they are blittable value types and don't need any marshaling. Global handles, however,
+    //       do need marshalling and therefore CANNOT appear in the signature of an unmanaged function pointer.
+    //       Implementations MUST handle marshalling of the ABI types manually
+
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
     using unsafe LLVMOrcCAPIDefinitionGeneratorTryToGenerateFunction = delegate* unmanaged[Cdecl]<
         nint /*LLVMOrcDefinitionGeneratorRef*/ /*GeneratorObj*/,
         void* /*Ctx*/,
-        /*[Out]*/ nint* /*LLVMOrcLookupStateRef*/ /*LookupState*/,
+        /*[Out]*/ LLVMOrcLookupStateRef* /*LookupState*/,
         LLVMOrcLookupKind /*Kind*/,
         LLVMOrcJITDylibRef /*JD*/,
-        LLVMOrcJITDylibLookup /*JDLookupFlags*/,
+        LLVMOrcJITDylibLookupFlags /*JDLookupFlags*/,
         LLVMOrcCLookupSetElement* /*LookupSet*/,
         size_t /*LookupSetSize*/,
         nint /*LLVMErrorRef*//*retVal*/
@@ -45,47 +48,47 @@ namespace Ubiquity.NET.Llvm.Interop
 #pragma warning restore IDE0065, SA1200
 
     [Flags]
-    [SuppressMessage( "Design", "CA1028:Enum Storage should be Int32", Justification = "ABI compatibility" )]
-    public enum LLVMJITSymbolGeneric
-        : byte
+    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Matches ABI naming" )]
+    public enum LLVMJITSymbolGenericFlags
+        : Int32
     {
-        None = 0,
-        Exported = 1,
-        Weak = 2,
-        Callable = 4,
-        MaterializationSideEffectsOnly = 8,
+        LLVMJITSymbolGenericFlagsNone = 0,
+        LLVMJITSymbolGenericFlagsExported = 1,
+        LLVMJITSymbolGenericFlagsWeak = 2,
+        LLVMJITSymbolGenericFlagsCallable = 4,
+        LLVMJITSymbolGenericFlagsMaterializationSideEffectsOnly = 8,
     }
 
     public enum LLVMOrcLookupKind
         : Int32
     {
-        Static = 0,
-        DLSym = 1,
+        LLVMOrcLookupKindStatic = 0,
+        LLVMOrcLookupKindDLSym = 1,
     }
 
     [Flags]
-    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "It does have one, and the name reflects the meaning" )]
-    public enum LLVMOrcJITDylibLookup
+    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "It does have one, and the name reflects the meaning, which is NOT 'None'" )]
+    public enum LLVMOrcJITDylibLookupFlags
         : Int32
     {
-        MatchExportedSymbolsOnly = 0,
-        MatchAllSymbols = 1,
+        LLVMOrcJITDylibLookupFlagsMatchExportedSymbolsOnly = 0,
+        LLVMOrcJITDylibLookupFlagsMatchAllSymbols = 1,
     }
 
     [Flags]
-    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "It does have one, and the name reflects the meaning" )]
-    public enum LLVMOrcSymbolLookup
+    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "It does have one, and the name reflects the meaning, which is NOT 'None'" )]
+    public enum LLVMOrcSymbolLookupFlags
         : Int32
     {
-        RequiredSymbol = 0,
-        WeaklyReferencedSymbol = 1,
+        LLVMOrcSymbolLookupFlagsRequiredSymbol = 0,
+        LLVMOrcSymbolLookupFlagsWeaklyReferencedSymbol = 1,
     }
 
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LLVMJITSymbolFlags
     {
-        public readonly LLVMJITSymbolGeneric GenericFlags;
-        public readonly byte TargetFlags; // exact meaning is defined by target...
+        public readonly byte /*LLVMJITSymbolGeneric*/ GenericFlags;
+        public readonly byte TargetFlags;
     }
 
     [StructLayout( LayoutKind.Sequential )]
@@ -126,8 +129,8 @@ namespace Ubiquity.NET.Llvm.Interop
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LLVMOrcCSymbolsList
     {
-        // This is a Pointer to pointer!
-        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef[]*/ Symbols;
+        // This is an Array/Span of LLVMOrcSymbolStringPoolEntryRef
+        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef* */ Symbols;
         public readonly size_t Length;
     }
 
@@ -142,7 +145,9 @@ namespace Ubiquity.NET.Llvm.Interop
     public readonly record struct LLVMOrcCSymbolDependenceGroup
     {
         public readonly LLVMOrcCSymbolsList Symbols;
-        public readonly nint /*LLVMOrcCDependenceMapPair[]*/ Dependencies;
+
+        // This is an Array/Span of LLVMOrcCDependenceMapPair
+        public readonly nint /*LLVMOrcCDependenceMapPair* */ Dependencies;
         public readonly size_t NumDependencies;
     }
 
@@ -150,14 +155,14 @@ namespace Ubiquity.NET.Llvm.Interop
     public record struct LLVMOrcCJITDylibSearchOrderElement
     {
         public LLVMOrcJITDylibRef JD;
-        public LLVMOrcJITDylibLookup JDLookupFlags;
+        public LLVMOrcJITDylibLookupFlags JDLookupFlags;
     }
 
     [StructLayout( LayoutKind.Sequential )]
     public record struct LLVMOrcCLookupSetElement
     {
         public nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
-        public LLVMOrcSymbolLookup LookupFlags;
+        public LLVMOrcSymbolLookupFlags LookupFlags;
     }
 
     public static partial class NativeMethods
@@ -174,9 +179,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcSymbolStringPoolClearDeadEntries(LLVMOrcSymbolStringPoolRef SSP);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcExecutionSessionIntern(LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcExecutionSessionIntern(LLVMOrcExecutionSessionRef ES, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -199,9 +204,8 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef S);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string LLVMOrcSymbolStringPoolEntryStr(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryPath )]
@@ -224,9 +228,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeMaterializationUnit(LLVMOrcMaterializationUnitRef MU);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit([MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name, void* Ctx, LLVMOrcCSymbolFlagsMapPair* Syms, size_t NumSyms, LLVMOrcSymbolStringPoolEntryRef InitSym, LLVMOrcMaterializationUnitMaterializeFunction Materialize, LLVMOrcMaterializationUnitDiscardFunction Discard, LLVMOrcMaterializationUnitDestroyFunction Destroy);
+        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(string Name, void* Ctx, LLVMOrcCSymbolFlagsMapPair* Syms, size_t NumSyms, LLVMOrcSymbolStringPoolEntryRef InitSym, LLVMOrcMaterializationUnitMaterializeFunction Materialize, LLVMOrcMaterializationUnitDiscardFunction Discard, LLVMOrcMaterializationUnitDestroyFunction Destroy);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -292,17 +296,17 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(LLVMOrcMaterializationResponsibilityRef MR, out LLVMOrcSymbolStringPoolEntryRef Symbols, size_t NumSymbols, out LLVMOrcMaterializationResponsibilityRef Result);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionCreateBareJITDylib(LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionCreateBareJITDylib(LLVMOrcExecutionSessionRef ES, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcExecutionSessionCreateJITDylib(LLVMOrcExecutionSessionRef ES, out LLVMOrcJITDylibRef Result, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMErrorRef LLVMOrcExecutionSessionCreateJITDylib(LLVMOrcExecutionSessionRef ES, out LLVMOrcJITDylibRef Result, string Name);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionGetJITDylibByName(LLVMOrcExecutionSessionRef ES, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionGetJITDylibByName(LLVMOrcExecutionSessionRef ES, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -336,13 +340,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForProcess(out LLVMOrcDefinitionGeneratorRef Result, sbyte GlobalPrefx, LLVMOrcSymbolPredicate Filter, void* FilterCtx);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForPath(out LLVMOrcDefinitionGeneratorRef Result, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string FileName, sbyte GlobalPrefix, LLVMOrcSymbolPredicate Filter, void* FilterCtx);
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateDynamicLibrarySearchGeneratorForPath(out LLVMOrcDefinitionGeneratorRef Result, string FileName, sbyte GlobalPrefix, LLVMOrcSymbolPredicate Filter, void* FilterCtx);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateStaticLibrarySearchGeneratorForPath(out LLVMOrcDefinitionGeneratorRef Result, LLVMOrcObjectLayerRef ObjLayer, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string FileName, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple);
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateStaticLibrarySearchGeneratorForPath(out LLVMOrcDefinitionGeneratorRef Result, LLVMOrcObjectLayerRef ObjLayer, string FileName, string TargetTriple);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -382,12 +386,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
-        public static unsafe partial string LLVMOrcJITTargetMachineBuilderGetTargetTriple(LLVMOrcJITTargetMachineBuilderRef JTMB);
+        public static unsafe partial DisposeMessageString LLVMOrcJITTargetMachineBuilderGetTargetTriple(LLVMOrcJITTargetMachineBuilderRef JTMB);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcJITTargetMachineBuilderSetTargetTriple(LLVMOrcJITTargetMachineBuilderRef JTMB, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple);
+        public static unsafe partial void LLVMOrcJITTargetMachineBuilderSetTargetTriple(LLVMOrcJITTargetMachineBuilderRef JTMB, string TargetTriple);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -417,25 +420,25 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcObjectTransformLayerSetTransform(LLVMOrcObjectTransformLayerRef ObjTransformLayer, LLVMOrcObjectTransformLayerTransformFunction TransformFunction, void* Ctx);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcIndirectStubsManagerRef LLVMOrcCreateLocalIndirectStubsManager([MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple);
+        public static unsafe partial LLVMOrcIndirectStubsManagerRef LLVMOrcCreateLocalIndirectStubsManager(string TargetTriple);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeIndirectStubsManager(LLVMOrcIndirectStubsManagerRef ISM);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateLocalLazyCallThroughManager([MarshalUsing( typeof( AnsiStringMarshaller ) )] string TargetTriple, LLVMOrcExecutionSessionRef ES, UInt64 ErrorHandlerAddr, out LLVMOrcLazyCallThroughManagerRef LCTM);
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateLocalLazyCallThroughManager(string TargetTriple, LLVMOrcExecutionSessionRef ES, UInt64 ErrorHandlerAddr, out LLVMOrcLazyCallThroughManagerRef LCTM);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeLazyCallThroughManager(LLVMOrcLazyCallThroughManagerRef LCTM);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcDumpObjectsRef LLVMOrcCreateDumpObjects([MarshalUsing( typeof( AnsiStringMarshaller ) )] string DumpDir, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string IdentifierOverride);
+        public static unsafe partial LLVMOrcDumpObjectsRef LLVMOrcCreateDumpObjects(string DumpDir, string IdentifierOverride);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

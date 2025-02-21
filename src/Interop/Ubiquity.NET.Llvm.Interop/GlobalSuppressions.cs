@@ -24,3 +24,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Interop ABI naming matches source for most structures and types" )]
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1642:Constructor summary documentation should begin with standard text", Justification = "Dumb rule - if the summary is really **supposed** to be a fixed format then tooling should just generate it..." )]
 [assembly: SuppressMessage( "Maintainability", "CA1506:Avoid excessive class coupling", Justification = "The whole point of this library is to expose the native ABI methods and types" )]
+[assembly: SuppressMessage( "Naming", "CA1712:Do not prefix enum values with type name", Justification = "Matches ABI. Wrapping OO library provides .NET 'style' names" )]
+[assembly: SuppressMessage( "Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Matches ABI. Wrapping OO library provides .NET 'style' names" )]

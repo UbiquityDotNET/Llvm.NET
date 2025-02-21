@@ -60,7 +60,7 @@ namespace Ubiquity.NET.Llvm.Interop
             string sourceFilePath = "",
             int sourceLineNumber = 0)
         {
-            if (IsInvalid)
+            if(IsInvalid)
             {
                 throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber}; {message}" );
             }
@@ -72,8 +72,20 @@ namespace Ubiquity.NET.Llvm.Interop
         /// </param>
         [SuppressMessage( "Style", "IDE0290:Use primary constructor", Justification = "Visibility of constructor is not expressible with a primary constructor" )]
         protected LlvmObjectRef(bool ownsHandle)
-            : base( IntPtr.Zero, ownsHandle )
+            : base( nint.Zero, ownsHandle )
         {
+        }
+
+        protected LlvmObjectRef(nint handle, bool ownsHandle)
+            : base(nint.Zero, ownsHandle)
+        {
+            SetHandle(handle);
+        }
+
+        protected LlvmObjectRef(nint handle)
+            : this(ownsHandle: true)
+        {
+            SetHandle(handle);
         }
     }
 }

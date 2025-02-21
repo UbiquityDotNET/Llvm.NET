@@ -14,16 +14,42 @@ using static Ubiquity.NET.Llvm.Interop.Constants;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
+    [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0001:Class is declared partial but has only one part", Justification = "Establishes pattern, others may be added in future" )]
+    public static partial class Constants
+    {
+        // These were all originally untyped #defines in the LLVM source
+        public const string LLVM_BLAKE3_VERSION_STRING = "1.3.1";
+        public const int LLVM_BLAKE3_KEY_LEN = 32;
+        public const int LLVM_BLAKE3_OUT_LEN = 32;
+        public const int LLVM_BLAKE3_BLOCK_LEN = 64;
+        public const int LLVM_BLAKE3_CHUNK_LEN = 1024;
+        public const int LLVM_BLAKE3_MAX_DEPTH = 54;
+    }
+
     [InlineArray( 8 )]
-    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray, no need" )]
-    public struct Uint32_FixedArray_of_8
+    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray" )]
+    public struct llvm_blake3_chunk_state_cv_t
     {
         private UInt32 Element;
     }
 
     [InlineArray( LLVM_BLAKE3_BLOCK_LEN )]
-    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray, no need" )]
-    public struct Blake3BlockBuffer
+    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray" )]
+    public struct llvm_blake3_chunk_state_buf_t
+    {
+        private byte Element;
+    }
+
+    [InlineArray( 8 )]
+    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray" )]
+    public struct llvm_blake3_hasher_key_t
+    {
+        private UInt32 Element;
+    }
+
+    [InlineArray( (LLVM_BLAKE3_MAX_DEPTH + 1) * LLVM_BLAKE3_OUT_LEN )]
+    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray" )]
+    public struct llvm_blake3_hasher_cv_stack_t
     {
         private byte Element;
     }
@@ -31,35 +57,27 @@ namespace Ubiquity.NET.Llvm.Interop
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct llvm_blake3_chunk_state
     {
-        public readonly Uint32_FixedArray_of_8 cv;
+        public readonly llvm_blake3_chunk_state_cv_t cv;
         public readonly UInt64 chunk_counter;
-        public readonly Blake3BlockBuffer buf;
+        public readonly llvm_blake3_chunk_state_buf_t buf;
         public readonly byte buf_len;
         public readonly byte blocks_compressed;
         public readonly byte flags;
     }
 
-    [InlineArray( (LLVM_BLAKE3_MAX_DEPTH + 1) * LLVM_BLAKE3_OUT_LEN )]
-    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray, no need" )]
-    public struct BlakeStackBuffer
-    {
-        private byte Element;
-    }
-
     [StructLayout( LayoutKind.Sequential )]
-    public unsafe readonly record struct llvm_blake3_hasher
+    public readonly record struct llvm_blake3_hasher
     {
-        public readonly Uint32_FixedArray_of_8 key;
+        public readonly llvm_blake3_hasher_key_t key;
         public readonly llvm_blake3_chunk_state chunk;
         public readonly byte cv_stack_len;
-        public readonly BlakeStackBuffer cv_stack;
+        public readonly llvm_blake3_hasher_cv_stack_t cv_stack;
     }
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( AnsiStringMarshaller ) )]
         public static unsafe partial string llvm_blake3_version();
 
         [LibraryImport( LibraryPath )]
@@ -70,9 +88,9 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_keyed(out llvm_blake3_hasher self, [In][MarshalUsing( ConstantElementCount = LLVM_BLAKE3_KEY_LEN )] byte[] key);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_derive_key(out llvm_blake3_hasher self, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string context);
+        public static unsafe partial void llvm_blake3_hasher_init_derive_key(out llvm_blake3_hasher self, string context);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -93,17 +111,5 @@ namespace Ubiquity.NET.Llvm.Interop
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_reset(out llvm_blake3_hasher self);
-    }
-
-    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1400:Access modifier should be declared", Justification = "It does; 'file' is an access modifier" )]
-    file static class Constants
-    {
-        // These were all originally untyped #defines in the LLVM source
-        public const string LLVM_BLAKE3_VERSION_STRING = "1.3.1";
-        public const int LLVM_BLAKE3_KEY_LEN = 32;
-        public const int LLVM_BLAKE3_OUT_LEN = 32;
-        public const int LLVM_BLAKE3_BLOCK_LEN = 64;
-        public const int LLVM_BLAKE3_CHUNK_LEN = 1024;
-        public const int LLVM_BLAKE3_MAX_DEPTH = 54;
     }
 }

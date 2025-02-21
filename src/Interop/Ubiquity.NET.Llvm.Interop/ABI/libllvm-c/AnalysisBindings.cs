@@ -6,7 +6,6 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -14,6 +13,6 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LibLLVMVerifyFunctionEx(LLVMValueRef Fn, LLVMVerifierFailureAction Action, [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string OutMessages);
+        public static unsafe partial LLVMStatus LibLLVMVerifyFunctionEx(LLVMValueRef Fn, LLVMVerifierFailureAction Action, out DisposeMessageString OutMessages);
     }
 }

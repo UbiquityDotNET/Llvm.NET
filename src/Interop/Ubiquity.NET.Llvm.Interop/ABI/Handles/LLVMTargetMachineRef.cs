@@ -5,15 +5,13 @@
 // -----------------------------------------------------------------------
 
 using System.CodeDom.Compiler;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle</summary>
-    [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Called ONLY by this class" )]
-    public partial class LLVMTargetMachineRef
+    public class LLVMTargetMachineRef
         : LlvmObjectRef
     {
         /// <summary>Initializes an instance of <see cref="LLVMTargetMachineRef"/> with default values</summary>
@@ -46,11 +44,11 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             return true;
-        }
 
-        [LibraryImport( NativeMethods.LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial void LLVMDisposeTargetMachine(nint p);
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static extern void LLVMDisposeTargetMachine(nint p);
+        }
     }
 
     // CONSIDER: Make the alias a `ref struct` to prevent boxing or heap allocation.
@@ -66,7 +64,7 @@ namespace Ubiquity.NET.Llvm.Interop
     /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
     /// perform any automatic cleanup. [That is, this is a PURE reference to an object]
     ///</remarks>
-    [GeneratedCode( "LlvmBindingsGenerator", "20.1.0-alpha.0.0.ci-ZZZ.601495633+d1254fe9f1777d1dc7521c608b84dde1ba5175e0" )]
+    [GeneratedCode( "LlvmBindingsGenerator", "20.1.0-alpha.0.0.ci-ZZZ.601755488+2c442300e0dbcc1976dfb1243d8f4824d380c8d2" )]
     public class LLVMTargetMachineRefAlias
         : LLVMTargetMachineRef
     {

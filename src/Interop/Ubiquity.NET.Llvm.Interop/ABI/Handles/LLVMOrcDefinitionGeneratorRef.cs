@@ -4,18 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle</summary>
-    [SuppressMessage( "Design", "CA1060:Move pinvokes to native methods class", Justification = "Called ONLY by this class" )]
-    public partial class LLVMOrcDefinitionGeneratorRef
+    public class LLVMOrcDefinitionGeneratorRef
         : LlvmObjectRef
     {
-        /// <summary>Initializes a new instance of the <see cref="LLVMOrcDefinitionGeneratorRef"/> with default values</summary>
+        /// <summary>Initializes an instance of <see cref="LLVMOrcDefinitionGeneratorRef"/> with default values</summary>
         public LLVMOrcDefinitionGeneratorRef()
             : base( ownsHandle: true )
         {
@@ -45,10 +43,10 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             return true;
-        }
 
-        [LibraryImport( NativeMethods.LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial void LLVMOrcDisposeDefinitionGenerator(nint p);
+            [DllImport( NativeMethods.LibraryPath )]
+            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            static extern void LLVMOrcDisposeDefinitionGenerator(nint p);
+        }
     }
 }

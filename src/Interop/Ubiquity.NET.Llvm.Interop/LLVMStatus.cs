@@ -14,6 +14,8 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Gets a value indicating whether the operation was successful</summary>
         public bool Succeeded => ErrorCode == 0;
 
+        public int ErrorCode { get; init; }
+
         /// <summary>Gets a value indicating whether the operation Failed</summary>
         public bool Failed => !Succeeded;
 
@@ -21,7 +23,5 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             ErrorCode = value;
         }
-
-        private readonly int ErrorCode;
     }
 }

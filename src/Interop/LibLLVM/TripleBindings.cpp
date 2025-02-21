@@ -171,7 +171,7 @@ extern "C"
         return LibLLVMParseTriple( LLVM_HOST_TRIPLE );
     }
 
-    char const* LibLLVMTripleAsString( LibLLVMTripleRef triple, bool normalize )
+    char const* LibLLVMTripleAsString( LibLLVMTripleRef triple, LLVMBool normalize )
     {
         Triple& llvmTriple = *unwrap( triple );
         auto str = normalize ? llvmTriple.normalize( ) : llvmTriple.getTriple( );

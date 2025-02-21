@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.CodeDom.Compiler;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
@@ -21,31 +19,10 @@ namespace Ubiquity.NET.Llvm.Interop
     ///     behavior, including, and most likely, memory access violations.
     /// </note>
     /// </remarks>
-    [GeneratedCode( "LlvmBindingsGenerator", "20.1.0-alpha.0.0.ci-ZZZ.601495633+d1254fe9f1777d1dc7521c608b84dde1ba5175e0" )]
     [NativeMarshalling( typeof( ContextHandleMarshaller<LLVMComdatRef> ) )]
     public readonly record struct LLVMComdatRef
         : IContextHandle<LLVMComdatRef>
     {
-        /// <summary>Fluent null handle validation</summary>
-        /// <param name="message">Message to use for an exception if thrown</param>
-        /// <param name="memberName">Name if the member calling this function (usually provided by compiler via <see cref="CallerMemberNameAttribute"/></param>
-        /// <param name="sourceFilePath">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerFilePathAttribute"/></param>
-        /// <param name="sourceLineNumber">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerLineNumberAttribute"/></param>
-        /// <returns>This object for fluent style use</returns>
-        public LLVMComdatRef ThrowIfInvalid(
-            string message = "",
-            [CallerMemberNameAttribute] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            return DangerousGetHandle() == nint.Zero
-                ? throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " )
-                : this;
-        }
-
-        /// <summary>Gets a value indicating if this handle is a <see langword="null"/> value</summary>
-        public bool IsNull => Handle == nint.Zero;
-
         /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
         /// <returns>The handle as an <see cref="nint"/></returns>
         public nint DangerousGetHandle() => Handle;
@@ -54,14 +31,6 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="abiValue">Native ABI value of the handle</param>
         /// <returns>Type specific wrapper around the native ABI handle</returns>
         public static LLVMComdatRef FromABI(nint abiValue) => new( abiValue );
-
-        /// <summary>Gets a zero (<see langword="null"/>) value handle</summary>
-        public static LLVMComdatRef Zero => FromABI( nint.Zero );
-
-        /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
-        /// <param name="value">Handle to convert</param>
-        /// <returns>The handle as an <see cref="nint"/></returns>
-        public static implicit operator nint(LLVMComdatRef value) => value.Handle;
 
         private LLVMComdatRef(nint p)
         {

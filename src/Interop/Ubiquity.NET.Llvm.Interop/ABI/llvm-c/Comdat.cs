@@ -14,18 +14,18 @@ namespace Ubiquity.NET.Llvm.Interop
     public enum LLVMComdatSelectionKind
         : Int32
     {
-        Any = 0,
-        ExactMatch = 1,
-        Largest = 2,
-        NoDeduplicate = 3,
-        SameSize = 4,
+        LLVMAnyComdatSelectionKind = 0,
+        LLVMExactMatchComdatSelectionKind = 1,
+        LLVMLargestComdatSelectionKind = 2,
+        LLVMNoDeduplicateComdatSelectionKind = 3,
+        LLVMSameSizeComdatSelectionKind = 4,
     }
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatRef LLVMGetOrInsertComdat(LLVMModuleRef M, [MarshalUsing( typeof( AnsiStringMarshaller ) )] string Name);
+        public static unsafe partial LLVMComdatRef LLVMGetOrInsertComdat(LLVMModuleRef M, string Name);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
