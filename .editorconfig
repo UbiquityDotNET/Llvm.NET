@@ -67,6 +67,7 @@ csharp_prefer_system_threading_lock = true:suggestion
 csharp_style_expression_bodied_constructors = false:error
 csharp_style_expression_bodied_lambdas = true:warning
 csharp_style_expression_bodied_local_functions = true:suggestion
+dotnet_diagnostic.RECS0001.severity = error
 
 # Analysis and refactoring rules for Ubiquity.NET
 # Description: Code analysis rules for Ubiquity.NET projects
@@ -75,6 +76,10 @@ csharp_style_expression_bodied_local_functions = true:suggestion
 
 # Code files
 [*.{cs,vb}]
+
+
+# CA1420: Property, type, or attribute requires runtime marshalling
+dotnet_diagnostic.CA1420.severity = error
 
 # IDE0079: Remove unnecessary suppression
 dotnet_diagnostic.IDE0079.severity = none
