@@ -17,8 +17,6 @@ using CppSharp.Passes;
 using CppSharp.Types;
 using CppSharp.Utils;
 
-using LlvmBindingsGenerator.Templates;
-
 using ClangParser = CppSharp.ClangParser;
 
 namespace LlvmBindingsGenerator
@@ -145,38 +143,32 @@ namespace LlvmBindingsGenerator
                     Directory.CreateDirectory( generatorOutputPath );
                 }
 
-                foreach( ICodeGenTemplate template in generator.Templates )
+                try
                 {
-                    try
+                    string templateOutputPath = generatorOutputPath;
+                    if( !string.IsNullOrWhiteSpace( generator.Template.SubFolder ) )
                     {
-                        string templateOutputPath = generatorOutputPath;
-                        if( !string.IsNullOrWhiteSpace( template.SubFolder ) )
-                        {
-                            templateOutputPath = Path.Combine( templateOutputPath, template.SubFolder );
-                            Directory.CreateDirectory( templateOutputPath );
-                        }
-
-                        string fileName = $"{generator.FileNameWithoutExtension}.{template.FileExtension}";
-
-                        string fullFilePathfile = Path.Combine( templateOutputPath, fileName );
-                        File.WriteAllText( fullFilePathfile, template.Generate() );
-
-                        Diagnostics.Debug( "Generated '{0}'", fileName );
+                        templateOutputPath = Path.Combine( templateOutputPath, generator.Template.SubFolder );
+                        Directory.CreateDirectory( templateOutputPath );
                     }
-                    catch( System.IO.IOException ex )
-                    {
-                        Diagnostics.Error( ex.Message );
-                    }
+
+                    string fileName = $"{generator.FileNameWithoutExtension}.{generator.Template.FileExtension}";
+
+                    string fullFilePathfile = Path.Combine( templateOutputPath, fileName );
+                    File.WriteAllText( fullFilePathfile, generator.Template.Generate() );
+
+                    Diagnostics.Debug( "Generated '{0}'", fileName );
+                }
+                catch( System.IO.IOException ex )
+                {
+                    Diagnostics.Error( ex.Message );
                 }
             }
         }
 
         public void Dispose()
         {
-            if( Context != null )
-            {
-                Context.TargetInfo.Dispose();
-            }
+            Context?.TargetInfo.Dispose();
 
             ParserOptions.Dispose();
             CppSharp.AST.Type.TypePrinterDelegate = null;
@@ -268,10 +260,7 @@ namespace LlvmBindingsGenerator
                     throw new InvalidOptionException( "One of your modules has no library name." );
                 }
 
-                if( module.OutputNamespace == null )
-                {
-                    module.OutputNamespace = module.LibraryName;
-                }
+                module.OutputNamespace ??= module.LibraryName;
             }
 
             if( Options.NoGenIncludeDirs != null )

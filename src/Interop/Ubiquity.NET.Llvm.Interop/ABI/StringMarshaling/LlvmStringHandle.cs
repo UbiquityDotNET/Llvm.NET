@@ -13,7 +13,10 @@ namespace Ubiquity.NET.Llvm.Interop
     /// <remarks>
     /// This base class provides most of the functionality for a string pointer except
     /// the disposal/release of the string. That is left to derived types to provide the
-    /// specific operation to release the pointer.
+    /// specific operation to release the pointer. In particular this provides a simple
+    /// copy by value marshalling and there is no copy made until <see cref="ToString()"/>
+    /// is called. In particular, <see cref="CreateReadOnlySpan"/> will NOT make a managed
+    /// copy and the returned span is to the original unmanaged memory.
     /// </remarks>
     public abstract class LlvmStringHandle
         : SafeHandle
@@ -23,6 +26,10 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Creates a readonly span for the data in this string</summary>
         /// <returns>Span of the ANSI characters in this string (as byte)</returns>
+        /// <remarks>
+        /// This does NOT make a managed copy of the underlying string memory. Instead
+        /// the returned span refers directly to the unmanaged memory of the string.
+        /// </remarks>
         public ReadOnlySpan<byte> CreateReadOnlySpan()
         {
             if(IsClosed || IsInvalid)

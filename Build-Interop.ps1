@@ -61,8 +61,8 @@ try
     # is insufficient to keep the size reasonable enough to support posting to public galleries. Additionally, the
     # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
     # and incompatibilities libs are generally not something published in a package. However, since the build time
-    # for the libraries exceeds the time allowed for most hosted build services these must be pre-built for the
-    # automated builds.
+    # for the libraries exceeds the time allowed for most hosted build services, or the size of the output exceeds
+	# allowed footprint these must be pre-built for the automated builds.
     Install-LlvmLibs $buildInfo
 
     $msBuildProperties = @{ Configuration = $Configuration
@@ -94,7 +94,13 @@ try
 
         Write-Information "Building LibLLVM"
         $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
-        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
+		
+		# LibLlvm ONLy has a release configuration, the interop lib only ever references that.
+		# Force a release build no matter what the "configuration" parameter is.
+		$libLLvmBuildProps = @{ Configuration = 'Release'
+                                LlvmVersion = $buildInfo['LlvmVersion']
+                              }
+        Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $libLLvmBuildProps -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
 
         Write-Information "Building Ubiquity.NET.Llvm.Interop"
         dotnet build 'src\Interop\Interop.sln' -p:$msbuildPropertyList

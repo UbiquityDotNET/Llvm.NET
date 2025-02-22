@@ -69,16 +69,19 @@ namespace LlvmBindingsGenerator
             Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
             Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
 
+#if GENERATE_CS_INTEROP
             // configuration validation - generates warnings for entries in configuration that
             // have no corresponding elements in the source AST. (either from typos in the config
             // or version to version changes in the underlying LLVM source)
             Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
-
             Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
 
             // General transformations - These passes may alter the in memory AST
             Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
+#endif
             Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
+
+#if GENERATE_CS_INTEROP
             Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
             Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
             Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnums ) );
@@ -89,6 +92,8 @@ namespace LlvmBindingsGenerator
 
             // validations to apply after all transforms complete
             Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( Configuration ) );
+#endif
+
             Driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
         }
 

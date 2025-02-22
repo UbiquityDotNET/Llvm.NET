@@ -20,7 +20,7 @@ namespace LlvmBindingsGenerator
 
         string FileRelativeDirectory { get; }
 
-        IEnumerable<ICodeGenTemplate> Templates { get; }
+        ICodeGenTemplate Template { get; }
     }
 
     internal interface ICodeGeneratorTemplateFactory

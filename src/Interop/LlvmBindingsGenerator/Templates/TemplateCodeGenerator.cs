@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal class TemplateCodeGenerator
@@ -14,9 +12,9 @@ namespace LlvmBindingsGenerator.Templates
         public TemplateCodeGenerator(
             string fileNameWithoutExtension,
             string fileRelativeDirectory,
-            IEnumerable<ICodeGenTemplate> templates
+            ICodeGenTemplate template
             )
-            : this( true, fileNameWithoutExtension, fileRelativeDirectory, templates)
+            : this( isValid: true, fileNameWithoutExtension, fileRelativeDirectory, template)
         {
         }
 
@@ -24,13 +22,13 @@ namespace LlvmBindingsGenerator.Templates
             bool isValid,
             string fileNameWithoutExtension,
             string fileRelativeDirectory,
-            IEnumerable<ICodeGenTemplate> templates
+            ICodeGenTemplate template
             )
         {
             IsValid = isValid;
             FileNameWithoutExtension = fileNameWithoutExtension;
             FileRelativeDirectory = fileRelativeDirectory;
-            Templates = templates;
+            Template = template;
         }
 
         public bool IsValid { get; }
@@ -39,6 +37,6 @@ namespace LlvmBindingsGenerator.Templates
 
         public string FileRelativeDirectory { get; }
 
-        public IEnumerable<ICodeGenTemplate> Templates { get; }
+        public ICodeGenTemplate Template { get; }
     }
 }

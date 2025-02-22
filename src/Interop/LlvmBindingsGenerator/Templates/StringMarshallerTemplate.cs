@@ -3,7 +3,6 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
 namespace LlvmBindingsGenerator.Templates
 {
     internal partial class StringMarshallerTemplate

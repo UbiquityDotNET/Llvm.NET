@@ -31,7 +31,7 @@ try
 
     # build the interop layer first using the script to manage the complexities of generated marshaling Interop
     # and dependencies between C# and C++ projects.
-    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+    .\Build-Interop.ps1 -Configuration $Configuration -AllowVsPreReleases:$AllowVsPreReleases
 
     # build the Managed code OO Wrapper layer
     Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""

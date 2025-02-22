@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
+using Ubiquity.NET.Llvm.Interop.Handles;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
     [Flags]

@@ -12,6 +12,18 @@ well. Thus, the design here uses a simpler PowerShell script that takes care of 
 correct platform+configuration+target framework combinations of each and finally builds the NuGet
 package from the resulting binaries.
 
+# OBSOLECENSE NOTE
+Most of the functionality described here is now obsolete. The source code committed to the repo
+includes the C# interop code so this generator is not needed for that. It **IS** still used to
+check the APIs exported from the extensions AND to generate the `EXPORTS.g.def` file used by the
+native code DLL. But that's where it ends.
+
+The marshalling support and SourceGenerators in C# and .NET has progressed to the point where
+it is easier to express the marshalling needs of an API, in the C# language itself instead of
+a foreign language custom for this case (the YAML config file). For simplicity sake, the config
+file format and parsing remains intact [Though that may change in the future once everything
+else settles down]
+
 ## Projects
 ### LlvmBindingsGenerator
 This is the P/Invoke generator for the generated interop code in Ubiquity.NET.Llvm.Interop. It uses

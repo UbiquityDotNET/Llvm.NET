@@ -8,6 +8,8 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+using Ubiquity.NET.Llvm.Interop.Handles;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
     public enum LLVMVerifierFailureAction

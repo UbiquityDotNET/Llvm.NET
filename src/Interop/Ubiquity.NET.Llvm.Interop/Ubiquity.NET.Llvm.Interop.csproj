@@ -24,11 +24,12 @@
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
+    <!-- NOTE: The Ubiquity.NET.LibLLVM.dll currently only comes in a release form, which is really RelWithDebInfo in LLVM Cmake terms -->
+    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\Release\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
         <PackagePath>runtimes\win-x64\native</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.pdb" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.pdb">
+    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\Release\x64\Ubiquity.NET.LibLLVM.pdb" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.pdb">
         <PackagePath>runtimes\win-x64\native</PackagePath>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -45,10 +46,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Remove="GeneratedCode\**\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GeneratedCode\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
@@ -58,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
       <PackageReference Include="Ubiquity.NET.ArgValidators" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquity.NET.Llvm.Interop.Handles\Ubiquity.NET.Llvm.Interop.Handles.csproj" />
   </ItemGroup>
   <!--
     Version numbers are computed at build time after any declarative properties are evaluated

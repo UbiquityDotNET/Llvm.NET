@@ -1,0 +1,59 @@
+﻿using System;
+using System.CodeDom.Compiler;
+using System.IO;
+
+namespace SourceGenerator.Utils
+{
+    /// <summary>Extension methods for an <see cref="IndentedTextWriter"/></summary>
+    public static class IndentedWriterExtensions
+    {
+        /// <summary>Pushes the indentation level returning an <see cref="IDisposable"/> that restores (pops) it on dispose</summary>
+        /// <param name="writer">Writer to indent</param>
+        /// <returns><see cref="IDisposable"/> that will restore (pop) the indentation one level when <see cref="IDisposable.Dispose"/> is called</returns>
+        /// <remarks>
+        /// This is a RAII like operation that simplifies/clarifies indentation updates for an
+        /// <see cref="IndentedTextWriter"/>. The return is generally used with a C# 'using' statement
+        /// or language equivalent to achieve automatic "pop" behavior.
+        /// </remarks>
+        public static IDisposable PushIndent(this IndentedTextWriter writer)
+        {
+            ++writer.Indent;
+            return new DisposableAction(() => --writer.Indent);
+        }
+
+        public static void WriteLines(this IndentedTextWriter writer, string txt)
+        {
+            using var rdr = new StringReader(txt);
+            for(string line = rdr.ReadLine(); line != null; line = rdr.ReadLine())
+            {
+                WriteLineOrBlankWithoutTabs( writer, line );
+            }
+        }
+
+        public static void WriteLines(this IndentedTextWriter writer, string txt, string match, string replacement)
+        {
+            using var rdr = new StringReader(txt);
+            for(string line = rdr.ReadLine(); line != null; line = rdr.ReadLine())
+            {
+                WriteLineOrBlankWithoutTabs(writer, line.Replace(match, replacement));
+            }
+        }
+
+        public static void WriteBlankLine(this IndentedTextWriter writer)
+        {
+            writer.WriteLineNoTabs( string.Empty );
+        }
+
+        private static void WriteLineOrBlankWithoutTabs(IndentedTextWriter writer, string line)
+        {
+            if(string.IsNullOrEmpty( line ))
+            {
+                WriteBlankLine( writer );
+            }
+            else
+            {
+                writer.WriteLine( line );
+            }
+        }
+    }
+}
