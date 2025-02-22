@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ubiquity.NET.Llvm.Interop.Handles
+namespace Ubiquity.NET.Llvm.Interop
 {
     [AttributeUsage( AttributeTargets.Struct )]
     public sealed class ContextHandleAttribute

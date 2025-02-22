@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Ubiquity.NET.Llvm.Interop.Handles
+namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Exception thrown when an underlying LLVM handle is unexpectedly null</summary>
     /// <remarks>

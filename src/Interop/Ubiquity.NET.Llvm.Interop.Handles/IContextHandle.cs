@@ -7,7 +7,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace Ubiquity.NET.Llvm.Interop.Handles
+namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interface to provide support for <see cref="ContextHandleMarshaller{T}"/></summary>
     /// <typeparam name="THandle">Type of the handle reference</typeparam>

@@ -76,39 +76,39 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial string llvm_blake3_version();
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init(out llvm_blake3_hasher self);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_keyed(out llvm_blake3_hasher self, [In][MarshalUsing( ConstantElementCount = LLVM_BLAKE3_KEY_LEN )] byte[] key);
 
-        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_derive_key(out llvm_blake3_hasher self, string context);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_derive_key_raw(out llvm_blake3_hasher self, void* context, size_t context_len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_update(out llvm_blake3_hasher self, void* input, size_t input_len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_finalize(out llvm_blake3_hasher self, out byte @out, size_t out_len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_finalize_seek(out llvm_blake3_hasher self, UInt64 seek, out byte @out, size_t out_len);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_reset(out llvm_blake3_hasher self);
     }

@@ -7,21 +7,19 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using Ubiquity.NET.Llvm.Interop.Handles;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMSymbolIteratorRef LibLLVMSymbolIteratorClone(LLVMSymbolIteratorRef @ref);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMSectionIteratorRef LibLLVMSectionIteratorClone(LLVMSectionIteratorRef @ref);
 
-        [LibraryImport( LibraryPath )]
+        [LibraryImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMRelocationIteratorRef LibLLVMRelocationIteratorClone(LLVMRelocationIteratorRef @ref);
     }

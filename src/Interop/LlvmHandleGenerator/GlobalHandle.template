@@ -33,7 +33,7 @@ partial class %%HANDLENAME%%
 
         return true;
 
-        [DllImport( Constants.LibraryPath )]
+        [DllImport( Names.LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         static extern void LLVMOrcDisposeDumpObjects(nint p);
     }

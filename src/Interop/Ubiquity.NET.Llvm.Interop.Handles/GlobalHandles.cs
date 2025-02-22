@@ -1,4 +1,4 @@
-﻿namespace Ubiquity.NET.Llvm.Interop.Handles
+﻿namespace Ubiquity.NET.Llvm.Interop
 {
     [GlobalHandle]
     public partial class LibLLVMTripleRef;

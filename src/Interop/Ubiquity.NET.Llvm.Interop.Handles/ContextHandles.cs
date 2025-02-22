@@ -7,7 +7,7 @@
 // This file declares the names of all the context handles.
 // The ContextHandle attribute is read by the LLvmHandleGenerator to
 // generate the source code for the handles from a template.
-namespace Ubiquity.NET.Llvm.Interop.Handles
+namespace Ubiquity.NET.Llvm.Interop
 {
     [ContextHandle]
     public readonly partial record struct LibLLVMMDOperandRef;

@@ -6,7 +6,7 @@
 
 using System.Runtime.InteropServices.Marshalling;
 
-namespace Ubiquity.NET.Llvm.Interop.Handles
+namespace Ubiquity.NET.Llvm.Interop
 {
     [CustomMarshaller( typeof( CustomMarshallerAttribute.GenericPlaceholder ), MarshalMode.Default, typeof( ContextHandleMarshaller<> ) )]
     public static class ContextHandleMarshaller<T>

@@ -163,23 +163,5 @@ namespace LlvmHandleGenerator
             using var rdr = new StreamReader(GetManifestResourceStream(resourceName));
             return rdr.ReadToEnd();
         }
-
-        //private static void AddAttributeSources(IncrementalGeneratorPostInitializationContext context)
-        //{
-        //    // make sure stream is closed as AddStaticSourceFile won't do that!
-        //    using var strm = GetManifestResourceStream(Names.ContextHandleAttribute.ResourceFileName);
-        //    if (strm is null)
-        //    {
-        //        Debug.Assert(false); // if this hits, then the name is incorrect, or the resource file is missing
-        //        throw new System.IO.FileNotFoundException("Resource file not found", "Names.ContextHandleAttribute.ResourceFileName");
-        //    }
-
-        //    context.AddStaticSourceFile(strm, Names.ContextHandleAttribute.GeneratedAttributeFileName);
-        //    // TODO: add other attribute or "static" files here
-
-        //    // NOTE: adding static files like this has some issues. [Probably NOT the best idea...]
-        //    //       It is usually better to add a reference to an attribute implementation via a NuGet Package.
-        //    //       see: https://andrewlock.net/creating-a-source-generator-part-7-solving-the-source-generator-marker-attribute-problem-part1/
-        //}
     }
 }
