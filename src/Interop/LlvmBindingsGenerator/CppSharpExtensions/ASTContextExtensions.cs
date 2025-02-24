@@ -51,7 +51,7 @@ namespace LlvmBindingsGenerator
                    select td;
         }
 
-        public static bool TryGetHandleDecl( this CppSharp.AST.Type astType, out TypedefNameDecl decl )
+        public static bool TryGetHandleDecl( this CppSharp.AST.Type astType, [MaybeNullWhen(false)] out TypedefNameDecl? decl )
         {
             switch( astType )
             {
@@ -126,7 +126,7 @@ namespace LlvmBindingsGenerator
             return td.TryGetFunctionSignature( out _ );
         }
 
-        public static bool TryGetFunctionSignature( this TypedefNameDecl td, out FunctionType signature )
+        public static bool TryGetFunctionSignature( this TypedefNameDecl td, [MaybeNullWhen(false)] out FunctionType? signature )
         {
             signature = null;
             if( td.Type is PointerType pt && pt.Pointee is FunctionType sig )
@@ -138,7 +138,7 @@ namespace LlvmBindingsGenerator
             return false;
         }
 
-        public static FunctionType GetFunctionPointerType( this TypedefNameDecl td )
+        public static FunctionType? GetFunctionPointerType( this TypedefNameDecl td )
         {
             return ( td.Type is PointerType pt && pt.Pointee is FunctionType ft ) ? ft : null;
         }

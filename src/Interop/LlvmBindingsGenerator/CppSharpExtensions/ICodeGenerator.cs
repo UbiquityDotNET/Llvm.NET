@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-using CppSharp.Generators;
-
 using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator
@@ -21,12 +17,5 @@ namespace LlvmBindingsGenerator
         string FileRelativeDirectory { get; }
 
         ICodeGenTemplate Template { get; }
-    }
-
-    internal interface ICodeGeneratorTemplateFactory
-    {
-        IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext );
-
-        void SetupPasses( BindingContext bindingContext );
     }
 }

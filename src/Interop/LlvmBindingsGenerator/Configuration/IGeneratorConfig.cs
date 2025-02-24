@@ -5,18 +5,15 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace LlvmBindingsGenerator.Configuration
 {
     internal interface IGeneratorConfig
     {
-        IReadOnlyDictionary<string, YamlFunctionBinding> FunctionBindings { get; }
-
-        IReadOnlyCollection<IncludeRef> IgnoredHeaders { get; }
+        ImmutableArray<IncludeRef> IgnoredHeaders { get; }
 
         IEnumerable<IHandleInfo> HandleMap { get; }
-
-        IReadOnlyDictionary<string, string> AnonymousEnums { get; }
 
         HandleTemplateMap BuildTemplateMap( );
     }

@@ -1,21 +1,18 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="EnumExtensions.cs" company="Ubiquity.NET Contributors">
+// <copyright file="IGeneratorCodeTemplate.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using CppSharp.Generators;
 
 namespace LlvmBindingsGenerator
 {
-    internal static class EnumExtensions
+    internal interface ICodeGeneratorTemplateFactory
     {
-        public static IEnumerable<T> GetEnumValues<T>( )
-            where T : Enum
-        {
-            return Enum.GetValues( typeof( T ) ).Cast<T>( );
-        }
+        IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext );
+
+        void SetupPasses( BindingContext bindingContext );
     }
 }

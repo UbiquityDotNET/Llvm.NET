@@ -126,61 +126,61 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMIsConstantZeroValue(LLVMValueRef valueRef);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMRemoveGlobalFromParent(LLVMValueRef valueRef);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMValueKind LibLLVMGetValueKind(LLVMValueRef valueRef);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LibLLVMGetAliasee(LLVMValueRef Val);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt32 LibLLVMGetArgumentIndex(LLVMValueRef Val);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMGlobalVariableAddDebugExpression(LLVMValueRef globalVar, LLVMMetadataRef exp);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMFunctionAppendBasicBlock(LLVMValueRef function, LLVMBasicBlockRef block);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LibLLVMValueAsMetadataGetValue(LLVMMetadataRef vmd);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMValueCacheRef LibLLVMCreateValueCache(LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMValueCacheAdd(LibLLVMValueCacheRef cacheRef, LLVMValueRef value, nint handle);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial nint LibLLVMValueCacheLookup(LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMIsConstantCString(LLVMValueRef C);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt32 LibLLVMGetConstantDataSequentialElementCount(LLVMValueRef C);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial byte* LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C, out size_t Length);
     }

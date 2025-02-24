@@ -11,12 +11,12 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMContextGetIsODRUniquingDebugTypes(LLVMContextRef context);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMContextSetIsODRUniquingDebugTypes(LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state);
     }

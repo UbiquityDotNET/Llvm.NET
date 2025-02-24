@@ -34,20 +34,24 @@ namespace LlvmBindingsGenerator.Configuration
         public bool Deserialize(
             IParser reader,
             Type expectedType,
-            Func<IParser, Type, object> nestedObjectDeserializer,
-            out object value,
+            Func<IParser, Type, object?> nestedObjectDeserializer,
+            out object? value,
             ObjectDeserializer rootDeserializer
             )
         {
-            var start = reader.Current.Start;
-            if(Inner.Deserialize( reader, expectedType, nestedObjectDeserializer, out value, rootDeserializer ))
+            value = null;
+            if (reader.Current is not null)
             {
-                if(value is IYamlNodeLocation node)
+                var start = reader.Current.Start;
+                if(Inner.Deserialize( reader, expectedType, nestedObjectDeserializer, out value, rootDeserializer ))
                 {
-                    node.Start = start;
-                }
+                    if(value is IYamlNodeLocation node)
+                    {
+                        node.Start = start;
+                    }
 
-                return true;
+                    return true;
+                }
             }
 
             return false;

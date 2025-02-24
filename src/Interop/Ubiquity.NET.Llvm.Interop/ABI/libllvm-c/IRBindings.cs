@@ -19,11 +19,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMGetVersionInfo(out LibLLVMVersionInfo pVersionInfo);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMHasUnwindDest(LLVMValueRef Invoke);

@@ -20,9 +20,9 @@ namespace LlvmBindingsGenerator.Configuration
         : IYamlNodeLocation
         , IHandleInfo
     {
-        public string HandleName { get; set; }
+        public string HandleName { get; set; } = string.Empty;
 
-        public string Disposer { get; set; }
+        public string Disposer { get; set; } = string.Empty;
 
         public bool Alias { get; set; }
 

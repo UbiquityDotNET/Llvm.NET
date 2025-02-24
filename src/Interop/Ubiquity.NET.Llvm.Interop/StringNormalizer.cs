@@ -9,34 +9,34 @@ using System.Text.RegularExpressions;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    internal static partial class StringNormalizer
+    public static partial class StringNormalizer
     {
         // LLVM doesn't use environment/OS specific line endings, so this will
         // normalize the line endings from strings provided by LLVM into the current
         // environment's normal format.
-        internal static string NormalizeLineEndings(nint llvmString)
+        public static string? NormalizeLineEndings(nint llvmString)
         {
-            if(llvmString == nint.Zero)
-            {
-                return string.Empty;
-            }
-
-            // PtrToStringAnsi only returns null if input is null, but that is already tested above.
-            string str = Marshal.PtrToStringAnsi( llvmString )!;
-            return NormalizeLineEndings( str );
+            return NormalizeLineEndings( Marshal.PtrToStringAnsi( llvmString ) );
         }
 
-        internal static string NormalizeLineEndings(string txt)
+        public static string? NormalizeLineEndings(string? txt)
         {
             // shortcut optimization for environments that match the LLVM assumption
-            return Environment.NewLine.Length == 1 && Environment.NewLine[ 0 ] == '\n'
+            // as well as any null or empty strings
+            return string.IsNullOrEmpty( txt ) || IsLineFeedOnlyEnv()
                 ? txt
                 : LineEndingNormalizingRegEx.Replace( txt, Environment.NewLine );
         }
+
+        private static bool IsLineFeedOnlyEnv()
+            => Environment.NewLine.Length == 1
+            && Environment.NewLine[ 0 ] == LineFeed;
 
         private static readonly Regex LineEndingNormalizingRegEx = GeneratedRegExForLineEndings();
 
         [GeneratedRegex( "(\r\n|\n\r|\r|\n)" )]
         private static partial Regex GeneratedRegExForLineEndings();
+
+        private const char LineFeed = '\n';
     }
 }

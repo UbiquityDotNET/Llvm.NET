@@ -4,7 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace LlvmBindingsGenerator.Templates
+using LlvmBindingsGenerator.Templates;
+
+namespace LlvmBindingsGenerator
 {
     internal class TemplateCodeGenerator
         : ICodeGenerator
@@ -14,7 +16,7 @@ namespace LlvmBindingsGenerator.Templates
             string fileRelativeDirectory,
             ICodeGenTemplate template
             )
-            : this( isValid: true, fileNameWithoutExtension, fileRelativeDirectory, template)
+            : this( isValid: true, fileNameWithoutExtension, fileRelativeDirectory, template )
         {
         }
 

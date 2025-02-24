@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <Sdk Name="Microsoft.Build.CentralPackageVersions" />
+
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -7,24 +8,26 @@
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
         <PlatformTarget>x64</PlatformTarget>
-        <TargetFramework>net8.0</TargetFramework>
-        <Nullable />
         <IsPublishable>False</IsPublishable>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
+
     <ItemGroup>
-      <None Include="..\readme-first.md" Link="readme-first.md" />
+        <None Include="..\readme-first.md" Link="readme-first.md" />
     </ItemGroup>
+
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" />
-        <PackageReference Include="CppSharp" />
-        <PackageReference Include="Ubiquity.NET.ArgValidators" />
-        <PackageReference Include="YamlDotNet" />
-        <PackageReference Include="System.CodeDom" />
+        <PackageReference Include="CommandLineParser" PrivateAssets="all" />
+        <PackageReference Include="CppSharp" PrivateAssets="all" />
+        <PackageReference Include="YamlDotNet" PrivateAssets="all" />
+        <PackageReference Include="System.CodeDom" PrivateAssets="all" />
     </ItemGroup>
+
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
         <None Update="BindingsConfig.yml">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Templates\T4\ContextHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -41,17 +44,8 @@
             <LastGenOutput>GlobalHandleTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
-        <None Update="Templates\T4\PerHeaderInteropTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>PerHeaderInteropTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
-        <None Update="Templates\T4\StringMarshallerTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>StringMarshallerTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
     </ItemGroup>
+
     <ItemGroup>
         <Compile Update="Templates\T4\ContextHandleTemplate.cs">
             <DesignTime>True</DesignTime>
@@ -68,19 +62,10 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>GlobalHandleTemplate.tt</DependentUpon>
         </Compile>
-        <Compile Update="Templates\T4\PerHeaderInteropTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>PerHeaderInteropTemplate.tt</DependentUpon>
-        </Compile>
-        <Compile Update="Templates\T4\StringMarshallerTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>StringMarshallerTemplate.tt</DependentUpon>
-        </Compile>
     </ItemGroup>
+
     <ItemGroup>
-      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
 
 </Project>

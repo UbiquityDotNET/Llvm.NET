@@ -24,13 +24,9 @@ namespace LlvmBindingsGenerator.Configuration
     [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is necessary, tooling can't agree on the point. (removing it generates a warning)" )]
     internal class YamlConfiguration
     {
-        public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection();
-
         public List<IncludeRef> IgnoredHeaders { get; set; } = new List<IncludeRef>();
 
         public List<IHandleInfo> HandleMap { get; set; } = new List<IHandleInfo>();
-
-        public Dictionary<string, string> AnonymousEnums { get; set; }
 
         public static YamlConfiguration ParseFrom( string path )
         {
@@ -42,30 +38,11 @@ namespace LlvmBindingsGenerator.Configuration
                                                        )
                                   .WithTypeConverter( new IncludeRefConverter())
                                   .WithNamingConvention( PascalCaseNamingConvention.Instance )
-                                  .WithTagMapping("!Status", typeof(YamlReturnStatusMarshalInfo))
-                                  .WithTagMapping("!String", typeof(YamlStringMarshalInfo))
-                                  .WithTagMapping("!Primitive", typeof(YamlPrimitiveMarshalInfo))
-                                  .WithTagMapping("!Array", typeof(YamlArrayMarshalInfo))
-                                  .WithTagMapping("!Alias", typeof(YamlAliasReturn))
-                                  .WithTagMapping("!Unsafe", typeof(YamlUnsafeReturn))
                                   .WithTagMapping("!ContextHandle", typeof(YamlContextHandle))
                                   .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
                                   .Build( );
 
-            var retVal = deserializer.Deserialize<YamlConfiguration>( input );
-
-            // Force all return transforms to use Return semantics so that
-            // transform passes will generate correct attributes for the
-            // return value.
-            var returnTransforms = from x in retVal.FunctionBindings.Values
-                                   where x.ReturnTransform != null
-                                   select x.ReturnTransform;
-            foreach( YamlBindingTransform xform in returnTransforms )
-            {
-                xform.Semantics = ParamSemantics.Return;
-            }
-
-            return retVal;
+            return deserializer.Deserialize<YamlConfiguration>( input );
         }
 
         public HandleTemplateMap BuildTemplateMap()
@@ -85,19 +62,15 @@ namespace LlvmBindingsGenerator.Configuration
 
         private static IHandleCodeTemplate Transform( IHandleInfo h )
         {
-            switch( h )
+            return h switch
             {
-            case YamlGlobalHandle ygh:
-                return new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias );
-
-            case YamlContextHandle ych:
-                return new ContextHandleTemplate( ych.HandleName );
-
-            default:
-                throw new InvalidOperationException( "Unknown handle info kind encountered" );
-            }
+                YamlGlobalHandle ygh => new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias ),
+                YamlContextHandle ych => new ContextHandleTemplate( ych.HandleName ),
+                _ => throw new InvalidOperationException( "Unknown handle info kind encountered" ),
+            };
         }
 
+        // special converter to ensure runtime platform normalized paths for any include paths in the file
         private class IncludeRefConverter
             : IYamlTypeConverter
         {
@@ -112,7 +85,7 @@ namespace LlvmBindingsGenerator.Configuration
                 return new IncludeRef() { Path = NormalizePathSep( scalarEvent.Value ), Start = scalarEvent.Start };
             }
 
-            public void WriteYaml( IEmitter emitter, object value, Type type, ObjectSerializer serializer )
+            public void WriteYaml( IEmitter emitter, object? value, Type type, ObjectSerializer serializer )
             {
                 throw new NotSupportedException();
             }

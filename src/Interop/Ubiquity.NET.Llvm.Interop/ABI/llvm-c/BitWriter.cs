@@ -12,19 +12,29 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRef M, string Path);
 
-        [LibraryImport( Names.LibraryPath )]
+// It is debatable if the .NET projections should deal with a raw C "File descriptor", which is
+// exclusively a C/C++ runtime construct that does NOT exist in managed code.
+#if SUPPORT_FILE_DESCRIPTORS
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFD(LLVMModuleRef M, int FD, int ShouldClose, int Unbuffered);
+        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFD(
+            LLVMModuleRef M,
+            int FD,
+            [MarshalAs(UnmanagedType.Bool)] bool ShouldClose,
+            [MarshalAs(UnmanagedType.Bool)] bool Unbuffered = false
+            );
 
-        [LibraryImport( Names.LibraryPath )]
+        [Obsolete("Use LLVMWriteBitcodeToFD instead")]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial int LLVMWriteBitcodeToFileHandle(LLVMModuleRef M, int Handle);
+        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFileHandle(LLVMModuleRef M, int Handle);
+#endif
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMemoryBufferRef LLVMWriteBitcodeToMemoryBuffer(LLVMModuleRef M);
     }

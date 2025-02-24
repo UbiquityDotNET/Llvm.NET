@@ -24,6 +24,8 @@ EXPORTS
 <#}#>
 
 ; Standard Official LLVM-C APIs
+; If LibLLCVM-C.lib is available, these could be generated to forward to that
+; or left out completely and use it directly from managed interop code
 <#foreach(var func in LlvmFunctions) {#>
 <#=func.Name#>
 <#}#>

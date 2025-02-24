@@ -207,73 +207,73 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleRef LibLLVMParseTriple(string triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMTripleOpEqual(LibLLVMTripleRef lhs, LibLLVMTripleRef rhs);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleArchType LibLLVMTripleGetArchType(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleSubArchType LibLLVMTripleGetSubArchType(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleVendorType LibLLVMTripleGetVendorType(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleOSType LibLLVMTripleGetOsType(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMTripleHasEnvironment(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleEnvironmentType LibLLVMTripleGetEnvironmentType(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMTripleGetEnvironmentVersion(LibLLVMTripleRef triple, out uint major, out uint minor, out uint build);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType(LibLLVMTripleRef triple);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleAsString(LibLLVMTripleRef triple, [MarshalAs( UnmanagedType.Bool )] bool normalize);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleGetArchTypeName(LibLLVMTripleArchType type);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleGetSubArchTypeName(LibLLVMTripleSubArchType type);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleGetVendorTypeName(LibLLVMTripleVendorType vendor);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleGetOsTypeName(LibLLVMTripleOSType osType);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleGetEnvironmentTypeName(LibLLVMTripleEnvironmentType environmentType);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMTripleGetObjectFormatTypeName(LibLLVMTripleObjectFormatType objectFormatType);
     }

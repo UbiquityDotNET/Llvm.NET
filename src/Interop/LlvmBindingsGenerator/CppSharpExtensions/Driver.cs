@@ -42,6 +42,7 @@ namespace LlvmBindingsGenerator
         {
             Options = options;
             ParserOptions = new CppSharp.Parser.ParserOptions();
+            Context = new BindingContext( Options, ParserOptions );
         }
 
         public DriverOptions Options { get; }
@@ -57,7 +58,6 @@ namespace LlvmBindingsGenerator
         {
             ValidateOptions();
             ParserOptions.Setup(TargetPlatform.Windows);
-            Context = new BindingContext( Options, ParserOptions );
         }
 
         public bool ParseCode()
@@ -154,8 +154,8 @@ namespace LlvmBindingsGenerator
 
                     string fileName = $"{generator.FileNameWithoutExtension}.{generator.Template.FileExtension}";
 
-                    string fullFilePathfile = Path.Combine( templateOutputPath, fileName );
-                    File.WriteAllText( fullFilePathfile, generator.Template.Generate() );
+                    string fullFilePath = Path.Combine( templateOutputPath, fileName );
+                    File.WriteAllText( fullFilePath, generator.Template.Generate() );
 
                     Diagnostics.Debug( "Generated '{0}'", fileName );
                 }
@@ -279,7 +279,7 @@ namespace LlvmBindingsGenerator
 
         private void OnFileParsed( string file, CppSharp.Parser.ParserResult result )
         {
-            OnFileParsed( new[] { file }, result );
+            OnFileParsed( [file], result );
         }
 
         private void OnFileParsed( IEnumerable<string> files, CppSharp.Parser.ParserResult result )

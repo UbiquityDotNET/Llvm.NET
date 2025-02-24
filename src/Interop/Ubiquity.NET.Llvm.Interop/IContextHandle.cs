@@ -27,32 +27,6 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <returns>The handle as an <see cref="nint"/></returns>
         nint DangerousGetHandle();
 
-        /// <summary>Gets a value indicating whether this handle is a <see langword="null"/> value</summary>
-        public bool IsNull => DangerousGetHandle() == nint.Zero;
-
-        /// <summary>Fluent null handle validation</summary>
-        /// <param name="message">Message to use for an exception if thrown</param>
-        /// <param name="memberName">Name if the member calling this function (usually provided by compiler via <see cref="CallerMemberNameAttribute"/></param>
-        /// <param name="sourceFilePath">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerFilePathAttribute"/></param>
-        /// <param name="sourceLineNumber">Source file path of the member calling this function (usually provided by compiler via <see cref="CallerLineNumberAttribute"/></param>
-        void ThrowIfNull(
-            string message = "",
-            [CallerMemberNameAttribute] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            if(IsNull)
-            {
-                throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " );
-            }
-        }
-
-        /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
-        /// <param name="value">Handle to convert</param>
-        /// <returns>The handle as an <see cref="nint"/></returns>
-        [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Covered more explicitly by DangerousGetHandle()" )]
-        public static virtual implicit operator nint(THandle value) => value.DangerousGetHandle();
-
         /// <summary>Creates a type specific handle to hold the native opaque pointer</summary>
         /// <param name="abiValue">ABI value of the handle (xxxRef in LLVM terminology)</param>
         /// <returns>Type specific handle for managed code use</returns>

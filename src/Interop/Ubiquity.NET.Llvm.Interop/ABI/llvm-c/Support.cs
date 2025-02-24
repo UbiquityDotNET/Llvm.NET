@@ -15,20 +15,20 @@ namespace Ubiquity.NET.Llvm.Interop
     // CONSIDER: These APIs are highly questionable in a managed environment. Should they even be published?
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
+        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMLoadLibraryPermanently( string Filename );
 
-        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller))]
+        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller))]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
         public static unsafe partial void LLVMParseCommandLineOptions( int argc, [In]string[] argv, string Overview );
 
-        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
+        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
         public static unsafe partial nint LLVMSearchForAddressOfSymbol( string symbolName );
 
-        [LibraryImport( Names.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
+        [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(AnsiStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
         public static unsafe partial void LLVMAddSymbol( string symbolName, void* symbolValue );
     }

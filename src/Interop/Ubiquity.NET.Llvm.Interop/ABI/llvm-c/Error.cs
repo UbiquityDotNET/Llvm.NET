@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorTypeId LLVMGetStringErrorTypeId();
     }

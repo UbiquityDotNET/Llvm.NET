@@ -4,24 +4,28 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
+    /// <summary>Template to provide <see cref="LibraryImportAttribute"/> compatible marshalling for an LLVM context handle</summary>
+    /// <typeparam name="T">LLVM Context handle type to provide marshalling for</typeparam>
     [CustomMarshaller( typeof( CustomMarshallerAttribute.GenericPlaceholder ), MarshalMode.Default, typeof( ContextHandleMarshaller<> ) )]
     public static class ContextHandleMarshaller<T>
         where T : struct, IContextHandle<T>
     {
-        /// <summary>Converts an LLVM string to a managed code string</summary>
+        /// <summary>Converts an LLVM native handle to a type specific managed code wrapper</summary>
         /// <param name="abiValue">native handle value</param>
-        /// <returns>Managed code string representation of the native string</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1000:Do not declare static members on generic types", Justification = "Needed for marshalling" )]
+        /// <returns>Managed code representation of the native opaque handle</returns>
+        [SuppressMessage( "Design", "CA1000:Do not declare static members on generic types", Justification = "Needed for marshalling" )]
         public static T ConvertToManaged(nint abiValue)
         {
             return T.FromABI( abiValue );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "CA1000:Do not declare static members on generic types", Justification = "Needed for marshalling" )]
+        [SuppressMessage( "Design", "CA1000:Do not declare static members on generic types", Justification = "Needed for marshalling" )]
         public static nint ConvertToUnmanaged(T managed)
         {
             return managed.DangerousGetHandle();

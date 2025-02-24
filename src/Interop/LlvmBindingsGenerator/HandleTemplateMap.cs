@@ -13,10 +13,6 @@ using LlvmBindingsGenerator.Templates;
 namespace LlvmBindingsGenerator
 {
     /// <summary>Maps a type of Handle via it's native name (as a string) to a template that will generate code for it</summary>
-    /// <remarks>
-    /// This is generally obsolete, the new use of a source generator for handles now means that they are all listed in one
-    /// of two files (GlobalHandles.cs or ContextHandles.cs) so the entire plan here of a single template is broken.
-    /// </remarks>
     internal class HandleTemplateMap
         : KeyedCollection<string, IHandleCodeTemplate>
         , IReadOnlyDictionary<string, IHandleCodeTemplate>
@@ -31,7 +27,7 @@ namespace LlvmBindingsGenerator
 
         public IEnumerable<IHandleCodeTemplate> Values => Items;
 
-        public bool ContainsKey(string key) => TryGetValue( key, out IHandleCodeTemplate _ );
+        public bool ContainsKey(string key) => TryGetValue( key, out IHandleCodeTemplate? _ );
 
         IEnumerator<KeyValuePair<string, IHandleCodeTemplate>> IEnumerable<KeyValuePair<string, IHandleCodeTemplate>>.GetEnumerator()
         {

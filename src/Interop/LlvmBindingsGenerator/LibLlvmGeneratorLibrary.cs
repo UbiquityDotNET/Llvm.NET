@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.IO;
 
 using CppSharp.AST;
-using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
 using LlvmBindingsGenerator.Passes;
+using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator
 {
@@ -37,6 +37,8 @@ namespace LlvmBindingsGenerator
             ExtensionsInclude = Path.Combine( extensionsRoot, "include" );
             OutputPath = Path.GetFullPath( outputPath );
             InternalTypePrinter = new LibLLVMTypePrinter();
+
+            // Hook in the custom type printer via static delegate
             Type.TypePrinterDelegate = t => InternalTypePrinter.GetName( t, TypeNameKind.Native );
         }
 
@@ -66,42 +68,21 @@ namespace LlvmBindingsGenerator
             // always start the passes with the IgnoreSystemHeaders pass to ensure that
             // transformation only occurs for the desired headers. Other passes depend on
             // TranslationUnit.IsGenerated to ignore headers.
-            Driver.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
-            Driver.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
+            Driver!.AddTranslationUnitPass( new IgnoreSystemHeadersPass( Configuration.IgnoredHeaders ) );
+            Driver!.AddTranslationUnitPass( new IgnoreDuplicateNamesPass( ) );
 
-#if GENERATE_CS_INTEROP
-            // configuration validation - generates warnings for entries in configuration that
-            // have no corresponding elements in the source AST. (either from typos in the config
-            // or version to version changes in the underlying LLVM source)
-            Driver.AddTranslationUnitPass( new IdentifyReduntantConfigurationEntriesPass( Configuration ) );
-            Driver.AddTranslationUnitPass( new CheckFlagEnumsPass( ) );
+            // modifying pass(es)
+            Driver!.AddTranslationUnitPass( new MarkFunctionsInternalPass( ) );
 
-            // General transformations - These passes may alter the in memory AST
-            Driver.AddTranslationUnitPass( new PODToValueTypePass( ) );
-#endif
-            Driver.AddTranslationUnitPass( new MarkFunctionsInternalPass( Configuration ) );
-
-#if GENERATE_CS_INTEROP
-            Driver.AddTranslationUnitPass( new AddMissingParameterNamesPass( ) );
-            Driver.AddTranslationUnitPass( new FixInconsistentLLVMHandleDeclarations( ) );
-            Driver.AddTranslationUnitPass( new DeAnonymizeEnumsPass( Configuration.AnonymousEnums ) );
-            Driver.AddTranslationUnitPass( new MapHandleAliasTypesPass( Configuration ) );
-            Driver.AddTranslationUnitPass( new MarkDeprecatedFunctionsAsObsoletePass( Configuration ) );
-            Driver.AddTranslationUnitPass( new AddMarshalingAttributesPass( Configuration ) );
-            Driver.AddTranslationUnitPass( new ConvertLLVMBoolPass( Configuration ) );
-
-            // validations to apply after all transforms complete
-            Driver.AddTranslationUnitPass( new ValidateMarshalingInfoPass( Configuration ) );
-#endif
-
-            Driver.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
+            // Verification/sanity checking passes
+            Driver!.AddTranslationUnitPass( new ValidateExtensionNamingPass( ) );
         }
 
         public void Preprocess( ASTContext ctx )
         {
             // purge all the CppSharp type mapping to prevent any conversions/mapping
             // Only the raw source should be in the AST until later stages adjust it.
-            Driver.Context.TypeMaps.TypeMaps.Clear();
+            Driver!.Context.TypeMaps.TypeMaps.Clear();
             InternalTypePrinter.Context = Driver.Context;
         }
 
@@ -111,11 +92,11 @@ namespace LlvmBindingsGenerator
 
         public IEnumerable<ICodeGenerator> CreateGenerators( )
         {
-            var templateFactory = new LibLlvmTemplateFactory( Configuration, InternalTypePrinter );
-            return templateFactory.CreateTemplates( Driver.Context );
+            var templateFactory = new LibLlvmTemplateFactory( Configuration );
+            return templateFactory.CreateTemplates( Driver!.Context );
         }
 
-        private IDriver Driver;
+        private IDriver? Driver;
         private readonly LibLLVMTypePrinter InternalTypePrinter;
         private readonly IGeneratorConfig Configuration;
         private readonly string CommonInclude;

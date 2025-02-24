@@ -6,21 +6,23 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
     <SignAssembly>False</SignAssembly>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <MinClientVersion>4.0</MinClientVersion>
+    <MinClientVersion>4.9.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is **STRONGLY** discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
+    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM [$(LlvmVersion)]. Direct use of this low level API is **STRONGLY** discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <EmbedAllSources>false</EmbedAllSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedAllSources>True</EmbedAllSources>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup>
@@ -57,23 +59,6 @@
       <PackageReference Include="Ubiquity.NET.ArgValidators" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ubiquity.NET.Llvm.Interop.Handles\Ubiquity.NET.Llvm.Interop.Handles.csproj" />
+    <Folder Include="GeneratedCode\" />
   </ItemGroup>
-  <!--
-    Version numbers are computed at build time after any declarative properties are evaluated
-    so this is needed to update the NuSpec properties with the dynamically generated values
-    NOTE: This can't use NuspecProperties as that is only applicable when using a NuSpec file.
-          Worse, it can cause a NullReferenceException (See: https://github.com/NuGet/Home/issues/4649 )
-    -->
-  <Target Name="_SetNuSpecPropertiesWithBuildInfo" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
-      <Description>$(Description) $(llvmVersion)</Description>
-    </PropertyGroup>
-    <Message Importance="high" Text="llvmVersion=$(llvmVersion)" />
-  </Target>
-
-  <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
-    <MakeDir Directories="$(PackageOutputPath)" />
-  </Target>
-
 </Project>

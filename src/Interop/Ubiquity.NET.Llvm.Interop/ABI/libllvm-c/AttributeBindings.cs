@@ -11,16 +11,16 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     public static partial class NativeMethods
     {
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMAttributeToString(LLVMAttributeRef attribute);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMIsTypeAttribute(LLVMAttributeRef attribute);
 
-        [LibraryImport( Names.LibraryPath )]
+        [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTypeRef LibLLVMGetAttributeTypeValue(LLVMAttributeRef attribute);
     }

@@ -14,11 +14,14 @@ using System.Runtime.InteropServices;
 
 using Ubiquity.NET.Llvm.Interop.Properties;
 
+// TODO: Replace all of this with a Custom import resolver (see: https://learn.microsoft.com/en-us/dotnet/standard/native-interop/native-library-loading#custom-import-resolver)
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interop methods for the Ubiquity.NET LibLLVM library</summary>
     public static partial class NativeMethods
     {
+        public const string LibraryPath = "Ubiquity.NET.LibLLVM";
+
         /// <summary>Dynamically loads a library from a directory dependent on the current architecture</summary>
         /// <param name="moduleName">name of the DLL</param>
         /// <param name="alternatePaths">alternate path locations to use to search for the DLL</param>

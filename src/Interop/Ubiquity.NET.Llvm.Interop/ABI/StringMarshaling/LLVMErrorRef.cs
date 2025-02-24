@@ -57,7 +57,7 @@ namespace Ubiquity.NET.Llvm.Interop
             {
                 return LLVMErrorTypeId.FromABI(LLVMGetErrorTypeId(handle));
 
-                [DllImport( Names.LibraryPath )]
+                [DllImport( NativeMethods.LibraryPath )]
                 [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
                 static extern /*LLVMErrorTypeId*/nint LLVMGetErrorTypeId(/*LLVMErrorRef*/ nint Err);
             }
@@ -71,7 +71,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 LLVMCantFail(handle);
             }
 
-            [DllImport( Names.LibraryPath )]
+            [DllImport( NativeMethods.LibraryPath )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMCantFail(/*LLVMErrorRef*/ nint Err);
         }
@@ -98,7 +98,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 }
             }
 
-            [DllImport( Names.LibraryPath )]
+            [DllImport( NativeMethods.LibraryPath )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static unsafe extern nint /*LLVMErrorRef*/ LLVMCreateStringError(byte* ErrMsg);
         }
@@ -110,7 +110,7 @@ namespace Ubiquity.NET.Llvm.Interop
             LLVMConsumeError( handle );
             return true;
 
-            [DllImport( Names.LibraryPath )]
+            [DllImport( NativeMethods.LibraryPath )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMConsumeError(nint p);
         }
@@ -133,7 +133,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
             // As this is a private local func, it must use DllImport AND
             // cannot allow ANY marshalling. That is done manually by caller.
-            [DllImport( Names.LibraryPath )]
+            [DllImport( NativeMethods.LibraryPath )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern /*ErrorMessageString*/ nint LLVMGetErrorMessage(nint p);
         }

@@ -68,7 +68,7 @@ namespace LlvmBindingsGenerator
                 TypedefType tdt when tdt.Declaration.Name == "int64_t" => "Int64",
                 TypedefType tdt => tdt.Declaration.Name,
                 BuiltinType bit when bit.Type == PrimitiveType.IntPtr => "nint",
-                CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ) => decl.Name,
+                CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl? decl ) => decl!.Name,
                 ArrayType at => $"{GetName( at.Type, kind )}[]",
                 _ => base.ToString( type ),
             };

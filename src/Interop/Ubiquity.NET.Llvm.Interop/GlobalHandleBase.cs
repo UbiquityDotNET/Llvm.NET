@@ -54,7 +54,8 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <note type = "important">
         /// It is important to note that this does NOT take into account the state of either handle.
         /// That is, if either is closed or invalid the wrapped handle value itself is what is tested
-        /// so they are considered the same if the handle values are the same.
+        /// so they are considered the same if the handle values are the same regardless of the "Closed"
+        /// state.
         /// </note>
         /// </remarks>
         public bool AreSame(GlobalHandleBase other)
@@ -63,7 +64,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 && DangerousGetHandle() == other.DangerousGetHandle();
         }
 
-        /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value</summary>
+        /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified ownership</summary>
         /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
         /// the finalization phase; otherwise, false (not recommended).
         /// </param>
@@ -72,12 +73,19 @@ namespace Ubiquity.NET.Llvm.Interop
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value and ownership</summary>
+        /// <param name="handle">Native handle to wrap in this instance</param>
+        /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
+        /// the finalization phase; otherwise, false (not recommended).
+        /// </param>
         protected GlobalHandleBase(nint handle, bool ownsHandle)
             : base(nint.Zero, ownsHandle)
         {
             SetHandle(handle);
         }
 
+        /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value</summary>
+        /// <param name="handle">Native handle to wrap in this instance</param>
         protected GlobalHandleBase(nint handle)
             : this(ownsHandle: true)
         {
