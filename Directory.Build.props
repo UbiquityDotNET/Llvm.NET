@@ -48,6 +48,9 @@
         <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">20</LlvmVersionMajor>
         <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">1</LlvmVersionMinor>
         <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
+        <LlvmVersion>$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
+        <LlvmVersionNext Condition="'$(LlvmVersionNext)'=='21.0.0'"></LlvmVersionNext>
+        <ProjectPackageVersionRange>[$(LlvmVersion), 21.0.0)</ProjectPackageVersionRange>
         <!--<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>-->
     </PropertyGroup>
     <Choose>

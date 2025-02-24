@@ -15,7 +15,6 @@
 
     <Target Name="SetProjectSpecficVersionDependentProperties">
         <PropertyGroup>
-            <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
             <NuspecProperties Condition="'$(NuspecFile)'!=''" >version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
         </PropertyGroup>
     </Target>
@@ -42,7 +41,7 @@
         <PropertyGroup>
             <Description>$(Description) $(llvmVersion)</Description>
         </PropertyGroup>
-        <Message Importance="high" Text="llvmVersion=$(llvmVersion)" />
+        <Message Importance="high" Text="PackageVersion: $(PackageVersion)" />
     </Target>
 
     <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
@@ -102,5 +101,20 @@
         .editorconfig in this repo includes `csharp_style_prefer_top_level_statements = false:error` to ensure that bad design choice isn't used either.
         -->
         <Error Condition="'$(ImplicitUsings)'!='disable'" Text="$(MSBuildProjectFile) - Projects in this repository MUST NOT have ImplicitUsings enabled!"/>
+    </Target>
+
+    <!-- see https://stackoverflow.com/questions/53278544/nuget-versioning-with-projectreference-dependencies for inspiration of this -->
+    <!--
+    This updates the require version of the referenced package in the package generated for *this* project.
+    -->
+    <Target Name="UseExplicitPackageVersions" BeforeTargets="_SetNuSpecPropertiesWithBuildInfo">
+        <ItemGroup>
+            <_ProjectReferencesWithVersions Condition="'%(FullPath)' != ''">
+                <PackageVersion>@(ProjectReference->'%(PackageVersion)')</PackageVersion>
+            </_ProjectReferencesWithVersions>
+            <_ProjectReferencesWithVersions Condition="'%(Identity)' != '' And '%(PackageVersion)' != ''">
+                <ProjectVersion>$([System.String]::new('%(PackageVersion)').Replace('~',%(ProjectVersion)))</ProjectVersion>
+            </_ProjectReferencesWithVersions>
+        </ItemGroup>
     </Target>
 </Project>
