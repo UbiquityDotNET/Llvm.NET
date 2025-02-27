@@ -34,6 +34,7 @@ extern "C" {
 
     // caller must release the returned string via LLVMDisposeMessage
     char const* LibLLVMAttributeToString( LLVMAttributeRef attribute );
+    char const* LibLLVMGetAttributeKindName(LibLLVMAttrKind attrKind);
     char const* LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute);
 #ifdef __cplusplus
 }

@@ -8,11 +8,32 @@
 
 using namespace llvm;
 
+namespace
+{
+    const char* AllocateDisposeMessageFor(StringRef strRef)
+    {
+        // Make a copy of the StringRef that is compatible with LLVMDisposeMessage
+        // While the str() method is there, it creates a COPY of the string to produce
+        // an std::string which would then be allocated and copied again to form the
+        // result. This skips the intermediate operations and leverages a single
+        // allocation and copy for the result.
+        auto pRetVal = (char*)malloc(strRef.size() + 1);
+        return pRetVal == nullptr
+            ? nullptr
+            : strncpy(pRetVal, strRef.data(), strRef.size());
+    }
+}
+
 extern "C"
 {
     char const* LibLLVMAttributeToString( LLVMAttributeRef attribute )
     {
         return LLVMCreateMessage( unwrap( attribute ).getAsString( ).c_str( ) );
+    }
+
+    char const* LibLLVMGetAttributeKindName(LibLLVMAttrKind attrKind)
+    {
+        return AllocateDisposeMessageFor(Attribute::getNameFromAttrKind((Attribute::AttrKind)attrKind));
     }
 
     char const* LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute)
@@ -23,16 +44,6 @@ extern "C"
             return nullptr;
         }
 
-        StringRef strName = Attribute::getNameFromAttrKind(attr.getKindAsEnum());
-
-        // Make a copy of the StringRef that is compatible with LLVMDisposeMessage
-        // While the str() method is there, it creates a COPY of the string to produce
-        // an std::string which would then be allocated and copied again to form the
-        // result. This skips the intermediate operations and leverages a single
-        // allocation and copy for the result.
-        auto pRetVal = (char*)malloc(strName.size()+1);
-        return pRetVal == nullptr
-             ? nullptr
-             : strncpy(pRetVal, strName.data(), strName.size());
+        return LibLLVMGetAttributeKindName((LibLLVMAttrKind)attr.getKindAsEnum());
     }
 }
