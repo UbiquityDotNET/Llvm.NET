@@ -3,7 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 

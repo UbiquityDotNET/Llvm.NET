@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 

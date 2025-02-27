@@ -107,7 +107,7 @@ namespace Ubiquity.NET.Llvm.Types
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
-        public override string ToString( ) => LLVMPrintTypeToString( TypeRefHandle );
+        public override string ToString( ) => LLVMPrintTypeToString( TypeRefHandle ).ToString();
 
         internal TypeRef( LLVMTypeRef typeRef )
         {
@@ -124,7 +124,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal static T? FromHandle<T>( LLVMTypeRef typeRef )
             where T : class, ITypeRef
         {
-            if( typeRef == default )
+            if( typeRef.IsNull )
             {
                 return null;
             }
@@ -163,7 +163,7 @@ namespace Ubiquity.NET.Llvm.Types
                     // case TypeKind.Float128:
                     // case TypeKind.Label:
                     // case TypeKind.Integer: => IntegerType
-                    // case TypeKind.Metadata:
+                    // case TypeKind.LlvmMetadata:
                     // case TypeKind.X86MMX:
                     */
                     _ => new TypeRef( handle ),
@@ -176,9 +176,9 @@ namespace Ubiquity.NET.Llvm.Types
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private static Context GetContextFor( LLVMTypeRef handle )
         {
-            if( handle == default )
+            if( handle.IsNull )
             {
-                throw new ArgumentException( "Handle is null", nameof( handle ) );
+                throw new ArgumentException( "Context Handle is null", nameof( handle ) );
             }
 
             var hContext = LLVMGetTypeContext( handle );

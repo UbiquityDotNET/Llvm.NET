@@ -13,6 +13,7 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------
 
+using System;
 using System.CodeDom.Compiler;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -23,6 +24,7 @@ namespace Ubiquity.NET.Llvm.Interop
     [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
     public class <#=HandleName#>
         : GlobalHandleBase
+        , IEquatable<<#=HandleName#>>
     {
         /// <summary>Initializes an instance of <see cref="<#=HandleName#>"/> with default values</summary>
         public <#=HandleName#>()
@@ -38,6 +40,33 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             SetHandle( handle );
         }
+
+        /// <summary>Throws an exception if this handle is invalid or in the closed state</summary>
+        /// <param name="message">Exception error message [default: empty string]</param>
+        /// <param name="memberName">Name of the member making the call [Default: provided by compiler]</param>
+        /// <param name="sourceFilePath">Source file of the code making this call [Default: provided by compiler]</param>
+        /// <param name="sourceLineNumber">Source line number of the code making this call [Default: provided by compiler]</param>
+        /// <returns>This instance for fluent based API usage</returns>
+        /// <exception cref="LlvmException">This handle is invalid or closed</exception>
+        public <#=HandleName#> ThrowIfInvalid(
+            string message = "",
+            [CallerMemberNameAttribute] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            if(IsInvalid || IsClosed)
+            {
+                throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber}; {message}" );
+            }
+
+            return this;
+        }
+
+        public bool Equals(<#=HandleName#> other) => handle == other.handle;
+
+        public override bool Equals(object obj) => obj is <#=HandleName#> hOther && Equals(hOther);
+
+        public override int GetHashCode() => handle.GetHashCode();
 
         /// <summary>Gets a Zero (<see langword="null"/>) value handle</summary>
         public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(nint.Zero, false);

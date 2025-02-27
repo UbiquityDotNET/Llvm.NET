@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( Resources.Integer_type_expected, nameof( value ) );
             }
 
-            if( !( type is IPointerType ) )
+            if( type is not IPointerType)
             {
                 throw new ArgumentException( Resources.Pointer_type_expected, nameof( type ) );
             }
@@ -58,26 +58,6 @@ namespace Ubiquity.NET.Llvm.Values
             value.ValidateNotNull( nameof( value ) );
 
             var handle = LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
-            return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
-        }
-
-        /// <summary>Creates a constant GetElementPtr expression</summary>
-        /// <param name="value">Constant value to get the element pointer for</param>
-        /// <param name="args">Pointer index args</param>
-        /// <returns>GetElementPtr expression</returns>
-        public static Constant GetElementPtr( Constant value, params Constant[ ] args )
-            => GetElementPtr( value, ( IEnumerable<Constant> )args );
-
-        /// <summary>Creates a constant GetElementPtr expression</summary>
-        /// <param name="value">Constant value to get the element pointer for</param>
-        /// <param name="args">Pointer index args</param>
-        /// <returns>GetElementPtr expression</returns>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public static Constant GetElementPtr( Constant value, IEnumerable<Constant> args )
-        {
-            value.ValidateNotNull( nameof( value ) );
-            var llvmArgs = InstructionBuilder.GetValidatedGEPArgs(value.NativeType, value, args);
-            var handle = LLVMConstGEP( value.ValueHandle, llvmArgs, (uint)llvmArgs.Length);
             return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }
 

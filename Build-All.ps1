@@ -64,7 +64,7 @@ try
         rd -Recurse -Force -Path $buildInfo['BuildOutputPath']
     }
 
-    md $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
+    New-Item -ItemType Directory $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
     if($BuildSource)
     {

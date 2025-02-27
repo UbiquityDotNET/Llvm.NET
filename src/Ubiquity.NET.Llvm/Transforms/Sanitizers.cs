@@ -6,7 +6,7 @@
 
 using System;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 

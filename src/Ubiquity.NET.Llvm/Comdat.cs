@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm
         Largest = LLVMComdatSelectionKind.LLVMLargestComdatSelectionKind,
 
         /// <summary>The linker requires that only one section with this COMDAT key exists</summary>
-        NoDuplicates = LLVMComdatSelectionKind.LLVMNoDuplicatesComdatSelectionKind,
+        NoDuplicates = LLVMComdatSelectionKind.LLVMNoDeduplicateComdatSelectionKind,
 
         /// <summary>Linker may choose any COMDAT key but sections must contain the same amount of data</summary>
         SameSize = LLVMComdatSelectionKind.LLVMSameSizeComdatSelectionKind
@@ -40,29 +40,21 @@ namespace Ubiquity.NET.Llvm
     public class Comdat
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
-        public string Name => Module.IsDisposed ? string.Empty : LibLLVMComdatGetName( ComdatHandle );
+        public string Name => Module.IsDisposed ? string.Empty : LibLLVMComdatGetName( ComdatHandle ).ToString();
 
         /// <summary>Gets or sets the <see cref="ComdatKind"/> for this <see cref="Comdat"/></summary>
         public ComdatKind Kind
         {
-            get
-            {
-                if( Module.IsDisposed )
-                {
-                    return default;
-                }
-
-                return ( ComdatKind )LLVMGetComdatSelectionKind( ComdatHandle );
-            }
+            get => Module.IsDisposed ? default : (ComdatKind)LLVMGetComdatSelectionKind( ComdatHandle );
 
             set
             {
-                if( Module.IsDisposed )
+                if(Module.IsDisposed)
                 {
                     return;
                 }
 
-                LLVMSetComdatSelectionKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
+                LLVMSetComdatSelectionKind( ComdatHandle, (LLVMComdatSelectionKind)value );
             }
         }
 

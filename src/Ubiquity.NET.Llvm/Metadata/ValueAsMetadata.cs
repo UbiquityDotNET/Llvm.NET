@@ -6,7 +6,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
@@ -15,7 +15,7 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Used to wrap an <see cref="Ubiquity.NET.Llvm.Values.Value"/> in the Metadata hierarchy</summary>
+    /// <summary>Used to wrap an <see cref="Ubiquity.NET.Llvm.Values.Value"/> in the LlvmMetadata hierarchy</summary>
     public class ValueAsMetadata
         : LlvmMetadata
     {

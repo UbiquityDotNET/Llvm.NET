@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -289,9 +289,18 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Verifies the function without throwing an exception</summary>
         /// <param name="errMsg">Error message if any, or <see cref="string.Empty"/> if no errors detected</param>
         /// <returns><see langword="true"/> if no errors found</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "nativeMsg is disposed directly only if needed" )]
         public bool Verify( out string errMsg )
         {
-            return LibLLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
+            errMsg = string.Empty;
+            if(LibLLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out DisposeMessageString nativeMsg ).Failed)
+            {
+                errMsg = nativeMsg.ToString();
+                nativeMsg.Dispose();
+                return false;
+            }
+
+            return false;
         }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>
@@ -392,7 +401,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            var handle = LLVMGetEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            var handle = LLVMGetEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
             return AttributeValue.FromHandle( Context, handle );
         }
 
@@ -411,7 +420,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            LLVMRemoveEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            LLVMRemoveEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
         }
 
         /// <inheritdoc/>

@@ -13,12 +13,9 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
-    // FUTURE: Convert to C# record for simplification and automatic implementations
-
     /// <summary>Relocation entry in an <see cref="ObjectFile"/></summary>
     [DebuggerDisplay( "{Symbol.Name,nq}({Description,nq})[{Offset}]:{Value}" )]
-    public struct Relocation
-        : IEquatable<Relocation>
+    public readonly record struct Relocation
     {
         /// <summary>Gets the offset for this relocation</summary>
         public ulong Offset => LLVMGetRelocationOffset( IteratorRef );
@@ -27,10 +24,10 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         public Symbol Symbol => new( Section.ContainingBinary, LLVMGetRelocationSymbol( IteratorRef ) );
 
         /// <summary>Gets the kind of relocation as a string for display purposes</summary>
-        public string Description => LLVMGetRelocationTypeName( IteratorRef );
+        public DisposeMessageString Description => LLVMGetRelocationTypeName( IteratorRef );
 
         /// <summary>Gets the relocation value as a string</summary>
-        public string Value => LLVMGetRelocationValueString( IteratorRef );
+        public DisposeMessageString Value => LLVMGetRelocationValueString( IteratorRef );
 
         /// <summary>Gets the relocation type for this relocation</summary>
         /// <remarks>The meaning of the values are target obj file format specific, there is no standard</remarks>
@@ -38,32 +35,6 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
         /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile.Section"/> this relocation belongs to</summary>
         public Section Section { get; }
-
-        /// <summary>Performs equality checks against an <see cref="object"/></summary>
-        /// <param name="obj">object to test for equality with this instance</param>
-        /// <returns><see langword="true"/> if <paramref name="obj"/> is equal to this instance</returns>
-        public override bool Equals( object? obj ) => ( obj is Relocation other ) && Equals( other );
-
-        /// <summary>Gets a hash code for this <see cref="Relocation"/></summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode( ) => IteratorRef.GetHashCode( );
-
-        /// <summary>Equality comparison</summary>
-        /// <param name="left">left side of comparison</param>
-        /// <param name="right">right side of comparison</param>
-        /// <returns>Result of equality test</returns>
-        public static bool operator ==( Relocation left, Relocation right ) => left.Equals( right );
-
-        /// <summary>Inequality comparison</summary>
-        /// <param name="left">left side of comparison</param>
-        /// <param name="right">right side of comparison</param>
-        /// <returns>Result of inequality test</returns>
-        public static bool operator !=( Relocation left, Relocation right ) => !( left == right );
-
-        /// <summary>Performs equality checks against another <see cref="Relocation"/></summary>
-        /// <param name="other">object to test for equality with this instance</param>
-        /// <returns><see langword="true"/> if <paramref name="other"/> is equal to this instance</returns>
-        public bool Equals( Relocation other ) => IteratorRef.Equals( other.IteratorRef );
 
         internal Relocation( Section owningSection, LLVMRelocationIteratorRef iterator )
             : this( owningSection, iterator, true )

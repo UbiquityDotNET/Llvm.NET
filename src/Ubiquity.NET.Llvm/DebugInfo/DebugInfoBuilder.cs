@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -36,25 +36,25 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     }
 
     /// <summary>Describes the kind of macro declaration</summary>
-    [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Simple 1:1 mapping to native names and values, there is no 0 value" )]
     public enum MacroKind
     {
+        /// <summary>Default None value. This is an invalid value that is not supported by LLVM</summary>
+        None = 0,
+
         /// <summary>Macro definition</summary>
         Define = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeDefine,
 
         /// <summary>Undefine a macro</summary>
         Undefine = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeMacro,
 
-        /* These are not supported in the LLVM native code yet, so no point in exposing them at this time
-            /// <summary>Start of file macro</summary>
-            StartFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeStartFile,
+        /// <summary>Start of file macro</summary>
+        StartFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeStartFile,
 
-            /// <summary>End of file macro</summary>
-            EndFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeEndFile,
+        /// <summary>End of file macro</summary>
+        EndFile = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeEndFile,
 
-            /// <summary>Vendor specific extension type</summary>
-            VendorExt = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeVendorExt
-        */
+        /// <summary>Vendor specific extension type</summary>
+        VendorExt = LLVMDWARFMacinfoRecordType.LLVMDWARFMacinfoRecordTypeVendorExt
     }
 
     /// <summary>DebugInfoBuilder is a factory class for creating DebugInformation for an LLVM <see cref="BitcodeModule"/></summary>
@@ -105,6 +105,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="optimized">Flag to indicate if the code in this compilation unit is optimized</param>
         /// <param name="compilationFlags">Additional tool specific flags</param>
         /// <param name="runtimeVersion">Runtime version</param>
+        /// <param name="sysRoot">System root for the debug info to use [Default:<see cref="string.Empty"/>]</param>
+        /// <param name="sdk">SDK name for the debug record [Default:<see cref="string.Empty"/>]</param>
         /// <returns><see cref="DICompileUnit"/></returns>
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DICompileUnit", Justification = "It is spelled correctly 8^)" )]
         public DICompileUnit CreateCompileUnit( SourceLanguage language
@@ -114,17 +116,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                               , bool optimized
                                               , string? compilationFlags
                                               , uint runtimeVersion
+                                              , string sysRoot = ""
+                                              , string sdk = ""
                                               )
         {
-            if( producer == null )
-            {
-                producer = string.Empty;
-            }
+            ArgumentNullException.ThrowIfNull(sysRoot);
+            ArgumentNullException.ThrowIfNull(sdk);
 
-            if( compilationFlags == null )
-            {
-                compilationFlags = string.Empty;
-            }
+            producer ??= string.Empty;
+            compilationFlags ??= string.Empty;
 
             if( OwningModule.DICompileUnit != null )
             {
@@ -132,22 +132,26 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             var file = CreateFile( fileName, fileDirectory );
-            var handle = LibLLVMDIBuilderCreateCompileUnit( BuilderHandle.ThrowIfInvalid()
-                                                          , ( LibLLVMDwarfSourceLanguage )language
-                                                          , file.MetadataHandle
-                                                          , producer
-                                                          , producer.Length
-                                                          , optimized
-                                                          , compilationFlags
-                                                          , compilationFlags.Length
-                                                          , runtimeVersion
-                                                          , string.Empty
-                                                          , size_t.Zero
-                                                          , LLVMDWARFEmissionKind.LLVMDWARFEmissionFull
-                                                          , 0
-                                                          , false
-                                                          , false
-                                                          );
+            var handle = LLVMDIBuilderCreateCompileUnit( BuilderHandle.ThrowIfInvalid()
+                                                       , ( LLVMDWARFSourceLanguage )language
+                                                       , file.MetadataHandle
+                                                       , producer
+                                                       , producer.Length
+                                                       , optimized
+                                                       , compilationFlags
+                                                       , compilationFlags.Length
+                                                       , runtimeVersion
+                                                       , string.Empty
+                                                       , size_t.Zero
+                                                       , LLVMDWARFEmissionKind.LLVMDWARFEmissionFull
+                                                       , DWOId: 0
+                                                       , SplitDebugInlining: false
+                                                       , DebugInfoForProfiling: false
+                                                       , sysRoot
+                                                       , sysRoot.Length
+                                                       , sdk
+                                                       , sdk.Length
+                                                       );
             OwningModule.DICompileUnit = MDNode.FromHandle<DICompileUnit>( handle.ThrowIfInvalid( ) )!;
             return OwningModule.DICompileUnit;
         }
@@ -175,7 +179,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Create a macro</summary>
         /// <param name="parentFile">Parent file containing the macro</param>
         /// <param name="line">Source line number where the macro is defined</param>
-        /// <param name="kind">Kind of macro</param>
+        /// <param name="kind">Id of macro</param>
         /// <param name="name">Name of the macro</param>
         /// <param name="value">Value of the macro (use String.Empty for <see cref="MacroKind.Undefine"/>)</param>
         /// <returns>Newly created macro node</returns>
@@ -232,10 +236,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="DIFile"/> or <see langword="null"/> if <paramref name="path"/>
         /// is <see langword="null"/> empty, or all whitespace
         /// </returns>
-        public DIFile CreateFile( string? path )
+        public DIFile CreateFile( string path )
         {
-            string? fileName = path is null ? null : Path.GetFileName( path );
-            string? directory = path is null ? null : Path.GetDirectoryName( path );
+            string? fileName = Path.GetFileName( path );
+            ArgumentException.ThrowIfNullOrWhiteSpace(fileName, nameof(path));
+
+            string? directory = Path.GetDirectoryName( path );
+            ArgumentException.ThrowIfNullOrWhiteSpace(directory, nameof(path));
+
             return CreateFile( fileName, directory );
         }
 
@@ -245,7 +253,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns>
         /// <see cref="DIFile"/> created
         /// </returns>
-        public DIFile CreateFile( string? fileName, string? directory )
+        public DIFile CreateFile( string fileName, string directory )
         {
             var handle = LLVMDIBuilderCreateFile( BuilderHandle.ThrowIfInvalid()
                                                 , fileName
@@ -520,7 +528,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                        , bitSize
                                                        , bitAlign
                                                        , addressSpace
-                                                       , name
+                                                       , name! // Might be null, but API is OK with that. LibraryImportAttribute ignores nullability...
                                                        , name?.Length ?? 0
                                                        );
             return MDNode.FromHandle<DIDerivedType>( handle.ThrowIfInvalid( ) )!;
@@ -1128,7 +1136,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">LLVM: llvm.dbg.declare</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
+        public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
         {
             return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertBefore );
         }
@@ -1149,8 +1157,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">LLVM: llvm.dbg.declare</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore )
+        public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore )
         {
             storage.ValidateNotNull( nameof( storage ) );
             varInfo.ValidateNotNull( nameof( varInfo ) );
@@ -1158,18 +1165,18 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             location.ValidateNotNull( nameof( location ) );
             insertBefore.ValidateNotNull( nameof( insertBefore ) );
 
-            var handle = LLVMDIBuilderInsertDeclareBefore( BuilderHandle.ThrowIfInvalid()
-                                                         , storage.ValueHandle
-                                                         , varInfo.MetadataHandle
-                                                         , expression.MetadataHandle
-                                                         , location.MetadataHandle
-                                                         , insertBefore.ValueHandle
-                                                         );
+            var handle = LLVMDIBuilderInsertDeclareRecordBefore( BuilderHandle.ThrowIfInvalid()
+                                                               , storage.ValueHandle
+                                                               , varInfo.MetadataHandle
+                                                               , expression.MetadataHandle
+                                                               , location.MetadataHandle
+                                                               , insertBefore.ValueHandle
+                                                               );
 
-            return Value.FromHandle<CallInstruction>( handle.ThrowIfInvalid( ) )!;
+            return new(handle.ThrowIfInvalid( ));
         }
 
-        /// <summary>Inserts an llvm.dbg.declare instruction before the given instruction</summary>
+        /// <summary>Inserts a DebugRecord before the given instruction</summary>
         /// <param name="storage">Value the declaration is bound to</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="location"><see cref="DILocation"/>for the variable</param>
@@ -1184,12 +1191,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">LLVM: llvm.dbg.declare</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd )
+        public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd )
         {
             return InsertDeclare( storage, varInfo, CreateExpression( ), location, insertAtEnd );
         }
 
-        /// <summary>Inserts an llvm.dbg.declare instruction before the given instruction</summary>
+        /// <summary>Inserts a debug record before the given instruction</summary>
         /// <param name="storage">Value the declaration is bound to</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="expression"><see cref="DIExpression"/> for a debugger to use when extracting the value</param>
@@ -1207,8 +1214,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-declare">LLVM: llvm.dbg.declare</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public CallInstruction InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd )
+        public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd )
         {
             storage.ValidateNotNull( nameof( storage ) );
             varInfo.ValidateNotNull( nameof( varInfo ) );
@@ -1221,17 +1227,18 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( Resources.Mismatched_scopes_for_location_and_variable );
             }
 
-            var handle = LLVMDIBuilderInsertDeclareAtEnd( BuilderHandle.ThrowIfInvalid()
-                                                        , storage.ValueHandle
-                                                        , varInfo.MetadataHandle
-                                                        , expression.MetadataHandle
-                                                        , location.MetadataHandle
-                                                        , insertAtEnd.BlockHandle
-                                                        );
-            return Value.FromHandle<CallInstruction>( handle.ThrowIfInvalid( ) )!;
+            var handle = LLVMDIBuilderInsertDeclareRecordAtEnd( BuilderHandle.ThrowIfInvalid()
+                                                              , storage.ValueHandle
+                                                              , varInfo.MetadataHandle
+                                                              , expression.MetadataHandle
+                                                              , location.MetadataHandle
+                                                              , insertAtEnd.BlockHandle
+                                                              );
+
+            return new(handle.ThrowIfInvalid( ));
         }
 
-        /// <summary>Inserts a call to the llvm.dbg.value intrinsic before the specified instruction</summary>
+        /// <summary>Inserts a debug record before the specified instruction</summary>
         /// <param name="value">New value</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
@@ -1248,7 +1255,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        public CallInstruction InsertValue( Value value
+        public DebugRecord InsertValue( Value value
                                           , DILocalVariable varInfo
                                           , DILocation location
                                           , Instruction insertBefore
@@ -1276,7 +1283,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
-        public CallInstruction InsertValue( Value value
+        public DebugRecord InsertValue( Value value
                                           , DILocalVariable varInfo
                                           , DIExpression? expression
                                           , DILocation location
@@ -1288,16 +1295,16 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             location.ValidateNotNull( nameof( location ) );
             insertBefore.ValidateNotNull( nameof( insertBefore ) );
 
-            var handle = LLVMDIBuilderInsertDbgValueBefore( BuilderHandle.ThrowIfInvalid()
-                                                          , value.ValueHandle
-                                                          , varInfo.MetadataHandle
-                                                          , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
-                                                          , location.MetadataHandle
-                                                          , insertBefore.ValueHandle
-                                                          );
-            var retVal = Value.FromHandle<CallInstruction>( handle.ThrowIfInvalid( ) )!;
-            retVal.IsTailCall = true;
-            return retVal;
+            var handle = LLVMDIBuilderInsertDbgValueRecordBefore(
+                BuilderHandle.ThrowIfInvalid(),
+                value.ValueHandle,
+                varInfo.MetadataHandle,
+                expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle,
+                location.MetadataHandle,
+                insertBefore.ValueHandle
+                );
+
+            return new( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</summary>
@@ -1305,7 +1312,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
         /// <param name="insertAtEnd">Block to append the intrinsic to the end of</param>
-        /// <returns><see cref="Instructions.CallInstruction"/> for the intrinsic</returns>
+        /// <returns>The debug record</returns>
         /// <remarks>
         /// This intrinsic provides information when a user source variable is set to a new value.
         /// <note type="note">
@@ -1317,7 +1324,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
-        public CallInstruction InsertValue( Value value
+        public DebugRecord InsertValue( Value value
                                           , DILocalVariable varInfo
                                           , DILocation location
                                           , BasicBlock insertAtEnd
@@ -1326,13 +1333,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             return InsertValue( value, varInfo, null, location, insertAtEnd );
         }
 
-        /// <summary>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</summary>
+        /// <summary>Inserts a DebugRecord at the end of a basic block</summary>
         /// <param name="value">New value</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> describing the variable</param>
         /// <param name="expression"><see cref="DIExpression"/> for the variable</param>
         /// <param name="location"><see cref="DILocation"/>for the assignment</param>
         /// <param name="insertAtEnd">Block to append the intrinsic to the end of</param>
-        /// <returns><see cref="Instructions.CallInstruction"/> for the intrinsic</returns>
+        /// <returns>The Debug record</returns>
         /// <remarks>
         /// This intrinsic provides information when a user source variable is set to a new value.
         /// <note type="note">
@@ -1345,17 +1352,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Interop API requires specific derived type" )]
-        public CallInstruction InsertValue( Value value
+        public DebugRecord InsertValue( Value value
                                           , DILocalVariable varInfo
                                           , DIExpression? expression
                                           , DILocation location
                                           , BasicBlock insertAtEnd
                                           )
         {
-            value.ValidateNotNull( nameof( value ) );
-            varInfo.ValidateNotNull( nameof( varInfo ) );
-            location.ValidateNotNull( nameof( location ) );
-            insertAtEnd.ValidateNotNull( nameof( insertAtEnd ) );
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(varInfo);
+            ArgumentNullException.ThrowIfNull(location);
+            ArgumentNullException.ThrowIfNull(insertAtEnd);
 
             if( location.Scope != varInfo.Scope )
             {
@@ -1367,17 +1374,16 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( Resources.Location_does_not_describe_the_specified_block_s_containing_function );
             }
 
-            var handle = LLVMDIBuilderInsertDbgValueAtEnd( BuilderHandle.ThrowIfInvalid()
-                                                         , value.ValueHandle
-                                                         , varInfo.MetadataHandle
-                                                         , expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle
-                                                         , location.MetadataHandle
-                                                         , insertAtEnd.BlockHandle
-                                                         );
+            var handle = LLVMDIBuilderInsertDeclareRecordAtEnd(
+                BuilderHandle.ThrowIfInvalid(),
+                value.ValueHandle,
+                varInfo.MetadataHandle,
+                expression?.MetadataHandle ?? CreateExpression( ).MetadataHandle,
+                location.MetadataHandle,
+                insertAtEnd.BlockHandle
+                );
 
-            var retVal = Value.FromHandle<CallInstruction>( handle.ThrowIfInvalid( ) )!;
-            retVal.IsTailCall = true;
-            return retVal;
+            return new( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
@@ -1391,7 +1397,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see cref="DIExpression"/></returns>
         public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
         {
-            long[ ] args = operations.Cast<long>( ).ToArray( );
+            UInt64[ ] args = operations.Cast<UInt64>( ).ToArray( );
             var handle = LLVMDIBuilderCreateExpression( BuilderHandle.ThrowIfInvalid(), args, args.LongLength );
             return MDNode.FromHandle<DIExpression>( handle.ThrowIfInvalid( ) )!;
         }
@@ -1399,7 +1405,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Creates a <see cref="DIExpression"/> for a constant value</summary>
         /// <param name="value">Value of the expression</param>
         /// <returns><see cref="DIExpression"/></returns>
-        public DIExpression CreateConstantValueExpression( Int64 value )
+        public DIExpression CreateConstantValueExpression( UInt64 value )
         {
             LLVMMetadataRef handle = LLVMDIBuilderCreateConstantValueExpression( BuilderHandle.ThrowIfInvalid(), value );
             return MDNode.FromHandle<DIExpression>( handle.ThrowIfInvalid( ) )!;
@@ -1432,10 +1438,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             tag.ValidateDefined( nameof( tag ) );
             name.ValidateNotNull( nameof( name ) );
-            if( uniqueId == null )
-            {
-                uniqueId = string.Empty;
-            }
+            uniqueId ??= string.Empty;
 
             // TODO: validate that tag is really valid for a composite type or document the result if it isn't (as long as LLVM won't crash at least)
             var handle = LLVMDIBuilderCreateReplaceableCompositeType( BuilderHandle.ThrowIfInvalid()
@@ -1466,7 +1469,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         // allowUnresolved == false
         private DebugInfoBuilder( BitcodeModule owningModule, bool allowUnresolved )
         {
-            owningModule.ValidateNotNull( nameof( owningModule ) );
+            ArgumentNullException.ThrowIfNull(owningModule);
+            ArgumentNullException.ThrowIfNull(owningModule.ModuleHandle);
+
             BuilderHandle = allowUnresolved
                 ? LLVMCreateDIBuilder( owningModule.ModuleHandle )
                 : LLVMCreateDIBuilderDisallowUnresolved( owningModule.ModuleHandle );

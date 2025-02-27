@@ -8,7 +8,7 @@ using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Contains a local Value as Metadata</summary>
+    /// <summary>Contains a local Value as LlvmMetadata</summary>
     public class LocalAsMetadata
         : ValueAsMetadata
     {

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Ubiquity.NET.Llvm.Values
 {

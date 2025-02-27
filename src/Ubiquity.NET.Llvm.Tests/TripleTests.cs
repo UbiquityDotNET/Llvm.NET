@@ -118,7 +118,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             var values = new Dictionary<Triple.SubArchType, string>
                 {
-                    { Triple.SubArchType.NoSubArch,               string.Empty },
+                    { Triple.SubArchType.None,               string.Empty },
                     { Triple.SubArchType.ARMSubArch_v8_4a,        "v8.4a" },
                     { Triple.SubArchType.ARMSubArch_v8_3a,        "v8.3a" },
                     { Triple.SubArchType.ARMSubArch_v8_2a,        "v8.2a" },
@@ -150,7 +150,7 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.SubArchType.NoSubArch ], Triple.GetCanonicalName( ( Triple.SubArchType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.SubArchType.None ], Triple.GetCanonicalName( ( Triple.SubArchType )0x12345678 ) );
         }
 
         [TestMethod]
@@ -158,7 +158,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             var values = new Dictionary<Triple.VendorType, string>
             {
-                { Triple.VendorType.UnknownVendor,           "unknown" },
+                { Triple.VendorType.Unknown,           "unknown" },
                 { Triple.VendorType.Apple,                   "apple" },
                 { Triple.VendorType.PC,                      "pc" },
                 { Triple.VendorType.SCEI,                    "scei" },
@@ -180,7 +180,7 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.VendorType.UnknownVendor ], Triple.GetCanonicalName( ( Triple.VendorType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.VendorType.Unknown ], Triple.GetCanonicalName( ( Triple.VendorType )0x12345678 ) );
         }
 
         [TestMethod]
@@ -235,7 +235,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             var values = new Dictionary<Triple.EnvironmentType, string>
             {
-                { Triple.EnvironmentType.UnknownEnvironment, "unknown" },
+                { Triple.EnvironmentType.Unknown, "unknown" },
                 { Triple.EnvironmentType.GNU,                "gnu" },
                 { Triple.EnvironmentType.GNUABIN32,          "gnuabin32" },
                 { Triple.EnvironmentType.GNUABI64,           "gnuabi64" },
@@ -260,7 +260,7 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.EnvironmentType.UnknownEnvironment ], Triple.GetCanonicalName( ( Triple.EnvironmentType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.EnvironmentType.Unknown ], Triple.GetCanonicalName( ( Triple.EnvironmentType )0x12345678 ) );
         }
 
         public static void GetObjFormatTypeNameTest( )

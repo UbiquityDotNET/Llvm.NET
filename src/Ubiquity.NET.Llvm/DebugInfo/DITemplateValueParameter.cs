@@ -13,8 +13,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     public class DITemplateValueParameter
         : DITemplateParameter
     {
-        /// <summary>Gets the value of the parameter as Metadata</summary>
-        /// <typeparam name="T">Metadata type of the value to get</typeparam>
+        /// <summary>Gets the value of the parameter as LlvmMetadata</summary>
+        /// <typeparam name="T">LlvmMetadata type of the value to get</typeparam>
         /// <returns>Value or <see langword="null"/> if the value is not convertible to <typeparamref name="T"/></returns>
         public T GetValue<T>( )
             where T : LlvmMetadata

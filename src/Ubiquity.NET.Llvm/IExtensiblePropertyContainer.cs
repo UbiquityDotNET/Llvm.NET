@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm
     /// <summary>Interface to allow adding arbitrary named data items to an object</summary>
     /// <remarks>
     /// It is sometimes useful for code generation applications to attach some tool specific
-    /// data to the LLVM objects created but that don't need representation as LLVM Metadata
+    /// data to the LLVM objects created but that don't need representation as LLVM LlvmMetadata
     /// nodes. This interface provides such a facility.
     /// </remarks>
     public interface IExtensiblePropertyContainer

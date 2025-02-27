@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Values
             return FromHandle<Constant>( LLVMConstNull( typeRef.GetTypeRef( ) ).ThrowIfInvalid( ) )!;
         }
 
-        /// <summary>Gets the constant as a Metadata node</summary>
+        /// <summary>Gets the constant as a LlvmMetadata node</summary>
         /// <returns>Constant value as a metadata constant</returns>
         public ConstantAsMetadata ToMetadata( )
             => LlvmMetadata.FromHandle<ConstantAsMetadata>( Context, LibLLVMConstantAsMetadata( ValueHandle ).ThrowIfInvalid( ) )!;

@@ -7,7 +7,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
@@ -81,21 +81,23 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         /// <exception cref="System.InvalidOperationException">The type is not <see langword="null"/> or not a temporary</exception>
         [SuppressMessage( "Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "DIType", Justification = "It is spelled correctly 8^)" )]
+        [DisallowNull]
         public TDebug? DIType
         {
             get => RawDebugInfoType;
             set
             {
-                TDebug v = value.ValidateNotNull( nameof( value ) )!;
-                if( ( RawDebugInfoType != null ) && RawDebugInfoType.IsTemporary )
+                ArgumentNullException.ThrowIfNull(value);
+
+                if( ( RawDebugInfoType is not null ) && RawDebugInfoType.IsTemporary )
                 {
-                    if( v.IsTemporary )
+                    if( value.IsTemporary )
                     {
                         throw new InvalidOperationException( Resources.Cannot_replace_a_temporary_with_another_temporary );
                     }
 
-                    RawDebugInfoType.ReplaceAllUsesWith( v );
-                    RawDebugInfoType = v;
+                    RawDebugInfoType.ReplaceAllUsesWith( value );
+                    RawDebugInfoType = value;
                 }
                 else
                 {
@@ -114,7 +116,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             get => NativeType_.ValueOrDefault;
 
-            protected set => NativeType_.Value = value;
+            protected set => NativeType_.Value = value; // CONSIDER: Could this be an "init" property?
         }
 
         /// <summary>Gets an intentionally undocumented value</summary>
@@ -244,9 +246,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="nativeType"><typeparamref name="TNative"/> type instance for this association</param>
         /// <param name="debugType"><typeparamref name="TDebug"/> type instance for this association (use <see langword="null"/> for void)</param>
         /// <returns><see cref="IDebugType{NativeT, DebugT}"/> implementation for the specified association</returns>
-        public static IDebugType<TNative, TDebug> Create<TNative, TDebug>( TNative nativeType
-                                                                         , TDebug? debugType
-                                                                         )
+        public static IDebugType<TNative, TDebug> CreateDebugType<TNative, TDebug>(TNative nativeType, TDebug? debugType)
             where TNative : class, ITypeRef
             where TDebug : DIType
         {

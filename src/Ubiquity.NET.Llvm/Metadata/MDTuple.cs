@@ -8,7 +8,7 @@ using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Tuple of Metadata nodes</summary>
+    /// <summary>Tuple of LlvmMetadata nodes</summary>
     /// <remarks>
     /// This acts as a container of nodes in the metadata hierarchy
     /// </remarks>

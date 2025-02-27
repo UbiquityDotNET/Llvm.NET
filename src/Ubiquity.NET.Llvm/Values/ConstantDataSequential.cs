@@ -7,7 +7,7 @@
 using System;
 using System.Text;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -53,7 +53,7 @@ namespace Ubiquity.NET.Llvm.Values
             return IsI8Sequence ? encoding.GetString( rawData ) : throw new InvalidOperationException( "Value is not a string" );
         }
 
-        /// <summary>Gets the raw Data for the data sequential as a <see cref="Span{T}"/> of <see cref="byte"/></summary>
+        /// <summary>Gets the raw Data for the data sequential as a <see cref="ReadOnlySpan{T}"/> of <see cref="byte"/></summary>
         /// <remarks>
         /// This retrieves the underlying data, which may be empty, independent of the actual element type. Thus,
         /// issues of endian mismatch can occur between host assumptions and target. Thus, caution is warranted
@@ -65,8 +65,7 @@ namespace Ubiquity.NET.Llvm.Values
             {
                 unsafe
                 {
-                    sbyte* ptr = LibLLVMGetConstantDataSequentialRawData( ValueHandle, out size_t len );
-                    return new ReadOnlySpan<byte>( ptr, len );
+                    return new( LibLLVMGetConstantDataSequentialRawData( ValueHandle, out size_t len ), len );
                 }
             }
         }

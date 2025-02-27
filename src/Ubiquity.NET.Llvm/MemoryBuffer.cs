@@ -8,7 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -21,12 +21,15 @@ namespace Ubiquity.NET.Llvm
     {
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a file</summary>
         /// <param name="path">Path of the file to load</param>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "msg is Disposed IFF it is valid to begin with" )]
         public MemoryBuffer( string path )
         {
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
-            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out string msg ).Failed )
+            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out DisposeMessageString msg ).Failed )
             {
-                throw new InternalCodeGeneratorException( msg );
+                string errMsg = msg.ToString();
+                msg.Dispose();
+                throw new InternalCodeGeneratorException( errMsg );
             }
 
             BufferHandle = handle;

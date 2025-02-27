@@ -8,7 +8,7 @@ using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Stores a string in Metadata</summary>
+    /// <summary>Stores a string in LlvmMetadata</summary>
     public class MDString
         : LlvmMetadata
     {

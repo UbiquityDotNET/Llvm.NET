@@ -49,7 +49,7 @@ extern "C" {
     ValueCache maps Values to binding provided handles as an intptr_t
     This is used to cache mappings between an LLVMValueRef and a binding
     specific type that wraps the LLVMValueRef. The cache handles
-    invalidation with callbacks when Values are RAUW or destroyed.
+    invalidation with callbacks when Values destroyed or `Replace All Uses With` (RAUW).
     */
     typedef struct LibLLVMOpaqueValueCache* LibLLVMValueCacheRef;
 
@@ -60,10 +60,10 @@ extern "C" {
     // These call backs *MUST NOT* access the cache itself in any way. The actual
     // update to the cache itself has not yet occurred so the cache won't reflect
     // the end state of the update operation
-    typedef void ( *LibLLVMValueCacheItemDeletedCallback )( LLVMValueRef ref, intptr_t handle );
-    typedef intptr_t ( *LibLLVMValueCacheItemReplacedCallback )( LLVMValueRef oldValue, intptr_t handle, LLVMValueRef newValue );
+    typedef void ( *LibLLVMValueCacheItemDeletedCallback )(void* ctx, LLVMValueRef ref, intptr_t handle );
+    typedef intptr_t ( *LibLLVMValueCacheItemReplacedCallback )(void* ctx, LLVMValueRef oldValue, intptr_t handle, LLVMValueRef newValue );
 
-    LibLLVMValueCacheRef LibLLVMCreateValueCache( LibLLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback );
+    LibLLVMValueCacheRef LibLLVMCreateValueCache(/*MaybeNull*/ void* ctx, LibLLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback );
     void LibLLVMDisposeValueCache( LibLLVMValueCacheRef cacheRef );
     void LibLLVMValueCacheAdd( LibLLVMValueCacheRef cacheRef, LLVMValueRef value, intptr_t handle );
     intptr_t LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef );

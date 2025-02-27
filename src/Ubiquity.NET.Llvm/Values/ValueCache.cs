@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Ubiquity.NET.Llvm.Instructions;
@@ -19,6 +20,8 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Values
 {
+    // Wrapper around extended native code to allow mapping the projected types to an LLVM owned type that supports
+    // llvm's `Replace All Uses With` (RAUW) operations, which is otherwise not possible in managed code.
     [SuppressMessage( "Maintainability", "CA1506:Avoid excessive class coupling", Justification = "Interop projection factory" )]
     internal class ValueCache
         : DisposableObject
@@ -28,8 +31,8 @@ namespace Ubiquity.NET.Llvm.Values
 
         public Value GetOrCreateItem( LLVMValueRef valueRef, Action<LLVMValueRef>? foundHandleRelease = null )
         {
-            IntPtr managedHandlePtr = LibLLVMValueCacheLookup( Handle, valueRef );
-            if( managedHandlePtr != IntPtr.Zero )
+            nint managedHandlePtr = LibLLVMValueCacheLookup( Handle, valueRef );
+            if( managedHandlePtr != nint.Zero )
             {
                 foundHandleRelease?.Invoke( valueRef );
                 return ( Value )(GCHandle.FromIntPtr( managedHandlePtr ).Target ?? throw new InvalidOperationException( "GC handle returned a null target!" ));
@@ -37,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Values
 
             Value instance = CreateValueInstance( valueRef );
             var managedHandle = GCHandle.Alloc( instance );
-            LibLLVMValueCacheAdd( Handle, valueRef, ( IntPtr )managedHandle );
+            LibLLVMValueCacheAdd( Handle, valueRef, ( nint )managedHandle );
             ValueRefToGCHandleMap[ valueRef ] = managedHandle;
             return instance;
         }
@@ -67,44 +70,37 @@ namespace Ubiquity.NET.Llvm.Values
             Context = context;
 
             // methods used as cross P/Invoke callbacks so the delegates must remain alive for duration
-            WrappedOnDeleted = new WrappedNativeCallback<LibLLVMValueCacheItemDeletedCallback>( OnItemDeleted );
-            WrappedOnReplaced = new WrappedNativeCallback<LibLLVMValueCacheItemReplacedCallback>( OnItemReplaced );
-
-            Handle = LibLLVMCreateValueCache( WrappedOnDeleted, WrappedOnReplaced );
+            NativeCallbackContext = GCHandle.Alloc(this);
+            unsafe
+            {
+                Handle = LibLLVMCreateValueCache( GCHandle.ToIntPtr(NativeCallbackContext), &NativeOnItemDeleted, &NativeOnItemReplaced );
+            }
         }
 
         protected override void Dispose( bool disposing )
         {
             if( disposing )
             {
-                WrappedOnDeleted.Dispose( );
-                WrappedOnReplaced.Dispose( );
                 Handle.Dispose( );
+                NativeCallbackContext.Free();
             }
         }
 
-        private void OnItemDeleted( LLVMValueRef valueRef, IntPtr handle )
+        private void OnItemDeleted( LLVMValueRef valueRef, nint handle )
         {
             ValueRefToGCHandleMap[ valueRef ].Free( );
             ValueRefToGCHandleMap.Remove( valueRef );
         }
 
-        private IntPtr OnItemReplaced( LLVMValueRef valueRef, IntPtr handle, LLVMValueRef newValue )
+        private nint OnItemReplaced( LLVMValueRef valueRef, nint handle, LLVMValueRef newValue )
         {
             var managedHandle = GCHandle.Alloc( CreateValueInstance( newValue ) );
             ValueRefToGCHandleMap[ valueRef ] = managedHandle;
-            return ( IntPtr )managedHandle;
+            return ( nint )managedHandle;
         }
 
-        /* ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
-        // These cannot and *must not* be made as locals as it holds the references
-        // and GCHandles for the delegate beyond the local scope they are created in.
-        */
-        private readonly WrappedNativeCallback<LibLLVMValueCacheItemDeletedCallback> WrappedOnDeleted;
-        private readonly WrappedNativeCallback<LibLLVMValueCacheItemReplacedCallback> WrappedOnReplaced;
-        /* ReSharper enable PrivateFieldCanBeConvertedToLocalVariable */
-
-        private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = new();
+        private readonly GCHandle NativeCallbackContext;
+        private readonly Dictionary<LLVMValueRef,GCHandle> ValueRefToGCHandleMap = [];
 
         private readonly LibLLVMValueCacheRef Handle;
 
@@ -350,6 +346,38 @@ namespace Ubiquity.NET.Llvm.Values
                 }
 
                 return kind > LibLLVMValueKind.InstructionKind ? new Instruction( handle ) : new Value( handle );
+            }
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
+        private static void NativeOnItemDeleted(nint context, nint valRef, nint handle)
+        {
+            try
+            {
+                if (GCHandle.FromIntPtr( context ).Target is ValueCache self)
+                {
+                    self.OnItemDeleted(LLVMValueRef.FromABI(valRef), handle);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
+        private static nint NativeOnItemReplaced(nint context, nint valRef, nint handle, nint newValRef)
+        {
+            try
+            {
+                return GCHandle.FromIntPtr( context ).Target is not ValueCache self
+                    ? nint.Zero
+                    : self.OnItemReplaced(LLVMValueRef.FromABI(valRef), handle, LLVMValueRef.FromABI(newValRef));
+            }
+            catch
+            {
+                return nint.Zero;
             }
         }
     }

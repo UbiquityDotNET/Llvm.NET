@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm.Transforms
@@ -19,7 +17,5 @@ namespace Ubiquity.NET.Llvm.Transforms
         }
 
         internal LLVMPassManagerRef Handle { get; }
-
-        internal List<WrappedNativeCallback> NativeCallBacks { get; } = new List<WrappedNativeCallback>( );
     }
 }

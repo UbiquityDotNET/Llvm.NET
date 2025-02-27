@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It's not a flags enum, get over it..." )]
     public enum MetadataKind
     {
-        /// <summary>Metadata string</summary>
+        /// <summary>LlvmMetadata string</summary>
         MDString = LibLLVMMetadataKind.LibLLVMMetadataKind_MDString,
 
         /// <summary>Constant Value as metadata</summary>
@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Distinct metadata place holder</summary>
         DistinctMDOperandPlaceholder = LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder,
 
-        /// <summary>Metadata tuple</summary>
+        /// <summary>LlvmMetadata tuple</summary>
         MDTuple = LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple,
 
         /// <summary>Debug info location</summary>
@@ -110,20 +110,14 @@ namespace Ubiquity.NET.Llvm
         DIMacroFile = LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile,
     }
 
-    /// <summary>Root of the LLVM Metadata hierarchy</summary>
-    /// <remarks>In LLVM this is just "Metadata" however that name has the potential
-    /// to conflict with the .NET runtime namespace of the same name, so the name
-    /// is changed in the .NET bindings to avoid the conflict.</remarks>
+    /// <summary>Root of the LLVM LlvmMetadata hierarchy</summary>
     public abstract class LlvmMetadata
     {
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
         public virtual void ReplaceAllUsesWith( LlvmMetadata other )
         {
-            if( other == null )
-            {
-                throw new ArgumentNullException( nameof( other ) );
-            }
+            ArgumentNullException.ThrowIfNull( other );
 
             if( MetadataHandle == default )
             {
@@ -135,10 +129,10 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Formats the metadata as a string</summary>
-        /// <returns>Metadata as a string</returns>
+        /// <returns>LlvmMetadata as a string</returns>
         public override string ToString( )
         {
-            return MetadataHandle == default ? string.Empty : LibLLVMMetadataAsString( MetadataHandle );
+            return MetadataHandle == default ? string.Empty : LibLLVMMetadataAsString( MetadataHandle ).ToString();
         }
 
         /// <summary>Gets a value indicating this metadata's kind</summary>
@@ -166,103 +160,40 @@ namespace Ubiquity.NET.Llvm
                 // use the native kind value to determine the managed type
                 // that should wrap this particular handle
                 var kind = ( MetadataKind )LibLLVMGetMetadataID( handle );
-                switch( kind )
+                return kind switch
                 {
-                case MetadataKind.MDString:
-                    return new MDString( handle );
-
-                case MetadataKind.ConstantAsMetadata:
-                    return new ConstantAsMetadata( handle );
-
-                case MetadataKind.LocalAsMetadata:
-                    return new LocalAsMetadata( handle );
-
-                case MetadataKind.DistinctMDOperandPlaceholder:
-                    throw new NotSupportedException( ); // return new DistinctMDOperandPlaceHodler( handle );
-
-                case MetadataKind.MDTuple:
-                    return new MDTuple( handle );
-
-                case MetadataKind.DILocation:
-                    return new DILocation( handle );
-
-                case MetadataKind.DIExpression:
-                    return new DIExpression( handle );
-
-                case MetadataKind.DIGlobalVariableExpression:
-                    return new DIGlobalVariableExpression( handle );
-
-                case MetadataKind.GenericDINode:
-                    return new GenericDINode( handle );
-
-                case MetadataKind.DISubrange:
-                    return new DISubRange( handle );
-
-                case MetadataKind.DIEnumerator:
-                    return new DIEnumerator( handle );
-
-                case MetadataKind.DIBasicType:
-                    return new DIBasicType( handle );
-
-                case MetadataKind.DIDerivedType:
-                    return new DIDerivedType( handle );
-
-                case MetadataKind.DICompositeType:
-                    return new DICompositeType( handle );
-
-                case MetadataKind.DISubroutineType:
-                    return new DISubroutineType( handle );
-
-                case MetadataKind.DIFile:
-                    return new DIFile( handle );
-
-                case MetadataKind.DICompileUnit:
-                    return new DICompileUnit( handle );
-
-                case MetadataKind.DISubprogram:
-                    return new DISubProgram( handle );
-
-                case MetadataKind.DILexicalBlock:
-                    return new DILexicalBlock( handle );
-
-                case MetadataKind.DILexicalBlockFile:
-                    return new DILexicalBlockFile( handle );
-
-                case MetadataKind.DINamespace:
-                    return new DINamespace( handle );
-
-                case MetadataKind.DIModule:
-                    return new DIModule( handle );
-
-                case MetadataKind.DITemplateTypeParameter:
-                    return new DITemplateTypeParameter( handle );
-
-                case MetadataKind.DITemplateValueParameter:
-                    return new DITemplateValueParameter( handle );
-
-                case MetadataKind.DIGlobalVariable:
-                    return new DIGlobalVariable( handle );
-
-                case MetadataKind.DILocalVariable:
-                    return new DILocalVariable( handle );
-
-                case MetadataKind.DIObjCProperty:
-                    return new DIObjCProperty( handle );
-
-                case MetadataKind.DIImportedEntity:
-                    return new DIImportedEntity( handle );
-
-                case MetadataKind.DIMacro:
-                    return new DIMacro( handle );
-
-                case MetadataKind.DIMacroFile:
-                    return new DIMacroFile( handle );
-
-                default:
-#pragma warning disable RECS0083 // Intentional trigger to catch changes in underlying LLVM libs
-                    throw new NotImplementedException( );
-#pragma warning restore RECS0083
-                }
+                    MetadataKind.MDString => new MDString( handle ),
+                    MetadataKind.ConstantAsMetadata => new ConstantAsMetadata( handle ),
+                    MetadataKind.LocalAsMetadata => new LocalAsMetadata( handle ),
+                    MetadataKind.DistinctMDOperandPlaceholder => throw new NotSupportedException(), // new DistinctMDOperandPlaceHolder( handle ),
+                    MetadataKind.MDTuple => new MDTuple( handle ),
+                    MetadataKind.DILocation => new DILocation( handle ),
+                    MetadataKind.DIExpression => new DIExpression( handle ),
+                    MetadataKind.DIGlobalVariableExpression => new DIGlobalVariableExpression( handle ),
+                    MetadataKind.GenericDINode => new GenericDINode( handle ),
+                    MetadataKind.DISubrange => new DISubRange( handle ),
+                    MetadataKind.DIEnumerator => new DIEnumerator( handle ),
+                    MetadataKind.DIBasicType => new DIBasicType( handle ),
+                    MetadataKind.DIDerivedType => new DIDerivedType( handle ),
+                    MetadataKind.DICompositeType => new DICompositeType( handle ),
+                    MetadataKind.DISubroutineType => new DISubroutineType( handle ),
+                    MetadataKind.DIFile => new DIFile( handle ),
+                    MetadataKind.DICompileUnit => new DICompileUnit( handle ),
+                    MetadataKind.DISubprogram => new DISubProgram( handle ),
+                    MetadataKind.DILexicalBlock => new DILexicalBlock( handle ),
+                    MetadataKind.DILexicalBlockFile => new DILexicalBlockFile( handle ),
+                    MetadataKind.DINamespace => new DINamespace( handle ),
+                    MetadataKind.DIModule => new DIModule( handle ),
+                    MetadataKind.DITemplateTypeParameter => new DITemplateTypeParameter( handle ),
+                    MetadataKind.DITemplateValueParameter => new DITemplateValueParameter( handle ),
+                    MetadataKind.DIGlobalVariable => new DIGlobalVariable( handle ),
+                    MetadataKind.DILocalVariable => new DILocalVariable( handle ),
+                    MetadataKind.DIObjCProperty => new DIObjCProperty( handle ),
+                    MetadataKind.DIImportedEntity => new DIImportedEntity( handle ),
+                    MetadataKind.DIMacro => new DIMacro( handle ),
+                    MetadataKind.DIMacroFile => new DIMacroFile( handle ),
+                    _ => throw new NotSupportedException(),
+                };
             }
         }
 

@@ -94,7 +94,7 @@ namespace TestDebugInfo
             // Create basic types used in this compilation
             var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
             var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
-            var voidType = DebugType.Create<ITypeRef,DIType>( module.Context.VoidType, null );
+            var voidType = DebugType.CreateDebugType<ITypeRef,DIType>( module.Context.VoidType, null );
             var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
             #endregion
 
@@ -189,8 +189,8 @@ namespace TestDebugInfo
                 // Module is good, so generate the output files
                 module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
                 File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
-                TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileType.ObjectFile );
-                TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileType.AssemblySource );
+                TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileKind.ObjectFile );
+                TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileKind.AssemblySource );
                 Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
             }
         }
@@ -238,7 +238,7 @@ namespace TestDebugInfo
             // to pair the LLVM pointer type with the original source type.
             var copySig = module.Context.CreateFunctionType( module.DIBuilder
                                                            , voidType
-                                                           , DebugType.Create( fooPtr, constFoo )
+                                                           , DebugType.CreateDebugType( fooPtr, constFoo )
                                                            , fooPtr
                                                            );
 

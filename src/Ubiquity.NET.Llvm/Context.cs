@@ -7,11 +7,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.ObjectFile;
@@ -85,7 +88,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the LLVM token type for this context</summary>
         public ITypeRef TokenType => TypeRef.FromHandle( LLVMTokenTypeInContext( ContextHandle ).ThrowIfInvalid( ) )!;
 
-        /// <summary>Gets the LLVM Metadata type for this context</summary>
+        /// <summary>Gets the LLVM LlvmMetadata type for this context</summary>
         public ITypeRef MetadataType => TypeRef.FromHandle( LLVMMetadataTypeInContext( ContextHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the LLVM X86 80-bit floating point type for this context</summary>
@@ -105,9 +108,9 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see cref="IPointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
         public IPointerType GetPointerTypeFor( ITypeRef elementType )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
+            ArgumentNullException.ThrowIfNull(elementType);
 
-            if( elementType.Context != this )
+            if ( elementType.Context != this )
             {
                 throw new ArgumentException( Resources.Cannot_mix_types_from_different_contexts, nameof( elementType ) );
             }
@@ -463,8 +466,9 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Creates a metadata string from the given string</summary>
         /// <param name="value">string to create as metadata</param>
         /// <returns>new metadata string</returns>
-        public MDString CreateMetadataString( string? value )
+        public MDString CreateMetadataString( string value )
         {
+            ArgumentNullException.ThrowIfNull(value);
             var handle = LLVMMDStringInContext2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
             return new MDString( handle );
         }
@@ -637,18 +641,18 @@ namespace Ubiquity.NET.Llvm
             => Value.FromHandle<ConstantFP>( LLVMConstReal( DoubleType.GetTypeRef( ), constValue ).ThrowIfInvalid( ) )!;
 
         /// <summary>Creates a simple boolean attribute</summary>
-        /// <param name="kind">Kind of attribute</param>
-        /// <returns><see cref="AttributeValue"/> with the specified Kind set</returns>
+        /// <param name="kind">Id of attribute</param>
+        /// <returns><see cref="AttributeValue"/> with the specified Id set</returns>
         public AttributeValue CreateAttribute( AttributeKind kind )
         {
             kind.ValidateDefined( nameof( kind ) );
-            if( kind.RequiresIntValue( ) )
+            if( kind.IsIntKind( ) )
             {
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_requires_a_value, kind ), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
-                                                , kind.GetEnumAttributeId( )
+                                                , (uint)kind
                                                 , 0ul
                                                 );
             return AttributeValue.FromHandle( this, handle );
@@ -673,13 +677,13 @@ namespace Ubiquity.NET.Llvm
         public AttributeValue CreateAttribute( AttributeKind kind, UInt64 value )
         {
             kind.ValidateDefined( nameof( kind ) );
-            if( !kind.RequiresIntValue( ) )
+            if( !kind.IsIntKind( ) )
             {
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_does_not_support_a_value, kind ), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( ContextHandle
-                                                , kind.GetEnumAttributeId( )
+                                                , (uint)kind
                                                 , value
                                                 );
             return AttributeValue.FromHandle( this, handle );
@@ -739,7 +743,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the modules created in this context</summary>
         public IEnumerable<BitcodeModule> Modules => ModuleCache;
 
-        /// <summary>Gets non-zero Metadata kind ID for a given name</summary>
+        /// <summary>Gets non-zero LlvmMetadata kind ID for a given name</summary>
         /// <param name="name">name of the metadata kind</param>
         /// <returns>integral constant for the ID</returns>
         /// <remarks>
@@ -793,7 +797,7 @@ namespace Ubiquity.NET.Llvm
         internal void RemoveModule( BitcodeModule module )
         {
             module.ValidateNotNull( nameof( module ) );
-            if( !( module.ModuleHandle is null ) )
+            if( module.ModuleHandle is not null)
             {
                 ModuleCache.Remove( module.ModuleHandle );
             }
@@ -845,14 +849,16 @@ namespace Ubiquity.NET.Llvm
             }
 
             ContextHandle = contextRef;
-            ActiveHandler = new WrappedNativeCallback<LLVMDiagnosticHandler>( DiagnosticHandler );
             ValueCache = new ValueCache( this );
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
             AttributeValueCache = new AttributeValue.InterningFactory( this );
             MetadataCache = new LlvmMetadata.InterningFactory( this );
 
-            LLVMContextSetDiagnosticHandler( ContextHandle, ActiveHandler, IntPtr.Zero );
+            unsafe
+            {
+                LLVMContextSetDiagnosticHandler( ContextHandle, &DiagnosticHandler, IntPtr.Zero );
+            }
         }
 
         /// <summary>Disposes the context to release unmanaged resources deterministically</summary>
@@ -865,7 +871,7 @@ namespace Ubiquity.NET.Llvm
         {
             // disconnect all modules so that any future critical finalization has no impact
             var handles = from m in Modules
-                          where !(m.ModuleHandle is null) && !m.ModuleHandle.IsClosed && !m.ModuleHandle.IsInvalid
+                          where m.ModuleHandle is not null && !m.ModuleHandle.IsClosed && !m.ModuleHandle.IsInvalid
                           select m.ModuleHandle;
 
             foreach( var handle in handles )
@@ -874,23 +880,32 @@ namespace Ubiquity.NET.Llvm
             }
 
             ValueCache.Dispose( );
-            LLVMContextSetDiagnosticHandler( ContextHandle, null, IntPtr.Zero );
-            ActiveHandler.Dispose( );
+            unsafe
+            {
+                LLVMContextSetDiagnosticHandler( ContextHandle, null, nint.Zero );
+            }
 
             ContextCache.TryRemove( ContextHandle );
-
             ContextHandle.Dispose( );
         }
 
-        private static void DiagnosticHandler( LLVMDiagnosticInfoRef param0, IntPtr param1 )
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [SuppressMessage( "Style", "IDE0060:Remove unused parameter", Justification = "Required by ABI, ignored here" )]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
+        private static unsafe void DiagnosticHandler( nint abiInfo, void* context )
         {
-            string msg = LLVMGetDiagInfoDescription( param0 );
-            var level = LLVMGetDiagInfoSeverity( param0 );
-            Debug.WriteLine( "{0}: {1}", level, msg );
-            Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
+            try
+            {
+                var info = LLVMDiagnosticInfoRef.FromABI(abiInfo);
+                DisposeMessageString msg = LLVMGetDiagInfoDescription( info );
+                var level = LLVMGetDiagInfoSeverity( info );
+                Debug.WriteLine( "{0}: {1}", level, msg );
+                Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
+            }
+            catch
+            {
+            }
         }
-
-        private readonly WrappedNativeCallback<LLVMDiagnosticHandler> ActiveHandler;
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;

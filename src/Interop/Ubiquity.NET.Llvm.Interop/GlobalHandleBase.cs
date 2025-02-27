@@ -29,24 +29,6 @@ namespace Ubiquity.NET.Llvm.Interop
             get => handle == nint.Zero;
         }
 
-        /// <summary>Throws an exception if this handle is invalid or in the closed state</summary>
-        /// <param name="message">Exception error message [default: empty string]</param>
-        /// <param name="memberName">Name of the member making the call [Default: provided by compiler]</param>
-        /// <param name="sourceFilePath">Source file of the code making this call [Default: provided by compiler]</param>
-        /// <param name="sourceLineNumber">Source line number of the code making this call [Default: provided by compiler]</param>
-        /// <exception cref="LlvmException">This handle is invalid or closed</exception>
-        public void ThrowIfInvalid(
-            string message = "",
-            [CallerMemberNameAttribute] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            if(IsInvalid || IsClosed)
-            {
-                throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber}; {message}" );
-            }
-        }
-
         /// <summary>Tests if this handle has the same value as <paramref name="other"/></summary>
         /// <param name="other">Other handle to compare with</param>
         /// <returns><see langword="true"/>if both handles refer to the same native instance</returns>

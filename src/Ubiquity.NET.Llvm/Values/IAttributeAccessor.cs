@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>The attribute applies to the first parameter of the function</summary>
         /// <remarks>
         /// Additional parameters are identified by simply adding an integer value to
-        /// this value. (i.e. FunctionAttributeIndex.Parameter0 + 1 )
+        /// this value. (i.e. Parameter1 == FunctionAttributeIndex.Parameter0 + 1 )
         /// </remarks>
         Parameter0 = ReturnType +1
     }

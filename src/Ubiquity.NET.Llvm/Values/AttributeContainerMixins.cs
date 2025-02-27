@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Values
             self.ValidateNotNull( nameof( self ) );
             kind.ValidateDefined( nameof( kind ) );
 
-            return self.Any( a => a.Kind == kind );
+            return self.Any( a => a.Id == kind );
         }
 
         /// <summary>Adds attributes to an <see cref="IAttributeContainer"/></summary>
@@ -183,7 +183,7 @@ namespace Ubiquity.NET.Llvm.Values
             else
             {
                 ICollection<AttributeValue> attributes = self.Attributes[ index ];
-                AttributeValue attrib = attributes.FirstOrDefault( a => a.Kind == kind );
+                AttributeValue attrib = attributes.FirstOrDefault( a => a.Id == kind );
                 if( attrib != default )
                 {
                     attributes.Remove( attrib );

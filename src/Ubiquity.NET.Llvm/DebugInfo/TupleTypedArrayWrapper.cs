@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {

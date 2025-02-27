@@ -29,11 +29,11 @@ try
     . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
-    # build the interop layer first using the script to manage the complexities of generated marshaling Interop
-    # and dependencies between C# and C++ projects.
-    .\Build-Interop.ps1 -Configuration $Configuration -AllowVsPreReleases:$AllowVsPreReleases
+    # build the native code layer first using the script to manage the complexities of SDK project dependencies
+    # between C# and C++ projects.
+    .\Build-Native.ps1 -Configuration $Configuration -AllowVsPreReleases:$AllowVsPreReleases
 
-    # build the Managed code OO Wrapper layer
+    # build the Managed code support
     Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
     dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
 

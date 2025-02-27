@@ -47,12 +47,12 @@ extern "C"
         return wrap( pComdat );
     }
 
-    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, LibLLVMComdatIteratorCallback callback )
+    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, void* context, LibLLVMComdatIteratorCallback callback )
     {
         auto pModule = unwrap( module );
         for( auto&& entry : pModule->getComdatSymbolTable( ) )
         {
-            if( !callback( wrap( &entry.second ) ) )
+            if( !callback( context, wrap( &entry.second ) ) )
                 break;
         }
     }

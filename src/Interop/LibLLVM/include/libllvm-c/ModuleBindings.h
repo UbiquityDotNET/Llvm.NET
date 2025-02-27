@@ -19,8 +19,8 @@ extern "C" {
     // Thus, a callback is used to provide the caller with all the elements without
     // requiring the use of unsafe and difficult to project constructs.
     // if the callback returns false the enumeration stops
-    typedef LLVMBool( *LibLLVMComdatIteratorCallback )( LLVMComdatRef comdatRef );
-    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, LibLLVMComdatIteratorCallback callback );
+    typedef LLVMBool( *LibLLVMComdatIteratorCallback )( void* context, LLVMComdatRef comdatRef );
+    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, void* context, LibLLVMComdatIteratorCallback callback );
     LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind );
     void LibLLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef );
     void LibLLVMModuleComdatClear( LLVMModuleRef module );

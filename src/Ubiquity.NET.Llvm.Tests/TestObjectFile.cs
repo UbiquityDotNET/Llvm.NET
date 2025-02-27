@@ -69,7 +69,7 @@ namespace Ubiquity.NET.Llvm.Tests
             bldr.Return( result );
 
             Debug.WriteLine( module.WriteToString( ) );
-            tm.EmitToFile( module, TestObjFileName, CodeGenFileType.ObjectFile );
+            tm.EmitToFile( module, TestObjFileName, CodeGenFileKind.ObjectFile );
         }
 
         [TestMethod]

@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
@@ -218,7 +218,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Converts the layout to a string representation of the layout data</summary>
         /// <returns>Data layout as a string</returns>
         /// <seealso href="xref:llvm_langref#data-layout">DICompositeType</seealso>
-        public override string ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle );
+        public override string ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle ).ToString();
 
         /// <summary>Gets the byte size of a type</summary>
         /// <param name="llvmType">Type to determine the size of</param>

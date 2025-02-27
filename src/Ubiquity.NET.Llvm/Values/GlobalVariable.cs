@@ -6,7 +6,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 

@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
-    using unsafe LLVMDiagnosticHandler = delegate* unmanaged[Cdecl]<LLVMDiagnosticInfoRef /*_0*/, void* /*_1*/, void /*retVal*/ >;
+    using unsafe LLVMDiagnosticHandler = delegate* unmanaged[Cdecl]</*LLVMDiagnosticInfoRef*/ nint /*_0*/, void* /*_1*/, void /*retVal*/ >;
     using unsafe LLVMYieldCallback = delegate* unmanaged[Cdecl]<nint /*LLVMContextRef*/ /*_0*/, void* /*_1*/, void /*retVal*/ >;
 #pragma warning restore  IDE0065, SA1200
 
@@ -426,7 +426,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMContextSetDiagnosticHandler(LLVMContextRef C, LLVMDiagnosticHandler Handler, void* DiagnosticContext);
+        public static unsafe partial void LLVMContextSetDiagnosticHandler(LLVMContextRef C, LLVMDiagnosticHandler Handler, nint DiagnosticContext);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -438,7 +438,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMContextSetYieldCallback(LLVMContextRef C, LLVMYieldCallback Callback, void* OpaqueHandle);
+        public static unsafe partial void LLVMContextSetYieldCallback(LLVMContextRef C, LLVMYieldCallback Callback, nint OpaqueHandle);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -1755,15 +1755,15 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstGEP2(LLVMTypeRef Ty, LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices);
+        public static unsafe partial LLVMValueRef LLVMConstGEP2(LLVMTypeRef Ty, LLVMValueRef ConstantVal, [In] LLVMValueRef[] ConstantIndices, uint NumIndices);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstInBoundsGEP2(LLVMTypeRef Ty, LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices);
+        public static unsafe partial LLVMValueRef LLVMConstInBoundsGEP2(LLVMTypeRef Ty, LLVMValueRef ConstantVal, [In] LLVMValueRef[] ConstantIndices, uint NumIndices);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMConstGEPWithNoWrapFlags(LLVMTypeRef Ty, LLVMValueRef ConstantVal, out LLVMValueRef ConstantIndices, uint NumIndices, LLVMGEPNoWrapFlags NoWrapFlags);
+        public static unsafe partial LLVMValueRef LLVMConstGEPWithNoWrapFlags(LLVMTypeRef Ty, LLVMValueRef ConstantVal, [In] LLVMValueRef[] ConstantIndices, uint NumIndices, LLVMGEPNoWrapFlags NoWrapFlags);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3394,7 +3394,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy([In] sbyte[] InputData, size_t InputDataLength, string BufferName);
+        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange([In] byte[] InputData, size_t InputDataLength, string BufferName, [MarshalAs( UnmanagedType.Bool)] bool RequiresNullTerminator);
+
+        [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy([In] byte[] InputData, size_t InputDataLength, string BufferName);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

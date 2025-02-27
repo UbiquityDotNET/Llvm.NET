@@ -21,10 +21,12 @@ namespace llvm
         struct ExtraData
         {
             explicit ExtraData( ValueCache* owningCache
+                              , void* context = nullptr
                               , LibLLVMValueCacheItemDeletedCallback deletedCallback = nullptr
                               , LibLLVMValueCacheItemReplacedCallback replacedCallback = nullptr
                               )
                 : Cache( owningCache )
+                , Context(context)
                 , ItemDeletedCallback( deletedCallback )
                 , ItemReplacedCallback( replacedCallback )
             {
@@ -33,6 +35,7 @@ namespace llvm
             ExtraData( ExtraData const& other ) = default;
 
             ValueCache* Cache;
+            void* Context;
             /*MaybeNull*/ LibLLVMValueCacheItemDeletedCallback ItemDeletedCallback;
             /*MaybeNull*/ LibLLVMValueCacheItemReplacedCallback ItemReplacedCallback;
 
@@ -48,10 +51,11 @@ namespace llvm
         typedef ValueMap<Value*, intptr_t, ValueCacheConfig> base_t;
 
     public:
-        ValueCache( LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback )
-            : base_t( ValueCacheConfig::ExtraData( this, deletedCallback, replacedCallback ) )
+        ValueCache(void* ctx, LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback )
+            : base_t( ValueCacheConfig::ExtraData( this, ctx, deletedCallback, replacedCallback ) )
         {
         }
+
     };
 
     void ValueCacheConfig::onDelete( const ExtraData& data, Value* pOldValue )
@@ -60,7 +64,7 @@ namespace llvm
         // Notify binding if a callback is provided.
         if ( data.ItemDeletedCallback != nullptr )
         {
-            data.ItemDeletedCallback( wrap( pOldValue ), data.Cache->lookup( pOldValue ) );
+            data.ItemDeletedCallback( data.Context, wrap( pOldValue ), data.Cache->lookup( pOldValue ) );
         }
     }
 
@@ -76,7 +80,7 @@ namespace llvm
         // Notify binding if a callback is provided.
         if ( data.ItemReplacedCallback != nullptr )
         {
-            currentHandle = data.ItemReplacedCallback( wrap( pOldValue ), currentHandle, wrap( pNewValue ) );
+            currentHandle = data.ItemReplacedCallback( data.Context, wrap( pOldValue ), currentHandle, wrap( pNewValue ) );
         }
     }
 }

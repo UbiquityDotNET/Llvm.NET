@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -464,9 +464,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets a value indicating whether this instruction has metadata</summary>
         public bool HasMetadata => LLVMHasMetadata( ValueHandle );
 
-        /// <summary>Gets or sets Metadata (as a value) for this instruction</summary>
-        /// <param name="kindKey">Metadata kind to get</param>
-        /// <returns>Metadata for the kind or <see langword="null"/> if not present</returns>
+        /// <summary>Gets or sets LlvmMetadata (as a value) for this instruction</summary>
+        /// <param name="kindKey">LlvmMetadata kind to get</param>
+        /// <returns>LlvmMetadata for the kind or <see langword="null"/> if not present</returns>
         public MetadataAsValue? this[ MetadataKind kindKey ]
         {
             get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );

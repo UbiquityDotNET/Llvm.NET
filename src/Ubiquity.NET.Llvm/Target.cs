@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -84,7 +84,7 @@ namespace Ubiquity.NET.Llvm
     }
 
     /// <summary>Output file type for target code generation</summary>
-    public enum CodeGenFileType
+    public enum CodeGenFileKind
     {
         /// <summary>Generate assembly source file</summary>
         AssemblySource = LLVMCodeGenFileType.LLVMAssemblyFile,
@@ -177,9 +177,18 @@ namespace Ubiquity.NET.Llvm
         {
             targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
 
-            return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed
-                ? throw new InternalCodeGeneratorException( errorMessag )
-                : FromHandle( targetHandle );
+            DisposeMessageString? errorMsg = null;
+            try
+            {
+                return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out errorMsg ).Failed
+                    ? throw new InternalCodeGeneratorException( errorMsg.ToString() )
+                    : FromHandle( targetHandle );
+            }
+            finally
+            {
+                // release any error message
+                errorMsg?.Dispose();
+            }
         }
 
         internal Target( LLVMTargetRef targetHandle )

@@ -7,7 +7,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -560,7 +560,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
-        public override string ToString( ) => LibLLVMTripleAsString( TripleHandle, true );
+        public override string ToString( ) => LibLLVMTripleAsString( TripleHandle, true ).ToString();
 
         /// <summary>Gets the Architecture of the triple</summary>
         public ArchType ArchitectureType => ( ArchType )LibLLVMTripleGetArchType( TripleHandle );
@@ -603,37 +603,37 @@ namespace Ubiquity.NET.Llvm
         /// such triple components used in a normalized triple.
         /// </overloads>
         public static string GetCanonicalName( ArchType archType )
-            => LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType ) ?? string.Empty;
+            => LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType ).ToString();
 
         /// <summary>Retrieves the canonical name for an architecture sub type</summary>
         /// <param name="subArchType">Architecture sub type</param>
         /// <returns>String name for the architecture sub type</returns>
         public static string GetCanonicalName( SubArchType subArchType )
-            => LibLLVMTripleGetSubArchTypeName( ( LibLLVMTripleSubArchType )subArchType ) ?? string.Empty;
+            => LibLLVMTripleGetSubArchTypeName( ( LibLLVMTripleSubArchType )subArchType ).ToString();
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
         /// <param name="vendorType">Vendor type</param>
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( VendorType vendorType )
-            => LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType ) ?? string.Empty;
+            => LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType ).ToString();
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
         /// <param name="osType">OS type</param>
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( OSType osType )
-            => LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType ) ?? string.Empty;
+            => LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType ).ToString();
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
         /// <param name="envType">Environment type</param>
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( EnvironmentType envType )
-            => LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType ) ?? string.Empty;
+            => LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType ).ToString();
 
         /// <summary>Retrieves the canonical name for the object component of a triple</summary>
         /// <param name="objFormatType">Object type</param>
         /// <returns>String name for the object component</returns>
         public static string GetCanonicalName( ObjectFormatType objFormatType )
-            => LibLLVMTripleGetObjectFormatTypeName( ( LibLLVMTripleObjectFormatType )objFormatType ) ?? string.Empty;
+            => LibLLVMTripleGetObjectFormatTypeName( ( LibLLVMTripleObjectFormatType )objFormatType ).ToString();
 
         /// <summary>Equality test for a triple</summary>
         /// <param name="other">triple to compare this triple to</param>
@@ -665,7 +665,7 @@ namespace Ubiquity.NET.Llvm
         {
             unNormalizedTriple.ValidateNotNullOrWhiteSpace( nameof( unNormalizedTriple ) );
 
-            return LLVMNormalizeTargetTriple( unNormalizedTriple );
+            return LLVMNormalizeTargetTriple( unNormalizedTriple ).ToString();
         }
 
         /// <summary>Gets the default <see cref="ObjectFormatType"/> for a given <see cref="ArchType"/> and <see cref="OSType"/></summary>
@@ -784,7 +784,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>
-        public static Triple HostTriple => new( LLVMGetDefaultTargetTriple( ) );
+        public static Triple HostTriple => new( LLVMGetDefaultTargetTriple( ).ToString() );
 
         /// <summary>Implicitly converts a triple to a string</summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>

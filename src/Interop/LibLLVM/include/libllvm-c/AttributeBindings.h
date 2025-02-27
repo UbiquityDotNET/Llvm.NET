@@ -22,11 +22,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+    typedef enum LibLLVMAttrKind {
+        // IR-Level Attributes
+        None,                  ///< No attributes have been set
+#define GET_ATTR_ENUM
+#include "llvm/IR/Attributes.inc"
+        EndAttrKinds,          ///< Sentinel value useful for loops
+        EmptyKey,              ///< Use as Empty key for DenseMap of AttrKind
+        TombstoneKey,          ///< Use as Tombstone key for DenseMap of AttrKind
+    } LibLLVMAttrKind;
+
     // caller must release the returned string via LLVMDisposeMessage
     char const* LibLLVMAttributeToString( LLVMAttributeRef attribute );
-    LLVMBool LibLLVMIsTypeAttribute( LLVMAttributeRef attribute );
-    LLVMTypeRef LibLLVMGetAttributeTypeValue( LLVMAttributeRef attribute );
-
+    char const* LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute);
 #ifdef __cplusplus
 }
 #endif

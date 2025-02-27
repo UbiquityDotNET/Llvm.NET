@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -877,10 +878,17 @@ namespace Ubiquity.NET.Llvm.Interop
         private static int CurrentInitializationState;
 
         [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private static unsafe void FatalErrorHandler(byte* reason)
         {
-            // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
-            Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", AnsiStringMarshaller.ConvertToManaged( reason ) );
+            try
+            {
+                // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
+                Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", AnsiStringMarshaller.ConvertToManaged( reason ) );
+            }
+            catch
+            {
+            }
         }
 
         private static void InternalShutdownLLVM(IDisposable hLibLLVM)

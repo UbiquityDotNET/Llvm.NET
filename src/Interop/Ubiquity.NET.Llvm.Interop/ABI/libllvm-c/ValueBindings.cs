@@ -12,8 +12,8 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
-    using unsafe LibLLVMValueCacheItemDeletedCallback = delegate* unmanaged[Cdecl]<LLVMValueRef /*@ref*/, nint /*handle*/, void /*retVal*/>;
-    using unsafe LibLLVMValueCacheItemReplacedCallback = delegate* unmanaged[Cdecl]<LLVMValueRef /*oldValue*/, nint /*handle*/, LLVMValueRef /*newValue*/, nint /*retVal*/ >;
+    using unsafe LibLLVMValueCacheItemDeletedCallback = delegate* unmanaged[Cdecl]<nint /*ctx*/,/*LLVMValueRef*/ nint /*@ref*/, nint /*handle*/, void /*retVal*/>;
+    using unsafe LibLLVMValueCacheItemReplacedCallback = delegate* unmanaged[Cdecl]<nint /*ctx*/, /*LLVMValueRef*/ nint /*oldValue*/, nint /*handle*/, /*LLVMValueRef*/nint /*newValue*/, nint /*retVal*/ >;
 #pragma warning restore IDE0065, SA1200
 
     public enum LibLLVMValueKind
@@ -161,7 +161,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMValueCacheRef LibLLVMCreateValueCache(LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback);
+        public static unsafe partial LibLLVMValueCacheRef LibLLVMCreateValueCache(nint ctx, LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

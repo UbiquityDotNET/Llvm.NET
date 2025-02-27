@@ -6,7 +6,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -16,6 +16,7 @@ using Ubiquity.NET.Llvm.Values;
 namespace Ubiquity.NET.Llvm.Types
 {
     /// <summary>Basic kind of a type</summary>
+    [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "This is NOT a flags type - tooling should get over it." )]
     public enum TypeKind
     {
         /// <summary>Type with no size</summary>
@@ -63,11 +64,20 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary><see cref="Ubiquity.NET.Llvm.LlvmMetadata"/></summary>
         Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
 
-        /// <summary>x86 MMX data type</summary>
-        X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,
-
         /// <summary>Exception handler token</summary>
-        Token = LLVMTypeKind.LLVMTokenTypeKind
+        Token = LLVMTypeKind.LLVMTokenTypeKind,
+
+        /// <summary>Scalable vector</summary>
+        ScalableVector = LLVMTypeKind.LLVMScalableVectorTypeKind,
+
+        /// <summary>B Float type</summary>
+        BFloat = LLVMTypeKind.LLVMBFloatTypeKind,
+
+        /// <summary>x86 AMX data type</summary>
+        X86AMX = LLVMTypeKind.LLVMX86_AMXTypeKind,
+
+        /// <summary>Target specific extended type</summary>
+        TargetSpecific = LLVMTypeKind.LLVMTargetExtTypeKind,
     }
 
     /// <summary>Interface for a Type in LLVM</summary>

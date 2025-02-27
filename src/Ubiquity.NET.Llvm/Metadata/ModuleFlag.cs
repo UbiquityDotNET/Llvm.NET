@@ -6,7 +6,7 @@
 
 using System;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
 
@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Initializes a new instance of the <see cref="ModuleFlag"/> class.</summary>
         /// <param name="behavior">Behavior for the flag</param>
         /// <param name="name">Name of the flag</param>
-        /// <param name="metadata">Metadata for the flag</param>
+        /// <param name="metadata">LlvmMetadata for the flag</param>
         public ModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata metadata )
         {
             Behavior = behavior;
@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the name of flag</summary>
         public string Name { get; }
 
-        /// <summary>Gets the Metadata for this flag</summary>
+        /// <summary>Gets the LlvmMetadata for this flag</summary>
         public LlvmMetadata Metadata { get; }
 
         internal ModuleFlag( MDNode node )

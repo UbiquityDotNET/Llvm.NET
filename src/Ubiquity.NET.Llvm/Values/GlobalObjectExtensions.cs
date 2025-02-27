@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Sets a named <see cref="Ubiquity.NET.Llvm.Comdat"/> for a <see cref="GlobalObject"/></summary>
         /// <param name="self">Global to get the Comdat for</param>
         /// <param name="name">name of the Comdat</param>
-        /// <param name="kind">Kind of Comdat to create if it doesn't exist already</param>
+        /// <param name="kind">Id of Comdat to create if it doesn't exist already</param>
         /// <returns><paramref name="self"/> for fluent use</returns>
         /// <remarks>
         /// This finds a <see cref="Ubiquity.NET.Llvm.Comdat"/> in the <see cref="GlobalValue.ParentModule"/>

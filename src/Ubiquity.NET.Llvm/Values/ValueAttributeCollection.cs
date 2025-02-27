@@ -70,7 +70,7 @@ namespace Ubiquity.NET.Llvm.Values
             bool retVal = Contains( item );
             if( item.IsEnum )
             {
-                Container.RemoveAttributeAtIndex( Index, item.Kind );
+                Container.RemoveAttributeAtIndex( Index, item.Id );
             }
             else
             {

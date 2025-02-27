@@ -69,9 +69,9 @@ extern "C"
         return wrap( unwrap<ValueAsMetadata>( vmd )->getValue( ) );
     }
 
-    LibLLVMValueCacheRef LibLLVMCreateValueCache( LibLLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback )
+    LibLLVMValueCacheRef LibLLVMCreateValueCache( void* ctx, LibLLVMValueCacheItemDeletedCallback /*MaybeNull*/ deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback )
     {
-        return wrap( new ValueCache( deletedCallback, replacedCallback ) );
+        return wrap( new ValueCache(ctx, deletedCallback, replacedCallback ) );
     }
 
     void LibLLVMDisposeValueCache( LibLLVMValueCacheRef cacheRef )

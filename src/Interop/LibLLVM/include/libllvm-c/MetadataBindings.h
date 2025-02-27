@@ -8,13 +8,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    typedef enum LibLLVMDwarfAttributeEncoding
-    {
-#define HANDLE_DW_ATE(ID, NAME, VERSION, VENDOR) DW_ATE_##NAME = ID,
-#include "llvm/BinaryFormat/Dwarf.def"
-        DW_ATE_lo_user = 0x80,
-        DW_ATE_hi_user = 0xff
-    } LibLLVMDwarfAttributeEncoding;
 
     typedef enum LibLLVMDwarfTag
     {
@@ -23,6 +16,16 @@ extern "C" {
 #include "llvm/BinaryFormat/Dwarf.def"
 #undef HANDLE_DW_TAG
     } LibLLVMDwarfTag;
+
+    typedef enum LibLLVMDwarfAttributeEncoding
+        : uint8_t
+    {
+#define HANDLE_DW_ATE(ID, NAME, VERSION, VENDOR) DW_ATE_##NAME = ID,
+#include "llvm/BinaryFormat/Dwarf.def"
+#undef HANDLE_DW_ATE
+        DW_ATE_lo_user = 0x80,
+        DW_ATE_hi_user = 0xff
+    }LibLLVMDwarfTypeKind;
 
     typedef enum LibLLVMMetadataKind
     {

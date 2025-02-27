@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Builds the native code Extended LLVM C API DLL along with the interop .NET assembly for it
+    Builds the native code Extended LLVM C API DLL
 
 .PARAMETER Configuration
     This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
@@ -62,7 +62,7 @@ try
     # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
     # and incompatibilities libs are generally not something published in a package. However, since the build time
     # for the libraries exceeds the time allowed for most hosted build services, or the size of the output exceeds
-	# allowed footprint these must be pre-built for the automated builds.
+    # allowed footprint these must be pre-built for the automated builds.
     Install-LlvmLibs $buildInfo
 
     $msBuildProperties = @{ Configuration = $Configuration
@@ -70,17 +70,16 @@ try
                           }
     $msbuildPropertyList = ConvertTo-PropertyList $msBuildProperties
 
+    # Build and run the source generator as it produces the EXPORTS.g.def needed for the native code to build
     Write-Information "Building LllvmBindingsGenerator"
-
     dotnet build 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -p:$msbuildPropertyList
 
     Write-Information "Generating P/Invoke Bindings"
-    Write-Information "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
-
+    Write-Verbose "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
     dotnet "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net8.0\LlvmBindingsGenerator.dll" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
-        # now build the projects that consume generated output for the bindings
+        # now build the native DLL that consumes the generated output for the bindings
 
         # Need to invoke NuGet directly for restore of vcxproj as /t:Restore target doesn't support packages.config
         # and PackageReference isn't supported for native projects... [Sigh...]
@@ -94,16 +93,14 @@ try
 
         Write-Information "Building LibLLVM"
         $libLLVMBinLogPath = Join-Path $buildInfo['BinLogsPath'] LibLLVM-Build.binlog
-		
-		# LibLlvm ONLy has a release configuration, the interop lib only ever references that.
-		# Force a release build no matter what the "configuration" parameter is.
-		$libLLvmBuildProps = @{ Configuration = 'Release'
+
+        # LibLlvm ONLY has a release configuration, the interop lib only ever references that.
+        # The libraries are just too big to produce a Debug build with symbols etc...
+        # Force a release build no matter what the "configuration" parameter is.
+        $libLLvmBuildProps = @{ Configuration = 'Release'
                                 LlvmVersion = $buildInfo['LlvmVersion']
                               }
         Invoke-MSBuild -Targets 'Build' -Project 'src\Interop\LibLLVM\LibLLVM.vcxproj' -Properties $libLLvmBuildProps -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$libLLVMBinLogPath") )
-
-        Write-Information "Building Ubiquity.NET.Llvm.Interop"
-        dotnet build 'src\Interop\Interop.sln' -p:$msbuildPropertyList
     }
     else
     {

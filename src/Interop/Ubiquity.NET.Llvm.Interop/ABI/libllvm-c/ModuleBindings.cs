@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
@@ -12,7 +13,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
-    using unsafe LibLLVMComdatIteratorCallback = delegate* unmanaged[Cdecl]</*LLVMComdatRef comdatRef*/ nint, LLVMComdatRef /*comdatRef*/, bool/*retVal*/>;
+    using unsafe LibLLVMComdatIteratorCallback = delegate* unmanaged[Cdecl]</*void**/ nint /*context*/, /*LLVMComdatRef*/ nint /*comdatRef*/, /*LLVMBool*/ Int32 /*retVal*/>;
 #pragma warning restore IDE0065, SA1200
 
     public static partial class NativeMethods
@@ -39,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMModuleEnumerateComdats(LLVMModuleRef module, LibLLVMComdatIteratorCallback callback);
+        public static unsafe partial void LibLLVMModuleEnumerateComdats(LLVMModuleRef module, nint context, LibLLVMComdatIteratorCallback callback);
 
         [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

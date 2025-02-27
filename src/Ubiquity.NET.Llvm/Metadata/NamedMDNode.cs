@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm
             Operands = new OperandIterator( this );
         }
 
-        // private iterator for Metadata operands
+        // private iterator for LlvmMetadata operands
         private class OperandIterator
             : IList<MDNode>
         {

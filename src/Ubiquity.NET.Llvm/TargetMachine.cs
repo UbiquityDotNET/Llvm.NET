@@ -6,7 +6,7 @@
 
 using System;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -39,13 +39,13 @@ namespace Ubiquity.NET.Llvm
         public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle );
+        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle ).ToString();
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle );
+        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle ).ToString();
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle );
+        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle ).ToString();
 
         /// <summary>Gets Layout information for this machine</summary>
         public DataLayout TargetData
@@ -61,26 +61,35 @@ namespace Ubiquity.NET.Llvm
         /// <param name="module"><see cref="BitcodeModule"/> to generate the code from</param>
         /// <param name="path">Path to the output file</param>
         /// <param name="fileType">Type of file to emit</param>
-        public void EmitToFile( BitcodeModule module, string path, CodeGenFileType fileType )
+        public void EmitToFile( BitcodeModule module, string path, CodeGenFileKind fileType )
         {
-            module.ValidateNotNull( nameof( module ) );
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
-            fileType.ValidateDefined( nameof( path ) );
+            ArgumentNullException.ThrowIfNull( module );
+            ArgumentNullException.ThrowIfNull( module.ModuleHandle );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
+            fileType.ValidateDefined( nameof( fileType ) );
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
-            var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
-                                                    , module.ModuleHandle
-                                                    , path
-                                                    , ( LLVMCodeGenFileType )fileType
-                                                    , out string errTxt
-                                                    );
-            if( status.Failed )
+            DisposeMessageString? errTxt = null;
+            try
             {
-                throw new InternalCodeGeneratorException( errTxt );
+                var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
+                                                        , module.ModuleHandle
+                                                        , path
+                                                        , ( LLVMCodeGenFileType )fileType
+                                                        , out errTxt
+                                                        );
+                if( status.Failed )
+                {
+                    throw new InternalCodeGeneratorException( errTxt.ToString() );
+                }
+            }
+            finally
+            {
+                errTxt?.Dispose();
             }
         }
 
@@ -92,9 +101,11 @@ namespace Ubiquity.NET.Llvm
         /// The <see cref="BitcodeModule.TargetTriple"/> must match the <see cref="Triple"/> for this
         /// target.
         /// </remarks>
-        public MemoryBuffer EmitToBuffer( BitcodeModule module, CodeGenFileType fileType )
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer")]
+        public MemoryBuffer EmitToBuffer( BitcodeModule module, CodeGenFileKind fileType )
         {
-            module.ValidateNotNull( nameof( module ) );
+            ArgumentNullException.ThrowIfNull( module );
+            ArgumentNullException.ThrowIfNull( module.ModuleHandle );
             fileType.ValidateDefined( nameof( fileType ) );
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
@@ -102,19 +113,24 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
-            var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
-                                                            , module.ModuleHandle
-                                                            , ( LLVMCodeGenFileType )fileType
-                                                            , out string errTxt
-                                                            , out LLVMMemoryBufferRef bufferHandle
-                                                            );
-
-            if( status.Failed )
+            DisposeMessageString? errTxt = null;
+            try
             {
-                throw new InternalCodeGeneratorException( errTxt );
-            }
+                var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
+                                                                , module.ModuleHandle
+                                                                , ( LLVMCodeGenFileType )fileType
+                                                                , out errTxt
+                                                                , out var bufferHandle
+                                                                );
 
-            return new MemoryBuffer( bufferHandle );
+                return status.Failed
+                     ? throw new InternalCodeGeneratorException( errTxt.ToString() )
+                     : new MemoryBuffer( bufferHandle );
+            }
+            finally
+            {
+                errTxt?.Dispose();
+            }
         }
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the triple and specified parameters</summary>

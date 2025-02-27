@@ -4,12 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -124,7 +127,18 @@ namespace Ubiquity.NET.Llvm
             module.ValidateNotNull( nameof( module ) );
 
             Module = module;
-            LibLLVMModuleEnumerateComdats( Module.ModuleHandle, AddComdat );
+            unsafe
+            {
+                var selfHandle = GCHandle.Alloc(this);
+                try
+                {
+                    LibLLVMModuleEnumerateComdats( Module.ModuleHandle, GCHandle.ToIntPtr(selfHandle), &NativeEnumerateComdatsCallback );
+                }
+                finally
+                {
+                    selfHandle.Free();
+                }
+            }
         }
 
         private IEnumerable<GlobalObject> GetModuleGlobalObjects( )
@@ -161,6 +175,22 @@ namespace Ubiquity.NET.Llvm
         }
 
         private readonly BitcodeModule Module;
-        private readonly Dictionary<string, Comdat> InternalComdatMap = new( );
+        private readonly Dictionary<string, Comdat> InternalComdatMap = [];
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
+        private static unsafe Int32 /*LLVMBool*/ NativeEnumerateComdatsCallback(nint context, nint abiComdatRef)
+        {
+            try
+            {
+                return GCHandle.FromIntPtr(context).Target is ComdatCollection self
+                    ? self.AddComdat(LLVMComdatRef.FromABI(abiComdatRef)) ? 1 : 0
+                    : 0;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

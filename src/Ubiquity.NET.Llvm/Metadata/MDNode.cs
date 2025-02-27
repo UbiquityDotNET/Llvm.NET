@@ -7,7 +7,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -15,9 +15,9 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Metadata node for LLVM IR Bitcode modules</summary>
+    /// <summary>LlvmMetadata node for LLVM IR Bitcode modules</summary>
     /// <remarks>
-    /// <para>Metadata nodes may be uniqued, or distinct. Temporary nodes with
+    /// <para>LlvmMetadata nodes may be uniqued, or distinct. Temporary nodes with
     /// support for <see cref="ReplaceAllUsesWith(LlvmMetadata)"/> may be used to
     /// defer uniqueing until the forward references are known.</para>
     /// <para>There is limited support for <see cref="ReplaceAllUsesWith(LlvmMetadata)"/>

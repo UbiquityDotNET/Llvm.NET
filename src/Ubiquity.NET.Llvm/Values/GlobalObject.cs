@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -59,8 +59,8 @@ namespace Ubiquity.NET.Llvm.Values
         }
 
         /// <summary>Sets metadata for this value</summary>
-        /// <param name="kindID">Kind id for the metadata</param>
-        /// <param name="node">Metadata wrapped as a value</param>
+        /// <param name="kindID">Id id for the metadata</param>
+        /// <param name="node">LlvmMetadata wrapped as a value</param>
         public void SetMetadata( uint kindID, LlvmMetadata node )
         {
             node.ValidateNotNull( nameof( node ) );

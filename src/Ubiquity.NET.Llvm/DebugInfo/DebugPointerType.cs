@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Types;
 
 namespace Ubiquity.NET.Llvm.DebugInfo

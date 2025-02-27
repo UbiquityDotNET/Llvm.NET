@@ -32,13 +32,5 @@ namespace Ubiquity.NET.Llvm
             : base( message, inner )
         {
         }
-
-        /// <summary>Initializes a new instance of the <see cref="InternalCodeGeneratorException"/> class from serialization</summary>
-        /// <param name="serializationInfo">Serialization Info for construction</param>
-        /// <param name="streamingContext">Context for construction</param>
-        protected InternalCodeGeneratorException( System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext )
-            : base( serializationInfo, streamingContext )
-        {
-        }
     }
 }

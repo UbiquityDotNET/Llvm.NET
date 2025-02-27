@@ -6,7 +6,7 @@
 
 using System;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 
@@ -61,7 +61,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
         public DebugArrayType( IArrayType llvmType, BitcodeModule module, DIType elementType, uint count, uint lowerBound = 0 )
-            : this( DebugType.Create( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
+            : this( DebugType.CreateDebugType( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
         {
         }
 
@@ -82,15 +82,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="diBuilder">Debug information builder for creating the new debug information</param>
         public void ResolveTemporary( DataLayout layout, DebugInfoBuilder diBuilder )
         {
-            if( layout == null )
-            {
-                throw new ArgumentNullException( nameof( layout ) );
-            }
+            ArgumentNullException.ThrowIfNull( layout );
 
-            if( diBuilder == null )
-            {
-                throw new ArgumentNullException( nameof( diBuilder ) );
-            }
+            ArgumentNullException.ThrowIfNull( diBuilder );
 
             if( DIType != null && DIType.IsTemporary && !DIType.IsResolved )
             {

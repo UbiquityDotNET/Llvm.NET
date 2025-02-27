@@ -14,10 +14,9 @@ using static Ubiquity.NET.Llvm.Interop.Constants;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    [SuppressMessage( "Redundancies in Symbol Declarations", "RECS0001:Class is declared partial but has only one part", Justification = "Establishes pattern, others may be added in future" )]
+    // These were all originally untyped #defines in the LLVM source
     public static partial class Constants
     {
-        // These were all originally untyped #defines in the LLVM source
         public const string LLVM_BLAKE3_VERSION_STRING = "1.3.1";
         public const int LLVM_BLAKE3_KEY_LEN = 32;
         public const int LLVM_BLAKE3_OUT_LEN = 32;
@@ -82,34 +81,63 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init(out llvm_blake3_hasher self);
+        public static unsafe partial void llvm_blake3_hasher_init(ref llvm_blake3_hasher self);
 
+        /// <summary>P/Invoke for LLVM support</summary>
+        /// <param name="self">Reference to the unmanaged data structure to work with</param>
+        /// <param name="key">Key for the operation</param>
+        /// <remarks>
+        /// <note type="important">It is worth noting that the marshalling doesn't care about the size of an array
+        /// with `[In]` semantics, but the native code does! It expects a pointer to a buffer of at least the specified
+        /// size [LLVM_BLAKE3_KEY_LEN]. Any attempts to call this using a smaller array will result in an access violation
+        /// and app crash!</note>
+        /// </remarks>
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_keyed(out llvm_blake3_hasher self, [In][MarshalUsing( ConstantElementCount = LLVM_BLAKE3_KEY_LEN )] byte[] key);
+        public static unsafe partial void llvm_blake3_hasher_init_keyed(ref llvm_blake3_hasher self, /*[In]sizeis(LLVM_BLAKE3_KEY_LEN)*/ byte* key);
 
         [LibraryImport( LibraryPath, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_derive_key(out llvm_blake3_hasher self, string context);
+        public static unsafe partial void llvm_blake3_hasher_init_derive_key(ref llvm_blake3_hasher self, string context);
+
+        /// <summary>P/Invoke for LLVM support</summary>
+        /// <param name="self">Reference to the unmanaged data structure to work with</param>
+        /// <param name="context">context for the operation</param>
+        /// <param name="context_len">length of the array <paramref name="context"/></param>
+        /// <remarks>
+        /// <note type="important">It is worth noting that the marshalling doesn't care about the size of an array
+        /// with `[In]` semantics, it just pins it and passes the pointer. The native code does care however! It expects a pointer
+        /// to a buffer of at least the specified size. Any attempts to call this using a smaller array will result in an access
+        /// violation and app crash!</note>
+        /// </remarks>
+        [LibraryImport( LibraryPath )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void llvm_blake3_hasher_init_derive_key_raw(ref llvm_blake3_hasher self, byte* context, size_t context_len);
+
+        /// <summary>P/Invoke for LLVM support</summary>
+        /// <param name="self">Reference to the unmanaged data structure to work with</param>
+        /// <param name="input">input for the operation</param>
+        /// <param name="input_len">length of the array <paramref name="input"/></param>
+        /// <remarks>
+        /// <note type="important">It is worth noting that the marshalling doesn't care about the size of an array
+        /// with `[In]` semantics, it just pins it and passes the pointer. The native code does care however! It expects a pointer
+        /// to a buffer of at least the specified size. Any attempts to call this using a smaller array will result in an access
+        /// violation and app crash!</note>
+        /// </remarks>
+        [LibraryImport( LibraryPath )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void llvm_blake3_hasher_update(ref llvm_blake3_hasher self, byte* input, size_t input_len);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_derive_key_raw(out llvm_blake3_hasher self, void* context, size_t context_len);
+        public static unsafe partial void llvm_blake3_hasher_finalize(ref llvm_blake3_hasher self, [MarshalUsing(CountElementName = nameof(out_len))] out byte[] @out, out nint out_len);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_update(out llvm_blake3_hasher self, void* input, size_t input_len);
+        public static unsafe partial void llvm_blake3_hasher_finalize_seek(ref llvm_blake3_hasher self, UInt64 seek, [MarshalUsing(CountElementName = nameof(out_len))] out byte[] @out, out nint out_len);
 
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_finalize(out llvm_blake3_hasher self, out byte @out, size_t out_len);
-
-        [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_finalize_seek(out llvm_blake3_hasher self, UInt64 seek, out byte @out, size_t out_len);
-
-        [LibraryImport( LibraryPath )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_reset(out llvm_blake3_hasher self);
+        public static unsafe partial void llvm_blake3_hasher_reset(ref llvm_blake3_hasher self);
     }
 }

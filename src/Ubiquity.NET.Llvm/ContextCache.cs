@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm
     {
         internal static bool TryRemove( LLVMContextRef h )
         {
-            return Instance.Value.TryRemove( h, out Context _ );
+            return Instance.Value.TryRemove( h, out Context? _ );
         }
 
         internal static void Add( Context context )

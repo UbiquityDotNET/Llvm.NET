@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
@@ -68,7 +68,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            var handle = LLVMGetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            var handle = LLVMGetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
             return AttributeValue.FromHandle( Context, handle );
         }
 
@@ -87,7 +87,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            LLVMRemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, kind.GetEnumAttributeId( ) );
+            LLVMRemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
         }
 
         /// <inheritdoc/>

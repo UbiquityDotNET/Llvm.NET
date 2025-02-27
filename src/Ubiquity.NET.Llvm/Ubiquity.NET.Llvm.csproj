@@ -19,12 +19,28 @@
         <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <IsAotCompatible>True</IsAotCompatible>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <IsAotCompatible>True</IsAotCompatible>
     </PropertyGroup>
     <ItemGroup>
         <!--Keep docfx generated OBJ folder junk from cluttering solution view-->
         <Compile Remove="obj\**" />
         <EmbeddedResource Remove="obj\**" />
         <None Remove="obj\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Transforms\FunctionPassManager.cs" />
+      <Compile Remove="Transforms\InterproceduralTransforms.cs" />
+      <Compile Remove="Transforms\ModulePassManager.cs" />
+      <Compile Remove="Transforms\PassManager.cs" />
+      <Compile Remove="Transforms\Sanitizers.cs" />
+      <Compile Remove="Transforms\ScalarTransforms.cs" />
+      <Compile Remove="Transforms\VectorTransforms.cs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="NugetPkg\build\Ubiquity.NET.Llvm.props" PackagePath="build" />
@@ -35,7 +51,16 @@
         </CodeAnalysisDictionary>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Ubiquity.NET.Llvm.Interop" VersionOverride="[10.0.0-*,11)" />
+      <None Include="Transforms\FunctionPassManager.cs" />
+      <None Include="Transforms\InterproceduralTransforms.cs" />
+      <None Include="Transforms\ModulePassManager.cs" />
+      <None Include="Transforms\PassManager.cs" />
+      <None Include="Transforms\Sanitizers.cs" />
+      <None Include="Transforms\ScalarTransforms.cs" />
+      <None Include="Transforms\VectorTransforms.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">

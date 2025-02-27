@@ -4,9 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -115,10 +116,18 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             buffer.ValidateNotNull( nameof( buffer ) );
             context.ValidateNotNull( nameof( context ) );
 
-            BinaryRef = LLVMCreateBinary( buffer.BufferHandle, context.ContextHandle, out string errMsg );
-            if( BinaryRef.IsInvalid )
+            DisposeMessageString? errMsg = null;
+            try
             {
-                throw new InternalCodeGeneratorException( errMsg );
+                BinaryRef = LLVMCreateBinary( buffer.BufferHandle, context.ContextHandle, out errMsg );
+                if( BinaryRef.IsInvalid )
+                {
+                    throw new InternalCodeGeneratorException( errMsg.ToString() );
+                }
+            }
+            finally
+            {
+                errMsg?.Dispose();
             }
         }
 
