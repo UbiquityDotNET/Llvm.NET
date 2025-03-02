@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj" />
+    <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
   </ItemGroup>

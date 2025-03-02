@@ -9,7 +9,7 @@ using System.IO;
 
 using OpenSoftware.DgmlTools.Model;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {

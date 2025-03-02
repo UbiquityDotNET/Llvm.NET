@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 

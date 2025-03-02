@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Runtime.Serialization;
 
 namespace Kaleidoscope.Runtime
 {
@@ -24,11 +23,6 @@ namespace Kaleidoscope.Runtime
 
         public CodeGeneratorException( string message, Exception inner )
             : base( message, inner )
-        {
-        }
-
-        protected CodeGeneratorException( SerializationInfo info, StreamingContext context )
-            : base( info, context )
         {
         }
     }

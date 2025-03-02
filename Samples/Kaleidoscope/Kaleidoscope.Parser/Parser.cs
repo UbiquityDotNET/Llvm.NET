@@ -14,7 +14,7 @@ using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar.ANTLR;
 using Kaleidoscope.Grammar.AST;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {

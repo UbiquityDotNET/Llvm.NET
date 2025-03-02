@@ -9,7 +9,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {

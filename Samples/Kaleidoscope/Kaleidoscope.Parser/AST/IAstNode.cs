@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 using OpenSoftware.DgmlTools.Model;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {

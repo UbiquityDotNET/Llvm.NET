@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {

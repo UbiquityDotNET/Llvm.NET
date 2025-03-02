@@ -3,14 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
+    <DefineConstants Condition="'$(KaleidoscopeJitSupport)'=='true'">$(DefineConstants);KALEIDOSCOPE_JIT_SUPPORT</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Chapter3\Chapter3.csproj" />
-    <ProjectReference Include="..\Chapter4\Chapter4.csproj" />
-    <ProjectReference Include="..\Chapter5\Chapter5.csproj" />
-    <ProjectReference Include="..\Chapter6\Chapter6.csproj" />
-    <ProjectReference Include="..\Chapter7\Chapter7.csproj" />
+    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter4\Chapter4.csproj" />
+    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter5\Chapter5.csproj" />
+    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter6\Chapter6.csproj" />
+    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter7\Chapter7.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
   </ItemGroup>

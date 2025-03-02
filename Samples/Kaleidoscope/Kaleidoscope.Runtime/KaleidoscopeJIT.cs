@@ -3,7 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
+#if KALEIDOSCOPE_JIT_SUPPORT
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -113,3 +113,4 @@ namespace Kaleidoscope.Runtime
         }
     }
 }
+#endif

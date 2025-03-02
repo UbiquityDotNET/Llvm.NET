@@ -55,6 +55,7 @@ namespace Kaleidoscope.Tests
             RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3.CodeGenerator( state) );
         }
 
+#if KALEIDOSCOPE_JIT_SUPPORT
         [TestMethod]
         [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]")]
         public void Chapter4()
@@ -86,6 +87,7 @@ namespace Kaleidoscope.Tests
             using var input = File.OpenText( "fibi.kls" );
             RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, false, writer ) );
         }
+#endif
 
 #if LAZY_FUNCTION_GENERATOR_SUPPORTED
         [TestMethod]
@@ -113,12 +115,12 @@ namespace Kaleidoscope.Tests
             foreach( IAstNode node in replSeq )
             {
                 var errors = node.CollectErrors();
-                Assert.AreEqual( 0, errors.Count( ) );
+                Assert.AreEqual( 0, errors.Count );
 
                 var result = generator.Generate( node );
 
                 // Validate guarantees of OptionalValue<T>
-                Assert.IsTrue( ( result.HasValue && !( result.Value is null ) ) || ( !result.HasValue && result.Value is null ) );
+                Assert.IsTrue( ( result.HasValue && result.Value is not null) || ( !result.HasValue && result.Value is null ) );
 
                 if( result.HasValue )
                 {

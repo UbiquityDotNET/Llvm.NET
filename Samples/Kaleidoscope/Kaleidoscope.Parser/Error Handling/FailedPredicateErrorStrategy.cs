@@ -6,7 +6,7 @@
 
 using Antlr4.Runtime;
 
-using Ubiquity.ArgValidators;
+using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {

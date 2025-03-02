@@ -288,7 +288,7 @@ namespace Ubiquity.NET.Llvm.Values
                 return false;
             }
 
-            return false;
+            return true;
         }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>
