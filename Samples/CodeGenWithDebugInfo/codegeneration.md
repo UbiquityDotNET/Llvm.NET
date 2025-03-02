@@ -41,8 +41,8 @@ The initialization returns an IDisposable so that the calling application can sh
 and potentially re-initialize for a different target if desired. This application only needs to generate one
 module and exit so it just applies a standard C# `using` scope to ensure proper cleanup.
 
-### Target specific details
-In order to isolate the specific details of the target architecture the application uses an interface that
+### Target ABI specific details
+In order to isolate the ABI specific details of the target architecture the application uses an interface that
 contains properties and methods to handle target specific support. Furthermore, an application may not need
 to use all of the possible target architectures so the application selects to register/initialize support for
 specific targets. This reduces startup time and resource commitments to only what is required by the application.

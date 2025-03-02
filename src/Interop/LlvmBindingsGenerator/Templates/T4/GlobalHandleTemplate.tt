@@ -12,6 +12,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
+#nullable enable
 
 using System;
 using System.CodeDom.Compiler;
@@ -54,17 +55,14 @@ namespace Ubiquity.NET.Llvm.Interop
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            if(IsInvalid || IsClosed)
-            {
-                throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber}; {message}" );
-            }
-
-            return this;
+            return IsInvalid || IsClosed
+                 ? throw new LlvmException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber}; {message}" )
+                 : this;
         }
 
-        public bool Equals(<#=HandleName#> other) => handle == other.handle;
+        public bool Equals(<#=HandleName#>? other) => other is not null && handle == other.handle;
 
-        public override bool Equals(object obj) => obj is <#=HandleName#> hOther && Equals(hOther);
+        public override bool Equals(object? obj) => obj is <#=HandleName#> hOther && Equals(hOther);
 
         public override int GetHashCode() => handle.GetHashCode();
 
@@ -85,7 +83,7 @@ namespace Ubiquity.NET.Llvm.Interop
             return true;
 
             // Native ABI declaration without ANY marshalling, AOT compatible
-            [DllImport( NativeMethods.LibraryPath )]
+            [DllImport( NativeMethods.LibraryName )]
             [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
             static unsafe extern void <#=HandleDisposeFunction#>( nint p );
         }

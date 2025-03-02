@@ -4,15 +4,18 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Types;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
-    /// <summary>Binding between a <see cref="DIDerivedType"/> and an <see cref="IPointerType"/></summary>
-    /// <seealso href="xref:llvm_langref#diderivedtype">LLVM DIDerivedType</seealso>
-    public class DebugPointerType
-        : DebugType<IPointerType, DIDerivedType>
+    /// <summary>Binding between a <see cref="DIType"/> and an <see cref="IPointerType"/></summary>
+    /// <seealso href="xref:llvm_langref#ditype">LLVM DIType</seealso>
+    public sealed class DebugPointerType
+        : DebugType<IPointerType, DIType/*DIDerivedType*/>
         , IPointerType
     {
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
@@ -24,12 +27,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, BitcodeModule module, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( debugElementType.ValidateNotNull( nameof( debugElementType ) ).NativeType
                   , module
-                  , debugElementType.DIType
+                  , debugElementType.DebugInfoType
                   , addressSpace
                   , name
                   , alignment
                   )
         {
+            ElementType = debugElementType.NativeType;
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
@@ -47,14 +51,20 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                   , alignment
                   )
         {
+            ElementType = llvmElementType;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class to bind with an existing pointer type</summary>
         /// <param name="llvmPtrType">Native type of the pointer</param>
         /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment for pointer type</param>
+        /// <remarks>
+        /// Due to the move to opaque pointers in LLVM, this form has a <see langword="null"/>
+        /// <see cref="ElementType"/> property as the elements the pointer refers to are
+        /// unknown.
+        /// </remarks>
         public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType? elementType, string? name = null, uint alignment = 0 )
             : base( llvmPtrType,
                     module.ValidateNotNull( nameof( module ) )
@@ -68,7 +78,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class to bind with an existing pointer type</summary>
         /// <param name="llvmPtrType">Native type of the pointer</param>
         /// <param name="debugType">Debug type for the pointer</param>
         /// <remarks>
@@ -78,7 +88,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// information in the LLVM Debug information (they are implicitly in the global
         /// namespace)
         /// </remarks>
-        public DebugPointerType( IPointerType llvmPtrType, DIDerivedType debugType )
+        public DebugPointerType( IPointerType llvmPtrType, DIType debugType )
             : base( llvmPtrType, debugType )
         {
         }
@@ -86,7 +96,19 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public uint AddressSpace => NativeType.AddressSpace;
 
-        /// <inheritdoc/>
-        public ITypeRef ElementType => NativeType.ElementType;
+        /// <summary>Gets the element type for this pointer</summary>
+        /// <remarks>
+        /// Since LLVM moved to opaque pointer types, this may be <see langword="null"/>
+        /// depending on how it was constructed. The constructor overloads taking an
+        /// <see cref="IPointerType"/> cannot provide an element type as the pointer is
+        /// opaque and the type it refers to is unknown.
+        /// </remarks>
+        public ITypeRef? ElementType { get; private set; }
+
+        [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal interface implementation" )]
+        void IPointerType.TrySetElementType(ITypeRef? elementType)
+        {
+            ElementType ??= elementType;
+        }
     }
 }

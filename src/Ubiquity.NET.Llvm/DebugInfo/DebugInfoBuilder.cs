@@ -116,15 +116,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                               , bool optimized
                                               , string? compilationFlags
                                               , uint runtimeVersion
-                                              , string sysRoot = ""
-                                              , string sdk = ""
+                                              , string? sysRoot = null
+                                              , string? sdk = null
                                               )
         {
-            ArgumentNullException.ThrowIfNull(sysRoot);
-            ArgumentNullException.ThrowIfNull(sdk);
-
-            producer ??= string.Empty;
-            compilationFlags ??= string.Empty;
+            // LLVM will crash the process if the source language is not defined.
+            if (!Enum.IsDefined(language))
+            {
+                throw new ArgumentException("Undefined language value", nameof(language));
+            }
 
             if( OwningModule.DICompileUnit != null )
             {
@@ -136,21 +136,21 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                        , ( LLVMDWARFSourceLanguage )language
                                                        , file.MetadataHandle
                                                        , producer
-                                                       , producer.Length
+                                                       , producer?.Length ?? 0
                                                        , optimized
                                                        , compilationFlags
-                                                       , compilationFlags.Length
+                                                       , compilationFlags?.Length ?? 0
                                                        , runtimeVersion
-                                                       , string.Empty
+                                                       , null
                                                        , size_t.Zero
                                                        , LLVMDWARFEmissionKind.LLVMDWARFEmissionFull
                                                        , DWOId: 0
                                                        , SplitDebugInlining: false
                                                        , DebugInfoForProfiling: false
                                                        , sysRoot
-                                                       , sysRoot.Length
+                                                       , sysRoot?.Length ?? 0
                                                        , sdk
-                                                       , sdk.Length
+                                                       , sdk?.Length ?? 0
                                                        );
             OwningModule.DICompileUnit = MDNode.FromHandle<DICompileUnit>( handle.ThrowIfInvalid( ) )!;
             return OwningModule.DICompileUnit;
@@ -218,7 +218,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DINamespace CreateNamespace( DIScope? scope, string name, bool exportSymbols )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
 
             var handle = LLVMDIBuilderCreateNameSpace( BuilderHandle.ThrowIfInvalid()
                                                      , scope?.MetadataHandle ?? default
@@ -236,15 +236,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="DIFile"/> or <see langword="null"/> if <paramref name="path"/>
         /// is <see langword="null"/> empty, or all whitespace
         /// </returns>
-        public DIFile CreateFile( string path )
+        public DIFile CreateFile( string? path )
         {
-            string? fileName = Path.GetFileName( path );
-            ArgumentException.ThrowIfNullOrWhiteSpace(fileName, nameof(path));
-
-            string? directory = Path.GetDirectoryName( path );
-            ArgumentException.ThrowIfNullOrWhiteSpace(directory, nameof(path));
-
-            return CreateFile( fileName, directory );
+            return CreateFile( Path.GetFileName( path ), Path.GetDirectoryName( path ) );
         }
 
         /// <summary>Creates a <see cref="DIFile"/></summary>
@@ -253,7 +247,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns>
         /// <see cref="DIFile"/> created
         /// </returns>
-        public DIFile CreateFile( string fileName, string directory )
+        public DIFile CreateFile( string? fileName, string? directory )
         {
             var handle = LLVMDIBuilderCreateFile( BuilderHandle.ThrowIfInvalid()
                                                 , fileName

@@ -41,7 +41,6 @@ namespace Ubiquity.NET.Llvm.Tests
             using var context = new Context( );
             var int8PtrType = context.GetPointerTypeFor( context.Int8Type );
             Assert.IsNotNull( int8PtrType );
-            Assert.AreSame( context.Int8Type, int8PtrType.ElementType );
             Assert.AreSame( context, int8PtrType.Context );
 
             var int8PtrTypeAlt = context.Int8Type.CreatePointerType( );
@@ -60,7 +59,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( voidType.IsFloatingPoint );
             Assert.IsFalse( voidType.IsInteger );
             Assert.IsFalse( voidType.IsPointer );
-            Assert.IsFalse( voidType.IsPointerPointer );
             Assert.IsFalse( voidType.IsSequence );
             Assert.IsFalse( voidType.IsStruct );
             Assert.IsFalse( voidType.IsSized );
@@ -132,7 +130,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( funcSig.IsFloatingPoint );
             Assert.IsFalse( funcSig.IsInteger );
             Assert.IsFalse( funcSig.IsPointer );
-            Assert.IsFalse( funcSig.IsPointerPointer );
             Assert.IsFalse( funcSig.IsSequence );
             Assert.IsFalse( funcSig.IsSized );
             Assert.IsFalse( funcSig.IsStruct );
@@ -171,15 +168,14 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( funcSig.IsFloatingPoint );
             Assert.IsFalse( funcSig.IsInteger );
             Assert.IsFalse( funcSig.IsPointer );
-            Assert.IsFalse( funcSig.IsPointerPointer );
             Assert.IsFalse( funcSig.IsSequence );
             Assert.IsFalse( funcSig.IsSized );
             Assert.IsFalse( funcSig.IsStruct );
             Assert.IsFalse( funcSig.IsVarArg );
             Assert.IsFalse( funcSig.IsVoid );
 
-            Assert.IsNotNull( funcSig.DIType );
-            DISubroutineType subroutineType = funcSig.DIType!;
+            Assert.IsNotNull( funcSig.DebugInfoType );
+            DISubroutineType subroutineType = funcSig.DebugInfoType!;
             Assert.IsNotNull( subroutineType );
             Assert.AreSame( context, subroutineType.Context );
             Assert.AreEqual( DebugInfoFlags.None, subroutineType.DebugInfoFlags );
@@ -207,7 +203,7 @@ namespace Ubiquity.NET.Llvm.Tests
             var funcSig = context.CreateFunctionType( module.DIBuilder, i16, i32, f32 );
             var funcSig2 = context.CreateFunctionType( module.DIBuilder, i16, i32, f32 );
             Assert.AreSame( funcSig.NativeType, funcSig2.NativeType );
-            Assert.AreSame( funcSig.DIType, funcSig2.DIType );
+            Assert.AreSame( funcSig.DebugInfoType, funcSig2.DebugInfoType );
         }
 
         [TestMethod]
@@ -251,7 +247,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( funcSig.IsFloatingPoint );
             Assert.IsFalse( funcSig.IsInteger );
             Assert.IsFalse( funcSig.IsPointer );
-            Assert.IsFalse( funcSig.IsPointerPointer );
             Assert.IsFalse( funcSig.IsSequence );
             Assert.IsFalse( funcSig.IsSized );
             Assert.IsFalse( funcSig.IsStruct );
@@ -283,7 +278,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( funcSig.IsFloatingPoint );
             Assert.IsFalse( funcSig.IsInteger );
             Assert.IsFalse( funcSig.IsPointer );
-            Assert.IsFalse( funcSig.IsPointerPointer );
             Assert.IsFalse( funcSig.IsSequence );
             Assert.IsFalse( funcSig.IsSized );
             Assert.IsFalse( funcSig.IsStruct );
@@ -317,7 +311,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -350,7 +343,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -383,7 +375,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -417,7 +408,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -451,7 +441,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -485,7 +474,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -519,7 +507,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -554,7 +541,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -589,7 +575,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( type.IsFloatingPoint );
             Assert.IsFalse( type.IsInteger );
             Assert.IsFalse( type.IsPointer );
-            Assert.IsFalse( type.IsPointerPointer );
             Assert.IsFalse( type.IsSequence );
             Assert.IsFalse( type.IsVoid );
         }
@@ -620,7 +605,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -667,7 +651,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -698,7 +681,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -731,7 +713,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -762,7 +743,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -794,7 +774,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -831,7 +810,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -868,7 +846,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -905,7 +882,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.NativeType.IsFloatingPoint );
             Assert.IsFalse( value.NativeType.IsInteger );
             Assert.IsFalse( value.NativeType.IsPointer );
-            Assert.IsFalse( value.NativeType.IsPointerPointer );
             Assert.IsFalse( value.NativeType.IsSequence );
             Assert.IsFalse( value.NativeType.IsVoid );
         }
@@ -948,7 +924,6 @@ namespace Ubiquity.NET.Llvm.Tests
             using var context = new Context( );
             string str = "hello world";
             ConstantDataArray value = context.CreateConstantString( str );
-            Assert.IsNotNull( value );
             Assert.IsTrue( value.IsString ); // Has terminating null, so it is a C String
             Assert.IsTrue( value.IsI8Sequence );
 
@@ -960,7 +935,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.IsZeroValue );
 
             Assert.AreSame( string.Empty, value.Name );
-            Assert.IsNotNull( value.NativeType );
 
             var arrayType = value.NativeType as IArrayType;
             Assert.IsNotNull( arrayType );
@@ -990,7 +964,6 @@ namespace Ubiquity.NET.Llvm.Tests
             using var context = new Context( );
             string str = "hello world";
             ConstantDataArray value = context.CreateConstantString( str, false );
-            Assert.IsNotNull( value );
             Assert.IsFalse( value.IsString ); // No terminating null, so it is not a C String
             Assert.IsTrue( value.IsI8Sequence );
 
@@ -1002,7 +975,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( value.IsZeroValue );
 
             Assert.AreSame( string.Empty, value.Name );
-            Assert.IsNotNull( value.NativeType );
 
             var arrayType = value.NativeType as IArrayType;
             Assert.IsNotNull( arrayType );
@@ -1031,7 +1003,6 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsFalse( integerType.IsFloatingPoint );
             Assert.IsTrue( integerType.IsInteger );
             Assert.IsFalse( integerType.IsPointer );
-            Assert.IsFalse( integerType.IsPointerPointer );
             Assert.IsFalse( integerType.IsSequence );
             Assert.IsFalse( integerType.IsStruct );
             Assert.IsTrue( integerType.IsSized );

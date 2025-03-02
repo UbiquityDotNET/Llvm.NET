@@ -10,4 +10,7 @@
       <PackageReference Include="MSTest.TestFramework" />
       <PackageReference Include="MSTest.TestAdapter" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
+  </ItemGroup>
 </Project>

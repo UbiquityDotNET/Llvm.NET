@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop
     /// <summary>Interop methods for the Ubiquity.NET LibLLVM library</summary>
     public static partial class NativeMethods
     {
-        public const string LibraryPath = "Ubiquity.NET.LibLLVM";
+        public const string LibraryName = "Ubiquity.NET.LibLLVM";
 
         /// <summary>Dynamically loads a library from a directory dependent on the current architecture</summary>
         /// <param name="moduleName">name of the DLL</param>

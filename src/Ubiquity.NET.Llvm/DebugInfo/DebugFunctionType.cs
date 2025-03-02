@@ -56,8 +56,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             : base( llvmType.ValidateNotNull( nameof( llvmType ) )
                   , module.ValidateNotNull( nameof( module ) )
                           .DIBuilder.CreateSubroutineType( debugFlags
-                                                         , retType.ValidateNotNull( nameof( retType ) ).DIType
-                                                         , argTypes.Select( t => t.DIType )
+                                                         , retType.ValidateNotNull( nameof( retType ) ).DebugInfoType
+                                                         , argTypes.Select( t => t.DebugInfoType )
                                                          )
                   )
         {

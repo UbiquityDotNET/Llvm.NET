@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Types;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
@@ -139,6 +140,9 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Gets the Module containing this global value</summary>
         public BitcodeModule ParentModule => NativeType.Context.GetModuleFor( LLVMGetGlobalParent( ValueHandle ) );
+
+        /// <summary>Gets the Value Type of this global value instance</summary>
+        public ITypeRef ValueType => TypeRef.FromHandle(LLVMGlobalGetValueType(ValueHandle).ThrowIfInvalid())!;
 
         internal GlobalValue( LLVMValueRef valueRef )
             : base( valueRef )

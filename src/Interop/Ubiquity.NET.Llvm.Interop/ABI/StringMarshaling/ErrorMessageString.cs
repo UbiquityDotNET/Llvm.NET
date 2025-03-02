@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.Interop
             LLVMDisposeErrorMessage( handle );
             return true;
 
-            [DllImport( NativeMethods.LibraryPath )]
+            [DllImport( NativeMethods.LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMDisposeErrorMessage(nint p);
         }

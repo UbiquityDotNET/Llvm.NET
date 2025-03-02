@@ -12,7 +12,7 @@ using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
-namespace TestDebugInfo
+namespace CodeGenWithDebugInfo
 {
     internal class CortexM3Details
         : ITargetDependentDetails
@@ -43,15 +43,18 @@ namespace TestDebugInfo
             // it, for Cortex-Mx it seems to use it only for larger structs, otherwise it uses an [ n x i32]. (Max
             // value of n is not known) and performs casts. Thus, on cortex-m the function parameters are handled
             // quite differently by clang, which seems odd to put such target dependent differences into the front-end.
-            if( !( function.Parameters[ paramIndex ].NativeType is IPointerType argType ) || !argType.ElementType.IsStruct )
+            // Sadly, the ABI calling convention details are left to the source generator so each one needs to know
+            // ALL the gory details of the ABI. [There is some work to generalize what Clang does and pull that down
+            // to LLVM proper, but that hasn't materialized yet...]
+            if( function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct )
             {
-                throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
+                throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure that is NOT opaque" );
             }
 
             var layout = function.ParentModule.Layout;
             function.AddAttributes( FunctionAttributeIndex.Parameter0 + paramIndex
                                   , function.Context.CreateAttribute( AttributeKind.ByVal )
-                                  , function.Context.CreateAttribute( AttributeKind.Alignment, layout.AbiAlignmentOf( argType.ElementType ) )
+                                  , function.Context.CreateAttribute( AttributeKind.Alignment, layout.AbiAlignmentOf( ptrType.ElementType! ) )
                                   );
         }
 
@@ -63,8 +66,8 @@ namespace TestDebugInfo
         }
 
         public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx )
-            => new[ ]
-            {
+            =>
+            [
                 ctx.CreateAttribute( "correctly-rounded-divide-sqrt-fp-math", "false" ),
                 ctx.CreateAttribute( "disable-tail-calls", "false" ),
                 ctx.CreateAttribute( "less-precise-fpmad", "false" ),
@@ -80,7 +83,7 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( "target-features", Features ),
                 ctx.CreateAttribute( "unsafe-fp-math", "false" ),
                 ctx.CreateAttribute( "use-soft-float", "false" )
-            };
+            ];
 
         private const string Cpu = "cortex-m3";
         private const string Features = "+hwdiv,+strict-align,+thumb-mode";

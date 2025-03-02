@@ -206,15 +206,7 @@ namespace Ubiquity.NET.Llvm.Values
         , IAttributeAccessor
     {
         /// <summary>Gets the signature type of the function</summary>
-        public IFunctionType Signature
-        {
-            get
-            {
-                LLVMTypeRef ty = LLVMTypeOf( ValueHandle ).ThrowIfInvalid();
-                LLVMTypeRef typeRef = LLVMGetElementType( ty ).ThrowIfInvalid();
-                return TypeRef.FromHandle<IFunctionType>( typeRef )!;
-            }
-        }
+        public IFunctionType Signature => (IFunctionType)ValueType;
 
         /// <summary>Gets the Entry block for this function</summary>
         public BasicBlock? EntryBlock
@@ -233,7 +225,7 @@ namespace Ubiquity.NET.Llvm.Values
             set => LLVMSetFunctionCallConv( ValueHandle, ( uint )value );
         }
 
-        /// <summary>Gets the LLVM instrinsicID for the method</summary>
+        /// <summary>Gets the LLVM intrinsicID for the method</summary>
         public uint IntrinsicId => LLVMGetIntrinsicID( ValueHandle );
 
         /// <summary>Gets a value indicating whether the method signature accepts variable arguments</summary>
@@ -257,12 +249,8 @@ namespace Ubiquity.NET.Llvm.Values
 
             set
             {
-                if( ( value != null ) && !value.Describes( this ) )
-                {
-                    throw new ArgumentException( "Subprogram does not describe this Function" );
-                }
-
-                LLVMSetSubprogram( ValueHandle, value?.MetadataHandle ?? default );
+                ArgumentNullException.ThrowIfNull(value);
+                LLVMSetSubprogram( ValueHandle, value.MetadataHandle );
             }
         }
 

@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var ctx = new Context();
             var module = ctx.CreateBitcodeModule();
-            var varArgsSig = ctx.GetFunctionType(ctx.VoidType, Enumerable.Empty<ITypeRef>(), true);
+            var varArgsSig = ctx.GetFunctionType(ctx.VoidType, [], true);
             var callerSig = ctx.GetFunctionType(ctx.VoidType);
 
             var function = module.CreateFunction( "VarArgFunc", varArgsSig );

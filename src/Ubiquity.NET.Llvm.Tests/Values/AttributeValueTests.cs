@@ -23,13 +23,12 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( AttributeKind.AlwaysInline );
-            Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.HasIntegerVaue );
+            Assert.IsFalse( value.Id.IsIntKind() );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "alwaysinline", value.Name );
             Assert.IsNull( value.StringValue );
             Assert.IsTrue( value.IsEnum );
-            Assert.AreEqual( AttributeKind.AlwaysInline, value.Kind );
+            Assert.AreEqual( AttributeKind.AlwaysInline, value.Id );
         }
 
         [TestMethod]
@@ -37,14 +36,13 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( AttributeKind.DereferenceableOrNull, 1234ul );
-            Assert.IsTrue( value.IntegerValue.HasValue );
-            Assert.IsTrue( value.HasIntegerVaue );
+            Assert.IsTrue( value.Id.IsIntKind() );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "dereferenceable_or_null", value.Name );
             Assert.IsNull( value.StringValue );
             Assert.IsTrue( value.IsEnum );
-            Assert.AreEqual( AttributeKind.DereferenceableOrNull, value.Kind );
-            Assert.AreEqual( value.IntegerValue, 1234ul );
+            Assert.AreEqual( AttributeKind.DereferenceableOrNull, value.Id);
+            Assert.AreEqual( 1234ul, value.IntegerValue);
         }
 
         [TestMethod]
@@ -52,13 +50,14 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( TestTargetDependentAttributeName );
-            Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.HasIntegerVaue );
+            Assert.IsFalse( value.Id.IsIntKind() );
+            Assert.IsFalse( value.Id.IsEnumKind() );
+            Assert.IsFalse( value.Id.IsTypeKind() );
             Assert.IsTrue( value.IsString );
             Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
             Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
             Assert.IsFalse( value.IsEnum );
-            Assert.AreEqual( AttributeKind.None, value.Kind );
+            Assert.AreEqual( AttributeKind.None, value.Id );
         }
 
         [TestMethod]
@@ -66,13 +65,12 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var ctx = new Context( );
             AttributeValue value = ctx.CreateAttribute( AttributeKind.NoInline );
-            Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.HasIntegerVaue );
+            Assert.IsFalse( value.Id.IsIntKind() );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "noinline", value.Name );
             Assert.IsNull( value.StringValue );
             Assert.IsTrue( value.IsEnum );
-            Assert.AreEqual( AttributeKind.NoInline, value.Kind );
+            Assert.AreEqual( AttributeKind.NoInline, value.Id );
         }
 
         [TestMethod]
@@ -80,13 +78,12 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var ctx = new Context( );
             AttributeValue value = ctx.CreateAttribute( TestTargetDependentAttributeName );
-            Assert.IsFalse( value.IntegerValue.HasValue );
-            Assert.IsFalse( value.HasIntegerVaue );
+            Assert.IsFalse( value.Id.IsIntKind() );
             Assert.IsTrue( value.IsString );
             Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
             Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
             Assert.IsFalse( value.IsEnum );
-            Assert.AreEqual( AttributeKind.None, value.Kind );
+            Assert.AreEqual( AttributeKind.None, value.Id );
         }
 
         // test all attributes for an index are available and reflect attributes set

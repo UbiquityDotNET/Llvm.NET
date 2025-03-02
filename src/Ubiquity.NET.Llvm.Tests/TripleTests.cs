@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.Llvm.Interop;
+
 /* ReSharper disable StringLiteralTypo */
 namespace Ubiquity.NET.Llvm.Tests
 {
@@ -19,12 +21,12 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             // nonsensical, but syntactically valid triple
             var triple = new Triple( "thumbv7m-pc-cuda-eabicoff" );
-            Assert.AreEqual( Triple.ArchType.Thumb, triple.ArchitectureType );
-            Assert.AreEqual( Triple.SubArchType.ARMSubArch_v7m, triple.SubArchitecture );
-            Assert.AreEqual( Triple.VendorType.PC, triple.Vendor );
-            Assert.AreEqual( Triple.OSType.CUDA, triple.OS );
-            Assert.AreEqual( Triple.EnvironmentType.EABI, triple.Environment );
-            Assert.AreEqual( Triple.ObjectFormatType.COFF, triple.ObjectFormat );
+            Assert.AreEqual( Triple.ArchKind.Thumb, triple.ArchitectureType );
+            Assert.AreEqual( Triple.SubArchKind.ARMSubArch_v7m, triple.SubArchitecture );
+            Assert.AreEqual( Triple.VendorKind.PC, triple.Vendor );
+            Assert.AreEqual( Triple.OSKind.CUDA, triple.OS );
+            Assert.AreEqual( Triple.EnvironmentKind.EABI, triple.Environment );
+            Assert.AreEqual( Triple.ObjectFormatKind.COFF, triple.ObjectFormat );
         }
 
         [TestMethod]
@@ -34,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Tests
             // so that ToString() retrieves the full normalized form
             var triple = new Triple( "thumbv7m-none-eabi" );
             string str = triple.ToString( );
-            Assert.AreEqual( "thumbv7m-none-unknown-eabi", str );
+            Assert.AreEqual( "thumbv7m-unknown-none-eabi", str );
         }
 
         [TestMethod]
@@ -52,57 +54,55 @@ namespace Ubiquity.NET.Llvm.Tests
         [TestMethod]
         public void GetArchTypeNameTest( )
         {
-            var values = new Dictionary<Triple.ArchType, string>
+            var values = new Dictionary<Triple.ArchKind, string>
                 {
-                  { Triple.ArchType.UnknownArch,    "unknown" },
-                  { Triple.ArchType.Aarch64,        "aarch64" },
-                  { Triple.ArchType.Aarch64BE,      "aarch64_be" },
-                  { Triple.ArchType.Arm,            "arm" },
-                  { Triple.ArchType.Armeb,          "armeb" },
-                  { Triple.ArchType.Arc,            "arc" },
-                  { Triple.ArchType.Avr,            "avr" },
-                  { Triple.ArchType.BPFel,          "bpfel" },
-                  { Triple.ArchType.BPFeb,          "bpfeb" },
-                  { Triple.ArchType.Hexagon,        "hexagon" },
-                  { Triple.ArchType.MIPS,           "mips" },
-                  { Triple.ArchType.MIPSel,         "mipsel" },
-                  { Triple.ArchType.MIPS64,         "mips64" },
-                  { Triple.ArchType.MIPS64el,       "mips64el" },
-                  { Triple.ArchType.MSP430,         "msp430" },
-                  { Triple.ArchType.PPC64,          "powerpc64" },
-                  { Triple.ArchType.PPC64le,        "powerpc64le" },
-                  { Triple.ArchType.PPC,            "powerpc" },
-                  { Triple.ArchType.R600,           "r600" },
-                  { Triple.ArchType.AMDGCN,         "amdgcn" },
-                  { Triple.ArchType.RiscV32,        "riscv32" },
-                  { Triple.ArchType.RiscV64,        "riscv64" },
-                  { Triple.ArchType.Sparc,          "sparc" },
-                  { Triple.ArchType.Sparcv9,        "sparcv9" },
-                  { Triple.ArchType.Sparcel,        "sparcel" },
-                  { Triple.ArchType.SystemZ,        "s390x" },
-                  { Triple.ArchType.TCE,            "tce" },
-                  { Triple.ArchType.Thumb,          "thumb" },
-                  { Triple.ArchType.Thumbeb,        "thumbeb" },
-                  { Triple.ArchType.X86,            "i386" },
-                  { Triple.ArchType.Amd64,          "x86_64" },
-                  { Triple.ArchType.Xcore,          "xcore" },
-                  { Triple.ArchType.Nvptx,          "nvptx" },
-                  { Triple.ArchType.Nvptx64,        "nvptx64" },
-                  { Triple.ArchType.Le32,           "le32" },
-                  { Triple.ArchType.Le64,           "le64" },
-                  { Triple.ArchType.Amdil,          "amdil" },
-                  { Triple.ArchType.Amdil64,        "amdil64" },
-                  { Triple.ArchType.Hsail,          "hsail" },
-                  { Triple.ArchType.Hsail64,        "hsail64" },
-                  { Triple.ArchType.Spir,           "spir" },
-                  { Triple.ArchType.Spir64,         "spir64" },
-                  { Triple.ArchType.Kalimba,        "kalimba" },
-                  { Triple.ArchType.Lanai,          "lanai" },
-                  { Triple.ArchType.Shave,          "shave" },
-                  { Triple.ArchType.Wasm32,         "wasm32" },
-                  { Triple.ArchType.Wasm64,         "wasm64" },
-                  { Triple.ArchType.Renderscript32, "renderscript32" },
-                  { Triple.ArchType.Renderscript64, "renderscript64" }
+                  { Triple.ArchKind.UnknownArch,    "unknown" },
+                  { Triple.ArchKind.Aarch64,        "aarch64" },
+                  { Triple.ArchKind.Aarch64BE,      "aarch64_be" },
+                  { Triple.ArchKind.Arm,            "arm" },
+                  { Triple.ArchKind.Armeb,          "armeb" },
+                  { Triple.ArchKind.Arc,            "arc" },
+                  { Triple.ArchKind.Avr,            "avr" },
+                  { Triple.ArchKind.BPFel,          "bpfel" },
+                  { Triple.ArchKind.BPFeb,          "bpfeb" },
+                  { Triple.ArchKind.Hexagon,        "hexagon" },
+                  { Triple.ArchKind.MIPS,           "mips" },
+                  { Triple.ArchKind.MIPSel,         "mipsel" },
+                  { Triple.ArchKind.MIPS64,         "mips64" },
+                  { Triple.ArchKind.MIPS64el,       "mips64el" },
+                  { Triple.ArchKind.MSP430,         "msp430" },
+                  { Triple.ArchKind.PPC64,          "powerpc64" },
+                  { Triple.ArchKind.PPC64le,        "powerpc64le" },
+                  { Triple.ArchKind.PPC,            "powerpc" },
+                  { Triple.ArchKind.R600,           "r600" },
+                  { Triple.ArchKind.AMDGCN,         "amdgcn" },
+                  { Triple.ArchKind.RiscV32,        "riscv32" },
+                  { Triple.ArchKind.RiscV64,        "riscv64" },
+                  { Triple.ArchKind.Sparc,          "sparc" },
+                  { Triple.ArchKind.Sparcv9,        "sparcv9" },
+                  { Triple.ArchKind.Sparcel,        "sparcel" },
+                  { Triple.ArchKind.SystemZ,        "s390x" },
+                  { Triple.ArchKind.TCE,            "tce" },
+                  { Triple.ArchKind.Thumb,          "thumb" },
+                  { Triple.ArchKind.Thumbeb,        "thumbeb" },
+                  { Triple.ArchKind.X86,            "i386" },
+                  { Triple.ArchKind.Amd64,          "x86_64" },
+                  { Triple.ArchKind.Xcore,          "xcore" },
+                  { Triple.ArchKind.Nvptx,          "nvptx" },
+                  { Triple.ArchKind.Nvptx64,        "nvptx64" },
+                  { Triple.ArchKind.Amdil,          "amdil" },
+                  { Triple.ArchKind.Amdil64,        "amdil64" },
+                  { Triple.ArchKind.Hsail,          "hsail" },
+                  { Triple.ArchKind.Hsail64,        "hsail64" },
+                  { Triple.ArchKind.Spir,           "spir" },
+                  { Triple.ArchKind.Spir64,         "spir64" },
+                  { Triple.ArchKind.Kalimba,        "kalimba" },
+                  { Triple.ArchKind.Lanai,          "lanai" },
+                  { Triple.ArchKind.Shave,          "shave" },
+                  { Triple.ArchKind.Wasm32,         "wasm32" },
+                  { Triple.ArchKind.Wasm64,         "wasm64" },
+                  { Triple.ArchKind.RenderScript32, "renderscript32" },
+                  { Triple.ArchKind.RenderScript64, "renderscript64" }
             };
 
             foreach( var kvp in values )
@@ -110,69 +110,26 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.ArchType.UnknownArch ], Triple.GetCanonicalName( ( Triple.ArchType )0x12345678 ) );
-        }
-
-        [TestMethod]
-        public void GetSubArchTypeNameTest( )
-        {
-            var values = new Dictionary<Triple.SubArchType, string>
-                {
-                    { Triple.SubArchType.None,               string.Empty },
-                    { Triple.SubArchType.ARMSubArch_v8_4a,        "v8.4a" },
-                    { Triple.SubArchType.ARMSubArch_v8_3a,        "v8.3a" },
-                    { Triple.SubArchType.ARMSubArch_v8_2a,        "v8.2a" },
-                    { Triple.SubArchType.ARMSubArch_v8_1a,        "v8.1a" },
-                    { Triple.SubArchType.ARMSubArch_v8,           "v8" },
-                    { Triple.SubArchType.ARMSubArch_v8r,          "v8r" },
-                    { Triple.SubArchType.ARMSubArch_v8m_baseline, "v8m.base" },
-                    { Triple.SubArchType.ARMSubArch_v8m_mainline, "v8m.main" },
-                    { Triple.SubArchType.ARMSubArch_v7,           "v7" },
-                    { Triple.SubArchType.ARMSubArch_v7em,         "v7em" },
-                    { Triple.SubArchType.ARMSubArch_v7m,          "v7m" },
-                    { Triple.SubArchType.ARMSubArch_v7s,          "v7s" },
-                    { Triple.SubArchType.ARMSubArch_v7k,          "v7k" },
-                    { Triple.SubArchType.ARMSubArch_v6,           "v6" },
-                    { Triple.SubArchType.ARMSubArch_v6m,          "v6m" },
-                    { Triple.SubArchType.ARMSubArch_v6k,          "v6k" },
-                    { Triple.SubArchType.ARMSubArch_v6t2,         "v6t2" },
-                    { Triple.SubArchType.ARMSubArch_v5,           "v5" },
-                    { Triple.SubArchType.ARMSubArch_v5te,         "v5e" },
-                    { Triple.SubArchType.ARMSubArch_v4t,          "v4t" },
-                    { Triple.SubArchType.KalimbaSubArch_v3,       "kalimba3" },
-                    { Triple.SubArchType.KalimbaSubArch_v4,       "kalimba4" },
-                    { Triple.SubArchType.KalimbaSubArch_v5,       "kalimba5" },
-                    { Triple.SubArchType.MipsSubArch_r6,          "mipsr6" },
-                };
-
-            foreach( var kvp in values )
-            {
-                Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
-            }
-
-            Assert.AreEqual( values[ Triple.SubArchType.None ], Triple.GetCanonicalName( ( Triple.SubArchType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.ArchKind.UnknownArch ], Triple.GetCanonicalName( ( Triple.ArchKind )0x12345678 ) );
         }
 
         [TestMethod]
         public void GetVendorTypeNameTest( )
         {
-            var values = new Dictionary<Triple.VendorType, string>
+            var values = new Dictionary<Triple.VendorKind, string>
             {
-                { Triple.VendorType.Unknown,           "unknown" },
-                { Triple.VendorType.Apple,                   "apple" },
-                { Triple.VendorType.PC,                      "pc" },
-                { Triple.VendorType.SCEI,                    "scei" },
-                { Triple.VendorType.BGP,                     "bgp" },
-                { Triple.VendorType.BGQ,                     "bgq" },
-                { Triple.VendorType.Freescale,               "fsl" },
-                { Triple.VendorType.IBM,                     "ibm" },
-                { Triple.VendorType.ImaginationTechnologies, "img" },
-                { Triple.VendorType.MipsTechnologies,        "mti" },
-                { Triple.VendorType.NVIDIA,                  "nvidia" },
-                { Triple.VendorType.CSR,                     "csr" },
-                { Triple.VendorType.Myriad,                  "myriad" },
-                { Triple.VendorType.AMD,                     "amd" },
-                { Triple.VendorType.Mesa,                    "mesa" }
+                { Triple.VendorKind.Unknown,                 "unknown" },
+                { Triple.VendorKind.Apple,                   "apple" },
+                { Triple.VendorKind.PC,                      "pc" },
+                { Triple.VendorKind.SCEI,                    "scei" },
+                { Triple.VendorKind.Freescale,               "fsl" },
+                { Triple.VendorKind.IBM,                     "ibm" },
+                { Triple.VendorKind.ImaginationTechnologies, "img" },
+                { Triple.VendorKind.MipsTechnologies,        "mti" },
+                { Triple.VendorKind.NVIDIA,                  "nvidia" },
+                { Triple.VendorKind.CSR,                     "csr" },
+                { Triple.VendorKind.AMD,                     "amd" },
+                { Triple.VendorKind.Mesa,                    "mesa" }
             };
 
             foreach( var kvp in values )
@@ -180,46 +137,41 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.VendorType.Unknown ], Triple.GetCanonicalName( ( Triple.VendorType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.VendorKind.Unknown ], Triple.GetCanonicalName( ( Triple.VendorKind )0x12345678 ) );
         }
 
         [TestMethod]
         public void GetOsTypeNameTest( )
         {
-            var values = new Dictionary<Triple.OSType, string>
+            var values = new Dictionary<Triple.OSKind, string>
             {
-                { Triple.OSType.UnknownOS, "unknown" },
-                { Triple.OSType.Ananas,    "ananas" },
-                { Triple.OSType.CloudABI,  "cloudabi" },
-                { Triple.OSType.Darwin,    "darwin" },
-                { Triple.OSType.DragonFly, "dragonfly" },
-                { Triple.OSType.FreeBSD,   "freebsd" },
-                { Triple.OSType.Fuchsia,   "fuchsia" },
-                { Triple.OSType.IOS,       "ios" },
-                { Triple.OSType.KFreeBSD,  "kfreebsd" },
-                { Triple.OSType.Linux,     "linux" },
-                { Triple.OSType.Lv2,       "lv2" },
-                { Triple.OSType.MacOSX,    "macosx" },
-                { Triple.OSType.NetBSD,    "netbsd" },
-                { Triple.OSType.OpenBSD,   "openbsd" },
-                { Triple.OSType.Solaris,   "solaris" },
-                { Triple.OSType.Win32,     "windows" },
-                { Triple.OSType.Haiku,     "haiku" },
-                { Triple.OSType.Minix,     "minix" },
-                { Triple.OSType.RTEMS,     "rtems" },
-                { Triple.OSType.NaCl,      "nacl" },
-                { Triple.OSType.CNK,       "cnk" },
-                { Triple.OSType.AIX,       "aix" },
-                { Triple.OSType.CUDA,      "cuda" },
-                { Triple.OSType.NVCL,      "nvcl" },
-                { Triple.OSType.AMDHSA,    "amdhsa" },
-                { Triple.OSType.PS4,       "ps4" },
-                { Triple.OSType.ELFIAMCU,  "elfiamcu" },
-                { Triple.OSType.TvOS,      "tvos" },
-                { Triple.OSType.WatchOS,   "watchos" },
-                { Triple.OSType.Mesa3D,    "mesa3d" },
-                { Triple.OSType.Contiki,   "contiki" },
-                { Triple.OSType.AmdPAL,    "amdpal" }
+                { Triple.OSKind.UnknownOS, "unknown" },
+                { Triple.OSKind.Darwin,    "darwin" },
+                { Triple.OSKind.DragonFly, "dragonfly" },
+                { Triple.OSKind.FreeBSD,   "freebsd" },
+                { Triple.OSKind.Fuchsia,   "fuchsia" },
+                { Triple.OSKind.IOS,       "ios" },
+                { Triple.OSKind.KFreeBSD,  "kfreebsd" },
+                { Triple.OSKind.Linux,     "linux" },
+                { Triple.OSKind.Lv2,       "lv2" },
+                { Triple.OSKind.MacOSX,    "macosx" },
+                { Triple.OSKind.NetBSD,    "netbsd" },
+                { Triple.OSKind.OpenBSD,   "openbsd" },
+                { Triple.OSKind.Solaris,   "solaris" },
+                { Triple.OSKind.Win32,     "windows" },
+                { Triple.OSKind.Haiku,     "haiku" },
+                { Triple.OSKind.RTEMS,     "rtems" },
+                { Triple.OSKind.NaCl,      "nacl" },
+                { Triple.OSKind.AIX,       "aix" },
+                { Triple.OSKind.CUDA,      "cuda" },
+                { Triple.OSKind.NVCL,      "nvcl" },
+                { Triple.OSKind.AMDHSA,    "amdhsa" },
+                { Triple.OSKind.PS4,       "ps4" },
+                { Triple.OSKind.ELFIAMCU,  "elfiamcu" },
+                { Triple.OSKind.TvOS,      "tvos" },
+                { Triple.OSKind.WatchOS,   "watchos" },
+                { Triple.OSKind.Mesa3D,    "mesa3d" },
+                { Triple.OSKind.AmdPAL,    "amdpal" }
             };
 
             foreach( var kvp in values )
@@ -227,32 +179,32 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.OSType.UnknownOS ], Triple.GetCanonicalName( ( Triple.OSType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.OSKind.UnknownOS ], Triple.GetCanonicalName( ( Triple.OSKind )0x12345678 ) );
         }
 
         [TestMethod]
         public void GetEnvironmentTypeNameTest( )
         {
-            var values = new Dictionary<Triple.EnvironmentType, string>
+            var values = new Dictionary<Triple.EnvironmentKind, string>
             {
-                { Triple.EnvironmentType.Unknown, "unknown" },
-                { Triple.EnvironmentType.GNU,                "gnu" },
-                { Triple.EnvironmentType.GNUABIN32,          "gnuabin32" },
-                { Triple.EnvironmentType.GNUABI64,           "gnuabi64" },
-                { Triple.EnvironmentType.GNUEABIHF,          "gnueabihf" },
-                { Triple.EnvironmentType.GNUEABI,            "gnueabi" },
-                { Triple.EnvironmentType.GNUX32,             "gnux32" },
-                { Triple.EnvironmentType.CODE16,             "code16" },
-                { Triple.EnvironmentType.EABI,               "eabi" },
-                { Triple.EnvironmentType.EABIHF,             "eabihf" },
-                { Triple.EnvironmentType.Android,            "android" },
-                { Triple.EnvironmentType.Musl,               "musl" },
-                { Triple.EnvironmentType.MuslEABI,           "musleabi" },
-                { Triple.EnvironmentType.MuslEABIHF,         "musleabihf" },
-                { Triple.EnvironmentType.MSVC,               "msvc" },
-                { Triple.EnvironmentType.Itanium,            "itanium" },
-                { Triple.EnvironmentType.Cygnus,             "cygnus" },
-                { Triple.EnvironmentType.CoreCLR,            "coreclr" },
+                { Triple.EnvironmentKind.Unknown,    "unknown" },
+                { Triple.EnvironmentKind.GNU,        "gnu" },
+                { Triple.EnvironmentKind.GNUABIN32,  "gnuabin32" },
+                { Triple.EnvironmentKind.GNUABI64,   "gnuabi64" },
+                { Triple.EnvironmentKind.GNUEABIHF,  "gnueabihf" },
+                { Triple.EnvironmentKind.GNUEABI,    "gnueabi" },
+                { Triple.EnvironmentKind.GNUX32,     "gnux32" },
+                { Triple.EnvironmentKind.CODE16,     "code16" },
+                { Triple.EnvironmentKind.EABI,       "eabi" },
+                { Triple.EnvironmentKind.EABIHF,     "eabihf" },
+                { Triple.EnvironmentKind.Android,    "android" },
+                { Triple.EnvironmentKind.Musl,       "musl" },
+                { Triple.EnvironmentKind.MuslEABI,   "musleabi" },
+                { Triple.EnvironmentKind.MuslEABIHF, "musleabihf" },
+                { Triple.EnvironmentKind.MSVC,       "msvc" },
+                { Triple.EnvironmentKind.Itanium,    "itanium" },
+                { Triple.EnvironmentKind.Cygnus,     "cygnus" },
+                { Triple.EnvironmentKind.CoreCLR,    "coreclr" },
             };
 
             foreach( var kvp in values )
@@ -260,24 +212,7 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ Triple.EnvironmentType.Unknown ], Triple.GetCanonicalName( ( Triple.EnvironmentType )0x12345678 ) );
-        }
-
-        public static void GetObjFormatTypeNameTest( )
-        {
-            var values = new Dictionary<Triple.ObjectFormatType, string>
-            {
-                { Triple.ObjectFormatType.COFF, "coff" },
-                { Triple.ObjectFormatType.ELF,  "elf" },
-                { Triple.ObjectFormatType.MachO, "macho" }
-            };
-
-            foreach( var kvp in values )
-            {
-                Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
-            }
-
-            Assert.AreSame( string.Empty, Triple.GetCanonicalName( ( Triple.ObjectFormatType )0x12345678 ) );
+            Assert.AreEqual( values[ Triple.EnvironmentKind.Unknown ], Triple.GetCanonicalName( ( Triple.EnvironmentKind )0x12345678 ) );
         }
     }
 }

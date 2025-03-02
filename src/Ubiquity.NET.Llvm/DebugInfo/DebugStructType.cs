@@ -74,7 +74,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                 );
 
             // assignment performs RAUW
-            DIType = concreteType;
+            DebugInfoType = concreteType;
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
@@ -187,7 +187,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public string Name => NativeType.Name ?? string.Empty;
 
         /// <summary>Gets the Source/Debug name</summary>
-        public string SourceName => DIType?.Name ?? string.Empty;
+        public string SourceName => DebugInfoType?.Name ?? string.Empty;
 
         /// <inheritdoc/>
         public void SetBody( bool packed, params ITypeRef[ ] elements )
@@ -255,7 +255,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               select CreateMemberType( module, memberInfo );
 
             var concreteType = module.DIBuilder.CreateStructType( scope: scope
-                                                                , name: DIType?.Name ?? string.Empty
+                                                                , name: DebugInfoType?.Name ?? string.Empty
                                                                 , file: file
                                                                 , line: line
                                                                 , bitSize: bitSize ?? module.Layout.BitSizeOf( NativeType )
@@ -264,7 +264,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                 , derivedFrom: derivedFrom
                                                                 , elements: memberTypes
                                                                 );
-            DIType = concreteType;
+            DebugInfoType = concreteType;
         }
 
         /// <summary>Gets a list of descriptors for each members</summary>
@@ -272,7 +272,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
         {
-            if( DIType == null )
+            if( DebugInfoType == null )
             {
                 throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member );
             }
@@ -296,7 +296,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 bitOffset = module.Layout.BitOffsetOfElement( NativeType, memberInfo.Index );
             }
 
-            return module.DIBuilder.CreateMemberType( scope: DIType
+            return module.DIBuilder.CreateMemberType( scope: DebugInfoType
                                                     , name: memberInfo.Name
                                                     , file: memberInfo.File
                                                     , line: memberInfo.Line
@@ -304,7 +304,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                     , bitAlign: bitAlign
                                                     , bitOffset: bitOffset
                                                     , debugFlags: memberInfo.DebugInfoFlags
-                                                    , type: memberInfo.DebugType.DIType
+                                                    , type: memberInfo.DebugType.DebugInfoType
                                                     );
         }
     }

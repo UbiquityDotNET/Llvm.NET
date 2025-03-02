@@ -23,6 +23,7 @@ namespace Ubiquity.NET.Llvm.Tests
     {
         private const string StructTestName = "struct.Test";
         private const string TestModuleName = "test";
+        private const string LlvmNewLine = "\n";
 
         // To validate transformation to correct newline formatting
         // this must explicitly setup the string, using a file source
@@ -30,13 +31,16 @@ namespace Ubiquity.NET.Llvm.Tests
         // In order to have consistent indexed source symbols the automated
         // builds standardize on the single LineFeed character so the test
         // file would end up containing incorrect line endings for the test
-        private const string TestModuleTemplate = "; ModuleID = '{1}'{0}"
-                                                + "source_filename = \"test\"{0}"
-                                                + "{0}"
-                                                + "define void @foo() {{{0}"
-                                                + "entry:{0}"
-                                                + "  ret void{0}"
-                                                + "}}{0}";
+        private const string TestModuleTemplate = """
+            ; ModuleID = '{0}'
+            source_filename = "test"
+
+            define void @foo() {{
+            entry:
+              ret void
+            }}
+
+            """;
 
         [TestMethod]
         public void DefaultConstructorTest( )
@@ -154,9 +158,11 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context1 = new Context( );
             using var m1 = CreateSimpleModule( context1, "module1" );
+
             using var context2 = new Context( );
             var m2 = m1.Clone( context2 );
-            Assert.AreNotSame( context2, m1 );
+
+            Assert.AreNotSame( context2, m1.Context );
             Assert.IsNotNull( m2 );
             Assert.AreSame( context2, m2.Context );
         }
@@ -233,18 +239,18 @@ namespace Ubiquity.NET.Llvm.Tests
         [TestMethod]
         public void WriteToFileTest( )
         {
-            string path = Path.GetTempFileName( );
+            string tmpFileName = Path.GetTempFileName( );
             try
             {
                 using( var context = new Context( ) )
                 using( var module = context.CreateBitcodeModule( TestModuleName ) )
                 {
                     _ = CreateSimpleVoidNopTestFunction( module, "foo" );
-                    module.WriteToFile( path );
+                    module.WriteToFile( tmpFileName );
                 }
 
                 using var ctx = new Context( );
-                using var module2 = BitcodeModule.LoadFrom( path, ctx );
+                using var module2 = BitcodeModule.LoadFrom( tmpFileName, ctx );
 
                 // force a GC to ensure buffer created in LoadFrom is handled correctly
                 GC.Collect( GC.MaxGeneration );
@@ -254,12 +260,12 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.IsNotNull( testFunc );
                 string txt = module2.WriteToString( );
                 Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
-                string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, Environment.NewLine, path );
+                string expectedText = GetExpectedModuleText(tmpFileName);
                 Assert.AreEqual( expectedText, txt );
             }
             finally
             {
-                File.Delete( path );
+                File.Delete( tmpFileName );
             }
         }
 
@@ -275,7 +281,7 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsNotNull( testFunc );
             string txt = module.WriteToString( );
             Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
-            string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, Environment.NewLine, "test" );
+            string expectedText = GetExpectedModuleText("test");
             Assert.AreEqual( expectedText, txt );
         }
 
@@ -554,6 +560,19 @@ namespace Ubiquity.NET.Llvm.Tests
 
             // UNTERMINATED BLOCK INTENTIONAL
             return testFunc;
+        }
+
+        private static string GetExpectedModuleText(string moduleName)
+        {
+            string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, moduleName );
+            if(Environment.NewLine != LlvmNewLine)
+            {
+                // Normalize expected text to use LLVM's line endings as it
+                // is NOT the same on Windows platforms at least.
+                expectedText = expectedText.ReplaceLineEndings( LlvmNewLine );
+            }
+
+            return expectedText;
         }
     }
 }

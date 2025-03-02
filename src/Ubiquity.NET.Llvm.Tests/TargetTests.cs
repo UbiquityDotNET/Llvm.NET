@@ -111,21 +111,25 @@ namespace Ubiquity.NET.Llvm.Tests
 
             public bool HasTargetMachine { get; }
 
-            internal static readonly TargetInfoCollection ExpectedTargets = new( )
-            {
+            internal static readonly TargetInfoCollection ExpectedTargets = [
                 new TargetInfo( "xcore", "XCore", false, false, true ),
                 new TargetInfo( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),
                 new TargetInfo( "x86", "32-bit X86: Pentium-Pro and above", true, true, true ),
                 new TargetInfo( "wasm64", "WebAssembly 64-bit", true, false, true ),
                 new TargetInfo( "wasm32", "WebAssembly 32-bit", true, false, true ),
+                new TargetInfo( "ve", "VE", true, false, true ),
                 new TargetInfo( "systemz", "SystemZ", true, true, true ),
-                new TargetInfo( "sparcel", "Sparc LE", true, true, true ),
-                new TargetInfo( "sparcv9", "Sparc V9", true, true, true ),
-                new TargetInfo( "sparc", "Sparc", true, true, true ),
-                new TargetInfo( "riscv64", "64-bit RISC-V", true, false, true ),
-                new TargetInfo( "riscv32", "32-bit RISC-V", true, false, true ),
+                new TargetInfo( "spirv", "SPIR-V Logical", true, false, true ),
+                new TargetInfo( "spirv64", "SPIR-V 64-bit", true, false, true ),
+                new TargetInfo( "spirv32", "SPIR-V 32-bit", true, false, true ),
+                new TargetInfo( "sparcel", "Sparc LE", true, false, true ),
+                new TargetInfo( "sparcv9", "Sparc V9", true, false, true ),
+                new TargetInfo( "sparc", "Sparc", true, false, true ),
+                new TargetInfo( "riscv64", "64-bit RISC-V", true, true, true ),
+                new TargetInfo( "riscv32", "32-bit RISC-V", true, true, true ),
                 new TargetInfo( "ppc64le", "PowerPC 64 LE", true, true, true ),
                 new TargetInfo( "ppc64", "PowerPC 64", true, true, true ),
+                new TargetInfo( "ppc32le", "PowerPC 32 LE", true, true, true ),
                 new TargetInfo( "ppc32", "PowerPC 32", true, true, true ),
                 new TargetInfo( "nvptx64", "NVIDIA PTX 64-bit", false, false, true ),
                 new TargetInfo( "nvptx", "NVIDIA PTX 32-bit", false, false, true ),
@@ -134,11 +138,14 @@ namespace Ubiquity.NET.Llvm.Tests
                 new TargetInfo( "mips64", "MIPS (64-bit big endian)", true, true, true ),
                 new TargetInfo( "mipsel", "MIPS (32-bit little endian)", true, true, true ),
                 new TargetInfo( "mips", "MIPS (32-bit big endian)", true, true, true ),
+                new TargetInfo( "loongarch64", "64-bit LoongArch", true, true, true ),
+                new TargetInfo( "loongarch32", "32-bit LoongArch", true, false, true ),
                 new TargetInfo( "lanai", "Lanai", true, false, true ),
                 new TargetInfo( "hexagon", "Hexagon", true, true, true ),
                 new TargetInfo( "bpfeb", "BPF (big endian)", true, true, true ),
                 new TargetInfo( "bpfel", "BPF (little endian)", true, true, true ),
                 new TargetInfo( "bpf", "BPF (host endian)", true, true, true ),
+                new TargetInfo( "avr", "Atmel AVR Microcontroller", true, false, true ),
                 new TargetInfo( "thumbeb", "Thumb (big endian)", true, true, true ),
                 new TargetInfo( "thumb", "Thumb", true, true, true ),
                 new TargetInfo( "armeb", "ARM (big endian)", true, true, true ),
@@ -150,7 +157,7 @@ namespace Ubiquity.NET.Llvm.Tests
                 new TargetInfo( "aarch64", "AArch64 (little endian)", true, true, true ),
                 new TargetInfo( "arm64_32", "ARM64 (little endian ILP32)", true, true, true ),
                 new TargetInfo( "arm64", "ARM64 (little endian)", true, true, true )
-            };
+            ];
         }
 
         // This is useful for generating the list of expected targets

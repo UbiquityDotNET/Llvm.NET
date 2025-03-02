@@ -342,7 +342,7 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot replace non temporary DIType with a new Type.
+        ///   Looks up a localized string similar to Cannot replace non temporary DebugInfoType with a new Type.
         /// </summary>
         internal static string Cannot_replace_non_temporary_DIType_with_a_new_Type {
             get {
@@ -360,7 +360,7 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot reset the native DIType to null.
+        ///   Looks up a localized string similar to Cannot reset the native DebugInfoType to null.
         /// </summary>
         internal static string Cannot_Reset_Type_to_null {
             get {

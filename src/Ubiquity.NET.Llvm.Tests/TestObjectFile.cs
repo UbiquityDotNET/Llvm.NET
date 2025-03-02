@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.Tests
             _ = ctx; // unused
             using var llvmContext = new Context( );
             using var module = llvmContext.CreateBitcodeModule( "test", SourceLanguage.C, TestSrcFileName, "unit tests" );
-            var tm = TargetMachine.FromTriple( Triple.HostTriple );
+            var tm = TargetMachine.FromTriple( Triple.Host );
             module.TargetTriple = tm.Triple;
             module.Layout = tm.TargetData;
 

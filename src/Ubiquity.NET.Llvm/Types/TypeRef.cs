@@ -20,10 +20,11 @@ namespace Ubiquity.NET.Llvm.Types
         , ITypeHandleOwner
     {
         /// <inheritdoc/>
-        public LLVMTypeRef TypeHandle => TypeRefHandle;
+        public LLVMTypeRef TypeRefHandle { get; }
 
         /// <inheritdoc/>
-        public bool IsSized => Kind != TypeKind.Function && LLVMTypeIsSized( TypeRefHandle );
+        public bool IsSized => Kind != TypeKind.Function
+                            && LLVMTypeIsSized( TypeRefHandle );
 
         /// <inheritdoc/>
         public TypeKind Kind => ( TypeKind )LLVMGetTypeKind( TypeRefHandle );
@@ -50,28 +51,16 @@ namespace Ubiquity.NET.Llvm.Types
         public bool IsSequence => Kind == TypeKind.Array || Kind == TypeKind.Vector || Kind == TypeKind.Pointer;
 
         /// <inheritdoc/>
-        public bool IsFloatingPoint
+        public bool IsFloatingPoint => Kind switch
         {
-            get
-            {
-                switch( Kind )
-                {
-                case TypeKind.Float16:
-                case TypeKind.Float32:
-                case TypeKind.Float64:
-                case TypeKind.X86Float80:
-                case TypeKind.Float128m112:
-                case TypeKind.Float128:
-                    return true;
-
-                default:
-                    return false;
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public bool IsPointerPointer => ( this is IPointerType ptrType ) && ptrType.ElementType.Kind == TypeKind.Pointer;
+            TypeKind.Float16 or
+            TypeKind.Float32 or
+            TypeKind.Float64 or
+            TypeKind.X86Float80 or
+            TypeKind.Float128m112 or
+            TypeKind.Float128 => true,
+            _ => false,
+        };
 
         /// <inheritdoc/>
         public Context Context => GetContextFor( TypeRefHandle );
@@ -91,19 +80,11 @@ namespace Ubiquity.NET.Llvm.Types
         /// <inheritdoc/>
         public IPointerType CreatePointerType( uint addressSpace )
         {
-            if( IsVoid )
-            {
-                throw new InvalidOperationException( "Cannot create pointer to void in LLVM, use i8* instead" );
-            }
-
-            return FromHandle<IPointerType>( LLVMPointerType( TypeRefHandle, addressSpace ).ThrowIfInvalid( ) )!;
+            // create the opaque pointer then set this type as the ElementType.
+            var retVal = FromHandle<IPointerType>( LLVMPointerType( TypeRefHandle, addressSpace ).ThrowIfInvalid( ) )!;
+            retVal.TrySetElementType(this);
+            return retVal;
         }
-
-        public bool TryGetExtendedPropertyValue<T>( string id, [MaybeNullWhen(false)] out T value )
-            => ExtensibleProperties.TryGetExtendedPropertyValue( id, out value );
-
-        public void AddExtendedPropertyValue( string id, object? value )
-            => ExtensibleProperties.AddExtendedPropertyValue( id, value );
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
@@ -121,7 +102,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal static TypeRef? FromHandle( LLVMTypeRef typeRef ) => FromHandle<TypeRef>( typeRef );
 
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context is owned and disposed by global ContextCache" )]
-        internal static T? FromHandle<T>( LLVMTypeRef typeRef )
+        internal static T? FromHandle<T>( LLVMTypeRef typeRef, ITypeRef? elementType = null )
             where T : class, ITypeRef
         {
             if( typeRef.IsNull )
@@ -171,8 +152,6 @@ namespace Ubiquity.NET.Llvm.Types
             }
         }
 
-        protected LLVMTypeRef TypeRefHandle { get; }
-
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
         private static Context GetContextFor( LLVMTypeRef handle )
         {
@@ -184,7 +163,5 @@ namespace Ubiquity.NET.Llvm.Types
             var hContext = LLVMGetTypeContext( handle );
             return ContextCache.GetContextFor( hContext.ThrowIfInvalid( ) );
         }
-
-        private readonly ExtensiblePropertyContainer ExtensibleProperties = new( );
     }
 }

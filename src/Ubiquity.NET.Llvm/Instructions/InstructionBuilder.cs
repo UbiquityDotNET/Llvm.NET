@@ -259,12 +259,10 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             typeRef.ValidateNotNull( nameof( typeRef ) );
             var handle = LLVMBuildAlloca( BuilderHandle, typeRef.GetTypeRef( ), string.Empty );
-            if( handle == default )
-            {
-                throw new InternalCodeGeneratorException( "Failed to build an Alloca instruction" );
-            }
 
-            return Value.FromHandle<Alloca>( handle )!;
+            return handle == default
+                ? throw new InternalCodeGeneratorException( "Failed to build an Alloca instruction" )
+                : Value.FromHandle<Alloca>( handle )!;
         }
 
         /// <summary>Creates an alloca instruction</summary>
@@ -274,23 +272,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Alloca Alloca( ITypeRef typeRef, ConstantInt elements )
         {
-            if( typeRef == null )
-            {
-                throw new ArgumentNullException( nameof( typeRef ) );
-            }
-
-            if( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
+            ArgumentNullException.ThrowIfNull( typeRef );
+            ArgumentNullException.ThrowIfNull( elements );
 
             var instHandle = LLVMBuildArrayAlloca( BuilderHandle, typeRef.GetTypeRef( ), elements.ValueHandle, string.Empty );
-            if( instHandle == default )
-            {
-                throw new InternalCodeGeneratorException( "Failed to build an Alloca array instruction" );
-            }
-
-            return Value.FromHandle<Alloca>( instHandle )!;
+            return instHandle == default
+                ? throw new InternalCodeGeneratorException( "Failed to build an Alloca array instruction" )
+                : Value.FromHandle<Alloca>( instHandle )!;
         }
 
         /// <summary>Creates a return instruction for a function that has no return value</summary>
@@ -321,7 +309,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="ReturnInstruction"/></returns>
         public ReturnInstruction Return( Value value )
         {
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentNullException.ThrowIfNull(value);
+
             if( InsertBlock is null )
             {
                 throw new InvalidOperationException( "No insert block is set for this builder" );
@@ -351,14 +340,17 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
-        public CallInstruction Call( Value func, params Value[ ] args ) => Call( func, ( IReadOnlyList<Value> )args );
+        public CallInstruction Call( IrFunction func, params Value[ ] args ) => Call( func, ( IReadOnlyList<Value> )args );
 
         /// <summary>Creates a call function</summary>
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
-        public CallInstruction Call( Value func, IReadOnlyList<Value> args )
+        public CallInstruction Call( IrFunction func, IReadOnlyList<Value> args )
         {
+            ArgumentNullException.ThrowIfNull( func );
+            ArgumentNullException.ThrowIfNull( args );
+
             LLVMValueRef hCall = BuildCall( func, args ).ThrowIfInvalid();
             return Value.FromHandle<CallInstruction>( hCall )!;
         }
@@ -369,15 +361,20 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="then">Successful continuation block</param>
         /// <param name="catchBlock">Exception handling block</param>
         /// <returns><see cref="Instructions.Invoke"/></returns>
-        public Invoke Invoke( Value func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
+        public Invoke Invoke( IrFunction func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
         {
+            ArgumentNullException.ThrowIfNull( func );
+            ArgumentNullException.ThrowIfNull( args );
+            ArgumentNullException.ThrowIfNull( then );
+            ArgumentNullException.ThrowIfNull( catchBlock );
+
             ValidateCallArgs( func, args );
             then.ValidateNotNull( nameof( then ) );
             catchBlock.ValidateNotNull( nameof( then ) );
 
             LLVMValueRef[ ] llvmArgs = args.Select( v => v.ValueHandle ).ToArray( );
             LLVMValueRef invoke = LLVMBuildInvoke2( BuilderHandle
-                                                  , func.NativeType.GetTypeRef( )
+                                                  , func.NativeType.GetTypeRef( ) // TODO: Is this legit with opaque pointers?
                                                   , func.ValueHandle
                                                   , llvmArgs
                                                   , ( uint )llvmArgs.Length
@@ -445,28 +442,8 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Expected_pointer_value, nameof( destination ) );
             }
 
-            if( !ptrType.ElementType.Equals( value.NativeType )
-             || ( value.NativeType.Kind == TypeKind.Integer && value.NativeType.IntegerBitWidth != ptrType.ElementType.IntegerBitWidth )
-              )
-            {
-                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
-            }
-
             LLVMValueRef valueRef = LLVMBuildStore( BuilderHandle, value.ValueHandle, destination.ValueHandle );
             return Value.FromHandle<Store>( valueRef.ThrowIfInvalid( ) )!;
-        }
-
-        /// <summary>Creates a <see cref="Instructions.Load"/> instruction</summary>
-        /// <param name="sourcePtr">Pointer to the value to load</param>
-        /// <returns><see cref="Instructions.Load"/></returns>
-        /// <remarks>The <paramref name="sourcePtr"/> must not be an opaque pointer type</remarks>
-        [Obsolete( "Use overload accepting a type and opaque pointer instead" )]
-        public Load Load( Value sourcePtr )
-        {
-            sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
-            return sourcePtr.NativeType is IPointerType ptrType
-                ? Load( ptrType.ElementType, sourcePtr )
-                : throw new ArgumentException( Resources.Expected_a_pointer_value, nameof( sourcePtr ) );
         }
 
         /// <summary>Creates a load instruction</summary>
@@ -481,6 +458,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             type.ValidateNotDefault( nameof( type ) );
             sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
+
             if( sourcePtr.NativeType.Kind != TypeKind.Pointer )
             {
                 throw new ArgumentException( Resources.Expected_a_pointer_value, nameof( sourcePtr ) );
@@ -491,7 +469,6 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Cannot_load_a_value_for_an_opaque_or_unsized_type, nameof( type ) );
             }
 
-            // TODO: validate sourceptr is opaque or sourcePtr.Type.ElementType == type
             var handle = LLVMBuildLoad2( BuilderHandle, type.GetTypeRef( ), sourcePtr.ValueHandle, string.Empty );
             return Value.FromHandle<Load>( handle.ThrowIfInvalid( ) )!;
         }
@@ -588,16 +565,6 @@ namespace Ubiquity.NET.Llvm.Instructions
             if( ptr.NativeType is not IPointerType ptrType)
             {
                 throw new ArgumentException( Resources.Expected_pointer_value, nameof( ptr ) );
-            }
-
-            if( ptrType.ElementType != cmp.NativeType )
-            {
-                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, cmp.NativeType ) );
-            }
-
-            if( ptrType.ElementType != value.NativeType )
-            {
-                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, value.NativeType ) );
             }
 
             var handle = LLVMBuildAtomicCmpXchg( BuilderHandle
@@ -1434,18 +1401,6 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }
 
-            if( !dstPtrType.ElementType.IsInteger )
-            {
-                dstPtrType = module.Context.Int8Type.CreatePointerType( );
-                destination = BitCast( destination, dstPtrType );
-            }
-
-            if( !srcPtrType.ElementType.IsInteger )
-            {
-                srcPtrType = module.Context.Int8Type.CreatePointerType( );
-                source = BitCast( source, srcPtrType );
-            }
-
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memcpy.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
@@ -1501,18 +1456,6 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }
 
-            if( !dstPtrType.ElementType.IsInteger )
-            {
-                dstPtrType = module.Context.Int8Type.CreatePointerType( );
-                destination = BitCast( destination, dstPtrType );
-            }
-
-            if( !srcPtrType.ElementType.IsInteger )
-            {
-                srcPtrType = module.Context.Int8Type.CreatePointerType( );
-                source = BitCast( source, srcPtrType );
-            }
-
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memmove.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
@@ -1543,11 +1486,6 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Pointer_type_expected, nameof( destination ) );
             }
 
-            if( dstPtrType.ElementType != value.NativeType )
-            {
-                throw new ArgumentException( Resources.Pointer_type_doesn_t_match_the_value_type );
-            }
-
             if( !value.NativeType.IsInteger )
             {
                 throw new ArgumentException( Resources.Integer_type_expected, nameof( value ) );
@@ -1561,12 +1499,6 @@ namespace Ubiquity.NET.Llvm.Instructions
             if( Context != module.Context )
             {
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
-            }
-
-            if( !dstPtrType.ElementType.IsInteger )
-            {
-                dstPtrType = module.Context.Int8Type.CreatePointerType( );
-                destination = BitCast( destination, dstPtrType );
             }
 
             // find the appropriate overloaded form of the function
@@ -1663,11 +1595,6 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Pointer_value_expected, nameof( pointer ) );
             }
 
-            if( pointerType.ElementType.GetTypeRef( ) != type.GetTypeRef( ) )
-            {
-                throw new ArgumentException( "GEP pointer and element type don't agree!" );
-            }
-
             // start with the base pointer as type for first index
             ITypeRef elementType = type.CreatePointerType();
             foreach( var index in args )
@@ -1724,21 +1651,6 @@ namespace Ubiquity.NET.Llvm.Instructions
             {
                 throw new ArgumentException( Resources.Pointer_value_expected, nameof( pointer ) );
             }
-
-            if( ptrType.ElementType is not IStructType elementStructType)
-            {
-                throw new ArgumentException( Resources.Pointer_to_a_structure_expected, nameof( pointer ) );
-            }
-
-            if( !elementStructType.IsSized && index > 0 )
-            {
-                throw new ArgumentException( Resources.Cannot_get_element_of_unsized_opaque_structures );
-            }
-
-            if( index >= elementStructType.Members.Count )
-            {
-                throw new ArgumentException( Resources.Index_exceeds_number_of_members_in_the_type, nameof( index ) );
-            }
         }
 
         private BitcodeModule GetModuleOrThrow( )
@@ -1789,29 +1701,13 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Expected_pointer_type, nameof( ptr ) );
             }
 
-            if( ptrType.ElementType != val.NativeType )
-            {
-                throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Incompatible_types_destination_pointer_must_be_same_type_0_1, ptrType.ElementType, val.NativeType ) );
-            }
-
             var handle = LLVMBuildAtomicRMW( BuilderHandle, op, ptr.ValueHandle, val.ValueHandle, LLVMAtomicOrdering.LLVMAtomicOrderingSequentiallyConsistent, false );
             return Value.FromHandle<AtomicRMW>( handle.ThrowIfInvalid( ) )!;
         }
 
-        private static FunctionType ValidateCallArgs( [ValidatedNotNull] Value func, [ValidatedNotNull] IReadOnlyList<Value> args )
+        private static IFunctionType ValidateCallArgs( IrFunction func, IReadOnlyList<Value> args )
         {
-            func.ValidateNotNull( nameof( func ) );
-            args.ValidateNotNull( nameof( args ) );
-
-            if( func.NativeType is not IPointerType funcPtrType)
-            {
-                throw new ArgumentException( Resources.Expected_pointer_to_function, nameof( func ) );
-            }
-
-            if( funcPtrType.ElementType is not FunctionType signatureType)
-            {
-                throw new ArgumentException( Resources.A_pointer_to_a_function_is_required_for_an_indirect_call, nameof( func ) );
-            }
+            IFunctionType signatureType = func.Signature;
 
             // validate arg count; too few or too many (unless the signature supports varargs) is an error
             if( args.Count < signatureType.ParameterTypes.Count
@@ -1833,16 +1729,15 @@ namespace Ubiquity.NET.Llvm.Instructions
             return signatureType;
         }
 
-        private LLVMValueRef BuildCall( [ValidatedNotNull] Value func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
+        private LLVMValueRef BuildCall( IrFunction func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
 
-        private LLVMValueRef BuildCall( [ValidatedNotNull] Value func ) => BuildCall( func, new List<Value>( ) );
+        private LLVMValueRef BuildCall( IrFunction func ) => BuildCall( func, new List<Value>( ) );
 
-        private LLVMValueRef BuildCall( [ValidatedNotNull] Value func, IReadOnlyList<Value> args )
+        private LLVMValueRef BuildCall( IrFunction func, IReadOnlyList<Value> args )
         {
-            func.ValidateNotNull( nameof( func ) );
-            FunctionType sig = ValidateCallArgs( func, args );
+            IFunctionType sig = ValidateCallArgs( func, args );
             LLVMValueRef[ ] llvmArgs = args.Select( v => v.ValueHandle ).ToArray( );
-            return LLVMBuildCall2( BuilderHandle, sig.TypeHandle, func.ValueHandle, llvmArgs, ( uint )llvmArgs.Length, string.Empty );
+            return LLVMBuildCall2( BuilderHandle, sig.GetTypeRef(), func.ValueHandle, llvmArgs, ( uint )llvmArgs.Length, string.Empty );
         }
     }
 }

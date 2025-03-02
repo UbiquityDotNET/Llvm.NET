@@ -55,21 +55,43 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         Fortran08 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageFortran08,
         RenderScript = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageRenderScript,
         Bliss = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageBLISS,
+        Kotlin = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageKotlin,
+        Zig = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageZig,
+        Crystal = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageCrystal,
+        Cpp17 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageC_plus_plus_17,
+        Cpp20 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageC_plus_plus_20,
+        C17 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageC17,
+        Fortran18 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageFortran18,
+        Ada2005 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageAda2005,
+        Ada2012 = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageAda2012,
+        HIP = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageHIP,
+        Assembly = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageAssembly,
+        CSharp = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageC_sharp,
+        Mojo = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageMojo,
+        GLSL = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageGLSL,
+        GLSL_ES = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageGLSL_ES,
+        HLSL = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageHLSL,
+        OpenClCPP = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageOpenCL_CPP,
+        CppForOpenCL = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageCPP_for_OpenCL,
+        SYCL = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageSYCL,
+        Ruby = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageRuby,
+        Move = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageMove,
+        HyLo = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageHylo,
+        Metal = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageMetal,
         MipsAssembler = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageMips_Assembler,
         GoogleRenderScript = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageGOOGLE_RenderScript,
         BorlandDelphi = LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageBORLAND_Delphi,
 
+#if LLVM_DWARF_SUPPORTS_USER_DEFINE_LANGUAGE
         /// <summary>Base value for unofficial languages ids</summary>
         UserMin = 0x8000,
 
-        /// <summary>[Ubiquity.NET.Llvm] C# Language</summary>
-        CSharp = UserMin + 0x01000,
-
         /// <summary>[Ubiquity.NET.Llvm] .NET IL Assembly language (ILAsm)</summary>
-        ILAsm = UserMin + 0x01001,
+        ILAsm = UserMin + 0x01000,
 
         /// <summary>Max Value for unofficial language ids</summary>
         UserMax = 0xffff
+#endif
     }
 
     // <summary>Tag kind for the debug information discriminated union nodes</summary>

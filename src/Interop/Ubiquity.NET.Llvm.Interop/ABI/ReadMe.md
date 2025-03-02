@@ -43,6 +43,40 @@ context handles that is coverd by the `ContextHandleMarshaller<T>` custom marsha
 The generated types for all context handles marks the type marshalling with the
 `NativeMarshallingAttribute` to ensure it is AOT marshalling ready.
 
+## Arrays
+Array marshalling requires some careful annotation and interpretation from the native code
+where the type is normally just a pointer. There's nothing in the C/C++ language that says
+anything about the SIZE of the data that pointer points to beyond the size of the type
+pointed to. (i.e., Is it an array of elements of type `T`? How many such elements are valid...)
+Thus marshalling to a runtime with stronger type guarantees requires some care.
+
+### In Arrays
+Input arrays are generally rather simple to declare and use the form:
+``` C#
+void LLVMSomeApi(LLVMHandleOfSomeSort h, [In] LlvmHandleOfSomeOtherSort[] elements, int numElements);
+```
+
+### Out arrays
+Arrays where the implementation is expected to provide a pointer to valid data that is filled in
+use the following pattern:
+``` C#
+void LLVMSomeApiThatFillsArray(LLVMHandleOfSomeSort h, [Out] LlvmHandleOfSomeOtherSort[] elements, int numElements);
+```
+### Return arrays
+Return arrays are like an out param except that they are the return type, the problem with this
+is that they are **purely** `out` in that the native code must allocate the return value and
+cleanup (if any) of that return is left to the caller to perform. Unfortunately, there is NO
+built-in marshalling that supports
+```C#
+```
+
+It is important to note that `[Out] byte[] buf` and `out byte[] buf` are two very different
+declarations and have distinct meanings for the marshalling of these parameters. The first
+expects the **caller** to allocate the memory and it is 'filled in' by the callee, the second
+expects the **callee** to allocate and fill the memory. The second implies some form of "contract"
+on the reelase of the allocated memory. The marshaller has no knowledge of such a thing and
+does not know how to release it either. Thus a custom marshaller is needed for such things.
+
 ## Explicit types
 All of the P/Invoke API signatures are created with Explicitly sized values for numerics
 ***and enumerations***. This ensures there is no confusion on the bit length of types etc...
@@ -81,12 +115,15 @@ unified most string use to one of three forms.
 2) Pointers to strings that require a correspoinding call to `LLVMDisposeMessage()`
 3) Error message strings that require a corresponding call to `LLVMDisposeErrorMessage()`
 
-#1 is handled by marking the `LibraryImportAttribute` with `StringMarshallingCustomType = typeof( AnsiStringMarshaller )`
-and a parameter or return signature of `string`. These are ALWAYS converted to/from native
-form directly at point of use. Thus any use of them will incur a performance hit as the
-memory is allocated/pinned and copied as needed to marshal the string between managed and
+#1 is handled by marking the `LibraryImportAttribute` with `StringMarshallingCustomType = typeof( ConstUtf8StringMarshaller )`
+and a parameter or return signature of `string`. Or, more often with a return attribute specifying
+the `ConstUtf8StringMarshaller` as the marshaller for the return type. These are ALWAYS converted
+to/from native form directly at point of use. Thus any use of them will incur a performance hit
+as the memory is allocated/pinned and copied as needed to marshal the string between managed and
 native forms. This does, however mean that there is no ambiguity about the validity or
-lifetime of an otherwise alias pointer.
+lifetime of an otherwise alias pointer. The built-in/BCL marshalling assumes that ALL native
+strings are allocated via `CoTaskMemAlloc()` and therefore require a release. But that is
+***NEVER*** the case with LLVM and usually not true of interop with arbitrary C/C++ code.
 
 #2 is handled by the `DisposeMessageString` type which is really just a SafeHandle. The
 built-in generator supports marshalling handle types so it is really just associating

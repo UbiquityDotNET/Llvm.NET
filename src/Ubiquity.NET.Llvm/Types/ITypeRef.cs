@@ -82,7 +82,6 @@ namespace Ubiquity.NET.Llvm.Types
 
     /// <summary>Interface for a Type in LLVM</summary>
     public interface ITypeRef
-        : IExtensiblePropertyContainer
     {
         /// <summary>Gets a value indicating whether the type is sized</summary>
         bool IsSized { get; }
@@ -113,9 +112,6 @@ namespace Ubiquity.NET.Llvm.Types
 
         /// <summary>Gets a value indicating whether this type is a floating point type</summary>
         bool IsFloatingPoint { get; }
-
-        /// <summary>Gets a value indicating whether this type is a pointer to a pointer</summary>
-        bool IsPointerPointer { get; }
 
         /// <summary>Gets the Context that owns this type</summary>
         Context Context { get; }
@@ -153,7 +149,7 @@ namespace Ubiquity.NET.Llvm.Types
     internal interface ITypeHandleOwner
     {
         /// <summary>Gets the LibLLVM handle for the type</summary>
-        LLVMTypeRef TypeHandle { get; }
+        LLVMTypeRef TypeRefHandle { get; }
     }
 
     internal static class TypeRefExtensions
@@ -161,7 +157,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal static LLVMTypeRef GetTypeRef( [ValidatedNotNull] this ITypeRef self )
         {
             self.ValidateNotNull( nameof( self ) );
-            return ( ( ITypeHandleOwner )self ).TypeHandle;
+            return ( ( ITypeHandleOwner )self ).TypeRefHandle;
         }
     }
 }

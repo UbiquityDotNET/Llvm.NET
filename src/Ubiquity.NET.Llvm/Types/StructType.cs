@@ -6,6 +6,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 using Ubiquity.NET.Llvm.Interop;
 
@@ -79,9 +81,10 @@ namespace Ubiquity.NET.Llvm.Types
                     if( count > 0 )
                     {
                         var structElements = new LLVMTypeRef[ count ];
-                        LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
-                        members.AddRange( from e in structElements
-                                          select FromHandle<ITypeRef>( e.ThrowIfInvalid( ) )!
+                        LLVMGetStructElementTypes( TypeRefHandle, structElements );
+
+                        members.AddRange( from hRef in structElements
+                                          select FromHandle<ITypeRef>( hRef.ThrowIfInvalid( ) )!
                                         );
                     }
                 }

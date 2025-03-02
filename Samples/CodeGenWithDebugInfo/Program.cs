@@ -13,7 +13,7 @@ using System.IO;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Transforms;
+
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
@@ -24,7 +24,7 @@ using static Ubiquity.NET.Llvm.Interop.Library;
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
 #pragma warning disable CA1506 // warning CA1506: 'Main' is coupled with '51' different types from '12' different namespaces. Rewrite or refactor the code to decrease its class coupling below '41'.
 
-namespace TestDebugInfo
+namespace CodeGenWithDebugInfo
 {
     /// <summary>Program to test/demonstrate Aspects of debug information generation with Ubiquity.NET.Llvm</summary>
     public static class Program
@@ -83,7 +83,7 @@ namespace TestDebugInfo
             module.SourceFileName = Path.GetFileName( srcPath );
             module.TargetTriple = TargetDetails.TargetMachine.Triple;
             module.Layout = TargetDetails.TargetMachine.TargetData;
-            Debug.Assert( !( module.DICompileUnit is null ), "Expected module with non-null compile unit" );
+            Debug.Assert( module.DICompileUnit is not null, "Expected module with non-null compile unit" );
 
             TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
             #endregion
@@ -94,7 +94,7 @@ namespace TestDebugInfo
             // Create basic types used in this compilation
             var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
             var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
-            var voidType = DebugType.CreateDebugType<ITypeRef,DIType>( module.Context.VoidType, null );
+            var voidType = DebugType.Create( module.Context.VoidType, (DIType?)null );
             var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
             #endregion
 
@@ -121,11 +121,11 @@ namespace TestDebugInfo
 
             var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
             bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-            bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "bar", string.Empty, diFile, 8, fooType.DIType, false, null ) );
+            bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "bar", string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
 
             var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
             baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-            baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "baz", string.Empty, diFile, 9, fooType.DIType, false, null ) );
+            baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "baz", string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
 
             // add module flags and compiler identifiers...
             // this can technically occur at any point, though placing it here makes
@@ -135,7 +135,7 @@ namespace TestDebugInfo
 
             #region CreatingQualifiedTypes
             // create types for function args
-            var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DIType, QualifiedTypeTag.Const );
+            var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DebugInfoType, QualifiedTypeTag.Const );
             var fooPtr = new DebugPointerType( fooType, module );
             #endregion
 
@@ -162,30 +162,6 @@ namespace TestDebugInfo
             }
             else
             {
-                // test optimization works, but don't save it as that makes it harder to do a compare with official clang builds
-                {// force a GC to verify callback delegate for diagnostics is still valid, this is for test only and wouldn't
-                    // normally be done in production code.
-                    GC.Collect( GC.MaxGeneration );
-                    using var modForOpt = module.Clone( );
-                    // NOTE:
-                    // The ordering of passes can matter depending on the pass, and passes may be added more than once
-                    // the caller has full control of ordering, this is just a sample of effectively randomly picked
-                    // passes and not necessarily a reflection of any particular use case.
-                    var pm = new ModulePassManager( );
-                    pm.AddAlwaysInlinerPass( )
-                        .AddAggressiveDCEPass( )
-                        .AddArgumentPromotionPass( )
-                        .AddBasicAliasAnalysisPass( )
-                        .AddBitTrackingDCEPass( )
-                        .AddCFGSimplificationPass( )
-                        .AddConstantMergePass( )
-                        .AddConstantPropagationPass( )
-                        .AddFunctionInliningPass( )
-                        .AddGlobalOptimizerPass( )
-                        .AddInstructionCombiningPass( )
-                        .Run( modForOpt );
-                }
-
                 // Module is good, so generate the output files
                 module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
                 File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
@@ -238,7 +214,7 @@ namespace TestDebugInfo
             // to pair the LLVM pointer type with the original source type.
             var copySig = module.Context.CreateFunctionType( module.DIBuilder
                                                            , voidType
-                                                           , DebugType.CreateDebugType( fooPtr, constFoo )
+                                                           , DebugType.Create( fooPtr, constFoo )
                                                            , fooPtr
                                                            );
 
@@ -257,6 +233,7 @@ namespace TestDebugInfo
                                                  .AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoUnwind, AttributeKind.NoInline, AttributeKind.OptimizeNone )
                                                  .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
 
+            Debug.Assert( !fooPtr.IsOpaquePtr(), "Expected the debug info for a pointer was created with a valid ElementType");
             TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
@@ -295,7 +272,7 @@ namespace TestDebugInfo
             // create debug info locals for the arguments
             // NOTE: Debug parameter indices are 1 based!
             var paramSrc = diBuilder.CreateArgument( copyFunc.DISubProgram, "src", diFile, 11, constFooType, false, 0, 1 );
-            var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DIType, false, 0, 2 );
+            var paramDst = diBuilder.CreateArgument( copyFunc.DISubProgram, "pDst", diFile, 12, fooPtr.DebugInfoType, false, 0, 2 );
 
             uint ptrAlign = module.Layout.CallFrameAlignmentOf( fooPtr );
 
@@ -404,7 +381,7 @@ namespace TestDebugInfo
         // obviously this is not clang but using an identical name helps in comparisons with actual clang output
         private const string VersionIdentString = "clang version 5.0.0 (tags/RELEASE_500/rc4)";
 
-        // these fields are initialized in main before being used elswhere
+        // these fields are initialized in main before being used elsewhere
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         private static ITargetDependentDetails TargetDetails;
 

@@ -154,7 +154,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                        , ( a, d ) => (Math.Max( a.MaxSize, d.BitSize ), Math.Max( a.MaxAlign, d.BitAlignment ))
                                        );
             var concreteType = module.DIBuilder.CreateUnionType( scope: scope
-                                                               , name: DIType!.Name // not null via construction
+                                                               , name: DebugInfoType!.Name // not null via construction
                                                                , file: file
                                                                , line: line
                                                                , bitSize: checked((uint)unionBitSize)
@@ -162,7 +162,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                , debugFlags: debugFlags
                                                                , elements: memberTypes
                                                                );
-            DIType = concreteType;
+            DebugInfoType = concreteType;
         }
 
         private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
@@ -181,7 +181,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( "Cannot determine size of member", nameof( memberInfo ) );
             }
 
-            return module.DIBuilder.CreateMemberType( scope: DIType
+            return module.DIBuilder.CreateMemberType( scope: DebugInfoType
                                                     , name: memberInfo.Name
                                                     , file: memberInfo.File
                                                     , line: memberInfo.Line
@@ -189,7 +189,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                     , bitAlign: memberInfo.ExplicitLayout?.BitAlignment ?? 0
                                                     , bitOffset: 0
                                                     , debugFlags: memberInfo.DebugInfoFlags
-                                                    , type: memberInfo.DebugType.DIType
+                                                    , type: memberInfo.DebugType.DebugInfoType
                                                     );
         }
     }

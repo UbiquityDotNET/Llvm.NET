@@ -38,6 +38,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets the Discriminator for the composite type</summary>
         public DIDerivedType? Discriminator => GetOperand<DIDerivedType>( 8 );
 
+        // public DIVariable Location => GetOPerand<DIVariable>(9);
+        // public MDNode? /*DIVariable|DIExpression*/ Associated => GetOperand<MDNode>(10);
+        // etc...
+
         /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API LlvmMetadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>
         internal DICompositeType( LLVMMetadataRef handle )

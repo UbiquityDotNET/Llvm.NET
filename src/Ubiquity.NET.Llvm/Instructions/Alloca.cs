@@ -7,6 +7,8 @@
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 
+using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Alloca instruction for allocating stack space</summary>
@@ -24,7 +26,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// is always a pointer type, this provides the ElementType (e.g. the pointee type)
         /// for the alloca.
         /// </remarks>
-        public ITypeRef ElementType => ( ( IPointerType )NativeType ).ElementType;
+        public ITypeRef ElementType => TypeRef.FromHandle(LLVMGetAllocatedType(ValueHandle).ThrowIfInvalid())!;
 
         internal Alloca( LLVMValueRef valueRef )
             : base( valueRef )

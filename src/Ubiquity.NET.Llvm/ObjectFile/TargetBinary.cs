@@ -69,7 +69,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /*
         TODO: (Needs extension C APIs)
             string FileFormatName { get; }
-            TripleArchType ArchType { get; }
+            TripleArchType ArchKind { get; }
             SubTargetFeatures Features { get; }
             UInt64 StartAddress { get; }
             Triple Triple { get; }

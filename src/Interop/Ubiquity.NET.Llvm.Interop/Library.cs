@@ -871,8 +871,8 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         // version info for verification of matched LibLLVM
-        private const int VersionMajor = 10;
-        private const int VersionMinor = 0;
+        private const int VersionMajor = 20;
+        private const int VersionMinor = 1;
         private const int VersionPatch = 0;
 
         private static int CurrentInitializationState;

@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             : base( llvmType, BuildDebugType( llvmType, elementType, module, count, lowerBound, alignment ) )
         {
             elementType.ValidateNotNull(nameof( elementType ) );
-            elementType.DIType.ValidateNotNull( $"{nameof( elementType )}.{nameof( elementType.DIType )}" );
+            elementType.DebugInfoType.ValidateNotNull( $"{nameof( elementType )}.{nameof( elementType.DebugInfoType )}" );
             DebugElementType = elementType;
         }
 
@@ -61,7 +61,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
         public DebugArrayType( IArrayType llvmType, BitcodeModule module, DIType elementType, uint count, uint lowerBound = 0 )
-            : this( DebugType.CreateDebugType( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
+            : this( DebugType.Create( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
         {
         }
 
@@ -75,7 +75,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public uint Length => NativeType.Length;
 
         /// <summary>Gets the lower bound of the array - usually, but not always, zero</summary>
-        public uint LowerBound { get; } /*=> DIType.GetOperand<DISubRange>( 0 ).LowerBound;*/
+        public uint LowerBound { get; } /*=> DebugInfoType.GetOperand<DISubRange>( 0 ).LowerBound;*/
 
         /// <summary>Resolves a temporary metadata node for the array if full size information wasn't available at creation time</summary>
         /// <param name="layout">Type layout information</param>
@@ -86,11 +86,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
             ArgumentNullException.ThrowIfNull( diBuilder );
 
-            if( DIType != null && DIType.IsTemporary && !DIType.IsResolved )
+            if( DebugInfoType != null && DebugInfoType.IsTemporary && !DebugInfoType.IsResolved )
             {
-                DIType = diBuilder.CreateArrayType( layout.BitSizeOf( NativeType )
+                DebugInfoType = diBuilder.CreateArrayType( layout.BitSizeOf( NativeType )
                                                   , layout.AbiBitAlignmentOf( NativeType )
-                                                  , DebugElementType.DIType!
+                                                  , DebugElementType.DebugInfoType!
                                                   , diBuilder.CreateSubRange( LowerBound, NativeType.Length )
                                                   );
             }
@@ -117,7 +117,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             {
                 return module.DIBuilder.CreateArrayType( module.Layout.BitSizeOf( llvmType )
                                                        , alignment
-                                                       , elementType.DIType! // validated not null in constructor
+                                                       , elementType.DebugInfoType! // validated not null in constructor
                                                        , module.DIBuilder.CreateSubRange( lowerBound, count )
                                                        );
             }

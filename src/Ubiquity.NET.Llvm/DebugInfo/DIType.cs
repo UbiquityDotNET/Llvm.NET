@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DIType.cs" company="Ubiquity.NET Contributors">
+// <copyright file="DebugInfoType.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,7 +13,7 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for Debug info types</summary>
-    /// <seealso href="xref:llvm_langref#ditype">LLVM DIType</seealso>
+    /// <seealso href="xref:llvm_langref#ditype">LLVM DebugInfoType</seealso>
     public class DIType
         : DIScope
     {

@@ -27,6 +27,9 @@ extern "C" {
         DW_ATE_hi_user = 0xff
     }LibLLVMDwarfTypeKind;
 
+    // NOTE: This enum is a replication of Metadata::MetadataKind, it is distinct from
+    // the LLVM-C definition of LLVMMetadataKind as that ONLY includes definitions for
+    // what is included in debug information. (rather than ANY metadata)
     typedef enum LibLLVMMetadataKind
     {
 #define HANDLE_METADATA_LEAF(CLASS) LibLLVMMetadataKind_##CLASS,

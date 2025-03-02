@@ -18,9 +18,13 @@ namespace
         // result. This skips the intermediate operations and leverages a single
         // allocation and copy for the result.
         auto pRetVal = (char*)malloc(strRef.size() + 1);
-        return pRetVal == nullptr
-            ? nullptr
-            : strncpy(pRetVal, strRef.data(), strRef.size());
+        if (pRetVal == nullptr)
+        {
+            return nullptr;
+        }
+
+        pRetVal[strRef.size()] = '\0';
+        return strncpy(pRetVal, strRef.data(), strRef.size());
     }
 }
 

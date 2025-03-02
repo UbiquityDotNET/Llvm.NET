@@ -12,12 +12,12 @@ using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
-namespace TestDebugInfo
+namespace CodeGenWithDebugInfo
 {
     internal class X64Details
         : ITargetDependentDetails
     {
-        public X64Details( ILibLlvm libLLVM )
+        public X64Details(ILibLlvm libLLVM)
         {
             libLLVM.RegisterTarget( CodeGenTarget.X86 );
         }
@@ -32,23 +32,22 @@ namespace TestDebugInfo
                                                                       , CodeModel.Small
                                                                       );
 
-        public void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex )
+        public void AddABIAttributesForByValueStructure(IrFunction function, int paramIndex )
         {
-            if( !( function.Parameters[ paramIndex ].NativeType is IPointerType argType ) || !argType.ElementType.IsStruct )
+            if(function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct)
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }
         }
 
-        public void AddModuleFlags( BitcodeModule module )
+        public void AddModuleFlags(BitcodeModule module)
         {
             module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
         }
 
-        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx )
-            => new List<AttributeValue>
-            {
-                ctx.CreateAttribute("disable-tail-calls", "false" ),
+        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes(Context ctx)
+            => [
+                ctx.CreateAttribute( "disable-tail-calls", "false" ),
                 ctx.CreateAttribute( "less-precise-fpmad", "false" ),
                 ctx.CreateAttribute( "no-frame-pointer-elim", "false" ),
                 ctx.CreateAttribute( "no-infs-fp-math", "false" ),
@@ -59,7 +58,7 @@ namespace TestDebugInfo
                 ctx.CreateAttribute( "unsafe-fp-math", "false" ),
                 ctx.CreateAttribute( "use-soft-float", "false" ),
                 ctx.CreateAttribute( AttributeKind.UWTable )
-            };
+            ];
 
         private const string Cpu = "x86-64";
         private const string Features = "+sse,+sse2";

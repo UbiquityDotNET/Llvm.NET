@@ -7,9 +7,10 @@
 using System.Collections.Generic;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
-namespace TestDebugInfo
+namespace CodeGenWithDebugInfo
 {
     #region ITargetDependentDetails
     internal interface ITargetDependentDetails

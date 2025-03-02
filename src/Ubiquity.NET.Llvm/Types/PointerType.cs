@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -16,21 +17,20 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Types
 {
-    /// <summary>Interface for a pointer type in LLVM</summary>
-    public interface IPointerType
-        : ISequenceType
-    {
-        /// <summary>Gets the address space the pointer refers to</summary>
-        uint AddressSpace { get; }
-    }
-
     /// <summary>LLVM pointer type</summary>
-    internal class PointerType
-        : SequenceType
+    internal sealed class PointerType
+        : TypeRef
         , IPointerType
     {
-        /// <summary>Gets the address space the pointer refers to</summary>
         public uint AddressSpace => LLVMGetPointerAddressSpace( TypeRefHandle );
+
+        public ITypeRef? ElementType { get; internal set; }
+
+        [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal interface implementation" )]
+        void IPointerType.TrySetElementType(ITypeRef? elementType)
+        {
+            ElementType ??= elementType;
+        }
 
         internal PointerType( LLVMTypeRef typeRef )
             : base( typeRef )

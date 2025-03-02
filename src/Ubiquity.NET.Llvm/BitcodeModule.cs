@@ -11,6 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
@@ -332,12 +333,29 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Verifies a bit-code module</summary>
-        /// <param name="errorMessage">Error messages describing any issues found in the bit-code</param>
+        /// <param name="errorMessage">Error messages describing any issues found in the bit-code. Empty string if no error</param>
         /// <returns>true if the verification succeeded and false if not.</returns>
-        public bool Verify( [MaybeNullWhen(false)] out DisposeMessageString errorMessage )
+        public bool Verify( out string errorMessage )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            return LLVMVerifyModule( ModuleHandle!, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errorMessage ).Succeeded;
+
+            errorMessage = string.Empty;
+            DisposeMessageString? llvmMsg = null;
+            try
+            {
+                LLVMStatus retVal = LLVMVerifyModule( ModuleHandle!, LLVMVerifierFailureAction.LLVMReturnStatusAction, out llvmMsg );
+                if(retVal.Failed)
+                {
+                    errorMessage = llvmMsg.ToString();
+                    return false;
+                }
+
+                return true;
+            }
+            finally
+            {
+                llvmMsg?.Dispose();
+            }
         }
 
         /// <summary>Looks up a function in the module by name</summary>
@@ -413,8 +431,13 @@ namespace Ubiquity.NET.Llvm
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
             signature.ValidateNotNull( nameof( signature ) );
 
-            LLVMValueRef valueRef = LibLLVMGetOrInsertFunction( ModuleHandle!, name, signature.GetTypeRef( ) );
-            return Value.FromHandle<IrFunction>( valueRef.ThrowIfInvalid( ) )!;
+            LLVMValueRef function = LLVMGetNamedFunctionWithLength(ModuleHandle!, name, name.Length);
+            if(function.IsNull)
+            {
+                function = LLVMAddFunction(ModuleHandle!, name, signature.GetTypeRef( ));
+            }
+
+            return Value.FromHandle<IrFunction>( function.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -440,12 +463,28 @@ namespace Ubiquity.NET.Llvm
         /// <param name="path">File to write the LLVM IR source to</param>
         /// <param name="errMsg">Error messages encountered, if any</param>
         /// <returns><see langword="true"/> if successful or <see langword="false"/> if not</returns>
-        public bool WriteToTextFile( string path, out DisposeMessageString errMsg )
+        public bool WriteToTextFile( string path, out string errMsg )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             path.ValidateNotNullOrWhiteSpace( nameof( path ) );
 
-            return LLVMPrintModuleToFile( ModuleHandle!, path, out errMsg ).Succeeded;
+            errMsg = string.Empty;
+            DisposeMessageString? llvmMsg = null;
+            try
+            {
+                LLVMStatus result = LLVMPrintModuleToFile( ModuleHandle!, path, out llvmMsg );
+                if (result.Failed)
+                {
+                    errMsg = llvmMsg.ToString();
+                    return false;
+                }
+
+                return true;
+            }
+            finally
+            {
+                llvmMsg?.Dispose();
+            }
         }
 
         /// <summary>Creates a string representation of the module</summary>
@@ -456,10 +495,10 @@ namespace Ubiquity.NET.Llvm
         /// an extremely long time (up to many seconds depending on complexity
         /// of the module) which is bad for the debugger.
         /// </remarks>
-        public DisposeMessageString WriteToString( )
+        public string WriteToString( )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            return LLVMPrintModuleToString( ModuleHandle! );
+            return LLVMPrintModuleToString( ModuleHandle! ).ToString();
         }
 
         /// <summary>Writes the LLVM IR bit code into a memory buffer</summary>
@@ -719,13 +758,13 @@ namespace Ubiquity.NET.Llvm
                 linkageName = name;
             }
 
-            if( signature.DIType == null )
+            if( signature.DebugInfoType == null )
             {
                 throw new ArgumentException( Resources.Signature_requires_debug_type_information, nameof( signature ) );
             }
 
             var func = CreateFunction( linkageName, signature );
-            var diSignature = signature.DIType;
+            var diSignature = signature.DebugInfoType;
             var diFunc = DIBuilder.CreateFunction( scope: scope
                                                  , name: name
                                                  , mangledName: linkageName
@@ -882,8 +921,8 @@ namespace Ubiquity.NET.Llvm
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Module created here is owned, and disposed of via the projected BitcodeModule" )]
         public static BitcodeModule LoadFrom( MemoryBuffer buffer, Context context )
         {
-            buffer.ValidateNotNull( nameof( buffer ) );
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull(buffer);
+            ArgumentNullException.ThrowIfNull(context);
 
             return LLVMParseBitcodeInContext2( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef ).Failed
                 ? throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer )
@@ -957,9 +996,13 @@ namespace Ubiquity.NET.Llvm
             private protected override BitcodeModule ItemFactory( LLVMModuleRef handle )
             {
                 var contextRef = LLVMGetModuleContext( handle );
-                return Context.ContextHandle != contextRef
-                    ? throw new ArgumentException( Resources.Context_mismatch_cannot_cache_modules_from_multiple_contexts )
-                    : new BitcodeModule( handle );
+                if (!Context.ContextHandle.Equals(contextRef))
+                {
+                    handle.Dispose();
+                    throw new ArgumentException( Resources.Context_mismatch_cannot_cache_modules_from_multiple_contexts );
+                }
+
+                return new BitcodeModule( handle );
             }
         }
 

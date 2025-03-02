@@ -28,7 +28,10 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             using var testModule = context.CreateBitcodeModule( "test" );
             var bldr = testModule.DIBuilder;
 
+// testing how API handles NULL
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             var file = bldr.CreateFile( null );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.IsNotNull( file );
             ValidateDIFileProperties( context, file, string.Empty, string.Empty );
         }
@@ -71,7 +74,9 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
 
             string fileName = $"{nameof(CreateFile_with_null_directory_should_succeed)}.foo";
 
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             var file = bldr.CreateFile( fileName, null );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             ValidateDIFileProperties( context, file, string.Empty, fileName );
         }
 
@@ -1342,9 +1347,13 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             // 6 - GlobalVariables
             // 7 - ImportedEntities
             // 8 - Macros
-            Assert.AreEqual( 9, unit.Operands.Count, "CompileUnit should have correct number of operands" );
+            // 9 - ????
+            // 10 - ????
+            const int expectedOperandCount = 11;
+
+            Assert.AreEqual( expectedOperandCount, unit.Operands.Count, "CompileUnit should have correct number of operands" );
             var operandList = unit.Operands.ToList();
-            Assert.AreEqual( 9, operandList.Count, "Enumerating CompileUnit.Operands should have correct number of elements" );
+            Assert.AreEqual( expectedOperandCount, operandList.Count, "Enumerating CompileUnit.Operands should have correct number of elements" );
             Assert.IsNotNull( operandList[ 0 ], "Expect DIFile operand not null" );
 
             ValidateMetadataStringOperand( nameof( producer ), producer, operandList[ 1 ] );
