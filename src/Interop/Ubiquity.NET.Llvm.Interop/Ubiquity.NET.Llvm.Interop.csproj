@@ -22,6 +22,7 @@
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IsAotCompatible>True</IsAotCompatible>
     <!-- Only use embedding for local builds; Official automated builds use sourcelink -->
     <EmbedAllSources Condition="$(IsAutomatedBuild) != 'true'">True</EmbedAllSources>
     <EmbedAllSources Condition="$(IsAutomatedBuild) == 'true'">False</EmbedAllSources>

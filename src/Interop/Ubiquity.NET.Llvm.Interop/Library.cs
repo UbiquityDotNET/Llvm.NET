@@ -115,7 +115,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // force loading the appropriate architecture specific
             // DLL before any use of the wrapped interop APIs to
             // allow building this library as ANYCPU
-            string? thisModulePath = Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
+            string? thisModulePath = Path.GetDirectoryName( AppContext.BaseDirectory );
             if(string.IsNullOrWhiteSpace( thisModulePath ))
             {
                 throw new InvalidOperationException( Resources.Cannot_determine_assembly_location );
