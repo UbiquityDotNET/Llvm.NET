@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <IsAotCompatible>True</IsAotCompatible>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +12,7 @@
         <PackageReference Include="Ubiquity.NET.ArgValidators" />
     </ItemGroup>
 
+    <!-- TODO: Move this to directory level props as it is generally re-usable -->
     <!-- inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild -->
     <UsingTask
         TaskName="ReplaceFileText"
