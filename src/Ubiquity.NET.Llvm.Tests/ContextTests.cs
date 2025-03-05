@@ -16,7 +16,7 @@ using Ubiquity.NET.Llvm.Values;
 // warning SA1500: Braces for multi-line statements must not share line
 #pragma warning disable SA1500
 
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]
     public class ContextTests

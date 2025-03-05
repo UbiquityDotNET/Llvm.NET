@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Llvm.Values;
 
 /* ReSharper disable StringLiteralTypo */
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]
     public class AttributeValueTests

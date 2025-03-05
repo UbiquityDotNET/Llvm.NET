@@ -4,23 +4,26 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.LlvmTests;
+using Ubiquity.NET.Llvm.UT;
 
-namespace Ubiquity.NET.Llvm.Tests.DebugInfo
+namespace Ubiquity.NET.Llvm.UT.DebugInfo
 {
     [TestClass]
     public class DILocationTests
     {
         [TestMethod]
-        [ExpectedArgumentException( "scope" )]
         public void DILocation_ctor_with_null_scope_throws( )
         {
             using var context = new Context();
-            var location = new DILocation( context, 0, 0, null!, null );
-            Assert.Fail( "Shouldn't get here" );
+            var ex = Assert.ThrowsExactly<ArgumentNullException>(()=>
+                _ = new DILocation( context, 0, 0, null!, null )
+                );
+            Assert.AreEqual("scope", ex.ParamName);
         }
 
         [TestMethod]

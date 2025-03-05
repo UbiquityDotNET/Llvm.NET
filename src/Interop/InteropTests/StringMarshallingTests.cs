@@ -122,6 +122,5 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 }
             }
         }
-
     }
 }

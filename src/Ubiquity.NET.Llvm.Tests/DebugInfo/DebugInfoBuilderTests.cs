@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -11,9 +12,9 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.LlvmTests;
+using Ubiquity.NET.Llvm.UT;
 
-namespace Ubiquity.NET.Llvm.Tests.DebugInfo
+namespace Ubiquity.NET.Llvm.UT.DebugInfo
 {
     [TestClass]
     [SuppressMessage( "StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "Groups related test methods by category" )]
@@ -113,38 +114,40 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         #region DIBuilder.CreateCompileUnit
         [TestMethod]
         [TestCategory( "DIBuilder.CreateCompileUnit" )]
-        [ExpectedArgumentException( "sourceFilePath" )]
         public void CreateCompileUnit_with_null_sourcefilepath_should_throw( )
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
             var bldr = testModule.DIBuilder;
 
+            var ex = Assert.ThrowsExactly<ArgumentNullException>(()=>
             _ = bldr.CreateCompileUnit( language: default
                                       , sourceFilePath: null! // should trigger exception
                                       , producer: null
                                       , optimized: false
                                       , compilationFlags: null
                                       , runtimeVersion: 0
-                                      );
+                                      ));
+            Assert.AreEqual( "sourceFilePath", ex.ParamName);
         }
 
         [TestMethod]
         [TestCategory( "DIBuilder.CreateCompileUnit" )]
-        [ExpectedArgumentException( "sourceFilePath" )]
         public void CreateCompileUnit_with_empty_sourcefilepath_should_throw( )
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
             var bldr = testModule.DIBuilder;
 
+            var ex = Assert.ThrowsExactly<ArgumentException>(()=>
             _ = bldr.CreateCompileUnit( language: default
                                       , sourceFilePath: string.Empty // should trigger exception
                                       , producer: null
                                       , optimized: false
                                       , compilationFlags: null
                                       , runtimeVersion: 0
-                                      );
+                                      ));
+            Assert.AreEqual("sourceFilePath", ex.ParamName);
         }
 
         [TestMethod]

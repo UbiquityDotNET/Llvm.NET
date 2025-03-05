@@ -66,7 +66,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Runtime", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter7.1", "..\Samples\Kaleidoscope\Chapter7.1\Chapter7.1.csproj", "{0A43B467-DAC7-4831-BB0E-0FE496213E51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.Tests", "Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj", "{50AB0DAA-77B1-4C02-9A1F-2C8E7E7D9A88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.UT", "Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.UT.csproj", "{50AB0DAA-77B1-4C02-9A1F-2C8E7E7D9A88}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaleidoscope.Tests", "..\Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj", "{752FFF38-2B50-4341-ABF5-CCAE013388AE}"
 EndProject

@@ -59,7 +59,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-      <PackageReference Include="Ubiquity.NET.ArgValidators" />
+      <PackageReference Include="Ubiquity.NET.ArgValidators" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GeneratedCode\" />

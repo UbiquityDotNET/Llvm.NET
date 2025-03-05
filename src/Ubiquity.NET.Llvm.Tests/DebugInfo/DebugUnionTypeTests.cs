@@ -12,7 +12,7 @@ using Ubiquity.NET.Llvm.Types;
 // warning SA1500: Braces for multi-line statements must not share line
 #pragma warning disable SA1500
 
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.UT
 {
     // TODO: Standard arg checks and error handling in general
     // for now focusing on verifying it does the right thing

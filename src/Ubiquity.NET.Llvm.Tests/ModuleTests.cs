@@ -14,9 +14,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Values;
-using Ubiquity.NET.LlvmTests;
 
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]
     public class ModuleTests
@@ -140,7 +139,6 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
-        [ExpectedArgumentException( "otherModule", ExpectedExceptionMessage = "Linking modules from different contexts is not allowed" )]
         public void MultiContextLinkTest( )
         {
             using var context = new Context( );
@@ -151,7 +149,13 @@ namespace Ubiquity.NET.Llvm.Tests
             using var m2 = CreateSimpleModule( contextM2, "module2" );
             Assert.AreNotSame( mergedMod.Context, m1.Context );
             Assert.AreNotSame( mergedMod.Context, m2.Context );
-            mergedMod.Link( m1 ); // exception expected here.
+            var ex = Assert.ThrowsExactly<ArgumentException>(()=>
+                        mergedMod.Link( m1 )
+                     );
+            Assert.AreEqual("otherModule", ex.ParamName);
+
+            // full message includes the name of the parameter, but that's .NET functionality not tested
+            Assert.IsTrue(ex.Message.StartsWith("Linking modules from different contexts is not allowed"));
         }
 
         [TestMethod]

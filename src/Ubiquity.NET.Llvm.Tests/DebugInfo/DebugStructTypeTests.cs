@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Types;
 
-namespace Ubiquity.NET.Llvm.Tests.DebugInfo
+namespace Ubiquity.NET.Llvm.UT.DebugInfo
 {
     [TestClass]
     public class DebugStructTypeTests
