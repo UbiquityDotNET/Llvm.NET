@@ -10,8 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Ubiquity.NET.ArgValidators;
-
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
 namespace Kaleidoscope.Runtime
@@ -23,7 +21,8 @@ namespace Kaleidoscope.Runtime
         /// <returns>name with invalid characters replaced with '_'</returns>
         public static string GetSafeFileName( string name )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
             var bldr = new StringBuilder( name.Length );
             char[ ] invalidChars = Path.GetInvalidFileNameChars( );
             foreach( char c in name )

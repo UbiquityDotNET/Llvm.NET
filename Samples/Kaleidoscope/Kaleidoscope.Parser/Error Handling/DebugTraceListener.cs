@@ -4,14 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 using Kaleidoscope.Grammar.ANTLR;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -29,28 +28,28 @@ namespace Kaleidoscope.Grammar
         /// <inheritdoc/>
         public virtual void EnterEveryRule( ParserRuleContext ctx )
         {
-            ctx.ValidateNotNull( nameof( ctx ) );
+            ArgumentNullException.ThrowIfNull( ctx );
             Trace.TraceInformation( $"enter[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
         }
 
         /// <inheritdoc/>
         public virtual void ExitEveryRule( ParserRuleContext ctx )
         {
-            ctx.ValidateNotNull( nameof( ctx ) );
+            ArgumentNullException.ThrowIfNull( ctx );
             Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
         }
 
         /// <inheritdoc/>
         public virtual void VisitErrorNode( IErrorNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             Trace.TraceInformation( "Error: '{0}'", node.ToStringTree( ) );
         }
 
         /// <inheritdoc/>
         public virtual void VisitTerminal( ITerminalNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             var parserRuleContext = ( ParserRuleContext )node.Parent.RuleContext;
             IToken symbol = node.Symbol;
             Trace.TraceInformation( "Terminal: '{0}' rule {1}", symbol, Parser.RuleNames[ parserRuleContext.RuleIndex ] );

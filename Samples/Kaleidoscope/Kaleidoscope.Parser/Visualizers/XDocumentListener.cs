@@ -12,8 +12,6 @@ using Antlr4.Runtime.Tree;
 
 using Kaleidoscope.Grammar.ANTLR;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Parse listener that, when used with <see cref="ParseTreeWalker"/> generates an XML representation of the parse tree</summary>
@@ -29,9 +27,9 @@ namespace Kaleidoscope.Grammar
 
         public XDocument Document { get; }
 
-        public override void EnterUnaryOpExpression( [ValidatedNotNull] KaleidoscopeParser.UnaryOpExpressionContext context )
+        public override void EnterUnaryOpExpression( KaleidoscopeParser.UnaryOpExpressionContext context )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             if( ActiveNode is null )
             {
                 throw new InvalidOperationException( "ActiveNode is null!" );
@@ -40,15 +38,15 @@ namespace Kaleidoscope.Grammar
             ActiveNode.Add( new XAttribute( "Op", context.Op ) );
         }
 
-        public override void EnterExpression( [ValidatedNotNull] KaleidoscopeParser.ExpressionContext context )
+        public override void EnterExpression( KaleidoscopeParser.ExpressionContext context )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             base.EnterExpression( context );
         }
 
-        public override void VisitTerminal( [ValidatedNotNull] ITerminalNode node )
+        public override void VisitTerminal( ITerminalNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             if( ActiveNode is null )
             {
                 throw new InvalidOperationException( "ActiveNode is null!" );
@@ -57,16 +55,16 @@ namespace Kaleidoscope.Grammar
             ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText( ) ) ) );
         }
 
-        public override void EnterEveryRule( [ValidatedNotNull] ParserRuleContext context )
+        public override void EnterEveryRule( ParserRuleContext context )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             string typeName = context.GetType( ).Name;
-            Push( new XElement( typeName.Substring( 0, typeName.Length - ContextTypeNameSuffix.Length ) ) );
+            Push( new XElement( typeName[ ..^ContextTypeNameSuffix.Length ] ) );
         }
 
-        public override void ExitEveryRule( [ValidatedNotNull] ParserRuleContext context )
+        public override void ExitEveryRule( ParserRuleContext context )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             base.ExitEveryRule( context );
             if( ActiveNode is null )
             {

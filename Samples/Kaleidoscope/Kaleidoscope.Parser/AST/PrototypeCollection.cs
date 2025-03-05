@@ -4,11 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.ObjectModel;
 
 using Kaleidoscope.Grammar.AST;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -17,11 +16,11 @@ namespace Kaleidoscope.Grammar
     {
         public void AddOrReplaceItem( Prototype info )
         {
-            info.ValidateNotNull( nameof( info ) );
+            ArgumentNullException.ThrowIfNull( info );
             Remove( info.Name );
             Add( info );
         }
 
-        protected override string GetKeyForItem( Prototype item ) => item.ValidateNotNull( nameof( item ) ).Name;
+        protected override string GetKeyForItem( Prototype item ) => item.ThrowIfNull().Name;
     }
 }

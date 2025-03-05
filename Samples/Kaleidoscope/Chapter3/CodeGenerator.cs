@@ -12,7 +12,6 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Values;
@@ -31,7 +30,7 @@ namespace Kaleidoscope.Chapter3
         public CodeGenerator( DynamicRuntimeState globalState )
             : base( null )
         {
-            globalState.ValidateNotNull( nameof( globalState ) );
+            ArgumentNullException.ThrowIfNull( globalState );
             if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
@@ -75,7 +74,7 @@ namespace Kaleidoscope.Chapter3
         #region ConstantExpression
         public override Value? Visit( ConstantExpression constant )
         {
-            constant.ValidateNotNull( nameof( constant ) );
+            ArgumentNullException.ThrowIfNull( constant );
             return Context.CreateConstant( constant.Value );
         }
         #endregion
@@ -83,7 +82,7 @@ namespace Kaleidoscope.Chapter3
         #region BinaryOperatorExpression
         public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
-            binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
+            ArgumentNullException.ThrowIfNull( binaryOperator );
             switch( binaryOperator.Op )
             {
             case BuiltInOperatorKind.Less:
@@ -134,7 +133,7 @@ namespace Kaleidoscope.Chapter3
         #region FunctionCallExpression
         public override Value? Visit( FunctionCallExpression functionCall )
         {
-            functionCall.ValidateNotNull( nameof( functionCall ) );
+            ArgumentNullException.ThrowIfNull( functionCall );
             string targetName = functionCall.FunctionPrototype.Name;
 
             Function? function;
@@ -158,7 +157,7 @@ namespace Kaleidoscope.Chapter3
         #region FunctionDefinition
         public override Value? Visit( FunctionDefinition definition )
         {
-            definition.ValidateNotNull( nameof( definition ) );
+            ArgumentNullException.ThrowIfNull( definition );
             var function = GetOrDeclareFunction( definition.Signature );
             if( !function.IsDeclaration )
             {
@@ -191,7 +190,8 @@ namespace Kaleidoscope.Chapter3
         #region VariableReferenceExpression
         public override Value? Visit( VariableReferenceExpression reference )
         {
-            reference.ValidateNotNull( nameof( reference ) );
+            ArgumentNullException.ThrowIfNull( reference );
+
             if( !NamedValues.TryGetValue( reference.Name, out Value? value ) )
             {
                 // Source input is validated by the parser and AstBuilder, therefore

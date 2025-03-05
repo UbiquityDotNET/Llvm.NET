@@ -8,8 +8,6 @@ using System;
 
 using Antlr4.Runtime;
 
-using Ubiquity.NET.ArgValidators;
-
 using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeLexer;
 
 namespace Kaleidoscope.Grammar
@@ -77,7 +75,7 @@ namespace Kaleidoscope.Grammar
         /// </remarks>
         internal bool TryAddOperator( IToken token, OperatorKind kind, int precedence )
         {
-            token.ValidateNotNull( nameof( token ) );
+            ArgumentNullException.ThrowIfNull( token );
             return TryAddOperator( token.Type, kind, precedence );
         }
 

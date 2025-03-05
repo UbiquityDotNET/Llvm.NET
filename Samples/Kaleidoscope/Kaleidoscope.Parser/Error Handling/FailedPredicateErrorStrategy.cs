@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Antlr4.Runtime;
+using System;
 
-using Ubiquity.NET.ArgValidators;
+using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar
 {
@@ -19,7 +19,7 @@ namespace Kaleidoscope.Grammar
     {
         protected override void ReportFailedPredicate( Antlr4.Runtime.Parser recognizer, FailedPredicateException e )
         {
-            e.ValidateNotNull( nameof( e ) );
+            ArgumentNullException.ThrowIfNull( e );
             switch( e.Predicate )
             {
             case "FeatureControlFlow":

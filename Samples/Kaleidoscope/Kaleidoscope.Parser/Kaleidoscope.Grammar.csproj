@@ -9,7 +9,6 @@
     <ItemGroup>
         <PackageReference Include="Antlr4" />
         <PackageReference Include="OpenSoftware.DgmlBuilder" />
-        <PackageReference Include="Ubiquity.NET.ArgValidators" />
     </ItemGroup>
 
     <!-- TODO: Move this to directory level props as it is generally re-usable -->

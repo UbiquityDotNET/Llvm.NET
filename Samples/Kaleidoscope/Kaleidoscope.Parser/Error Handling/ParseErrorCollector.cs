@@ -4,11 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 using Kaleidoscope.Grammar.AST;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -17,7 +16,7 @@ namespace Kaleidoscope.Grammar
     {
         public void SyntaxError( SyntaxError syntaxError )
         {
-            syntaxError.ValidateNotNull( nameof( syntaxError ) );
+            ArgumentNullException.ThrowIfNull( syntaxError );
             Errors.Add( new ErrorNode( syntaxError.Location, syntaxError.ToString( ) ) );
         }
 

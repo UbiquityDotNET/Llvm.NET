@@ -4,11 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 using OpenSoftware.DgmlTools.Model;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -42,17 +41,18 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="node">Node to traverse for errors</param>
         /// <remarks>Traverses the node hierarchy to find all error node at any depth</remarks>
         /// <returns>Collection of errors found</returns>
-        public static IReadOnlyCollection<ErrorNode> CollectErrors( [ValidatedNotNull] this IAstNode node )
+        public static IReadOnlyCollection<ErrorNode> CollectErrors( this IAstNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull(node);
+
             var collector = new ErrorNodeCollector();
             node.Accept<string>( collector );
             return collector.Errors;
         }
 
-        public static DirectedGraph CreateGraph( [ValidatedNotNull] this IAstNode node )
+        public static DirectedGraph CreateGraph( this IAstNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull(node);
 
             var generator = new AstGraphGenerator();
             node.Accept( generator );

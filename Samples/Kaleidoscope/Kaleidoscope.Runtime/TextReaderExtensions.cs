@@ -9,17 +9,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Kaleidoscope.Runtime
 {
     /// <summary>Utility class to provide extensions for REPL Loop</summary>
     public static class TextReaderExtensions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "StyleCop.CSharp.LayoutRules", "SA1500:Braces for multi-line statements should not share line", Justification = "Do/While Loop" )]
-        public static IEnumerable<string> ToLines( [ValidatedNotNull] this TextReader input )
+        public static IEnumerable<string> ToLines( this TextReader input )
         {
-            input.ValidateNotNull( nameof( input ) );
+            ArgumentNullException.ThrowIfNull( input );
+
             string? line;
             do
             {

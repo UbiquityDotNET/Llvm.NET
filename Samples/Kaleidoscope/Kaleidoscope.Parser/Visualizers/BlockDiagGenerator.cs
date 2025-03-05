@@ -4,12 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.CodeDom.Compiler;
 using System.IO;
 
 using OpenSoftware.DgmlTools.Model;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
@@ -30,8 +29,8 @@ namespace Kaleidoscope.Grammar
     {
         public static void WriteAsBlockDiag( this DirectedGraph graph, string file )
         {
-            graph.ValidateNotNull( nameof( graph ) );
-            file.ValidateNotNullOrWhiteSpace( nameof( file ) );
+            ArgumentNullException.ThrowIfNull( graph );
+            ArgumentException.ThrowIfNullOrWhiteSpace(file);
 
             using var strmWriter = new StreamWriter( File.Open( file, FileMode.Create, FileAccess.ReadWrite, FileShare.None ) );
             using var writer = new IndentedTextWriter( strmWriter, "    " );

@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Antlr4.Runtime;
+using System;
 
-using Ubiquity.NET.ArgValidators;
+using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
@@ -18,7 +18,7 @@ namespace Kaleidoscope.Grammar.ANTLR
         public KaleidoscopeParser( ITokenStream tokenStream, DynamicRuntimeState globalState, IParseErrorListener? errorListener, bool useDiagnosticListener = false )
             : this( tokenStream )
         {
-            globalState.ValidateNotNull( nameof( globalState ) );
+            ArgumentNullException.ThrowIfNull( globalState );
 
             GlobalState = globalState;
             if( errorListener != null )

@@ -4,9 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -68,7 +67,8 @@ namespace Kaleidoscope.Grammar.AST
         public virtual TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : class
         {
-            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+            ArgumentNullException.ThrowIfNull(visitor);
+            return visitor.Visit( this );
         }
 
         public override string ToString( )

@@ -4,10 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Text;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -33,7 +32,9 @@ namespace Kaleidoscope.Grammar.AST
         public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : class
         {
-            return visitor.ValidateNotNull( nameof( visitor ) ).Visit( this );
+            ArgumentNullException.ThrowIfNull(visitor);
+
+            return visitor.Visit( this );
         }
 
         public IEnumerable<IAstNode> Children

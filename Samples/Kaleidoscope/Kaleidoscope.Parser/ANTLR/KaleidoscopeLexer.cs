@@ -6,8 +6,6 @@
 
 using Antlr4.Runtime;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Kaleidoscope.Grammar.ANTLR
 {
     // partial extension to handle creating virtual tokens/Identifiers depending
@@ -15,7 +13,7 @@ namespace Kaleidoscope.Grammar.ANTLR
     internal partial class KaleidoscopeLexer
     {
         public KaleidoscopeLexer( char[ ] input, LanguageLevel languageLevel, IParseErrorListener errorListener )
-            : this( new AntlrInputStream( input.ValidateNotNull( nameof( input ) ), input.Length ) )
+            : this( new AntlrInputStream( input.ThrowIfNull(), input.Length ) )
         {
             LanguageLevel = languageLevel;
             AddErrorListener( new ParseErrorListenerAdapter( errorListener ) );

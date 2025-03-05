@@ -4,9 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -42,7 +41,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public virtual TResult? VisitChildren( IAstNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             TResult? aggregate = DefaultResult;
             foreach( var child in node.Children )
             {

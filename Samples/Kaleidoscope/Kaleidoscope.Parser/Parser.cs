@@ -14,8 +14,6 @@ using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar.ANTLR;
 using Kaleidoscope.Grammar.AST;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Kaleidoscope.Grammar
 {
     /// <summary>Enumeration to define the kinds of diagnostic intermediate data to generate for each function definition</summary>
@@ -62,7 +60,9 @@ namespace Kaleidoscope.Grammar
                      , DiagnosticRepresentations diagnostics
                      )
         {
-            GlobalState = globalState.ValidateNotNull( nameof( globalState ) );
+            ArgumentNullException.ThrowIfNull( globalState );
+
+            GlobalState = globalState;
             Diagnostics = diagnostics;
         }
 
@@ -87,7 +87,7 @@ namespace Kaleidoscope.Grammar
         /// <inheritdoc/>
         public IAstNode Parse( TextReader reader )
         {
-            reader.ValidateNotNull( nameof( reader ) );
+            ArgumentNullException.ThrowIfNull( reader );
             return Parse( reader.ReadToEnd( ).ToCharArray( ), ParseMode.FullSource );
         }
 

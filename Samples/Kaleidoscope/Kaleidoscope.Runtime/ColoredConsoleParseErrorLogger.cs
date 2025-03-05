@@ -8,8 +8,6 @@ using System;
 
 using Kaleidoscope.Grammar.AST;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Kaleidoscope.Runtime
 {
     public class ColoredConsoleParseErrorLogger
@@ -17,7 +15,7 @@ namespace Kaleidoscope.Runtime
     {
         public void ShowError( ErrorNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             ShowError( node.ToString( ) );
         }
 

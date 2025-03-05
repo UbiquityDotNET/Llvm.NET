@@ -6,8 +6,6 @@
 
 using System;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Kaleidoscope.Grammar
 {
     public enum ParseErrorSource
@@ -20,12 +18,16 @@ namespace Kaleidoscope.Grammar
     {
         public SyntaxError( ParseErrorSource source, string sourceFile, int id, string symbol, SourceSpan location, string message, Exception? exception )
         {
+            ArgumentNullException.ThrowIfNull( sourceFile );
+            ArgumentNullException.ThrowIfNull( symbol );
+            ArgumentNullException.ThrowIfNull( message );
+
             Source = source;
-            SourceFile = sourceFile.ValidateNotNull( nameof( sourceFile ) );
+            SourceFile = sourceFile;
             Id = id;
-            Symbol = symbol.ValidateNotNull( nameof( symbol ) );
+            Symbol = symbol;
             Location = location;
-            Message = message.ValidateNotNull( nameof( message ) );
+            Message = message;
             Exception = exception;
         }
 

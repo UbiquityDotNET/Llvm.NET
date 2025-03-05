@@ -4,18 +4,18 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Kaleidoscope.Grammar
 {
     internal static class LocationExtensions
     {
-        public static SourceSpan GetSourceSpan( [ValidatedNotNull] this ParserRuleContext ctx )
+        public static SourceSpan GetSourceSpan( this ParserRuleContext ctx )
         {
-            ctx.ValidateNotNull( nameof( ctx ) );
+            ArgumentNullException.ThrowIfNull( ctx );
             return new SourceSpan( ctx.Start.Line
                                  , ctx.Start.Column
                                  , ctx.Stop.Line
@@ -23,9 +23,9 @@ namespace Kaleidoscope.Grammar
                                  );
         }
 
-        public static SourceSpan GetSourceSpan( [ValidatedNotNull]this RuleContext ctx )
+        public static SourceSpan GetSourceSpan( this RuleContext ctx )
         {
-            ctx.ValidateNotNull( nameof( ctx ) );
+            ArgumentNullException.ThrowIfNull( ctx );
             if( ctx is ParserRuleContext ruleCtx )
             {
                 GetSourceSpan( ruleCtx );
@@ -34,15 +34,15 @@ namespace Kaleidoscope.Grammar
             return default;
         }
 
-        public static SourceSpan GetSourceSpan( [ValidatedNotNull] this ITerminalNode node )
+        public static SourceSpan GetSourceSpan( this ITerminalNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             return GetSourceSpan( node.Symbol );
         }
 
-        public static SourceSpan GetSourceSpan( [ValidatedNotNull] this IToken token )
+        public static SourceSpan GetSourceSpan( this IToken token )
         {
-            token.ValidateNotNull( nameof( token ) );
+            ArgumentNullException.ThrowIfNull( token );
             return new SourceSpan( token.Line, token.Column, token.Line, token.Column + token.Text.Length );
         }
     }
