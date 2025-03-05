@@ -6,7 +6,6 @@
 
 using System;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 
@@ -119,7 +118,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         private AttributeValue( Context context, LLVMAttributeRef nativeValue )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             Context = context;
             NativeAttribute = nativeValue;
         }

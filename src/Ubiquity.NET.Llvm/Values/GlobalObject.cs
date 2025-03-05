@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -63,7 +62,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="node">LlvmMetadata wrapped as a value</param>
         public void SetMetadata( uint kindID, LlvmMetadata node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             LLVMGlobalSetMetadata( ValueHandle, kindID, node.MetadataHandle );
         }
 

@@ -7,7 +7,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Types;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
@@ -53,10 +52,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                 , IDebugType<ITypeRef, DIType> retType
                                 , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                 )
-            : base( llvmType.ValidateNotNull( nameof( llvmType ) )
-                  , module.ValidateNotNull( nameof( module ) )
+            : base( llvmType.ThrowIfNull()
+                  , module.ThrowIfNull()
                           .DIBuilder.CreateSubroutineType( debugFlags
-                                                         , retType.ValidateNotNull( nameof( retType ) ).DebugInfoType
+                                                         , retType.ThrowIfNull().DebugInfoType
                                                          , argTypes.Select( t => t.DebugInfoType )
                                                          )
                   )

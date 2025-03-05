@@ -4,7 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
+using System;
+
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -66,8 +67,8 @@ namespace Ubiquity.NET.Llvm
         /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
         internal Comdat( BitcodeModule module, LLVMComdatRef comdatRef )
         {
-            module.ValidateNotNull( nameof( module ) );
-            comdatRef.ValidateNotDefault( nameof( comdatRef ) );
+            ArgumentNullException.ThrowIfNull( module );
+            comdatRef.ThrowIfInvalid();
 
             Module = module;
             ComdatHandle = comdatRef;

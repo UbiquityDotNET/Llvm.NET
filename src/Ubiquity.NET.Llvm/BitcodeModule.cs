@@ -12,7 +12,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
@@ -387,7 +386,7 @@ namespace Ubiquity.NET.Llvm
         public bool TryGetFunction( string name, [MaybeNullWhen( false )] out Function function )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var funcRef = LLVMGetNamedFunction( ModuleHandle!, name );
             if( funcRef == default )
@@ -409,9 +408,9 @@ namespace Ubiquity.NET.Llvm
         public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, Function resolver )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
-            type.ValidateNotNull( nameof( name ) );
-            resolver.ValidateNotNull( nameof( resolver ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
+            ArgumentNullException.ThrowIfNull( type );
+            ArgumentNullException.ThrowIfNull( resolver );
 
             var handle = LLVMAddGlobalIFunc( ModuleHandle!, name, name.Length, type.GetTypeRef( ), addressSpace, resolver.ValueHandle );
             return Value.FromHandle<GlobalIFunc>( handle.ThrowIfInvalid( ) )!;
@@ -424,7 +423,7 @@ namespace Ubiquity.NET.Llvm
         public bool TryGetNamedGlobalIFunc( string name, [MaybeNullWhen( false )] out GlobalIFunc function )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var funcRef = LLVMGetNamedGlobalIFunc( ModuleHandle!, name, name.Length );
             if( funcRef == default )
@@ -450,8 +449,8 @@ namespace Ubiquity.NET.Llvm
         public Function CreateFunction( string name, IFunctionType signature )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
-            signature.ValidateNotNull( nameof( signature ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
+            ArgumentNullException.ThrowIfNull( signature );
 
             LLVMValueRef function = LLVMGetNamedFunctionWithLength(ModuleHandle!, name, name.Length);
             if(function.IsNull)
@@ -472,7 +471,7 @@ namespace Ubiquity.NET.Llvm
         public void WriteToFile( string path )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
             LLVMStatus status = LLVMWriteBitcodeToFile( ModuleHandle!, path );
             if( status.Failed )
@@ -488,7 +487,7 @@ namespace Ubiquity.NET.Llvm
         public bool WriteToTextFile( string path, out string errMsg )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
             errMsg = string.Empty;
             DisposeMessageString? llvmMsg = null;
@@ -539,8 +538,8 @@ namespace Ubiquity.NET.Llvm
         public GlobalAlias AddAlias( Value aliasee, string aliasName, uint addressSpace = 0)
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            aliasee.ValidateNotNull( nameof( aliasee ) );
-            aliasName.ValidateNotNullOrWhiteSpace( nameof( aliasName ) );
+            ArgumentNullException.ThrowIfNull( aliasee );
+            ArgumentException.ThrowIfNullOrWhiteSpace( aliasName );
 
             var handle = LLVMAddAlias2( ModuleHandle!, aliasee.NativeType.GetTypeRef( ), addressSpace, aliasee.ValueHandle, aliasName );
             return Value.FromHandle<GlobalAlias>( handle.ThrowIfInvalid( ) )!;
@@ -552,7 +551,7 @@ namespace Ubiquity.NET.Llvm
         public GlobalAlias? GetAlias( string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LibLLVMGetGlobalAlias( ModuleHandle!, name );
             return Value.FromHandle<GlobalAlias>( handle );
@@ -569,8 +568,8 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LLVMAddGlobalInAddressSpace( ModuleHandle!, typeRef.GetTypeRef( ), name, addressSpace );
             return Value.FromHandle<GlobalVariable>( handle.ThrowIfInvalid( ) )!;
@@ -586,9 +585,9 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-            linkage.ValidateDefined( nameof( linkage ) );
-            constVal.ValidateNotNull( nameof( constVal ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
+            linkage.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( constVal );
 
             return AddGlobalInAddressSpace( addressSpace, typeRef, isConst, linkage, constVal, string.Empty );
         }
@@ -604,10 +603,10 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-            linkage.ValidateDefined( nameof( linkage ) );
-            constVal.ValidateNotNull( nameof( constVal ) );
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
+            linkage.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( constVal );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var retVal = AddGlobalInAddressSpace( addressSpace, typeRef, name );
             retVal.IsConstant = isConst;
@@ -626,8 +625,8 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable AddGlobal( ITypeRef typeRef, string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-            name.ValidateNotNull( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
+            ArgumentNullException.ThrowIfNull( name );
 
             var handle = LLVMAddGlobal( ModuleHandle!, typeRef.GetTypeRef( ), name );
             return Value.FromHandle<GlobalVariable>( handle.ThrowIfInvalid( ) )!;
@@ -642,9 +641,9 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-            linkage.ValidateDefined( nameof( linkage ) );
-            constVal.ValidateNotNull( nameof( constVal ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
+            linkage.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( constVal );
 
             return AddGlobal( typeRef, isConst, linkage, constVal, string.Empty );
         }
@@ -659,10 +658,10 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            typeRef.ValidateNotNull( nameof( typeRef ) );
-            linkage.ValidateDefined( nameof( linkage ) );
-            constVal.ValidateNotNull( nameof( constVal ) );
-            name.ValidateNotNull( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
+            linkage.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( constVal );
+            ArgumentNullException.ThrowIfNull( name );
 
             var retVal = AddGlobal( typeRef, name );
             retVal.IsConstant = isConst;
@@ -677,7 +676,7 @@ namespace Ubiquity.NET.Llvm
         public ITypeRef? GetTypeByName( string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var hType = LLVMGetTypeByName( ModuleHandle!, name );
             return hType == default ? null : TypeRef.FromHandle( hType );
@@ -689,7 +688,7 @@ namespace Ubiquity.NET.Llvm
         public GlobalVariable? GetNamedGlobal( string name )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var hGlobal = LLVMGetNamedGlobal( ModuleHandle!, name );
             return hGlobal == default ? null : Value.FromHandle<GlobalVariable>( hGlobal );
@@ -702,8 +701,8 @@ namespace Ubiquity.NET.Llvm
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, UInt32 value )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            behavior.ValidateDefined( nameof( behavior ) );
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            behavior.ThrowIfNotDefined();
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
             var metadata = Context.CreateConstant( value ).ToMetadata();
 
             LLVMAddModuleFlag( ModuleHandle!, ( LLVMModuleFlagBehavior )behavior, name, name.Length, metadata.MetadataHandle );
@@ -716,9 +715,9 @@ namespace Ubiquity.NET.Llvm
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            behavior.ValidateDefined( nameof( behavior ) );
-            value.ValidateNotNull( nameof( value ) );
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            behavior.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( value );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             LLVMAddModuleFlag( ModuleHandle!, ( LLVMModuleFlagBehavior )behavior, name, name.Length, value.MetadataHandle );
         }
@@ -729,8 +728,8 @@ namespace Ubiquity.NET.Llvm
         public void AddNamedMetadataOperand( string name, LlvmMetadata value )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            value.ValidateNotNull( nameof( value ) );
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( value );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             LibLLVMAddNamedMetadataOperand2( ModuleHandle!, name, value?.MetadataHandle ?? default );
         }
@@ -773,8 +772,8 @@ namespace Ubiquity.NET.Llvm
                                         )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
-            signature.ValidateNotNull( nameof( signature ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
+            ArgumentNullException.ThrowIfNull( signature );
             if(string.IsNullOrWhiteSpace(linkageName))
             {
                 linkageName = name;
@@ -917,8 +916,8 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Loaded <see cref="BitcodeModule"/></returns>
         public static BitcodeModule LoadFrom( string path, Context context )
         {
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
+            ArgumentNullException.ThrowIfNull( context );
 
             if( !File.Exists( path ) )
             {
@@ -968,7 +967,7 @@ namespace Ubiquity.NET.Llvm
 
         internal static BitcodeModule? FromHandle( LLVMModuleRef nativeHandle )
         {
-            nativeHandle.ValidateNotDefault( nameof( nativeHandle ) );
+            nativeHandle.ThrowIfInvalid();
             var contextRef = LLVMGetModuleContext( nativeHandle );
             Context context = ContextCache.GetContextFor( contextRef );
             return context.GetModuleFor( nativeHandle );
@@ -983,7 +982,7 @@ namespace Ubiquity.NET.Llvm
             public BitcodeModule CreateBitcodeModule( string moduleId )
             {
                 // empty string is OK.
-                moduleId.ValidateNotNull( nameof( moduleId ) );
+                ArgumentNullException.ThrowIfNull( moduleId );
 
                 var hContext = LLVMModuleCreateWithNameInContext( moduleId, Context.ContextHandle );
                 return GetOrCreateItem( hContext );
@@ -1030,7 +1029,7 @@ namespace Ubiquity.NET.Llvm
 
         private BitcodeModule( LLVMModuleRef handle )
         {
-            handle.ValidateNotDefault( nameof( handle ) );
+            handle.ThrowIfInvalid();
 
             ModuleHandle = handle;
             Context = ContextCache.GetContextFor( LLVMGetModuleContext( handle ) );

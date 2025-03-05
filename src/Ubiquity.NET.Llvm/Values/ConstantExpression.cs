@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -32,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Values
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public static Constant IntToPtrExpression( Constant value, ITypeRef type )
         {
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentNullException.ThrowIfNull( value );
 
             if( value.NativeType.Kind != TypeKind.Integer )
             {
@@ -55,7 +54,7 @@ namespace Ubiquity.NET.Llvm.Values
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public static Constant BitCast( Constant value, ITypeRef toType )
         {
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentNullException.ThrowIfNull( value );
 
             var handle = LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;

@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Values;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -29,13 +28,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 return BasicBlock.FromHandle(LLVMGetSuccessor( Container.ValueHandle, (uint)index ))!;
             }
 
             set
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 LLVMSetSuccessor( Container.ValueHandle, ( uint )index, value?.BlockHandle ?? default );
             }
         }

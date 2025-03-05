@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
@@ -77,7 +76,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Integer type matching the bit width of a native pointer in the target's default address space</returns>
         public ITypeRef IntPtrType( Context context )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             LLVMTypeRef typeRef = LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle );
             return TypeRef.FromHandle( typeRef.ThrowIfInvalid( ) )!;
         }
@@ -107,7 +106,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Integer type matching the bit width of a native pointer in the target's address space</returns>
         public ITypeRef IntPtrType( Context context, uint addressSpace )
         {
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( context );
             var typeHandle = LLVMIntPtrTypeForASInContext( context.ContextHandle, DataLayoutHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle.ThrowIfInvalid( ) )!;
         }
@@ -264,7 +263,7 @@ namespace Ubiquity.NET.Llvm
 
         internal LLVMTargetDataRef DataLayoutHandle { get; }
 
-        private static void VerifySized( [ValidatedNotNull] ITypeRef type, string name )
+        private static void VerifySized( ITypeRef type, string name )
         {
             if( type == null )
             {

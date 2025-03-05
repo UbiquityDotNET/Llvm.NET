@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -113,8 +112,8 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <param name="context">Context for the object file</param>
         internal TargetBinary( MemoryBuffer buffer, Context context )
         {
-            buffer.ValidateNotNull( nameof( buffer ) );
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( buffer );
+            ArgumentNullException.ThrowIfNull( context );
 
             DisposeMessageString? errMsg = null;
             try

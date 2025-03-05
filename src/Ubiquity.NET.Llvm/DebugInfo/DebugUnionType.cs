@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 
@@ -40,8 +39,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                              , DebugInfoFlags debugFlags
                              , IEnumerable<DebugMemberInfo> elements
                              )
-            : base( llvmType.ValidateNotNull( nameof( llvmType ) ),
-                    module.ValidateNotNull( nameof( module ) )
+            : base( llvmType.ThrowIfNull(),
+                    module.ThrowIfNull()
                           .DIBuilder
                           .CreateReplaceableCompositeType( Tag.UnionType
                                                          , name
@@ -73,7 +72,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                              , DIFile? file
                              , uint line = 0
                              )
-            : base( module.ValidateNotNull( nameof( module ) ).Context.CreateStructType( nativeName ),
+            : base( module.ThrowIfNull().Context.CreateStructType( nativeName ),
                     module.DIBuilder
                           .CreateReplaceableCompositeType( Tag.UnionType
                                                          , name
@@ -112,8 +111,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                            , IEnumerable<DebugMemberInfo> debugElements
                            )
         {
-            module.ValidateNotNull( nameof( module ) );
-            debugElements.ValidateNotNull( nameof( debugElements ) );
+            ArgumentNullException.ThrowIfNull( module );
+            ArgumentNullException.ThrowIfNull( debugElements );
 
             if( module.Layout == null )
             {

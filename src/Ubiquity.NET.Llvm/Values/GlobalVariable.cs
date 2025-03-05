@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 
@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Llvm.Values
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop" )]
         public void AddDebugInfo( DIGlobalVariableExpression expression )
         {
-            expression.ValidateNotNull( nameof( expression ) );
+            ArgumentNullException.ThrowIfNull( expression );
 
             LibLLVMGlobalVariableAddDebugExpression( ValueHandle, expression.MetadataHandle );
         }

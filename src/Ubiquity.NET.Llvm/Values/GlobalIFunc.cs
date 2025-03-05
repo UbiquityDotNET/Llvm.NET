@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -24,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Values
         public Constant Resolver
         {
             get => FromHandle<Function>( LLVMGetGlobalIFuncResolver( ValueHandle ).ThrowIfInvalid( ) )!;
-            set => LLVMSetGlobalIFuncResolver( ValueHandle, value.ValidateNotNull( nameof( value ) ).ValueHandle );
+            set => LLVMSetGlobalIFuncResolver( ValueHandle, value.ThrowIfNull().ValueHandle );
         }
 
         /// <summary>Removes this instance from the parent module without destroying it</summary>

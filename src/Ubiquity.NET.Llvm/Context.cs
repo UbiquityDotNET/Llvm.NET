@@ -14,7 +14,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.ObjectFile;
@@ -217,8 +216,8 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Function signature</returns>
         public DebugFunctionType CreateFunctionType(DebugInfoBuilder diBuilder
                                                    , bool isVarArg
-                                                   , [ValidatedNotNull] IDebugType<ITypeRef, DIType> retType
-                                                   , [ValidatedNotNull] IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
+                                                   , IDebugType<ITypeRef, DIType> retType
+                                                   , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
         {
             ArgumentNullException.ThrowIfNull( diBuilder );
@@ -306,7 +305,7 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public Constant CreateConstantStruct(bool packed, IEnumerable<Constant> values)
         {
-            values.ValidateNotNull( nameof( values ) );
+            ArgumentNullException.ThrowIfNull( values );
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
             var handle = LLVMConstStructInContext( ContextHandle, valueHandles, ( uint )valueHandles.Length, packed );
@@ -352,8 +351,8 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public Constant CreateNamedConstantStruct(IStructType type, IEnumerable<Constant> values)
         {
-            type.ValidateNotNull( nameof( type ) );
-            values.ValidateNotNull( nameof( values ) );
+            ArgumentNullException.ThrowIfNull( type );
+            ArgumentNullException.ThrowIfNull( values );
 
             if(type.Context != this)
             {
@@ -403,7 +402,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>New type</returns>
         public IStructType CreateStructType(string name)
         {
-            name.ValidateNotNull( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( name );
             var handle = LLVMStructCreateNamed( ContextHandle, name );
             return TypeRef.FromHandle<IStructType>( handle.ThrowIfInvalid() )!;
         }
@@ -416,7 +415,7 @@ namespace Ubiquity.NET.Llvm
         /// </returns>
         public IStructType CreateStructType(bool packed, params ITypeRef[] elements)
         {
-            elements.ValidateNotNull( nameof( elements ) );
+            ArgumentNullException.ThrowIfNull( elements );
 
             LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
             var handle = LLVMStructTypeInContext( ContextHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
@@ -448,8 +447,8 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public IStructType CreateStructType(string name, bool packed, IEnumerable<ITypeRef> elements)
         {
-            name.ValidateNotNull( nameof( name ) );
-            elements.ValidateNotNull( nameof( elements ) );
+            ArgumentNullException.ThrowIfNull( name );
+            ArgumentNullException.ThrowIfNull( elements );
 
             var retVal = TypeRef.FromHandle<IStructType>( LLVMStructCreateNamed( ContextHandle, name ).ThrowIfInvalid( ) )!;
             retVal.SetBody( packed, elements );
@@ -476,7 +475,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
         public MDNode CreateMDNode(string value)
         {
-            value.ValidateNotNullOrWhiteSpace( nameof( value ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( value );
             var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
             var hNode = LLVMMDNodeInContext2( ContextHandle, elements, ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode.ThrowIfInvalid() )!;
@@ -503,7 +502,7 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public ConstantDataArray CreateConstantString(string value, bool nullTerminate)
         {
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentNullException.ThrowIfNull( value );
             var handle = LLVMConstStringInContext( ContextHandle, value, ( uint )value.Length, !nullTerminate );
             return Value.FromHandle<ConstantDataArray>( handle.ThrowIfInvalid() )!;
         }
@@ -610,7 +609,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Constant for the specified value</returns>
         public ConstantInt CreateConstant(ITypeRef intType, UInt64 constValue, bool signExtend)
         {
-            intType.ValidateNotNull( nameof( intType ) );
+            ArgumentNullException.ThrowIfNull( intType );
 
             if(intType.Context != this)
             {
@@ -643,7 +642,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see cref="AttributeValue"/> with the specified Id set</returns>
         public AttributeValue CreateAttribute(AttributeKind kind)
         {
-            kind.ValidateDefined( nameof( kind ) );
+            kind.ThrowIfNotDefined();
             if(kind.IsIntKind())
             {
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_requires_a_value, kind ), nameof( kind ) );
@@ -674,7 +673,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see cref="AttributeValue"/> with the specified kind and value</returns>
         public AttributeValue CreateAttribute(AttributeKind kind, UInt64 value)
         {
-            kind.ValidateDefined( nameof( kind ) );
+            kind.ThrowIfNotDefined();
             if(!kind.IsIntKind())
             {
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_does_not_support_a_value, kind ), nameof( kind ) );
@@ -698,8 +697,8 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see cref="AttributeValue"/> with the specified name and value</returns>
         public AttributeValue CreateAttribute(string name, string value)
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
+            ArgumentNullException.ThrowIfNull( value );
 
             var handle = LLVMCreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
             return AttributeValue.FromHandle( this, handle );
@@ -788,13 +787,13 @@ namespace Ubiquity.NET.Llvm
         // maintained. (LLVM has no method of retrieving the context that owns an attribute)
         internal AttributeValue GetAttributeFor(LLVMAttributeRef handle)
         {
-            handle.ValidateNotDefault( nameof( handle ) );
+            handle.ThrowIfInvalid();
             return AttributeValueCache.GetOrCreateItem( handle );
         }
 
         internal void RemoveModule(BitcodeModule module)
         {
-            module.ValidateNotNull( nameof( module ) );
+            ArgumentNullException.ThrowIfNull( module );
             if(module.ModuleHandle is not null)
             {
                 ModuleCache.Remove( module.ModuleHandle );
@@ -803,7 +802,7 @@ namespace Ubiquity.NET.Llvm
 
         internal BitcodeModule GetModuleFor(LLVMModuleRef moduleRef)
         {
-            moduleRef.ValidateNotDefault( nameof( moduleRef ) );
+            moduleRef.ThrowIfInvalid();
 
             var hModuleContext = LLVMGetModuleContext( moduleRef );
             if(!hModuleContext.Equals( ContextHandle ))
@@ -822,20 +821,22 @@ namespace Ubiquity.NET.Llvm
 
         internal Value GetValueFor(LLVMValueRef valueRef)
         {
-            valueRef.ValidateNotDefault( nameof( valueRef ) );
+            valueRef.ThrowIfInvalid();
 
             return ValueCache.GetOrCreateItem( valueRef );
         }
 
         internal LlvmMetadata GetNodeFor(LLVMMetadataRef handle)
         {
-            handle.ValidateNotDefault( nameof( handle ) );
+            handle.ThrowIfInvalid();
+
             return MetadataCache.GetOrCreateItem( handle );
         }
 
         internal ITypeRef GetTypeFor(LLVMTypeRef typeRef)
         {
-            typeRef.ValidateNotDefault( nameof( typeRef ) );
+            typeRef.ThrowIfInvalid();
+
             return TypeCache.GetOrCreateItem( typeRef );
         }
 

@@ -7,7 +7,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -732,7 +731,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Normalized string</returns>
         public static string Normalize( string unNormalizedTriple )
         {
-            unNormalizedTriple.ValidateNotNullOrWhiteSpace( nameof( unNormalizedTriple ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( unNormalizedTriple );
 
             return LLVMNormalizeTargetTriple( unNormalizedTriple ).ToString();
         }

@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -32,10 +31,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="scope">Containing scope for the location</param>
         /// <param name="inlinedAt">Scope where this scope is inlined at/into</param>
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation? inlinedAt )
-            : base( LLVMDIBuilderCreateDebugLocation( context.ValidateNotNull( nameof( context ) ).ContextHandle
+            : base( LLVMDIBuilderCreateDebugLocation( context.ThrowIfNull().ContextHandle
                                                     , line
                                                     , column
-                                                    , scope.ValidateNotNull( nameof( scope ) ).MetadataHandle
+                                                    , scope.ThrowIfNull().MetadataHandle
                                                     , inlinedAt?.MetadataHandle ?? default
                                                     )
                   )

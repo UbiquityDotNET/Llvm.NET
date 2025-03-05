@@ -6,7 +6,6 @@
 
 using System;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
 
@@ -37,7 +36,7 @@ namespace Ubiquity.NET.Llvm
 
         internal ModuleFlag( MDNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
             if( node.Operands.Count != 3 )
             {
                 throw new ArgumentException( Resources.Expected_node_with_3_operands, nameof( node ) );

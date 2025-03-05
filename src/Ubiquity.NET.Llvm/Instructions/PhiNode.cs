@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="additionalIncoming">additional values and blocks</param>
         public void AddIncoming( (Value Value, BasicBlock Block) firstIncoming, params (Value Value, BasicBlock Block)[ ] additionalIncoming )
         {
-            additionalIncoming.ValidateNotNull( nameof( additionalIncoming ) );
+            ArgumentNullException.ThrowIfNull( additionalIncoming );
 
             var allIncoming = additionalIncoming.Prepend( firstIncoming );
 

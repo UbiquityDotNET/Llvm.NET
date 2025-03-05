@@ -10,7 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -35,7 +34,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a <see cref="BasicBlock"/></summary>
         /// <param name="block">Block this builder is initially attached to</param>
         public InstructionBuilder( BasicBlock block )
-            : this( block.ValidateNotNull( nameof( block ) )
+            : this( block.ThrowIfNull()
                          .Context
                   )
         {
@@ -50,7 +49,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get => MDNode.FromHandle<DILocation>( LLVMGetCurrentDebugLocation2( BuilderHandle ) );
 
-            set => LLVMSetCurrentDebugLocation2( BuilderHandle, value.ValidateNotNull( nameof( value ) )!.MetadataHandle );
+            set => LLVMSetCurrentDebugLocation2( BuilderHandle, value.ThrowIfNull()!.MetadataHandle );
         }
 
         /// <summary>Set the current debug location for this <see cref="InstructionBuilder"/></summary>
@@ -70,7 +69,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>This builder for fluent API usage</returns>
         public InstructionBuilder SetDebugLocation( DILocation? location )
         {
-            location.ValidateNotNull( nameof( location ) );
+            ArgumentNullException.ThrowIfNull( location );
             LLVMSetCurrentDebugLocation2( BuilderHandle, location?.MetadataHandle ?? default );
             return this;
         }
@@ -124,7 +123,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="block">Block to insert</param>
         public void AppendBasicBlock( BasicBlock block )
         {
-            block.ValidateNotNull( nameof( block ) );
+            ArgumentNullException.ThrowIfNull( block );
             LLVMInsertExistingBasicBlockAfterInsertBlock( BuilderHandle, block.BlockHandle );
         }
 
@@ -257,7 +256,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
         public Alloca Alloca( ITypeRef typeRef )
         {
-            typeRef.ValidateNotNull( nameof( typeRef ) );
+            ArgumentNullException.ThrowIfNull( typeRef );
             var handle = LLVMBuildAlloca( BuilderHandle, typeRef.GetTypeRef( ), string.Empty );
 
             return handle == default
@@ -369,8 +368,8 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( catchBlock );
 
             ValidateCallArgs( func, args );
-            then.ValidateNotNull( nameof( then ) );
-            catchBlock.ValidateNotNull( nameof( then ) );
+            ArgumentNullException.ThrowIfNull( then );
+            ArgumentNullException.ThrowIfNull( catchBlock );
 
             LLVMValueRef[ ] llvmArgs = args.Select( v => v.ValueHandle ).ToArray( );
             LLVMValueRef invoke = LLVMBuildInvoke2( BuilderHandle
@@ -406,7 +405,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="Instructions.Freeze"/></returns>
         public Freeze Freeze( Value value )
         {
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentNullException.ThrowIfNull( value );
             LLVMValueRef inst = LLVMBuildFreeze( BuilderHandle, value.ValueHandle, string.Empty);
             return Value.FromHandle<Freeze>( inst.ThrowIfInvalid( ) )!;
         }
@@ -416,7 +415,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="Instructions.ResumeInstruction"/></returns>
         public ResumeInstruction Resume( Value exception )
         {
-            exception.ValidateNotNull( nameof( exception ) );
+            ArgumentNullException.ThrowIfNull( exception );
 
             LLVMValueRef resume = LLVMBuildResume( BuilderHandle, exception.ValueHandle );
             return Value.FromHandle<ResumeInstruction>( resume.ThrowIfInvalid( ) )!;
@@ -434,8 +433,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Store Store( Value value, Value destination )
         {
-            value.ValidateNotNull( nameof( value ) );
-            destination.ValidateNotNull( nameof( destination ) );
+            ArgumentNullException.ThrowIfNull( value );
+            ArgumentNullException.ThrowIfNull( destination );
 
             if( destination.NativeType is not IPointerType ptrType)
             {
@@ -456,8 +455,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Load Load( ITypeRef type, Value sourcePtr )
         {
-            type.ValidateNotDefault( nameof( type ) );
-            sourcePtr.ValidateNotNull( nameof( sourcePtr ) );
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull( sourcePtr );
 
             if( sourcePtr.NativeType.Kind != TypeKind.Pointer )
             {
@@ -558,9 +557,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicCmpXchg AtomicCmpXchg( Value ptr, Value cmp, Value value )
         {
-            ptr.ValidateNotNull( nameof( ptr ) );
-            cmp.ValidateNotNull( nameof( cmp ) );
-            value.ValidateNotNull( nameof( value ) );
+            ArgumentNullException.ThrowIfNull( ptr );
+            ArgumentNullException.ThrowIfNull( cmp );
+            ArgumentNullException.ThrowIfNull( value );
 
             if( ptr.NativeType is not IPointerType ptrType)
             {
@@ -643,7 +642,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        public Value GetElementPtr( [ValidatedNotNull] ITypeRef type, [ValidatedNotNull] Value pointer, [ValidatedNotNull] IEnumerable<Value> args )
+        public Value GetElementPtr( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
             var llvmArgs = GetValidatedGEPArgs( type, pointer, args );
             var handle = LLVMBuildGEP2( BuilderHandle
@@ -679,7 +678,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
         public Value GetElementPtr( Value pointer, IEnumerable<Value> args )
-            => GetElementPtr( pointer.ValidateNotNull( nameof( pointer ) ).NativeType, pointer, args );
+            => GetElementPtr( pointer.ThrowIfNull().NativeType, pointer, args );
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
         /// <param name="pointer">pointer to get an element from</param>
@@ -730,7 +729,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         [Obsolete( "Use overload that takes a pointer type and opaque pointer" )]
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args )
         {
-            return GetElementPtrInBounds( pointer.ValidateNotNull( nameof( pointer ) ).NativeType, pointer, args );
+            return GetElementPtrInBounds( pointer.ThrowIfNull().NativeType, pointer, args );
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
@@ -849,7 +848,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public static Value ConstGetElementPtrInBounds( Value pointer, params Value[ ] args )
         {
-            pointer.ValidateNotNull( nameof( pointer ) );
+            ArgumentNullException.ThrowIfNull( pointer );
             var llvmArgs = GetValidatedGEPArgs( pointer.NativeType, pointer, args );
             var handle = LLVMConstInBoundsGEP2(pointer.NativeType.GetTypeRef(), pointer.ValueHandle, llvmArgs, ( uint )llvmArgs.Length );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -867,8 +866,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public Value IntToPointer( Value intValue, IPointerType ptrType )
         {
-            intValue.ValidateNotNull( nameof( intValue ) );
-            ptrType.ValidateNotNull( nameof( ptrType ) );
+            ArgumentNullException.ThrowIfNull( intValue );
+            ArgumentNullException.ThrowIfNull( ptrType );
 
             var handle = (intValue is Constant)
                          ? LLVMConstIntToPtr( intValue.ValueHandle, ptrType.GetTypeRef( ) )
@@ -888,8 +887,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Value PointerToInt( Value ptrValue, ITypeRef intType )
         {
-            ptrValue.ValidateNotNull( nameof( ptrValue ) );
-            intType.ValidateNotNull( nameof( intType ) );
+            ArgumentNullException.ThrowIfNull( ptrValue );
+            ArgumentNullException.ThrowIfNull( intType );
 
             if( ptrValue.NativeType.Kind != TypeKind.Pointer )
             {
@@ -913,7 +912,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="Instructions.Branch"/></returns>
         public Branch Branch( BasicBlock target )
         {
-            LLVMValueRef valueRef = LLVMBuildBr( BuilderHandle, target.ValidateNotNull( nameof( target ) ).BlockHandle );
+            LLVMValueRef valueRef = LLVMBuildBr( BuilderHandle, target.ThrowIfNull().BlockHandle );
             return Value.FromHandle<Branch>( valueRef.ThrowIfInvalid( ) )!;
         }
 
@@ -924,9 +923,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="Instructions.Branch"/></returns>
         public Branch Branch( Value ifCondition, BasicBlock thenTarget, BasicBlock elseTarget )
         {
-            ifCondition.ValidateNotNull( nameof( ifCondition ) );
-            thenTarget.ValidateNotNull( nameof( thenTarget ) );
-            elseTarget.ValidateNotNull( nameof( elseTarget ) );
+            ArgumentNullException.ThrowIfNull( ifCondition );
+            ArgumentNullException.ThrowIfNull( thenTarget );
+            ArgumentNullException.ThrowIfNull( elseTarget );
 
             var handle = LLVMBuildCondBr( BuilderHandle
                                         , ifCondition.ValueHandle
@@ -949,9 +948,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Comparison instruction</returns>
         public Value Compare( IntPredicate predicate, Value lhs, Value rhs )
         {
-            predicate.ValidateDefined( nameof( predicate ) );
-            lhs.ValidateNotNull( nameof( lhs ) );
-            rhs.ValidateNotNull( nameof( rhs ) );
+            predicate.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( lhs );
+            ArgumentNullException.ThrowIfNull( rhs );
 
             if( !lhs.NativeType.IsInteger && !lhs.NativeType.IsPointer )
             {
@@ -974,9 +973,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Comparison instruction</returns>
         public Value Compare( RealPredicate predicate, Value lhs, Value rhs )
         {
-            predicate.ValidateDefined( nameof( predicate ) );
-            lhs.ValidateNotNull( nameof( lhs ) );
-            rhs.ValidateNotNull( nameof( rhs ) );
+            predicate.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( lhs );
+            ArgumentNullException.ThrowIfNull( rhs );
 
             if( !lhs.NativeType.IsFloatingPoint )
             {
@@ -1023,8 +1022,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value ZeroExtendOrBitCast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -1042,8 +1041,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value SignExtendOrBitCast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -1061,8 +1060,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value TruncOrBitCast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -1084,8 +1083,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value ZeroExtend( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildZExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1097,8 +1096,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value SignExtend( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildSExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1110,8 +1109,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value BitCast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
             if( valueRef.NativeType == targetType )
@@ -1134,8 +1133,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value IntCast( Value valueRef, ITypeRef targetType, bool isSigned )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildIntCast2( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), isSigned, string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1147,8 +1146,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value Trunc( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             var handle = valueRef is Constant
                        ? LLVMConstTrunc( valueRef.ValueHandle, targetType.GetTypeRef( ) )
@@ -1163,8 +1162,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value SIToFPCast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildSIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1176,8 +1175,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value UIToFPCast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildUIToFP( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1189,8 +1188,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value FPToUICast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildFPToUI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1202,8 +1201,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value FPToSICast( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildFPToSI( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1215,8 +1214,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value FPExt( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildFPExt( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1228,8 +1227,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Result <see cref="Value"/></returns>
         public Value FPTrunc( Value valueRef, ITypeRef targetType )
         {
-            valueRef.ValidateNotNull( nameof( valueRef ) );
-            targetType.ValidateNotNull( nameof( targetType ) );
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
 
             LLVMValueRef handle = LLVMBuildFPTrunc( BuilderHandle, valueRef.ValueHandle, targetType.GetTypeRef( ), string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1246,9 +1245,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Value Select( Value ifCondition, Value thenValue, Value elseValue )
         {
-            ifCondition.ValidateNotNull( nameof( ifCondition ) );
-            thenValue.ValidateNotNull( nameof( thenValue ) );
-            elseValue.ValidateNotNull( nameof( elseValue ) );
+            ArgumentNullException.ThrowIfNull( ifCondition );
+            ArgumentNullException.ThrowIfNull( thenValue );
+            ArgumentNullException.ThrowIfNull( elseValue );
 
             var conditionVectorType = ifCondition.NativeType as IVectorType;
 
@@ -1301,7 +1300,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Value for the instruction</returns>
         public Value ExtractValue( Value instance, uint index )
         {
-            instance.ValidateNotNull( nameof( instance ) );
+            ArgumentNullException.ThrowIfNull( instance );
 
             var handle = LLVMBuildExtractValue( BuilderHandle, instance.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1318,8 +1317,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Switch Switch( Value value, BasicBlock defaultCase, uint numCases )
         {
-            value.ValidateNotNull( nameof( value ) );
-            defaultCase.ValidateNotNull( nameof( defaultCase ) );
+            ArgumentNullException.ThrowIfNull( value );
+            ArgumentNullException.ThrowIfNull( defaultCase );
 
             var handle = LLVMBuildSwitch( BuilderHandle, value.ValueHandle, defaultCase.BlockHandle, numCases );
             return Value.FromHandle<Switch>( handle.ThrowIfInvalid( ) )!;
@@ -1371,9 +1370,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Value MemCpy( Value destination, Value source, Value len, bool isVolatile )
         {
-            destination.ValidateNotNull( nameof( destination ) );
-            source.ValidateNotNull( nameof( source ) );
-            len.ValidateNotNull( nameof( len ) );
+            ArgumentNullException.ThrowIfNull( destination );
+            ArgumentNullException.ThrowIfNull( source );
+            ArgumentNullException.ThrowIfNull( len );
             var module = GetModuleOrThrow( );
 
             if( destination == source )
@@ -1426,9 +1425,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Value MemMove( Value destination, Value source, Value len, bool isVolatile )
         {
-            destination.ValidateNotNull( nameof( destination ) );
-            source.ValidateNotNull( nameof( source ) );
-            len.ValidateNotNull( nameof( len ) );
+            ArgumentNullException.ThrowIfNull( destination );
+            ArgumentNullException.ThrowIfNull( source );
+            ArgumentNullException.ThrowIfNull( len );
             var module = GetModuleOrThrow( );
 
             if( destination == source )
@@ -1476,9 +1475,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Value MemSet( Value destination, Value value, Value len, bool isVolatile )
         {
-            destination.ValidateNotNull( nameof( destination ) );
-            value.ValidateNotNull( nameof( value ) );
-            len.ValidateNotNull( nameof( len ) );
+            ArgumentNullException.ThrowIfNull( destination );
+            ArgumentNullException.ThrowIfNull( value );
+            ArgumentNullException.ThrowIfNull( len );
             var module = GetModuleOrThrow( );
 
             if( destination.NativeType is not IPointerType dstPtrType)
@@ -1521,8 +1520,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value InsertValue( Value aggValue, Value elementValue, uint index )
         {
-            aggValue.ValidateNotNull( nameof( aggValue ) );
-            elementValue.ValidateNotNull( nameof( elementValue ) );
+            ArgumentNullException.ThrowIfNull( aggValue );
+            ArgumentNullException.ThrowIfNull( elementValue );
 
             var handle = LLVMBuildInsertValue( BuilderHandle, aggValue.ValueHandle, elementValue.ValueHandle, index, string.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
@@ -1535,8 +1534,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value AddWithOverflow( Value lhs, Value rhs, bool signed )
         {
-            lhs.ValidateNotNull( nameof( lhs ) );
-            rhs.ValidateNotNull( nameof( rhs ) );
+            ArgumentNullException.ThrowIfNull( lhs );
+            ArgumentNullException.ThrowIfNull( rhs );
 
             char kind = signed ? 's' : 'u';
             string name = $"llvm.{kind}add.with.overflow.i";
@@ -1553,8 +1552,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value SubWithOverflow( Value lhs, Value rhs, bool signed )
         {
-            lhs.ValidateNotNull( nameof( lhs ) );
-            rhs.ValidateNotNull( nameof( rhs ) );
+            ArgumentNullException.ThrowIfNull( lhs );
+            ArgumentNullException.ThrowIfNull( rhs );
 
             char kind = signed ? 's' : 'u';
             string name = $"llvm.{kind}sub.with.overflow.i";
@@ -1572,8 +1571,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Instruction as a <see cref="Value"/></returns>
         public Value MulWithOverflow( Value lhs, Value rhs, bool signed )
         {
-            lhs.ValidateNotNull( nameof( lhs ) );
-            rhs.ValidateNotNull( nameof( rhs ) );
+            ArgumentNullException.ThrowIfNull( lhs );
+            ArgumentNullException.ThrowIfNull( rhs );
 
             char kind = signed ? 's' : 'u';
             string name = $"llvm.{kind}mul.with.overflow.i";
@@ -1584,11 +1583,11 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Call( function, lhs, rhs );
         }
 
-        internal static LLVMValueRef[ ] GetValidatedGEPArgs( [ValidatedNotNull] ITypeRef type, [ValidatedNotNull] Value pointer, [ValidatedNotNull] IEnumerable<Value> args )
+        internal static LLVMValueRef[ ] GetValidatedGEPArgs( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
-            type.ValidateNotNull( nameof( type ) );
-            pointer.ValidateNotNull( nameof( pointer ) );
-            args.ValidateNotNull( nameof( args ) );
+            ArgumentNullException.ThrowIfNull( type );
+            ArgumentNullException.ThrowIfNull( pointer );
+            ArgumentNullException.ThrowIfNull( args );
 
             if( pointer.NativeType is not IPointerType pointerType)
             {
@@ -1643,9 +1642,9 @@ namespace Ubiquity.NET.Llvm.Instructions
 
         internal LLVMBuilderRef BuilderHandle { get; }
 
-        private static void ValidateStructGepArgs( [ValidatedNotNull] Value pointer, uint index )
+        private static void ValidateStructGepArgs( Value pointer, uint index )
         {
-            pointer.ValidateNotNull( nameof( pointer ) );
+            ArgumentNullException.ThrowIfNull( pointer );
 
             if( pointer.NativeType is not IPointerType ptrType)
             {
@@ -1663,10 +1662,10 @@ namespace Ubiquity.NET.Llvm.Instructions
         // a unary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
         private Value BuildUnaryOp( Func<LLVMBuilderRef, LLVMValueRef, string, LLVMValueRef> opFactory
-                                  , [ValidatedNotNull] Value operand
+                                  , Value operand
                                   )
         {
-            operand.ValidateNotNull( nameof( operand ) );
+            ArgumentNullException.ThrowIfNull( operand );
             var valueRef = opFactory( BuilderHandle, operand.ValueHandle, string.Empty );
             return Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
@@ -1675,12 +1674,12 @@ namespace Ubiquity.NET.Llvm.Instructions
         // a binary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
         private Value BuildBinOp( Func<LLVMBuilderRef, LLVMValueRef, LLVMValueRef, string, LLVMValueRef> opFactory
-                                , [ValidatedNotNull] Value lhs
-                                , [ValidatedNotNull] Value rhs
+                                , Value lhs
+                                , Value rhs
                                 )
         {
-            lhs.ValidateNotNull( nameof( lhs ) );
-            rhs.ValidateNotNull( nameof( rhs ) );
+            ArgumentNullException.ThrowIfNull( lhs );
+            ArgumentNullException.ThrowIfNull( rhs );
 
             if( lhs.NativeType != rhs.NativeType )
             {
@@ -1691,10 +1690,10 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
-        private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, [ValidatedNotNull] Value ptr, [ValidatedNotNull] Value val )
+        private AtomicRMW BuildAtomicRMW( LLVMAtomicRMWBinOp op, Value ptr, Value val )
         {
-            ptr.ValidateNotNull( nameof( ptr ) );
-            val.ValidateNotNull( nameof( val ) );
+            ArgumentNullException.ThrowIfNull( ptr );
+            ArgumentNullException.ThrowIfNull( val );
 
             if( ptr.NativeType is not IPointerType ptrType)
             {

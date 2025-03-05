@@ -7,7 +7,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -68,7 +67,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="other">Node to replace this one with</param>
         public override void ReplaceAllUsesWith( LlvmMetadata other )
         {
-            other.ValidateNotNull( nameof( other ) );
+            ArgumentNullException.ThrowIfNull( other );
 
             if( !IsTemporary || IsResolved )
             {

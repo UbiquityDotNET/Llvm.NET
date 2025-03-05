@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Ubiquity.NET.Llvm
 {
     internal class OperandCollectionSlice<T>
@@ -20,13 +18,13 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 return InnerCollection[ Offset + index ];
             }
 
             set
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 InnerCollection[ Offset + index ] = value;
             }
         }

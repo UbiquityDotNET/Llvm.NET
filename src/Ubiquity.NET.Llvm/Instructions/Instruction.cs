@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -471,7 +470,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );
 
-            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValidateNotNull( nameof( value ) )!.ValueHandle );
+            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ThrowIfNull()!.ValueHandle );
         }
 
         /// <summary>Gets a snap-shot collection of the metadata for this instruction, filtering out all the debug location nodes</summary>

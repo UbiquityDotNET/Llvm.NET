@@ -4,7 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
+using System.Diagnostics.CodeAnalysis;
+
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -22,10 +23,11 @@ namespace Ubiquity.NET.Llvm.Instructions
         : FuncletPad
     {
         /// <summary>Gets or sets the <seealso cref="Ubiquity.NET.Llvm.Instructions.CatchSwitch"/> for this pad</summary>
+        [DisallowNull]
         public CatchSwitch CatchSwitch
         {
             get => Operands.GetOperand<CatchSwitch>( ^1 )!;
-            set => Operands[ ^1 ] = value.ValidateNotNull( nameof( value ) );
+            set => Operands[ ^1 ] = value.ThrowIfNull();
         }
 
         internal CatchPad( LLVMValueRef valueRef )

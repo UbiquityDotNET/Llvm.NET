@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -24,7 +23,7 @@ namespace Ubiquity.NET.Llvm
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "msg is Disposed IFF it is valid to begin with" )]
         public MemoryBuffer( string path )
         {
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
             if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out DisposeMessageString msg ).Failed )
             {
                 string errMsg = msg.ToString();
@@ -44,7 +43,7 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public MemoryBuffer( byte[] data, string? name = null)
         {
-            data.ValidateNotNull( nameof( data ) );
+            ArgumentNullException.ThrowIfNull( data );
             BufferHandle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, data.Length, name ?? string.Empty )
                           .ThrowIfInvalid( );
         }
@@ -71,7 +70,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="buffer">Buffer to convert</param>
         /// <remarks>This is a simple wrapper around calling <see cref="Slice(int, int)"/> with default parameters</remarks>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Named alternate exists - Slice()" )]
-        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.ValidateNotNull( nameof( buffer ) ).Slice( 0, -1 );
+        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.ThrowIfNull().Slice( 0, -1 );
 
         /// <summary>Create a <see cref="System.ReadOnlySpan{T}"/> for a slice of the buffer</summary>
         /// <param name="start">Starting index for the slice [default = 0]</param>
@@ -90,8 +89,8 @@ namespace Ubiquity.NET.Llvm
                 length = Size - start;
             }
 
-            start.ValidateRange( 0, Size - 1, nameof( start ) );
-            length.ValidateRange( 0, Size, nameof( length ) );
+            start.ThrowIfOutOfRange( 0, Size - 1 );
+            length.ThrowIfOutOfRange( 0, Size );
 
             if( ( start + length ) > Size )
             {
@@ -118,7 +117,7 @@ namespace Ubiquity.NET.Llvm
 
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
-            bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );
+            bufferHandle.ThrowIfInvalid();
             BufferHandle = bufferHandle;
         }
 

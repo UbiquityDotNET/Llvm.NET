@@ -5,8 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
@@ -23,10 +23,11 @@ namespace Ubiquity.NET.Llvm.Instructions
         : Terminator
     {
         /// <summary>Gets or sets the <see cref="CleanupPad"/> for this instruction</summary>
+        [DisallowNull]
         public CleanupPad CleanupPad
         {
             get => Operands.GetOperand<CleanupPad>( 0 )!;
-            set => Operands[ 0 ] = value.ValidateNotNull( nameof( value ) );
+            set => Operands[ 0 ] = value.ThrowIfNull();
         }
 
         /// <summary>Gets a value indicating whether this <see cref="CatchSwitch"/> has an unwind destination</summary>
@@ -56,7 +57,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
             set
             {
-                value.ValidateNotNull( nameof( value ) );
+                ArgumentNullException.ThrowIfNull( value );
                 if( !HasUnwindDestination )
                 {
                     throw new InvalidOperationException( Resources.Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller );

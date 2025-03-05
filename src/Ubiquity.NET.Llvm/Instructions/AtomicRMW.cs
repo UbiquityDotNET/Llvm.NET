@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -63,7 +62,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public AtomicRMWBinOp Kind
         {
             get => ( AtomicRMWBinOp )LLVMGetAtomicRMWBinOp( ValueHandle );
-            set => LLVMSetAtomicRMWBinOp( ValueHandle, ( LLVMAtomicRMWBinOp )value.ValidateDefined( nameof( value ) ) );
+            set => LLVMSetAtomicRMWBinOp( ValueHandle, ( LLVMAtomicRMWBinOp )value.ThrowIfNotDefined() );
         }
 
         internal AtomicRMW( LLVMValueRef valueRef )

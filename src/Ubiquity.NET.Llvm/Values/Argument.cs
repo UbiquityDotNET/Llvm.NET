@@ -6,7 +6,6 @@
 
 using System.Collections.Generic;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -62,7 +61,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// </returns>
         public Argument AddAttribute( AttributeKind kind )
         {
-            kind.ValidateDefined( nameof( kind ) );
+            kind.ThrowIfNotDefined();
 
             Attributes.Add( Context.CreateAttribute( kind ) );
 
@@ -98,7 +97,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>This Argument for fluent usage</returns>
         public Argument RemoveAttribute( AttributeKind kind )
         {
-            kind.ValidateDefined( nameof( kind ) );
+            kind.ThrowIfNotDefined();
             return kind == AttributeKind.None ? ( this ) : RemoveAttribute( kind.GetAttributeName( ) );
         }
 

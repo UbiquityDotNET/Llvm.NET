@@ -6,7 +6,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -68,7 +67,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public bool Describes( Function function )
-            => LibLLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function ) ).ValueHandle );
+            => LibLLVMSubProgramDescribes( MetadataHandle, function.ThrowIfNull().ValueHandle );
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

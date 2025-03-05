@@ -6,7 +6,6 @@
 
 using System;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -66,7 +65,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( module );
             ArgumentNullException.ThrowIfNull( module.ModuleHandle );
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
-            fileType.ValidateDefined( nameof( fileType ) );
+            fileType.ThrowIfNotDefined();
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
@@ -106,7 +105,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentNullException.ThrowIfNull( module );
             ArgumentNullException.ThrowIfNull( module.ModuleHandle );
-            fileType.ValidateDefined( nameof( fileType ) );
+            fileType.ThrowIfNotDefined();
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
@@ -155,7 +154,8 @@ namespace Ubiquity.NET.Llvm
 
         internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
         {
-            targetMachineHandle.ValidateNotDefault( nameof( targetMachineHandle ) );
+            ArgumentNullException.ThrowIfNull(targetMachineHandle);
+            targetMachineHandle.ThrowIfInvalid();
 
             TargetMachineHandle = targetMachineHandle;
         }

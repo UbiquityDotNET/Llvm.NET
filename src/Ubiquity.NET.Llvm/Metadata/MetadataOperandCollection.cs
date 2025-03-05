@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
-
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm
@@ -30,7 +28,7 @@ namespace Ubiquity.NET.Llvm
             get => GetOperand<LlvmMetadata>( index );
             set
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 LibLLVMMDNodeReplaceOperand( Container.MetadataHandle, ( uint )index, value?.MetadataHandle ?? default );
             }
         }
@@ -66,7 +64,7 @@ namespace Ubiquity.NET.Llvm
             where TItem : LlvmMetadata
         {
             uint offset = ( uint )i.GetOffset(Count);
-            offset.ValidateRange( 0u, ( uint )Count, nameof( i ) );
+            offset.ThrowIfOutOfRange( 0u, ( uint )Count );
             var node = LibLLVMGetOperandNode( LibLLVMMDNodeGetOperand( Container.MetadataHandle, offset ) );
             return LlvmMetadata.FromHandle<TItem>( Container.Context, node );
         }

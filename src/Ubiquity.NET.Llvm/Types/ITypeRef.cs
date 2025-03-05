@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -154,9 +154,9 @@ namespace Ubiquity.NET.Llvm.Types
 
     internal static class TypeRefExtensions
     {
-        internal static LLVMTypeRef GetTypeRef( [ValidatedNotNull] this ITypeRef self )
+        internal static LLVMTypeRef GetTypeRef( this ITypeRef self )
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
             return ( ( ITypeHandleOwner )self ).TypeRefHandle;
         }
     }

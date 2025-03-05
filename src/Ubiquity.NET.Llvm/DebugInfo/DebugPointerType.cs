@@ -7,7 +7,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Types;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
@@ -25,7 +24,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment on pointer</param>
         public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, BitcodeModule module, uint addressSpace = 0, string? name = null, uint alignment = 0 )
-            : this( debugElementType.ValidateNotNull( nameof( debugElementType ) ).NativeType
+            : this( debugElementType.ThrowIfNull().NativeType
                   , module
                   , debugElementType.DebugInfoType
                   , addressSpace
@@ -44,7 +43,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment of pointer</param>
         public DebugPointerType( ITypeRef llvmElementType, BitcodeModule module, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
-            : this( llvmElementType.ValidateNotNull( nameof( llvmElementType ) ).CreatePointerType( addressSpace )
+            : this( llvmElementType.ThrowIfNull().CreatePointerType( addressSpace )
                   , module
                   , elementType
                   , name
@@ -67,7 +66,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType? elementType, string? name = null, uint alignment = 0 )
             : base( llvmPtrType,
-                    module.ValidateNotNull( nameof( module ) )
+                    module.ThrowIfNull()
                           .DIBuilder
                           .CreatePointerType( elementType
                                             , name

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
+using System;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -21,10 +21,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
         /// <seealso cref="GlobalValue.Visibility"/>
-        public static T Visibility<T>( [ValidatedNotNull] this T self, Visibility value )
+        public static T Visibility<T>( this T self, Visibility value )
             where T : GlobalValue
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
             self.Visibility = value;
             return self;
         }
@@ -35,10 +35,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
         /// <seealso cref="GlobalValue.Linkage"/>
-        public static T Linkage<T>( [ValidatedNotNull] this T self, Linkage value )
+        public static T Linkage<T>( this T self, Linkage value )
             where T : GlobalValue
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
             self.Linkage = value;
             return self;
         }
@@ -49,10 +49,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="value">New value to set</param>
         /// <returns><paramref name="self"/> for fluent usage patterns</returns>
         /// <seealso cref="GlobalValue.UnnamedAddress"/>
-        public static T UnnamedAddress<T>( [ValidatedNotNull] this T self, UnnamedAddressKind value )
+        public static T UnnamedAddress<T>( this T self, UnnamedAddressKind value )
             where T : GlobalValue
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
             self.UnnamedAddress = value;
             return self;
         }

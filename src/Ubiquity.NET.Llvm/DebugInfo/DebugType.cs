@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
@@ -163,11 +162,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessing the <see cref="DebugInfoType"/> property</summary>
         /// <param name="self">The type to convert</param>
         [SuppressMessage( "Microsoft.Usage", "CA2225:OperatorOverloadsHaveNamedAlternates", Justification = "DebugInfoType is available as a property, this is for convenience" )]
-        public static implicit operator TDebug?( DebugType<TNative, TDebug> self ) => self.ValidateNotNull( nameof( self ) ).DebugInfoType;
+        public static implicit operator TDebug?( DebugType<TNative, TDebug> self ) => self.ThrowIfNull().DebugInfoType;
 
         internal DebugType( TNative llvmType, TDebug? debugInfoType )
         {
-            llvmType.ValidateNotNull( nameof( llvmType ) );
+            ArgumentNullException.ThrowIfNull( llvmType );
 
             NativeType = llvmType;
             RawDebugInfoType = debugInfoType;

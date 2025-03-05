@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 
@@ -47,7 +46,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , uint? bitSize = null
                               , uint bitAlignment = 0
                               )
-            : base( module.ValidateNotNull( nameof( module ) )
+            : base( module.ThrowIfNull()
                           .Context.CreateStructType( nativeName, packed, members.Select( e => e.DebugType ).ToArray( ) )
                   , module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
                                                                    , sourceName
@@ -100,7 +99,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , uint bitAlignment = 0
                               )
             : base( llvmType
-                  , module.ValidateNotNull( nameof( module ) )
+                  , module.ThrowIfNull()
                           .DIBuilder.CreateStructType( scope
                                                      , name
                                                      , file
@@ -134,7 +133,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , uint line
                               )
             : base( llvmType
-                  , module.ValidateNotNull( nameof( module ) )
+                  , module.ThrowIfNull()
                           .DIBuilder
                           .CreateReplaceableCompositeType( Tag.StructureType
                                                          , name
@@ -164,7 +163,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , DIFile? file = null
                               , uint line = 0
                               )
-            : this( module.ValidateNotNull( nameof( module ) ).Context.CreateStructType( nativeName )
+            : this( module.ThrowIfNull().Context.CreateStructType( nativeName )
                   , module
                   , scope
                   , name
@@ -248,7 +247,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                            , uint bitAlignment = 0
                            )
         {
-            module.ValidateNotNull( nameof( module ) );
+            ArgumentNullException.ThrowIfNull( module );
             DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
             SetBody( packed, nativeElements.ToArray( ) );
             var memberTypes = from memberInfo in DebugMembers

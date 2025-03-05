@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
@@ -43,7 +42,7 @@ namespace Ubiquity.NET.Llvm.Values
                  ? string.Empty
                  : LLVMGetValueName2( ValueHandle, out size_t _ ) ?? string.Empty;
 
-            set => LLVMSetValueName2( ValueHandle, value, value.ValidateNotNull( nameof( value ) ).Length );
+            set => LLVMSetValueName2( ValueHandle, value, value.ThrowIfNull().Length );
         }
 
         /// <summary>Gets a value indicating whether this value is Undefined</summary>

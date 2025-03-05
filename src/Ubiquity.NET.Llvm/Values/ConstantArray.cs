@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 
@@ -46,8 +45,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public static Constant From( ITypeRef elementType, int len, params Constant[ ] values )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
-            values.ValidateNotNull( nameof( values ) );
+            ArgumentNullException.ThrowIfNull( elementType );
+            ArgumentNullException.ThrowIfNull( values );
             var zeroFilledValues = ZeroFill( elementType, len, values ).ToList( );
             return From( elementType, zeroFilledValues );
         }

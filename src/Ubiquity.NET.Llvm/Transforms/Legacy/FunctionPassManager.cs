@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.ArgValidators;
-
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 using Function = Ubiquity.NET.Llvm.Values.Function;
@@ -19,7 +17,7 @@ namespace Ubiquity.NET.Llvm.Transforms.Legacy
         /// <summary>Initializes a new instance of the <see cref="FunctionPassManager"/> class.</summary>
         /// <param name="module">Module that owns the functions this manager works on</param>
         public FunctionPassManager( BitcodeModule module )
-            : base( LLVMCreateFunctionPassManagerForModule( module.ValidateNotNull( nameof( module ) ).ModuleHandle ) )
+            : base( LLVMCreateFunctionPassManagerForModule( module.ThrowIfNull().ModuleHandle ) )
         {
         }
 
@@ -35,7 +33,7 @@ namespace Ubiquity.NET.Llvm.Transforms.Legacy
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Run( Function target )
         {
-            return LLVMRunFunctionPassManager( Handle, target.ValidateNotNull( nameof( target ) ).ValueHandle );
+            return LLVMRunFunctionPassManager( Handle, target.ThrowIfNull().ValueHandle );
         }
 
         /// <summary>Finalizes all of the function passes scheduled in the function pass manager.</summary>

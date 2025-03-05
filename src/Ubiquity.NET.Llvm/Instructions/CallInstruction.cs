@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Values;
@@ -93,7 +92,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
             LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 

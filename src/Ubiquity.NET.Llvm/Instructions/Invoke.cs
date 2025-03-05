@@ -4,10 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public BasicBlock NormalDestination
         {
             get => BasicBlock.FromHandle( LLVMGetNormalDest( ValueHandle ).ThrowIfInvalid() )!;
-            set => LLVMSetNormalDest( ValueHandle, value.ValidateNotNull( nameof( value ) ).BlockHandle );
+            set => LLVMSetNormalDest( ValueHandle, value.ThrowIfNull().BlockHandle );
         }
 
         /// <summary>Gets the attributes for this call site</summary>
@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LLVMGetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
             return AttributeValue.FromHandle( Context, handle );
@@ -88,7 +88,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
             LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 

@@ -6,7 +6,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
@@ -32,7 +31,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="md"><see cref="ValueAsMetadata"/> to get the value for</param>
         /// <remarks>This is a simple wrapper around the <see cref="Value"/> property</remarks>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Value property provides this functionality already" )]
-        public static implicit operator Value?( ValueAsMetadata md ) => md.ValidateNotNull( nameof( md ) ).Value;
+        public static implicit operator Value?( ValueAsMetadata md ) => md.ThrowIfNull().Value;
 
         private protected ValueAsMetadata( LLVMMetadataRef handle )
             : base( handle )

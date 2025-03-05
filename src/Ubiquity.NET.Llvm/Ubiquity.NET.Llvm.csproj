@@ -48,18 +48,7 @@
         </CodeAnalysisDictionary>
     </ItemGroup>
     <ItemGroup>
-      <!--
-      Setting Private Assets for all of this project ref is intentional. A MAJOR part of this OO projection
-      is to protect callers from the unsafe native interop and it's quirky behavior in comparison to the
-      expectations of managed code libraries. NOTHING in this library is allowed to publicly expose or
-      re-export any type or value from the interop library. If a consumer really wants the low level they
-      need to explicitly reference it.
-      -->
-      <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" PrivateAssets="All" />
-    </ItemGroup>
-    <ItemGroup>
-        <!--TODO: Elminate the need for this with built-in support -->
-        <PackageReference Include="Ubiquity.NET.ArgValidators" />
+      <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">

@@ -9,7 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -30,7 +29,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public void Add( BasicBlock item )
         {
-            item.ValidateNotNull( nameof( item ) );
+            ArgumentNullException.ThrowIfNull( item );
 
             if( item.ContainingFunction == null )
             {
@@ -70,7 +69,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         public bool Contains( BasicBlock item )
         {
-            item.ValidateNotNull( nameof( item ) );
+            ArgumentNullException.ThrowIfNull( item );
             return item.ContainingFunction == ContainingFunction;
         }
 
@@ -89,7 +88,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         public bool Remove( BasicBlock item )
         {
-            item.ValidateNotNull( nameof( item ) );
+            ArgumentNullException.ThrowIfNull( item );
             if( item.ContainingFunction != ContainingFunction )
             {
                 return false;

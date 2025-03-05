@@ -7,7 +7,6 @@
 using System;
 using System.Text;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -46,7 +45,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>string</returns>
         public string ExtractAsString(Encoding encoding)
         {
-            encoding.ValidateNotNull( nameof( encoding ) );
+            ArgumentNullException.ThrowIfNull( encoding );
 
             // ignore terminating \0 for C strings
             var rawData = IsString ? RawData[0..^1] : RawData;

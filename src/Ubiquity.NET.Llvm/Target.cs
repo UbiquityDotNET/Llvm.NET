@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -168,14 +168,14 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="triple">Target <see cref="Triple"/> describing the target</param>
         /// <returns>Target for the given triple</returns>
-        public static Target FromTriple( Triple triple ) => FromTriple( triple.ValidateNotNull( nameof( triple ) ).ToString( ) );
+        public static Target FromTriple( Triple triple ) => FromTriple( triple.ThrowIfNull().ToString( ) );
 
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="targetTriple">Target triple string describing the target</param>
         /// <returns>Target for the given triple</returns>
         public static Target FromTriple( string targetTriple )
         {
-            targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( targetTriple );
 
             DisposeMessageString? errorMsg = null;
             try
@@ -193,7 +193,7 @@ namespace Ubiquity.NET.Llvm
 
         internal Target( LLVMTargetRef targetHandle )
         {
-            targetHandle.ValidateNotDefault( nameof( targetHandle ) );
+            targetHandle.ThrowIfInvalid();
 
             TargetHandle = targetHandle;
         }
@@ -202,10 +202,10 @@ namespace Ubiquity.NET.Llvm
 
         internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string? cpu, string? features, CodeGenOpt optLevel, RelocationMode relocationMode, CodeModel codeModel )
         {
-            triple.ValidateNotNullOrWhiteSpace( nameof( triple ) );
-            optLevel.ValidateDefined( nameof( optLevel ) );
-            relocationMode.ValidateDefined( nameof( relocationMode ) );
-            codeModel.ValidateDefined( nameof( codeModel ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( triple );
+            optLevel.ThrowIfNotDefined();
+            relocationMode.ThrowIfNotDefined();
+            codeModel.ThrowIfNotDefined();
 
             var targetMachineHandle = LLVMCreateTargetMachine( target.TargetHandle
                                                              , triple
@@ -220,7 +220,8 @@ namespace Ubiquity.NET.Llvm
 
         internal static Target FromHandle( LLVMTargetRef targetHandle )
         {
-            targetHandle.ValidateNotDefault( nameof( targetHandle ) );
+            targetHandle.ThrowIfInvalid();
+
             lock( TargetMap )
             {
                 if( TargetMap.TryGetValue( targetHandle, out Target? retVal ) )

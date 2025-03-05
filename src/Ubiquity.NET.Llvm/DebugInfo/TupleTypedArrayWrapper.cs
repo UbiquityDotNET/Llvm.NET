@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Generic wrapper to treat an MDTuple as an array of elements of a specific type</summary>
@@ -38,7 +36,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             get
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 return Tuple!.Operands.GetOperand<T>( index );
             }
         }

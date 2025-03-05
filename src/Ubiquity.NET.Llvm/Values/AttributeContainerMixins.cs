@@ -4,10 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -19,10 +18,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="self">Collection to test</param>
         /// <param name="kind"><see cref="AttributeKind"/> to search for</param>
         /// <returns><see langword="true"/> if found</returns>
-        public static bool Contains( [ValidatedNotNull] this ICollection<AttributeValue> self, AttributeKind kind )
+        public static bool Contains( this ICollection<AttributeValue> self, AttributeKind kind )
         {
-            self.ValidateNotNull( nameof( self ) );
-            kind.ValidateDefined( nameof( kind ) );
+            ArgumentNullException.ThrowIfNull( self );
+            kind.ThrowIfNotDefined();
 
             return self.Any( a => a.Id == kind );
         }
@@ -33,10 +32,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="index"><see cref="FunctionAttributeIndex"/> to add the attributes to</param>
         /// <param name="values">Attributes to add to the container</param>
         /// <returns><paramref name="self"/> for fluent use</returns>
-        public static T AddAttributes<T>( [ValidatedNotNull] this T self, FunctionAttributeIndex index, params AttributeKind[ ] values )
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params AttributeKind[ ] values )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
 
             if( values != null )
             {
@@ -66,7 +65,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind kind )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
 
             AttributeValue attrib = self.Context.CreateAttribute( kind );
             if( self is IAttributeAccessor container )
@@ -90,7 +89,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static T AddAttribute<T>( this T self, FunctionAttributeIndex index, AttributeValue attrib )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
 
             if( self is IAttributeAccessor container )
             {
@@ -125,7 +124,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
 
             if( attributes != null )
             {
@@ -154,8 +153,8 @@ namespace Ubiquity.NET.Llvm.Values
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IAttributeDictionary attributes )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
-            attributes.ValidateNotNull( nameof( attributes ) );
+            ArgumentNullException.ThrowIfNull( self );
+            ArgumentNullException.ThrowIfNull( attributes );
 
             return AddAttributes( self, index, attributes[ index ] );
         }
@@ -169,7 +168,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static T RemoveAttribute<T>( this T self, FunctionAttributeIndex index, AttributeKind kind )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
 
             if( kind == AttributeKind.None )
             {
@@ -202,7 +201,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static T RemoveAttribute<T>( this T self, FunctionAttributeIndex index, string name )
             where T : class, IAttributeContainer
         {
-            self.ValidateNotNull( nameof( self ) );
+            ArgumentNullException.ThrowIfNull( self );
 
             if( self is IAttributeAccessor container )
             {

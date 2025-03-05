@@ -6,7 +6,6 @@
 
 using System;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 
@@ -34,8 +33,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                              )
             : base( llvmType, BuildDebugType( llvmType, elementType, module, count, lowerBound, alignment ) )
         {
-            elementType.ValidateNotNull(nameof( elementType ) );
-            elementType.DebugInfoType.ValidateNotNull( $"{nameof( elementType )}.{nameof( elementType.DebugInfoType )}" );
+            ArgumentNullException.ThrowIfNull( elementType );
+            ArgumentNullException.ThrowIfNull(elementType.DebugInfoType);
+
             DebugElementType = elementType;
         }
 
@@ -45,7 +45,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
         public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, BitcodeModule module, uint count, uint lowerBound = 0 )
-            : this( elementType.ValidateNotNull( nameof( elementType ) ).CreateArrayType( count )
+            : this( elementType.ThrowIfNull().CreateArrayType( count )
                   , elementType
                   , module
                   , count
@@ -61,7 +61,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
         public DebugArrayType( IArrayType llvmType, BitcodeModule module, DIType elementType, uint count, uint lowerBound = 0 )
-            : this( DebugType.Create( llvmType.ValidateNotNull( nameof( llvmType ) ).ElementType, elementType ), module, count, lowerBound )
+            : this( DebugType.Create( llvmType.ThrowIfNull().ElementType, elementType ), module, count, lowerBound )
         {
         }
 
@@ -96,17 +96,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
         }
 
-        private static DICompositeType BuildDebugType( [ValidatedNotNull] IArrayType llvmType
-                                                     , [ValidatedNotNull] IDebugType<ITypeRef, DIType> elementType
-                                                     , [ValidatedNotNull] BitcodeModule module
+        private static DICompositeType BuildDebugType( IArrayType llvmType
+                                                     , IDebugType<ITypeRef, DIType> elementType
+                                                     , BitcodeModule module
                                                      , uint count
                                                      , uint lowerBound
                                                      , uint alignment
                                                      )
         {
-            llvmType.ValidateNotNull( nameof( llvmType ) );
-            elementType.ValidateNotNull( nameof( elementType ) );
-            module.ValidateNotNull( nameof( module ) );
+            ArgumentNullException.ThrowIfNull( llvmType );
+            ArgumentNullException.ThrowIfNull( elementType );
+            ArgumentNullException.ThrowIfNull( module );
 
             if( llvmType.ElementType.GetTypeRef( ) != elementType.GetTypeRef( ) )
             {

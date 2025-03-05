@@ -4,11 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-
-using Ubiquity.NET.ArgValidators;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -28,9 +27,9 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="set">Attribute collection (set) to remove the attribute from</param>
         /// <param name="name">Name of the attribute to remove</param>
         /// <returns><see langword="true"/> if <paramref name="name"/> was in <paramref name="set"/> before being removed</returns>
-        public static bool Remove( [ValidatedNotNull] this ICollection<AttributeValue> set, string name )
+        public static bool Remove( this ICollection<AttributeValue> set, string name )
         {
-            set.ValidateNotNull( nameof( set ) );
+            ArgumentNullException.ThrowIfNull( set );
             var attr = ( from a in set
                          where a.Name == name
                          select a

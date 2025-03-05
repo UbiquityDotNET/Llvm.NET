@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -315,7 +314,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="block">Existing block to append to the function's list of blocks</param>
         public void AppendBasicBlock( BasicBlock block )
         {
-            block.ValidateNotNull( nameof( block ) );
+            ArgumentNullException.ThrowIfNull( block );
             LLVMAppendExistingBasicBlock( ValueHandle, block.BlockHandle );
         }
 
@@ -335,7 +334,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="ArgumentException"><paramref name="insertBefore"/> belongs to a different function</exception>
         public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
         {
-            insertBefore.ValidateNotNull( nameof( insertBefore ) );
+            ArgumentNullException.ThrowIfNull( insertBefore );
             if( insertBefore.ContainingFunction != null && insertBefore.ContainingFunction != this )
             {
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );

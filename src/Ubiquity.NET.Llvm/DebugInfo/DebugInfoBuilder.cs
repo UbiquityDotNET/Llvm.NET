@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
@@ -86,7 +85,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                               , uint runtimeVersion
                                               )
         {
-            sourceFilePath.ValidateNotNullOrWhiteSpace( nameof( sourceFilePath ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( sourceFilePath );
             return CreateCompileUnit( language
                                     , Path.GetFileName( sourceFilePath )
                                     , Path.GetDirectoryName( sourceFilePath ) ?? Environment.CurrentDirectory
@@ -185,9 +184,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns>Newly created macro node</returns>
         public DIMacro CreateMacro( DIMacroFile? parentFile, uint line, MacroKind kind, string name, string value )
         {
-            kind.ValidateDefined( nameof( kind ) );
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
-            value.ValidateNotNull( nameof( value ) );
+            kind.ThrowIfNotDefined();
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
+            ArgumentNullException.ThrowIfNull( value );
+
             switch( kind )
             {
             case MacroKind.Define:
@@ -328,9 +328,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                           , Function function
                                           )
         {
-            name.ValidateNotNull( nameof( name ) );
-            mangledName.ValidateNotNull( nameof( mangledName ) );
-            function.ValidateNotNull( nameof( function ) );
+            ArgumentNullException.ThrowIfNull( name );
+            ArgumentNullException.ThrowIfNull( mangledName );
+            ArgumentNullException.ThrowIfNull( function );
 
             // force whitespace strings to empty
             if( string.IsNullOrWhiteSpace( name ) )
@@ -390,7 +390,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                   , bool isOptimized
                                                   )
         {
-            subroutineType.ValidateNotNull( nameof( subroutineType ) );
+            ArgumentNullException.ThrowIfNull( subroutineType );
 
             if( string.IsNullOrWhiteSpace( name ) )
             {
@@ -441,7 +441,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                   , uint alignInBits = 0
                                                   )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LLVMDIBuilderCreateAutoVariable( BuilderHandle.ThrowIfInvalid()
                                                         , scope?.MetadataHandle ?? default
@@ -478,7 +478,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                              , ushort argNo
                                              )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LLVMDIBuilderCreateParameterVariable( BuilderHandle.ThrowIfInvalid()
                                                              , scope?.MetadataHandle ?? default
@@ -502,7 +502,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns>Basic type debugging information</returns>
         public DIBasicType CreateBasicType( string name, UInt64 bitSize, DiTypeKind encoding, DebugInfoFlags diFlags = DebugInfoFlags.None )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
             var handle = LLVMDIBuilderCreateBasicType( BuilderHandle.ThrowIfInvalid(), name, name.Length, bitSize, ( uint )encoding, ( LLVMDIFlags )diFlags );
             return MDNode.FromHandle<DIBasicType>( handle.ThrowIfInvalid( ) )!;
         }
@@ -571,7 +571,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see cref="DISubroutineType"/></returns>
         public DISubroutineType CreateSubroutineType( DebugInfoFlags debugFlags, IEnumerable<DIType?> types )
         {
-            types.ValidateNotNull( nameof( types ) );
+            ArgumentNullException.ThrowIfNull( types );
             var handles = types.Select( t => t?.MetadataHandle ?? default ).ToArray( );
             var handle = LLVMDIBuilderCreateSubroutineType( BuilderHandle.ThrowIfInvalid()
                                                           , LLVMMetadataRef.Zero
@@ -654,8 +654,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                , string uniqueId = ""
                                                )
         {
-            elements.ValidateNotNull( nameof( elements ) );
-            name.ValidateNotNull( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( elements );
+            ArgumentNullException.ThrowIfNull( name );
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateStructType( BuilderHandle.ThrowIfInvalid()
@@ -750,8 +750,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                               , string uniqueId = ""
                                               )
         {
-            name.ValidateNotNull( nameof( name ) );
-            elements.ValidateNotNull( nameof( elements ) );
+            ArgumentNullException.ThrowIfNull( name );
+            ArgumentNullException.ThrowIfNull( elements );
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateUnionType( BuilderHandle.ThrowIfInvalid()
@@ -796,7 +796,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                              , DIType? type
                                              )
         {
-            name.ValidateNotNull( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( name );
 
             var handle = LLVMDIBuilderCreateMemberType( BuilderHandle.ThrowIfInvalid()
                                                       , scope?.MetadataHandle ?? default
@@ -844,8 +844,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see cref="DICompositeType"/> for the array</returns>
         public DICompositeType CreateArrayType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, IEnumerable<DINode> subscripts )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
-            subscripts.ValidateNotNull( nameof( subscripts ) );
+            ArgumentNullException.ThrowIfNull( elementType );
+            ArgumentNullException.ThrowIfNull( subscripts );
 
             var subScriptHandles = subscripts.Select( s => s.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateArrayType( BuilderHandle.ThrowIfInvalid(), bitSize, bitAlign, elementType.MetadataHandle, subScriptHandles, (uint)subScriptHandles.Length );
@@ -883,8 +883,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see cref="DICompositeType"/> for the Vector</returns>
         public DICompositeType CreateVectorType( UInt64 bitSize, UInt32 bitAlign, DIType elementType, IEnumerable<DINode> subscripts )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
-            subscripts.ValidateNotNull( nameof( subscripts ) );
+            ArgumentNullException.ThrowIfNull( elementType );
+            ArgumentNullException.ThrowIfNull( subscripts );
 
             var subScriptHandles = subscripts.Select( s => s.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateVectorType( BuilderHandle.ThrowIfInvalid(), bitSize, bitAlign, elementType.MetadataHandle, subScriptHandles, (uint)subScriptHandles.Length );
@@ -902,7 +902,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateTypedef( DIType? type, string name, DIFile? file, uint line, DINode? context, UInt32 alignInBits )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LLVMDIBuilderCreateTypedef( BuilderHandle.ThrowIfInvalid()
                                                    , type?.MetadataHandle ?? default
@@ -973,7 +973,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see cref="DIEnumerator"/> for the name, value pair</returns>
         public DIEnumerator CreateEnumeratorValue( string name, long value, bool isUnsigned = false )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
             var handle = LLVMDIBuilderCreateEnumerator( BuilderHandle.ThrowIfInvalid(), name, name!.Length, value, isUnsigned );
             return MDNode.FromHandle<DIEnumerator>( handle.ThrowIfInvalid( ) )!;
         }
@@ -999,7 +999,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                     , DIType? underlyingType
                                                     )
         {
-            name.ValidateNotNull( nameof( name ) );
+            ArgumentNullException.ThrowIfNull( name );
 
             var elementHandles = elements.Select( e => e.MetadataHandle ).ToArray( );
             var handle = LLVMDIBuilderCreateEnumerationType( BuilderHandle.ThrowIfInvalid()
@@ -1043,7 +1043,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                         , UInt32 bitAlign = 0
                                                                         )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             if( string.IsNullOrWhiteSpace( linkageName ) )
             {
@@ -1071,7 +1071,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="subProgram"><see cref="DISubProgram"/> to finalize debug information for</param>
         public void Finish( DISubProgram subProgram )
         {
-            subProgram.ValidateNotNull( nameof( subProgram ) );
+            ArgumentNullException.ThrowIfNull( subProgram );
             LibLLVMDIBuilderFinalizeSubProgram( BuilderHandle.ThrowIfInvalid( ), subProgram.MetadataHandle );
         }
 
@@ -1153,11 +1153,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore )
         {
-            storage.ValidateNotNull( nameof( storage ) );
-            varInfo.ValidateNotNull( nameof( varInfo ) );
-            expression.ValidateNotNull( nameof( expression ) );
-            location.ValidateNotNull( nameof( location ) );
-            insertBefore.ValidateNotNull( nameof( insertBefore ) );
+            ArgumentNullException.ThrowIfNull( storage );
+            ArgumentNullException.ThrowIfNull( varInfo );
+            ArgumentNullException.ThrowIfNull( expression );
+            ArgumentNullException.ThrowIfNull( location );
+            ArgumentNullException.ThrowIfNull( insertBefore );
 
             var handle = LLVMDIBuilderInsertDeclareRecordBefore( BuilderHandle.ThrowIfInvalid()
                                                                , storage.ValueHandle
@@ -1210,11 +1210,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd )
         {
-            storage.ValidateNotNull( nameof( storage ) );
-            varInfo.ValidateNotNull( nameof( varInfo ) );
-            expression.ValidateNotNull( nameof( expression ) );
-            location.ValidateNotNull( nameof( location ) );
-            insertAtEnd.ValidateNotNull( nameof( insertAtEnd ) );
+            ArgumentNullException.ThrowIfNull( storage );
+            ArgumentNullException.ThrowIfNull( varInfo );
+            ArgumentNullException.ThrowIfNull( expression );
+            ArgumentNullException.ThrowIfNull( location );
+            ArgumentNullException.ThrowIfNull( insertAtEnd );
 
             if( location.Scope.SubProgram != varInfo.Scope.SubProgram )
             {
@@ -1284,10 +1284,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                           , Instruction insertBefore
                                           )
         {
-            value.ValidateNotNull( nameof( value ) );
-            varInfo.ValidateNotNull( nameof( varInfo ) );
-            location.ValidateNotNull( nameof( location ) );
-            insertBefore.ValidateNotNull( nameof( insertBefore ) );
+            ArgumentNullException.ThrowIfNull( value );
+            ArgumentNullException.ThrowIfNull( varInfo );
+            ArgumentNullException.ThrowIfNull( location );
+            ArgumentNullException.ThrowIfNull( insertBefore );
 
             var handle = LLVMDIBuilderInsertDbgValueRecordBefore(
                 BuilderHandle.ThrowIfInvalid(),
@@ -1430,8 +1430,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                              , string uniqueId = ""
                                                              )
         {
-            tag.ValidateDefined( nameof( tag ) );
-            name.ValidateNotNull( nameof( name ) );
+            tag.ThrowIfNotDefined();
+            ArgumentNullException.ThrowIfNull( name );
             uniqueId ??= string.Empty;
 
             // TODO: validate that tag is really valid for a composite type or document the result if it isn't (as long as LLVM won't crash at least)

@@ -12,7 +12,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
@@ -44,8 +43,8 @@ namespace Ubiquity.NET.Llvm
         /// <returns>New or updated <see cref="Comdat"/></returns>
         public Comdat InsertOrUpdate( string key, ComdatKind kind )
         {
-            key.ValidateNotNullOrWhiteSpace( nameof( key ) );
-            kind.ValidateDefined( nameof( kind ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( key );
+            kind.ThrowIfNotDefined();
 
             LLVMComdatRef comdatRef = LibLLVMModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
             if( !InternalComdatMap.TryGetValue( key, out Comdat? retVal ) )
@@ -90,7 +89,7 @@ namespace Ubiquity.NET.Llvm
         /// </returns>
         public bool Remove( string key )
         {
-            key.ValidateNotNullOrWhiteSpace( nameof( key ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( key );
 
             if( !InternalComdatMap.TryGetValue( key, out Comdat? value ) )
             {
@@ -116,7 +115,7 @@ namespace Ubiquity.NET.Llvm
         /// </returns>
         public bool TryGetValue( string key, [MaybeNullWhen(false)] out Comdat value )
         {
-            key.ValidateNotNullOrWhiteSpace( nameof( key ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( key );
             return InternalComdatMap.TryGetValue( key, out value );
         }
 
@@ -124,7 +123,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="module">Module the comdats are enumerated from</param>
         internal ComdatCollection( BitcodeModule module )
         {
-            module.ValidateNotNull( nameof( module ) );
+            ArgumentNullException.ThrowIfNull( module );
 
             Module = module;
             unsafe
@@ -168,7 +167,8 @@ namespace Ubiquity.NET.Llvm
 
         private bool AddComdat( LLVMComdatRef comdatRef )
         {
-            comdatRef.ValidateNotDefault( nameof( comdatRef ) );
+            comdatRef.ThrowIfInvalid();
+
             var comdat = new Comdat( Module, comdatRef );
             InternalComdatMap.Add( comdat.Name, comdat );
             return true;
