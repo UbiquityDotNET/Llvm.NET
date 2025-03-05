@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRef M, string Path);
 

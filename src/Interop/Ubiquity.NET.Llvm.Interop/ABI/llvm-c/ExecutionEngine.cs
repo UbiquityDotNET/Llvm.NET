@@ -115,7 +115,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMRemoveModule(LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, out DisposeMessageString OutError);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMFindFunction(LLVMExecutionEngineRef EE, string Name, out LLVMValueRef OutFn);
 
@@ -139,11 +139,11 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial nint LLVMGetPointerToGlobal(LLVMExecutionEngineRef EE, LLVMValueRef Global);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt64 LLVMGetGlobalValueAddress(LLVMExecutionEngineRef EE, string Name);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt64 LLVMGetFunctionAddress(LLVMExecutionEngineRef EE, string Name);
 

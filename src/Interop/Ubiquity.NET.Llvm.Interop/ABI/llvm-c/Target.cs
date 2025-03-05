@@ -528,7 +528,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetModuleDataLayout(LLVMModuleRef M, LLVMTargetDataRef DL);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetDataRef LLVMCreateTargetData(string StringRep);
 

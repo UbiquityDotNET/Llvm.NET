@@ -883,7 +883,7 @@ namespace Ubiquity.NET.Llvm.Interop
             try
             {
                 // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
-                Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", AnsiStringMarshaller.ConvertToManaged( reason ) );
+                Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", ExecutionEncodingStringMarshaller.ConvertToManaged( reason ) );
             }
             catch
             {

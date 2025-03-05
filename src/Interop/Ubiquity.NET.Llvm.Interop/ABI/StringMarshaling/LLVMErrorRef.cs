@@ -101,14 +101,14 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             unsafe
             {
-                byte* bytes = AnsiStringMarshaller.ConvertToUnmanaged(errMsg);
+                byte* bytes = ExecutionEncodingStringMarshaller.ConvertToUnmanaged(errMsg);
                 try
                 {
                     return new(LLVMCreateStringError(bytes));
                 }
                 finally
                 {
-                    AnsiStringMarshaller.Free(bytes);
+                    ExecutionEncodingStringMarshaller.Free(bytes);
                 }
             }
 

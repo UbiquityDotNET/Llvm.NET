@@ -180,7 +180,7 @@ namespace Ubiquity.NET.Llvm
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private static unsafe byte* NativeSymbolLookupCallback(void* disInfo, UInt64 referenceValue, UInt64* pReferenceType, UInt64 referencePC, byte** referenceName)
         {
-            // scoped var managedRefNameMarshaller = default( AnsiStringMarshaller.ManagedToUnmanagedIn );
+            // scoped var managedRefNameMarshaller = default( ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn );
             try
             {
                 if (GCHandle.FromIntPtr((nint)disInfo).Target is not IDisassemblerCallbacks callBacks)
@@ -190,7 +190,7 @@ namespace Ubiquity.NET.Llvm
 
                 string? managedRetVal = callBacks.SymbolLookup(referenceValue, ref *pReferenceType, referencePC, out string? managedRefName);
 
-                // managedRefNameMarshaller.FromManaged(managedRefName, stackalloc byte[AnsiStringMarshaller.ManagedToUnmanagedIn.BufferSize]);
+                // managedRefNameMarshaller.FromManaged(managedRefName, stackalloc byte[ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn.BufferSize]);
                 // Use of normal marshalling pattern is broken here... The lifetime of the effectively OUT byte pointer referenceName
                 // is undefined. If the marshalling allocates memory for the buffer then it is invalid as soon as this call returns
                 // so not much use as an OUT pointer...

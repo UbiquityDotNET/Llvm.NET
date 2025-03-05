@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <returns>A managed string.</returns>
         /// <seealso cref="ExecutionEncodingStringMarshaller.Encoding"/>
         public static string? ConvertToManaged(byte* unmanaged)
-            => ExecutionEncodingStringMarshaller.Encoding.MarshalString(unmanaged);
+            => ExecutionEncodingStringMarshaller.ConvertToManaged(unmanaged);
 
         /// <summary> [Intentional NOP] Frees the memory for the unmanaged string.</summary>
         /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>

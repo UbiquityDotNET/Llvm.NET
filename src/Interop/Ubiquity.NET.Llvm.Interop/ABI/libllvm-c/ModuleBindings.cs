@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LibLLVMGetOrInsertFunction(LLVMModuleRef module, string name, LLVMTypeRef functionType);
 
@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? LibLLVMGetModuleSourceFileName(LLVMModuleRef module);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMSetModuleSourceFileName(LLVMModuleRef module, string name);
 
@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? LibLLVMGetModuleName(LLVMModuleRef module);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LibLLVMGetGlobalAlias(LLVMModuleRef module, string name);
 
@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMModuleEnumerateComdats(LLVMModuleRef module, nint context, LibLLVMComdatIteratorCallback callback);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat(LLVMModuleRef module, string name, LLVMComdatSelectionKind kind);
 

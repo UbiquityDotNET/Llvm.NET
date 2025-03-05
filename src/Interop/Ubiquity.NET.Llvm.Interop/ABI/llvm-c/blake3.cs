@@ -97,7 +97,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_keyed(ref llvm_blake3_hasher self, /*[In]sizeis(LLVM_BLAKE3_KEY_LEN)*/ byte* key);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_derive_key(ref llvm_blake3_hasher self, string context);
 

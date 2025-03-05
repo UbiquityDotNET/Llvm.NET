@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -28,26 +29,26 @@ namespace Ubiquity.NET.Llvm.Interop
         /// it remains silent on this point. Spelunking the build system generated for LLVM itself by CMake there is NOTHING
         /// to set either the source or execution encodings for Windows, MSVC or any other toolset that I can see so they seem
         /// to be left at defaults.
+        /// <note type="information">
+        /// For .NET Core, which includes .NET 5+, <see cref="System.Text.Encoding.Default"/> is the same as
+        /// <see cref="System.Text.Encoding.UTF8"/> even on Windows. So that is the assumed encoding used here.
+        /// </note>
         /// </remarks>
         /// <ImplementationNotes>
         /// This is the one place that deals with the encoding for ALL of the interop library. Nothing in the code base should
-        /// use any other form of string marshalling. This allows one place to deal with any error or target platform/runtime
-        /// peculiarities for the encoding. This doesn't matter much for any string consts, but matters a LOT for symbol names
-        /// etc... that a user might want to set.
+        /// use any other form of string marshalling, conversion or encoding. This allows one place to deal with any error or
+        /// target platform/runtime peculiarities for the encoding. This doesn't matter much for any string consts, but matters
+        /// a LOT for symbol names etc... that a user might want to set.
         /// </ImplementationNotes>
         public static Encoding Encoding
-            => OperatingSystem.IsWindows()
-            ? Encoding.Default
-            : Encoding.UTF8;
+            => Encoding.UTF8;
 
         public static ReadOnlySpan<byte> ReadOnlySpanFromNullTerminated(byte* nativePtr)
         {
             return MemoryMarshal.CreateReadOnlySpanFromNullTerminated( nativePtr );
         }
 
-        /// <summary>
-        /// Converts a string to an unmanaged version.
-        /// </summary>
+        /// <summary>Converts a string to an unmanaged version.</summary>
         /// <param name="managed">The managed string to convert.</param>
         /// <returns>An unmanaged string.</returns>
         public static byte* ConvertToUnmanaged(string? managed)
@@ -61,42 +62,38 @@ namespace Ubiquity.NET.Llvm.Interop
             byte* mem = (byte*)Marshal.AllocCoTaskMem(exactByteCount);
             Span<byte> buffer = new (mem, exactByteCount);
 
-            Encoding.GetBytes(managed, buffer); // Does NOT include null terminator
-            buffer[^1] = 0; // now it has the null terminator! 8^)
+            int numBytes = Encoding.GetBytes(managed, buffer); // Does NOT include null terminator
+            buffer[numBytes] = 0; // now it has the null terminator! 8^)
+            Debug.Assert(exactByteCount == numBytes + 1, "Mismatched lengths, likely result in bogus native string!");
             return mem;
         }
 
-        /// <summary>
-        /// Converts an unmanaged string to a managed version.
-        /// </summary>
+        /// <summary>Converts an unmanaged string to a managed version.</summary>
         /// <param name="unmanaged">The unmanaged string to convert.</param>
         /// <returns>A managed string.</returns>
         public static string? ConvertToManaged(byte* unmanaged)
             => Encoding.MarshalString(unmanaged);
 
-        /// <summary>
-        /// Frees the memory for the unmanaged string.
-        /// </summary>
+        /// <summary>Frees the memory for the unmanaged string using the CoTask allocator.</summary>
         /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>
         public static void Free(byte* unmanaged)
             => Marshal.FreeCoTaskMem((IntPtr)unmanaged);
 
-        /// <summary>
-        /// Custom marshaller to marshal a managed string as a ANSI unmanaged string.
-        /// </summary>
+        /// <summary>Custom marshaller to marshal a managed string as an unmanaged string using the <see cref="Encoding"/> property for encoding the native string.</summary>
         [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Standard pattern for custom marshallers" )]
         public ref struct ManagedToUnmanagedIn
         {
-            /// <summary>
-            /// Gets the requested buffer size for optimized marshalling.
-            /// </summary>
+            /// <summary>Gets the default buffer size for optimized marshalling.</summary>
             public static int BufferSize => 0x100;
 
-            /// <summary>
-            /// Initializes the marshaller with a managed string and requested buffer.
-            /// </summary>
+            /// <summary>Initializes the marshaller with a managed string and requested buffer.</summary>
             /// <param name="managed">The managed string to initialize the marshaller with.</param>
             /// <param name="buffer">A request buffer of at least size <see cref="BufferSize"/>.</param>
+            /// <remarks>
+            /// If the buffer is not large enough to handle a native representation of <paramref name="managed"/>
+            /// then a new buffer is allocated and is not released until <see cref="Free"/> is called to release
+            /// it.
+            /// </remarks>
             public void FromManaged(string? managed, Span<byte> buffer)
             {
                 AllocatedByThisMarshaller = false;
@@ -111,7 +108,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 if (Encoding.GetMaxByteCount(managed.Length) >= buffer.Length)
                 {
                     // Calculate accurate byte count when the provided stack-allocated buffer is not sufficient
-                    int exactByteCount = Encoding.GetByteCount(managed) + 1; // + 1 to includes null terminator
+                    int exactByteCount = Encoding.GetByteCount(managed) + 1; // + 1 to include null terminator
                     if (exactByteCount > buffer.Length)
                     {
                         buffer = new Span<byte>((byte*)NativeMemory.Alloc((nuint)exactByteCount), exactByteCount);
@@ -121,13 +118,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
                 NativePointer = (byte*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer));
 
-                Encoding.GetBytes(managed, buffer);
-                buffer[^1] = 0;
+                int numBytes = Encoding.GetBytes(managed, buffer);
+                buffer[numBytes] = 0; // Enforce termination assumption in native code
             }
 
-            /// <summary>
-            /// Converts the current managed string to an unmanaged string.
-            /// </summary>
+            /// <summary>Converts the current managed string to an unmanaged string.</summary>
             /// <returns>The converted unmanaged string.</returns>
             public readonly byte* ToUnmanaged() => NativePointer;
 

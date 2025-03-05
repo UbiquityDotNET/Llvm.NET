@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -64,6 +65,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         [TestMethod]
         [SuppressMessage( "Usage", "MSTEST0037:Use proper 'Assert' methods", Justification = "Broken analyzer, suggested API does NOT handle unsafe pointer types" )]
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "It's a pointer - chill" )]
+        [SkipLocalsInitAttribute]
         public void TestConVersionToManagedWithInSemantics()
         {
             // simulate the general flow of code used by the LibraryImportAttribute source generator
@@ -72,6 +74,39 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn marshaller = new();
                 try
                 {
+#pragma warning disable CS9081 // A result of a stackalloc expression of this type in this context may be exposed outside of the containing method
+                    // It isn't exposed and this is EXACTLY what the source generator does!
+                    marshaller.FromManaged("123", stackalloc byte[ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn.BufferSize]);
+#pragma warning restore CS9081 // A result of a stackalloc expression of this type in this context may be exposed outside of the containing method
+
+                    byte* pNativeString = marshaller.ToUnmanaged();
+                    Assert.IsTrue(pNativeString is not null);
+                    Assert.AreEqual( (byte)0x31, pNativeString[0]);
+                    Assert.AreEqual( (byte)0x32, pNativeString[1]);
+                    Assert.AreEqual( (byte)0x33, pNativeString[2]);
+                    Assert.AreEqual( 0, pNativeString[3]);
+                }
+                finally
+                {
+                    marshaller.Free();
+                }
+            }
+        }
+
+        [TestMethod]
+        [SuppressMessage( "Usage", "MSTEST0037:Use proper 'Assert' methods", Justification = "Broken analyzer, suggested API does NOT handle unsafe pointer types" )]
+        [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "It's a pointer - chill" )]
+        [SkipLocalsInitAttribute]
+        public void TestConVersionToManagedWithInSemanticsAllocated()
+        {
+            // simulate the general flow of code used by the LibraryImportAttribute source generator
+            unsafe
+            {
+                ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn marshaller = new();
+                try
+                {
+                    // use a default span as the input so the size is 0, which forces the marshaller to perform internal allocation
+                    // and free is relevant (and really required here)
                     marshaller.FromManaged("123", default);
 
                     byte* pNativeString = marshaller.ToUnmanaged();
@@ -87,5 +122,6 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 }
             }
         }
+
     }
 }

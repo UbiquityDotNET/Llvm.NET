@@ -221,7 +221,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMContextRefAlias LibLLVMGetNodeContext(LLVMMetadataRef node);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
             LLVMDIBuilderRef D,
@@ -313,7 +313,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMAddNamedMetadataOperand2(LLVMModuleRef M, string name, LLVMMetadataRef Val);
 
