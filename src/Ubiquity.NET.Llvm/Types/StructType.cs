@@ -64,7 +64,7 @@ namespace Ubiquity.NET.Llvm.Types
         public void SetBody( bool packed, params ITypeRef[ ] elements )
             => SetBody(packed, (IEnumerable<ITypeRef>)elements);
 
-        public string Name => LLVMGetStructName( TypeRefHandle );
+        public string Name => LLVMGetStructName( TypeRefHandle ) ?? string.Empty;
 
         public bool IsOpaque => LLVMIsOpaqueStruct( TypeRefHandle );
 

@@ -97,10 +97,10 @@ namespace Ubiquity.NET.Llvm
     public class Target
     {
         /// <summary>Gets the name of this target</summary>
-        public string Name => LLVMGetTargetName( TargetHandle );
+        public string Name => LLVMGetTargetName( TargetHandle ) ?? string.Empty;
 
         /// <summary>Gets the description of this target</summary>
-        public string Description => LLVMGetTargetDescription( TargetHandle );
+        public string Description => LLVMGetTargetDescription( TargetHandle ) ?? string.Empty;
 
         /// <summary>Gets a value indicating whether this target has JIT support</summary>
         public bool HasJIT => LLVMTargetHasJIT( TargetHandle );

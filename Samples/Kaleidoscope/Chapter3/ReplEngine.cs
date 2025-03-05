@@ -30,7 +30,7 @@ namespace Kaleidoscope.Chapter3
         {
             switch( resultValue )
             {
-            case IrFunction function:
+            case Function function:
                 Console.WriteLine( "Defined function: {0}", function.Name );
                 Console.WriteLine( function );
                 break;

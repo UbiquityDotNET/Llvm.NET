@@ -13,6 +13,11 @@ namespace Ubiquity.NET.Llvm.Interop
     public class DisposeMessageString
         : LlvmStringHandle
     {
+        /// <summary>Default constructor is required for marshalling</summary>
+        public DisposeMessageString()
+        {
+        }
+
         protected override bool ReleaseHandle()
         {
             LLVMDisposeMessage( handle );

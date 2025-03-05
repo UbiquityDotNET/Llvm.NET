@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 
 using Ubiquity.NET.Llvm;
-using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
@@ -32,7 +31,7 @@ namespace CodeGenWithDebugInfo
                                                                       , CodeModel.Small
                                                                       );
 
-        public void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex )
+        public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {
             // ByVal pointers indicate by value semantics. The actual LLVM semantics are along the lines of
             // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"

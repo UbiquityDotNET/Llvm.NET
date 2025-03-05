@@ -86,7 +86,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         }
 
         /// <summary>Gets the function this builder currently inserts into</summary>
-        public IrFunction? InsertFunction => InsertBlock?.ContainingFunction;
+        public Function? InsertFunction => InsertBlock?.ContainingFunction;
 
         /// <summary>Positions the builder at the end of a given <see cref="BasicBlock"/></summary>
         /// <param name="basicBlock">Block to set the position of</param>
@@ -340,13 +340,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
-        public CallInstruction Call( IrFunction func, params Value[ ] args ) => Call( func, ( IReadOnlyList<Value> )args );
+        public CallInstruction Call( Function func, params Value[ ] args ) => Call( func, ( IReadOnlyList<Value> )args );
 
         /// <summary>Creates a call function</summary>
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
-        public CallInstruction Call( IrFunction func, IReadOnlyList<Value> args )
+        public CallInstruction Call( Function func, IReadOnlyList<Value> args )
         {
             ArgumentNullException.ThrowIfNull( func );
             ArgumentNullException.ThrowIfNull( args );
@@ -361,7 +361,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="then">Successful continuation block</param>
         /// <param name="catchBlock">Exception handling block</param>
         /// <returns><see cref="Instructions.Invoke"/></returns>
-        public Invoke Invoke( IrFunction func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
+        public Invoke Invoke( Function func, IReadOnlyList<Value> args, BasicBlock then, BasicBlock catchBlock )
         {
             ArgumentNullException.ThrowIfNull( func );
             ArgumentNullException.ThrowIfNull( args );
@@ -1705,7 +1705,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Value.FromHandle<AtomicRMW>( handle.ThrowIfInvalid( ) )!;
         }
 
-        private static IFunctionType ValidateCallArgs( IrFunction func, IReadOnlyList<Value> args )
+        private static IFunctionType ValidateCallArgs( Function func, IReadOnlyList<Value> args )
         {
             IFunctionType signatureType = func.Signature;
 
@@ -1729,11 +1729,11 @@ namespace Ubiquity.NET.Llvm.Instructions
             return signatureType;
         }
 
-        private LLVMValueRef BuildCall( IrFunction func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
+        private LLVMValueRef BuildCall( Function func, params Value[ ] args ) => BuildCall( func, ( IReadOnlyList<Value> )args );
 
-        private LLVMValueRef BuildCall( IrFunction func ) => BuildCall( func, new List<Value>( ) );
+        private LLVMValueRef BuildCall( Function func ) => BuildCall( func, new List<Value>( ) );
 
-        private LLVMValueRef BuildCall( IrFunction func, IReadOnlyList<Value> args )
+        private LLVMValueRef BuildCall( Function func, IReadOnlyList<Value> args )
         {
             IFunctionType sig = ValidateCallArgs( func, args );
             LLVMValueRef[ ] llvmArgs = args.Select( v => v.ValueHandle ).ToArray( );

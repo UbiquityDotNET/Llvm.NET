@@ -44,10 +44,24 @@ namespace Ubiquity.NET.Llvm.Interop
             LazyMessage = new( LazyGetMessage );
         }
 
+        /// <summary>Gets a value indicating whether this instance represents success</summary>
+        public bool Success => handle == nint.Zero;
+
+        /// <summary>Gets a value indicating whether this instance represents a failure</summary>
+        public bool Failed => !Success;
+
         /// <inheritdoc/>
         public override string ToString()
         {
             return LazyMessage.Value?.ToString() ?? string.Empty;
+        }
+
+        public void ThrowIfFailed()
+        {
+            if (Failed)
+            {
+                throw new LlvmException(ToString());
+            }
         }
 
         /// <summary>Gets the LLVM type ID for the error</summary>
@@ -123,10 +137,10 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             // LLVMGetErrorMessage is explicitly defined as NOT idempotent.
-            // So, once the value is retrieved it cannot be retrieved again.
+            // Once the value is retrieved it cannot be retrieved again.
             // This marshals the string to an ErrorMessageString this one time
-            // only. The ErrorMessageString owns the resulting string of the
-            // message.
+            // only. The ErrorMessageString instance owns the resulting native
+            // string of the message and will dispose of it appropriately.
             ErrorMessageString retVal = new(LLVMGetErrorMessage( handle ));
             SetHandleAsInvalid();
             return retVal;

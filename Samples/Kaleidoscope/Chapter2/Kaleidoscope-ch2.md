@@ -438,12 +438,12 @@ mechanism for building a pipeline of transformations from the text input into th
 
 ### CodeGenerator
 The code generator will transform the AST node into the final output for the program. For the basic samples
-(Chapter 3-7) it indicates the value of any JITed and executed top level expressions, or the name of any functions
-defined. Chapter 2 uses a generator that simply produces the node it was given as the app doesn't actually use LLVM
-(it focuses on parsing the language only and the REPL infrastructure). This, helps to keep the samples
-consistent and as similar as possible to allow direct file comparisons to show the changes for a particular feature.
-The separation of concerns also aids in making the grammar, runtime and code generation unit-testable without the
-driver.
+(Chapter 4-7) it indicates the value of any JITed and executed top level expressions. In chapter 3 it indicates
+the name of any functions defined and the LLVM IR for them. Chapter 2 uses a generator that simply produces the
+node it was given as the app doesn't actually use LLVM (it focuses on parsing the language only and the REPL
+infrastructure). This, helps to keep the samples consistent and as similar as possible to allow direct file
+comparisons to show the changes for a particular feature. The separation of concerns also aids in making the
+grammar, runtime and code generation unit-testable without the driver application.
 
 [!code-csharp[ShowResults](CodeGenerator.cs)]
 

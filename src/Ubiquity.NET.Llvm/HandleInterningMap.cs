@@ -18,9 +18,6 @@ namespace Ubiquity.NET.Llvm
         : IHandleInterning<THandle, TMappedType>
         where THandle : notnull, IEquatable<THandle>
     {
-        /// <summary>Gets the context for the handles in this map</summary>
-        public Context Context { get; }
-
         /// <summary>Gets or creates a wrapped type for the handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>
         /// <param name="foundHandleRelease">Action to perform if the handle was already in the map [default: null]</param>
@@ -71,11 +68,8 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        /// <summary>Initializes a new instance of the <see cref="HandleInterningMap{THandle, TMappedType}"/> class.</summary>
-        /// <param name="context">Context this map is bound to</param>
-        private protected HandleInterningMap( Context context )
+        private protected HandleInterningMap( )
         {
-            Context = context;
         }
 
         // Extension point to allow optimized dispose of all items if available.

@@ -10,11 +10,9 @@
     <ProductVersionMajor Condition="'$(ProductVersionMajor)'==''">$(LlvmVersionMajor)</ProductVersionMajor>
     <ProductVersionMinor Condition="'$(ProductVersionMinor)'==''">$(LlvmVersionMinor)</ProductVersionMinor>
     <ProductVersionBuild Condition="'$(ProductVersionBuild)'==''">$(LlvmVersionPatch)</ProductVersionBuild>
-
     <!-- Use a distinct revision for debug vs non debug builds so it is easy to identify -->
     <ProductVersionRevision Condition="'$(ProductVersionRevision)'=='' AND '$(Configuration)'=='Release'">0</ProductVersionRevision>
     <ProductVersionRevision Condition="'$(ProductVersionRevision)'=='' AND '$(Configuration)'=='Debug'">1</ProductVersionRevision>
-
     <FileVersionMajor Condition="'$(FileVersionMajor)'==''">$(ProductVersionMajor)</FileVersionMajor>
     <FileVersionMinor Condition="'$(FileVersionMinor)'==''">$(ProductVersionMinor)</FileVersionMinor>
   </PropertyGroup>

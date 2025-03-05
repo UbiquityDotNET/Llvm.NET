@@ -63,11 +63,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         // Does the list include exceptions thrown by the complete call graph? or only those explicitly thrown by this function?
         public DITypeArray? ThrownTypes => Operands.Count < 11 ? null : new DITypeArray( GetOperand<MDTuple>( 10 ) );
 
-        /// <summary>Determines if this instance describes a given <see cref="IrFunction"/></summary>
-        /// <param name="function"><see cref="IrFunction"/> to test</param>
+        /// <summary>Determines if this instance describes a given <see cref="Function"/></summary>
+        /// <param name="function"><see cref="Function"/> to test</param>
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public bool Describes( IrFunction function )
+        public bool Describes( Function function )
             => LibLLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function ) ).ValueHandle );
 
         internal DISubProgram( LLVMMetadataRef handle )

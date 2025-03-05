@@ -69,7 +69,7 @@ namespace Kaleidoscope.Runtime
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate double CallbackHandler4( double arg1, double arg2, double arg3, double arg4 );
 
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Native callback *MUST NOT* surface managed exceptions" )]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private double Printd( double x )
         {
             // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
@@ -84,7 +84,7 @@ namespace Kaleidoscope.Runtime
             }
         }
 
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Native callback *MUST NOT* surface managed exceptions" )]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private double PutChard( double x )
         {
             // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code

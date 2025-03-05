@@ -39,7 +39,9 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public string Name
         {
-            get => Context.IsDisposed ? string.Empty : LLVMGetValueName2( ValueHandle, out size_t _ );
+            get => Context.IsDisposed
+                 ? string.Empty
+                 : LLVMGetValueName2( ValueHandle, out size_t _ ) ?? string.Empty;
 
             set => LLVMSetValueName2( ValueHandle, value, value.ValidateNotNull( nameof( value ) ).Length );
         }

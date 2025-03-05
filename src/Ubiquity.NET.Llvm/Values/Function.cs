@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IrFunction.cs" company="Ubiquity.NET Contributors">
+// <copyright file="Function.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -201,7 +201,7 @@ namespace Ubiquity.NET.Llvm.Values
     }
 
     /// <summary>LLVM Function definition</summary>
-    public class IrFunction
+    public class Function
         : GlobalObject
         , IAttributeAccessor
     {
@@ -235,9 +235,9 @@ namespace Ubiquity.NET.Llvm.Values
         public ITypeRef ReturnType => Signature.ReturnType;
 
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
-        public IrFunction? PersonalityFunction
+        public Function? PersonalityFunction
         {
-            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<IrFunction>( LLVMGetPersonalityFn( ValueHandle.ThrowIfInvalid( ) ) )!;
+            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle.ThrowIfInvalid( ) ) )!;
 
             set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
         }
@@ -258,7 +258,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso href="xref:llvm_docs_garbagecollection">Garbage Collection with LLVM</seealso>
         public string GcName
         {
-            get => LLVMGetGC( ValueHandle );
+            get => LLVMGetGC( ValueHandle ) ?? string.Empty;
             set => LLVMSetGC( ValueHandle, value );
         }
 
@@ -377,7 +377,7 @@ namespace Ubiquity.NET.Llvm.Values
             uint count = GetAttributeCountAtIndex( index );
             if( count == 0 )
             {
-                return Enumerable.Empty<AttributeValue>( );
+                return [];
             }
 
             var buffer = new LLVMAttributeRef[ count ];
@@ -428,7 +428,32 @@ namespace Ubiquity.NET.Llvm.Values
             LLVMDeleteFunction( ValueHandle );
         }
 
-        internal IrFunction( LLVMValueRef valueRef )
+        /// <summary>Tries running the specified passes on this function</summary>
+        /// <param name="targetMachine">Target machine for the passes</param>
+        /// <param name="options">Options for the passes</param>
+        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
+        /// <returns>Error containing result</returns>
+        /// <exception cref="ArgumentNullException">One of the arguments provided was null (see exception details for name of the parameter)</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="passes"/> has less than one pass. At least one is required</exception>
+        /// <remarks>
+        /// This will try to run all the passes specified against the module. The return value contains
+        /// the results and, if an error occurred, any error message text for the error.
+        /// <note type="information">
+        /// The `try` semantics apply to the actual LLVM call only, normal parameter checks are performed
+        /// and may produce an exception.
+        /// </note>
+        /// </remarks>
+        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes)
+        {
+            ArgumentNullException.ThrowIfNull(targetMachine);
+            ArgumentNullException.ThrowIfNull(options);
+            ArgumentNullException.ThrowIfNull(passes);
+            ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
+
+            return new(LLVMRunPassesOnFunction(ValueHandle, string.Join(',', passes), targetMachine.TargetMachineHandle, options.Handle));
+        }
+
+        internal Function( LLVMValueRef valueRef )
             : base( valueRef )
         {
             Attributes = new ValueAttributeDictionary( this, ( ) => this );

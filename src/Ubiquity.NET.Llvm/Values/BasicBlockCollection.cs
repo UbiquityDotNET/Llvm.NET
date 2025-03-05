@@ -101,11 +101,11 @@ namespace Ubiquity.NET.Llvm.Values
 
         public bool IsReadOnly => false;
 
-        internal BasicBlockCollection( IrFunction function )
+        internal BasicBlockCollection( Function function )
         {
             ContainingFunction = function;
         }
 
-        private readonly IrFunction ContainingFunction;
+        private readonly Function ContainingFunction;
     }
 }

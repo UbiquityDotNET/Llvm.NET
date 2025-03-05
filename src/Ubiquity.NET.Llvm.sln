@@ -76,7 +76,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ubiquity.NET.Llvm.JIT.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.Llvm.Interop", "Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj", "{E3F83E17-02C9-4CFF-802D-80AAD9900D9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteropTests", "Interop\InteropTests\InteropTests.csproj", "{3F2B911D-D437-4F15-ADC4-4C7A4ABB5389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.Llvm.Interop.UT", "Interop\InteropTests\Ubiquity.NET.Llvm.Interop.UT.csproj", "{3F2B911D-D437-4F15-ADC4-4C7A4ABB5389}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

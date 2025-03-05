@@ -2,7 +2,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
-using System.Runtime.CompilerServices;
+using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -72,6 +72,51 @@ namespace Ubiquity.NET.Llvm.Interop
             : this(ownsHandle: true)
         {
             SetHandle(handle);
+        }
+    }
+
+    public static class GlobalHandleBaseExtensions
+    {
+        /// <summary>Provides MOVE semantics for a global handle instance</summary>
+        /// <typeparam name="T">Type of the global handle</typeparam>
+        /// <param name="self">The global handle to move ownership of</param>
+        /// <returns>new handle that owns this instance</returns>
+        /// <remarks>
+        /// This provides move semantics such that this instance is invalid after the operation
+        /// completes. This allows dispose to function normally but as a NOP, which allows for
+        /// consistent treatment of these references. The use of an extension method ensures type
+        /// matching on the handle types AND improves readability and maintainability by declaring
+        /// intent in a "self documenting" fashion.
+        /// </remarks>
+        public static T Move<T>(this T self)
+            where T : GlobalHandleBase, new()
+        {
+            ArgumentNullException.ThrowIfNull(self);
+
+            T retVal = new();
+            Marshal.InitHandle(retVal, self.DangerousGetHandle());
+            self.SetHandleAsInvalid();
+            return retVal;
+        }
+
+        /// <summary>This provides `move` semantics when transferring ownership of the resources represented by the handle to native code</summary>
+        /// <typeparam name="T">Type of the handle (Usually deduced implicitly from args)</typeparam>
+        /// <param name="self">The handle to `move` ownership into native code</param>
+        /// <returns>The underlying native handle that will NOT receive any additional clean up or release</returns>
+        /// <remarks>
+        /// <note type="important">It is important to note that this will release all the safety guarantees of cleanup for a
+        /// <see cref="SafeHandle"/>! This is normally used directly as the return value of a callback. It should NOT be used
+        /// for `in` parameters. It is possible that the ownership is not fully transferred and some error results leaving the
+        /// resource dangling/leaked. Instead, pass it using normal handle marshalling, then after the native call returns it
+        /// is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
+        /// </note>
+        /// </remarks>
+        public static nint MoveToNative<T>(this T self)
+            where T : GlobalHandleBase
+        {
+            ArgumentNullException.ThrowIfNull(self);
+            self.SetHandleAsInvalid();
+            return self.DangerousGetHandle();
         }
     }
 }

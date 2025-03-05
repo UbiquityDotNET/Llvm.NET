@@ -8,9 +8,6 @@ using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop;
-
-/* ReSharper disable StringLiteralTypo */
 namespace Ubiquity.NET.Llvm.Tests
 {
     [TestClass]

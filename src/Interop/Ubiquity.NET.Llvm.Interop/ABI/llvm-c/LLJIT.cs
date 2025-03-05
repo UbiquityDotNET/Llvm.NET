@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
-    using unsafe LLVMOrcLLJITBuilderObjectLinkingLayerCreatorFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, nint /*LLVMOrcExecutionSessionRef ES*/, byte* /*Triple*/, LLVMOrcObjectLayerRef /*retVal*/>;
+    using unsafe LLVMOrcLLJITBuilderObjectLinkingLayerCreatorFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, nint /*LLVMOrcExecutionSessionRef ES*/, byte* /*Triple*/, /*LLVMOrcObjectLayerRef*/ nint /*retVal*/>;
 #pragma warning restore IDE0065, SA1200
 
     public static partial class NativeMethods
@@ -52,8 +52,8 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -97,7 +97,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
     }
 }

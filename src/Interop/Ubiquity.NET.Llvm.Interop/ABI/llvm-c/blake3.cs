@@ -77,8 +77,8 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string llvm_blake3_version();
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? llvm_blake3_version();
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

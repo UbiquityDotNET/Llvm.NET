@@ -52,11 +52,11 @@ namespace Ubiquity.NET.Llvm.Values
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        internal FunctionParameterList( IrFunction owningFunction )
+        internal FunctionParameterList( Function owningFunction )
         {
             OwningFunction = owningFunction;
         }
 
-        private readonly IrFunction OwningFunction;
+        private readonly Function OwningFunction;
     }
 }

@@ -6,9 +6,8 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -38,17 +37,15 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             get
             {
-                // At the very least, this needs to know the length of the string
-                // so make sure it is computed/scanned only once.
-                LazyInitializer.EnsureInitialized( ref LazyStrLen, ref LengthInitialized, ref LazySyncLock, MakeLazyStringLen );
+                ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
                 unsafe
                 {
-                    return IsClosed || IsInvalid ? default : new ReadOnlySpan<byte>((void*)handle, LazyStrLen);
+                    return LazyValue.GetReadOnlySpan((byte*)handle);
                 }
             }
         }
 
-        /// <summary>Converts the underlying ANSI pointer into a managed string</summary>
+        /// <summary>Converts the underlying string pointer into a managed string</summary>
         /// <returns>Managed string for the provided pointer</returns>
         /// <remarks>
         /// The return is a managed string that is equivalent to the string of this pointer.
@@ -56,13 +53,11 @@ namespace Ubiquity.NET.Llvm.Interop
         /// </remarks>
         public override string ToString()
         {
-            if (IsClosed || IsInvalid)
+            ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+            unsafe
             {
-                return string.Empty;
+                return LazyValue.ToString((byte*)handle) ?? string.Empty;
             }
-
-            LazyInitializer.EnsureInitialized(ref LazyString, ref LazySyncLock, MakeLazyString);
-            return LazyString;
         }
 
         public override bool Equals(object? obj)
@@ -72,32 +67,32 @@ namespace Ubiquity.NET.Llvm.Interop
 
         public override int GetHashCode()
         {
-            ReadOnlySpan<byte> data = ReadOnlySpan;
-
-            // if there's no data, then the hash is 0
-            if (data.Length == 0)
-            {
-                return 0;
-            }
-
-            // use BLAKE3 to compute a hash code of the span data, and then hash the resulting array.
-            llvm_blake3_hasher hasher = default;
-            llvm_blake3_hasher_init(ref hasher);
-            unsafe
-            {
-                fixed(byte* p = &MemoryMarshal.GetReference(data))
-                {
-                    llvm_blake3_hasher_update(ref hasher, p, data.Length);
-                }
-
-                llvm_blake3_hasher_finalize(ref hasher, out byte[] hashCode, out nint _);
-                return hashCode.GetHashCode();
-            }
+            ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+            return ByteSpanHelpers.ComputeHashCode(ReadOnlySpan);
         }
 
         public bool Equals(LlvmStringHandle? other)
         {
-            return other is not null && ReadOnlySpan.SequenceEqual(other.ReadOnlySpan);
+            // perf optimization to skip longer scan if possible (null input or exact same handle value)
+            return other is not null
+                && ( (handle == other.handle) || Equals(other.ReadOnlySpan));
+        }
+
+        /// <summary>Tests if the span of characters for this string is identical to the provided span</summary>
+        /// <param name="otherSpan">Span of bytes to compare this string to</param>
+        /// <returns><see langword="true"/> if the spans contain the same data or <see langword="false"/> if not</returns>
+        public bool Equals(ReadOnlySpan<byte> otherSpan)
+        {
+            return ReadOnlySpan.SequenceEqual(otherSpan);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if( disposing )
+            {
+                LazyValue.Dispose();
+            }
         }
 
         private protected LlvmStringHandle()
@@ -116,24 +111,6 @@ namespace Ubiquity.NET.Llvm.Interop
         {
         }
 
-        private string MakeLazyString()
-        {
-            string retVal = Marshal.PtrToStringAnsi( handle ) ?? string.Empty;
-            LazyInitializer.EnsureInitialized(ref LazyStrLen, ref LengthInitialized, ref LazySyncLock, ()=> retVal.Length);
-            return retVal;
-        }
-
-        private int MakeLazyStringLen()
-        {
-            unsafe
-            {
-                return MemoryMarshal.CreateReadOnlySpanFromNullTerminated((byte*)handle).Length;
-            }
-        }
-
-        private object LazySyncLock = new();
-        private string? LazyString;
-        private bool LengthInitialized;
-        private int LazyStrLen;
+        private readonly LazyInitializedString LazyValue = new();
     }
 }

@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm
     public class NamedMDNode
     {
         /// <summary>Gets the name of the node</summary>
-        public string Name => LLVMGetNamedMetadataName( NativeHandle, out size_t _ );
+        public string Name => LLVMGetNamedMetadataName( NativeHandle, out size_t _ ) ?? string.Empty;
 
         /// <summary>Gets the operands for the node</summary>
         public IList<MDNode> Operands { get; }

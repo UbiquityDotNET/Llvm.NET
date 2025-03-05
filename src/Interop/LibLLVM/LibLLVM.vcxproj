@@ -94,8 +94,8 @@
     <ClCompile Include="InlinedExports.cpp" />
     <ClCompile Include="IRBindings.cpp" />
     <ClCompile Include="MetadataBindings.cpp" />
-    <ClCompile Include="PassManagerBindings.cpp" />
     <ClCompile Include="ModuleBindings.cpp" />
+    <ClCompile Include="PassBuilderOptionsBindings.cpp" />
     <ClCompile Include="TripleBindings.cpp" />
     <ClCompile Include="ValueBindings.cpp" />
   </ItemGroup>
@@ -113,10 +113,10 @@
     <ClInclude Include="include\libllvm-c\MetadataBindings.h" />
     <ClInclude Include="include\libllvm-c\ModuleBindings.h" />
     <ClInclude Include="include\libllvm-c\ObjectFileBindings.h" />
-    <ClInclude Include="include\libllvm-c\PassManagerBindings.h" />
     <ClInclude Include="include\libllvm-c\TripleBindings.h" />
     <ClInclude Include="include\libllvm-c\ValueBindings.h" />
     <ClInclude Include="include\ValueCache.h" />
+    <ClInclude Include="PassBuilderOptionsBindings.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

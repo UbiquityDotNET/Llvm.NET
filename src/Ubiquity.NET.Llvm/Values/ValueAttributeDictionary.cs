@@ -71,7 +71,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        internal ValueAttributeDictionary( IAttributeAccessor container, Func<IrFunction> functionFetcher )
+        internal ValueAttributeDictionary( IAttributeAccessor container, Func<Function> functionFetcher )
         {
             Container = container;
             FunctionFetcher = functionFetcher;
@@ -89,7 +89,7 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
-        private readonly Func<IrFunction> FunctionFetcher;
+        private readonly Func<Function> FunctionFetcher;
         private readonly IAttributeAccessor Container;
     }
 }

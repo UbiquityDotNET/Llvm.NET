@@ -137,7 +137,7 @@ namespace Kaleidoscope.Chapter3
             functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
 
-            IrFunction? function;
+            Function? function;
             if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
             {
                 function = GetOrDeclareFunction( target );
@@ -208,9 +208,9 @@ namespace Kaleidoscope.Chapter3
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private IrFunction GetOrDeclareFunction( Prototype prototype )
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
-            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
+            if( Module.TryGetFunction( prototype.Name, out Function? function ) )
             {
                 return function;
             }

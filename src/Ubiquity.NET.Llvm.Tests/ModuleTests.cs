@@ -69,6 +69,7 @@ namespace Ubiquity.NET.Llvm.Tests
         }
 
         [TestMethod]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "MSTEST0032:Assertion condition is always true", Justification = "BS! This VERIFIES the claim!" )]
         public void ConstructorTestWithName( )
         {
             using var context = new Context( );
@@ -196,7 +197,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
-            IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+            Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
             // verify basics
             Assert.IsNotNull( testFunc );
@@ -210,7 +211,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
-            IrFunction testFunc = CreateInvalidFunction( module, "badfunc" );
+            Function testFunc = CreateInvalidFunction( module, "badfunc" );
 
             // verify basics
             Assert.IsNotNull( testFunc );
@@ -224,7 +225,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
-            IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+            Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
             // verify basics
             Assert.IsNotNull( testFunc );
@@ -232,7 +233,7 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.AreEqual( "foo", testFunc.Name );
 
             // Verify the function is in the module, and getting it retrieves the same instance
-            Assert.IsTrue( module.TryGetFunction( "foo", out IrFunction? funcFromModule ) );
+            Assert.IsTrue( module.TryGetFunction( "foo", out Function? funcFromModule ) );
             Assert.AreSame( testFunc, funcFromModule );
         }
 
@@ -254,7 +255,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
                 // force a GC to ensure buffer created in LoadFrom is handled correctly
                 GC.Collect( GC.MaxGeneration );
-                Assert.IsTrue( module2.TryGetFunction( "foo", out IrFunction? testFunc ) );
+                Assert.IsTrue( module2.TryGetFunction( "foo", out Function? testFunc ) );
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
@@ -275,7 +276,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
 
-            IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+            Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
             // verify basics
             Assert.IsNotNull( testFunc );
@@ -290,7 +291,7 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
-            IrFunction testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
+            Function testFunc = CreateSimpleVoidNopTestFunction( module, "_test" );
 
             var alias = module.AddAlias( testFunc, TestModuleName );
             Assert.AreSame( alias, module.GetAlias( TestModuleName ) );
@@ -522,7 +523,7 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.AreEqual( 1, clone.Comdats.Count, "Comdat count should contain the one and only referenced comdat after save/clone" );
             Assert.IsTrue( clone.Comdats.Contains( globalName ), "Cloned module should have the referenced comdat" );
 
-            Assert.IsTrue( clone.TryGetFunction( globalName, out IrFunction? clonedGlobal ) );
+            Assert.IsTrue( clone.TryGetFunction( globalName, out Function? clonedGlobal ) );
             Assert.IsNotNull( clonedGlobal );
             Assert.IsNotNull( clonedGlobal!.Comdat );
             Assert.AreEqual( globalName, clonedGlobal.Comdat!.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
@@ -536,7 +537,7 @@ namespace Ubiquity.NET.Llvm.Tests
             return retVal;
         }
 
-        private static IrFunction CreateSimpleVoidNopTestFunction( BitcodeModule module, string name )
+        private static Function CreateSimpleVoidNopTestFunction( BitcodeModule module, string name )
         {
             var ctx = module.Context;
             Assert.IsNotNull( ctx );
@@ -551,7 +552,7 @@ namespace Ubiquity.NET.Llvm.Tests
             return testFunc;
         }
 
-        private static IrFunction CreateInvalidFunction( BitcodeModule module, string name )
+        private static Function CreateInvalidFunction( BitcodeModule module, string name )
         {
             var ctx = module.Context;
 

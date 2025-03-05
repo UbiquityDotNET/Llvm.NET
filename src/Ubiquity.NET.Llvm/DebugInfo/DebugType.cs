@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.NET.ArgValidators;
@@ -80,18 +81,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
         }
 
-        /// <summary>Gets or sets the native LLVM type for this debug type binding</summary>
-        /// <remarks>
-        /// Once the native type is set, it cannot be reset. Attempts to change the native
-        /// type when it isn't <see langword="null"/> will result in an exception.
-        /// </remarks>
-        /// <exception cref="System.InvalidOperationException">The native type was already set</exception>
-        public TNative NativeType
-        {
-            get => NativeType_.ValueOrDefault;
-
-            protected set => NativeType_.Value = value; // CONSIDER: Could this be an "init" property?
-        }
+        /// <summary>Gets the native LLVM type for this debug type binding</summary>
+        public TNative NativeType { get; init; }
 
         /// <summary>Gets an intentionally undocumented value</summary>
         /// <remarks>internal use only</remarks>
@@ -178,19 +169,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             llvmType.ValidateNotNull( nameof( llvmType ) );
 
-            NativeType_.Value = llvmType;
+            NativeType = llvmType;
             RawDebugInfoType = debugInfoType;
         }
 
         private TDebug? RawDebugInfoType;
-
-        // This can't be an auto property as the setter needs to enforce Set Once semantics
-        [SuppressMessage( "StyleCop.CSharp.NamingRules"
-                        , "SA1310:Field names must not contain underscore"
-                        , Justification = "Trailing _ indicates value MUST NOT be written to directly, even internally"
-                        )
-        ]
-        private readonly WriteOnce<TNative> NativeType_ = new();
     }
 
     /// <summary>Utility class to provide mix-in type extensions and support for Debug Types</summary>
@@ -211,8 +194,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Convenience extension for determining if the <see cref="DIType"/> property is valid</summary>
         /// <param name="debugType">Debug type to test for valid Debug information</param>
-        /// <remarks>In LLVM Debug information a <see langword="null"/> <see cref="Ubiquity.NET.Llvm.DebugInfo.DIType"/> is
-        /// used to represent the void type. Thus, looking only at the <see cref="DIType"/> property is
+        /// <remarks>In LLVM Debug information of <see langword="null"/> for a <see cref="Ubiquity.NET.Llvm.DebugInfo.DIType"/>
+        /// is used to represent the void type. Thus, looking only at the <see cref="DIType"/> property is
         /// insufficient to distinguish between a type with no debug information and one representing the void
         /// type. This extension method is used to disambiguate the two possibilities.
         /// </remarks>
@@ -222,7 +205,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull(debugType);
 
             return debugType.DebugInfoType != null
-                || debugType.NativeType.IsVoid; // second test is to see if null debugInfo == VOID type
+                || (debugType.NativeType is ITypeRef nt && nt.IsVoid); // second test is to see if null debugInfo == VOID type
         }
     }
 }

@@ -18,6 +18,7 @@
         <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,7 +33,13 @@
             <Link>CustomDictionary.xml</Link>
         </CodeAnalysisDictionary>
     </ItemGroup>
+
     <ItemGroup>
+      <PackageReference Include="System.Reactive" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
         <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
     </ItemGroup>
 

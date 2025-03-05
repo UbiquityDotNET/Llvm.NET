@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the linker section this object belongs to</summary>
         public string Section
         {
-            get => LLVMGetSection( ValueHandle );
+            get => LLVMGetSection( ValueHandle ) ?? string.Empty;
             set => LLVMSetSection( ValueHandle, value );
         }
 

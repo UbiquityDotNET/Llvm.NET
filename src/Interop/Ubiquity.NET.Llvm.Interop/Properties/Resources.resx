@@ -140,4 +140,13 @@
   <data name="Llvm_not_initialized" xml:space="preserve">
     <value>LLVM library is not initialized - nothing to shut down.</value>
   </data>
+  <data name="Value_already_set" xml:space="preserve">
+    <value>Value already set</value>
+  </data>
+  <data name="Value_not_set" xml:space="preserve">
+    <value>Value not set</value>
+  </data>
+  <data name="Already_captured_different_native_string" xml:space="preserve">
+    <value>Already captured a different native string. Check caller for incorrect string value</value>
+  </data>
 </root>

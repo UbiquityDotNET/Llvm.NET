@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -317,6 +318,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
         [TestMethod]
         [TestCategory( "Anonymous Structs" )]
+        [SuppressMessage( "Design", "MSTEST0032:Assertion condition is always true", Justification = "BS! Test VERIFIES claim" )]
         public void CreateAnonymousStructTypeTestWithOneMemberUnpacked( )
         {
             using var context = new Context( );
@@ -327,7 +329,8 @@ namespace Ubiquity.NET.Llvm.Tests
             // verify type specific attributes
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
-            Assert.IsNull( type.Name );
+            Assert.IsNotNull( type.Name );
+            Assert.IsEmpty( type.Name );
             Assert.AreEqual( 1, type.Members.Count );
             Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
             Assert.IsFalse( type.IsPacked );
@@ -349,6 +352,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
         [TestMethod]
         [TestCategory( "Anonymous Structs" )]
+        [SuppressMessage( "Design", "MSTEST0032:Assertion condition is always true", Justification = "BS! Test VERIFIES claim" )]
         public void CreateAnonymousStructTypeTestWithOneMemberPacked( )
         {
             using var context = new Context( );
@@ -359,7 +363,8 @@ namespace Ubiquity.NET.Llvm.Tests
             // verify type specific attributes
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
-            Assert.IsNull( type.Name );
+            Assert.IsNotNull( type.Name );
+            Assert.IsEmpty( type.Name );
             Assert.AreEqual( 1, type.Members.Count );
             Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
             Assert.IsTrue( type.IsPacked );
@@ -381,6 +386,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
         [TestMethod]
         [TestCategory( "Anonymous Structs" )]
+        [SuppressMessage( "Design", "MSTEST0032:Assertion condition is always true", Justification = "BS! Test VERIFIES claim" )]
         public void CreateAnonymousStructTypeTestWithMultipleMembersUnpacked( )
         {
             using var context = new Context( );
@@ -391,7 +397,8 @@ namespace Ubiquity.NET.Llvm.Tests
             // verify type specific attributes
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
-            Assert.IsNull( type.Name );
+            Assert.IsNotNull( type.Name );
+            Assert.IsEmpty( type.Name );
             Assert.AreEqual( 2, type.Members.Count );
             Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
             Assert.AreSame( context.Int32Type, type.Members[ 1 ] );
@@ -414,6 +421,7 @@ namespace Ubiquity.NET.Llvm.Tests
 
         [TestMethod]
         [TestCategory( "Anonymous Structs" )]
+        [SuppressMessage( "Design", "MSTEST0032:Assertion condition is always true", Justification = "BS! Test VERIFIES claim" )]
         public void CreateAnonymousStructTypeTestWithMultipleMembersPacked( )
         {
             using var context = new Context( );
@@ -424,7 +432,8 @@ namespace Ubiquity.NET.Llvm.Tests
             // verify type specific attributes
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
-            Assert.IsNull( type.Name );
+            Assert.IsNotNull( type.Name );
+            Assert.IsEmpty( type.Name );
             Assert.AreEqual( 2, type.Members.Count );
             Assert.AreSame( context.Int16Type, type.Members[ 0 ] );
             Assert.AreSame( context.Int32Type, type.Members[ 1 ] );

@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.Values
         : Value
     {
         /// <summary>Gets the function containing the block</summary>
-        public IrFunction? ContainingFunction
+        public Function? ContainingFunction
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.Values
                 // cache functions and use lookups to ensure
                 // identity/interning remains consistent with actual
                 // LLVM model of interning
-                return FromHandle<IrFunction>( parent );
+                return FromHandle<Function>( parent );
             }
         }
 

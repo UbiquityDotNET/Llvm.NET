@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         , IAttributeAccessor
     {
         /// <summary>Gets the target function of the invocation</summary>
-        public IrFunction TargetFunction => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
+        public Function TargetFunction => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets or sets the normal destination for the invoke</summary>
         public BasicBlock NormalDestination

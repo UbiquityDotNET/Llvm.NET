@@ -15,7 +15,7 @@ using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
-namespace InteropTests
+namespace Ubiquity.NET.Llvm.Interop.UT
 {
     [TestClass]
     public class OrcJitTests

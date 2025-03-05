@@ -86,8 +86,8 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMGetSectionName(LLVMSectionIteratorRef SI);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMGetSectionName(LLVMSectionIteratorRef SI);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -121,8 +121,8 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMGetSymbolName(LLVMSymbolIteratorRef SI);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMGetSymbolName(LLVMSymbolIteratorRef SI);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

@@ -115,7 +115,7 @@ namespace Ubiquity.NET.Llvm.Types
         }
 
         internal class InterningFactory
-            : HandleInterningMap<LLVMTypeRef, ITypeRef>
+            : HandleInterningMapWithContext<LLVMTypeRef, ITypeRef>
         {
             internal InterningFactory( Context context )
                 : base( context )

@@ -147,7 +147,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         internal class InterningFactory
-            : HandleInterningMap<LLVMMetadataRef, LlvmMetadata>
+            : HandleInterningMapWithContext<LLVMMetadataRef, LlvmMetadata>
         {
             internal InterningFactory( Context context )
                 : base( context )

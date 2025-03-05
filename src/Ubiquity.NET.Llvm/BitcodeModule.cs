@@ -11,7 +11,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 using Ubiquity.NET.ArgValidators;
 using Ubiquity.NET.Llvm.DebugInfo;
@@ -29,9 +28,6 @@ namespace Ubiquity.NET.Llvm
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It isn't a flags enum" )]
     public enum ModuleFlagBehavior
     {
-        /// <summary>Invalid value (default value for this enumeration)</summary>
-        Invalid = 0,
-
         /// <summary>Emits an error if two values disagree, otherwise the resulting value is that of the operands</summary>
         Error = LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorError,
 
@@ -74,7 +70,7 @@ namespace Ubiquity.NET.Llvm
             get
             {
                 ObjectDisposedException.ThrowIf(IsDisposed, this);
-                return LibLLVMGetModuleSourceFileName( ModuleHandle! );
+                return LibLLVMGetModuleSourceFileName( ModuleHandle! ) ?? string.Empty;
             }
 
             set
@@ -111,7 +107,8 @@ namespace Ubiquity.NET.Llvm
                     for( uint i = 0; i < len; ++i )
                     {
                         var behavior = LLVMModuleFlagEntriesGetFlagBehavior( flags, i );
-                        string key = LLVMModuleFlagEntriesGetKey( flags, i, out size_t _ );
+                        string? key = LLVMModuleFlagEntriesGetKey( flags, i, out size_t _ );
+                        Debug.Assert(key is not null, "Internal LLVM error; should never have a null key");
                         var metadata = LlvmMetadata.FromHandle<LlvmMetadata>( Context, LLVMModuleFlagEntriesGetMetadata( flags, i ).ThrowIfInvalid( ) );
                         retVal.Add( key, new ModuleFlag( ( ModuleFlagBehavior )behavior, key, metadata! ) );
                     }
@@ -175,7 +172,7 @@ namespace Ubiquity.NET.Llvm
             get
             {
                 ObjectDisposedException.ThrowIf(IsDisposed, this);
-                return LLVMGetTarget( ModuleHandle! );
+                return LLVMGetTarget( ModuleHandle! ) ?? string.Empty;
             }
 
             set
@@ -201,7 +198,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets the functions contained in this module</summary>
-        public IEnumerable<IrFunction> Functions
+        public IEnumerable<Function> Functions
         {
             get
             {
@@ -209,7 +206,7 @@ namespace Ubiquity.NET.Llvm
                 var current = LLVMGetFirstFunction( ModuleHandle! );
                 while( current != default )
                 {
-                    yield return Value.FromHandle<IrFunction>( current )!;
+                    yield return Value.FromHandle<Function>( current )!;
                     current = LLVMGetNextFunction( current );
                 }
             }
@@ -261,12 +258,12 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets the name of the module</summary>
-        public string Name => IsDisposed ? string.Empty : LibLLVMGetModuleName( ModuleHandle! );
+        public string Name => IsDisposed ? string.Empty : LibLLVMGetModuleName( ModuleHandle! ) ?? string.Empty;
 
         /// <summary>Gets or sets the module level inline assembly</summary>
         public string ModuleInlineAsm
         {
-            get => IsDisposed ? string.Empty : LLVMGetModuleInlineAsm( ModuleHandle!, out size_t _ );
+            get => IsDisposed ? string.Empty : LLVMGetModuleInlineAsm( ModuleHandle!, out size_t _ ) ?? string.Empty;
 
             set
             {
@@ -301,6 +298,31 @@ namespace Ubiquity.NET.Llvm
                 // remove the module handle from the module cache.
                 ModuleHandle.Dispose( );
             }
+        }
+
+        /// <summary>Tries running the specified passes on this module</summary>
+        /// <param name="targetMachine">Target machine for the passes</param>
+        /// <param name="options">Options for the passes</param>
+        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
+        /// <returns>Error containing result</returns>
+        /// <exception cref="ArgumentNullException">One of the arguments provided was null (see exception details for name of the parameter)</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="passes"/> has less than one pass. At least one is required</exception>
+        /// <remarks>
+        /// This will try to run all the passes specified against the module. The return value contains
+        /// the results and, if an error occurred, any error message text for the error.
+        /// <note type="information">
+        /// The `try` semantics apply to the actual LLVM call only, normal parameter checks are performed
+        /// and may produce an exception.
+        /// </note>
+        /// </remarks>
+        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes)
+        {
+            ArgumentNullException.ThrowIfNull(targetMachine);
+            ArgumentNullException.ThrowIfNull(options);
+            ArgumentNullException.ThrowIfNull(passes);
+            ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
+
+            return new(LLVMRunPasses(ModuleHandle, string.Join(',', passes), targetMachine.TargetMachineHandle, options.Handle));
         }
 
         /// <summary>Link another module into this one</summary>
@@ -362,7 +384,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="name">Name of the function</param>
         /// <param name="function">The function or <see langword="null"/> if not found</param>
         /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
-        public bool TryGetFunction( string name, [MaybeNullWhen( false )] out IrFunction function )
+        public bool TryGetFunction( string name, [MaybeNullWhen( false )] out Function function )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -374,7 +396,7 @@ namespace Ubiquity.NET.Llvm
                 return false;
             }
 
-            function = Value.FromHandle<IrFunction>( funcRef )!;
+            function = Value.FromHandle<Function>( funcRef )!;
             return true;
         }
 
@@ -384,7 +406,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="addressSpace">Address space for the indirect function</param>
         /// <param name="resolver">Resolver for the indirect function</param>
         /// <returns>New <see cref="GlobalIFunc"/></returns>
-        public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, IrFunction resolver )
+        public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, Function resolver )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -418,14 +440,14 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</summary>
         /// <param name="name">Name of the function to add</param>
         /// <param name="signature">Signature of the function</param>
-        /// <returns><see cref="IrFunction"/>matching the specified signature and name</returns>
+        /// <returns><see cref="Function"/>matching the specified signature and name</returns>
         /// <remarks>
         /// If a matching function already exists it is returned, and therefore the returned
-        /// <see cref="IrFunction"/> may have a body and additional attributes. If a function of
+        /// <see cref="Function"/> may have a body and additional attributes. If a function of
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        public IrFunction CreateFunction( string name, IFunctionType signature )
+        public Function CreateFunction( string name, IFunctionType signature )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             name.ValidateNotNullOrWhiteSpace( nameof( name ) );
@@ -437,7 +459,7 @@ namespace Ubiquity.NET.Llvm
                 function = LLVMAddFunction(ModuleHandle!, name, signature.GetTypeRef( ));
             }
 
-            return Value.FromHandle<IrFunction>( function.ThrowIfInvalid( ) )!;
+            return Value.FromHandle<Function>( function.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Writes a bit-code module to a file</summary>
@@ -737,7 +759,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
         /// <returns>Function described by the arguments</returns>
-        public IrFunction CreateFunction( DIScope? scope
+        public Function CreateFunction( DIScope? scope
                                         , string name
                                         , string? linkageName
                                         , DIFile? file
@@ -793,7 +815,7 @@ namespace Ubiquity.NET.Llvm
         /// Function, matching the signature specified. This may be a previously declared or defined
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
-        public IrFunction CreateFunction( string name
+        public Function CreateFunction( string name
                                         , bool isVarArg
                                         , IDebugType<ITypeRef, DIType> returnType
                                         , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
@@ -813,7 +835,7 @@ namespace Ubiquity.NET.Llvm
         /// Function, matching the signature specified. This may be a previously declared or defined
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
-        public IrFunction CreateFunction( string name
+        public Function CreateFunction( string name
                                         , bool isVarArg
                                         , IDebugType<ITypeRef, DIType> returnType
                                         , params IDebugType<ITypeRef, DIType>[ ] argumentTypes
@@ -838,7 +860,7 @@ namespace Ubiquity.NET.Llvm
         /// space, or bit widths. That is instead of 'llvm.memset.p0i8.i32' use 'llvm.memset.p.i'.
         /// </note>
         /// </remarks>
-        public IrFunction GetIntrinsicDeclaration( string name, params ITypeRef[ ] args )
+        public Function GetIntrinsicDeclaration( string name, params ITypeRef[ ] args )
         {
             uint id = Intrinsic.LookupId( name );
             return GetIntrinsicDeclaration( id, args );
@@ -848,7 +870,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="id">id of the intrinsic</param>
         /// <param name="args">Arguments for the intrinsic</param>
         /// <returns>Function declaration</returns>
-        public IrFunction GetIntrinsicDeclaration( UInt32 id, params ITypeRef[ ] args )
+        public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[ ] args )
         {
             ArgumentNullException.ThrowIfNull(args);
             ObjectDisposedException.ThrowIf(IsDisposed, this);
@@ -860,7 +882,7 @@ namespace Ubiquity.NET.Llvm
 
             LLVMTypeRef[ ] llvmArgs = args.Select( a => a.GetTypeRef( ) ).ToArray( );
             LLVMValueRef valueRef = LLVMGetIntrinsicDeclaration( ModuleHandle!, id, llvmArgs, llvmArgs.Length );
-            return ( IrFunction )Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
+            return ( Function )Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Clones the current module</summary>
@@ -953,7 +975,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         internal class InterningFactory
-            : HandleInterningMap<LLVMModuleRef, BitcodeModule>
+            : HandleInterningMapWithContext<LLVMModuleRef, BitcodeModule>
             , IBitcodeModuleFactory
         {
             public BitcodeModule CreateBitcodeModule( ) => CreateBitcodeModule( string.Empty );

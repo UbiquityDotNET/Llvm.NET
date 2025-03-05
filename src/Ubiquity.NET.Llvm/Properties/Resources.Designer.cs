@@ -342,7 +342,7 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot replace non temporary DebugInfoType with a new Type.
+        ///   Looks up a localized string similar to Cannot replace non temporary DIType with a new Type.
         /// </summary>
         internal static string Cannot_replace_non_temporary_DIType_with_a_new_Type {
             get {
@@ -360,7 +360,7 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot reset the native DebugInfoType to null.
+        ///   Looks up a localized string similar to Cannot reset the native DIType to null.
         /// </summary>
         internal static string Cannot_Reset_Type_to_null {
             get {
@@ -1167,29 +1167,11 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value already set.
-        /// </summary>
-        internal static string Value_already_set {
-            get {
-                return ResourceManager.GetString("Value_already_set", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Value for return must match the function signature&apos;s return type.
         /// </summary>
         internal static string Value_for_return_must_match_the_function_signature_s_return_type {
             get {
                 return ResourceManager.GetString("Value_for_return_must_match_the_function_signature_s_return_type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value not set.
-        /// </summary>
-        internal static string Value_not_set {
-            get {
-                return ResourceManager.GetString("Value_not_set", resourceCulture);
             }
         }
         

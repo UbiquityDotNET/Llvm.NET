@@ -8,9 +8,9 @@ using Ubiquity.NET.ArgValidators;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
-using IrFunction = Ubiquity.NET.Llvm.Values.IrFunction;
+using Function = Ubiquity.NET.Llvm.Values.Function;
 
-namespace Ubiquity.NET.Llvm.Transforms
+namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>LLVM pass manager for functions</summary>
     public sealed class FunctionPassManager
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.Transforms
         /// <summary>Runs the passes registered in the pass manager</summary>
         /// <param name="target">Function to run the passes on</param>
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
-        public bool Run( IrFunction target )
+        public bool Run( Function target )
         {
             return LLVMRunFunctionPassManager( Handle, target.ValidateNotNull( nameof( target ) ).ValueHandle );
         }

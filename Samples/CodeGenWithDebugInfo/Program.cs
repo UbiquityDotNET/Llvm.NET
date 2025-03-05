@@ -17,7 +17,7 @@ using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
-using static Ubiquity.NET.Llvm.Interop.Library;
+using static Ubiquity.NET.Llvm.Library;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
@@ -143,8 +143,8 @@ namespace CodeGenWithDebugInfo
             // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
             //       However, this is what Clang ends up doing for some reason so it is
             //       replicated here to aid in comparing the generated LL files.
-            IrFunction doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
-            IrFunction copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
+            Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
+            Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
 
             CreateCopyFunctionBody( module, copyFunc, diFile, fooType, fooPtr, constFoo );
             CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
@@ -177,7 +177,7 @@ namespace CodeGenWithDebugInfo
         }
 
         #region FunctionDeclarations
-        private static IrFunction DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
+        private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
             var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
 
@@ -197,7 +197,7 @@ namespace CodeGenWithDebugInfo
             return doCopyFunc;
         }
 
-        private static IrFunction DeclareCopyFunc( BitcodeModule module
+        private static Function DeclareCopyFunc( BitcodeModule module
                                                  , DIFile diFile
                                                  , IDebugType<ITypeRef, DIType> voidType
                                                  , DIDerivedType constFoo
@@ -250,7 +250,7 @@ namespace CodeGenWithDebugInfo
         #endregion
 
         private static void CreateCopyFunctionBody( BitcodeModule module
-                                                  , IrFunction copyFunc
+                                                  , Function copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo
                                                   , DebugPointerType fooPtr
@@ -330,11 +330,11 @@ namespace CodeGenWithDebugInfo
         }
 
         private static void CreateDoCopyFunctionBody( BitcodeModule module
-                                                    , IrFunction doCopyFunc
+                                                    , Function doCopyFunc
                                                     , IStructType foo
                                                     , GlobalVariable bar
                                                     , GlobalVariable baz
-                                                    , IrFunction copyFunc
+                                                    , Function copyFunc
                                                     )
         {
             var bytePtrType = module.Context.Int8Type.CreatePointerType( );

@@ -24,8 +24,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         , IAttributeAccessor
     {
         /// <summary>Gets the target function of the call</summary>
-        public IrFunction TargetFunction
-            => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
+        public Function TargetFunction
+            => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the attributes for this call site</summary>
         public IAttributeDictionary Attributes { get; }

@@ -310,8 +310,8 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

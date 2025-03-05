@@ -155,10 +155,10 @@ namespace Ubiquity.NET.Llvm.Values
 
             if(index >= FunctionAttributeIndex.Parameter0)
             {
-                IrFunction? function;
+                Function? function;
                 switch(value)
                 {
-                case IrFunction f:
+                case Function f:
                     function = f;
                     break;
 

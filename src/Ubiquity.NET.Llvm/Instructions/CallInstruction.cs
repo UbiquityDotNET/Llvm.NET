@@ -24,8 +24,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         , IAttributeAccessor
     {
         /// <summary>Gets the target function of the call</summary>
-        public IrFunction TargetFunction
-            => FromHandle<IrFunction>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
+        public Function TargetFunction
+            => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets or sets a value indicating whether the call is a tail call</summary>
         public bool IsTailCall

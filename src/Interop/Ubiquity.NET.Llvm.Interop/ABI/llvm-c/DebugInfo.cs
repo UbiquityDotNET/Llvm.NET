@@ -304,18 +304,18 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMDIFileGetDirectory(LLVMMetadataRef File, out uint Len);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMDIFileGetDirectory(LLVMMetadataRef File, out uint Len);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMDIFileGetFilename(LLVMMetadataRef File, out uint Len);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMDIFileGetFilename(LLVMMetadataRef File, out uint Len);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMDIFileGetSource(LLVMMetadataRef File, out uint Len);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMDIFileGetSource(LLVMMetadataRef File, out uint Len);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -450,8 +450,8 @@ namespace Ubiquity.NET.Llvm.Interop
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMDITypeGetName(LLVMMetadataRef DType, out size_t Length);
+        [return: MarshalUsing(typeof(ConstStringMarshaller))]
+        public static unsafe partial string? LLVMDITypeGetName(LLVMMetadataRef DType, out size_t Length);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

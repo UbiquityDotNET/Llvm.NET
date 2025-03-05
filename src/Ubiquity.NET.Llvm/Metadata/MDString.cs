@@ -6,6 +6,8 @@
 
 using Ubiquity.NET.Llvm.Interop;
 
+using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Stores a string in LlvmMetadata</summary>
@@ -16,7 +18,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            return NativeMethods.LibLLVMGetMDStringText( MetadataHandle, out uint _ );
+            return LibLLVMGetMDStringText( MetadataHandle, out uint _ ) ?? string.Empty;
         }
 
         internal MDString( LLVMMetadataRef handle )

@@ -130,7 +130,7 @@ namespace Kaleidoscope.Tests
                         TestContext.WriteLine( "Evaluated to {0}", value.Value );
                         break;
 
-                    case IrFunction function:
+                    case Function function:
                         TestContext.WriteLine( "Generated:\n{0}", function.ToString( ) );
                         break;
 

@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 {
     /// <summary>Symbol in an <see cref="TargetBinary"/></summary>
     [DebuggerDisplay( "{Name,nq}@{Address}[{Size}]" )]
-    public struct Symbol
+    public readonly struct Symbol
         : IEquatable<Symbol>
     {
         /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile.TargetBinary"/> this symbol belongs to</summary>
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         }
 
         /// <summary>Gets the name of the symbol</summary>
-        public string Name => LLVMGetSymbolName( IteratorRef );
+        public string Name => LLVMGetSymbolName( IteratorRef ) ?? string.Empty;
 
         /// <summary>Gets the address of the symbol</summary>
         public ulong Address => LLVMGetSymbolAddress( IteratorRef );

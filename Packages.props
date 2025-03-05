@@ -22,6 +22,7 @@
         <PackageReference Update="Antlr4" Version="4.6.6"/>
         <PackageReference Update="OpenSoftware.DgmlBuilder" Version="2.1.0" />
         <PackageReference Update="CommandLineParser" Version="2.9.1" />
+        <PackageReference Update="System.Reactive" Version="6.0.1" />
 
         <!-- docfx.console is deprecated, TODO: Convert everything to use docfx -->
         <PackageReference Update="docfx.console" Version="2.58.5" />
@@ -39,11 +40,6 @@
         <PackageReference Update="Microsoft.Bcl.HashCode" Version="6.0.0" />
 
         <!-- Source generators and test utilities need Roslyn compatible types for describing reference assemblies-->
-        <!--
-        NuGET lies about this...  the official NuGet site says the dependency for Microsoft.CodeAnalysis.Common
-        is '>= V4.11.0' but that's NOT true. It requires EXACTLY v4.11 and anything using the newer 4.12 is
-        busted with a build error/wanring about an inability to resolve the version mismatches.
-        -->
         <PackageReference Update="Basic.Reference.Assemblies" Version="1.8.0" />
 
         <!-- Tests all use the same framework versions -->

@@ -153,6 +153,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 = memberTypes.Aggregate( (MaxSize: 0ul, MaxAlign: 0ul)
                                        , ( a, d ) => (Math.Max( a.MaxSize, d.BitSize ), Math.Max( a.MaxAlign, d.BitAlignment ))
                                        );
+
             var concreteType = module.DIBuilder.CreateUnionType( scope: scope
                                                                , name: DebugInfoType!.Name // not null via construction
                                                                , file: file
@@ -168,11 +169,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
         {
             ulong bitSize;
-            if( !( memberInfo.ExplicitLayout is null ) )
+            if( memberInfo.ExplicitLayout is not null)
             {
                 bitSize = memberInfo.ExplicitLayout.BitSize;
             }
-            else if( !( module.Layout is null ) )
+            else if( module.Layout is not null)
             {
                 bitSize = module.Layout.BitSizeOf( memberInfo.DebugType );
             }

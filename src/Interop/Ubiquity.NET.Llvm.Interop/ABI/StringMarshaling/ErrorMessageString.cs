@@ -15,6 +15,11 @@ namespace Ubiquity.NET.Llvm.Interop
     internal class ErrorMessageString
         : LlvmStringHandle
     {
+        /// <summary>Default constructor is required for marshalling</summary>
+        public ErrorMessageString()
+        {
+        }
+
         public ErrorMessageString(nint hABI)
             : base( hABI )
         {

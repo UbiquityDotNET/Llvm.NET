@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets the Name of the attribute</summary>
         public string Name
             => IsString
-                ? LLVMGetStringAttributeKind( NativeAttribute, out uint _ )
+                ? LLVMGetStringAttributeKind( NativeAttribute, out uint _ ) ?? string.Empty
                 : LibLLVMGetEnumAttributeKindName(NativeAttribute).ToString();
 
         /// <summary>Gets the value for named attributes with values</summary>
@@ -104,7 +104,7 @@ namespace Ubiquity.NET.Llvm.Values
         internal LLVMAttributeRef NativeAttribute { get; }
 
         internal class InterningFactory
-            : HandleInterningMap<LLVMAttributeRef, AttributeValue>
+            : HandleInterningMapWithContext<LLVMAttributeRef, AttributeValue>
         {
             internal InterningFactory( Context context )
                 : base( context )

@@ -124,7 +124,7 @@ namespace Ubiquity.NET.Llvm.Values
                 return new BasicBlock( handle );
 
             case LibLLVMValueKind.FunctionKind:
-                return new IrFunction( handle );
+                return new Function( handle );
 
             case LibLLVMValueKind.GlobalAliasKind:
                 return new GlobalAlias( handle );

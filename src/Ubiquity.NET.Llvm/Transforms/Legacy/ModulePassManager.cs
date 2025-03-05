@@ -7,7 +7,7 @@ using Ubiquity.NET.ArgValidators;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
-namespace Ubiquity.NET.Llvm.Transforms
+namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>Pass manager for running passes against an entire module</summary>
     public sealed class ModulePassManager

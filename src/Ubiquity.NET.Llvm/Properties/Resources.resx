@@ -220,12 +220,6 @@
   <data name="Unsupported_Architecture" xml:space="preserve">
     <value>Unsupported Architecture</value>
   </data>
-  <data name="Value_not_set" xml:space="preserve">
-    <value>Value not set</value>
-  </data>
-  <data name="Value_already_set" xml:space="preserve">
-    <value>Value already set</value>
-  </data>
   <data name="ElementType_doesn_t_match_array_element_type" xml:space="preserve">
     <value>ElementType doesn't match array element type</value>
   </data>

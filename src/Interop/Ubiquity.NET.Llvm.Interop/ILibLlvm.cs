@@ -68,7 +68,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
     /// <summary>Target tools to register/enable</summary>
     [Flags]
-    public enum TargetRegistrations
+    public enum TargetRegistration
     {
         /// <summary>Register nothing</summary>
         None = 0x00,
@@ -113,6 +113,6 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Registers components for ARM AArch64 target(s)</summary>
         /// <param name="target">Target architecture to register/initialize</param>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        void RegisterTarget(CodeGenTarget target, TargetRegistrations registrations = TargetRegistrations.All);
+        void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
     }
 }

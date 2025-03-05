@@ -311,7 +311,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="scopeLine">starting line of the first scope of the function's body</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <param name="function">Underlying LLVM <see cref="IrFunction"/> to attach debug info to</param>
+        /// <param name="function">Underlying LLVM <see cref="Function"/> to attach debug info to</param>
         /// <returns><see cref="DISubProgram"/> created based on the input parameters</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DISubProgram CreateFunction( DIScope? scope
@@ -325,7 +325,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                           , uint scopeLine
                                           , DebugInfoFlags debugFlags
                                           , bool isOptimized
-                                          , IrFunction function
+                                          , Function function
                                           )
         {
             name.ValidateNotNull( nameof( name ) );
@@ -1475,7 +1475,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         private bool IsFinished;
 
-        private static bool LocationDescribes( DILocation location, IrFunction function )
+        private static bool LocationDescribes( DILocation location, Function function )
         {
             return ( location.Scope.SubProgram?.Describes( function ) ?? false )
                    || ( location.InlinedAtScope?.SubProgram?.Describes( function ) ?? false );

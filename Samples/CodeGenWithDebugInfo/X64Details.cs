@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 
 using Ubiquity.NET.Llvm;
-using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
@@ -32,7 +31,7 @@ namespace CodeGenWithDebugInfo
                                                                       , CodeModel.Small
                                                                       );
 
-        public void AddABIAttributesForByValueStructure(IrFunction function, int paramIndex )
+        public void AddABIAttributesForByValueStructure(Function function, int paramIndex )
         {
             if(function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct)
             {

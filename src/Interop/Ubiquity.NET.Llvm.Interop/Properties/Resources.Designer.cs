@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,15 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Already captured a different native string. Check caller for incorrect string value.
+        /// </summary>
+        internal static string Already_captured_different_native_string {
+            get {
+                return ResourceManager.GetString("Already_captured_different_native_string", resourceCulture);
             }
         }
         
@@ -123,6 +132,24 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
         internal static string Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5 {
             get {
                 return ResourceManager.GetString("Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value already set.
+        /// </summary>
+        internal static string Value_already_set {
+            get {
+                return ResourceManager.GetString("Value_already_set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value not set.
+        /// </summary>
+        internal static string Value_not_set {
+            get {
+                return ResourceManager.GetString("Value_not_set", resourceCulture);
             }
         }
     }

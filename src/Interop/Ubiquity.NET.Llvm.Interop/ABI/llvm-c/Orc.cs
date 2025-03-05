@@ -179,7 +179,7 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcSymbolStringPoolClearDeadEntries(LLVMOrcSymbolStringPoolRef SSP);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcExecutionSessionIntern(LLVMOrcExecutionSessionRef ES, string Name);
 
@@ -204,10 +204,12 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef S);
 
+        // This does NOT marshal the string, it only provides the raw pointer so that a span is constructible
+        // from the pointer. The memory for the string is OWNED by the entry so the returned pointer is valid
+        // for the lifetime of the referenced entry.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstUtf8StringMarshaller))]
-        public static unsafe partial string LLVMOrcSymbolStringPoolEntryStr(LLVMOrcSymbolStringPoolEntryRef S);
+        public static unsafe partial byte* LLVMOrcSymbolStringPoolEntryStr(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -269,9 +271,13 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcMaterializationResponsibilityGetRequestedSymbols(LLVMOrcMaterializationResponsibilityRef MR, out size_t NumSymbols);
 
+        // TODO: Create custom marshaller to use this and hide it. This is tricky as it is disposing of a pointer
+        // to the strings (That is the array itself is disposed, but NOT the symbol strings). It should ONLY be
+        // used in a custom marshaller for the array of symbol strings. (Internally this simply calls free() on
+        // the pointer so any referenced strings are still valid)
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcDisposeSymbols(out LLVMOrcSymbolStringPoolEntryRef Symbols);
+        public static unsafe partial void LLVMOrcDisposeSymbols(nint* Symbols);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -293,13 +299,21 @@ namespace Ubiquity.NET.Llvm.Interop
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityReplace(LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcMaterializationUnitRef MU);
 
+        // NOTE: The normal ArrayMarshaller and SafeHandleMarsaller are NOT capable of handling arrays of references to safe handles,
+        // so a caller must manually create a pinned array of the underlying handle values and provide a pointer to the first element.
+        // This is normally done with the RefHandleMarshaller class.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(LLVMOrcMaterializationResponsibilityRef MR, out LLVMOrcSymbolStringPoolEntryRef Symbols, size_t NumSymbols, out LLVMOrcMaterializationResponsibilityRef Result);
+        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
+            LLVMOrcMaterializationResponsibilityRef MR,
+            /*[In] LLVMOrcSymbolStringPoolEntryRef[]*/ nint* Symbols,
+            size_t NumSymbols,
+            out LLVMOrcMaterializationResponsibilityRef Result
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionCreateBareJITDylib(LLVMOrcExecutionSessionRef ES, string Name);
+        public static unsafe partial LLVMOrcJITDylibRef LLVMOrcExecutionSessionCreateBareJITDylib(LLVMOrcExecutionSessionRef ES, byte* Name);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( AnsiStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

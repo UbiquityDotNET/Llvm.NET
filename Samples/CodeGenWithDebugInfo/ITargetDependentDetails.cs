@@ -21,7 +21,7 @@ namespace CodeGenWithDebugInfo
 
         IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx );
 
-        void AddABIAttributesForByValueStructure( IrFunction function, int paramIndex );
+        void AddABIAttributesForByValueStructure( Function function, int paramIndex );
 
         void AddModuleFlags( BitcodeModule module );
     }

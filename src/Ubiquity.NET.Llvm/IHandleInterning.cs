@@ -12,12 +12,16 @@ namespace Ubiquity.NET.Llvm
     internal interface IHandleInterning<THandle, TMappedType>
         : IEnumerable<TMappedType>
     {
-        Context Context { get; }
-
         TMappedType GetOrCreateItem( THandle handle, Action<THandle>? foundHandleRelease = null );
 
         void Remove( THandle handle );
 
         void Clear( );
     }
+
+   internal interface IHandleInterningWithContext<THandle, TMappedType>
+        : IHandleInterning<THandle, TMappedType>
+   {
+        Context Context { get; }
+   }
 }

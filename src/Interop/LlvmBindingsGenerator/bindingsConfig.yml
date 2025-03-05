@@ -50,7 +50,7 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMOrcThreadSafeContextRef, Disposer: LLVMOrcDisposeThreadSafeContext}
   - !GlobalHandle {HandleName: LLVMOrcThreadSafeModuleRef, Disposer: LLVMOrcDisposeThreadSafeModule}
   - !GlobalHandle {HandleName: LLVMOrcJITTargetMachineBuilderRef, Disposer: LLVMOrcDisposeJITTargetMachineBuilder}
-  - !GlobalHandle {HandleName: LLVMOrcObjectLayerRef, Disposer: LLVMOrcDisposeObjectLayer}
+  - !GlobalHandle {HandleName: LLVMOrcObjectLayerRef, Disposer: LLVMOrcDisposeObjectLayer, Alias: True}
   - !GlobalHandle {HandleName: LLVMOrcIndirectStubsManagerRef, Disposer: LLVMOrcDisposeIndirectStubsManager}
   - !GlobalHandle {HandleName: LLVMOrcLazyCallThroughManagerRef, Disposer: LLVMOrcDisposeLazyCallThroughManager}
   - !GlobalHandle {HandleName: LLVMOrcDumpObjectsRef, Disposer: LLVMOrcDisposeDumpObjects}
