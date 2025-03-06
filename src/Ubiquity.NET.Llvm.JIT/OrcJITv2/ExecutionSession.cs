@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Buffers;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -32,6 +31,22 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
     {
         /// <summary>Gets a reference to the symbol string pool for this session</summary>
         public SymbolStringPool SymbolStringPool => new( LLVMOrcExecutionSessionGetSymbolStringPool( Handle ) );
+
+/*
+        public TryCreateLazyCallThroughManager(
+            string triple,
+            UInt64 errorHandlerAddress,
+            [MaybeNullWhen( false )] out LazyCallThroughManager mgr,
+            out ErrorInfo errInfo
+            )
+        {
+
+        }
+*/
+
+        // CONSIDER: It might be better if this was a method on the JIT (and internal on this type)
+        // so that the JIT instance could hold on to the lifetime to keep callers from needing to
+        // deal with lifetime management.
 
         /// <summary>Set the error reporter for the session</summary>
         /// <param name="errorReporter">Error reporter to set</param>
@@ -79,14 +94,93 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// </remarks>
         public JITDyLib GetOrCreateBareDyLib(ReadOnlySpan<byte> name)
         {
-            ReadOnlySpan<byte> foo = new();
+            if (TryGetDyLib(name, out JITDyLib? foundLib))
+            {
+                return foundLib;
+            }
 
-            // TODO: check if already present and use that as the return value...
             unsafe
             {
-                fixed(byte* p = &MemoryMarshal.GetReference(foo))
+                fixed(byte* p = &MemoryMarshal.GetReference(name))
                 {
                     return new(LLVMOrcExecutionSessionCreateBareJITDylib(Handle, p));
+                }
+            }
+        }
+
+        /// <summary>Tries to get or create a <see cref="JITDyLib"/> in this session by name</summary>
+        /// <param name="name">name of the library</param>
+        /// <param name="lib">Library or <see langword="null"/> if not found</param>
+        /// <param name="errInfo"><see cref="ErrorInfo"/> for any errors in creating the library if it didn't exist</param>
+        /// <returns><see langword="true"/> if successful and <see langword="false"/> if not</returns>
+        /// <remarks>
+        /// This will add symbols for any attached platforms. If there are no attached platforms then this
+        /// is the same as calling <see cref="O:GetOrCreateBareDyLib"/>
+        /// </remarks>
+        public bool TryGetOrCreateDyLib(string name, [MaybeNullWhen(false)] out JITDyLib lib, out ErrorInfo errInfo)
+        {
+            byte[] encodedBytes = ExecutionEncodingStringMarshaller.Encoding.GetBytes(name);
+            return TryGetOrCreateDyLib(new ReadOnlySpan<byte>(encodedBytes), out lib, out errInfo);
+        }
+
+        /// <summary>Tries to get or create a <see cref="JITDyLib"/> in this session by name</summary>
+        /// <param name="name">name of the library as span to send directly to native code</param>
+        /// <param name="lib">Library or <see langword="null"/> if not found</param>
+        /// <param name="errInfo"><see cref="ErrorInfo"/> for any errors in creating the library if it didn't exist</param>
+        /// <returns><see langword="true"/> if successful and <see langword="false"/> if not</returns>
+        /// <remarks>
+        /// <para>This will add symbols for any attached platforms. If there are no attached platforms then this
+        /// is the same as calling <see cref="O:GetOrCreateBareDyLib"/>.</para>
+        /// <para><paramref name="name"/> is a span to allow retrieval of the name from native code and then providing
+        /// it back again without going through any sort of marshal/unmarshal sequence. This allows for the most efficient
+        /// use of data that is likely to come from the underlying native code.
+        /// </para>
+        /// </remarks>
+        public bool TryGetOrCreateDyLib(ReadOnlySpan<byte> name, [MaybeNullWhen(false)] out JITDyLib lib, out ErrorInfo errInfo)
+        {
+            lib = null;
+            errInfo = default; // defaults to success!
+
+            // check if already present and use that as the out value...
+            if (TryGetDyLib(name, out lib))
+            {
+                return true;
+            }
+
+            unsafe
+            {
+                fixed(byte* p = &MemoryMarshal.GetReference(name))
+                {
+                    errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, p).ThrowIfInvalid());
+                    if (errInfo.Success)
+                    {
+                        lib = new(libHandle);
+                    }
+
+                    return errInfo.Success;
+                }
+            }
+        }
+
+        /// <summary>Tries to get a named library from this session</summary>
+        /// <param name="name">name of the library</param>
+        /// <param name="lib">[out] library if found or <see langword="null"/></param>
+        /// <returns><see langword="true"/> if found or <see langword="false"/> if not</returns>
+        public bool TryGetDyLib(ReadOnlySpan<byte> name, [MaybeNullWhen(false)] out JITDyLib lib)
+        {
+            lib = null;
+            unsafe
+            {
+                fixed(byte* p = &MemoryMarshal.GetReference(name))
+                {
+                    LLVMOrcJITDylibRef nativeLib = LLVMOrcExecutionSessionGetJITDylibByName(Handle, p);
+                    if(nativeLib.IsNull)
+                    {
+                        return false;
+                    }
+
+                    lib = new(nativeLib);
+                    return true;
                 }
             }
         }

@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Provides conversion of the span of bytes to managed code using the <see cref="NativeCodeExecutionEncoding"/></summary>
         /// <param name="self">The encoding to use for conversion</param>
-        /// <param name="span">Input span to convert</param>
+        /// <param name="span">Input span to convert with or without a null terminator.</param>
         /// <returns>string containing the decoded characters from the input <paramref name="span"/></returns>
         /// <remarks>
         /// If the input <paramref name="span"/> is empty, then this returns <see langword="null"/>.
@@ -34,7 +34,9 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             ArgumentNullException.ThrowIfNull(self);
 
-            return span.IsEmpty ? string.Empty : self.GetString(span);
+            return span.IsEmpty
+                 ? string.Empty // optimization for empty spans
+                 : self.GetString( span[^1] == 0 ? span[..^1] : span); // drop the null terminator if there is one.
         }
 
         /// <summary>Provides conversion of the native bytes to managed code using the <see cref="NativeCodeExecutionEncoding"/></summary>

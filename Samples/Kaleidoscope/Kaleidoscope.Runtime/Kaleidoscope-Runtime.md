@@ -9,7 +9,9 @@ particulars of parsing or the Kaleidoscope language in general.
 
 ## REPL Loop infrastructure
 The Kaleidoscope.Runtime library contains the basic infrastructure for the classic Read, Evaluate,
-Print, Loop (REPL) common for interactive/interpreted/JIT language runtimes.
+Print, Loop (REPL) common for interactive/interpreted/JIT language runtimes. An area in need of some
+effort is clean shutdown of the REPL and hosting application. Currently it releies on simply closing
+window or a brutal "kill" via Ctrl-C.
 
 ### TextReaderExtensions class
 The TextReaderExtensions class provides a means to read lines from a TextReader as an `IEnumerable<string>`.

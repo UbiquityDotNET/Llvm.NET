@@ -42,12 +42,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
 
             LazyCaptureNativeString(nativeString);
 
-            // At the very least, this needs to know the length of the string
+            // At the very least, this needs to know the native byte length of the string - including the null terminator
             // so make sure it is computed/scanned only once.
             LazyInitializer.EnsureInitialized<int>( ref LazyNativeByteLen, ref LengthInitialized, ref LazySyncLock, GetNativeStringByteLen );
             return new ReadOnlySpan<byte>( CapturedNativeString, LazyNativeByteLen );
 
-            unsafe int GetNativeStringByteLen() => ExecutionEncodingStringMarshaller.ReadOnlySpanFromNullTerminated( CapturedNativeString ).Length;
+            unsafe int GetNativeStringByteLen() => ExecutionEncodingStringMarshaller.ReadOnlySpanFromNullTerminated( CapturedNativeString ).Length + 1;
         }
 
         public unsafe string? ToString(byte* nativeString)

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -117,6 +118,32 @@ namespace Ubiquity.NET.Llvm.Interop
             ArgumentNullException.ThrowIfNull(self);
             self.SetHandleAsInvalid();
             return self.DangerousGetHandle();
+        }
+
+        /// <summary>Throws an exception if the provided handle is <see langword="null"/>, invalid, or in the closed state</summary>
+        /// <typeparam name="T">Type of the handle [Must derive from <see cref="GlobalHandleBase"/>]</typeparam>
+        /// <param name="self"><see cref="GlobalHandleBase"/> instance to test</param>
+        /// <param name="message">Exception error message [default: "Unexpected invalid handle from interop!"]</param>
+        /// <param name="expression">String form of the expression to evaluate [Default: provided by compiler]</param>
+        /// <param name="sourceFilePath">Source file of the code making this call [Default: provided by compiler]</param>
+        /// <param name="sourceLineNumber">Source line number of the code making this call [Default: provided by compiler]</param>
+        /// <returns><paramref name="self"/> instance for fluent based API usage</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="self"/> is <see langword="null"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="self"/> is invalid, or in the closed state</exception>
+        public static T ThrowIfInvalid<T>(
+            this T self,
+            string message = "Unexpected invalid handle from interop!",
+            [CallerArgumentExpression(nameof(self))] string expression = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0
+            )
+            where T : GlobalHandleBase
+        {
+            ArgumentNullException.ThrowIfNull(self, expression);
+
+            return self.IsInvalid || self.IsClosed
+                 ? throw new ArgumentException( $"Handle is Invalid - {sourceFilePath}@{sourceLineNumber}; {message}", expression )
+                 : self;
         }
     }
 }

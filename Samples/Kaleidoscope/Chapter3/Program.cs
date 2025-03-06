@@ -8,6 +8,7 @@ using System;
 using System.Reflection;
 
 using Ubiquity.NET.Llvm;
+
 using static Ubiquity.NET.Llvm.Library;
 
 namespace Kaleidoscope.Chapter3

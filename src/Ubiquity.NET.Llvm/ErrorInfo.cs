@@ -47,6 +47,7 @@ namespace Ubiquity.NET.Llvm
 
         internal ErrorInfo(LLVMErrorRef h)
         {
+            ArgumentNullException.ThrowIfNull(h);
             Handle = h;
         }
 
