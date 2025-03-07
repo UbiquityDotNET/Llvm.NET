@@ -11,7 +11,7 @@ using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm.Values;
 
-namespace Kaleidoscope.Chapter4
+namespace Kaleidoscope.Chapter3_5
 {
     internal class ReplEngine
         : ReadEvaluatePrintLoopBase<Value>
@@ -30,20 +30,9 @@ namespace Kaleidoscope.Chapter4
         {
             switch( resultValue )
             {
-            case ConstantFP result:
-                if( Console.CursorLeft > 0 ) // TODO: Comment on what this is for... ????
-                {
-                    Console.WriteLine( );
-                }
-
-                Console.WriteLine( "Evaluated to {0}", result.Value );
-                break;
-
             case Function function:
-#if SAVE_LLVM_IR
-                string safeFileName = Utilities.GetSafeFileName( function.Name );
-                _ = function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( safeFileName, "ll" ), out string _ );
-#endif
+                Console.WriteLine( "Defined function: {0}", function.Name );
+                Console.WriteLine( function );
                 break;
 
             default:

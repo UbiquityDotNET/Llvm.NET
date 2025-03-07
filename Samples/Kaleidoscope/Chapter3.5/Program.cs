@@ -11,11 +11,11 @@ using Ubiquity.NET.Llvm;
 
 using static Ubiquity.NET.Llvm.Library;
 
-namespace Kaleidoscope.Chapter4
+namespace Kaleidoscope.Chapter3_5
 {
     public static class Program
     {
-        /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 4)</summary>
+        /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 3.5)</summary>
         public static void Main( )
         {
             var repl = new ReplEngine( );
@@ -24,8 +24,13 @@ namespace Kaleidoscope.Chapter4
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
+            // On Windows the exit keyboard sequence includes the <enter> key press.
+            // Any other platform it's still less then obvious, so provide some help.
+            Console.WriteLine($"    Use Ctrl-Z{(OperatingSystem.IsWindows() ? " (followed by <Enter>)" : string.Empty)} to exit this application.");
+
             using var libLlvm = InitializeLLVM( );
             libLlvm.RegisterTarget( CodeGenTarget.Native );
+
             repl.Run( Console.In );
         }
     }

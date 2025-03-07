@@ -31,6 +31,7 @@ namespace Kaleidoscope.Chapter3
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
+
             if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
@@ -43,31 +44,30 @@ namespace Kaleidoscope.Chapter3
         }
         #endregion
 
-        public BitcodeModule Module { get; }
-
+        #region Dispose
         public void Dispose( )
         {
             Module.Dispose( );
             Context.Dispose( );
         }
+        #endregion
 
         #region Generate
         public OptionalValue<Value> Generate( IAstNode ast )
         {
-            if( ast is null )
+            ArgumentNullException.ThrowIfNull(ast);
+
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            // They are looked up and added to the module as extern if not already
+            // present if they are called.
+            if( ast is not FunctionDefinition definition )
             {
                 return default;
             }
 
-            // Prototypes, including extern are ignored as AST generation
-            // adds them to the RuntimeState so that already has the declarations
-            Value? result = null;
-            if( ast is FunctionDefinition )
-            {
-                result = ast.Accept( this );
-            }
-
-            return result != null ? OptionalValue.Create( result ) : default;
+            var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+            return OptionalValue.Create<Value>( function );
         }
         #endregion
 
@@ -75,6 +75,7 @@ namespace Kaleidoscope.Chapter3
         public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
+
             return Context.CreateConstant( constant.Value );
         }
         #endregion
@@ -83,6 +84,7 @@ namespace Kaleidoscope.Chapter3
         public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
+
             switch( binaryOperator.Op )
             {
             case BuiltInOperatorKind.Less:
@@ -134,6 +136,7 @@ namespace Kaleidoscope.Chapter3
         public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
+
             string targetName = functionCall.FunctionPrototype.Name;
 
             Function? function;
@@ -158,6 +161,7 @@ namespace Kaleidoscope.Chapter3
         public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
+
             var function = GetOrDeclareFunction( definition.Signature );
             if( !function.IsDeclaration )
             {
@@ -233,10 +237,11 @@ namespace Kaleidoscope.Chapter3
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
+        private readonly BitcodeModule Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly IDictionary<string, Value> NamedValues = new Dictionary<string, Value>( );
+        private readonly Dictionary<string, Value> NamedValues = [];
         #endregion
     }
 }

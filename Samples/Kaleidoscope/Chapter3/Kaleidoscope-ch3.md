@@ -196,7 +196,7 @@ when generated in the textual form of LLVM IR assembly. A nice feature of LLVM i
 handle duplicate names by appending a value to the name automatically so that generators don't need to
 keep track of the names to ensure uniqueness.
 
-The `Less` operator uses a floating point Unordered less than IR instruction followed by an integer to
+The `Less` operator uses a floating point `unordered less than` IR instruction followed by an integer to
 float cast to translate the LLVM IR i1 result into a floating point value needed by Kaleidoscope.
 
 The `^` operator for exponentiation uses the `llvm.pow.f64` intrinsic to perform the exponentiation as

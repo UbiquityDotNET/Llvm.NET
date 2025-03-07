@@ -284,8 +284,7 @@ namespace Ubiquity.NET.Llvm.Values
             return kind switch
             {
                 AttributeKind.ReadOnly or
-                AttributeKind.WriteOnly or
-                AttributeKind.ReadNone => AttributeAllowedOn.Function | AttributeAllowedOn.Parameter,
+                AttributeKind.WriteOnly => AttributeAllowedOn.Function | AttributeAllowedOn.Parameter,
 
                 AttributeKind.ByVal or
                 AttributeKind.InAlloca or
@@ -293,6 +292,7 @@ namespace Ubiquity.NET.Llvm.Values
                 AttributeKind.Nest or
                 AttributeKind.NoCapture or
                 AttributeKind.Returned or
+                AttributeKind.ReadNone or
                 AttributeKind.SwiftSelf or
                 AttributeKind.SwiftError => AttributeAllowedOn.Parameter,
 
@@ -305,6 +305,8 @@ namespace Ubiquity.NET.Llvm.Values
                 AttributeKind.Dereferenceable or
                 AttributeKind.DereferenceableOrNull => AttributeAllowedOn.Parameter | AttributeAllowedOn.Return,
 
+                AttributeKind.StackAlignment or
+                AttributeKind.AllocKind or
                 AttributeKind.NoReturn or
                 AttributeKind.NoUnwind or
                 AttributeKind.NoInline or

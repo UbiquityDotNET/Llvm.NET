@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 using Kaleidoscope.Grammar;
@@ -16,13 +15,11 @@ using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.JIT;
-using Ubiquity.NET.Llvm.Transforms;
 using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
-namespace Kaleidoscope.Chapter4
+namespace Kaleidoscope.Chapter3_5
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
     public sealed class CodeGenerator
@@ -30,13 +27,11 @@ namespace Kaleidoscope.Chapter4
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
-        #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false, TextWriter? outputWriter = null )
+        public CodeGenerator( DynamicRuntimeState globalState )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
 
-            JIT.OutputWriter = outputWriter ?? Console.Out;
             if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
@@ -44,80 +39,40 @@ namespace Kaleidoscope.Chapter4
 
             RuntimeState = globalState;
             Context = new Context( );
-            DisableOptimizations = disableOptimization;
-            InitializeModuleAndPassManager( );
+            Module = Context.CreateBitcodeModule( "Kaleidoscope" );
             InstructionBuilder = new InstructionBuilder( Context );
         }
-        #endregion
 
-        #region Dispose
         public void Dispose( )
         {
-            JIT.Dispose( );
-            Module?.Dispose( );
+            Module.Dispose( );
             Context.Dispose( );
         }
-        #endregion
 
-        #region Generate
         public OptionalValue<Value> Generate( IAstNode ast )
         {
             ArgumentNullException.ThrowIfNull(ast);
 
             // Prototypes, including extern are ignored as AST generation
             // adds them to the RuntimeState so that already has the declarations
+            // They are looked up and added to the module as extern if not already
+            // present if they are called.
             if( ast is not FunctionDefinition definition )
             {
                 return default;
             }
 
-            InitializeModuleAndPassManager( );
-            Debug.Assert( Module is not null , "Module initialization failed" );
-
-            var function = ( Function )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
-
-            if( definition.IsAnonymous )
-            {
-                // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
-                ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
-                var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
-                var retVal = Context.CreateConstant( nativeFunc( ) );
-                JIT.RemoveModule( jitHandle );
-                return OptionalValue.Create<Value>( retVal );
-            }
-            else
-            {
-                // Destroy any previously generated module for this function.
-                // This allows re-definition as the new module will provide the
-                // implementation. This is needed, otherwise both the MCJIT
-                // and OrcJit engines will resolve to the original module, despite
-                // claims to the contrary in the official tutorial text. (Though,
-                // to be fair it may have been true in the original JIT and might
-                // still be true for the interpreter)
-                if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
-                {
-                    JIT.RemoveModule( handle );
-                }
-
-                // Unknown if any future input will call the function so add it for lazy compilation.
-                // Native code is generated for the module automatically only when required.
-                ulong jitHandle = JIT.AddLazyCompiledModule( Module );
-                FunctionModuleMap.Add( definition.Name, jitHandle );
-                return OptionalValue.Create<Value>( function );
-            }
+            var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+            return OptionalValue.Create<Value>( function );
         }
-        #endregion
 
-        #region ConstantExpression
         public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
             return Context.CreateConstant( constant.Value );
         }
-        #endregion
 
-        #region BinaryOperatorExpression
         public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
@@ -167,16 +122,10 @@ namespace Kaleidoscope.Chapter4
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        #endregion
 
-        #region FunctionCallExpression
         public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            if( Module is null )
-            {
-                throw new InvalidOperationException( "Can't visit a function call without an active module" );
-            }
 
             string targetName = functionCall.FunctionPrototype.Name;
 
@@ -196,12 +145,12 @@ namespace Kaleidoscope.Chapter4
 
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        #endregion
 
         #region FunctionDefinition
         public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
+
             var function = GetOrDeclareFunction( definition.Signature );
             if( !function.IsDeclaration )
             {
@@ -222,8 +171,8 @@ namespace Kaleidoscope.Chapter4
                 InstructionBuilder.Return( funcReturn );
                 function.Verify( );
 
-                FunctionPassManager?.Run( function );
-                return function;
+                var errInfo = function.TryRunPasses( PassNames );
+                return errInfo.Success ? (Value)function : throw new CodeGeneratorException(errInfo.ToString());
             }
             catch( CodeGeneratorException )
             {
@@ -233,7 +182,6 @@ namespace Kaleidoscope.Chapter4
         }
         #endregion
 
-        #region VariableReferenceExpression
         public override Value? Visit( VariableReferenceExpression reference )
         {
             ArgumentNullException.ThrowIfNull( reference );
@@ -248,26 +196,6 @@ namespace Kaleidoscope.Chapter4
 
             return value;
         }
-        #endregion
-
-        #region InitializeModuleAndPassManager
-        private void InitializeModuleAndPassManager( )
-        {
-            Module = Context.CreateBitcodeModule( );
-            Module.Layout = JIT.TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module );
-
-            if( !DisableOptimizations )
-            {
-                FunctionPassManager.AddInstructionCombiningPass( )
-                                   .AddReassociatePass( )
-                                   .AddGVNPass( )
-                                   .AddCFGSimplificationPass( );
-            }
-
-            FunctionPassManager.Initialize( );
-        }
-        #endregion
 
         #region GetOrDeclareFunction
 
@@ -275,11 +203,6 @@ namespace Kaleidoscope.Chapter4
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
         {
-            if( Module is null )
-            {
-                throw new InvalidOperationException( "ICE: Can't get or declare a function without an active module" );
-            }
-
             if( Module.TryGetFunction( prototype.Name, out Function? function ) )
             {
                 return function;
@@ -287,6 +210,15 @@ namespace Kaleidoscope.Chapter4
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
+
+            // Any function created by this generator from AST should NOT end up optimized into any built-in or other intrinsic.
+            // LLVM has a bug (https://github.com/llvm/llvm-project/issues/130172) [:( Closed as 'Not planned']
+            // that will think some things are valid runtime library calls it can optimize by substituting a
+            // const value for the return instead of the actual returned value.
+            // There is NO way to alter or customize the `TargetLibraryInfo` it is baked into the LLVM code
+            // and depends on the triple so there's no way to control it. Thus, anything that comes from the
+            // AST is considered as NOT builtin and should not be replaced.
+            retVal.AddAttributes(FunctionAttributeIndex.Function, AttributeKind.NoBuiltIn);
 
             int index = 0;
             foreach( var argId in prototype.Parameters )
@@ -303,15 +235,17 @@ namespace Kaleidoscope.Chapter4
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
+        private readonly BitcodeModule Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
-        private readonly IDictionary<string, Value> NamedValues = new Dictionary<string, Value>( );
-        private BitcodeModule? Module;
-        private FunctionPassManager? FunctionPassManager;
-        private readonly bool DisableOptimizations;
-        private readonly KaleidoscopeJIT JIT = new( );
-        private readonly Dictionary<string, ulong> FunctionModuleMap = new( );
+        private readonly Dictionary<string, Value> NamedValues = [];
+        private static readonly string[] PassNames = [
+            "simplifycfg",
+            "instcombine",
+            "reassociate",
+            "gvn",
+        ];
         #endregion
     }
 }

@@ -12,8 +12,8 @@ namespace Ubiquity.NET.Llvm
 {
     /// <summary>Represents the success or failure of an operation with "try" semantics</summary>
     /// <remarks>
-    /// In addition to the <see cref="Success"/> and <see cref="Failed"/> this also tracks any
-    /// error messages in the event of a failure.
+    /// In addition to the <see cref="Success"/> and <see cref="Failed"/> states this also tracks
+    /// any error messages in the event of a failure.
     /// </remarks>
     public readonly ref struct ErrorInfo
     {

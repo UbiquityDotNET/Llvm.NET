@@ -299,21 +299,47 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        /// <summary>Tries running the specified passes on this module</summary>
-        /// <param name="targetMachine">Target machine for the passes</param>
-        /// <param name="options">Options for the passes</param>
+        /// <summary>Tries running the specified passes on this function</summary>
         /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
         /// <returns>Error containing result</returns>
         /// <exception cref="ArgumentNullException">One of the arguments provided was null (see exception details for name of the parameter)</exception>
         /// <exception cref="ArgumentOutOfRangeException">If <paramref name="passes"/> has less than one pass. At least one is required</exception>
         /// <remarks>
-        /// This will try to run all the passes specified against the module. The return value contains
+        /// This will try to run all the passes specified against this module. The return value contains
         /// the results and, if an error occurred, any error message text for the error.
         /// <note type="information">
         /// The `try` semantics apply to the actual LLVM call only, normal parameter checks are performed
         /// and may produce an exception.
         /// </note>
         /// </remarks>
+        public ErrorInfo TryRunPasses(params string[] passes)
+        {
+            using PassBuilderOptions options = new();
+            return TryRunPasses(options, passes);
+        }
+
+        /// <inheritdoc cref="TryRunPasses(string[])"/>
+        /// <param name="options">Options for the passes</param>
+        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
+        public ErrorInfo TryRunPasses(PassBuilderOptions options, params string[] passes)
+        {
+            ArgumentNullException.ThrowIfNull(options);
+            ArgumentNullException.ThrowIfNull(passes);
+            ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
+
+            // TODO: [Optimization] provide overload that accepts a ReadOnlySpan<byte> for the pass "string"
+            //       That way the overhead of Join() and conversion to native form is performed exactly once.
+            //       (NativeStringView ~= ReadOnlySpan<byte>?)
+
+            // While not explicitly documented either way, the PassBuilder used under the hood is capable
+            // of handling a NULL target machine.
+            return new(LLVMRunPasses(ModuleHandle, string.Join(',', passes), LLVMTargetMachineRef.Zero, options.Handle));
+        }
+
+        /// <inheritdoc cref="TryRunPasses(string[])"/>
+        /// <param name="targetMachine">Target machine for the passes</param>
+        /// <param name="options">Options for the passes</param>
+        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
         public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes)
         {
             ArgumentNullException.ThrowIfNull(targetMachine);

@@ -93,24 +93,28 @@ foreach(var inlineFunc in InlinedFunctions) {
             
             #line default
             #line hidden
-            this.Write("\r\n; Standard Official LLVM-C APIs\r\n; If LibLLCVM-C.lib is available, these could " +
-                    "be generated to forward to that\r\n; or left out completely and use it directly fr" +
-                    "om managed interop code\r\n");
+            this.Write(@"
+; Standard Official LLVM-C APIs
+; If LibLLCVM-C.lib is available, these could be generated to forward to that
+; or left out completely and use it directly from managed interop code
+; A Major problem with that is that it loses ALL access to the C++ as that is
+; NOT exported (and should never be as it isn't ABI stable)
+");
             
-            #line 29 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExportsTemplate.tt"
+            #line 31 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExportsTemplate.tt"
 foreach(var func in LlvmFunctions) {
             
             #line default
             #line hidden
             
-            #line 30 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExportsTemplate.tt"
+            #line 32 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExportsTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(func.Name));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 31 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExportsTemplate.tt"
+            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ExportsTemplate.tt"
 }
             
             #line default
