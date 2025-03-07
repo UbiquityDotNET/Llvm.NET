@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.NET.InteropHelpers;

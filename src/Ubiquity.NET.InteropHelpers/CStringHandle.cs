@@ -6,20 +6,20 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Ubiquity.NET.InteropHelpers
 {
-    /// <summary>Abstract base class for types that represents an LLVM string</summary>
+    /// <summary>Abstract base class for types that represents a native string</summary>
     /// <remarks>
     /// This base class provides most of the functionality for a string pointer except
-    /// the disposal/release of the string. That is left to derived types to provide the
-    /// specific operation to release the pointer. In particular this provides a simple
-    /// copy by value marshalling and there is no copy made until <see cref="ToString()"/>
-    /// is called. In particular, <see cref="Span"/> will NOT make a managed
-    /// copy and the returned span is to the original unmanaged memory.
+    /// the disposal/release of the string (if Any). That is left to derived types to
+    /// provide the specific operation to release the pointer. In particular this provides
+    /// a simple copy by value marshalling and there is no copy made nor any marshalling to
+    /// managed code overhead until <see cref="ToString()"/> is called. In particular,
+    /// <see cref="ReadOnlySpan"/> will NOT make a managed copy and the returned span is to the
+    /// original unmanaged memory.
     /// </remarks>
     public abstract class CStringHandle
         : SafeHandle

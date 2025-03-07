@@ -9,7 +9,6 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.Llvm.UT;
 
 namespace Ubiquity.NET.Llvm.UT.DebugInfo
 {

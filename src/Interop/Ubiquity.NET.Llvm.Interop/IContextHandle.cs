@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interface to provide support for <see cref="ContextHandleMarshaller{T}"/></summary>

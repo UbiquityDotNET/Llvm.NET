@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
 using Ubiquity.NET.Llvm.Types;
 
 #pragma warning disable SA1649 // File name must match first type ( Justification -  Interface + internal Impl + public extensions )

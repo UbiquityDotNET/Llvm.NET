@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Diagnostics;
 
 using Ubiquity.NET.Llvm.Interop;
