@@ -7,7 +7,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1602 // An item within a C# enumeration is missing an Xml documentation header.
@@ -134,17 +134,17 @@ namespace Ubiquity.NET.Llvm.Interop
 #pragma warning restore SA1602 // An item within a C# enumeration is missing an Xml documentation header.
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    public static partial class NativeMethods
+    public static partial class AttributeBindings
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMAttributeToString(LLVMAttributeRef attribute);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMGetAttributeKindName(LibLLVMAttrKind attrKind);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute);
     }

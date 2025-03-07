@@ -13,8 +13,10 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 using Ubiquity.NET.Llvm.Interop.Properties;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.IRBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Interop

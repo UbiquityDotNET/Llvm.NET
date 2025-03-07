@@ -20,20 +20,20 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMVerifyModule(LLVMModuleRef M, LLVMVerifierFailureAction Action, out DisposeMessageString OutMessage);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMVerifyFunction(LLVMValueRef Fn, LLVMVerifierFailureAction Action);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMViewFunctionCFG(LLVMValueRef Fn);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMViewFunctionCFGOnly(LLVMValueRef Fn);
     }

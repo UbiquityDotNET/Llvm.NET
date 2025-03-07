@@ -77,12 +77,12 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? llvm_blake3_version();
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init(ref llvm_blake3_hasher self);
 
@@ -95,11 +95,11 @@ namespace Ubiquity.NET.Llvm.Interop
         /// size [LLVM_BLAKE3_KEY_LEN]. Any attempts to call this using a smaller array will result in an access violation
         /// and app crash!</note>
         /// </remarks>
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_keyed(ref llvm_blake3_hasher self, /*[In]sizeis(LLVM_BLAKE3_KEY_LEN)*/ byte* key);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_derive_key(ref llvm_blake3_hasher self, string context);
 
@@ -113,7 +113,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// to a buffer of at least the specified size. Any attempts to call this using a smaller array will result in an access
         /// violation and app crash!</note>
         /// </remarks>
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_init_derive_key_raw(ref llvm_blake3_hasher self, byte* context, size_t context_len);
 
@@ -127,19 +127,19 @@ namespace Ubiquity.NET.Llvm.Interop
         /// to a buffer of at least the specified size. Any attempts to call this using a smaller array will result in an access
         /// violation and app crash!</note>
         /// </remarks>
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_update(ref llvm_blake3_hasher self, byte* input, size_t input_len);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_finalize(ref llvm_blake3_hasher self, [MarshalUsing(CountElementName = nameof(out_len))] out byte[] @out, out nint out_len);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_finalize_seek(ref llvm_blake3_hasher self, UInt64 seek, [MarshalUsing(CountElementName = nameof(out_len))] out byte[] @out, out nint out_len);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void llvm_blake3_hasher_reset(ref llvm_blake3_hasher self);
     }

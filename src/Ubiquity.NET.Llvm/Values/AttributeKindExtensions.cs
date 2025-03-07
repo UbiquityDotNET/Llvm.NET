@@ -8,10 +8,10 @@ using System;
 using System.Globalization;
 
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 using Ubiquity.NET.Llvm.Properties;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
 namespace Ubiquity.NET.Llvm.Values
 {

@@ -12,6 +12,7 @@ using System.Linq;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm

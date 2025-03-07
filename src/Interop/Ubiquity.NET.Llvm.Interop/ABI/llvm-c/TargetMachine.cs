@@ -63,152 +63,152 @@ namespace Ubiquity.NET.Llvm.Interop
 
     public static partial class NativeMethods
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetRef LLVMGetFirstTarget();
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetRef LLVMGetNextTarget(LLVMTargetRef T);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetRef LLVMGetTargetFromName(string Name);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMGetTargetFromTriple(string Triple, out LLVMTargetRef T, out DisposeMessageString ErrorMessage);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? LLVMGetTargetName(LLVMTargetRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? LLVMGetTargetDescription(LLVMTargetRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMTargetHasJIT(LLVMTargetRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMTargetHasTargetMachine(LLVMTargetRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMTargetHasAsmBackend(LLVMTargetRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetMachineOptionsRef LLVMCreateTargetMachineOptions();
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMDisposeTargetMachineOptions(LLVMTargetMachineOptionsRef Options);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMTargetMachineOptionsSetCPU(LLVMTargetMachineOptionsRef Options, string CPU);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMTargetMachineOptionsSetFeatures(LLVMTargetMachineOptionsRef Options, string Features);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMTargetMachineOptionsSetABI(LLVMTargetMachineOptionsRef Options, string ABI);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMTargetMachineOptionsSetCodeGenOptLevel(LLVMTargetMachineOptionsRef Options, LLVMCodeGenOptLevel Level);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMTargetMachineOptionsSetRelocMode(LLVMTargetMachineOptionsRef Options, LLVMRelocMode Reloc);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMTargetMachineOptionsSetCodeModel(LLVMTargetMachineOptionsRef Options, LLVMCodeModel CodeModel);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetMachineRef LLVMCreateTargetMachineWithOptions(LLVMTargetRef T, string Triple, LLVMTargetMachineOptionsRef Options);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetMachineRef LLVMCreateTargetMachine(LLVMTargetRef T, string Triple, string CPU, string Features, LLVMCodeGenOptLevel Level, LLVMRelocMode Reloc, LLVMCodeModel CodeModel);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetRef LLVMGetTargetMachineTarget(LLVMTargetMachineRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMGetTargetMachineTriple(LLVMTargetMachineRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMGetTargetMachineCPU(LLVMTargetMachineRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMGetTargetMachineFeatureString(LLVMTargetMachineRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTargetDataRef LLVMCreateTargetDataLayout(LLVMTargetMachineRef T);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetTargetMachineAsmVerbosity(LLVMTargetMachineRef T, [MarshalAs( UnmanagedType.Bool )] bool VerboseAsm);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetTargetMachineFastISel(LLVMTargetMachineRef T, [MarshalAs( UnmanagedType.Bool )] bool Enable);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetTargetMachineGlobalISel(LLVMTargetMachineRef T, [MarshalAs( UnmanagedType.Bool )] bool Enable);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetTargetMachineGlobalISelAbort(LLVMTargetMachineRef T, LLVMGlobalISelAbortMode Mode);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMSetTargetMachineMachineOutliner(LLVMTargetMachineRef T, [MarshalAs( UnmanagedType.Bool )] bool Enable);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMTargetMachineEmitToFile(LLVMTargetMachineRef T, LLVMModuleRef M, string Filename, LLVMCodeGenFileType codegen, out DisposeMessageString ErrorMessage);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMTargetMachineEmitToMemoryBuffer(LLVMTargetMachineRef T, LLVMModuleRef M, LLVMCodeGenFileType codegen, out DisposeMessageString ErrorMessage, out LLVMMemoryBufferRef OutMemBuf);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMGetDefaultTargetTriple();
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( NativeMethods.LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMNormalizeTargetTriple(string triple);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMGetHostCPUName();
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial DisposeMessageString LLVMGetHostCPUFeatures();
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMAddAnalysisPasses(LLVMTargetMachineRef T, LLVMPassManagerRef PM);
     }

@@ -9,12 +9,9 @@ using System;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
-// TODO: re-work this! THere are now several "kinds" of attributes in LLVM: enum, string, int, Type, ContantRange, Constant range list...
-//       These need distinct handling, so is likely best to use derived types and let the interning figure out out which is which.
-//       LLVMIsEnumAttribute(), LLVMIsStringAttribute(), and LLVMIsTypeAttribute() are likely useful. (Note: those consider enum and int
-//       attributes as Enum... [Go Figure! Best guess is that an "int" attribute is an enum attribute with a UInt64 value]
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Single attribute for functions, function returns and function parameters</summary>

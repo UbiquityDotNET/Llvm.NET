@@ -9,7 +9,7 @@ using System;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Values;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {

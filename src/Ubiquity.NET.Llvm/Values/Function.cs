@@ -14,6 +14,7 @@ using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AnalysisBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Values

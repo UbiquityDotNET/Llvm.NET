@@ -5,9 +5,10 @@
 // -----------------------------------------------------------------------
 
 using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 using Ubiquity.NET.Llvm.Values;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
 namespace Ubiquity.NET.Llvm
 {

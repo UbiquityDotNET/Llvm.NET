@@ -7,7 +7,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LibLLVMVersionInfo
@@ -17,13 +17,13 @@ namespace Ubiquity.NET.Llvm.Interop
         public readonly int Patch;
     }
 
-    public static partial class NativeMethods
+    public static partial class IRBindings
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMGetVersionInfo(out LibLLVMVersionInfo pVersionInfo);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMHasUnwindDest(LLVMValueRef Invoke);

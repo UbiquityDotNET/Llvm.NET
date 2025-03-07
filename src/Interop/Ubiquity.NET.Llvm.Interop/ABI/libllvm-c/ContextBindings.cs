@@ -7,16 +7,16 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
-    public static partial class NativeMethods
+    public static partial class ContextBindings
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMContextGetIsODRUniquingDebugTypes(LLVMContextRef context);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( NativeMethods.LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMContextSetIsODRUniquingDebugTypes(LLVMContextRef context, [MarshalAs( UnmanagedType.Bool )] bool state);
     }

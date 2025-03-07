@@ -8,7 +8,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TripleBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm

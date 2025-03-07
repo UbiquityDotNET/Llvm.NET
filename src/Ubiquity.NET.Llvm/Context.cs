@@ -22,6 +22,7 @@ using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ContextBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm

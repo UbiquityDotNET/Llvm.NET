@@ -9,6 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.NET.Llvm.Interop;
 
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
+
 // The names describe what they are, further details are available in the DWARF specs
 #pragma warning disable CS1591, SA1600, SA1602 // Enumeration items must be documented
 

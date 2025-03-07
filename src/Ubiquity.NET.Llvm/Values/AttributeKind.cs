@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 
 namespace Ubiquity.NET.Llvm.Values
 {

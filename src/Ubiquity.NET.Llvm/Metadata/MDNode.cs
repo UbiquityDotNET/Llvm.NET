@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm
