@@ -32,7 +32,8 @@ namespace Ubiquity.NET.Llvm.UT
             // constructor should parse and normalize the triple
             // so that ToString() retrieves the full normalized form
             var triple = new Triple( "thumbv7m-none-eabi" );
-            string str = triple.ToString( );
+            string? str = triple.ToString( );
+            Assert.IsNotNull( str );
             Assert.AreEqual( "thumbv7m-unknown-none-eabi", str );
         }
 

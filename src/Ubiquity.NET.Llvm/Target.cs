@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -168,7 +169,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="triple">Target <see cref="Triple"/> describing the target</param>
         /// <returns>Target for the given triple</returns>
-        public static Target FromTriple( Triple triple ) => FromTriple( triple.ThrowIfNull().ToString( ) );
+        public static Target FromTriple( Triple triple ) => FromTriple( triple.ThrowIfNull().ToString( ).ThrowIfNull() );
 
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="targetTriple">Target triple string describing the target</param>
@@ -181,7 +182,7 @@ namespace Ubiquity.NET.Llvm
             try
             {
                 return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out errorMsg ).Failed
-                    ? throw new InternalCodeGeneratorException( errorMsg.ToString() )
+                    ? throw new InternalCodeGeneratorException( errorMsg?.ToString() ?? string.Empty )
                     : FromHandle( targetHandle );
             }
             finally

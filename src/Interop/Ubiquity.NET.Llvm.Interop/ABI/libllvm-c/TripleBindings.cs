@@ -7,7 +7,8 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
+
+using Ubiquity.NET.InteropHelpers;
 
 namespace Ubiquity.NET.Llvm.Interop
 {

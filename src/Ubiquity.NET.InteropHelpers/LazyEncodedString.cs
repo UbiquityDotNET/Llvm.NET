@@ -7,44 +7,45 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
-using Ubiquity.NET.Llvm.Interop;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Lazily encoded string with implicit casting to a read only span of bytes or a normal managed string</summary>
     /// <remarks>
-    /// <para>This class handles capturing a managed string AND a lazily evaluated representation of the string as
-    /// a sequence of native bytes. The encoding to bytes ONLY happens once, and ONLY when needed the first time.
-    /// This reduces the overhead to a onetime hit for any strings that "sometimes" get passed to native code.</para>
-    /// <para>This is essentially a pair of <see cref="Lazy{T}"/> members to handle lazy conversions in one direction.
+    /// <para>This class handles capturing a managed string  or a span for a native one. It supports a lazily evaluated
+    /// representation of the string as a sequence of native bytes or a managed string. The encoding ONLY happens once,
+    /// and ONLY when needed the first time. This reduces the overhead to a onetime hit for any strings that "sometimes"
+    /// get passed to native code or "sometimes" get used in managed code as a string.</para>
+    /// <para>This is essentially a pair of <see cref="Lazy{T}"/> members to handle conversions in one direction.
     /// Constructors exist for an existing <see cref="ReadOnlySpan{T}"/> of bytes and another for a string. Each constructor
-    /// will pre-initialize one of the lazy values and set up the lazy evaluation function for the other. Thus the string
+    /// will pre-initialize one of the lazy values and set up the evaluation function for the other. Thus the string
     /// is encoded/decoded ONLY if needed and then, only once.</para>
-    /// <para>This class handles all the subtle complexity regarding terminators as most of the encoding will drop/ignore
-    /// a string terminator but native code absolutely needs it. Thus, this ensures the presence of a terminator even
-    /// if the span provided to the constructor doesn't include one. (It has to copy the string anyway so why not be nice
-    /// and robust)</para>
+    /// <para>This class handles all the subtle complexity regarding terminators as most of the encoding APIs in .NET will
+    /// drop/ignore a string terminator but native code usually needs it. Thus, this ensures the presence of a terminator
+    /// even if the span provided to the constructor doesn't include one. (It has to copy the string anyway so why not be
+    /// nice and robust)</para>
     /// </remarks>
     public class LazyEncodedString
     {
         /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from an existing managed string</summary>
         /// <param name="managed">string to lazy encode for native code use</param>
-        public LazyEncodedString(string managed)
+        /// <param name="encoding">Encoding to use for the string [Optional: Defaults to <see cref="Encoding.UTF8"/> if not provided]</param>
+        public LazyEncodedString(string managed, Encoding? encoding = null)
         {
+            Encoding = encoding ?? Encoding.UTF8;
+
             // Pre-Initialize with the provided string
             ManagedString = new(managed);
             NativeBytes = new(GetNativeArrayWithTerminator);
 
             unsafe byte[] GetNativeArrayWithTerminator()
             {
-                var encoding = ExecutionEncodingStringMarshaller.Encoding;
-
-                int nativeByteLen = encoding.GetByteCount(managed) + 1; // +1 for terminator
+                int nativeByteLen = Encoding.GetByteCount(managed) + 1; // +1 for terminator
                 byte[] retVal = new byte[nativeByteLen];
 
-                int numBytes = ExecutionEncodingStringMarshaller.Encoding.GetBytes(ManagedString.Value, retVal);
+                int numBytes = Encoding.GetBytes(ManagedString.Value, retVal);
                 Debug.Assert(numBytes == nativeByteLen - 1, "Invalid terminator length assumptions!"); // -1 as numBytes does not account for terminator
                 retVal[numBytes] = 0; // force null termination so it is viable with native code
                 return retVal;
@@ -53,16 +54,18 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from an existing span of native bytes</summary>
         /// <param name="span">span of native bytes</param>
+        /// <param name="encoding">Encoding to use for the string [Optional: Defaults to <see cref="Encoding.UTF8"/> if not provided]</param>
         /// <remarks>This has some performance overhead as it MUST make a copy of the contents of the span. The lifetime
         /// of <paramref name="span"/> is not guaranteed beyond this call.
         /// </remarks>
-        public LazyEncodedString(ReadOnlySpan<byte> span)
+        public LazyEncodedString(ReadOnlySpan<byte> span, Encoding? encoding = null)
         {
+            Encoding = encoding ?? Encoding.UTF8;
             NativeBytes = new(GetNativeArrayWithTerminator(span));
             ManagedString = new(ConvertString, LazyThreadSafetyMode.ExecutionAndPublication);
 
             // drop the terminator for conversion to managed so it won't appear in the string
-            string ConvertString() => ExecutionEncodingStringMarshaller.Encoding.GetString(NativeBytes.Value[..^1]);
+            string ConvertString() => Encoding.GetString(NativeBytes.Value[..^1]);
 
             // This incurs the cost of a copy but the lifetime of the span is not known or
             // guaranteed beyond this call.
@@ -74,6 +77,7 @@ namespace Ubiquity.NET.Llvm
                     return span.ToArray();
                 }
 
+                // need to account for new line so manually allocate and copy the span
                 byte[] retVal = new byte[span.Length + 1];
                 span.CopyTo(retVal);
                 retVal[^1] = 0; // force terminator
@@ -83,14 +87,15 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from a raw native pointer</summary>
         /// <param name="nativePtr">pointer to create this instance from</param>
-        public unsafe LazyEncodedString(byte* nativePtr)
-            : this(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(nativePtr)) // WRONG This doesn't contain the terminator!
+        /// <param name="encoding">Encoding to use for the string [Optional: Defaults to <see cref="Encoding.UTF8"/> if not provided]</param>
+        public unsafe LazyEncodedString(byte* nativePtr, Encoding? encoding = null)
+            : this(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(nativePtr), encoding)
         {
         }
 
         /// <inheritdoc/>
         /// <remarks>
-        /// This will perform conversion if <see cref="LazyEncodedString.LazyEncodedString(ReadOnlySpan{byte})"/>
+        /// This will perform conversion if <see cref="LazyEncodedString.LazyEncodedString(ReadOnlySpan{byte},Encoding)"/>
         /// was used to construct this instance and conversion has not yet occurred. Otherwise it will provide the
         /// string it was constructed with or a previously converted one.
         /// </remarks>
@@ -99,7 +104,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets a <see cref="ReadOnlySpan{T}"/> of bytes for the native encoding of the string</summary>
         /// <returns>Span for the encoded bytes of the string</returns>
         /// <remarks>
-        /// <para>This will perform conversion if the <see cref="LazyEncodedString.LazyEncodedString(string)"/>
+        /// <para>This will perform conversion if the <see cref="LazyEncodedString.LazyEncodedString(string,Encoding)"/>
         /// was used to construct this instance anf conversion has not yet occurred. Otherwise it will provide
         /// the span it was constructed with or a previously converted one.</para>
         /// <note type="important">
@@ -119,6 +124,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="self">instance to cast</param>
         public static implicit operator ReadOnlySpan<byte>(LazyEncodedString self) => self.ThrowIfNull().ToReadOnlySpan();
 
+        private readonly Encoding Encoding;
         private readonly Lazy<string> ManagedString;
 
         // The native array MUST include the terminator so it is useable as a fixed pointer in native code

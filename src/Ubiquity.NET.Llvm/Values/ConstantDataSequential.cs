@@ -7,6 +7,7 @@
 using System;
 using System.Text;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;

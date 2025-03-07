@@ -12,6 +12,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
@@ -393,7 +394,7 @@ namespace Ubiquity.NET.Llvm
                 LLVMStatus retVal = LLVMVerifyModule( ModuleHandle!, LLVMVerifierFailureAction.LLVMReturnStatusAction, out llvmMsg );
                 if(retVal.Failed)
                 {
-                    errorMessage = llvmMsg.ToString();
+                    errorMessage = llvmMsg.ToString() ?? string.Empty;
                     return false;
                 }
 
@@ -522,7 +523,7 @@ namespace Ubiquity.NET.Llvm
                 LLVMStatus result = LLVMPrintModuleToFile( ModuleHandle!, path, out llvmMsg );
                 if (result.Failed)
                 {
-                    errMsg = llvmMsg.ToString();
+                    errMsg = llvmMsg.ToString() ?? string.Empty;
                     return false;
                 }
 
@@ -540,9 +541,11 @@ namespace Ubiquity.NET.Llvm
         /// This is intentionally NOT an override of ToString() as that is
         /// used by debuggers to show the value of a type and this can take
         /// an extremely long time (up to many seconds depending on complexity
-        /// of the module) which is bad for the debugger.
+        /// of the module) which is usually bad for the debugger. If you need
+        /// to see the contents of the IR for a module you can use this method
+        /// in the immediate window.
         /// </remarks>
-        public string WriteToString( )
+        public string? WriteToString( )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
             return LLVMPrintModuleToString( ModuleHandle! ).ToString();

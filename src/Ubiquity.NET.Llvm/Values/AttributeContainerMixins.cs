@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Ubiquity.NET.InteropHelpers;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Provides a layer of simplicity and backwards compatibility for manipulating attributes on Values</summary>

@@ -8,17 +8,17 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Utility extensions for the <see cref="Encoding"/> class</summary>
     /// <remarks>
     /// These differ from the APIs already present on <see cref="Encoding"/> with
     /// respect to handling of <see langword="null"/> and empty spans. Specifically,
     /// these implementation don't throw an exception in such a case. They just
-    /// return <see langword="null"/>. That is, if given <see langword="null"/> these
-    /// will return <see langword="null"/> so that the resulting value mirrors the
-    /// native value. This is especially important where a <see langword="null"/>
-    /// value has a distinct meaning from an empty string.
+    /// return <see langword="null"/> when given that as the input. That is, if given
+    /// <see langword="null"/> these will return <see langword="null"/> so that the
+    /// resulting value mirrors the native value. This is especially important where
+    /// a <see langword="null"/> value has a distinct meaning from an empty string.
     /// </remarks>
     public static class EncodingExtensions
     {

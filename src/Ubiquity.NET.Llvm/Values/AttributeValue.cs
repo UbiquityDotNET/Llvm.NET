@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.Values
         public string Name
             => IsString
                 ? LLVMGetStringAttributeKind( NativeAttribute, out uint _ ) ?? string.Empty
-                : LibLLVMGetEnumAttributeKindName(NativeAttribute).ToString();
+                : LibLLVMGetEnumAttributeKindName(NativeAttribute).ToString() ?? string.Empty;
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
@@ -90,7 +90,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Gets a string representation of the attribute</summary>
         /// <returns>Attribute as a string</returns>
-        public override string ToString( )
+        public override string? ToString( )
         {
             return LibLLVMAttributeToString( NativeAttribute ).ToString();
         }

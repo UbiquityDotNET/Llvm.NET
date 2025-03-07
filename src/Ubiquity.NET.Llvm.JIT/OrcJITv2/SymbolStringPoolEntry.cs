@@ -5,11 +5,17 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+using System.Threading;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+
+// Regions help hide the boiler plate equality stuff
+#pragma warning disable SA1124 // Do not use regions
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
@@ -29,19 +35,32 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /*, IEquatable<ReadOnlySpan<byte>> // Not allowed in C# 12/NET 8.0*/
         , IDisposable
     {
+        /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class from another entry (Add ref construction)</summary>
+        /// <param name="other">Other string to make a new entry from</param>
+        /// <remarks>
+        /// In LLVM a <see cref="SymbolStringPoolEntry"/> is a pointer to a reference counted string. This constructor will create a new
+        /// entry that "owns" a ref count bump (AddRef) on a source string (<paramref name="other"/>). Callers must dispose of the new
+        /// instance the same as the original one or the ref count is never reduced and the native memory never reclaimed (That is, it leaks!)
+        /// </remarks>
+        public SymbolStringPoolEntry(SymbolStringPoolEntry other)
+            : this(other.ThrowIfNull().AddRef())
+        {
+            // TODO: optimize this to use any lazy evaluated values available in other
+        }
+
         /// <summary>Gets the managed string form of the native string</summary>
         /// <returns>managed string for this handle</returns>
-        public override string ToString()
+        public override string? ToString()
         {
             ThrowIfDisposed();
-            unsafe
-            {
-                return LazyValue.ToString(LLVMOrcSymbolStringPoolEntryStr( Handle )) ?? string.Empty;
-            }
+            return ManagedString.Value;
         }
+
+        #region IEquatable<SymbolStringPoolEntry>
 
         /// <inheritdoc/>
         public override bool Equals(object? obj)
+#pragma warning restore SA1124 // Do not use regions
         {
             return obj is SymbolStringPoolEntry other && Equals(other);
         }
@@ -67,28 +86,27 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         public bool Equals(ReadOnlySpan<byte> otherSpan) => ReadOnlySpan.SequenceEqual(otherSpan);
 
         /// <inheritdoc/>
+        [SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API")]
         public override int GetHashCode()
         {
             ThrowIfDisposed();
-            return ByteSpanHelpers.ComputeHashCode(ReadOnlySpan);
+            return ToString()?.GetHashCode() ?? 0;
         }
+
+        /// <summary>Gets the hash code for the managed string</summary>
+        /// <param name="comparisonType">Kind of comparison to perform when computing the hash code</param>
+        /// <returns>Hash code for the managed string</returns>
+        public int GetHashCode(StringComparison comparisonType)
+        {
+            ThrowIfDisposed();
+            return ToString()?.GetHashCode(comparisonType) ?? 0;
+        }
+        #endregion
 
         /// <summary>Release the reference to the string</summary>
         public void Dispose()
         {
             Handle.Dispose();
-            LazyValue.Dispose();
-        }
-
-        /// <summary>Increments the ref count on this string and returns a new wrapper that will own the new count</summary>
-        /// <returns>new string to own the updated ref count</returns>
-        /// <remarks>
-        /// This returns a new wrapper for the handle so that it has a distinct <see cref="Dispose"/> to release it.
-        /// </remarks>
-        public SymbolStringPoolEntry IncrementRefCount()
-        {
-            LLVMOrcRetainSymbolStringPoolEntry(Handle);
-            return new(Handle);
         }
 
         /// <summary>Gets a readonly span for the data in this string</summary>
@@ -104,7 +122,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 ThrowIfDisposed();
                 unsafe
                 {
-                    return LazyValue.GetReadOnlySpan(LLVMOrcSymbolStringPoolEntryStr( Handle ));
+                    return new((void*)NativeStringPtr.Value, LazyStrLen.Value);
                 }
             }
         }
@@ -117,15 +135,30 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             }
 
             Handle = h;
+            unsafe
+            {
+                NativeStringPtr = new(()=>(nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication);
+                ManagedString = new(()=>ExecutionEncodingStringMarshaller.ConvertToManaged((byte*)NativeStringPtr.Value), LazyThreadSafetyMode.ExecutionAndPublication);
+                LazyStrLen = new(()=>MemoryMarshal.CreateReadOnlySpanFromNullTerminated((byte*)NativeStringPtr.Value).Length, LazyThreadSafetyMode.ExecutionAndPublication);
+            }
         }
 
         internal LLVMOrcSymbolStringPoolEntryRef Handle { get; init; }
 
-        private void ThrowIfDisposed()
+        private LLVMOrcSymbolStringPoolEntryRef AddRef()
         {
-            ObjectDisposedException.ThrowIf(Handle is null || Handle.IsClosed || Handle.IsInvalid, new object());
+            ThrowIfDisposed();
+            LLVMOrcRetainSymbolStringPoolEntry(Handle);
+            return new(Handle.DangerousGetHandle(), owner: true);
         }
 
-        private readonly LazyInitializedString LazyValue = new();
+        private void ThrowIfDisposed()
+        {
+            ObjectDisposedException.ThrowIf(Handle is null || Handle.IsClosed || Handle.IsInvalid, this);
+        }
+
+        private readonly Lazy<string?> ManagedString;
+        private readonly Lazy<int> LazyStrLen; // count of bytes in the native string (Not including null terminator)
+        private readonly Lazy<nint> NativeStringPtr;
     }
 }

@@ -217,7 +217,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Converts the layout to a string representation of the layout data</summary>
         /// <returns>Data layout as a string</returns>
         /// <seealso href="xref:llvm_langref#data-layout">DICompositeType</seealso>
-        public override string ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle ).ToString();
+        public override string? ToString( ) => LLVMCopyStringRepOfTargetData( DataLayoutHandle ).ToString();
 
         /// <summary>Gets the byte size of a type</summary>
         /// <param name="llvmType">Type to determine the size of</param>

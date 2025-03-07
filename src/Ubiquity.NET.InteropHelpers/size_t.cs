@@ -7,8 +7,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
+    // TODO: This should have the same interfaces as System.IntPtr and implemented through the native pointer
+    // If C#/.NET had the concept of a proper typedef that's what this would be...
+
     /// <summary>CLR equivalent to the C/C++ architecture specific size_t</summary>
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Generated code relies on this to match C++" )]
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Matching native Interop type" )]

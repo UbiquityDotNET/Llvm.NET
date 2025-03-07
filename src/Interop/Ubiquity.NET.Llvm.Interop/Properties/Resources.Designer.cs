@@ -61,15 +61,6 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Already captured a different native string. Check caller for incorrect string value.
-        /// </summary>
-        internal static string Already_captured_different_native_string {
-            get {
-                return ResourceManager.GetString("Already_captured_different_native_string", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cannot determine assembly location.
         /// </summary>
         internal static string Cannot_determine_assembly_location {

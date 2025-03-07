@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
+using Ubiquity.NET.InteropHelpers;
+
 using static Ubiquity.NET.Llvm.Interop.Constants;
 
 namespace Ubiquity.NET.Llvm.Interop

@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -217,7 +218,10 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                     // makes sense for it to do so). This will do it in one place so that if it is found
                     // otherwise, then it is corrected once for all. [Thus the `ref readonly` declaration of
                     // the parameter in the delegate]
-                    using var errInfo = new ErrorInfo(abiErrorRef);
+#pragma warning disable CA2000 // Dispose objects before losing scope
+                    // Ownership is "moved" to the ErrorInfo instance created, which has a "using"
+                    using var errInfo = new ErrorInfo(new LLVMErrorRef(abiErrorRef));
+#pragma warning restore CA2000 // Dispose objects before losing scope
                     self(in errInfo);
                 }
             }

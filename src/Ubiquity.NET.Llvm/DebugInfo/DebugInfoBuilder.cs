@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;

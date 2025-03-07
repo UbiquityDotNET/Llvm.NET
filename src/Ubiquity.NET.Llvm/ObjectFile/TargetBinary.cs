@@ -121,7 +121,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
                 BinaryRef = LLVMCreateBinary( buffer.BufferHandle, context.ContextHandle, out errMsg );
                 if( BinaryRef.IsInvalid )
                 {
-                    throw new InternalCodeGeneratorException( errMsg.ToString() );
+                    throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
                 }
             }
             finally

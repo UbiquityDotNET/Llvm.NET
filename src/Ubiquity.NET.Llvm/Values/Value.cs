@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Types;
@@ -75,7 +76,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Generates a string representing the LLVM syntax of the value</summary>
         /// <returns>string version of the value formatted by LLVM</returns>
-        public override string ToString( ) => LLVMPrintValueToString( ValueHandle ).ToString();
+        public override string? ToString( ) => LLVMPrintValueToString( ValueHandle ).ToString();
 
         /// <summary>Replace all uses of a <see cref="Value"/> with another one</summary>
         /// <param name="other">New value</param>

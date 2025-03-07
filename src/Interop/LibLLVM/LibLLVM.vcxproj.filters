@@ -107,7 +107,7 @@
     <ClInclude Include="include\libllvm-c\ObjectFileBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PassBuilderOptionsBindings.h">
+    <ClInclude Include="include\libllvm-c\PassBuilderOptionsBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

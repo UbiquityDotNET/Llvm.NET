@@ -6,6 +6,7 @@
 
 using System;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Properties;
 using Ubiquity.NET.Llvm.Types;
 

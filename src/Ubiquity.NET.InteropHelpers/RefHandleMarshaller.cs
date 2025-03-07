@@ -9,18 +9,18 @@ using System.Buffers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Performs custom marshalling of handle arrays as in parameters</summary>
     /// <remarks>
     /// Sadly, the built-in support for safe handles doesn't include arrays of the elements
-    /// as in parameters while still retaining ownership (That is, `ref` semantics). Worse,
+    /// as `in` parameters while still retaining ownership (That is, `ref` semantics). Worse,
     /// the documentation for source generator custom marshallers (especially for arrays)
     /// is so poor that it wasn't plausible to implement this support as a custom marshaller.
     /// Instead these APIs are declared to simplify and control the marshalling as safely
     /// as possible. Callers must use one of the overloads to `WithManagedArrayAsNativePointer`
     /// to allocate, build, call an operation delegate, and then release the native array.
-    /// That is, the hard.tedious work of allocating, copying the managed array and pinning
+    /// That is, the hard and tedious work of allocating, copying the managed array and pinning
     /// the array for native consumption is ALL handled in the methods provided by this class.
     /// </remarks>
     public static class RefHandleMarshaller

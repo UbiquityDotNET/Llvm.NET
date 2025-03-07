@@ -80,6 +80,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.Llvm.Interop.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter3.5", "..\Samples\Kaleidoscope\Chapter3.5\Chapter3.5.csproj", "{16142073-B70D-48B3-B63B-23211F2C7CFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.InteropHelpers", "Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj", "{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,6 +168,10 @@ Global
 		{16142073-B70D-48B3-B63B-23211F2C7CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16142073-B70D-48B3-B63B-23211F2C7CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16142073-B70D-48B3-B63B-23211F2C7CFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

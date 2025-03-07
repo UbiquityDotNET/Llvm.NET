@@ -1,15 +1,16 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LlvmStringHandle.cs" company="Ubiquity.NET Contributors">
+// <copyright file="CStringHandle.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 
-using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
-
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Abstract base class for types that represents an LLVM string</summary>
     /// <remarks>
@@ -20,9 +21,9 @@ namespace Ubiquity.NET.Llvm.Interop
     /// is called. In particular, <see cref="Span"/> will NOT make a managed
     /// copy and the returned span is to the original unmanaged memory.
     /// </remarks>
-    public abstract class LlvmStringHandle
+    public abstract class CStringHandle
         : SafeHandle
-        , IEquatable<LlvmStringHandle>
+        , IEquatable<CStringHandle>
     {
         /// <inheritdoc/>
         public override bool IsInvalid => handle == nint.Zero;
@@ -40,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
                 unsafe
                 {
-                    return LazyValue.GetReadOnlySpan((byte*)handle);
+                    return new((void*)handle, LazyStrLen.Value);
                 }
             }
         }
@@ -51,27 +52,31 @@ namespace Ubiquity.NET.Llvm.Interop
         /// The return is a managed string that is equivalent to the string of this pointer.
         /// It's lifetime is controlled by the runtime GC.
         /// </remarks>
-        public override string ToString()
+        public override string? ToString()
         {
             ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
-            unsafe
-            {
-                return LazyValue.ToString((byte*)handle) ?? string.Empty;
-            }
+            return ManagedString.Value;
         }
 
         public override bool Equals(object? obj)
         {
-            return ((IEquatable<LlvmStringHandle>)this).Equals( obj as LlvmStringHandle );
+            return ((IEquatable<CStringHandle>)this).Equals( obj as CStringHandle );
         }
 
+        [SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API")]
         public override int GetHashCode()
         {
             ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
-            return ByteSpanHelpers.ComputeHashCode(ReadOnlySpan);
+            return ToString()?.GetHashCode() ?? 0;
         }
 
-        public bool Equals(LlvmStringHandle? other)
+        public int GetHashCode(StringComparison comparisonType)
+        {
+            ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+            return ToString()?.GetHashCode(comparisonType) ?? 0;
+        }
+
+        public bool Equals(CStringHandle? other)
         {
             // perf optimization to skip longer scan if possible (null input or exact same handle value)
             return other is not null
@@ -86,31 +91,28 @@ namespace Ubiquity.NET.Llvm.Interop
             return ReadOnlySpan.SequenceEqual(otherSpan);
         }
 
-        protected override void Dispose(bool disposing)
+        protected CStringHandle()
+            : base( nint.Zero, ownsHandle: true )
         {
-            base.Dispose(disposing);
-            if( disposing )
+            unsafe
             {
-                LazyValue.Dispose();
+                ManagedString = new(()=>ExecutionEncodingStringMarshaller.ConvertToManaged((byte*)handle), LazyThreadSafetyMode.ExecutionAndPublication);
+                LazyStrLen = new(()=>MemoryMarshal.CreateReadOnlySpanFromNullTerminated((byte*)handle).Length, LazyThreadSafetyMode.ExecutionAndPublication);
             }
         }
 
-        private protected LlvmStringHandle()
-            : base( nint.Zero, ownsHandle: true )
-        {
-        }
-
-        private protected LlvmStringHandle(nint p)
+        protected CStringHandle(nint p)
             : this()
         {
             SetHandle( p );
         }
 
-        private protected unsafe LlvmStringHandle(byte* p)
+        protected unsafe CStringHandle(byte* p)
             : this( (nint)p )
         {
         }
 
-        private readonly LazyInitializedString LazyValue = new();
+        private readonly Lazy<string?> ManagedString;
+        private readonly Lazy<int> LazyStrLen; // count of bytes in the native string (Not including null terminator)
     }
 }

@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Security;
 
+using Ubiquity.NET.InteropHelpers;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Global LLVM object handle for an error</summary>

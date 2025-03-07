@@ -6,6 +6,7 @@
 
 using System;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 using Ubiquity.NET.Llvm.Properties;
 
@@ -38,13 +39,13 @@ namespace Ubiquity.NET.Llvm
         public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle ).ToString();
+        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle ).ToString() ?? string.Empty;
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle ).ToString();
+        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle ).ToString() ?? string.Empty;
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle ).ToString();
+        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle ).ToString() ?? string.Empty;
 
         /// <summary>Gets Layout information for this machine</summary>
         public DataLayout TargetData
@@ -83,7 +84,7 @@ namespace Ubiquity.NET.Llvm
                                                         );
                 if( status.Failed )
                 {
-                    throw new InternalCodeGeneratorException( errTxt.ToString() );
+                    throw new InternalCodeGeneratorException( errTxt?.ToString() ?? string.Empty);
                 }
             }
             finally
@@ -123,7 +124,7 @@ namespace Ubiquity.NET.Llvm
                                                                 );
 
                 return status.Failed
-                     ? throw new InternalCodeGeneratorException( errTxt.ToString() )
+                     ? throw new InternalCodeGeneratorException( errTxt?.ToString() ?? string.Empty )
                      : new MemoryBuffer( bufferHandle );
             }
             finally

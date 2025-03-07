@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
+using Ubiquity.NET.InteropHelpers;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
     // NOTE: Context handles are just value types that wrap around a runtime nint (basically a strong typedef)

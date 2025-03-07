@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public bool IsNull => Handle.IsNull;
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override string? ToString()
         {
             return LLVMPrintDbgRecordToString(Handle).ToString();
         }

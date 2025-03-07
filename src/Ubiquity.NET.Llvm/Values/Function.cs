@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Ubiquity.NET.Llvm.DebugInfo;
@@ -267,7 +268,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
         public void Verify( )
         {
-            if( !Verify( out string errMsg ) )
+            if( !Verify( out string? errMsg ) )
             {
                 throw new InternalCodeGeneratorException( errMsg );
             }
@@ -276,17 +277,17 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Verifies the function without throwing an exception</summary>
         /// <param name="errMsg">Error message if any, or <see cref="string.Empty"/> if no errors detected</param>
         /// <returns><see langword="true"/> if no errors found</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "nativeMsg is disposed directly only if needed" )]
-        public bool Verify( out string errMsg )
+        public bool Verify( [MaybeNullWhen(true)] out string errMsg )
         {
-            errMsg = string.Empty;
-            if(LibLLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out DisposeMessageString nativeMsg ).Failed)
+            errMsg = null;
+            if(LibLLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out DisposeMessageString? nativeMsg ).Failed)
             {
-                errMsg = nativeMsg.ToString();
-                nativeMsg.Dispose();
+                errMsg = nativeMsg?.ToString() ?? string.Empty;
+                nativeMsg?.Dispose();
                 return false;
             }
 
+            nativeMsg?.Dispose();
             return true;
         }
 

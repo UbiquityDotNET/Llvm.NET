@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
 using static Ubiquity.NET.Llvm.Interop.NativeMethods;
@@ -133,7 +134,7 @@ namespace Ubiquity.NET.Llvm
                 ArgumentNullException.ThrowIfNull(triple);
                 CallBacksHandle = callBacks is null ? null : GCHandle.Alloc(callBacks);
                 DisasmHandle = LLVMCreateDisasmCPUFeatures(
-                        triple.ToString( ),
+                        triple.ToString( ) ?? string.Empty,
                         cpu,
                         features,
                         CallBacksHandle.HasValue ? GCHandle.ToIntPtr(CallBacksHandle.Value).ToPointer() : null,

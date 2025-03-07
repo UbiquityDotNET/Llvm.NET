@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.InteropHelpers;
+
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
     // TODO: Test encoding handling

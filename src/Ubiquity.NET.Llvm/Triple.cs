@@ -645,7 +645,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
-        public override string ToString( ) => LibLLVMTripleAsString( TripleHandle, true ).ToString();
+        public override string? ToString( ) => LibLLVMTripleAsString( TripleHandle, true ).ToString();
 
         /// <summary>Gets the Architecture of the triple</summary>
         public ArchKind ArchitectureType => ( ArchKind )LibLLVMTripleGetArchType( TripleHandle );
@@ -688,25 +688,25 @@ namespace Ubiquity.NET.Llvm
         /// such triple components used in a normalized triple.
         /// </overloads>
         public static string GetCanonicalName( ArchKind archType )
-            => LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType ).ToString();
+            => LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType ).ToString() ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
         /// <param name="vendorType">Vendor type</param>
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( VendorKind vendorType )
-            => LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType ).ToString();
+            => LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType ).ToString() ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
         /// <param name="osType">OS type</param>
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( OSKind osType )
-            => LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType ).ToString();
+            => LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType ).ToString() ?? string.Empty;
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
         /// <param name="envType">Environment type</param>
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( EnvironmentKind envType )
-            => LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType ).ToString();
+            => LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType ).ToString() ?? string.Empty;
 
         /// <inheritdoc/>
         public bool Equals( Triple? other )
@@ -723,7 +723,7 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public override int GetHashCode( )
         {
-            return ToString( ).GetHashCode( StringComparison.Ordinal );
+            return ToString( )?.GetHashCode( StringComparison.Ordinal ) ?? 0;
         }
 
         /// <summary>Normalizes a triple string</summary>
@@ -733,7 +733,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( unNormalizedTriple );
 
-            return LLVMNormalizeTargetTriple( unNormalizedTriple ).ToString();
+            return LLVMNormalizeTargetTriple( unNormalizedTriple ).ToString() ?? string.Empty;
         }
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>

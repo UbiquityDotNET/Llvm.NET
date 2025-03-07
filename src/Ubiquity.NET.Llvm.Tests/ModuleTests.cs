@@ -263,7 +263,7 @@ namespace Ubiquity.NET.Llvm.UT
 
                 // verify basics
                 Assert.IsNotNull( testFunc );
-                string txt = module2.WriteToString( );
+                string? txt = module2.WriteToString( );
                 Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
                 string expectedText = GetExpectedModuleText(tmpFileName);
                 Assert.AreEqual( expectedText, txt );
@@ -280,11 +280,11 @@ namespace Ubiquity.NET.Llvm.UT
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
 
-            Function testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
+            Function? testFunc = CreateSimpleVoidNopTestFunction( module, "foo" );
 
             // verify basics
             Assert.IsNotNull( testFunc );
-            string txt = module.WriteToString( );
+            string? txt = module.WriteToString( );
             Assert.IsFalse( string.IsNullOrWhiteSpace( txt ) );
             string expectedText = GetExpectedModuleText("test");
             Assert.AreEqual( expectedText, txt );

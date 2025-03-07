@@ -4,10 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 using System;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
     public static partial class StringNormalizer
     {

@@ -132,7 +132,9 @@ namespace Ubiquity.NET.Llvm
         /// <returns>LlvmMetadata as a string</returns>
         public override string ToString( )
         {
-            return MetadataHandle == default ? string.Empty : LibLLVMMetadataAsString( MetadataHandle ).ToString();
+            return MetadataHandle == default
+                 ? string.Empty
+                 : LibLLVMMetadataAsString( MetadataHandle ).ToString() ?? string.Empty;
         }
 
         /// <summary>Gets a value indicating this metadata's kind</summary>

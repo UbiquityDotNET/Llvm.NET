@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Runtime.InteropServices;
 
 using Ubiquity.NET.Llvm.Interop;
 
@@ -43,6 +44,25 @@ namespace Ubiquity.NET.Llvm
         public void Dispose()
         {
             Handle.Dispose();
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct.</summary>
+        /// <param name="safeHandle">interop handle to initialize from</param>
+        /// <exception cref="ArgumentException">The handle isn't of the correct type</exception>
+        /// <remarks>
+        /// <note type="important">
+        /// Use of This API outside of the ORC library is NOT supported. Do not attempt to use it
+        /// in application code.
+        /// </note>
+        /// </remarks>
+        public ErrorInfo(SafeHandle safeHandle)
+        {
+            if( safeHandle is not LLVMErrorRef h)
+            {
+                throw new ArgumentException("Incorrect handle type provided");
+            }
+
+            Handle = h;
         }
 
         internal ErrorInfo(LLVMErrorRef h)

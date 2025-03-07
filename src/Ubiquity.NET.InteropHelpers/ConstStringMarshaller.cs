@@ -7,7 +7,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for `char const*` strings that are simple aliases requiring no release</summary>
     [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedOut, typeof(ConstStringMarshaller))]
@@ -30,7 +30,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // pointer. There is no way to specify that there isn't a need to free the string. It is
             // just a `char*` without any allocator - no ownership is transferred, so there's nothing
             // to free/release. The default handling, even for UnmanagedType.LPStr, is to assume the
-            // pointer was allocated VIA the CoTask Allocator and then free it. Which is, of course,
+            // pointer was allocated via the CoTask Allocator and then free it. Which is, of course,
             // wrong for any OUT or return pointers that weren't allocated that way. (The normal case
             // for interop with C/C++) The existing free always assumes the native pointer is allocated
             // via Marshal.AllocCoTaskMem() or a native equivalent so that it can call Marshal.FreeCoTaskMem()
