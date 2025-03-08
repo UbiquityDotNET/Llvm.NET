@@ -6,6 +6,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -123,6 +124,11 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Implicit cast to a span via <see cref="ToReadOnlySpan"/></summary>
         /// <param name="self">instance to cast</param>
         public static implicit operator ReadOnlySpan<byte>(LazyEncodedString self) => self.ThrowIfNull().ToReadOnlySpan();
+
+        /// <summary>Convenient implicit conversion of a managed string into a Lazily encoded string</summary>
+        /// <param name="managed">managed string to wrap with lazy encoding support</param>
+        [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It's a convenience wrapper around an existing constructor" )]
+        public static implicit operator LazyEncodedString(string managed) => new(managed);
 
         private readonly Encoding Encoding;
         private readonly Lazy<string> ManagedString;

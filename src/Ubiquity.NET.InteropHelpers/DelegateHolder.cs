@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Keep alive holder to ensure native call back delegates are not destroyed while registered with native code</summary>
     /// <typeparam name="T">Delegate signature of the native callback</typeparam>
@@ -32,9 +32,10 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull(d);
 
 #if DEBUG
+            // TODO: Ideally, these should be moved or replicated in an analyzer for this library.
+
             // These checks are based on type and impact the runtime for AOT, so are only enabled for a debug build
             // additionally, for a release they are just perf overhead.
-            // TODO: Ideally, these should be moved or replicated in an analyzer for this library.
             if(d.GetType().IsGenericType)
             {
                 // Marshal.GetFunctionPointerForDelegate will create an exception for this but the
