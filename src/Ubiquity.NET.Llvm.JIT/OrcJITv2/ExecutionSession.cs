@@ -79,20 +79,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// This does not populate any symbols for the library when creating a new one.
         /// All configuration is the responsibility of the caller.
         /// </remarks>
-        public JITDyLib GetOrCreateBareDyLib(string name)
-        {
-            byte[] encodedBytes = ExecutionEncodingStringMarshaller.Encoding.GetBytes(name);
-            return GetOrCreateBareDyLib(new ReadOnlySpan<byte>(encodedBytes));
-        }
-
-        /// <summary>Gets an existing <see cref="JITDyLib"/> or creates a new one</summary>
-        /// <param name="name">name of the library</param>
-        /// <returns>The dynamic lib for the name</returns>
-        /// <remarks>
-        /// This does not populate any symbols for the library when creating a new one.
-        /// All configuration is the responsibility of the caller.
-        /// </remarks>
-        public JITDyLib GetOrCreateBareDyLib(ReadOnlySpan<byte> name)
+        public JITDyLib GetOrCreateBareDyLib(LazyEncodedString name)
         {
             if (TryGetDyLib(name, out JITDyLib? foundLib))
             {
@@ -101,7 +88,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
             unsafe
             {
-                fixed(byte* p = &MemoryMarshal.GetReference(name))
+                fixed(byte* p = &MemoryMarshal.GetReference(name.ToReadOnlySpan()))
                 {
                     return new(LLVMOrcExecutionSessionCreateBareJITDylib(Handle, p));
                 }
@@ -114,30 +101,17 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <param name="errInfo"><see cref="ErrorInfo"/> for any errors in creating the library if it didn't exist</param>
         /// <returns><see langword="true"/> if successful and <see langword="false"/> if not</returns>
         /// <remarks>
-        /// This will add symbols for any attached platforms. If there are no attached platforms then this
-        /// is the same as calling <see cref="O:GetOrCreateBareDyLib"/>
-        /// </remarks>
-        public bool TryGetOrCreateDyLib(string name, [MaybeNullWhen(false)] out JITDyLib lib, out ErrorInfo errInfo)
-        {
-            byte[] encodedBytes = ExecutionEncodingStringMarshaller.Encoding.GetBytes(name);
-            return TryGetOrCreateDyLib(new ReadOnlySpan<byte>(encodedBytes), out lib, out errInfo);
-        }
-
-        /// <summary>Tries to get or create a <see cref="JITDyLib"/> in this session by name</summary>
-        /// <param name="name">name of the library as span to send directly to native code</param>
-        /// <param name="lib">Library or <see langword="null"/> if not found</param>
-        /// <param name="errInfo"><see cref="ErrorInfo"/> for any errors in creating the library if it didn't exist</param>
-        /// <returns><see langword="true"/> if successful and <see langword="false"/> if not</returns>
-        /// <remarks>
         /// <para>This will add symbols for any attached platforms. If there are no attached platforms then this
         /// is the same as calling <see cref="O:GetOrCreateBareDyLib"/>.</para>
-        /// <para><paramref name="name"/> is a span to allow retrieval of the name from native code and then providing
-        /// it back again without going through any sort of marshal/unmarshal sequence. This allows for the most efficient
-        /// use of data that is likely to come from the underlying native code.
+        /// <para><paramref name="name"/> is a LazyEncodedString to allow for the possibility of retrieval of the name from
+        /// native code and then providing it back again without going through any sort of marshal/unmarshal sequence. This
+        /// allows for the most efficient use of data that is likely to come from the underlying native code.
         /// </para>
         /// </remarks>
-        public bool TryGetOrCreateDyLib(ReadOnlySpan<byte> name, [MaybeNullWhen(false)] out JITDyLib lib, out ErrorInfo errInfo)
+        public bool TryGetOrCreateDyLib(LazyEncodedString name, [MaybeNullWhen(false)] out JITDyLib lib, out ErrorInfo errInfo)
         {
+            ArgumentNullException.ThrowIfNull(name);
+
             lib = null;
             errInfo = default; // defaults to success!
 
@@ -149,7 +123,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
             unsafe
             {
-                fixed(byte* p = &MemoryMarshal.GetReference(name))
+                fixed(byte* p = &MemoryMarshal.GetReference(name.ToReadOnlySpan()))
                 {
                     errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, p).ThrowIfInvalid());
                     if (errInfo.Success)
@@ -166,12 +140,14 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <param name="name">name of the library</param>
         /// <param name="lib">[out] library if found or <see langword="null"/></param>
         /// <returns><see langword="true"/> if found or <see langword="false"/> if not</returns>
-        public bool TryGetDyLib(ReadOnlySpan<byte> name, [MaybeNullWhen(false)] out JITDyLib lib)
+        public bool TryGetDyLib(LazyEncodedString name, [MaybeNullWhen(false)] out JITDyLib lib)
         {
+            ArgumentNullException.ThrowIfNull(name);
+
             lib = null;
             unsafe
             {
-                fixed(byte* p = &MemoryMarshal.GetReference(name))
+                fixed(byte* p = &MemoryMarshal.GetReference(name.ToReadOnlySpan()))
                 {
                     LLVMOrcJITDylibRef nativeLib = LLVMOrcExecutionSessionGetJITDylibByName(Handle, p);
                     if(nativeLib.IsNull)
@@ -205,6 +181,9 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
         internal LLVMOrcExecutionSessionRef Handle { get; init; }
 
+        /// <summary>Native code callback for error reporting</summary>
+        /// <param name="context">The context for the callback is a <see cref="GCHandle"/> with a target of <see cref="ErrorReporter"/></param>
+        /// <param name="abiErrorRef">ABI handle for an error ref</param>
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private static unsafe void NativeErrorReporterCallback(void* context, /*LLVMErrorRef*/ nint abiErrorRef)
@@ -213,14 +192,12 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             {
                 if(context is not null && GCHandle.FromIntPtr((nint)context).Target is ErrorReporter self)
                 {
-                    // It is Unclear, if the handler is supposed to Dispose the provided error ref or not (it
-                    // makes sense for it to do so). This will do it in one place so that if it is found
-                    // otherwise, then it is corrected once for all. [Thus the `ref readonly` declaration of
-                    // the parameter in the delegate]
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                    // Ownership is "moved" to the ErrorInfo instance created, which has a "using"
-                    using var errInfo = new ErrorInfo(new LLVMErrorRef(abiErrorRef));
-#pragma warning restore CA2000 // Dispose objects before losing scope
+                    // It is Unclear, if this native handler is supposed to Dispose the provided error ref
+                    // or not (it makes sense for it to do so). This will do it in one place so that if it
+                    // is found otherwise, then it is corrected once for all. [Thus the `ref readonly`
+                    // declaration of the parameter in the delegate]
+                    // Ownership is "moved" to the ErrorInfo instance created
+                    using var errInfo = new ErrorInfo(abiErrorRef);
                     self(in errInfo);
                 }
             }
