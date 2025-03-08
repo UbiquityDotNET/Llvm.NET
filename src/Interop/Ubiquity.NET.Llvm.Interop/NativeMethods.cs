@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop.Properties;
 
 // TODO: Replace all of this with a Custom import resolver (see: https://learn.microsoft.com/en-us/dotnet/standard/native-interop/native-library-loading#custom-import-resolver)

@@ -125,23 +125,5 @@ namespace Ubiquity.NET.Llvm.Interop.Properties {
                 return ResourceManager.GetString("Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value already set.
-        /// </summary>
-        internal static string Value_already_set {
-            get {
-                return ResourceManager.GetString("Value_already_set", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value not set.
-        /// </summary>
-        internal static string Value_not_set {
-            get {
-                return ResourceManager.GetString("Value_not_set", resourceCulture);
-            }
-        }
     }
 }

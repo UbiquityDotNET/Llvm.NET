@@ -48,7 +48,7 @@ namespace Kaleidoscope.Tests
         }
 
         [TestMethod]
-        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]")]
+        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
         public void Chapter3()
         {
             using var input = File.OpenText( "simpleExpressions.kls" );

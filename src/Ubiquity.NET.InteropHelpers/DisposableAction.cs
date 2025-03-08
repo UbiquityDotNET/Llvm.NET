@@ -4,13 +4,13 @@
 
 using System;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Disposable type that runs a specified action on dispose</summary>
     /// <remarks>
-    /// This is used in RAII pattern style code instead of try/finally.
-    /// It is most valuable when the scope extends beyond a single function
-    /// where a try/finally simply won't work.
+    /// This is used in RAII pattern style code instead of try/finally. It is most
+    /// valuable when the scope extends beyond a single function (as a return of
+    /// <see cref="IDisposable"/>) where a try/finally simply won't work.
     /// </remarks>
     public readonly record struct DisposableAction
         : IDisposable

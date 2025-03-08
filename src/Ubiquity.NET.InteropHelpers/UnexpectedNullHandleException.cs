@@ -6,12 +6,12 @@
 
 using System;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropHelpers
 {
-    /// <summary>Exception thrown when an underlying LLVM handle is unexpectedly null</summary>
+    /// <summary>Exception thrown when an underlying Native API `handle` is unexpectedly <see langword="null"/></summary>
     /// <remarks>
-    /// This is generally a non-recoverable error state where the underlying LLVM library is
-    /// in an inconsistent or unexpected state.
+    /// This is generally a non-recoverable error state where the underlying API library is in an inconsistent
+    /// or otherwise unexpected state.
     /// </remarks>
     public sealed class UnexpectedNullHandleException
         : InvalidOperationException

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.InteropHelpers;
 
 namespace Ubiquity.NET.Llvm
 {

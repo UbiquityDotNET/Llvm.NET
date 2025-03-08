@@ -11,8 +11,12 @@ using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
+    /// <summary>Utility class to provide extension methods for a span of bytes</summary>
     public static class ByteSpanHelpers
     {
+        /// <summary>Computes the hash code of the contents for a span of bytes</summary>
+        /// <param name="span">Span of bytes to compute a hash code for</param>
+        /// <returns>Hash code</returns>
         public static int ComputeHashCode(ReadOnlySpan<byte> span)
         {
             // if there's no data, then the hash is 0

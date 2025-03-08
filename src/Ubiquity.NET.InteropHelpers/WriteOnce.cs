@@ -9,9 +9,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-using Ubiquity.NET.Llvm.Interop.Properties;
+using Ubiquity.NET.InteropHelpers.Properties;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.InteropProperties
 {
     /// <summary>Wrapper class to provide Write-Once semantics to a value</summary>
     /// <typeparam name="T">Type of value to store</typeparam>

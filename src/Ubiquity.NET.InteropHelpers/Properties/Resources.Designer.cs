@@ -68,5 +68,23 @@ namespace Ubiquity.NET.InteropHelpers.Properties {
                 return ResourceManager.GetString("Already_captured_different_native_string", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value already set.
+        /// </summary>
+        internal static string Value_already_set {
+            get {
+                return ResourceManager.GetString("Value_already_set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value not set.
+        /// </summary>
+        internal static string Value_not_set {
+            get {
+                return ResourceManager.GetString("Value_not_set", resourceCulture);
+            }
+        }
     }
 }
