@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 // This is cribbed from the interop library to prevent the need for applications to take a direct dependency on the interop library
 // it is configured as a "private asset" and therefore does NOT flow to consumers of this library.
 namespace Ubiquity.NET.Llvm

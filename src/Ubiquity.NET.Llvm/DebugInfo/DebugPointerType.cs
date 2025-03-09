@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.Types;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Binding between a <see cref="DIType"/> and an <see cref="IPointerType"/></summary>

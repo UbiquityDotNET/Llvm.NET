@@ -4,47 +4,43 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
-    public static partial class NativeMethods
+    public static partial class BitReader
     {
         [Obsolete( "Use LLVMParseBitcode2 instead" )]
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMParseBitcode(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out DisposeMessageString OutMessage);
 
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMParseBitcode2(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule);
 
         [Obsolete( "Use LLVMParseBitcodeInContext2 instead" )]
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMParseBitcodeInContext(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out DisposeMessageString OutMessage);
 
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMParseBitcodeInContext2(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule);
 
         [Obsolete( "Use LLVMGetBitcodeModuleInContext2 instead" )]
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
 
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext2(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM);
 
         [Obsolete( "Use LLVMGetBitcodeModule2 instead" )]
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMGetBitcodeModule(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
 
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMGetBitcodeModule2(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM);
     }

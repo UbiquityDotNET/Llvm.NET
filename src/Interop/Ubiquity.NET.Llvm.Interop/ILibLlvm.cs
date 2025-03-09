@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Code gen target to register/initialize</summary>

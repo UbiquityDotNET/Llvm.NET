@@ -4,10 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Runtime.InteropServices;
-
-using Ubiquity.NET.Llvm.Interop;
 
 namespace Ubiquity.NET.Llvm
 {

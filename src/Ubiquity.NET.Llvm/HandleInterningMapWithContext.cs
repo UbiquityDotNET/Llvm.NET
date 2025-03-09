@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm
 {
     internal abstract class HandleInterningMapWithContext<THandle, TMappedType>

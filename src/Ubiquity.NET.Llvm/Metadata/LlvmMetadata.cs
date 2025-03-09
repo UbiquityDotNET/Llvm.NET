@@ -4,17 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Enumeration to define metadata type kind</summary>

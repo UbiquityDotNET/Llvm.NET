@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-using Ubiquity.NET.InteropHelpers;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Manages Common LLVM strings that use the `LLVMDisposeMessage` API to release the resources for the string</summary>
@@ -25,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop
             LLVMDisposeMessage( handle );
             return true;
 
-            [DllImport( NativeMethods.LibraryName )]
+            [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMDisposeMessage(nint p);
         }

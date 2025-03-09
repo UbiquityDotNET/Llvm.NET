@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Freeze a poison or undef value</summary>

@@ -2,23 +2,6 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Threading;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-using Ubiquity.NET.Llvm.Interop.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.IRBindings;
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Provides support for various LLVM static state initialization and manipulation</summary>

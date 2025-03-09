@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Provides extension methods to <see cref="Instruction"/> that cannot be achieved as members of the class</summary>

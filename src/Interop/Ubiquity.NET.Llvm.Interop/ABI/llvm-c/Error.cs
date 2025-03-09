@@ -4,14 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
-    public static partial class NativeMethods
+    public static partial class Error
     {
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorTypeId LLVMGetStringErrorTypeId();
     }

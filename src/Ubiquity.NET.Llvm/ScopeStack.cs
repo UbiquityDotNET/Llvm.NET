@@ -4,12 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.NET.InteropHelpers;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Simple implementation of common Variable scoping</summary>

@@ -4,12 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Security;
-
-using Ubiquity.NET.InteropHelpers;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -71,7 +66,7 @@ namespace Ubiquity.NET.Llvm.Interop
             {
                 return LLVMErrorTypeId.FromABI(LLVMGetErrorTypeId(handle));
 
-                [DllImport( NativeMethods.LibraryName )]
+                [DllImport( LibraryName )]
                 [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
                 static extern /*LLVMErrorTypeId*/nint LLVMGetErrorTypeId(/*LLVMErrorRef*/ nint Err);
             }
@@ -85,7 +80,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 LLVMCantFail(handle);
             }
 
-            [DllImport( NativeMethods.LibraryName )]
+            [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMCantFail(/*LLVMErrorRef*/ nint Err);
         }
@@ -112,7 +107,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 }
             }
 
-            [DllImport( NativeMethods.LibraryName )]
+            [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static unsafe extern nint /*LLVMErrorRef*/ LLVMCreateStringError(byte* ErrMsg);
         }
@@ -124,7 +119,7 @@ namespace Ubiquity.NET.Llvm.Interop
             LLVMConsumeError( handle );
             return true;
 
-            [DllImport( NativeMethods.LibraryName )]
+            [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMConsumeError(nint p);
         }
@@ -147,7 +142,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
             // As this is a private local func, it must use DllImport AND
             // cannot allow ANY marshalling. That is done manually by caller.
-            [DllImport( NativeMethods.LibraryName )]
+            [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern /*ErrorMessageString*/ nint LLVMGetErrorMessage(nint p);
         }

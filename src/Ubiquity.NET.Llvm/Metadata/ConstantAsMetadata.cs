@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Constant <see cref="Value"/> as metadata</summary>

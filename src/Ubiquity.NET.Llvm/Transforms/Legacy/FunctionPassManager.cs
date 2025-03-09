@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.InteropHelpers;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 using Function = Ubiquity.NET.Llvm.Values.Function;
 
 namespace Ubiquity.NET.Llvm.Transforms.Legacy

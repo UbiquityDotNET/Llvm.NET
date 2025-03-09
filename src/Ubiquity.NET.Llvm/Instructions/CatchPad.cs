@@ -4,12 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Marks a <see cref="BasicBlock"/> as a catch handler</summary>

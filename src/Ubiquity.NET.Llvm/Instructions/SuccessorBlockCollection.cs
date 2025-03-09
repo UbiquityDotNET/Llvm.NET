@@ -5,13 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
 
 namespace Ubiquity.NET.Llvm.Instructions
 {

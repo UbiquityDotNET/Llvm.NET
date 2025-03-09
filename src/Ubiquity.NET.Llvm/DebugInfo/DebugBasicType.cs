@@ -4,12 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.Properties;
-using Ubiquity.NET.Llvm.Types;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information binding between an LLVM native <see cref="ITypeRef"/> and a <see cref="DIBasicType"/></summary>

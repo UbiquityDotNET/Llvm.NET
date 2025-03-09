@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>

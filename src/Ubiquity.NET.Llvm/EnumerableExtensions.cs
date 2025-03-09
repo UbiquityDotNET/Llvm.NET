@@ -5,9 +5,6 @@
 // -----------------------------------------------------------------------
 
 #if !NET_COREAPP
-using System;
-using System.Collections.Generic;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>This is an internal duplicate of Extensions added to CoreFx.</summary>

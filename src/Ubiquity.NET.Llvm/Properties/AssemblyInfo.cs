@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -24,4 +23,4 @@ using System.Runtime.InteropServices;
 // to help people to do the right thing by making it MUCH harder to do the wrong thing. It is
 // impossible to claim (or at least easy to refute such a claim...) that one is ignorant of the
 // "wrongness" of such misuse. The only legit answer is an equivalent of "tough noogies".
-[assembly: InternalsVisibleTo("Ubiquity.NET.llvm.JIT")]
+[assembly: InternalsVisibleTo( "Ubiquity.NET.llvm.JIT" )]

@@ -2,10 +2,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
-using System;
 using System.Resources;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant( false )]
 

@@ -4,11 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     public enum LLVMLinkerMode
         : Int32
@@ -17,9 +13,9 @@ namespace Ubiquity.NET.Llvm.Interop
         LLVMLinkerPreserveSource_Removed = 1,
     }
 
-    public static partial class NativeMethods
+    public static partial class Linker
     {
-        [LibraryImport( NativeMethods.LibraryName )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMLinkModules2(LLVMModuleRef Dest, LLVMModuleRef Src);
     }

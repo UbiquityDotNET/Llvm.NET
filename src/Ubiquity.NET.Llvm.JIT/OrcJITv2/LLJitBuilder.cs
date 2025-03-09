@@ -14,7 +14,7 @@ using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.InteropProperties;
 using Ubiquity.NET.Llvm.Interop;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {

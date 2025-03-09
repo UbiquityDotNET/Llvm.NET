@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Array of <see cref="DILocalVariable"/> nodes for use with see <see cref="DebugInfoBuilder"/> methods</summary>

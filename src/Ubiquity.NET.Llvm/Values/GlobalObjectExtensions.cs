@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Fluent style extensions for properties of <see cref="GlobalObject"/></summary>

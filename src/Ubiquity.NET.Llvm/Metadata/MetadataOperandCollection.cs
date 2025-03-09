@@ -4,14 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.NET.InteropHelpers;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
 
 namespace Ubiquity.NET.Llvm
 {

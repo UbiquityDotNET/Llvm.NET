@@ -12,7 +12,7 @@ using System.Threading;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 // Regions help hide the boiler plate equality stuff
 #pragma warning disable SA1124 // Do not use regions

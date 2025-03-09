@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {

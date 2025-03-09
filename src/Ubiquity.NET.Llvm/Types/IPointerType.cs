@@ -7,8 +7,6 @@
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Types
 {
     /// <summary>Interface for a pointer type in LLVM</summary>

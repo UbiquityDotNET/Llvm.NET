@@ -4,18 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
-using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-using Ubiquity.NET.Llvm.Properties;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
@@ -188,7 +179,7 @@ namespace Ubiquity.NET.Llvm.Values
                 return new Branch( handle );
 
             case LibLLVMValueKind.SwitchKind:
-                return new Switch( handle );
+                return new Instructions.Switch( handle );
 
             case LibLLVMValueKind.IndirectBrKind:
                 return new IndirectBranch( handle );

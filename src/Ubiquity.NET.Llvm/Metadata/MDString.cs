@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Stores a string in LlvmMetadata</summary>

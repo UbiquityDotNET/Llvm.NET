@@ -1,62 +1,65 @@
-<Project Sdk="Microsoft.NET.Sdk">
-    <Sdk Name="Microsoft.Build.CentralPackageVersions" />
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
-        <DebugType>portable</DebugType>
-        <DebugSymbols>true</DebugSymbols>
-        <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
-        <SignAssembly>False</SignAssembly>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <MinClientVersion>4.0</MinClientVersion>
-        <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
-        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <Description>JIT .NET Bindings for LLVM</Description>
-        <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
-        <NoPackageAnalysis>true</NoPackageAnalysis>
-        <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
-        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
+    <SignAssembly>False</SignAssembly>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <IsAotCompatible>True</IsAotCompatible>
 
-    <ItemGroup>
-        <!--Keep docfx generated OBJ folder junk from cluttering solution view-->
-        <Compile Remove="obj\**" />
-        <EmbeddedResource Remove="obj\**" />
-        <None Remove="obj\**" />
-    </ItemGroup>
+    <!--NuGet packaging support, only applied for release builds as it just takes too long for quick inner loop developement -->
+    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+    <MinClientVersion>4.0</MinClientVersion>
+    <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>JIT .NET Bindings for LLVM</Description>
+    <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
-            <Link>CustomDictionary.xml</Link>
-        </CodeAnalysisDictionary>
-    </ItemGroup>
+  <ItemGroup>
+    <!--Keep docfx generated OBJ folder junk from cluttering solution view-->
+    <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="System.Reactive" />
-    </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
-        <ProjectReference Include="..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
-        <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <Compile Update="Properties\Resources.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
+    <ProjectReference Include="..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
+    <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Update="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 
 </Project>

@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
 namespace Ubiquity.NET.Llvm
 {
     internal interface IHandleInterning<THandle, TMappedType>

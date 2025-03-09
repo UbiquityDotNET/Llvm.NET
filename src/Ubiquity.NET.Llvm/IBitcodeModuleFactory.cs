@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.DebugInfo;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Interface for a <see cref="BitcodeModule"/> factory</summary>

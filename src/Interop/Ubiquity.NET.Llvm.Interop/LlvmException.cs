@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Exception thrown from LLVM Error Messages</summary>

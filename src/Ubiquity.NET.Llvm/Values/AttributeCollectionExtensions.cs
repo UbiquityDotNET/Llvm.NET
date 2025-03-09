@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Extension methods for a collection of <see cref="AttributeValue"/></summary>

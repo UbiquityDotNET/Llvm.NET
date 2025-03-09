@@ -5,10 +5,10 @@ directly. The source generation was too problematic/complex to generalize to the
 where the output was usable "as-is". Additionally, it used marshalling hints via a custom
 YAML configuration file. Ultimately, this file ended up as a foreign language form of the
 marshalling attributes in C# code. So it was mostly abandoned. (It is still used to generate
-the exports and perform some validations of the extension code at the native level and
-to generate the otherwise tedious handle types.)
+the `EXPOORTS.g.def` file, the type specific handle wrappers, and perform some validations
+of the extension code at the native level.)
 
-The generator had one advantage in that it could read the configuration file AND
+The generator did have one advantage in that it could read the configuration file AND
 validate that the functions listed in it were still in the actual headers (though
 it failed to identify any additional elements in the headers NOT in the config file!).
 There may yet be some way to salvage some parts of the generator to perform a sanity

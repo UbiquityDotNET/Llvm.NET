@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Id values for enumerated LLVM attributes</summary>

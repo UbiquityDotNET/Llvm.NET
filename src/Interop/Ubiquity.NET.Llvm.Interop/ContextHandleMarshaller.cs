@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Template to provide <see cref="LibraryImportAttribute"/> compatible marshalling for an LLVM context handle</summary>

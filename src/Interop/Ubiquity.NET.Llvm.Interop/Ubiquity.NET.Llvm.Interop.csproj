@@ -9,7 +9,11 @@
     <SignAssembly>False</SignAssembly>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsAotCompatible>True</IsAotCompatible>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+
+    <!--NuGet packaging support, only applied for release builds as it just takes too long for quick inner loop developement -->
+    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
     <MinClientVersion>4.9.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -22,11 +26,6 @@
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <IsAotCompatible>True</IsAotCompatible>
-    <!-- Only use embedding for local builds; Official automated builds use sourcelink -->
-    <EmbedAllSources Condition="$(IsAutomatedBuild) != 'true'">True</EmbedAllSources>
-    <EmbedAllSources Condition="$(IsAutomatedBuild) == 'true'">False</EmbedAllSources>
-    <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup>
     <!-- NOTE: The Ubiquity.NET.LibLLVM.dll currently only comes in a release form, which is really RelWithDebInfo in LLVM Cmake terms -->

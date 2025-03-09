@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Runtime.InteropServices;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     [StructLayout( LayoutKind.Sequential )]

@@ -4,15 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-using Ubiquity.NET.Llvm.Types;
-using Ubiquity.NET.Llvm.Values;
-
 #pragma warning disable SA1649 // File name must match first type ( Justification -  Interface + internal Impl + public extensions )
 
 namespace Ubiquity.NET.Llvm.DebugInfo

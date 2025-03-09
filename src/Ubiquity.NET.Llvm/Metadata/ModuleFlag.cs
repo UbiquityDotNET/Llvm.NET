@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.Llvm.Properties;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Module Flags Tuple for a module</summary>

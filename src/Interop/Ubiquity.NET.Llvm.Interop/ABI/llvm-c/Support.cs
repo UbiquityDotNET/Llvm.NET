@@ -6,14 +6,10 @@
 
 #if INCLUDE_LLVM_LIBRARY_SUPPORT_ABI
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     // CONSIDER: These APIs are highly questionable in a managed environment. Should they even be published?
-    public static partial class NativeMethods
+    public static partial class Support
     {
         [LibraryImport( NativeMethods.LibraryPath, StringMarshallingCustomType = typeof(ExecutionEncodingStringMarshaller) )]
         [UnmanagedCallConv( CallConvs = [typeof(CallConvCdecl)] )]
