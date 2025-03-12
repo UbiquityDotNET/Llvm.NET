@@ -17,22 +17,6 @@ internal class Program
 
         using var jit = new LlJIT();
 
-        // Keep the callback alive and valid until not needed. (End of scope)
-        // NOTE: There is an inherent conflict of dependency in that the
-        //       Materialize local function will capture the JIT instance
-        //       and therefore cannot exist before it and must be disposed
-        //       before it. The JIT owns the callback to the materializer
-        //       so it can call the materializer at any point while code is
-        //       executing in the JIT. However, that is resolved by understanding
-        //       that the materializer is not relevant unless the JIT is running
-        //       code that has not yet materialized the symbols it controls or,
-        //       more likely in shutdown, not running any code any more.
-        //       Thus, once all execution is done Dispose() on this before
-        //       Dispose() on the JIT is safe. Additionally, the internal implementation
-        //       of the native callbacks will dispose of the materializer AFTER
-        //       either a call to Materialize or Destroy.
-        using var materializer = new CustomMaterializer(Materialize);
-
         var triple = jit.TripleString;
         using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
 
@@ -48,8 +32,12 @@ internal class Program
             new(jit.MangleAndIntern(BarBodySymbolName), flags),
         ];
 
-        using var fooMu = new CustomMaterializationUnit("FooMU", materializer, fooSym);
-        using var barMu = new CustomMaterializationUnit("BarMU", materializer, barSym);
+        // Just use the local function, it captures what is needed and all data is
+        // disposed from this instance. Normally, the materialization actually needs
+        // to retain data (Commonly the AST of some function) that is held in a type
+        // that implements IDisposable. But that is not needed in this sample.
+        using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
+        using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
         jit.MainLib.Define(fooMu);
         jit.MainLib.Define(barMu);
 

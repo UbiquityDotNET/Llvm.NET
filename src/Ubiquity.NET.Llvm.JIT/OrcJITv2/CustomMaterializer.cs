@@ -4,53 +4,28 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-// They are ordered correctly, analyzer has no configurability for the access order and stupid defaults.
-#pragma warning disable SA1202 // Elements should be ordered by access
-
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
-    /// <summary>Delegate to perform action on Materialization</summary>
-    /// <param name="r"><see cref="MaterializationResponsibility"/> that serves as the context for this materialization</param>
-    public delegate void MaterializationAction(MaterializationResponsibility r);
-
-    /// <summary>Delegate to perform action on discard</summary>
-    /// <param name="jitLib">Library the symbols is discarded from</param>
-    /// <param name="symbol">Symbol being discarded</param>
-    /// <remarks>
-    /// This must be a "custom" delegate as the <see cref="JITDyLib"/> is a
-    /// ref type that is NOT allowed as a type parameter for <see cref="Action{T1, T2}"/>.
-    /// </remarks>
-    public delegate void DiscardAction(JITDyLib jitLib, SymbolStringPoolEntry symbol);
-
     /// <summary>Holds delegates for performing custom materialization for a single materialization unit</summary>
-    public sealed class CustomMaterializer
+    internal sealed class CustomMaterializer
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="CustomMaterializer"/> class.</summary>
         /// <param name="materializeAction">Action to perform to materialize the symbol</param>
-        public CustomMaterializer(MaterializationAction materializeAction)
-            : this( materializeAction, null, static () => { } )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="CustomMaterializer"/> class.</summary>
-        /// <param name="materializeAction">Action to perform to materialize the symbol</param>
-        /// <param name="destroyAction">Action to perform to release any resources held for this materialization that won't be used</param>
-        public CustomMaterializer(MaterializationAction materializeAction, Action destroyAction)
-            : this( materializeAction, null, destroyAction )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="CustomMaterializer"/> class.</summary>
-        /// <param name="materializeAction">Action to perform to materialize the symbol</param>
         /// <param name="discardAction">Action to perform when the JIT discards/replaces a symbol</param>
-        /// <param name="destroyAction">Action to perform to release any resources held for this materialization that won't be used</param>
-        public CustomMaterializer(MaterializationAction materializeAction, DiscardAction? discardAction, Action destroyAction)
+        /// <param name="dataOwner">[Optional] Owner of data used by <paramref name="materializeAction"/> that is disposed once materialization is complete</param>
+        /// <remarks>
+        /// The use of <see cref="IDisposable"/> for release of the data is to allow for early disposal of resources if the <paramref name="materializeAction"/>
+        /// is never called. If provided the <see cref="IDisposable.Dispose"/> method is ALWAYS called on completion of materialization that, is the
+        /// sequence is <paramref name="materializeAction"/> then <see cref="IDisposable.Dispose"/> is called if the <paramref name="dataOwner"/> is
+        /// provided. This allows finer control over the lifetime of data used by a materializer even if the materialization itself is never called.
+        /// </remarks>
+        public CustomMaterializer(MaterializationAction materializeAction, DiscardAction? discardAction, IDisposable? dataOwner)
         {
             AllocatedSelf = new( this );
             MaterializeHandler = materializeAction;
             DiscardHandler = discardAction;
-            DestroyHandler = destroyAction;
+            DataOwner = dataOwner;
         }
 
         /// <inheritdoc/>
@@ -58,29 +33,36 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         {
             if(!AllocatedSelf.IsInvalid && !AllocatedSelf.IsClosed)
             {
+                // Decrements the ref count on the handle
+                // might not actually destroy anything
                 AllocatedSelf.Dispose();
+
+                // IFF the allocated handle reaches ref count == 0
+                // dispose the data as well.
+                if (AllocatedSelf.IsClosed)
+                {
+                    DataOwner?.Dispose();
+                }
             }
         }
 
         internal bool SupportsDiscard => DiscardHandler is not null;
 
-        internal void AddRef()
+        internal unsafe void* AddRefAndGetNativeContext()
         {
-            bool ignoredButRequired = false;
-            AllocatedSelf.DangerousAddRef(ref ignoredButRequired);
-        }
-
-        internal unsafe void* GetNativeContext()
-        {
-            return (void*)AllocatedSelf.DangerousGetHandle();
+            return AllocatedSelf.AddRefAndGetNativeContext();
         }
 
         internal MaterializationAction MaterializeHandler { get; init; }
 
         internal DiscardAction? DiscardHandler { get; init; }
 
-        internal Action DestroyHandler { get; init; }
+        // This is the key to ref counted behavior to hold this instance (and anything it references)
+        // alive for the GC. The "ownership" of the refcount is handed to native code while the
+        // calling code is free to no longer reference this instance as it holds an allocated
+        // GCHandle for itself and THAT is kept alive by a ref count that is "owned" by native code.
+        private SafeGCHandle AllocatedSelf { get; init; }
 
-        internal SafeGCHandle AllocatedSelf { get; init; }
+        private readonly IDisposable? DataOwner;
     }
 }
