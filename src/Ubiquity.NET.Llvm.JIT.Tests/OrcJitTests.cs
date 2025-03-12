@@ -4,72 +4,187 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.JIT;
-using Ubiquity.NET.Llvm.Values;
+using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Llvm.JIT.OrcJITv2;
 
 namespace Ubiquity.NET.Llvm.Tests
 {
     [TestClass]
     public class OrcJitTests
     {
+        private const string FooBodySymbolName = "foo_body";
+        private const string BarBodySymbolName = "bar_body";
+
         [TestMethod]
-        public void TestEagerIRCompilation( )
+        public void TestVerLazyJIT( )
         {
-            using var ctx = new Context( );
-            var nativeTriple = Triple.HostTriple;
-            var target = Target.FromTriple( nativeTriple );
-            var machine = target.CreateTargetMachine( nativeTriple );
-            using var orcJit = new OrcJit( machine );
-            using( var lazyModule = CreateModule( ctx, machine, 10101010, "lazy1", "lazy1" ) )
+            using var jit = new LlJIT();
+
+            // Keep the callback alive and valid until not needed. (End of scope)
+            // NOTE: There is an inherent conflict of dependency in that the
+            //       Materialize local function will capture the JIT instance
+            //       and therefore cannot exist before it and must be disposed
+            //       before it. The JIT owns the callback to the materializer
+            //       so it can call the materializer at any point while code is
+            //       executing in the JIT. However, that is resolved by understanding
+            //       that the materializer is not relevant unless the JIT is running
+            //       code that has not yet materialized the symbols it controls or,
+            //       more likely in shutdown, not running any code any more.
+            //       Thus, once all execution is done Dispose() on this before
+            //       Dispose() on the JIT is safe. Additionally, the internal implementation
+            //       of the native callbacks will dispose of the materializer AFTER
+            //       either a call to Materialize or Destroy.
+            using var materializer = new CustomMaterializer(Materialize);
+
+            var triple = jit.TripleString;
+            using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
+
+            // Place the generated module in the JIT
+            jit.AddModule(jit.MainLib, mainMod);
+            SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
+
+            List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> fooSym = [
+                new(jit.MangleAndIntern(FooBodySymbolName), flags),
+            ];
+
+            List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> barSym = [
+                new(jit.MangleAndIntern(BarBodySymbolName), flags),
+            ];
+
+            using var fooMu = new CustomMaterializationUnit("FooMU", materializer, fooSym);
+            using var barMu = new CustomMaterializationUnit("BarMU", materializer, barSym);
+            jit.MainLib.Define(fooMu);
+            jit.MainLib.Define(barMu);
+
+            using var ism = new LocalIndirectStubsManager(triple);
+            using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
+
+            List<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> reexports =[
+                new(jit.MangleAndIntern("foo"), new(jit.MangleAndIntern(FooBodySymbolName), flags)),
+                new(jit.MangleAndIntern("bar"), new(jit.MangleAndIntern(BarBodySymbolName), flags)),
+            ];
+
+            using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
+            jit.MainLib.Define(lazyReExports);
+
+            UInt64 address = jit.Lookup("entry");
+
+            unsafe
             {
-                orcJit.AddLazyCompiledModule( lazyModule );
+                var entry = (delegate* unmanaged[Cdecl]<Int32, Int32>)address;
+                int result = entry(1); // Conditionally calls "foo" with lazy materialization
+                Assert.AreEqual(1, result);
+
+                result = entry(0); // Conditionally calls "bar" with lazy materialization
+                Assert.AreEqual(2, result);
             }
 
-            using( var lazyModule = CreateModule( ctx, machine, 20202020, "lazy2", "lazy2" ) )
+            // Local function to handle materializing the very lazy symbols
+            // This function captures "jit" and therefore the materializer instance
+            // above must remain valid until the JIT is destroyed or the materialization
+            // occurs.
+            void Materialize(MaterializationResponsibility r)
             {
-                orcJit.AddLazyCompiledModule( lazyModule );
-            }
+                // symbol strings returned are NOT owned by this function so Dispose() isn't needed (Though it is an allowed NOP)
+                using var symbols = r.GetRequestedSymbols();
+                Debug.Assert(symbols.Count == 1, "Unexpected number of symbols!");
 
-            // try several different modules with the same function name replacing the previous
-            using( var module = CreateModule( ctx, orcJit.TargetMachine, 42 ) )
-            {
-                AddAndExecuteTestModule( orcJit, module, 42 );
-            }
+                using var fooBodyName = jit.MangleAndIntern(FooBodySymbolName);
+                using var barBodyName = jit.MangleAndIntern(BarBodySymbolName);
 
-            using( var module = CreateModule( ctx, orcJit.TargetMachine, 12345678 ) )
-            {
-                AddAndExecuteTestModule( orcJit, module, 12345678 );
-            }
+                ThreadSafeModule module;
+                if(symbols[0].Equals(fooBodyName))
+                {
+                    Debug.WriteLine("Parsing module for 'Foo'");
+                    module = ParseTestModule(FooModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "foo-mod");
+                }
+                else if (symbols[0].Equals(barBodyName))
+                {
+                    Debug.WriteLine("Parsing module for 'Bar'");
+                    module = ParseTestModule(BarModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "bar-mod");
+                }
+                else
+                {
+                    Debug.WriteLine("Unknown symbol");
 
-            using( var module = CreateModule( ctx, orcJit.TargetMachine, 87654321 ) )
-            {
-                AddAndExecuteTestModule( orcJit, module, 87654321 );
+                    // Not a known symbol - fail the materialization request.
+                    r.Fail();
+                    r.Dispose();
+                    return;
+                }
+
+                // apply the data Layout
+                module.WithPerThreadModule(ApplyDataLayout);
+
+                // Finally emit the module to the JIT.
+                // This transfers ownership of both the responsibility AND the module
+                // to the native LLVM JIT.
+                jit.TransformLayer.Emit(r, module);
+
+                ErrorInfo ApplyDataLayout(BitcodeModule module)
+                {
+                    module.DataLayoutString = jit.DataLayoutString;
+
+                    // no API calls in this function provide an ErrorInfo instance, so just return
+                    // the default (success)
+                    //
+                    // Note: The invoking callback will catch any exceptions thrown from this function
+                    //       AND convert them to an ErrorInfo to return to the native code.
+                    return default;
+                }
             }
         }
 
-        private static void AddAndExecuteTestModule( OrcJit orcJit, BitcodeModule module, int magicNumber )
+        private static ThreadSafeModule ParseTestModule(LazyEncodedString src, LazyEncodedString name)
         {
-            ulong orcHandle = orcJit.AddEagerlyCompiledModule( module );
-            var main = orcJit.GetFunctionDelegate<TestMain>("main");
-            Assert.IsNotNull( main );
-            Assert.AreEqual( magicNumber, main( ) );
-            orcJit.RemoveModule( orcHandle );
+            using var threadSafeContext = new ThreadSafeContext();
+            var ctx = threadSafeContext.PerThreadContext;
+            return new ThreadSafeModule(threadSafeContext, ctx.ParseModule(src, name));
         }
 
-        private static BitcodeModule CreateModule( Context ctx, TargetMachine machine, int magicNumber, string modulename = "test", string functionname = "main" )
+        private const string MainModuleSource = """
+        define i32 @entry(i32 %argc)
         {
-            var module = ctx.CreateBitcodeModule(modulename);
-            module.Layout = machine.TargetData;
-            IrFunction main = module.CreateFunction( functionname, ctx.GetFunctionType( ctx.Int32Type ) );
-            BasicBlock entryBlock = main.AppendBasicBlock("entry");
-            var bldr = new InstructionBuilder(entryBlock);
-            bldr.Return( ctx.CreateConstant( magicNumber ) );
-            return module;
+        entry:
+            %tobool = icmp ne i32 %argc, 0
+            br i1 %tobool, label %if.foo, label %if.bar
+
+        if.foo:
+            %call = tail call i32 @foo()
+            br label %return
+
+        if.bar:
+            %call1 = tail call i32 @bar()
+            br label %return
+
+        return:
+            %retval.0 = phi i32 [ %call, %if.foo ], [ %call1, %if.bar ]
+            ret i32 %retval.0
         }
 
-        private delegate int TestMain( );
+        declare i32 @foo()
+        declare i32 @bar()
+        """;
+
+        private const string FooModuleSource = """
+        define i32 @foo_body() {
+          entry:
+            ret i32 1
+        }
+        """;
+
+        private const string BarModuleSource = """
+        define i32 @bar_body()
+        {
+          entry:
+            ret i32 2
+        }
+        """;
     }
 }

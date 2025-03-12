@@ -726,6 +726,37 @@ namespace Ubiquity.NET.Llvm
             return ModuleCache.CreateBitcodeModule( moduleId, language, srcFilePath, producer, optimized, compilationFlags, runtimeVersion );
         }
 
+        /// <summary>Parse LLVM IR source for a module, into this context</summary>
+        /// <param name="src">LLVM IR Source code of the module</param>
+        /// <param name="name">Name of the module buffer</param>
+        /// <returns>Newly created module parsed from the IR</returns>
+        /// <exception cref="LlvmException">Any errors parsing the IR</exception>
+        public BitcodeModule ParseModule(LazyEncodedString src, LazyEncodedString name)
+        {
+            ArgumentNullException.ThrowIfNull(src);
+            ArgumentNullException.ThrowIfNull(name);
+
+            unsafe
+            {
+                using var nativeSrcHandle = src.Pin();
+                using var mb = new MemoryBuffer((byte*)nativeSrcHandle.Pointer, src.NativeSize, name, requiresNullTerminator: true);
+
+#pragma warning disable CA2000 // Dispose objects before losing scope
+                LLVMStatus result = LLVMParseIRInContext(ContextHandle, mb.Handle.MoveToNative(), out LLVMModuleRef module, out DisposeMessageString errMsg);
+                using(errMsg)
+                {
+                    if (result.Failed)
+                    {
+                        Debug.Assert(!errMsg.IsClosed && !errMsg.IsInvalid, "Unexpected state from LLVM interop!");
+                        throw new LlvmException(errMsg.ToString() ?? string.Empty);
+                    }
+
+                    return ModuleCache.GetOrCreateItem(module, (h)=>h.Dispose());
+                }
+#pragma warning restore CA2000 // Dispose objects before losing scope
+            }
+        }
+
         /// <summary>Gets the modules created in this context</summary>
         public IEnumerable<BitcodeModule> Modules => ModuleCache;
 
@@ -751,7 +782,11 @@ namespace Ubiquity.NET.Llvm
         /// <exception cref="System.IO.IOException">File IO failures</exception>
         public TargetBinary OpenBinary(string path)
         {
-            return new TargetBinary( new MemoryBuffer( path ), this );
+            // ownership of this buffer transfers to the TargetBinary instance
+            // unless an exception occurs. Dispose() is idempotent and a harmless
+            // NOP if transfer occurs.
+            using var buffer = new MemoryBuffer( path );
+            return new TargetBinary( buffer, this );
         }
 
         /*TODO: Create interop calls to support additional properties/methods

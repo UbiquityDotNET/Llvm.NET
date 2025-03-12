@@ -46,6 +46,7 @@ global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Disassembler;
+global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.IrReader;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Linker;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Object;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;

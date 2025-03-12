@@ -45,7 +45,6 @@ namespace LlvmBindingsGenerator.Templates
 // ------------------------------------------------------------------------------
 
 using System.CodeDom.Compiler;
-using System.Runtime.InteropServices.Marshalling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -62,28 +61,28 @@ namespace Ubiquity.NET.Llvm.Interop
     /// </remarks>
     [GeneratedCode(""LlvmBindingsGenerator"",""");
             
-            #line 32 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 31 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    [NativeMarshalling(typeof(ContextHandleMarshaller<");
             
-            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 32 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(">))]\r\n    public readonly record struct ");
             
-            #line 34 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 33 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write("\r\n        : IContextHandle<");
             
-            #line 35 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 34 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
@@ -99,7 +98,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Interface defined factory for an instance of <see cref=""");
             
-            #line 44 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 43 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
@@ -108,7 +107,7 @@ namespace Ubiquity.NET.Llvm.Interop
                     "/param>\r\n        /// <returns>Type specific wrapper around the native ABI handle" +
                     "</returns>\r\n        public static ");
             
-            #line 47 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 46 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
@@ -116,7 +115,7 @@ namespace Ubiquity.NET.Llvm.Interop
             this.Write(" FromABI(nint abiValue) => new(abiValue);\r\n\r\n        /// <summary>Gets a zero (<s" +
                     "ee langword=\"null\"/>) value handle</summary>\r\n        public static ");
             
-            #line 50 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 49 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
@@ -128,14 +127,14 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <returns>The handle as an <see cref=""nint""/></returns>
         public static implicit operator nint(");
             
-            #line 55 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 54 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default
             #line hidden
             this.Write(" value) => value.Handle;\r\n\r\n        private ");
             
-            #line 57 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
+            #line 56 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\ContextHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
             
             #line default

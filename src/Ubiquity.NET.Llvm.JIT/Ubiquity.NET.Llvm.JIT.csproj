@@ -38,10 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Reactive" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
     <ProjectReference Include="..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
     <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />

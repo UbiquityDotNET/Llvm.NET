@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         nint /*LLVMErrorRef*/ /*retVal*/
         >;
     using unsafe LLVMOrcMaterializationUnitDestroyFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, void /*retVal*/ >;
-    using unsafe LLVMOrcMaterializationUnitDiscardFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, LLVMOrcJITDylibRef /*JD*/, nint /*LLVMOrcSymbolStringPoolEntryRef*/ /*Symbol*/, void /*retVal*/>;
+    using unsafe LLVMOrcMaterializationUnitDiscardFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, /*LLVMOrcJITDylibRef*/nint /*JD*/, nint /*LLVMOrcSymbolStringPoolEntryRef*/ /*Symbol*/, void /*retVal*/>;
     using unsafe LLVMOrcMaterializationUnitMaterializeFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, nint /*LLVMOrcMaterializationResponsibilityRef*/ /*MR*/, void /*retVal*/>;
     using unsafe LLVMOrcObjectTransformLayerTransformFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, /*[Out]*/ nint* /*LLVMMemoryBufferRef*/ /*ObjInOut*/, nint /*LLVMErrorRef*/ /*retVal*/ >;
     using unsafe LLVMOrcSymbolPredicate = delegate* unmanaged[Cdecl]<void* /*Ctx*/, nint /*LLVMOrcSymbolStringPoolEntryRef*/ /*Sym*/, int /*retVal*/>;
@@ -43,8 +43,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
     [Flags]
     [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Matches ABI naming" )]
+    [SuppressMessage( "Design", "CA1028:Enum Storage should be Int32", Justification = "Matches ABI" )]
     public enum LLVMJITSymbolGenericFlags
-        : Int32
+        : byte
     {
         LLVMJITSymbolGenericFlagsNone = 0,
         LLVMJITSymbolGenericFlagsExported = 1,
@@ -79,46 +80,24 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     }
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMJITSymbolFlags
-    {
-        public readonly byte /*LLVMJITSymbolGeneric*/ GenericFlags;
-        public readonly byte TargetFlags;
-    }
+    public readonly record struct LLVMJITSymbolFlags(LLVMJITSymbolGenericFlags GenericFlags, byte TargetFlags);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMJITEvaluatedSymbol
-    {
-        public readonly UInt64 Address;
-        public readonly LLVMJITSymbolFlags Flags;
-    }
+    public readonly record struct LLVMJITEvaluatedSymbol(UInt64 Address, LLVMJITSymbolFlags Flags);
+
+    // Only an "unmanaged" struct is usable directly in native APIs
+    // so these only store the raw handle value. Callers must account for any move or ref counted lifetimes, etc...
+    [StructLayout( LayoutKind.Sequential )]
+    public readonly record struct LLVMOrcCSymbolFlagsMapPair(/*LLVMOrcSymbolStringPoolEntryRef*/ nint Name, LLVMJITSymbolFlags Flags);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolFlagsMapPair
-    {
-        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
-        public readonly LLVMJITSymbolFlags Flags;
-    }
+    public readonly record struct LLVMOrcCSymbolMapPair(/*LLVMOrcSymbolStringPoolEntryRef*/ nint Name, LLVMJITEvaluatedSymbol sym);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolMapPair
-    {
-        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
-        public readonly LLVMJITEvaluatedSymbol Sym;
-    }
+    public readonly record struct LLVMOrcCSymbolAliasMapEntry(/*LLVMOrcSymbolStringPoolEntryRef*/ nint Name, LLVMJITSymbolFlags Flags);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolAliasMapEntry
-    {
-        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
-        public readonly LLVMJITSymbolFlags Flags;
-    }
-
-    [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolAliasMapPair
-    {
-        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
-        public readonly LLVMOrcCSymbolAliasMapEntry Entry;
-    }
+    public readonly record struct LLVMOrcCSymbolAliasMapPair(/*LLVMOrcSymbolStringPoolEntryRef*/ nint name, LLVMOrcCSymbolAliasMapEntry entry);
 
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LLVMOrcCSymbolsList
@@ -136,7 +115,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     }
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolDependenceGroup
+    public readonly ref struct LLVMOrcCSymbolDependenceGroup
     {
         public readonly LLVMOrcCSymbolsList Symbols;
 
@@ -146,17 +125,25 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     }
 
     [StructLayout( LayoutKind.Sequential )]
-    public record struct LLVMOrcCJITDylibSearchOrderElement
+    public readonly ref struct LLVMOrcCJITDylibSearchOrderElement
     {
-        public LLVMOrcJITDylibRef JD;
-        public LLVMOrcJITDylibLookupFlags JDLookupFlags;
+        public readonly LLVMOrcJITDylibRef JD;
+        public readonly LLVMOrcJITDylibLookupFlags JDLookupFlags;
     }
 
     [StructLayout( LayoutKind.Sequential )]
-    public record struct LLVMOrcCLookupSetElement
+    public readonly ref struct LLVMOrcCLookupSetElement
     {
-        public nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
-        public LLVMOrcSymbolLookupFlags LookupFlags;
+        public LLVMOrcCLookupSetElement(LLVMOrcSymbolStringPoolEntryRef name, LLVMOrcSymbolLookupFlags flags)
+        {
+            ArgumentNullException.ThrowIfNull(name);
+
+            Name = name.DangerousGetHandle();
+            LookupFlags = flags;
+        }
+
+        private readonly nint /*LLVMOrcSymbolStringPoolEntryRef*/ Name;
+        private readonly LLVMOrcSymbolLookupFlags LookupFlags;
     }
 
     public static partial class Orc
@@ -177,6 +164,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcExecutionSessionIntern(LLVMOrcExecutionSessionRef ES, string Name);
 
+        [Experimental("LLVM001")]
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcExecutionSessionLookup(
@@ -198,11 +186,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef S);
 
+        // internal only RAW API, no safe handle - BEWARE!
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        internal static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(nint s);
+
         // This does NOT marshal the string, it only provides the raw pointer so that a span is constructible
         // from the pointer. The memory for the string is OWNED by the entry so the returned pointer is valid
         // for the lifetime of the referenced entry.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Keeping related or overloaded APIs together is WAY simpler on maintenance" )]
         public static unsafe partial byte* LLVMOrcSymbolStringPoolEntryStr(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryName )]
@@ -228,6 +222,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(string Name, void* Ctx, LLVMOrcCSymbolFlagsMapPair* Syms, size_t NumSyms, LLVMOrcSymbolStringPoolEntryRef InitSym, LLVMOrcMaterializationUnitMaterializeFunction Materialize, LLVMOrcMaterializationUnitDiscardFunction Discard, LLVMOrcMaterializationUnitDestroyFunction Destroy);
+
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(byte* Name, void* Ctx, LLVMOrcCSymbolFlagsMapPair* Syms, size_t NumSyms, LLVMOrcSymbolStringPoolEntryRef InitSym, LLVMOrcMaterializationUnitMaterializeFunction Materialize, LLVMOrcMaterializationUnitDiscardFunction Discard, LLVMOrcMaterializationUnitDestroyFunction Destroy);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -263,7 +261,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcMaterializationResponsibilityGetRequestedSymbols(LLVMOrcMaterializationResponsibilityRef MR, out size_t NumSymbols);
+        public static unsafe partial /*LLVMOrcSymbolStringPoolEntryRef[]*/ nint* LLVMOrcMaterializationResponsibilityGetRequestedSymbols(LLVMOrcMaterializationResponsibilityRef MR, out size_t NumSymbols);
 
         // TODO: Create custom marshaller to use this and hide it. This is tricky as it is disposing of a pointer
         // to the strings (That is the array itself is disposed, but NOT the symbol strings). It should ONLY be
@@ -417,9 +415,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeObjectLayer(LLVMOrcObjectLayerRef ObjLayer);
 
+        // ownership of the handles is transferred to native code in this call, thus they are declared as nint to allow MoveToNative()
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcIRTransformLayerEmit(LLVMOrcIRTransformLayerRef IRTransformLayer, LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcThreadSafeModuleRef TSM);
+        public static unsafe partial void LLVMOrcIRTransformLayerEmit(LLVMOrcIRTransformLayerRef IRTransformLayer, /*LLVMOrcMaterializationResponsibilityRef*/ nint MR, /*LLVMOrcThreadSafeModuleRef*/nint TSM);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -435,11 +434,19 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcIndirectStubsManagerRef LLVMOrcCreateLocalIndirectStubsManager(byte* TargetTriple);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeIndirectStubsManager(LLVMOrcIndirectStubsManagerRef ISM);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcCreateLocalLazyCallThroughManager(string TargetTriple, LLVMOrcExecutionSessionRef ES, UInt64 ErrorHandlerAddr, out LLVMOrcLazyCallThroughManagerRef LCTM);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateLocalLazyCallThroughManager(byte* TargetTriple, LLVMOrcExecutionSessionRef ES, UInt64 ErrorHandlerAddr, out LLVMOrcLazyCallThroughManagerRef LCTM);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

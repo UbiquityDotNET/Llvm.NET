@@ -17,35 +17,43 @@ namespace Ubiquity.NET.InteropHelpers
     [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Matching native Interop type" )]
     [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Matching native Interop type" )]
     public readonly record struct size_t
+        : IComparable<size_t>
     {
         /// <summary>Converts a size to an int</summary>
         /// <returns>Size as an int</returns>
         /// <exception cref="OverflowException"> if the size is not representable in a 32 bit value</exception>
-        public Int32 ToInt32() => Size.ToInt32();
+        public Int32 ToInt32() => checked((Int32)Size.ToUInt32());
 
         /// <summary>Converts the size to an Int64</summary>
         /// <returns>Size as an Int64</returns>
-        public Int64 ToInt64() => Size.ToInt64();
+        public Int64 ToInt64() => checked((Int64)Size.ToUInt64());
+
+        /// <summary>Converts the size to an UInt64</summary>
+        /// <returns>Size as an UInt64</returns>
+        public UInt64 ToUInt64() => Size.ToUInt64();
+
+        /// <inheritdoc/>
+        public int CompareTo(size_t other) => Size.CompareTo(other.Size);
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromInt32(int size) => new( size );
+        public static size_t FromInt32(int size) => new( checked((nuint)(Int64)size) );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int64"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromInt64(Int64 size) => new( checked((nint)size) );
+        public static size_t FromInt64(Int64 size) => new( checked((nuint)size) );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromUInt32(UInt32 size) => new( (nint)size );
+        public static size_t FromUInt32(UInt32 size) => new( (nuint)size );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.UInt64"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromUInt64(UInt64 size) => new( (nint)size );
+        public static size_t FromUInt64(UInt64 size) => new( (nuint)size );
 
         /// <summary>Converts a <see cref="System.Int32"/> int to a <see cref="size_t"/></summary>
         /// <param name="size">Value to convert</param>
@@ -76,13 +84,11 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Gets a 0 size value</summary>
         public static size_t Zero { get; } = new(0);
 
-        private size_t(nint size)
+        private size_t(nuint size)
         {
             Size = size;
         }
 
-        internal readonly nint Size;
-
-        public int CompareTo(object? obj) => ((IComparable)Size).CompareTo( obj );
+        internal readonly nuint Size;
     }
 }

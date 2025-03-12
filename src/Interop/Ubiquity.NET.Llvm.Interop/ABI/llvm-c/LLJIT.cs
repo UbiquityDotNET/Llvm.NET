@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateLLJIT(out LLVMOrcLLJITRef Result, LLVMOrcLLJITBuilderRef Builder);
+        public static unsafe partial LLVMErrorRef LLVMOrcCreateLLJIT(/*[MaybeInvalidWhen(Failed)]*/ out LLVMOrcLLJITRef Result, LLVMOrcLLJITBuilderRef Builder);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -47,8 +47,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
+        public static unsafe partial byte* LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -58,6 +57,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcLLJITMangleAndIntern(LLVMOrcLLJITRef J, string UnmangledName);
 
+        // overload to allow use with LazyEncodedString
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcLLJITMangleAndIntern(LLVMOrcLLJITRef J, byte* UnmangledName);
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddObjectFile(LLVMOrcLLJITRef J, LLVMOrcJITDylibRef JD, LLVMMemoryBufferRef ObjBuffer);
@@ -66,17 +70,18 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddObjectFileWithRT(LLVMOrcLLJITRef J, LLVMOrcResourceTrackerRef RT, LLVMMemoryBufferRef ObjBuffer);
 
+        // Native library takes ownership of the TSM, so it is a declared `nint` to push towards use of `MoveToNative`
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModule(LLVMOrcLLJITRef J, LLVMOrcJITDylibRef JD, LLVMOrcThreadSafeModuleRef TSM);
+        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModule(LLVMOrcLLJITRef J, LLVMOrcJITDylibRef JD, /*LLVMOrcThreadSafeModuleRef*/nint TSM);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModuleWithRT(LLVMOrcLLJITRef J, LLVMOrcResourceTrackerRef JD, LLVMOrcThreadSafeModuleRef TSM);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITLookup(LLVMOrcLLJITRef J, out UInt64 Result, string Name);
+        public static unsafe partial LLVMErrorRef LLVMOrcLLJITLookup(LLVMOrcLLJITRef J, out UInt64 Result, byte* Name);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -92,7 +97,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
+        public static unsafe partial byte* LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
     }
 }

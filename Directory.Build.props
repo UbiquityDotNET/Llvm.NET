@@ -63,7 +63,7 @@
                 <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
                 <Nullable>enable</Nullable>
                 <!--
-                DO NOT ALLOW Implicit using statements - EVIL; causes mass issues and frustration moving code between projects when one doesn't support it.
+                DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't support it.
                 Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.
                 -->
                 <ImplicitUsings>disable</ImplicitUsings>

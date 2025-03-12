@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         {
             get
             {
-                LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.BinaryRef );
+                LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.Handle );
                 LLVMMoveToContainingSection( iterator, IteratorRef );
                 return new Section( ContainingBinary, iterator, false );
             }

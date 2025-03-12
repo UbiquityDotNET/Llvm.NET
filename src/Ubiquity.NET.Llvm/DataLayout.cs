@@ -175,10 +175,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( Value value )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
+            ArgumentNullException.ThrowIfNull( value );
 
             VerifySized( value.NativeType, nameof( value ) );
             return LLVMPreferredAlignmentOfGlobal( DataLayoutHandle, value.ValueHandle );
@@ -202,6 +199,24 @@ namespace Ubiquity.NET.Llvm
         {
             VerifySized( structType, nameof( structType ) );
             return LLVMOffsetOfElement( DataLayoutHandle, structType.GetTypeRef( ), element );
+        }
+
+        /// <summary>Gets the string representation of this data layout as a <see cref="LazyEncodedString"/></summary>
+        /// <returns>Representation of the data layout</returns>
+        /// <remarks>
+        /// The returned <see cref="LazyEncodedString"/> retains a copy of the native code form of the string.
+        /// This value is ONLY marshalled to a managed string when needed (and only once, it is cached). This
+        /// behavior allows for lower overhead re-use of this string in additional APIs as NO marshalling
+        /// needs to occur. This does have the overhead of making a copy of the strings contents as the
+        /// lifetime of the underlying native string is generally unknown and thus not reliable.
+        /// </remarks>
+        public LazyEncodedString ToLazyEncodedString()
+        {
+            // Sadly this duplicates the string and then releases it
+            // TODO: [Optimization] LibLLVM extension method to get the original raw pointer directly
+            //       then the LazyEncodedString will perform the copy only once!
+            using var nativeTxt = LLVMCopyStringRepOfTargetData( DataLayoutHandle );
+            return new(nativeTxt.ReadOnlySpan);
         }
 
         /// <summary>Converts the layout to a string representation of the layout data</summary>

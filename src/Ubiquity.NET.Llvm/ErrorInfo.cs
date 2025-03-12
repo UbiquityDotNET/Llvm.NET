@@ -15,33 +15,30 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     public readonly ref struct ErrorInfo
     {
-        /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct.</summary>
-        /// <param name="safeHandle">interop handle to initialize from</param>
-        /// <exception cref="ArgumentException">The handle isn't of the correct type</exception>
-        /// <remarks>
-        /// <note type="important">
-        /// Use of This API outside of the ORC library is NOT supported. Do not attempt to use it
-        /// in application code.
-        /// </note>
-        /// </remarks>
-        public ErrorInfo(SafeHandle safeHandle)
-        {
-            if( safeHandle is not LLVMErrorRef h)
-            {
-                throw new ArgumentException("Incorrect handle type provided");
-            }
-
-            Handle = h;
-        }
-
         /// <summary>Gets a value indicating whether this instance represents success</summary>
-        public bool Success => Handle.Success;
+        public bool Success
+        {
+            get
+            {
+                ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
+
+                return Handle.Success;
+            }
+        }
 
         /// <summary>Gets a value indicating whether this instance represents a failure</summary>
         public bool Failed => !Success;
 
+        /// <summary>Gets a value indicating whether this instance is disposed</summary>
+        public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
+
         /// <inheritdoc/>
-        public override string ToString()=> Handle.ToString();
+        public override string ToString()
+        {
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
+
+            return Handle.ToString();
+        }
 
         /// <summary>Throws an exception if this instance is a failure result (<see cref="Failed"/> is <see langword="true"/>)</summary>
         /// <exception cref="InternalCodeGeneratorException"><see cref="Failed"/> is <see langword="true"/></exception>
@@ -50,6 +47,8 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public void ThrowIfFailed()
         {
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
+
             if (Failed)
             {
                 throw new InternalCodeGeneratorException(ToString());
@@ -60,6 +59,36 @@ namespace Ubiquity.NET.Llvm
         public void Dispose()
         {
             Handle.Dispose();
+        }
+
+        /// <summary>Factory function to create a new <see cref="ErrorInfo"/> from a string</summary>
+        /// <param name="msg">message for the error</param>
+        /// <returns>Newly constructed <see cref="ErrorInfo"/> with the provided message</returns>
+        public static ErrorInfo Create(string msg)
+        {
+            return new(LLVMErrorRef.Create(msg));
+        }
+
+        /// <summary>Factory function to create a new <see cref="ErrorInfo"/> from an exception</summary>
+        /// <param name="ex">Exception to create an instance from</param>
+        /// <returns>Newly constructed <see cref="ErrorInfo"/> with the message from <paramref name="ex"/></returns>
+        /// <remarks>
+        /// <note type="important">
+        /// It is important to note that this will convert a <see langword="null"/> for <paramref name="ex"/> into
+        /// a failed result with an empty string. This is to prevent exception within a catch handler. This
+        /// condition is asserted in a debug build so that any attempts to provide a null value are caught and
+        /// fixed.
+        /// </note>
+        /// </remarks>
+        public static ErrorInfo Create(Exception ex)
+        {
+            Debug.Assert(ex is not null, "ERROR: Must not provide NULL - debug assert prevents exception in catch handler. FIX THE CALLER - it's broken!");
+            return Create(ex?.Message ?? string.Empty);
+        }
+
+        internal nint MoveToNative()
+        {
+            return Handle?.MoveToNative() ?? 0;
         }
 
         internal ErrorInfo(LLVMErrorRef h)

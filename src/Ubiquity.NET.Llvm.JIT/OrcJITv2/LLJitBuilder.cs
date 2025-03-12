@@ -4,17 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.InteropProperties;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
+#if FUTURE_DEVELOPMENT_AREA
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
@@ -29,7 +19,16 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         }
 
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose()
+        {
+            Handle.Dispose();
+
+            // If the callback context handle exists and is allocated then free it now.
+            if (ObjectLinkingLayerContextHandle.HasValue && ObjectLinkingLayerContextHandle.Value.IsAllocated)
+            {
+                ObjectLinkingLayerContextHandle.Value.Free();
+            }
+        }
 
         /// <summary>Sets the target machine builder for this JIT builder</summary>
         /// <param name="targetMachineBuilder">Target machine builder for this JIT builder</param>
@@ -50,6 +49,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             ArgumentNullException.ThrowIfNull(creator);
             ObjectLinkingLayerContextHandle.ThrowIfHasValue();
             ObjectLinkingLayerContextHandle.Value = GCHandle.Alloc(creator);
+
             unsafe
             {
                 LLVMOrcLLJITBuilderSetObjectLinkingLayerCreator(
@@ -66,24 +66,21 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// This function takes ownership of this builder (even on failures). Thus, it is
         /// not valid to use this instance after this method is called.
         /// </remarks>
-        public ErrorInfo CreateJit(out LLJIT? jit)
+        public ErrorInfo CreateJit(out LlJIT? jit)
         {
             ObjectDisposedException.ThrowIf(Handle.IsInvalid || Handle.IsClosed, this);
             jit = null;
 
             // This instance no longer owns the handle
+            // (The builder is gone... Yea, bad API design but that's how it goes with LLVM sometimes...)
             Handle.SetHandleAsInvalid();
-#pragma warning disable CA2000 // Dispose objects before losing scope
             ErrorInfo retVal = new(LLVMOrcCreateLLJIT(out LLVMOrcLLJITRef jitHandle, Handle));
-#pragma warning restore CA2000 // Dispose objects before losing scope
-            if(retVal.Success)
+            using(jitHandle)
             {
-                jit = new LLJIT(jitHandle.Move()); // Wraps the jit Handle to transfer ownership (Dispose not needed)
-            }
-            else
-            {
-                // Assert the expectation that jitHandle is ALWAYS invalid on errors (So Dispose isn't needed)
-                Debug.Assert(jitHandle.IsInvalid, "Expected an invalid handle on errors possible leak will result");
+                if(retVal.Success)
+                {
+                    jit = new LlJIT(jitHandle.Move()); // transfer ownership of the underlying handle (Dispose not needed, but a harmless NOP)
+                }
             }
 
             return retVal;
@@ -105,14 +102,14 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             {
                 if(GCHandle.FromIntPtr((nint)context).Target is IObjectLinkingLayerFactory self)
                 {
-                    string managedTriple = ExecutionEncodingStringMarshaller.ConvertToManaged(triple) ?? string.Empty;
+                    var managedTriple = new Triple(triple);
 
                     // caller takes ownership of the resulting handle; Don't Dispose it
                     ObjectLayer layer = self.Create(new ExecutionSession(sessionRef), managedTriple);
                     return layer.Handle.MoveToNative();
                 }
 
-                // TODO: How/Can this report an error? Internally the result is (via a C++ lambda) an "llvm::expected"
+                // TODO: How/Can this report an error? Internally the result is (via a C++ lambda) that returns an "llvm::expected"
                 // but it is unclear if this method can return an error or what happens on a null return...
                 return 0; // This will probably crash in LLVM anyway - best effort.
             }
@@ -123,3 +120,4 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         }
     }
 }
+#endif

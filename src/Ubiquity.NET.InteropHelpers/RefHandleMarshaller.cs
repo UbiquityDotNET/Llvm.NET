@@ -6,6 +6,8 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -37,7 +39,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="size">Number of handles in the array</param>
         public unsafe delegate void VoidOp(nint* nativeArrayPtr, int size);
 
-        /// <summary>Marshals an array to a native pointer (as an </summary>
+        /// <summary>Marshals an array SafeHandle to a native pointer (as an array of nint) </summary>
         /// <typeparam name="THandle"><see cref="SafeHandle"/> type to marshal</typeparam>
         /// <typeparam name="TRetVal">Return type of the operation</typeparam>
         /// <param name="managedArray">Managed array of handles to marshal (by reference)</param>
@@ -64,6 +66,11 @@ namespace Ubiquity.NET.InteropHelpers
             }
         }
 
+        /// <summary>Marshals an array SafeHandle to a native pointer (as an array of nint) </summary>
+        /// <typeparam name="THandle"><see cref="SafeHandle"/> type to marshal</typeparam>
+        /// <param name="managedArray">Managed array of handles to marshal (by reference)</param>
+        /// <param name="op">Operation to perform with the native array.</param>
+        /// <inheritdoc cref="WithManagedArrayAsNativePointer{THandle, TRetVal}(THandle[], ReturningOp{TRetVal})" path="/remarks"/>
         public static void WithManagedArrayAsNativePointer<THandle>(THandle[] managedArray, VoidOp op)
             where THandle : SafeHandle
         {

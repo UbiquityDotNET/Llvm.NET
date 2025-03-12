@@ -38,7 +38,7 @@ HandleMap:
   - !GlobalHandle {HandleName: LibLLVMTripleRef, Disposer: LibLLVMDisposeTriple}
   - !GlobalHandle {HandleName: LibLLVMValueCacheRef, Disposer: LibLLVMDisposeValueCache}
   - !GlobalHandle {HandleName: LLVMTargetMachineRef, Disposer: LLVMDisposeTargetMachine, Alias: True}
-  - !GlobalHandle {HandleName: LLVMOrcSymbolStringPoolEntryRef, Disposer: LLVMOrcDisposeSymbols}
+  - !GlobalHandle {HandleName: LLVMOrcSymbolStringPoolEntryRef, Disposer: LLVMOrcReleaseSymbolStringPoolEntry}
   - !GlobalHandle {HandleName: LLVMOperandBundleRef, Disposer: LLVMDisposeOperandBundle}
   - !GlobalHandle {HandleName: LLVMTargetMachineOptionsRef, Disposer: LLVMDisposeTargetMachineOptions}
   - !GlobalHandle {HandleName: LLVMOrcLLJITBuilderRef, Disposer: LLVMOrcDisposeLLJITBuilder}

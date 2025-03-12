@@ -12,8 +12,7 @@
     <IsAotCompatible>True</IsAotCompatible>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
 
-    <!--NuGet packaging support, only applied for release builds as it just takes too long for quick inner loop developement -->
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <MinClientVersion>4.9.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -24,7 +23,7 @@
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
-    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSymbols Condition="'$(Configuration)'=='Release'">true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>

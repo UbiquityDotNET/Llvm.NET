@@ -34,7 +34,7 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void Size_Provides_Correct_length( )
         {
-            var buffer = new MemoryBuffer( TestFileName );
+            using var buffer = new MemoryBuffer( TestFileName );
             Assert.IsNotNull( buffer );
 
             byte[ ] result = buffer.ToArray( );
@@ -47,7 +47,7 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void ToArray_Provides_ArrayOfBuffer_Data( )
         {
-            var buffer = new MemoryBuffer( TestFileName );
+            using var buffer = new MemoryBuffer( TestFileName );
             Assert.IsNotNull( buffer );
 
             byte[ ] result = buffer.ToArray( );
@@ -65,7 +65,7 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void Slice_Provides_a_FullView_of_the_Data( )
         {
-            var buffer = new MemoryBuffer( TestFileName );
+            using var buffer = new MemoryBuffer( TestFileName );
             Assert.IsNotNull( buffer );
 
             ReadOnlySpan<byte> result = buffer.Slice( );
@@ -77,7 +77,7 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void Slice_Provides_a_Partial_View_of_the_Data( )
         {
-            var buffer = new MemoryBuffer( TestFileName );
+            using var buffer = new MemoryBuffer( TestFileName );
             Assert.IsNotNull( buffer );
 
             ReadOnlySpan<byte> result = buffer.Slice( 5, 2 );
@@ -90,7 +90,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void Buffer_from_array_with_null_name_succeeds( )
         {
             byte[ ] data = Range(0, 255);
-            var buffer = new MemoryBuffer(data, null);
+            using var buffer = new MemoryBuffer(data, null);
             Assert.IsNotNull( buffer );
             Assert.AreEqual( 255, buffer.Size );
         }
@@ -99,7 +99,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void Buffer_from_array_with_valid_name_succeeds( )
         {
             byte[ ] data = Range(0, 255);
-            var buffer = new MemoryBuffer(data, "testName");
+            using var buffer = new MemoryBuffer(data, "testName");
             Assert.IsNotNull( buffer );
             Assert.AreEqual( 255, buffer.Size );
         }
@@ -108,7 +108,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void Buffer_from_array_contains_correct_data( )
         {
             byte[ ] data = Range(0, 255);
-            var buffer = new MemoryBuffer(data);
+            using var buffer = new MemoryBuffer(data);
             Assert.IsNotNull( buffer );
             Assert.AreEqual( 255, buffer.Size );
             var span = buffer.Slice();

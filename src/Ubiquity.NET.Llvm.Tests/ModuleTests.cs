@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreSame( string.Empty, module.SourceFileName );
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
-            Assert.AreSame( string.Empty, module.DataLayoutString );
+            Assert.IsTrue( module.DataLayoutString.IsEmpty );
             Assert.IsNotNull( module.Layout );
             Assert.AreSame( string.Empty, module.TargetTriple );
             Assert.IsNotNull( module.DIBuilder );
@@ -77,7 +77,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TestModuleName, module.SourceFileName );
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
-            Assert.AreSame( string.Empty, module.DataLayoutString );
+            Assert.IsTrue( module.DataLayoutString.IsEmpty );
             Assert.IsNotNull( module.Layout );
             Assert.AreSame( string.Empty, module.TargetTriple );
             Assert.IsNotNull( module.DIBuilder );
@@ -103,7 +103,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( "test.c", module.SourceFileName );
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
-            Assert.AreSame( string.Empty, module.DataLayoutString );
+            Assert.IsTrue( module.DataLayoutString.IsEmpty );
             Assert.IsNotNull( module.Layout );
             Assert.AreSame( string.Empty, module.TargetTriple );
             Assert.IsNotNull( module.DIBuilder );

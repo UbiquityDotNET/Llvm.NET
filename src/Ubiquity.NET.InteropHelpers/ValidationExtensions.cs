@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Ubiquity.NET.InteropHelpers
@@ -30,6 +30,7 @@ namespace Ubiquity.NET.InteropHelpers
             where T : class
         {
             ArgumentNullException.ThrowIfNull(obj, exp);
+
             return obj;
         }
 
@@ -45,6 +46,7 @@ namespace Ubiquity.NET.InteropHelpers
         {
             ArgumentOutOfRangeException.ThrowIfLessThan(self, min, exp);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(self, max, exp);
+
             return self;
         }
 
@@ -63,13 +65,7 @@ namespace Ubiquity.NET.InteropHelpers
         public static T ThrowIfNotDefined<T>(this T self, [CallerArgumentExpression(nameof(self))] string? exp = null)
             where T : struct, Enum
         {
-            return Enum.IsDefined<T>(self) ? self : throw new ArgumentOutOfRangeException(exp);
+            return Enum.IsDefined<T>(self) ? self : throw new InvalidEnumArgumentException(exp);
         }
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Internal, only used here, keeps compiler happy" )]
-    internal sealed class ValidatedNotNullAttribute : Attribute
-    {
     }
 }

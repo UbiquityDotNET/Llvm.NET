@@ -3,8 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
-using System;
+#if FUTURE_DEVELOPMENT_AREA
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
@@ -35,3 +34,4 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         ObjectLayer Create(ExecutionSession session, string triple);
     }
 }
+#endif

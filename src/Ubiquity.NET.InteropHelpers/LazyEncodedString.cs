@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Buffers;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -78,7 +79,7 @@ namespace Ubiquity.NET.InteropHelpers
                     return span.ToArray();
                 }
 
-                // need to account for new line so manually allocate and copy the span
+                // need to account for terminator so manually allocate and copy the span
                 byte[] retVal = new byte[span.Length + 1];
                 span.CopyTo(retVal);
                 retVal[^1] = 0; // force terminator
@@ -93,6 +94,11 @@ namespace Ubiquity.NET.InteropHelpers
             : this(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(nativePtr), encoding)
         {
         }
+
+        /// <summary>Gets a value indicating whether this instance represents an empty string</summary>
+        public bool IsEmpty => ManagedString.IsValueCreated
+                             ? ManagedString.Value.Length == 0
+                             : !NativeBytes.IsValueCreated || NativeBytes.Value.Length == 0;
 
         /// <inheritdoc/>
         /// <remarks>
@@ -116,6 +122,16 @@ namespace Ubiquity.NET.InteropHelpers
         /// </note>
         /// </remarks>
         public ReadOnlySpan<byte> ToReadOnlySpan() => new(NativeBytes.Value);
+
+        /// <summary>Pins the native representation of this memory for use in native APIs</summary>
+        /// <returns>MemoryHandle that owns the pinned data</returns>
+        public MemoryHandle Pin()
+        {
+            return NativeBytes.Value.AsMemory().Pin();
+        }
+
+        /// <summary>Gets the native size (in bytes, including the terminator) of the memory for this string</summary>
+        public int NativeSize => NativeBytes.Value.Length;
 
         /// <summary>Implicit cast to a string via <see cref="ToString"/></summary>
         /// <param name="self">instance to cast</param>

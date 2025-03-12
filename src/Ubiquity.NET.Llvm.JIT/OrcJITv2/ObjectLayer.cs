@@ -3,10 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
-using System;
-
-using Ubiquity.NET.Llvm.Interop;
+#if FUTURE_DEVELOPMENT_AREA
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
@@ -25,3 +22,4 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         internal LLVMOrcObjectLayerRef Handle { get; init; }
     }
 }
+#endif

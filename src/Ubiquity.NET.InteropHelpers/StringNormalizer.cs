@@ -4,38 +4,110 @@
 // </copyright>
 // -----------------------------------------------------------------------
 using System;
-using System.Text.RegularExpressions;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ubiquity.NET.InteropHelpers
 {
-    public static partial class StringNormalizer
+    /// <summary>The kind of line endings for a string of characters</summary>
+    public enum LineEndingKind
     {
-        // LLVM doesn't use environment/OS specific line endings, so this will
-        // normalize the line endings from strings provided by LLVM into the current
-        // environment's normal format.
-        public static unsafe string? NormalizeLineEndings(byte* llvmString)
+        /// <summary>Line endings consist of the single line feed character '\n'</summary>
+        /// <remarks>This is the typical form for *nix systems, and Mac OS X and later</remarks>
+        LineFeed,
+
+        /// <summary>Line endings consist of a pair of carriage return '\r' AND line feed '\n'</summary>
+        /// <remarks>This is the canonical form used in Windows environments</remarks>
+        CarriageReturnLineFeed,
+
+        /// <summary>Line endings consist of the single carriage return character '\r'</summary>
+        /// <remarks>This is the typical form for older Mac systems</remarks>
+        CarriageReturn,
+    }
+
+    /// <summary>Utility class for converting line endings to expected forms</summary>
+    public static class StringNormalizer
+    {
+        /// <summary>Gets a string form of the line ending</summary>
+        /// <param name="kind">Kind of line ending to get the string form of</param>
+        /// <returns>String form of the specified line ending</returns>
+        /// <exception cref="InvalidEnumArgumentException">Unknown value for <paramref name="kind"/></exception>
+        public static string LineEnding(this LineEndingKind kind)
         {
-            return NormalizeLineEndings( ConstStringMarshaller.ConvertToManaged(llvmString) );
+            return kind switch
+            {
+                LineEndingKind.LineFeed => "\n",
+                LineEndingKind.CarriageReturnLineFeed => "\r\n",
+                LineEndingKind.CarriageReturn => "\r",
+                _ => throw new InvalidEnumArgumentException( nameof( kind ), (int)kind, typeof( LineEndingKind ) ),
+            };
         }
 
-        public static string? NormalizeLineEndings(string? txt)
+        /// <summary>Gets the system (<see cref="Environment"/>) line ending kind for the current environment</summary>
+        public static LineEndingKind SystemLineEndings => LazySystemKind.Value;
+
+        /// <summary>Converts a native string into a managed string with managed environment line endings</summary>
+        /// <param name="abiString">Native string pointer</param>
+        /// <param name="srcKind">Line ending kind for the native ABI [default: <see cref="LineEndingKind.LineFeed"/></param>
+        /// <returns>Managed string with normalized line endings that match the system</returns>
+        public static unsafe string? NormalizeLineEndings(byte* abiString, LineEndingKind srcKind = LineEndingKind.LineFeed)
         {
-            // shortcut optimization for environments that match the LLVM assumption
+            return NormalizeLineEndings( ConstStringMarshaller.ConvertToManaged(abiString), srcKind, SystemLineEndings );
+        }
+
+        /// <summary>Normalize a managed string with system defined line endings to a specified kind</summary>
+        /// <param name="txt">input string to convert</param>
+        /// <param name="dstKind">destination kind of string to convert</param>
+        /// <returns>Normalized string; If dstKind matches the current system environment then this returns <paramref name="txt"/> un-modified</returns>
+        public static string? NormalizeLineEndings(this string? txt, LineEndingKind dstKind)
+        {
+            return NormalizeLineEndings(txt, SystemLineEndings, dstKind);
+        }
+
+        /// <summary>Converts a string into a string with managed environment line endings</summary>
+        /// <param name="txt">string to convert</param>
+        /// <param name="srcKind">Line ending kind for the source (<paramref name="txt"/>)</param>
+        /// <param name="dstKind">Line ending kind for the destination (return string)</param>
+        /// <returns>Normalized string; If the <paramref name="srcKind"/> is the same as <paramref name="dstKind"/> this is returns <paramref name="txt"/> un-modified</returns>
+        public static string? NormalizeLineEndings(this string? txt, LineEndingKind srcKind, LineEndingKind dstKind)
+        {
+            // shortcut optimization for environments that match the ABI assumption
             // as well as any null or empty strings
-            return string.IsNullOrEmpty( txt ) || IsLineFeedOnlyEnv()
+            return string.IsNullOrEmpty( txt ) || srcKind == dstKind
                 ? txt
-                : LineEndingNormalizingRegEx.Replace( txt, Environment.NewLine );
+                : txt.Replace(srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
         }
 
-        private static bool IsLineFeedOnlyEnv()
-            => Environment.NewLine.Length == 1
-            && Environment.NewLine[ 0 ] == LineFeed;
+        // simplifies consistency of exception in face of unknown environment configuration
+        private static InvalidOperationException UnknownLineEndingsException => new("Unknown environment line ending kind");
 
-        private static readonly Regex LineEndingNormalizingRegEx = GeneratedRegExForLineEndings();
+        private static readonly Lazy<LineEndingKind> LazySystemKind = new(ComputeSystemLineEndings);
 
-        [GeneratedRegex( "(\r\n|\n\r|\r|\n)" )]
-        private static partial Regex GeneratedRegExForLineEndings();
+        [SuppressMessage( "Style", "IDE0066:Convert switch statement to expression", Justification = "Reduces readability" )]
+        private static LineEndingKind ComputeSystemLineEndings()
+        {
+            string newLine = Environment.NewLine;
+            switch(newLine.Length)
+            {
+            case 1:
+                return newLine[ 0 ] switch
+                {
+                    CR => LineEndingKind.CarriageReturn,
+                    LF => LineEndingKind.LineFeed,
+                    _ => throw UnknownLineEndingsException
+                };
 
-        private const char LineFeed = '\n';
+            case 2:
+                return newLine[ 0 ] == CR && newLine[ 1 ] == LF
+                     ? LineEndingKind.CarriageReturnLineFeed
+                     : throw UnknownLineEndingsException;
+
+            default:
+                throw UnknownLineEndingsException;
+            }
+        }
+
+        private const char LF = '\n';
+        private const char CR = '\r';
     }
 }

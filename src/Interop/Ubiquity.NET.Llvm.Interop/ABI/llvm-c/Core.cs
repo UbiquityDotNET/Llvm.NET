@@ -578,9 +578,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
         public static unsafe partial string? LLVMGetDataLayout(LLVMModuleRef M);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetDataLayout(LLVMModuleRef M, string DataLayoutStr);
+        public static unsafe partial void LLVMSetDataLayout(LLVMModuleRef M, byte* DataLayoutStr);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -3442,9 +3442,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMCreateMemoryBufferWithSTDIN(out LLVMMemoryBufferRef OutMemBuf, out DisposeMessageString OutMessage);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange([In] byte[] InputData, size_t InputDataLength, string BufferName, [MarshalAs( UnmanagedType.Bool)] bool RequiresNullTerminator);
+        public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange(byte* InputData, size_t InputDataLength, byte* BufferName, [MarshalAs( UnmanagedType.Bool)] bool RequiresNullTerminator);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

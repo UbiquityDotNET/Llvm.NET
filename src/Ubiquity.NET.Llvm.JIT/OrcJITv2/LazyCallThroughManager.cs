@@ -4,13 +4,18 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
     /// <summary>LLVM ORC JIT v2 Lazy Call Through Manager</summary>
-    public class LazyCallThroughManager
+    public sealed class LazyCallThroughManager
+        : IDisposable
     {
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Handle.Dispose();
+        }
+
         internal LazyCallThroughManager(LLVMOrcLazyCallThroughManagerRef h)
         {
             Handle = h;

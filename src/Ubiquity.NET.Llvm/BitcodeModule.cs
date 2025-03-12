@@ -114,7 +114,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the Debug Compile unit for this module</summary>
         public DICompileUnit? DICompileUnit { get; internal set; }
 
-        /// <summary>Gets the Data layout string for this module</summary>
+        /// <summary>Gets or Sets the Data layout string for this module</summary>
         /// <remarks>
         /// <note type="note">The data layout string doesn't do what seems obvious.
         /// That is, it doesn't force the target back-end to generate code
@@ -123,12 +123,27 @@ namespace Ubiquity.NET.Llvm
         /// come from the actual <see cref="TargetMachine"/> the code is
         /// targeting.</note>
         /// </remarks>
-        public string DataLayoutString
+        [DisallowNull]
+        public LazyEncodedString DataLayoutString
         {
             get
             {
                 ObjectDisposedException.ThrowIf(IsDisposed, this);
+
                 return Layout.ToString( ) ?? string.Empty;
+            }
+
+            set
+            {
+                ObjectDisposedException.ThrowIf(IsDisposed, this);
+
+                unsafe
+                {
+                    ArgumentNullException.ThrowIfNull(value);
+
+                    using var memHandle = value.Pin();
+                    LLVMSetDataLayout(ModuleHandle!, (byte*)memHandle.Pointer);
+                }
             }
         }
 
@@ -143,8 +158,10 @@ namespace Ubiquity.NET.Llvm
 
             set
             {
+                ArgumentNullException.ThrowIfNull(value);
                 ObjectDisposedException.ThrowIf(IsDisposed, this);
-                LLVMSetDataLayout( ModuleHandle!, value?.ToString( ) ?? string.Empty );
+
+                DataLayoutString = value.ToLazyEncodedString();
             }
         }
 
@@ -915,7 +932,7 @@ namespace Ubiquity.NET.Llvm
                 return Clone( );
             }
 
-            var buffer = WriteToBuffer( );
+            using var buffer = WriteToBuffer( );
             var retVal = LoadFrom( buffer, targetContext );
             Debug.Assert( retVal.Context == targetContext, Resources.Expected_to_get_a_module_bound_to_the_specified_context );
             return retVal;
@@ -935,7 +952,7 @@ namespace Ubiquity.NET.Llvm
                 throw new FileNotFoundException( Resources.Specified_bit_code_file_does_not_exist, path );
             }
 
-            var buffer = new MemoryBuffer( path );
+            using var buffer = new MemoryBuffer( path );
             return LoadFrom( buffer, context );
         }
 
@@ -956,7 +973,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull(buffer);
             ArgumentNullException.ThrowIfNull(context);
 
-            return LLVMParseBitcodeInContext2( context.ContextHandle, buffer.BufferHandle, out LLVMModuleRef modRef ).Failed
+            return LLVMParseBitcodeInContext2( context.ContextHandle, buffer.Handle, out LLVMModuleRef modRef ).Failed
                 ? throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer )
                 : context.GetModuleFor( modRef );
         }
@@ -967,13 +984,11 @@ namespace Ubiquity.NET.Llvm
         internal LLVMModuleRef Detach( )
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
+
             Context.RemoveModule( this );
 
             // MOVE ownership of the native handle to the return type
-            LLVMModuleRef retVal = new( ModuleHandle.DangerousGetHandle(), true);
-            ModuleHandle.SetHandleAsInvalid();
-
-            return retVal;
+            return ModuleHandle.Move();
         }
 
         internal static BitcodeModule? FromHandle( LLVMModuleRef nativeHandle )

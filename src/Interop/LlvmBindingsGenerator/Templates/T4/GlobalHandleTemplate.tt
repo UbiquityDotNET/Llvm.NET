@@ -14,10 +14,7 @@
 // ------------------------------------------------------------------------------
 #nullable enable
 
-using System;
 using System.CodeDom.Compiler;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.Llvm.Interop
 {
@@ -54,14 +51,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <inheritdoc/>
         protected override bool ReleaseHandle( )
         {
-            // critical safety check, base should never call ReleaseHandle on an invalid handle
-            // but ABI usually can't handle that and would just crash the app, so make it
-            // a NOP just in case.
-            if( handle != nint.Zero )
-            {
-                <#=HandleDisposeFunction#>( handle );
-            }
-
+            <#=HandleDisposeFunction#>( handle );
             return true;
 
             // Native ABI declaration without ANY marshalling, AOT compatible

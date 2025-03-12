@@ -11,7 +11,7 @@ using System.Globalization;
 
 using Ubiquity.NET.InteropHelpers.Properties;
 
-namespace Ubiquity.NET.InteropProperties
+namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Wrapper class to provide Write-Once semantics to a value</summary>
     /// <typeparam name="T">Type of value to store</typeparam>
@@ -24,7 +24,7 @@ namespace Ubiquity.NET.InteropProperties
     public struct WriteOnce<T>
         : IEquatable<T>
     {
-        /// <summary>Initializes a new instance of <see cref="WriteOnce{T}"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="WriteOnce{T}"/> struct.</summary>
         public WriteOnce()
         {
         }

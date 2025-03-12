@@ -22,13 +22,12 @@ namespace Ubiquity.NET.LlvmTests
         [AssemblyInitialize]
         public static void AssemblyInitialize( TestContext ctx )
         {
-            if( ctx == null )
-            {
-                throw new ArgumentNullException( nameof( ctx ) );
-            }
+            ArgumentNullException.ThrowIfNull( ctx );
 
             LibLLVM = Library.InitializeLLVM( );
-            LibLLVM.RegisterTarget( CodeGenTarget.All );
+
+            // Testing JIT so the only target of relevance is the native machine
+            LibLLVM.RegisterTarget( CodeGenTarget.Native );
         }
 
         [AssemblyCleanup]

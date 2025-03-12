@@ -308,6 +308,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LibLLVMTripleRef LibLLVMParseTriple(byte* triple);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMTripleOpEqual(LibLLVMTripleRef lhs, LibLLVMTripleRef rhs);
 
