@@ -9,10 +9,9 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.PassBuilderOptionsBindings;
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Class to hold options for an LLVM pass builder</summary>
-    public sealed class PassBuilderOptions
-        : IDisposable
+    public readonly ref struct PassBuilderOptions
     {
-        /// <summary>Initializes a new instance of the <see cref="PassBuilderOptions"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="PassBuilderOptions"/> struct.</summary>
         public PassBuilderOptions()
             : this( LLVMCreatePassBuilderOptions() )
         {
@@ -148,7 +147,7 @@ namespace Ubiquity.NET.Llvm
             set => LLVMPassBuilderOptionsSetInlinerThreshold( Handle, value );
         }
 
-        /// <inheritdoc/>
+        /// <summary>Disposes the underlying LLVM handle</summary>
         public void Dispose()
         {
             Handle.Dispose();

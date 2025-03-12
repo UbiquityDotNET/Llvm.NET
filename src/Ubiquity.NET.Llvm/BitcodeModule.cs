@@ -323,7 +323,6 @@ namespace Ubiquity.NET.Llvm
         /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
         public ErrorInfo TryRunPasses(PassBuilderOptions options, params string[] passes)
         {
-            ArgumentNullException.ThrowIfNull(options);
             ArgumentNullException.ThrowIfNull(passes);
             ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
 
@@ -343,7 +342,6 @@ namespace Ubiquity.NET.Llvm
         public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes)
         {
             ArgumentNullException.ThrowIfNull(targetMachine);
-            ArgumentNullException.ThrowIfNull(options);
             ArgumentNullException.ThrowIfNull(passes);
             ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
 
