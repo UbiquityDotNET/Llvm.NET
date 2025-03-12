@@ -6,11 +6,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace Ubiquity.NET.InteropHelpers
 {
     // TODO: This should have the same interfaces as System.IntPtr and implemented through the native pointer
-    // If C#/.NET had the concept of a proper typedef that's what this would be...
+    // If C#/.NET had the concept of a proper typedef that's what this would be instead of this HUGE mess...
 
     /// <summary>CLR equivalent to the C/C++ architecture specific size_t</summary>
     [SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Generated code relies on this to match C++" )]
@@ -18,7 +19,19 @@ namespace Ubiquity.NET.InteropHelpers
     [SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Matching native Interop type" )]
     public readonly record struct size_t
         : IComparable<size_t>
+        , IComparisonOperators<size_t, size_t, bool>
     {
+        /// <inheritdoc/>
+        public int CompareTo(size_t other) => Size.CompareTo(other.Size);
+
+        public static bool operator >(size_t left, size_t right) => left.Size < right.Size;
+
+        public static bool operator >=(size_t left, size_t right) => left.Size >= right.Size;
+
+        public static bool operator <(size_t left, size_t right) => left.Size < right.Size;
+
+        public static bool operator <=(size_t left, size_t right) => left.Size <= right.Size;
+
         /// <summary>Converts a size to an int</summary>
         /// <returns>Size as an int</returns>
         /// <exception cref="OverflowException"> if the size is not representable in a 32 bit value</exception>
@@ -31,9 +44,6 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Converts the size to an UInt64</summary>
         /// <returns>Size as an UInt64</returns>
         public UInt64 ToUInt64() => Size.ToUInt64();
-
-        /// <inheritdoc/>
-        public int CompareTo(size_t other) => Size.CompareTo(other.Size);
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>

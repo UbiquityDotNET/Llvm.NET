@@ -6,8 +6,9 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <SignAssembly>False</SignAssembly>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <IsAotCompatible>True</IsAotCompatible>
 
-    <!--NuGet packaging support, only applied for release builds as it just takes too long for quick inner loop developement -->
+      <!--NuGet packaging support, only applied for release builds as it just takes too long for quick inner loop developement -->
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
     <MinClientVersion>4.9.0</MinClientVersion>
     <Authors>.NET Foundation,Ubiquity.NET</Authors>

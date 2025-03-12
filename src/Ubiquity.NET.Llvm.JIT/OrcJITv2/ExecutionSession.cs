@@ -85,9 +85,14 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         }
 */
 
+#if FUTURE_DEVELOPMENT_AREA
         // CONSIDER: It might be better if this was a method on the JIT (and internal on this type)
         // so that the JIT instance could hold on to the lifetime to keep callers from needing to
-        // deal with lifetime management.
+        // deal with lifetime management. Lifetime management and native callbacis is a difficult
+        // issue, made more complex by AOT support. Marshal.GetFunctionPointerForDelegate MUST
+        // dynamically build a native callable thunk, that performs all marshalling. But that is
+        // not an option for AOT scenarios. [Sadly that API doesn't appear to be flagged as off
+        // limits for an AOT compatible app/library...]
 
         /// <summary>Set the error reporter for the session</summary>
         /// <param name="errorReporter">Error reporter to set</param>
@@ -112,6 +117,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 LLVMOrcExecutionSessionSetErrorReporter(Handle, &NativeErrorReporterCallback, (void*)errorReporter.Context);
             }
         }
+#endif
 
         /// <summary>Gets an existing <see cref="JITDyLib"/> or creates a new one</summary>
         /// <param name="name">name of the library</param>

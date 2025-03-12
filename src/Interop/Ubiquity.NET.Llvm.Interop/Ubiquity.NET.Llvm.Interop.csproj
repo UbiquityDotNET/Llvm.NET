@@ -10,7 +10,6 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
     <IsAotCompatible>True</IsAotCompatible>
-    <EmbedUntrackedSources>false</EmbedUntrackedSources>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <MinClientVersion>4.9.0</MinClientVersion>
@@ -24,6 +23,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
     <IncludeSymbols Condition="'$(Configuration)'=='Release'">true</IncludeSymbols>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
