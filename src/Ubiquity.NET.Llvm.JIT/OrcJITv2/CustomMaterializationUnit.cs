@@ -119,13 +119,13 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 // Bump ref count for the native code to "own", it does NOT do this on it's
                 // own and instead assumes caller owns and "moves" the ref count responsibility.
                 initSymbol?.DangerousAddRef();
-                void* nativeContext = materializer.AddRefAndGetNativeContext();
+                nint nativeContext = materializer.AddRefAndGetNativeContext();
                 try
                 {
                     using MemoryHandle nativeMem = name.Pin();
                     return LLVMOrcCreateCustomMaterializationUnit(
                         (byte*)nativeMem.Pointer,
-                        nativeContext,
+                        (void*)nativeContext,
                         (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
                         symbols.Count,
                         initSymbol?.Handle ?? LLVMOrcSymbolStringPoolEntryRef.Zero,
@@ -145,7 +145,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         }
 
         // static class to provide the native callbacks for custom materialization
-        // These all assum the managed delegates are held within an instance of CustomMaterializer
+        // These all assume the managed delegates are held within an instance of CustomMaterializer
         private static class NativeCallbacks
         {
             [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]

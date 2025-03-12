@@ -32,7 +32,7 @@ namespace Ubiquity.NET.InteropHelpers
             ArgumentNullException.ThrowIfNull(d);
 
 #if DEBUG
-            // TODO: Ideally, these should be moved or replicated in an analyzer for this library.
+            // TODO: Ideally, these should be moved to or replicated in an analyzer for this library.
 
             // These checks are based on type and impact the runtime for AOT, so are only enabled for a debug build.
             // For a release build they are just perf overhead for well tested consumers.

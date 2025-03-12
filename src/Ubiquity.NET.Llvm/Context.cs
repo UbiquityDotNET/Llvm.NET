@@ -14,6 +14,22 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ContextBindings;
 
 namespace Ubiquity.NET.Llvm
 {
+    /// <summary>Severity level for diagnostics</summary>
+    public enum DiagnosticSeverity
+    {
+        /// <summary>Errors reported from native code</summary>
+        Error = LLVMDiagnosticSeverity.LLVMDSError,
+
+        /// <summary>Warnings reported from native code</summary>
+        Warning = LLVMDiagnosticSeverity.LLVMDSWarning,
+
+        /// <summary>Remarks reported from native code</summary>
+        Remark = LLVMDiagnosticSeverity.LLVMDSRemark,
+
+        /// <summary>Note level diagnostics reported from native code</summary>
+        Note = LLVMDiagnosticSeverity.LLVMDSNote,
+    }
+
     /// <summary>Encapsulates an LLVM context</summary>
     /// <remarks>
     /// <para>A context in LLVM is a container for interning (LLVM refers to this as "uniqueing") various types
@@ -90,6 +106,9 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
         public IEnumerable<LlvmMetadata> Metadata => MetadataCache;
+
+        /// <summary>Gets or sets the minimum severity level for diagnostics in this context</summary>
+        public DiagnosticSeverity DiagnosticSeverity { get; set; } = DiagnosticSeverity.Warning;
 
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
@@ -880,7 +899,15 @@ namespace Ubiquity.NET.Llvm
 
             unsafe
             {
-                LLVMContextSetDiagnosticHandler( ContextHandle, &DiagnosticHandler, IntPtr.Zero );
+                // ensure the diagnostic call back can get back to this instance
+                // Dispose will remove it and then release the allocation
+                DiagnosticCallBackRef = new(this);
+
+                // set the native diagnostic handler
+                // TODO: Add support to Native handler to allow custom handler
+                // existing native handler should still log to debugger, but could call
+                // an extensibility point
+                LLVMContextSetDiagnosticHandler( ContextHandle, &DiagnosticHandler, DiagnosticCallBackRef.AddRefAndGetNativeContext() );
             }
         }
 
@@ -905,7 +932,9 @@ namespace Ubiquity.NET.Llvm
             ValueCache.Dispose();
             unsafe
             {
+                // remove th diagnostic handler by providing "null"
                 LLVMContextSetDiagnosticHandler( ContextHandle, null, nint.Zero );
+                DiagnosticCallBackRef.Dispose();
             }
 
             ContextCache.TryRemove( ContextHandle );
@@ -919,17 +948,26 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                var info = LLVMDiagnosticInfoRef.FromABI(abiInfo);
-                DisposeMessageString msg = LLVMGetDiagInfoDescription( info );
-                var level = LLVMGetDiagInfoSeverity( info );
-                Debug.WriteLine( "{0}: {1}", level, msg );
-                Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
+                if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is Context self)
+                {
+                    var info = LLVMDiagnosticInfoRef.FromABI(abiInfo);
+                    var level = LLVMGetDiagInfoSeverity( info );
+
+                    if( level <= (LLVMDiagnosticSeverity)self.DiagnosticSeverity)
+                    {
+                        using DisposeMessageString msg = LLVMGetDiagInfoDescription( info );
+                        Debug.WriteLine( "{0}: {1}", level, msg );
+                        Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
+                    }
+                }
             }
             catch
             {
                 Debugger.Break();
             }
         }
+
+        private readonly SafeGCHandle DiagnosticCallBackRef;
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;

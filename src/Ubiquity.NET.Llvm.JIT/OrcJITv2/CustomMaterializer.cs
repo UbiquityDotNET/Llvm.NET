@@ -48,7 +48,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
         internal bool SupportsDiscard => DiscardHandler is not null;
 
-        internal unsafe void* AddRefAndGetNativeContext()
+        internal unsafe nint AddRefAndGetNativeContext()
         {
             return AllocatedSelf.AddRefAndGetNativeContext();
         }
