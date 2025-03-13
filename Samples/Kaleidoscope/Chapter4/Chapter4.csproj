@@ -6,6 +6,7 @@
     <AssemblyName>kls4</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <ItemGroup>

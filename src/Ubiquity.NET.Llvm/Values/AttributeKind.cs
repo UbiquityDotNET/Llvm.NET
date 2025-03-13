@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Values
     /// a given release of LLVM. (And likely won't change across even a minor version
     /// change. But, sadly, there is no promise on that...) Thus projections/bindings
     /// and, more importantly consumers of such, are stuck with the reality that this
-    /// is an are a that is likely to cause breaking changes.
+    /// is an area that is likely to cause breaking changes.
     /// </note>
     /// <para>
     /// </para>

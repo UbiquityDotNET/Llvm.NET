@@ -5,13 +5,11 @@
 // -----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.JIT.OrcJITv2;
 
@@ -26,16 +24,25 @@ namespace Kaleidoscope.Runtime
         : LlJIT
     {
         /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
-        public KaleidoscopeJIT( )
+        /// <remarks>This creates a JIT with a default set of passes for 'O3'</remarks>
+        public KaleidoscopeJIT()
+            : this("default<O3>")
         {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
+        /// <param name="optimizationPasses">Optimization passes to use for each module transform in this JIT</param>
+        public KaleidoscopeJIT( params string[] optimizationPasses )
+        {
+            OptimizationPasses = optimizationPasses;
             SymbolFlags symFlags = new(SymbolGenericOption.Callable);
 
             // Add a materializer for the well-known symbols for the managed code implementations
             unsafe
             {
                 List<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols = [
-                    new(MangleAndIntern("putchard"), new(MakeRawPtr(&NativeMethods.PutChard), symFlags)),
-                    new(MangleAndIntern("printd"), new(MakeRawPtr(&NativeMethods.Printd), symFlags)),
+                    new(MangleAndIntern("putchard"), new(MakeRawPtr(&BuiltIns.PutChard), symFlags)),
+                    new(MangleAndIntern("printd"), new(MakeRawPtr(&BuiltIns.Printd), symFlags)),
                 ];
 
                 using var absoluteMaterializer = new AbsoluteMaterializationUnit(absoluteSymbols);
@@ -61,46 +68,37 @@ namespace Kaleidoscope.Runtime
             return retVal;
         }
 
-        public IReadOnlyCollection<string> Passes
-        {
-            get => new ReadOnlyCollection<string>(OptimizationPasses);
-            set => OptimizationPasses = [.. value.ThrowIfNull()];
-        }
-
         /// <summary>Gets or sets the output writer for output from the program.</summary>
         /// <remarks>The default writer is <see cref="Console.Out"/>.</remarks>
         public static TextWriter OutputWriter { get; set; } = Console.Out;
 
         // Optimization passes used in the transform function for materialized modules
-        // Default set covers the basics; ore are possible and may produce better results
-        // but could also end up taking more effort than just materializing the native code
-        // and executing it...
-        private string[] OptimizationPasses = [
-                "mem2reg",
-                "simplifycfg",
-                "instcombine",
-                "reassociate",
-                "gvn",
-        ];
+        // Default constructor set covers the basics; more are possible and may produce
+        // better results but could also end up taking more effort than just materializing
+        // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged.
+        private readonly string[] OptimizationPasses;
 
+        // call back to handle per module transforms in the JIT
         private void ModuleTransformer(ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule)
         {
             // This implementation does not replace the module
             replacementModule = null;
 
-            // work on the module directly
+            // work on the per thread module directly
             module.WithPerThreadModule((module)=>
             {
                 // force it to use the JIT's data layout
                 module.DataLayoutString = DataLayoutString;
 
-                // perform optimizations
-                return module.TryRunPasses(OptimizationPasses);
+                // perform optimizations on the whole module if there are
+                // any passes for this JIT instance.
+                return OptimizationPasses.Length == 0 ? default : module.TryRunPasses(OptimizationPasses);
             });
         }
 
         // Cleaner workaround for ugly compiler casting requirements
-        // The & operator officially has no type and MUST be cast.
+        // The & operator officially has no type and MUST be cast to
+        // or passed into a value of a function pointer type.
         // Thus the provided parameter type does the job and allows
         // a simple cast to the required JIT address form.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -109,7 +107,9 @@ namespace Kaleidoscope.Runtime
             return (UInt64)funcPtr;
         }
 
-        private static class NativeMethods
+        // These are the built-ins known by Kaleidoscope and used by many of the sample chapters.
+        // They are registered with the JIT in the constructor as absolute symbols.
+        private static class BuiltIns
         {
             [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]

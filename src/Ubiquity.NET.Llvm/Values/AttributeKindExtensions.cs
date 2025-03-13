@@ -193,7 +193,7 @@ namespace Ubiquity.NET.Llvm.Values
             case FunctionAttributeIndex.Function:
                 if(!allowedIndexes.HasFlag( AttributeAllowedOn.Function ))
                 {
-                    throw new ArgumentException( Resources.Attribute_not_allowed_on_functions, nameof( index ) );
+                    throw new ArgumentException( Resources.Attribute_not_allowed_on_functions, nameof( kind ) );
                 }
 
                 break;
@@ -201,7 +201,7 @@ namespace Ubiquity.NET.Llvm.Values
             case FunctionAttributeIndex.ReturnType:
                 if(!allowedIndexes.HasFlag( AttributeAllowedOn.Return ))
                 {
-                    throw new ArgumentException( Resources.Attribute_not_allowed_on_function_Return, nameof( index ) );
+                    throw new ArgumentException( Resources.Attribute_not_allowed_on_function_Return, nameof( kind ) );
                 }
 
                 break;
@@ -210,7 +210,7 @@ namespace Ubiquity.NET.Llvm.Values
             default:
                 if(!allowedIndexes.HasFlag( AttributeAllowedOn.Parameter ))
                 {
-                    throw new ArgumentException( Resources.Attribute_not_allowed_on_function_parameter, nameof( index ) );
+                    throw new ArgumentException( Resources.Attribute_not_allowed_on_function_parameter, nameof( kind ) );
                 }
 
                 break;
@@ -330,6 +330,7 @@ namespace Ubiquity.NET.Llvm.Values
                 AttributeKind.Convergent or
                 AttributeKind.NoRecurse or
                 AttributeKind.AllocSize or
+                AttributeKind.Memory or
                 AttributeKind.Speculatable => AttributeAllowedOn.Function,
 
                 _ => AttributeAllowedOn.None,

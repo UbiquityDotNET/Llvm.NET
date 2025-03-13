@@ -32,7 +32,7 @@ namespace Kaleidoscope.Chapter3_5
             {
             case Function function:
                 Console.WriteLine( "Defined function: {0}", function.Name );
-                Console.WriteLine( function );
+                Console.WriteLine( function.ParentModule.WriteToString() );
                 break;
 
             default:

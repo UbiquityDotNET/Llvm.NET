@@ -44,6 +44,7 @@ namespace Kaleidoscope.Chapter4
             }
 
             RuntimeState = globalState;
+            ThreadSafeContext = new();
             InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
         }
         #endregion
@@ -64,6 +65,8 @@ namespace Kaleidoscope.Chapter4
 
             // Prototypes, including extern are ignored as AST generation
             // adds them to the RuntimeState so that already has the declarations
+            // They are looked up and added to the module as extern if not already
+            // present if they are called.
             if(ast is not FunctionDefinition definition)
             {
                 return default;
@@ -77,26 +80,21 @@ namespace Kaleidoscope.Chapter4
 
             if(definition.IsAnonymous)
             {
-                // directly track modules for anonymous functions as calling the function is the guaranteed next step
-                // and then it is removed as nothing an reference it again.
+                // directly track modules for anonymous functions as calling the function is the guaranteed
+                // next step and then it is removed as nothing can reference it again.
                 using ResourceTracker resourceTracker = KlsJIT.Add(ThreadSafeContext, Module);
                 Value retVal;
 
                 // invoking the function is an "unsafe" operation via a function pointer
+                // Also note that .NET has no mechanism to catch native exceptions like
+                // access violations or stack overflows from infinite recursion. They will
+                // crash the app.
                 unsafe
                 {
-                    try
-                    {
-                        var pFunc = (delegate* unmanaged[Cdecl]<double>)KlsJIT.Lookup(definition.Name);
-                        retVal = ctx.CreateConstant( pFunc() );
-                        resourceTracker.RemoveAll();
-                        return OptionalValue.Create<Value>( retVal );
-                    }
-                    catch
-                    {
-                        // Console.Error.WriteLine(ex.Message);
-                        return default;
-                    }
+                    var pFunc = (delegate* unmanaged[Cdecl]<double>)KlsJIT.Lookup(definition.Name);
+                    retVal = ctx.CreateConstant( pFunc() );
+                    resourceTracker.RemoveAll();
+                    return OptionalValue.Create<Value>( retVal );
                 }
             }
             else
@@ -181,6 +179,7 @@ namespace Kaleidoscope.Chapter4
         public override Value? Visit(FunctionCallExpression functionCall)
         {
             ArgumentNullException.ThrowIfNull( functionCall );
+
             if(Module is null)
             {
                 throw new InvalidOperationException( "Can't visit a function call without an active module" );
@@ -206,6 +205,7 @@ namespace Kaleidoscope.Chapter4
         }
         #endregion
 
+        #region FunctionDefinition
         public override Value? Visit(FunctionDefinition definition)
         {
             ArgumentNullException.ThrowIfNull( definition );
@@ -238,6 +238,7 @@ namespace Kaleidoscope.Chapter4
                 throw;
             }
         }
+        #endregion
 
         public override Value? Visit(VariableReferenceExpression reference)
         {
@@ -273,18 +274,7 @@ namespace Kaleidoscope.Chapter4
             Context ctx = ThreadSafeContext.PerThreadContext;
             var llvmSignature = ctx.GetFunctionType( ctx.DoubleType, prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
-
-            if(!prototype.IsExtern)
-            {
-                // Any function created by this generator from AST should NOT end up optimized into any built-in or other intrinsic.
-                // LLVM has a bug (https://github.com/llvm/llvm-project/issues/130172) [:( Closed as 'Not planned']
-                // that will think some things are valid runtime library calls it can optimize by substituting a
-                // const value for the return instead of the actual returned value.
-                // There is NO way to alter or customize the `TargetLibraryInfo` it is baked into the LLVM code
-                // and depends on the triple so there's no way to control it. Thus, anything that comes from the
-                // AST is considered as NOT built-in and should not be replaced.
-                retVal.AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoBuiltIn );
-            }
+            retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
             int index = 0;
             foreach(var argId in prototype.Parameters)
@@ -303,7 +293,7 @@ namespace Kaleidoscope.Chapter4
         #region PrivateMembers
         private BitcodeModule? Module;
         private readonly DynamicRuntimeState RuntimeState;
-        private readonly ThreadSafeContext ThreadSafeContext = new();
+        private readonly ThreadSafeContext ThreadSafeContext;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly Dictionary<string, Value> NamedValues = [];
         private readonly KaleidoscopeJIT KlsJIT = new( );

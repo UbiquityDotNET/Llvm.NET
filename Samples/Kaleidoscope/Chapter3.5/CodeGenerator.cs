@@ -170,7 +170,8 @@ namespace Kaleidoscope.Chapter3_5
                 InstructionBuilder.Return( funcReturn );
                 function.Verify( );
 
-                var errInfo = function.TryRunPasses( PassNames );
+                // pass pipeline is run against the module
+                var errInfo = function.ParentModule.TryRunPasses( PassNames );
                 return errInfo.Success ? (Value)function : throw new CodeGeneratorException(errInfo.ToString());
             }
             catch( CodeGeneratorException )
@@ -209,15 +210,7 @@ namespace Kaleidoscope.Chapter3_5
 
             var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
-
-            // Any function created by this generator from AST should NOT end up optimized into any built-in or other intrinsic.
-            // LLVM has a bug (https://github.com/llvm/llvm-project/issues/130172) [:( Closed as 'Not planned']
-            // that will think some things are valid runtime library calls it can optimize by substituting a
-            // const value for the return instead of the actual returned value.
-            // There is NO way to alter or customize the `TargetLibraryInfo` it is baked into the LLVM code
-            // and depends on the triple so there's no way to control it. Thus, anything that comes from the
-            // AST is considered as NOT builtin and should not be replaced.
-            retVal.AddAttributes(FunctionAttributeIndex.Function, AttributeKind.NoBuiltIn);
+            retVal.AddAttribute(FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn);
 
             int index = 0;
             foreach( var argId in prototype.Parameters )
@@ -240,10 +233,7 @@ namespace Kaleidoscope.Chapter3_5
         private readonly InstructionBuilder InstructionBuilder;
         private readonly Dictionary<string, Value> NamedValues = [];
         private static readonly string[] PassNames = [
-            "simplifycfg",
-            "instcombine",
-            "reassociate",
-            "gvn",
+            "default<O3>"
         ];
         #endregion
     }

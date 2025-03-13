@@ -38,7 +38,7 @@ namespace Kaleidoscope.Chapter4
                     Console.WriteLine( );
                 }
 
-                Console.WriteLine( "Evaluated to {0}", result.Value );
+                Console.WriteLine( "{0}", result.Value );
                 break;
 
             case Function function:
