@@ -75,13 +75,43 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// input module and it is no longer useable (Generates <see cref="ObjectDisposedException"/>)
         /// for any use other than Dispose(). This allows normal clean up in the event of an exception
         /// to occur.
+        /// <note type="important">
+        /// Transfer of ownership does NOT occur in the face of an error (exception)! However the
+        /// <see cref="ThreadSafeModule.Dispose"/> method is idempotent and will NOT throw an exception
+        /// if disposed so it is safe to declare instances with a "using".
+        /// </note>
         /// </remarks>
         public void AddModule(JITDyLib lib, ThreadSafeModule module)
         {
             ArgumentNullException.ThrowIfNull(module);
 
-            LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle.MoveToNative());
+            LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle);
             errRef.ThrowIfFailed();
+            module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
+        }
+
+        /// <summary>Adds a module to the JIT</summary>
+        /// <param name="tracker">Resource tracker to manage the module</param>
+        /// <param name="module">Module to add</param>
+        /// <remarks>
+        /// This function has "move" semantics in that the JIT takes ownership of the
+        /// input module and it is no longer useable (Generates <see cref="ObjectDisposedException"/>)
+        /// for any use other than Dispose(). This allows normal clean up in the event of an exception
+        /// to occur.
+        /// <note type="important">
+        /// Transfer of ownership does NOT occur in the face of an error (exception)! However the
+        /// <see cref="ThreadSafeModule.Dispose"/> method is idempotent and will NOT throw an exception
+        /// if disposed so it is safe to declare instances with a "using".
+        /// </note>
+        /// </remarks>
+        public void AddModule(ResourceTracker tracker, ThreadSafeModule module)
+        {
+            ArgumentNullException.ThrowIfNull(tracker);
+            ArgumentNullException.ThrowIfNull(module);
+
+            LLVMErrorRef errorRef = LLVMOrcLLJITAddLLVMIRModuleWithRT(Handle, tracker.Handle, module.Handle);
+            errorRef.ThrowIfFailed();
+            module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
         }
 
         /// <summary>Mangles and interns a symbol in the JIT's symbol pool</summary>

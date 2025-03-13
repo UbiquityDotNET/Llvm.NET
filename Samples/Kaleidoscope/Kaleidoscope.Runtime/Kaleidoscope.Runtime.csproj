@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <IsAotCompatible>True</IsAotCompatible>
-        <DefineConstants Condition="'$(KaleidoscopeJitSupport)'=='true'">$(DefineConstants);KALEIDOSCOPE_JIT_SUPPORT</DefineConstants>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -12,7 +12,7 @@
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\..\..\src\Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj" />
+      <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj" />
       <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     </ItemGroup>
 </Project>

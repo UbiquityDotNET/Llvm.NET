@@ -3,12 +3,14 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-#if FUTURE_DEVELOPMENT_AREA
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
-    internal class AbsoluteMaterializationUnit
+    /// <summary>Materialization unit for absolute symbols in an LLVM ORC v2 JIT</summary>
+    public class AbsoluteMaterializationUnit
         : MaterializationUnit
     {
+        /// <summary>Initializes a new instance of the <see cref="AbsoluteMaterializationUnit"/> class.</summary>
+        /// <param name="absoluteSymbols">Absolute (pre-evaluated) symbols to add to the JIT</param>
         public AbsoluteMaterializationUnit(IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols)
             : base(MakeHandle(absoluteSymbols))
         {
@@ -28,4 +30,3 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         }
     }
 }
-#endif

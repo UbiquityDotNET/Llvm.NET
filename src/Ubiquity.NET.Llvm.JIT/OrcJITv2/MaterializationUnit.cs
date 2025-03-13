@@ -29,6 +29,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             Handle = h;
         }
 
+        // TODO: Make these an extension to a IReadOnlyDictionary<>
         private protected static IMemoryOwner<LLVMOrcCSymbolMapPair> InitializeNativeCopy(
             [ValidatedNotNull] IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
             )

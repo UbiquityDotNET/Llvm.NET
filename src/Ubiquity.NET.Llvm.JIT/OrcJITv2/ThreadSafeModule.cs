@@ -78,8 +78,11 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 ErrorInfo errInfo = default;
                 if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is GenericModuleOperation self)
                 {
-                    // mod and underlying LLVMModuleRef created here are aliases, no need to dispose them
-                    var mod = BitcodeModule.FromHandle(new LLVMModuleRef(abiModuleHandle, owner: false));
+                    // module and underlying LLVMModuleRef created here are aliases, no need to dispose them
+                    var moduleHandle = new LLVMModuleRefAlias();
+                    Marshal.InitHandle(moduleHandle, abiModuleHandle);
+
+                    var mod = BitcodeModule.FromHandle(moduleHandle);
                     errInfo = mod is not null
                         ? self(mod)
                         : ErrorInfo.Create("Internal Error: Could not create wrapped module for native method");

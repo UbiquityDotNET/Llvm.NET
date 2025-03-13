@@ -31,7 +31,9 @@ namespace Kaleidoscope.Chapter4
             switch( resultValue )
             {
             case ConstantFP result:
-                if( Console.CursorLeft > 0 ) // TODO: Comment on what this is for... ????
+                // If the cursor is not at the beginning of a line
+                // generate a new line for it
+                if( Console.CursorLeft > 0 )
                 {
                     Console.WriteLine( );
                 }

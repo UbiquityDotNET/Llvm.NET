@@ -761,7 +761,7 @@ namespace Ubiquity.NET.Llvm
                 using var mb = new MemoryBuffer((byte*)nativeSrcHandle.Pointer, src.NativeSize, name, requiresNullTerminator: true);
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                LLVMStatus result = LLVMParseIRInContext(ContextHandle, mb.Handle.MoveToNative(), out LLVMModuleRef module, out DisposeMessageString errMsg);
+                LLVMStatus result = LLVMParseIRInContext(ContextHandle, mb.Handle, out LLVMModuleRef module, out DisposeMessageString errMsg);
                 using(errMsg)
                 {
                     if (result.Failed)
@@ -770,6 +770,9 @@ namespace Ubiquity.NET.Llvm
                         throw new LlvmException(errMsg.ToString() ?? string.Empty);
                     }
 
+                    // successfully completed ownership transfer.
+                    // NOTE: Ownership transfer of the buffer is NOT documented, but in reality - does happen!
+                    mb.Handle.SetHandleAsInvalid();
                     return ModuleCache.GetOrCreateItem(module, (h)=>h.Dispose());
                 }
 #pragma warning restore CA2000 // Dispose objects before losing scope

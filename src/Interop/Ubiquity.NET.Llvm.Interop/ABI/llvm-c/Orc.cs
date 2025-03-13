@@ -263,10 +263,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial /*LLVMOrcSymbolStringPoolEntryRef[]*/ nint* LLVMOrcMaterializationResponsibilityGetRequestedSymbols(LLVMOrcMaterializationResponsibilityRef MR, out size_t NumSymbols);
 
-        // TODO: Create custom marshaller to use this and hide it. This is tricky as it is disposing of a pointer
-        // to the strings (That is the array itself is disposed, but NOT the symbol strings). It should ONLY be
-        // used in a custom marshaller for the array of symbol strings. (Internally this simply calls free() on
-        // the pointer so any referenced strings are still valid)
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeSymbols(nint* Symbols);
@@ -361,7 +357,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMContextRef LLVMOrcThreadSafeContextGetContext(LLVMOrcThreadSafeContextRef TSCtx);
+        public static unsafe partial LLVMContextRefAlias LLVMOrcThreadSafeContextGetContext(LLVMOrcThreadSafeContextRef TSCtx);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

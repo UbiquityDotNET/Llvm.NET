@@ -27,6 +27,13 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             materializationUnit.Handle.SetHandleAsInvalid();
         }
 
+        /// <summary>Creates a <see cref="ResourceTracker"/> associated with this library</summary>
+        /// <returns>New resource tracker</returns>
+        public ResourceTracker CreateResourceTracker()
+        {
+            return new(LLVMOrcJITDylibCreateResourceTracker(Handle));
+        }
+
         internal JITDyLib(LLVMOrcJITDylibRef h)
         {
             Handle = h;

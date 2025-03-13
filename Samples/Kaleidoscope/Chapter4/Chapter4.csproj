@@ -5,6 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>kls4</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

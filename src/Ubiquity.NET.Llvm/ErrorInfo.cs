@@ -30,7 +30,7 @@ namespace Ubiquity.NET.Llvm
         public bool Failed => !Success;
 
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
-        public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
+        public bool IsDisposed => Handle is not null && Handle.IsClosed;
 
         /// <inheritdoc/>
         public override string ToString()

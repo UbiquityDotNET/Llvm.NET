@@ -44,7 +44,6 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             get
             {
                 ObjectDisposedException.ThrowIf(Handle.IsClosed || Handle.IsInvalid, this);
-
                 return ContextCache.GetContextFor(LLVMOrcThreadSafeContextGetContext(Handle));
             }
         }

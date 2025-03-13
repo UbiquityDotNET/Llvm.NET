@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         // Native library takes ownership of the TSM, so it is a declared `nint` to push towards use of `MoveToNative`
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModule(LLVMOrcLLJITRef J, LLVMOrcJITDylibRef JD, /*LLVMOrcThreadSafeModuleRef*/nint TSM);
+        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModule(LLVMOrcLLJITRef J, LLVMOrcJITDylibRef JD, LLVMOrcThreadSafeModuleRef TSM);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
