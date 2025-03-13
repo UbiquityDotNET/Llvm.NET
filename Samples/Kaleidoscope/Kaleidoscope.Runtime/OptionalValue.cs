@@ -17,7 +17,7 @@ namespace Kaleidoscope.Runtime
     /// This is used in place of trying to add nullability attributes to <see cref="System.ValueTuple"/>
     /// as that's not allowed. The default constructor is used for cases when there is no value.
     /// </remarks>
-    public struct OptionalValue<T>
+    public readonly struct OptionalValue<T>
         : IEquatable<OptionalValue<T>>
     {
         /// <summary>Initializes a new instance of the <see cref="OptionalValue{T}"/> struct with a valid value.</summary>

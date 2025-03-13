@@ -33,9 +33,9 @@ operators. This stack supports two distinct modes of parsing, interactive REPL, 
 for ahead of time compilation.
 
 ## Kaleidoscope JIT engine
-The JIT engine used for Kaleidoscope is based on the Ubiquity.NET.Llvm OrcJit, which, unsurprisingly, uses the LLVM
-OrcJit functionality to provide On Request Compilation (ORC). For most of the chapters, the JIT uses a
-moderately lazy compilation technique where the source language is parsed, converted to LLVM IR and submitted
+The JIT engine used for Kaleidoscope is based on the Ubiquity.NET.Llvm OrcJIT v2, which, unsurprisingly, uses
+the LLVM OrcJit functionality to provide On Request Compilation (ORC). For most of the chapters, the JIT uses
+a moderately lazy compilation technique where the source language is parsed, converted to LLVM IR and submitted
 to the JIT engine. The JIT engine does not immediately generate native code from the module, however. Instead
 it stores the module, and whenever compiled code calls to a symbol exported by the IR module, it will then
 generate the native code for the function "on the fly". This has the advantage of not paying the price of
@@ -45,11 +45,7 @@ source language to IR, even if the code will never execute.
 ### Really lazy compilation
 While the basic lazy compilation of IR to native code has performance benefits over a pure interpreter, it
 still has the potential for wasted overhead converting the parsed language to LLVM IR. Fortunately, the LLVM
-and Ubiquity.NET.Llvm OrcJit support truly lazy compilation. This is done by asking the JIT to create a stub for
-a named symbol and then, whenever code calls that symbol the stub calls back to the JIT which then calls back
-the application to generate the IR, add the module to the JIT and trigger compilation to native. Thus, achieving
-true Just-In-Time compilation.
-
->[!CAUTION]
-> The truly lazy functionality is currently disabled due to a bug in the underlying LLVM OrcJIT
-> implementation on Windows.
+and Ubiquity.NET.Llvm.OrcJitv2 supports truly lazy compilation. This is done by asking the JIT to create a
+stub for a named symbol and then, whenever code calls that symbol the stub calls back to the JIT which then
+calls back the application to 'materialize' the IR, add the module to the JIT and trigger compilation to
+native. Thus, achieving true Just-In-Time compilation.

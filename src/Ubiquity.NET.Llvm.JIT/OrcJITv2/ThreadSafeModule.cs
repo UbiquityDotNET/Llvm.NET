@@ -53,6 +53,11 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                   .SetHandleAsInvalid();
         }
 
+        internal ThreadSafeModule(nint h, bool alias = false)
+        {
+            Handle = new(h, !alias);
+        }
+
         internal ThreadSafeModule(LLVMOrcThreadSafeModuleRef h)
         {
             Handle = h;

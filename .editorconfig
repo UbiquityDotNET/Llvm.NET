@@ -68,6 +68,7 @@ csharp_style_expression_bodied_constructors = false:error
 csharp_style_expression_bodied_lambdas = true:warning
 csharp_style_expression_bodied_local_functions = true:suggestion
 dotnet_diagnostic.RECS0001.severity = error
+dotnet_diagnostic.SA1023.severity = none
 
 # Analysis and refactoring rules for Ubiquity.NET
 # Description: Code analysis rules for Ubiquity.NET projects

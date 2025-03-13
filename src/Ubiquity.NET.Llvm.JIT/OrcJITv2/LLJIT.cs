@@ -4,11 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// They are order by access, unfortunately this analyzer has stupid built-in defaults that
+// puts internal as higher priority than protected and no way to override it.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
     /// <summary>ORC v2 LLJIT instance</summary>
-    public sealed class LlJIT
-        : IDisposable
+    public class LlJIT
+        : DisposableObject
     {
         /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
         public LlJIT()
@@ -131,11 +135,17 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <summary>Gets the IR transform layer for this JIT</summary>
         public IrTransformLayer TransformLayer => new(LLVMOrcLLJITGetIRTransformLayer(Handle));
 
-        /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
-
         /// <summary>Gets the Execution session for this JIT</summary>
         public ExecutionSession Session => new(LLVMOrcLLJITGetExecutionSession(Handle));
+
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Handle.Dispose();
+            }
+        }
 
         internal LlJIT(LLVMOrcLLJITRef h)
         {
