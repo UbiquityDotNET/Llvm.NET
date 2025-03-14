@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyVersion>20.1.0.0</AssemblyVersion>
+    <TargetFramework>net9.0</TargetFramework>
     <OutputType>exe</OutputType>
     <OutputTypeEx>exe</OutputTypeEx>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

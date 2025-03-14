@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <TargetFramework>net9.0</TargetFramework>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>

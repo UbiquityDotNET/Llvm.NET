@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-      <TargetFramework>net8.0</TargetFramework>
+      <TargetFramework>net9.0</TargetFramework>
       <IsPackable>false</IsPackable>
       <RunSettingsFilePath>$(BuildRootDir)\src\x64.runsettings</RunSettingsFilePath>
   </PropertyGroup>
