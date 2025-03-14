@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm
 
         internal static void Add( Context context )
         {
-            if( !Instance.Value.TryAdd( context.ContextHandle, context ) )
+            if( !Instance.Value.TryAdd( context.Handle, context ) )
             {
                 throw new InternalCodeGeneratorException( "Internal Error: Can't add context to Cache as it already exists!" );
             }

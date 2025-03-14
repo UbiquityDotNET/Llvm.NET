@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 
 using Ubiquity.NET.Llvm.ObjectFile;
@@ -14,22 +12,6 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ContextBindings;
 
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Severity level for diagnostics</summary>
-    public enum DiagnosticSeverity
-    {
-        /// <summary>Errors reported from native code</summary>
-        Error = LLVMDiagnosticSeverity.LLVMDSError,
-
-        /// <summary>Warnings reported from native code</summary>
-        Warning = LLVMDiagnosticSeverity.LLVMDSWarning,
-
-        /// <summary>Remarks reported from native code</summary>
-        Remark = LLVMDiagnosticSeverity.LLVMDSRemark,
-
-        /// <summary>Note level diagnostics reported from native code</summary>
-        Note = LLVMDiagnosticSeverity.LLVMDSNote,
-    }
-
     /// <summary>Encapsulates an LLVM context</summary>
     /// <remarks>
     /// <para>A context in LLVM is a container for interning (LLVM refers to this as "uniqueing") various types
@@ -60,55 +42,66 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets the LLVM void type for this context</summary>
-        public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef VoidType => TypeRef.FromHandle( LLVMVoidTypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM boolean type for this context</summary>
-        public ITypeRef BoolType => TypeRef.FromHandle( LLVMInt1TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef BoolType => TypeRef.FromHandle( LLVMInt1TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM 8 bit integer type for this context</summary>
-        public ITypeRef Int8Type => TypeRef.FromHandle( LLVMInt8TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef Int8Type => TypeRef.FromHandle( LLVMInt8TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM 16 bit integer type for this context</summary>
-        public ITypeRef Int16Type => TypeRef.FromHandle( LLVMInt16TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef Int16Type => TypeRef.FromHandle( LLVMInt16TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM 32 bit integer type for this context</summary>
-        public ITypeRef Int32Type => TypeRef.FromHandle( LLVMInt32TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef Int32Type => TypeRef.FromHandle( LLVMInt32TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM 64 bit integer type for this context</summary>
-        public ITypeRef Int64Type => TypeRef.FromHandle( LLVMInt64TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef Int64Type => TypeRef.FromHandle( LLVMInt64TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM 128 bit integer type for this context</summary>
-        public ITypeRef Int128Type => TypeRef.FromHandle( LLVMInt128TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef Int128Type => TypeRef.FromHandle( LLVMInt128TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM half precision floating point type for this context</summary>
-        public ITypeRef HalfFloatType => TypeRef.FromHandle( LLVMHalfTypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef HalfFloatType => TypeRef.FromHandle( LLVMHalfTypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM single precision floating point type for this context</summary>
-        public ITypeRef FloatType => TypeRef.FromHandle( LLVMFloatTypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef FloatType => TypeRef.FromHandle( LLVMFloatTypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM double precision floating point type for this context</summary>
-        public ITypeRef DoubleType => TypeRef.FromHandle( LLVMDoubleTypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef DoubleType => TypeRef.FromHandle( LLVMDoubleTypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM token type for this context</summary>
-        public ITypeRef TokenType => TypeRef.FromHandle( LLVMTokenTypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef TokenType => TypeRef.FromHandle( LLVMTokenTypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM LlvmMetadata type for this context</summary>
-        public ITypeRef MetadataType => TypeRef.FromHandle( LLVMMetadataTypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef MetadataType => TypeRef.FromHandle( LLVMMetadataTypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM X86 80-bit floating point type for this context</summary>
-        public ITypeRef X86Float80Type => TypeRef.FromHandle( LLVMX86FP80TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef X86Float80Type => TypeRef.FromHandle( LLVMX86FP80TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM 128-Bit floating point type</summary>
-        public ITypeRef Float128Type => TypeRef.FromHandle( LLVMFP128TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef Float128Type => TypeRef.FromHandle( LLVMFP128TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the LLVM PPC 128-bit floating point type</summary>
-        public ITypeRef PpcFloat128Type => TypeRef.FromHandle( LLVMPPCFP128TypeInContext( ContextHandle ).ThrowIfInvalid() )!;
+        public ITypeRef PpcFloat128Type => TypeRef.FromHandle( LLVMPPCFP128TypeInContext( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
         public IEnumerable<LlvmMetadata> Metadata => MetadataCache;
 
         /// <summary>Gets or sets the minimum severity level for diagnostics in this context</summary>
         public DiagnosticSeverity DiagnosticSeverity { get; set; } = DiagnosticSeverity.Warning;
+
+        /// <summary>Set a custom diagnostic handler</summary>
+        /// <param name="handler">handler</param>
+        public void SetDiagnosticHandler(DiagnosticInfoCallbackAction handler)
+        {
+            using var callBack = new DiagnosticCallbackHolder(handler);
+            unsafe
+            {
+                LLVMContextSetDiagnosticHandler( Handle, &DiagnosticCallbackHolder.DiagnosticHandler, callBack.AddRefAndGetNativeContext() );
+            }
+        }
 
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
@@ -143,7 +136,7 @@ namespace Ubiquity.NET.Llvm
                 32 => Int32Type,
                 64 => Int64Type,
                 128 => Int128Type,
-                _ => TypeRef.FromHandle( LLVMIntTypeInContext( ContextHandle, bitWidth ).ThrowIfInvalid() )!,
+                _ => TypeRef.FromHandle( LLVMIntTypeInContext( Handle, bitWidth ).ThrowIfInvalid() )!,
             };
         }
 
@@ -171,7 +164,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( returnType );
             ArgumentNullException.ThrowIfNull( args );
 
-            if(ContextHandle != returnType.Context.ContextHandle)
+            if(Handle != returnType.Context.Handle)
             {
                 throw new ArgumentException( Resources.Mismatched_context, nameof( returnType ) );
             }
@@ -316,7 +309,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( values );
 
             var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
-            var handle = LLVMConstStructInContext( ContextHandle, valueHandles, ( uint )valueHandles.Length, packed );
+            var handle = LLVMConstStructInContext( Handle, valueHandles, ( uint )valueHandles.Length, packed );
             return Value.FromHandle<Constant>( handle.ThrowIfInvalid() )!;
         }
 
@@ -411,7 +404,7 @@ namespace Ubiquity.NET.Llvm
         public IStructType CreateStructType(string name)
         {
             ArgumentNullException.ThrowIfNull( name );
-            var handle = LLVMStructCreateNamed( ContextHandle, name );
+            var handle = LLVMStructCreateNamed( Handle, name );
             return TypeRef.FromHandle<IStructType>( handle.ThrowIfInvalid() )!;
         }
 
@@ -426,7 +419,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( elements );
 
             LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
-            var handle = LLVMStructTypeInContext( ContextHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
+            var handle = LLVMStructTypeInContext( Handle, llvmArgs, ( uint )llvmArgs.Length, packed );
             return TypeRef.FromHandle<IStructType>( handle.ThrowIfInvalid() )!;
         }
 
@@ -458,7 +451,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( name );
             ArgumentNullException.ThrowIfNull( elements );
 
-            var retVal = TypeRef.FromHandle<IStructType>( LLVMStructCreateNamed( ContextHandle, name ).ThrowIfInvalid( ) )!;
+            var retVal = TypeRef.FromHandle<IStructType>( LLVMStructCreateNamed( Handle, name ).ThrowIfInvalid( ) )!;
             retVal.SetBody( packed, elements );
 
             return retVal;
@@ -474,7 +467,7 @@ namespace Ubiquity.NET.Llvm
         public MDString CreateMetadataString(string? value)
         {
             // ArgumentNullException.ThrowIfNull(value);
-            var handle = LLVMMDStringInContext2( ContextHandle, value, ( uint )( value?.Length ?? 0 ) );
+            var handle = LLVMMDStringInContext2( Handle, value, ( uint )( value?.Length ?? 0 ) );
             return new MDString( handle );
         }
 
@@ -485,7 +478,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( value );
             var elements = new[ ] { CreateMetadataString( value ).MetadataHandle };
-            var hNode = LLVMMDNodeInContext2( ContextHandle, elements, ( uint )elements.Length );
+            var hNode = LLVMMDNodeInContext2( Handle, elements, ( uint )elements.Length );
             return MDNode.FromHandle<MDNode>( hNode.ThrowIfInvalid() )!;
         }
 
@@ -511,7 +504,7 @@ namespace Ubiquity.NET.Llvm
         public ConstantDataArray CreateConstantString(string value, bool nullTerminate)
         {
             ArgumentNullException.ThrowIfNull( value );
-            var handle = LLVMConstStringInContext( ContextHandle, value, ( uint )value.Length, !nullTerminate );
+            var handle = LLVMConstStringInContext( Handle, value, ( uint )value.Length, !nullTerminate );
             return Value.FromHandle<ConstantDataArray>( handle.ThrowIfInvalid() )!;
         }
 
@@ -656,7 +649,7 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_requires_a_value, kind ), nameof( kind ) );
             }
 
-            var handle = LLVMCreateEnumAttribute( ContextHandle
+            var handle = LLVMCreateEnumAttribute( Handle
                                                 , (uint)kind
                                                 , 0ul
                                                 );
@@ -687,7 +680,7 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_does_not_support_a_value, kind ), nameof( kind ) );
             }
 
-            var handle = LLVMCreateEnumAttribute( ContextHandle
+            var handle = LLVMCreateEnumAttribute( Handle
                                                 , (uint)kind
                                                 , value
                                                 );
@@ -708,7 +701,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
             ArgumentNullException.ThrowIfNull( value );
 
-            var handle = LLVMCreateStringAttribute( ContextHandle, name, ( uint )name.Length, value, ( uint )value.Length );
+            var handle = LLVMCreateStringAttribute( Handle, name, ( uint )name.Length, value, ( uint )value.Length );
             return AttributeValue.FromHandle( this, handle );
         }
 
@@ -717,7 +710,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see cref="BasicBlock"/> created</returns>
         public BasicBlock CreateBasicBlock(string name)
         {
-            return BasicBlock.FromHandle( LLVMCreateBasicBlockInContext( ContextHandle, name ).ThrowIfInvalid() )!;
+            return BasicBlock.FromHandle( LLVMCreateBasicBlockInContext( Handle, name ).ThrowIfInvalid() )!;
         }
 
         /// <inheritdoc/>
@@ -752,8 +745,8 @@ namespace Ubiquity.NET.Llvm
         /// <exception cref="LlvmException">Any errors parsing the IR</exception>
         public BitcodeModule ParseModule(LazyEncodedString src, LazyEncodedString name)
         {
-            ArgumentNullException.ThrowIfNull(src);
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( src );
+            ArgumentNullException.ThrowIfNull( name );
 
             unsafe
             {
@@ -761,19 +754,19 @@ namespace Ubiquity.NET.Llvm
                 using var mb = new MemoryBuffer((byte*)nativeSrcHandle.Pointer, src.NativeSize, name, requiresNullTerminator: true);
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                LLVMStatus result = LLVMParseIRInContext(ContextHandle, mb.Handle, out LLVMModuleRef module, out DisposeMessageString errMsg);
+                LLVMStatus result = LLVMParseIRInContext(Handle, mb.Handle, out LLVMModuleRef module, out DisposeMessageString errMsg);
                 using(errMsg)
                 {
-                    if (result.Failed)
+                    if(result.Failed)
                     {
-                        Debug.Assert(!errMsg.IsClosed && !errMsg.IsInvalid, "Unexpected state from LLVM interop!");
-                        throw new LlvmException(errMsg.ToString() ?? string.Empty);
+                        Debug.Assert( !errMsg.IsClosed && !errMsg.IsInvalid, "Unexpected state from LLVM interop!" );
+                        throw new LlvmException( errMsg.ToString() ?? string.Empty );
                     }
 
                     // successfully completed ownership transfer.
                     // NOTE: Ownership transfer of the buffer is NOT documented, but in reality - does happen!
                     mb.Handle.SetHandleAsInvalid();
-                    return ModuleCache.GetOrCreateItem(module, (h)=>h.Dispose());
+                    return ModuleCache.GetOrCreateItem( module, (h) => h.Dispose() );
                 }
 #pragma warning restore CA2000 // Dispose objects before losing scope
             }
@@ -789,13 +782,13 @@ namespace Ubiquity.NET.Llvm
         /// These IDs are uniqued across all modules in this context.
         /// </remarks>
         public uint GetMDKindId(string name)
-            => LLVMGetMDKindIDInContext( ContextHandle, name, name == null ? 0u : (uint)name.Length );
+            => LLVMGetMDKindIDInContext( Handle, name, name == null ? 0u : (uint)name.Length );
 
         /// <summary>Gets or sets a value indicating whether the context keeps a map for uniqueing debug info identifiers across the context</summary>
         public bool OdrUniqueDebugTypes
         {
-            get => LibLLVMContextGetIsODRUniquingDebugTypes( ContextHandle );
-            set => LibLLVMContextSetIsODRUniquingDebugTypes( ContextHandle, value );
+            get => LibLLVMContextGetIsODRUniquingDebugTypes( Handle );
+            set => LibLLVMContextSetIsODRUniquingDebugTypes( Handle, value );
         }
 
         /// <summary>Opens a <see cref="TargetBinary"/> from a path</summary>
@@ -820,7 +813,7 @@ namespace Ubiquity.NET.Llvm
         public IEnumerable<string> OperandBundleTagIds { get; }
         */
 
-        internal LLVMContextRef ContextHandle { get; }
+        internal LLVMContextRef Handle { get; }
 
         /* These interning methods provide unique mapping between the .NET wrappers and the underlying LLVM instances
         // The mapping ensures that any LibLLVM handle is always re-mappable to exactly one wrapper instance.
@@ -851,7 +844,7 @@ namespace Ubiquity.NET.Llvm
             moduleRef.ThrowIfInvalid();
 
             var hModuleContext = LLVMGetModuleContext( moduleRef );
-            if(!hModuleContext.Equals( ContextHandle ))
+            if(!hModuleContext.Equals( Handle ))
             {
                 throw new ArgumentException( Resources.Incorrect_context_for_module );
             }
@@ -893,25 +886,12 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentNullException( nameof( contextRef ) );
             }
 
-            ContextHandle = contextRef;
+            Handle = contextRef;
             ValueCache = new ValueCache( this );
             ModuleCache = new BitcodeModule.InterningFactory( this );
             TypeCache = new TypeRef.InterningFactory( this );
             AttributeValueCache = new AttributeValue.InterningFactory( this );
             MetadataCache = new LlvmMetadata.InterningFactory( this );
-
-            unsafe
-            {
-                // ensure the diagnostic call back can get back to this instance
-                // Dispose will remove it and then release the allocation
-                DiagnosticCallBackRef = new(this);
-
-                // set the native diagnostic handler
-                // TODO: Add support to Native handler to allow custom handler
-                // existing native handler should still log to debugger, but could call
-                // an extensibility point
-                LLVMContextSetDiagnosticHandler( ContextHandle, &DiagnosticHandler, DiagnosticCallBackRef.AddRefAndGetNativeContext() );
-            }
         }
 
         /// <summary>Disposes the context to release unmanaged resources deterministically</summary>
@@ -935,42 +915,13 @@ namespace Ubiquity.NET.Llvm
             ValueCache.Dispose();
             unsafe
             {
-                // remove th diagnostic handler by providing "null"
-                LLVMContextSetDiagnosticHandler( ContextHandle, null, nint.Zero );
-                DiagnosticCallBackRef.Dispose();
+                // remove any diagnostic handler by providing "null"
+                LLVMContextSetDiagnosticHandler( Handle, null, nint.Zero );
             }
 
-            ContextCache.TryRemove( ContextHandle );
-            ContextHandle.Dispose();
+            ContextCache.TryRemove( Handle );
+            Handle.Dispose();
         }
-
-        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [SuppressMessage( "Style", "IDE0060:Remove unused parameter", Justification = "Required by ABI, ignored here" )]
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe void DiagnosticHandler(nint abiInfo, void* context)
-        {
-            try
-            {
-                if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is Context self)
-                {
-                    var info = LLVMDiagnosticInfoRef.FromABI(abiInfo);
-                    var level = LLVMGetDiagInfoSeverity( info );
-
-                    if( level <= (LLVMDiagnosticSeverity)self.DiagnosticSeverity)
-                    {
-                        using DisposeMessageString msg = LLVMGetDiagInfoDescription( info );
-                        Debug.WriteLine( "{0}: {1}", level, msg );
-                        Debug.Assert( level != LLVMDiagnosticSeverity.LLVMDSError, Resources.Assert_Unexpected_Debug_state );
-                    }
-                }
-            }
-            catch
-            {
-                Debugger.Break();
-            }
-        }
-
-        private readonly SafeGCHandle DiagnosticCallBackRef;
 
         // child item wrapper factories
         private readonly ValueCache ValueCache;

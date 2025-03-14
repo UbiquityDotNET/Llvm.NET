@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm
     public sealed class DataLayout
     {
         /// <summary>Gets the byte ordering for this target</summary>
-        public ByteOrdering Endianess => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );
+        public ByteOrdering Endianness => ( ByteOrdering )LLVMByteOrder( DataLayoutHandle );
 
         /// <summary>Gets the size of a pointer for the default address space of the target</summary>
         /// <returns>Size of a pointer to the default address space</returns>
@@ -67,7 +67,7 @@ namespace Ubiquity.NET.Llvm
         public ITypeRef IntPtrType( Context context )
         {
             ArgumentNullException.ThrowIfNull( context );
-            LLVMTypeRef typeRef = LLVMIntPtrTypeInContext( context.ContextHandle, DataLayoutHandle );
+            LLVMTypeRef typeRef = LLVMIntPtrTypeInContext( context.Handle, DataLayoutHandle );
             return TypeRef.FromHandle( typeRef.ThrowIfInvalid( ) )!;
         }
 
@@ -97,7 +97,7 @@ namespace Ubiquity.NET.Llvm
         public ITypeRef IntPtrType( Context context, uint addressSpace )
         {
             ArgumentNullException.ThrowIfNull( context );
-            var typeHandle = LLVMIntPtrTypeForASInContext( context.ContextHandle, DataLayoutHandle, addressSpace );
+            var typeHandle = LLVMIntPtrTypeForASInContext( context.Handle, DataLayoutHandle, addressSpace );
             return TypeRef.FromHandle( typeHandle.ThrowIfInvalid( ) )!;
         }
 

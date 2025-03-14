@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public InstructionBuilder( Context context )
         {
             Context = context ?? throw new ArgumentNullException( nameof( context ) );
-            BuilderHandle = LLVMCreateBuilderInContext( context.ContextHandle );
+            BuilderHandle = LLVMCreateBuilderInContext( context.Handle );
         }
 
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a <see cref="BasicBlock"/></summary>

@@ -125,7 +125,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             try
             {
                 BackingBuffer = new(buffer.Handle.Move());
-                Handle = LLVMCreateBinary( BackingBuffer.Handle, context.ContextHandle, out errMsg );
+                Handle = LLVMCreateBinary( BackingBuffer.Handle, context.Handle, out errMsg );
                 if( Handle.IsInvalid )
                 {
                     throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );

@@ -44,6 +44,8 @@ namespace Ubiquity.NET.Llvm.Interop
                 && DangerousGetHandle() == other.DangerousGetHandle();
         }
 
+        public bool IsOwned { get; } = true;
+
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified ownership</summary>
         /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
         /// the finalization phase; otherwise, false (not recommended).
@@ -51,6 +53,7 @@ namespace Ubiquity.NET.Llvm.Interop
         protected GlobalHandleBase(bool ownsHandle)
             : base( nint.Zero, ownsHandle )
         {
+            IsOwned = ownsHandle;
         }
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value and ownership</summary>
@@ -62,6 +65,7 @@ namespace Ubiquity.NET.Llvm.Interop
             : base(nint.Zero, ownsHandle)
         {
             SetHandle(handle);
+            IsOwned = ownsHandle;
         }
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value</summary>

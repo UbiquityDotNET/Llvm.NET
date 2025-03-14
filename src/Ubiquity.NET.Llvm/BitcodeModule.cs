@@ -971,7 +971,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull(buffer);
             ArgumentNullException.ThrowIfNull(context);
 
-            return LLVMParseBitcodeInContext2( context.ContextHandle, buffer.Handle, out LLVMModuleRef modRef ).Failed
+            return LLVMParseBitcodeInContext2( context.Handle, buffer.Handle, out LLVMModuleRef modRef ).Failed
                 ? throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer )
                 : context.GetModuleFor( modRef );
         }
@@ -1008,7 +1008,7 @@ namespace Ubiquity.NET.Llvm
                 // empty string is OK.
                 ArgumentNullException.ThrowIfNull( moduleId );
 
-                var hContext = LLVMModuleCreateWithNameInContext( moduleId, Context.ContextHandle );
+                var hContext = LLVMModuleCreateWithNameInContext( moduleId, Context.Handle );
                 return GetOrCreateItem( hContext );
             }
 
@@ -1041,7 +1041,7 @@ namespace Ubiquity.NET.Llvm
             private protected override BitcodeModule ItemFactory( LLVMModuleRef handle )
             {
                 var contextRef = LLVMGetModuleContext( handle );
-                if (!Context.ContextHandle.Equals(contextRef))
+                if (!Context.Handle.Equals(contextRef))
                 {
                     handle.Dispose();
                     throw new ArgumentException( Resources.Context_mismatch_cannot_cache_modules_from_multiple_contexts );

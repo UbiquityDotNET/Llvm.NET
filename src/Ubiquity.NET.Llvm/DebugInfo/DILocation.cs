@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="scope">Containing scope for the location</param>
         /// <param name="inlinedAt">Scope where this scope is inlined at/into</param>
         public DILocation( Context context, uint line, uint column, DILocalScope scope, DILocation? inlinedAt )
-            : base( LLVMDIBuilderCreateDebugLocation( context.ThrowIfNull().ContextHandle
+            : base( LLVMDIBuilderCreateDebugLocation( context.ThrowIfNull().Handle
                                                     , line
                                                     , column
                                                     , scope.ThrowIfNull().MetadataHandle

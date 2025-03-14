@@ -294,7 +294,7 @@ namespace Ubiquity.NET.Llvm.Values
             }
             else
             {
-                var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, firstBlock, name );
+                var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.Handle, firstBlock, name );
                 retVal = BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
             }
 
@@ -314,7 +314,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><see cref="BasicBlock"/> created and inserted onto the end of the function</returns>
         public BasicBlock AppendBasicBlock( string name )
         {
-            LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.ContextHandle, ValueHandle, name );
+            LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.Handle, ValueHandle, name );
             return BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
         }
 
@@ -331,7 +331,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }
 
-            LLVMBasicBlockRef basicBlockRef = LLVMInsertBasicBlockInContext( NativeType.Context.ContextHandle, insertBefore.BlockHandle, name );
+            LLVMBasicBlockRef basicBlockRef = LLVMInsertBasicBlockInContext( NativeType.Context.Handle, insertBefore.BlockHandle, name );
             return BasicBlock.FromHandle( basicBlockRef.ThrowIfInvalid( ) )!;
         }
 
