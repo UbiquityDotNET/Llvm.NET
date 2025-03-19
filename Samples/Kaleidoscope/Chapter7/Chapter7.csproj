@@ -5,8 +5,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>kls7</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="fibi.kls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

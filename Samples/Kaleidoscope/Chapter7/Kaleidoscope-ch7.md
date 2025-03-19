@@ -15,10 +15,10 @@ daunting task that might scare off a number of users. The good news is, there is
 front-end to convert to SSA form directly.
 
 >[!IMPORTANT]
->There is no need for a language front-end to convert to SSA form directly. In fact, manually converting
-> to SSA form it is strongly discouraged! LLVM already has very efficient, and more importantly, well
-> tested, support for converting to SSA form (though how that works might be a bit surprising). The use
-> of this support is the focus of this chapter.
+>***In LLVM There is no need for a language front-end to convert to SSA form directly!*** In fact,
+> ***manually*** converting to SSA form is strongly discouraged! LLVM already has very efficient,
+> and more importantly, well tested, support for converting to SSA form (though how that works might
+> be a bit surprising - read on!). The use of this support is the focus of this chapter.
 
 ## Mutable Variables in LLVM
 ### Mutable Variables vs. SSA, What's the big deal?

@@ -28,7 +28,7 @@ namespace Kaleidoscope.Tests
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         [TestMethod]
-        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in these test]" )]
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in these test]" )]
         public void Chapter2( )
         {
             // simple basic test to ensure the well-known good input script
@@ -56,7 +56,7 @@ namespace Kaleidoscope.Tests
         }
 
         [TestMethod]
-        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]")]
+        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
         public void Chapter4()
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
@@ -64,7 +64,7 @@ namespace Kaleidoscope.Tests
         }
 
         [TestMethod]
-        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]" )]
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
         public void Chapter5( )
         {
             using var input = File.OpenText( "ControlFlow.kls" );
@@ -72,27 +72,24 @@ namespace Kaleidoscope.Tests
         }
 
         [TestMethod]
-        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]" )]
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
         public void Chapter6( )
         {
             using var input = File.OpenText( "mandel.kls" );
             RunBasicReplLoop( LanguageLevel.UserDefinedOperators, input, ( state, writer ) => new Chapter6.CodeGenerator( state, writer ) );
         }
 
-#if KALEIDOSCOPE_JIT_SUPPORT
-
         [TestMethod]
-        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]" )]
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
         public void Chapter7( )
         {
             using var input = File.OpenText( "fibi.kls" );
-            RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, false, writer ) );
+            RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, writer ) );
         }
-#endif
 
 #if LAZY_FUNCTION_GENERATOR_SUPPORTED
         [TestMethod]
-        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]" )]
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
         public void Chapter71( )
         {
             using var input = File.OpenText( "fibi.kls" );
