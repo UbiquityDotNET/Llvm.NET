@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Types
         /// from the lower level LLVM APIs and no prior cached managed wrapper exists
         /// with the type. This, at least, will provide it if available.
         /// </remarks>
-        ITypeRef? ElementType { get; }
+        ITypeRef? ElementType { get; init; }
 
         /// <summary>Gets a value indicating whether this pointer is opaque</summary>
         /// <remarks>
@@ -37,8 +37,6 @@ namespace Ubiquity.NET.Llvm.Types
         /// that the <see cref="IPointerType.ElementType"/> is not <see langword="null"/>.
         /// </remarks>
         bool IsOpaque => ElementType is null;
-
-        internal void TrySetElementType(ITypeRef? elementType);
     }
 
     /// <summary>Utility class to provide extensions for <see cref="IPointerType"/></summary>

@@ -48,6 +48,7 @@ namespace Kaleidoscope.Chapter3
         public void Dispose( )
         {
             Module.Dispose( );
+            InstructionBuilder.Dispose();
             Context.Dispose( );
         }
         #endregion
@@ -219,7 +220,7 @@ namespace Kaleidoscope.Chapter3
                 return function;
             }
 
-            var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
+            var llvmSignature = Context.GetFunctionType( returnType: Context.DoubleType, args: prototype.Parameters.Select( _ => Context.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
 
             int index = 0;
@@ -237,7 +238,7 @@ namespace Kaleidoscope.Chapter3
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
-        private readonly BitcodeModule Module;
+        private readonly Module Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;

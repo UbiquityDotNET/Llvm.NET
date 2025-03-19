@@ -19,6 +19,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// is never called. If provided the <see cref="IDisposable.Dispose"/> method is ALWAYS called on completion of materialization that, is the
         /// sequence is <paramref name="materializeAction"/> then <see cref="IDisposable.Dispose"/> is called if the <paramref name="dataOwner"/> is
         /// provided. This allows finer control over the lifetime of data used by a materializer even if the materialization itself is never called.
+        /// Ownership of the <paramref name="dataOwner"/> if provided, is transferred into this instance (MOVE SEMANTICS)
         /// </remarks>
         public CustomMaterializer(MaterializationAction materializeAction, DiscardAction? discardAction, IDisposable? dataOwner)
         {
@@ -41,7 +42,11 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 // dispose the data as well.
                 if (AllocatedSelf.IsClosed)
                 {
+#pragma warning disable IDISP007 // Don't dispose injected
+                    // That's the whole point - ownership of the "injected" value is transferred to this instance
+                    // to clean up when callbacks are done.
                     DataOwner?.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                 }
             }
         }

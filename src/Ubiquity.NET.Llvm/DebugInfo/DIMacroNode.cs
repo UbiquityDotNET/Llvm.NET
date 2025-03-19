@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Llvm.Metadata;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for macro related nodes in the debug hierarchy</summary>

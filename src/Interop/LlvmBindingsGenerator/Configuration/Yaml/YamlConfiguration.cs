@@ -32,7 +32,6 @@ namespace LlvmBindingsGenerator.Configuration
         {
             using var input = File.OpenText( path );
             var deserializer = new DeserializerBuilder( )
-
                                   .WithNodeDeserializer( inner => new YamlLocationNodeDeserializer(inner)
                                                        , s => s.InsteadOf<ObjectNodeDeserializer>()
                                                        )
@@ -45,29 +44,41 @@ namespace LlvmBindingsGenerator.Configuration
             return deserializer.Deserialize<YamlConfiguration>( input );
         }
 
-        public HandleTemplateMap BuildTemplateMap()
+        public ILookup<string, IHandleCodeTemplate> BuildTemplateMap()
         {
+            // get all the templates to use for generating the output code
             var handleTemplates = from h in HandleMap
-                                  select Transform(h);
-
-            var retVal = new HandleTemplateMap( );
-
-            foreach( var h in handleTemplates )
-            {
-                retVal.Add( h );
-            }
-
-            return retVal;
+                                  from template in Transforms( h )
+                                  select (h.HandleName, template);
+            return handleTemplates.ToLookup((p)=>p.HandleName, (p)=>p.template);
         }
 
-        private static IHandleCodeTemplate Transform( IHandleInfo h )
+        private static IEnumerable<IHandleCodeTemplate> Transforms( IHandleInfo h )
         {
-            return h switch
+            switch(h)
             {
-                YamlGlobalHandle ygh => new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias ),
-                YamlContextHandle ych => new ContextHandleTemplate( ych.HandleName ),
-                _ => throw new InvalidOperationException( "Unknown handle info kind encountered" ),
-            };
+            case YamlGlobalHandle ygh:
+                yield return new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias );
+
+                // for aliases treat them like a context handle as they are
+                // not owned by the managed code and only reference the native
+                // handle via a simple nint. Context Handle template creates
+                // a type safe wrapper around the raw 'nint' (as a value type) that
+                // does NOT implement IDisposable. (Unlike a SafeHandle)
+                if(ygh.Alias)
+                {
+                    yield return new ContextHandleTemplate( $"{ygh.HandleName}Alias" );
+                }
+
+                break;
+
+            case YamlContextHandle ych:
+                yield return new ContextHandleTemplate( ych.HandleName );
+                break;
+
+            default:
+                throw new InvalidOperationException( "Unknown handle info kind encountered" );
+            }
         }
 
         // special converter to ensure runtime platform normalized paths for any include paths in the file

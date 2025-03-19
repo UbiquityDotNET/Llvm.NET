@@ -34,39 +34,53 @@ namespace Ubiquity.NET.Llvm.UT
         {
             _ = ctx; // unused
             using var llvmContext = new Context( );
-            using var module = llvmContext.CreateBitcodeModule( "test", SourceLanguage.C, TestSrcFileName, "unit tests" );
-            var tm = TargetMachine.FromTriple( Triple.Host );
+            using var module = llvmContext.CreateBitcodeModule( "test" );
+            using var diBuilder = new DIBuilder(module);
+            _ = diBuilder.CreateCompileUnit(SourceLanguage.C, TestSrcFileName, "unit tests");
+            Assert.IsTrue(module.CompileUnits.Any());
+            Assert.IsNotNull(diBuilder.CompileUnit);
+
+            using var hostTriple = Triple.GetHostTriple();
+            using var tm = TargetMachine.FromTriple( hostTriple );
             module.TargetTriple = tm.Triple;
             module.Layout = tm.TargetData;
 
-            var doubleType = new DebugBasicType( llvmContext.DoubleType, module, "double", DiTypeKind.Float );
+            var doubleType = new DebugBasicType( llvmContext.DoubleType, in diBuilder, "double", DiTypeKind.Float );
             var voidType = DebugType.Create<ITypeRef, DIType>( module.Context.VoidType, null );
 
-            var printDecl = module.CreateFunction( PrintFuncName, false, voidType, doubleType );
+            var printDecl = module.CreateFunction( in diBuilder, PrintFuncName, false, voidType, doubleType );
 
-            var bldr = CreateFunctionAndGetBuilder(module, doubleType, AddFuncName, AddSectionName, 0);
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction!.DISubProgram! );
-            var result = bldr.FAdd( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-            _ = bldr.Call( printDecl, result );
-            bldr.Return( result );
+            using(var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, AddFuncName, AddSectionName, 0))
+            {
+                bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction!.DISubProgram! );
+                var result = bldr.FAdd( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+                _ = bldr.Call( printDecl, result );
+                bldr.Return( result );
+            }
 
-            bldr = CreateFunctionAndGetBuilder( module, doubleType, SubFuncName, SubSectionName, 5 );
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 7, 1, bldr.InsertFunction!.DISubProgram! );
-            result = bldr.FSub( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-            _ = bldr.Call( printDecl, result );
-            bldr.Return( result );
+            using(var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, SubFuncName, SubSectionName, 5 ))
+            {
+                bldr.CurrentDebugLocation = new DILocation( llvmContext, 7, 1, bldr.InsertFunction!.DISubProgram! );
+                var result = bldr.FSub( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+                _ = bldr.Call( printDecl, result );
+                bldr.Return( result );
+            }
 
-            bldr = CreateFunctionAndGetBuilder( module, doubleType, MulFuncName, MulSectionName, 10 );
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 12, 1, bldr.InsertFunction!.DISubProgram! );
-            result = bldr.FMul( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-            _ = bldr.Call( printDecl, result );
-            bldr.Return( result );
+            using(var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, MulFuncName, MulSectionName, 10 ))
+            {
+                bldr.CurrentDebugLocation = new DILocation( llvmContext, 12, 1, bldr.InsertFunction!.DISubProgram! );
+                var result = bldr.FMul( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+                _ = bldr.Call( printDecl, result );
+                bldr.Return( result );
+            }
 
-            bldr = CreateFunctionAndGetBuilder( module, doubleType, DivFuncName, DivSectionName, 15 );
-            bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction!.DISubProgram! );
-            result = bldr.FDiv( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
-            _ = bldr.Call( printDecl, result );
-            bldr.Return( result );
+            using( var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, DivFuncName, DivSectionName, 15 ))
+            {
+                bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction!.DISubProgram! );
+                var result = bldr.FDiv( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
+                _ = bldr.Call( printDecl, result );
+                bldr.Return( result );
+            }
 
             Debug.WriteLine( module.WriteToString( ) );
             tm.EmitToFile( module, TestObjFileName, CodeGenFileKind.ObjectFile );
@@ -76,7 +90,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void LoadObjFileTest( )
         {
             using var llvmContext = new Context( );
-            var obj = llvmContext.OpenBinary( TestObjFileName );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
         }
 
         [TestMethod]
@@ -84,7 +98,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void DeclaredSectionsTest( )
         {
             using var llvmContext = new Context( );
-            var obj = llvmContext.OpenBinary( TestObjFileName );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // all the declared section names should be present (There may be additional obj format specific sections as well)
             Assert.IsTrue( obj.Sections.SingleOrDefault( s => s.Name == AddSectionName ) != default );
@@ -98,7 +112,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void DeclaredSymbolsTest( )
         {
             using var llvmContext = new Context( );
-            var obj = llvmContext.OpenBinary( TestObjFileName );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // symbols should be present for all the declared functions
             Assert.IsTrue( obj.Symbols.SingleOrDefault( s => s.Name == AddFuncName ) != default );
@@ -112,7 +126,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void DeclaredFunctionRelocationTest( )
         {
             using var llvmContext = new Context( );
-            var obj = llvmContext.OpenBinary( TestObjFileName );
+            using var obj = llvmContext.OpenBinary( TestObjFileName );
 
             // all the declared section names should be present (There may be additional obj format specific sections as well)
             var declaredSections = from sec in obj.Sections
@@ -128,18 +142,18 @@ namespace Ubiquity.NET.Llvm.UT
             }
         }
 
-        [ClassCleanup]
+        [ClassCleanup(ClassCleanupBehavior.EndOfClass)]
         public static void Cleanup( )
         {
             System.IO.File.Delete( TestObjFileName );
         }
 
-        private static InstructionBuilder CreateFunctionAndGetBuilder( BitcodeModule module, DebugBasicType doubleType, string name, string section, uint line )
+        private static InstructionBuilder CreateFunctionAndGetBuilder(ref readonly DIBuilder diBuilder, Module module, DebugBasicType doubleType, string name, string section, uint line )
         {
-            DIFile file = module.DIBuilder.CreateFile(TestSrcFileName);
+            DIFile file = diBuilder.CreateFile(TestSrcFileName);
 
-            DebugFunctionType signature = module.Context.CreateFunctionType( module.DIBuilder, doubleType, doubleType, doubleType );
-            var func = module.CreateFunction(module.DICompileUnit!, name, name, file, line, signature, true, true, line + 1, DebugInfoFlags.None, false);
+            DebugFunctionType signature = module.Context.CreateFunctionType( in diBuilder, doubleType, doubleType, doubleType );
+            var func = module.CreateFunction(in diBuilder, diBuilder.CompileUnit, name, name, file, line, signature, true, true, line + 1, DebugInfoFlags.None, false);
             func.Section = section;
             var entry = func.AppendBasicBlock( "entry" );
             return new InstructionBuilder( entry );

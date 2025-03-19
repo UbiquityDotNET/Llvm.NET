@@ -58,11 +58,13 @@ namespace Ubiquity.NET.InteropHelpers
             return ManagedString.Value;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return ((IEquatable<CStringHandle>)this).Equals( obj as CStringHandle );
         }
 
+        /// <inheritdoc/>
         [SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API")]
         public override int GetHashCode()
         {
@@ -70,12 +72,16 @@ namespace Ubiquity.NET.InteropHelpers
             return ToString()?.GetHashCode() ?? 0;
         }
 
+        /// <summary>Returns the hash code for this string using the specified rules.</summary>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules to use in the comparison.</param>
+        /// <returns>A 32-bit signed integer hash code.</returns>
         public int GetHashCode(StringComparison comparisonType)
         {
             ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
             return ToString()?.GetHashCode(comparisonType) ?? 0;
         }
 
+        /// <inheritdoc/>
         public bool Equals(CStringHandle? other)
         {
             // perf optimization to skip longer scan if possible (null input or exact same handle value)
@@ -91,6 +97,7 @@ namespace Ubiquity.NET.InteropHelpers
             return ReadOnlySpan.SequenceEqual(otherSpan);
         }
 
+        /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
         protected CStringHandle()
             : base( nint.Zero, ownsHandle: true )
         {
@@ -101,12 +108,16 @@ namespace Ubiquity.NET.InteropHelpers
             }
         }
 
+        /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
+        /// <param name="p">Native unwrapped handle</param>
         protected CStringHandle(nint p)
             : this()
         {
             SetHandle( p );
         }
 
+        /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
+        /// <param name="p">native string pointer</param>
         protected unsafe CStringHandle(byte* p)
             : this( (nint)p )
         {

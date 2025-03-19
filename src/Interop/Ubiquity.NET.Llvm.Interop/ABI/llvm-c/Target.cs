@@ -517,11 +517,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTargetDataRefAlias LLVMGetModuleDataLayout(LLVMModuleRef M);
+        public static unsafe partial LLVMTargetDataRefAlias LLVMGetModuleDataLayout(LLVMModuleRefAlias M);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetModuleDataLayout(LLVMModuleRef M, LLVMTargetDataRef DL);
+        public static unsafe partial void LLVMSetModuleDataLayout(LLVMModuleRefAlias M, LLVMTargetDataRef DL);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -533,70 +533,70 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LLVMCopyStringRepOfTargetData(LLVMTargetDataRef TD);
+        public static unsafe partial DisposeMessageString LLVMCopyStringRepOfTargetData(LLVMTargetDataRefAlias TD);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMByteOrdering LLVMByteOrder(LLVMTargetDataRef TD);
+        public static unsafe partial LLVMByteOrdering LLVMByteOrder(LLVMTargetDataRefAlias TD);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMPointerSize(LLVMTargetDataRef TD);
+        public static unsafe partial uint LLVMPointerSize(LLVMTargetDataRefAlias TD);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMPointerSizeForAS(LLVMTargetDataRef TD, uint AS);
+        public static unsafe partial uint LLVMPointerSizeForAS(LLVMTargetDataRefAlias TD, uint AS);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMIntPtrType(LLVMTargetDataRef TD);
+        public static unsafe partial LLVMTypeRef LLVMIntPtrType(LLVMTargetDataRefAlias TD);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMIntPtrTypeForAS(LLVMTargetDataRef TD, uint AS);
+        public static unsafe partial LLVMTypeRef LLVMIntPtrTypeForAS(LLVMTargetDataRefAlias TD, uint AS);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMIntPtrTypeInContext(LLVMContextRef C, LLVMTargetDataRef TD);
+        public static unsafe partial LLVMTypeRef LLVMIntPtrTypeInContext(LLVMContextRefAlias C, LLVMTargetDataRefAlias TD);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMTypeRef LLVMIntPtrTypeForASInContext(LLVMContextRef C, LLVMTargetDataRef TD, uint AS);
+        public static unsafe partial LLVMTypeRef LLVMIntPtrTypeForASInContext(LLVMContextRefAlias C, LLVMTargetDataRefAlias TD, uint AS);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial ulong LLVMSizeOfTypeInBits(LLVMTargetDataRef TD, LLVMTypeRef Ty);
+        public static unsafe partial ulong LLVMSizeOfTypeInBits(LLVMTargetDataRefAlias TD, LLVMTypeRef Ty);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial ulong LLVMStoreSizeOfType(LLVMTargetDataRef TD, LLVMTypeRef Ty);
+        public static unsafe partial ulong LLVMStoreSizeOfType(LLVMTargetDataRefAlias TD, LLVMTypeRef Ty);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial ulong LLVMABISizeOfType(LLVMTargetDataRef TD, LLVMTypeRef Ty);
+        public static unsafe partial ulong LLVMABISizeOfType(LLVMTargetDataRefAlias TD, LLVMTypeRef Ty);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMABIAlignmentOfType(LLVMTargetDataRef TD, LLVMTypeRef Ty);
+        public static unsafe partial uint LLVMABIAlignmentOfType(LLVMTargetDataRefAlias TD, LLVMTypeRef Ty);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMCallFrameAlignmentOfType(LLVMTargetDataRef TD, LLVMTypeRef Ty);
+        public static unsafe partial uint LLVMCallFrameAlignmentOfType(LLVMTargetDataRefAlias TD, LLVMTypeRef Ty);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMPreferredAlignmentOfType(LLVMTargetDataRef TD, LLVMTypeRef Ty);
+        public static unsafe partial uint LLVMPreferredAlignmentOfType(LLVMTargetDataRefAlias TD, LLVMTypeRef Ty);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMPreferredAlignmentOfGlobal(LLVMTargetDataRef TD, LLVMValueRef GlobalVar);
+        public static unsafe partial uint LLVMPreferredAlignmentOfGlobal(LLVMTargetDataRefAlias TD, LLVMValueRef GlobalVar);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMElementAtOffset(LLVMTargetDataRef TD, LLVMTypeRef StructTy, ulong Offset);
+        public static unsafe partial uint LLVMElementAtOffset(LLVMTargetDataRefAlias TD, LLVMTypeRef StructTy, ulong Offset);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial ulong LLVMOffsetOfElement(LLVMTargetDataRef TD, LLVMTypeRef StructTy, uint Element);
+        public static unsafe partial ulong LLVMOffsetOfElement(LLVMTargetDataRefAlias TD, LLVMTypeRef StructTy, uint Element);
     }
 }

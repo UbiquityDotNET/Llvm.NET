@@ -33,7 +33,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Name of the attribute</returns>
         public static string GetAttributeName(this AttributeKind kind)
         {
-            return LibLLVMGetAttributeKindName((LibLLVMAttrKind)kind).ToString() ?? string.Empty;
+            using var nativeRet = LibLLVMGetAttributeKindName((LibLLVMAttrKind)kind);
+            return nativeRet.ToString() ?? string.Empty;
         }
 
         /// <summary>Gets a value indicating whether the attribute requires no parameter value</summary>

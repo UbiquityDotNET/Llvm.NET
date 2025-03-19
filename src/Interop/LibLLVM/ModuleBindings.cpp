@@ -4,10 +4,100 @@
 
 using namespace llvm;
 
-DEFINE_SIMPLE_CONVERSION_FUNCTIONS( NamedMDNode, LLVMNamedMDNodeRef )
+namespace
+{
+    // Template for wrapping a C++ iterator in a "HANDLE" that aids in projection
+    // to .NET's IEnumerator<T> This allows a C interop with a reference to an
+    // instance of this template as an iterator handle.
+    template<typename iterator_t, typename handle_t>
+    class NativeMapIteratorWrapper
+    {
+    public:
+        NativeMapIteratorWrapper(iterator_t b, iterator_t e)
+            : begin(b), current(b), end(e)
+        {
+        }
+
+        LLVMBool MoveNext()
+        {
+            if (current == end)
+            {
+                return 0;
+            }
+
+            current++;
+            return 1;
+        }
+
+        handle_t Current()
+        {
+            if (current == end)
+            {
+                return nullptr;
+            }
+
+            return wrap(&current->second);
+        }
+
+        void Reset()
+        {
+            current = begin;
+        }
+
+    private:
+        iterator_t begin;
+        iterator_t current;
+        iterator_t end;
+    };
+
+    // iterator for comdats in a module
+    using ModuleComdatIterator = NativeMapIteratorWrapper<Module::ComdatSymTabType::const_iterator, LLVMComdatRef>;
+
+    DEFINE_SIMPLE_CONVERSION_FUNCTIONS(NamedMDNode, LLVMNamedMDNodeRef)
+    DEFINE_SIMPLE_CONVERSION_FUNCTIONS(ModuleComdatIterator, LibLLVMComdatIteratorRef);
+}
 
 extern "C"
 {
+    LibLLVMComdatIteratorRef LibLLVMModuleBeginComdats(LLVMModuleRef module)
+    {
+        Module* pModule = unwrap(module);
+        Module::ComdatSymTabType const& comdatSymTab = pModule->getComdatSymbolTable();
+        return wrap(new ModuleComdatIterator(std::begin(comdatSymTab), std::end(comdatSymTab)));
+    }
+
+    LLVMComdatRef LibLLVMModuleGetComdat(LLVMModuleRef module, char const* name)
+    {
+        Module::ComdatSymTabType const& comdatSymTab = unwrap(module)->getComdatSymbolTable();
+        auto it = comdatSymTab.find(StringRef(name));
+        return (it == std::end(comdatSymTab)) ? nullptr : wrap(&it->second);
+    }
+
+    uint32_t LibLLVMModuleGetNumComdats(LLVMModuleRef module)
+    {
+        return unwrap(module)->getComdatSymbolTable().getNumItems();
+    }
+
+    LLVMBool LibLLVMMoveNextComdat(LibLLVMComdatIteratorRef it)
+    {
+        return unwrap(it)->MoveNext();
+    }
+
+    LLVMComdatRef LibLLVMCurrentComdat(LibLLVMComdatIteratorRef it)
+    {
+        return unwrap(it)->Current();
+    }
+
+    void LibLLVMModuleComdatIteratorReset(LibLLVMComdatIteratorRef it)
+    {
+        unwrap(it)->Reset();
+    }
+
+    void LibLLVMDisposeComdatIterator(LibLLVMComdatIteratorRef it)
+    {
+        delete unwrap(it);
+    }
+
     LLVMValueRef LibLLVMGetOrInsertFunction( LLVMModuleRef module, const char* name, LLVMTypeRef functionType )
     {
         auto pModule = unwrap( module );
@@ -41,20 +131,10 @@ extern "C"
 
     LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat( LLVMModuleRef module, char const* name, LLVMComdatSelectionKind kind )
     {
-        auto pModule = unwrap( module );
-        auto pComdat = pModule->getOrInsertComdat( name );
+        Module* pModule = unwrap( module );
+        Comdat* pComdat = pModule->getOrInsertComdat( name );
         pComdat->setSelectionKind( ( Comdat::SelectionKind ) kind );
         return wrap( pComdat );
-    }
-
-    void LibLLVMModuleEnumerateComdats( LLVMModuleRef module, void* context, LibLLVMComdatIteratorCallback callback )
-    {
-        auto pModule = unwrap( module );
-        for( auto&& entry : pModule->getComdatSymbolTable( ) )
-        {
-            if( !callback( context, wrap( &entry.second ) ) )
-                break;
-        }
     }
 
     void LibLLVMModuleComdatRemove( LLVMModuleRef module, LLVMComdatRef comdatRef )

@@ -39,7 +39,9 @@ namespace Ubiquity.NET.Llvm
         /// is <see langword="true"/> then the implementation should release managed and unmanaged resources, otherwise it should
         /// only release the unmanaged resources
         /// </remarks>
-        protected abstract void Dispose(bool disposing);
+        protected virtual void Dispose(bool disposing)
+        {
+        }
 
         // do not write directly to this field, it should only be done with interlocked calls in Dispose() to ensure correct behavior
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Indicates the field should never be directly written to" )]

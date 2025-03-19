@@ -68,9 +68,14 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         internal Section( TargetBinary objFile, LLVMSectionIteratorRef iterator, bool clone )
         {
             ContainingBinary = objFile;
-            IteratorRef = clone ? LibLLVMSectionIteratorClone( iterator ) : iterator;
+            IteratorRef = clone ? LibLLVMSectionIteratorClone( iterator ) : iterator.Move();
         }
 
+#pragma warning disable IDISP006 // Implement IDisposable
+
+        // Can't dispose the iterator, this is just a reference to one element
+        // the enumerator that produces these owns the native iterator.
         internal LLVMSectionIteratorRef IteratorRef { get; }
+#pragma warning restore IDISP006 // Implement IDisposable
     }
 }

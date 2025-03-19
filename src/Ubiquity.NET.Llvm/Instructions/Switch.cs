@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         : Terminator
     {
         /// <summary>Gets the default <see cref="BasicBlock"/> for the switch</summary>
-        public BasicBlock Default => BasicBlock.FromHandle( LLVMGetSwitchDefaultDest( ValueHandle ).ThrowIfInvalid( ) )!;
+        public BasicBlock Default => BasicBlock.FromHandle( LLVMGetSwitchDefaultDest( Handle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Adds a new case to the <see cref="Switch"/> instruction</summary>
         /// <param name="onVal">Value for the case to match</param>
@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentNullException( nameof( destination ) );
             }
 
-            LLVMAddCase( ValueHandle, onVal.ValueHandle, destination.BlockHandle );
+            LLVMAddCase( Handle, onVal.Handle, destination.BlockHandle );
         }
 
         internal Switch( LLVMValueRef valueRef )

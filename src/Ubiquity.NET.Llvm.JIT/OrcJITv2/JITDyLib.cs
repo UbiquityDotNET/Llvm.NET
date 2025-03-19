@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         public void Define(MaterializationUnit materializationUnit)
         {
             ArgumentNullException.ThrowIfNull(materializationUnit);
-            LLVMErrorRef errorRef = LLVMOrcJITDylibDefine(Handle, materializationUnit.Handle);
+            using LLVMErrorRef errorRef = LLVMOrcJITDylibDefine(Handle, materializationUnit.Handle);
             errorRef.ThrowIfFailed();
 
             // successfully transferred ownership to native code, mark it as such

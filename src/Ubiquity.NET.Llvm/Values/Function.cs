@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Llvm.Metadata;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AnalysisBindings;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -200,7 +202,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Gets the Entry block for this function</summary>
         public BasicBlock? EntryBlock
-            => LLVMCountBasicBlocks( ValueHandle ) == 0 ? null : BasicBlock.FromHandle( LLVMGetEntryBasicBlock( ValueHandle ) );
+            => LLVMCountBasicBlocks( Handle ) == 0 ? null : BasicBlock.FromHandle( LLVMGetEntryBasicBlock( Handle ) );
 
         /// <summary>Gets the basic blocks for the function</summary>
         public ICollection<BasicBlock> BasicBlocks { get; }
@@ -211,12 +213,12 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the Calling convention for the method</summary>
         public CallingConvention CallingConvention
         {
-            get => ( CallingConvention )LLVMGetFunctionCallConv( ValueHandle );
-            set => LLVMSetFunctionCallConv( ValueHandle, ( uint )value );
+            get => ( CallingConvention )LLVMGetFunctionCallConv( Handle );
+            set => LLVMSetFunctionCallConv( Handle, ( uint )value );
         }
 
         /// <summary>Gets the LLVM intrinsicID for the method</summary>
-        public uint IntrinsicId => LLVMGetIntrinsicID( ValueHandle );
+        public uint IntrinsicId => LLVMGetIntrinsicID( Handle );
 
         /// <summary>Gets a value indicating whether the method signature accepts variable arguments</summary>
         public bool IsVarArg => Signature.IsVarArg;
@@ -227,20 +229,20 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
         public Function? PersonalityFunction
         {
-            get => !LLVMHasPersonalityFn( ValueHandle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( ValueHandle.ThrowIfInvalid( ) ) )!;
+            get => !LLVMHasPersonalityFn( Handle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( Handle.ThrowIfInvalid( ) ) )!;
 
-            set => LLVMSetPersonalityFn( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
+            set => LLVMSetPersonalityFn( Handle, value?.Handle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Gets or sets the debug information for this function</summary>
         public DISubProgram? DISubProgram
         {
-            get => MDNode.FromHandle<DISubProgram>( LLVMGetSubprogram( ValueHandle ) );
+            get => (DISubProgram?)LLVMGetSubprogram( Handle ).CreateMetadata( );
 
             set
             {
                 ArgumentNullException.ThrowIfNull(value);
-                LLVMSetSubprogram( ValueHandle, value.MetadataHandle );
+                LLVMSetSubprogram( Handle, value.Handle );
             }
         }
 
@@ -248,8 +250,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso href="xref:llvm_docs_garbagecollection">Garbage Collection with LLVM</seealso>
         public string GcName
         {
-            get => LLVMGetGC( ValueHandle ) ?? string.Empty;
-            set => LLVMSetGC( ValueHandle, value );
+            get => LLVMGetGC( Handle ) ?? string.Empty;
+            set => LLVMSetGC( Handle, value );
         }
 
         /// <summary>Gets the attributes for this function</summary>
@@ -270,7 +272,7 @@ namespace Ubiquity.NET.Llvm.Values
         public bool Verify( [MaybeNullWhen(true)] out string errMsg )
         {
             errMsg = null;
-            if(LibLLVMVerifyFunctionEx( ValueHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out DisposeMessageString? nativeMsg ).Failed)
+            if(LibLLVMVerifyFunctionEx( Handle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out DisposeMessageString? nativeMsg ).Failed)
             {
                 errMsg = nativeMsg?.ToString() ?? string.Empty;
                 nativeMsg?.Dispose();
@@ -286,7 +288,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><see cref="BasicBlock"/> created and inserted at the beginning of the function</returns>
         public BasicBlock PrependBasicBlock( string name )
         {
-            LLVMBasicBlockRef firstBlock = LLVMGetFirstBasicBlock( ValueHandle );
+            LLVMBasicBlockRef firstBlock = LLVMGetFirstBasicBlock( Handle );
             BasicBlock retVal;
             if( firstBlock == default )
             {
@@ -294,7 +296,7 @@ namespace Ubiquity.NET.Llvm.Values
             }
             else
             {
-                var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.Handle, firstBlock, name );
+                var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.GetUnownedHandle(), firstBlock, name );
                 retVal = BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
             }
 
@@ -306,7 +308,7 @@ namespace Ubiquity.NET.Llvm.Values
         public void AppendBasicBlock( BasicBlock block )
         {
             ArgumentNullException.ThrowIfNull( block );
-            LLVMAppendExistingBasicBlock( ValueHandle, block.BlockHandle );
+            LLVMAppendExistingBasicBlock( Handle, block.BlockHandle );
         }
 
         /// <summary>Creates an appends a new basic block to a function</summary>
@@ -314,7 +316,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><see cref="BasicBlock"/> created and inserted onto the end of the function</returns>
         public BasicBlock AppendBasicBlock( string name )
         {
-            LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.Handle, ValueHandle, name );
+            LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.GetUnownedHandle(), Handle, name );
             return BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
         }
 
@@ -331,7 +333,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }
 
-            LLVMBasicBlockRef basicBlockRef = LLVMInsertBasicBlockInContext( NativeType.Context.Handle, insertBefore.BlockHandle, name );
+            LLVMBasicBlockRef basicBlockRef = LLVMInsertBasicBlockInContext( NativeType.Context.GetUnownedHandle(), insertBefore.BlockHandle, name );
             return BasicBlock.FromHandle( basicBlockRef.ThrowIfInvalid( ) )!;
         }
 
@@ -352,13 +354,13 @@ namespace Ubiquity.NET.Llvm.Values
         {
             attrib.VerifyValidOn( index, this );
 
-            LLVMAddAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
+            LLVMAddAttributeAtIndex( Handle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
         /// <inheritdoc/>
         public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            return LLVMGetAttributeCountAtIndex( ValueHandle, ( LLVMAttributeIndex )index );
+            return LLVMGetAttributeCountAtIndex( Handle, ( LLVMAttributeIndex )index );
         }
 
         /// <inheritdoc/>
@@ -371,16 +373,16 @@ namespace Ubiquity.NET.Llvm.Values
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            LLVMGetAttributesAtIndex( ValueHandle, ( LLVMAttributeIndex )index, buffer );
+            LLVMGetAttributesAtIndex( Handle, ( LLVMAttributeIndex )index, buffer );
             return from attribRef in buffer
-                   select AttributeValue.FromHandle( Context, attribRef );
+                   select new AttributeValue( attribRef );
         }
 
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            var handle = LLVMGetEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
-            return AttributeValue.FromHandle( Context, handle );
+            var handle = LLVMGetEnumAttributeAtIndex( Handle, ( LLVMAttributeIndex )index, (uint)kind );
+            return new( handle );
         }
 
         /// <inheritdoc/>
@@ -391,14 +393,14 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( Resources.Name_cannot_be_null_or_empty, nameof( name ) );
             }
 
-            var handle = LLVMGetStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, (uint)name.Length );
-            return AttributeValue.FromHandle( Context, handle );
+            var handle = LLVMGetStringAttributeAtIndex( Handle, ( LLVMAttributeIndex )index, name, (uint)name.Length );
+            return new( handle );
         }
 
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            LLVMRemoveEnumAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
+            LLVMRemoveEnumAttributeAtIndex( Handle, ( LLVMAttributeIndex )index, (uint)kind );
         }
 
         /// <inheritdoc/>
@@ -409,13 +411,13 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( Resources.Name_cannot_be_null_or_empty, nameof( name ) );
             }
 
-            LLVMRemoveStringAttributeAtIndex( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            LLVMRemoveStringAttributeAtIndex( Handle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
         /// <summary>Removes this function from the parent module</summary>
         public void EraseFromParent( )
         {
-            LLVMDeleteFunction( ValueHandle );
+            LLVMDeleteFunction( Handle );
         }
 
         /// <summary>Tries running the specified passes on this function</summary>
@@ -451,7 +453,7 @@ namespace Ubiquity.NET.Llvm.Values
 
             // While not explicitly documented either way, the PassBuilder used under the hood is capable
             // of handling a NULL target machine.
-            return new(LLVMRunPassesOnFunction(ValueHandle, string.Join(',', passes), LLVMTargetMachineRef.Zero, options.Handle));
+            return new(LLVMRunPassesOnFunction(Handle, string.Join(',', passes), LLVMTargetMachineRef.Zero, options.Handle));
         }
 
         /// <inheritdoc cref="TryRunPasses(string[])"/>
@@ -464,7 +466,7 @@ namespace Ubiquity.NET.Llvm.Values
             ArgumentNullException.ThrowIfNull(passes);
             ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
 
-            return new(LLVMRunPassesOnFunction(ValueHandle, string.Join(',', passes), targetMachine.TargetMachineHandle, options.Handle));
+            return new(LLVMRunPassesOnFunction(Handle, string.Join(',', passes), targetMachine.Handle, options.Handle));
         }
 
         internal Function( LLVMValueRef valueRef )

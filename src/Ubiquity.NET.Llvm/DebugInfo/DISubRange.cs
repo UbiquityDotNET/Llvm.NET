@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DINode
     {
         /// <summary>Gets a value for the lower bound of the range</summary>
-        public Int64 LowerBound => LibLLVMDISubRangeGetLowerBounds( MetadataHandle, 0 );
+        public Int64 LowerBound => LibLLVMDISubRangeGetLowerBounds( Handle, 0 );
 
         /// <summary>Gets a, potentially null, constant value for the count of the subrange</summary>
         /// <remarks>

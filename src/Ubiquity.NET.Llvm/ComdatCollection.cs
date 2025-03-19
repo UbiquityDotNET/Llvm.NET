@@ -4,97 +4,48 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Collection of <see cref="Comdat"/> entries for a module</summary>
+    /// <summary>Collection of Comdats in a module</summary>
     /// <remarks>
-    /// This type is used to provide enumeration and manipulation of <see cref="Comdat"/>s
-    /// in the module.
+    /// This is a 'ref struct' to ensure that ownership of the collection
+    /// remains with the module itself and this is only used to iterate
+    /// over the individual items. It is not allowed to store this as it
+    /// references the owning module and ultimately the Comdat values themselves
+    /// are owned in the native code layer and only "projected" to managed
+    /// here.
     /// </remarks>
-    public class ComdatCollection
+    public readonly ref struct ComdatCollection
         : IEnumerable<Comdat>
     {
+        /// <summary>Gets a count of comdats in the associated module</summary>
+        public int Count => checked((int)LibLLVMModuleGetNumComdats(OwningModule.GetUnownedHandle()));
+
         /// <summary>Retrieves <see cref="Comdat"/> by its name</summary>
         /// <param name="key">Name of the <see cref="Comdat"/></param>
         /// <returns><see cref="Comdat"/> or <see langword="null"/></returns>
-        /// <exception cref="System.ArgumentNullException">Key is null</exception>
+        /// <exception cref="System.ArgumentException">Key is null</exception>
         /// <exception cref="System.Collections.Generic.KeyNotFoundException">Key does not exist in the collection</exception>
-        public Comdat this[ string key ] => InternalComdatMap[ key ];
+        public Comdat this[ string key ]
+        {
+            get
+            {
+                ArgumentException.ThrowIfNullOrWhiteSpace(key);
 
-        /// <summary>Gets the number of items in the collection</summary>
-        public int Count => InternalComdatMap.Count;
+                return TryGetValue(key, out Comdat retVal) ? retVal : throw new KeyNotFoundException(key);
+            }
+        }
 
-        /// <summary>Inserts or updates a <see cref="Comdat"/> entry</summary>
+        /// <summary>Adds or updates a <see cref="Comdat"/> entry</summary>
         /// <param name="key">Name of the <see cref="Comdat"/></param>
         /// <param name="kind"><see cref="ComdatKind"/> for the entry</param>
         /// <returns>New or updated <see cref="Comdat"/></returns>
-        public Comdat InsertOrUpdate( string key, ComdatKind kind )
+        public Comdat AddOrUpdate( string key, ComdatKind kind )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( key );
             kind.ThrowIfNotDefined();
 
-            LLVMComdatRef comdatRef = LibLLVMModuleInsertOrUpdateComdat( Module.ModuleHandle, key, ( LLVMComdatSelectionKind )kind );
-            if( !InternalComdatMap.TryGetValue( key, out Comdat? retVal ) )
-            {
-                retVal = new Comdat( Module, comdatRef );
-                InternalComdatMap.Add( retVal.Name, retVal );
-            }
-
-            return retVal;
-        }
-
-        /// <summary>Removes all the <see cref="Comdat"/> entries from the module</summary>
-        public void Clear( )
-        {
-            foreach( var obj in GetModuleGlobalObjects( ) )
-            {
-                obj.Comdat = null;
-            }
-
-            InternalComdatMap.Clear( );
-            LibLLVMModuleComdatClear( Module.ModuleHandle );
-        }
-
-        /// <summary>Gets a value that indicates if a <see cref="Comdat"/> with a given name exists in the collection</summary>
-        /// <param name="key">Name of the <see cref="Comdat"/> to test for</param>
-        /// <returns><see langword="true"/> if the entry is present and <see langword="false"/> if not</returns>
-        public bool Contains( string key ) => InternalComdatMap.ContainsKey( key );
-
-        /// <summary>Gets an enumerator for all the <see cref="Comdat"/>s in the collection</summary>
-        /// <returns>Enumerator</returns>
-        public IEnumerator<Comdat> GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
-
-        /// <summary>Gets an enumerator for all the <see cref="Comdat"/>s in the collection</summary>
-        /// <returns>Enumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator( ) => InternalComdatMap.Values.GetEnumerator( );
-
-        /// <summary>Removes a <see cref="Comdat"/> entry from the module</summary>
-        /// <param name="key">Name of the <see cref="Comdat"/></param>
-        /// <returns>
-        /// <see langword="true"/> if the value was in the list or
-        /// <see langword="false"/> otherwise
-        /// </returns>
-        public bool Remove( string key )
-        {
-            ArgumentException.ThrowIfNullOrWhiteSpace( key );
-
-            if( !InternalComdatMap.TryGetValue( key, out Comdat? value ) )
-            {
-                return false;
-            }
-
-            bool retVal = InternalComdatMap.Remove( key );
-            if( retVal )
-            {
-                ClearComdatFromGlobals( key );
-                LibLLVMModuleComdatRemove( Module.ModuleHandle, value.ComdatHandle );
-            }
-
-            return retVal;
+            return new(LibLLVMModuleInsertOrUpdateComdat( OwningModule.GetUnownedHandle(), key, ( LLVMComdatSelectionKind )kind ));
         }
 
         /// <summary>Gets a value form the collection if it exists</summary>
@@ -104,84 +55,109 @@ namespace Ubiquity.NET.Llvm
         /// <see langword="true"/> if the value was found
         /// the list or <see langword="false"/> otherwise.
         /// </returns>
-        public bool TryGetValue( string key, [MaybeNullWhen(false)] out Comdat value )
+        public bool TryGetValue( string key, out Comdat value)
         {
-            ArgumentException.ThrowIfNullOrWhiteSpace( key );
-            return InternalComdatMap.TryGetValue( key, out value );
+            value = new(LibLLVMModuleGetComdat(OwningModule.GetUnownedHandle(), key));
+            return !value.Handle.IsNull;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="ComdatCollection"/> class for a module</summary>
-        /// <param name="module">Module the comdats are enumerated from</param>
-        internal ComdatCollection( BitcodeModule module )
-        {
-            ArgumentNullException.ThrowIfNull( module );
+        /// <summary>Gets a value that indicates if a <see cref="Comdat"/> with a given name exists in the collection</summary>
+        /// <param name="key">Name of the <see cref="Comdat"/> to test for</param>
+        /// <returns><see langword="true"/> if the entry is present and <see langword="false"/> if not</returns>
+        public bool Contains( string key ) => TryGetValue( key, out Comdat _);
 
-            Module = module;
-            unsafe
+        /// <summary>Removes a <see cref="Comdat"/> entry from the module</summary>
+        /// <param name="key">Name of the <see cref="Comdat"/></param>
+        /// <returns>
+        /// <see langword="true"/> if the value was in the list or
+        /// <see langword="false"/> otherwise
+        /// </returns>
+        public bool Remove( string key )
+        {
+            if(!TryGetValue(key, out Comdat value))
             {
-                var selfHandle = GCHandle.Alloc(this);
-                try
+                return false;
+            }
+
+            WithGlobalObjects(go=>
+            {
+                if (!go.Comdat.IsNull && go.Comdat.Name == key)
                 {
-                    LibLLVMModuleEnumerateComdats( Module.ModuleHandle, GCHandle.ToIntPtr(selfHandle), &NativeEnumerateComdatsCallback );
+                    go.Comdat = default;
                 }
-                finally
-                {
-                    selfHandle.Free();
-                }
-            }
-        }
+            });
 
-        private IEnumerable<GlobalObject> GetModuleGlobalObjects( )
-        {
-            foreach( var gv in Module.Globals )
-            {
-                yield return gv;
-            }
-
-            foreach( var func in Module.Functions )
-            {
-                yield return func;
-            }
-        }
-
-        private void ClearComdatFromGlobals( string name )
-        {
-            var matchingGlobals = from gv in GetModuleGlobalObjects()
-                                  where gv.Comdat != null && gv.Comdat.Name == name
-                                  select gv;
-
-            foreach( var gv in matchingGlobals )
-            {
-                gv.Comdat = null;
-            }
-        }
-
-        private bool AddComdat( LLVMComdatRef comdatRef )
-        {
-            comdatRef.ThrowIfInvalid();
-
-            var comdat = new Comdat( Module, comdatRef );
-            InternalComdatMap.Add( comdat.Name, comdat );
+            LibLLVMModuleComdatRemove( OwningModule.GetUnownedHandle(), value.Handle );
             return true;
         }
 
-        private readonly BitcodeModule Module;
-        private readonly Dictionary<string, Comdat> InternalComdatMap = [];
-
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe Int32 /*LLVMBool*/ NativeEnumerateComdatsCallback(nint context, nint abiComdatRef)
+        /// <summary>Removes all the <see cref="Comdat"/> entries from the module</summary>
+        public void Clear( )
         {
-            try
+            WithGlobalObjects(go => go.Comdat = default);
+            LibLLVMModuleComdatClear( OwningModule.GetUnownedHandle() );
+        }
+
+        /// <inheritdoc/>
+        IEnumerator<Comdat> IEnumerable<Comdat>.GetEnumerator() => new Enumerator(OwningModule);
+
+        /// <inheritdoc/>
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(OwningModule);
+
+        /// <summary>Enumerator for comdats</summary>
+        internal sealed class Enumerator
+            : IEnumerator<Comdat>
+        {
+            /// <inheritdoc/>
+            public Comdat Current => new(LibLLVMCurrentComdat(Handle));
+
+            /// <inheritdoc/>
+            /// <remarks>Throws a <see cref="NotSupportedException"/> as boxing the ref struct for return is NOT allowed</remarks>
+            /// <exception cref="NotSupportedException">Unconditionally</exception>
+            object IEnumerator.Current
             {
-                return GCHandle.FromIntPtr(context).Target is ComdatCollection self
-                    ? self.AddComdat(LLVMComdatRef.FromABI(abiComdatRef)) ? 1 : 0
-                    : 0;
+                [DoesNotReturn]
+                get => throw new NotSupportedException();
             }
-            catch
+
+            /// <inheritdoc/>
+            public void Dispose() => Handle.Dispose();
+
+            /// <inheritdoc/>
+            public bool MoveNext() => LibLLVMNextComdat(Handle);
+
+            /// <inheritdoc/>
+            public void Reset() => LibLLVMModuleComdatIteratorReset(Handle);
+
+            internal Enumerator(IModule module)
             {
-                return 0;
+                Handle = LibLLVMModuleBeginComdats(module.GetUnownedHandle());
+            }
+
+            private readonly LibLLVMComdatIteratorRef Handle;
+        }
+
+        internal ComdatCollection(IModule owningModule)
+        {
+            OwningModule = owningModule;
+        }
+
+        // iterates over a set of global objects since creating an enumerable with 'yield return' is not
+        // an option for a ref struct
+        private void WithGlobalObjects( Action<GlobalObject> op )
+        {
+            foreach( var gv in OwningModule.Globals )
+            {
+                op(gv);
+            }
+
+            foreach( var func in OwningModule.Functions )
+            {
+                op(func);
             }
         }
+
+        // This is an interface reference (alias) as this instance doesn't own the module and does not need disposal
+        private readonly IModule OwningModule;
     }
 }

@@ -3,12 +3,18 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
 namespace Ubiquity.NET.Llvm
 {
+    // TODO: ITargetMachine and internal TargetMachineAlias
+    // While noting in the core OO model has one, the JIT is another story...
+
     /// <summary>Target specific code generation information</summary>
     public sealed class TargetMachine
+        : IDisposable
     {
+        /// <inheritdoc/>
+        public void Dispose() => Handle.Dispose();
+
         /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
         /// <param name="triple">Triple for the target machine</param>
         /// <param name="cpu">CPU options for the machine</param>
@@ -28,37 +34,58 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
-        public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
+        public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( Handle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle ).ToString() ?? string.Empty;
-
-        /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle ).ToString() ?? string.Empty;
-
-        /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle ).ToString() ?? string.Empty;
-
-        /// <summary>Gets Layout information for this machine</summary>
-        public DataLayout TargetData
+        public string Triple
         {
             get
             {
-                var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                return DataLayout.FromHandle( handle.ThrowIfInvalid( ) )!;
+                using var nativeRetVal = LLVMGetTargetMachineTriple( Handle );
+                return nativeRetVal.ToString() ?? string.Empty;
             }
         }
 
+        /// <summary>Gets the CPU Type for this machine</summary>
+        public string Cpu
+        {
+            get
+            {
+                using var nativeRetval = LLVMGetTargetMachineCPU( Handle );
+                return nativeRetval.ToString() ?? string.Empty;
+            }
+        }
+
+        /// <summary>Gets the CPU specific features for this machine</summary>
+        public string Features
+        {
+            get
+            {
+                using var nativeRetVal = LLVMGetTargetMachineFeatureString( Handle );
+                return nativeRetVal.ToString() ?? string.Empty;
+            }
+        }
+
+        /// <summary>Gets Layout information for this machine</summary>
+#pragma warning disable IDISP012 // Property should not return created disposable
+        public DataLayout TargetData => new( LLVMCreateTargetDataLayout( Handle ) );
+#pragma warning restore IDISP012 // Property should not return created disposable
+
         /// <summary>Generate code for the target machine from a module</summary>
-        /// <param name="module"><see cref="BitcodeModule"/> to generate the code from</param>
+        /// <param name="module"><see cref="Module"/> to generate the code from</param>
         /// <param name="path">Path to the output file</param>
         /// <param name="fileType">Type of file to emit</param>
-        public void EmitToFile( BitcodeModule module, string path, CodeGenFileKind fileType )
+        /// <param name="skipVerify">Skips verification [Default: false; verification of module performed]</param>
+        public void EmitToFile( IModule module, string path, CodeGenFileKind fileType, bool skipVerify = false )
         {
             ArgumentNullException.ThrowIfNull( module );
-            ArgumentNullException.ThrowIfNull( module.ModuleHandle );
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
             fileType.ThrowIfNotDefined();
+
+            if(!skipVerify && !module.Verify(out string errMessage))
+            {
+                throw new InvalidOperationException(errMessage.NormalizeLineEndings(LineEndingKind.LineFeed, StringNormalizer.SystemLineEndings));
+            }
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
@@ -68,8 +95,8 @@ namespace Ubiquity.NET.Llvm
             DisposeMessageString? errTxt = null;
             try
             {
-                var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
-                                                        , module.ModuleHandle
+                var status = LLVMTargetMachineEmitToFile( Handle
+                                                        , module.GetUnownedHandle()
                                                         , path
                                                         , ( LLVMCodeGenFileType )fileType
                                                         , out errTxt
@@ -86,18 +113,17 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Emits the module for the target machine to a <see cref="MemoryBuffer"/></summary>
-        /// <param name="module">Module to emit to the buffer</param>
+        /// <param name="module">ModuleHandle to emit to the buffer</param>
         /// <param name="fileType">Type of file to generate into the buffer</param>
         /// <returns><see cref="MemoryBuffer"/> containing the generated code</returns>
         /// <remarks>
-        /// The <see cref="BitcodeModule.TargetTriple"/> must match the <see cref="Triple"/> for this
+        /// The <see cref="Module.TargetTriple"/> must match the <see cref="Triple"/> for this
         /// target.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer")]
-        public MemoryBuffer EmitToBuffer( BitcodeModule module, CodeGenFileKind fileType )
+        public MemoryBuffer EmitToBuffer( IModule module, CodeGenFileKind fileType )
         {
             ArgumentNullException.ThrowIfNull( module );
-            ArgumentNullException.ThrowIfNull( module.ModuleHandle );
             fileType.ThrowIfNotDefined();
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
@@ -108,8 +134,8 @@ namespace Ubiquity.NET.Llvm
             DisposeMessageString? errTxt = null;
             try
             {
-                var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
-                                                                , module.ModuleHandle
+                var status = LLVMTargetMachineEmitToMemoryBuffer( Handle
+                                                                , module.GetUnownedHandle()
                                                                 , ( LLVMCodeGenFileType )fileType
                                                                 , out errTxt
                                                                 , out var bufferHandle
@@ -150,9 +176,9 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull(targetMachineHandle);
             targetMachineHandle.ThrowIfInvalid();
 
-            TargetMachineHandle = targetMachineHandle;
+            Handle = targetMachineHandle.Move();
         }
 
-        internal LLVMTargetMachineRef TargetMachineHandle { get; }
+        internal LLVMTargetMachineRef Handle { get; }
     }
 }

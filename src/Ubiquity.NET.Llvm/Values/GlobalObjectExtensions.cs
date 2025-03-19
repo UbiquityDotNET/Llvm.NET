@@ -33,21 +33,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso cref="GlobalObject.Comdat"/>
         public static GlobalObject Comdat( this GlobalObject self, string name, ComdatKind kind )
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
-
-            if( !self.ParentModule.Comdats.TryGetValue( name, out Comdat? comdat ) )
-            {
-                comdat = self.ParentModule.Comdats.InsertOrUpdate( name, kind );
-            }
-            else
-            {
-                comdat.Kind = kind;
-            }
-
-            self.Comdat = comdat;
+            ArgumentNullException.ThrowIfNull( self );
+            self.Comdat = new(LibLLVMModuleInsertOrUpdateComdat(self.ParentModule.GetUnownedHandle(), name, (LLVMComdatSelectionKind)kind));
             return self;
         }
 
@@ -58,10 +45,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso cref="GlobalObject.Section"/>
         public static GlobalObject SectionName( this GlobalObject self, string name )
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            ArgumentNullException.ThrowIfNull( self );
 
             self.Section = name;
             return self;
@@ -74,10 +58,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso cref="GlobalObject.Alignment"/>
         public static GlobalObject Alignment( this GlobalObject self, uint value )
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            ArgumentNullException.ThrowIfNull( self );
 
             self.Alignment = value;
             return self;

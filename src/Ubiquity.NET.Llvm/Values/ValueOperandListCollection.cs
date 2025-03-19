@@ -29,12 +29,12 @@ namespace Ubiquity.NET.Llvm.Values
             set
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                LLVMSetOperand( Container.ValueHandle, ( uint )index, value?.ValueHandle ?? default );
+                LLVMSetOperand( Container.Handle, ( uint )index, value?.Handle ?? default );
             }
         }
 
         /// <summary>Gets the count of operands in this collection</summary>
-        public int Count => LLVMGetNumOperands( Container.ValueHandle );
+        public int Count => LLVMGetNumOperands( Container.Handle );
 
         /// <summary>Gets an enumerator for this collection</summary>
         /// <returns>Enumerator for the operands in this collection</returns>
@@ -71,7 +71,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             uint offset = ( uint )i.GetOffset(Count);
             offset.ThrowIfOutOfRange( 0u, ( uint )Count );
-            return Value.FromHandle<TItem>( LLVMGetOperand( Container.ValueHandle, offset ) );
+            return Value.FromHandle<TItem>( LLVMGetOperand( Container.Handle, offset ) );
         }
 
         internal ValueOperandListCollection( Value container )

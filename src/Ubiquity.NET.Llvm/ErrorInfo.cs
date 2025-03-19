@@ -66,7 +66,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Newly constructed <see cref="ErrorInfo"/> with the provided message</returns>
         public static ErrorInfo Create(string msg)
         {
-            return new(LLVMErrorRef.Create(msg));
+            return ErrorInfo.Create(msg);
         }
 
         /// <summary>Factory function to create a new <see cref="ErrorInfo"/> from an exception</summary>
@@ -86,6 +86,16 @@ namespace Ubiquity.NET.Llvm
             return Create(ex?.Message ?? string.Empty);
         }
 
+        /// <summary>This provides `move` semantics when transferring ownership of the resources represented by the handle to native code</summary>
+        /// <returns>The underlying native handle that will NOT receive any additional clean up or release</returns>
+        /// <remarks>
+        /// <note type="important">It is important to note that this will release all the safety guarantees of cleanup for a
+        /// <see cref="SafeHandle"/>! This is normally used directly as the return value of a callback. It should **NOT** be
+        /// used for `in` parameters. It is possible that the ownership is not fully transferred and some error results leaving
+        /// the resource dangling/leaked. Instead, pass it using normal handle marshalling, then after the native call returns it
+        /// is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
+        /// </note>
+        /// </remarks>
         internal nint MoveToNative()
         {
             return Handle?.MoveToNative() ?? 0;
@@ -94,7 +104,7 @@ namespace Ubiquity.NET.Llvm
         internal ErrorInfo(LLVMErrorRef h)
         {
             ArgumentNullException.ThrowIfNull(h);
-            Handle = h;
+            Handle = h.Move();
         }
 
         /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct from a native handle</summary>
@@ -102,6 +112,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// This is generally used in unmanaged callbacks to simplify creation of the projection from the raw handle.
         /// </remarks>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "It is 'moved' to this type; dispose not needed" )]
         internal ErrorInfo(nint h)
             : this(new LLVMErrorRef(h))
         {

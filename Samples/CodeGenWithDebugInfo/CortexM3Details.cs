@@ -23,13 +23,17 @@ namespace CodeGenWithDebugInfo
 
         public string ShortName => "M3";
 
-        public TargetMachine TargetMachine => TargetMachine.FromTriple( new Triple( TripleName )
-                                                                      , Cpu
-                                                                      , Features
-                                                                      , CodeGenOpt.Aggressive
-                                                                      , RelocationMode.Default
-                                                                      , CodeModel.Small
-                                                                      );
+        public TargetMachine CreateTargetMachine()
+        {
+            using var triple = new Triple( TripleName );
+            return TargetMachine.FromTriple( triple
+                                           , Cpu
+                                           , Features
+                                           , CodeGenOpt.Aggressive
+                                           , RelocationMode.Default
+                                           , CodeModel.Small
+                                           );
+        }
 
         public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {
@@ -57,14 +61,14 @@ namespace CodeGenWithDebugInfo
                                   );
         }
 
-        public void AddModuleFlags( BitcodeModule module )
+        public void AddModuleFlags( Module module )
         {
             // Specify ABI const sizes so linker can detect mismatches
             module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
         }
 
-        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx )
+        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
             =>
             [
                 ctx.CreateAttribute( "correctly-rounded-divide-sqrt-fp-math", "false" ),

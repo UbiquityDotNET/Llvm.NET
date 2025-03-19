@@ -20,14 +20,15 @@ namespace Kaleidoscope.Grammar.AST
             var style = new Style
             {
                 TargetType = "Node",
-                Setter = new List<Setter>
-                {
+                Setter =
+                [
                     new Setter( )
                     {
                         Property = "Style",
                         Value = "glass"
                     }
-                }
+
+                ]
             };
 
             Graph.Styles.Add( style );

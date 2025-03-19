@@ -54,6 +54,7 @@ namespace Ubiquity.NET.Llvm.Interop
             : base( nint.Zero, ownsHandle )
         {
             IsOwned = ownsHandle;
+            CaptureStack();
         }
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value and ownership</summary>
@@ -66,6 +67,13 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             SetHandle(handle);
             IsOwned = ownsHandle;
+
+            // In a debug build capture the stack for creation of this instance
+            // that way it is still available if there is an access violation
+            // in the dispose. Usually such a thing indicates the source did NOT
+            // properly apply a using. So it is VERY helpful in debugging odf finalizer
+            // failures to locate the source.
+            CaptureStack();
         }
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value</summary>
@@ -74,6 +82,17 @@ namespace Ubiquity.NET.Llvm.Interop
             : this(ownsHandle: true)
         {
             SetHandle(handle);
+        }
+
+#if DEBUG
+        /// <summary>Gets creation stack - Debugging aid</summary>
+        protected string? CreationStack { get; private set; }
+#endif
+
+        [Conditional("DEBUG")]
+        private void CaptureStack()
+        {
+            CreationStack = Environment.StackTrace;
         }
     }
 
@@ -101,15 +120,43 @@ namespace Ubiquity.NET.Llvm.Interop
             return retVal;
         }
 
+        /// <summary>Provides Cloning with AddRef semantics for a global handle instance</summary>
+        /// <typeparam name="T">Type of the global handle</typeparam>
+        /// <param name="self">The global handle to move ownership of</param>
+        /// <returns>new handle that owns the updated addref</returns>
+        /// <remarks>
+        /// This provides AddRef semantics such that this instance is valid after the operation
+        /// completes as is the return. This allows dispose to function normally but as a decrement
+        /// of the ref count, which allows for consistent treatment of these references. The use of
+        /// an extension method ensures type matching on the handle types AND improves readability
+        /// and maintainability by declaring intent in a "self documenting" fashion.
+        /// </remarks>
+        public static T CloneWithAddRef<T>(this T self)
+            where T : GlobalHandleBase, new()
+        {
+            ArgumentNullException.ThrowIfNull(self);
+
+            T retVal = new();
+            bool success = false;
+            self.DangerousAddRef(ref success);
+            if (!success)
+            {
+                throw new InvalidOperationException("Failed to addreff the SafeHandle!");
+            }
+
+            Marshal.InitHandle(retVal, self.DangerousGetHandle());
+            return retVal;
+        }
+
         /// <summary>This provides `move` semantics when transferring ownership of the resources represented by the handle to native code</summary>
         /// <typeparam name="T">Type of the handle (Usually deduced implicitly from args)</typeparam>
         /// <param name="self">The handle to `move` ownership into native code</param>
         /// <returns>The underlying native handle that will NOT receive any additional clean up or release</returns>
         /// <remarks>
         /// <note type="important">It is important to note that this will release all the safety guarantees of cleanup for a
-        /// <see cref="SafeHandle"/>! This is normally used directly as the return value of a callback. It should NOT be used
-        /// for `in` parameters. It is possible that the ownership is not fully transferred and some error results leaving the
-        /// resource dangling/leaked. Instead, pass it using normal handle marshalling, then after the native call returns it
+        /// <see cref="SafeHandle"/>! This is normally used directly as the return value of a callback. It should **NOT** be
+        /// used for `in` parameters. It is possible that the ownership is not fully transferred and some error results leaving
+        /// the resource dangling/leaked. Instead, pass it using normal handle marshalling, then after the native call returns it
         /// is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
         /// </note>
         /// </remarks>

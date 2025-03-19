@@ -42,6 +42,7 @@ extern "C" {
     LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
     LLVMBool LibLLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
     LLVMContextRef LibLLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
+    LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind(LLVMMetadataRef handle);
 
     LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef D
                                                                , LLVMMetadataRef /*DIScope* */Scope

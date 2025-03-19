@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Values
         : ICollection<BasicBlock>
     {
         /// <summary>Gets a count of the blocks in the collection</summary>
-        public int Count => checked(( int )LLVMCountBasicBlocks( ContainingFunction.ValueHandle ));
+        public int Count => checked(( int )LLVMCountBasicBlocks( ContainingFunction.Handle ));
 
         /// <summary>Add a block to the underlying function</summary>
         /// <param name="item"><see cref="BasicBlock"/> to add to the function</param>
@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Values
 
             if( item.ContainingFunction == null )
             {
-                LibLLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
+                LibLLVMFunctionAppendBasicBlock( ContainingFunction.Handle, item.BlockHandle );
             }
 
             if( item.ContainingFunction != ContainingFunction )
@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <inheritdoc/>
         public IEnumerator<BasicBlock> GetEnumerator( )
         {
-            LLVMBasicBlockRef blockRef = LLVMGetFirstBasicBlock( ContainingFunction.ValueHandle );
+            LLVMBasicBlockRef blockRef = LLVMGetFirstBasicBlock( ContainingFunction.Handle );
             while( blockRef != default )
             {
                 yield return BasicBlock.FromHandle( blockRef )!;

@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Transforms.Legacy
         {
             ArgumentNullException.ThrowIfNull(targetMachine);
 
-            LLVMAddAnalysisPasses(targetMachine.TargetMachineHandle, Handle);
+            LLVMAddAnalysisPasses(targetMachine.Handle, Handle);
         }
 
         internal PassManager( LLVMPassManagerRef handle )

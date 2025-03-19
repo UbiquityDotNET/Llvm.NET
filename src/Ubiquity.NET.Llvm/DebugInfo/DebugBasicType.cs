@@ -23,24 +23,22 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DebugBasicType"/> class.</summary>
         /// <param name="llvmType">Type to wrap debug information for</param>
-        /// <param name="module">Module to use when constructing the debug information</param>
+        /// <param name="diBuilder">Debug information builder for this module</param>
         /// <param name="name">Source language name of the type</param>
         /// <param name="encoding">Encoding for the type</param>
-        public DebugBasicType( ITypeRef llvmType, BitcodeModule module, string name, DiTypeKind encoding )
+        public DebugBasicType( ITypeRef llvmType,  ref readonly DIBuilder diBuilder, string name, DiTypeKind encoding )
             : base( llvmType,
-                    module.ThrowIfNull()
-                          .DIBuilder
-                          .CreateBasicType( name
-                                          , module.Layout.BitSizeOf( llvmType )
-                                          , encoding
-                                          )
+                    diBuilder.CreateBasicType( name
+                                             , diBuilder.OwningModule.Layout.BitSizeOf( llvmType )
+                                             , encoding
+                                             )
                   )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            if( module.Layout == null )
+            if( diBuilder.OwningModule.Layout == null )
             {
-                throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, nameof( module ) );
+                throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, $"{nameof(diBuilder)}.{nameof(diBuilder.OwningModule)}" );
             }
 
             switch( llvmType.Kind )

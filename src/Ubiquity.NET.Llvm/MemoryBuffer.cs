@@ -120,9 +120,9 @@ namespace Ubiquity.NET.Llvm
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
             bufferHandle.ThrowIfInvalid();
-            Handle = bufferHandle;
+            Handle = bufferHandle.Move();
         }
 
-        internal LLVMMemoryBufferRef Handle { get; }
+        internal LLVMMemoryBufferRef Handle { get; private set; }
     }
 }

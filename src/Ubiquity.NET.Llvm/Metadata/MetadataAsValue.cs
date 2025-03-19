@@ -6,7 +6,7 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Wraps metadata as a <see cref="Value"/></summary>
     public class MetadataAsValue

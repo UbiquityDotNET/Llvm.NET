@@ -14,15 +14,9 @@ namespace Ubiquity.NET.Llvm.Types
         : TypeRef
         , IPointerType
     {
-        public uint AddressSpace => LLVMGetPointerAddressSpace( TypeRefHandle );
+        public uint AddressSpace => LLVMGetPointerAddressSpace( Handle );
 
-        public ITypeRef? ElementType { get; internal set; }
-
-        [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal interface implementation" )]
-        void IPointerType.TrySetElementType(ITypeRef? elementType)
-        {
-            ElementType ??= elementType;
-        }
+        public ITypeRef? ElementType { get; init; }
 
         internal PointerType( LLVMTypeRef typeRef )
             : base( typeRef )

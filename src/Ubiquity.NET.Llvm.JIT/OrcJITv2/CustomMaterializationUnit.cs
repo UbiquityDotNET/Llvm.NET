@@ -157,10 +157,19 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                     if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
                         // [It is an alias; Dispose is a NOP with wasted overhead]
                         self.MaterializeHandler( new MaterializationResponsibility( abiResponsibility, alias: true ) );
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
 #pragma warning restore CA2000 // Dispose objects before losing scope
+
+#pragma warning disable IDISP007 // Don't dispose injected
+                        /*
+                        Not really "injected" and this is how the data/context is disposed when the
+                        native code is done with it.
+                        */
                         self.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                     }
                 }
                 catch
@@ -178,8 +187,10 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                     if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
                         // [It is an alias; Dispose is a NOP with wasted overhead]
                         self.DiscardHandler?.Invoke( new JITDyLib( abiLib ), new SymbolStringPoolEntry( abiSymbol, alias: true ) );
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
 #pragma warning restore CA2000 // Dispose objects before losing scope
                     }
                 }
@@ -197,7 +208,13 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 {
                     if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
                     {
+#pragma warning disable IDISP007 // Don't dispose injected
+                        /*
+                        Not really "injected" and this is how the data/context is disposed when the
+                        native code is done with it.
+                        */
                         self.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                     }
                 }
                 catch

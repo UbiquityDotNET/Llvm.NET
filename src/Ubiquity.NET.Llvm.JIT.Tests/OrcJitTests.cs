@@ -33,12 +33,16 @@ namespace Ubiquity.NET.Llvm.Tests
             jit.AddModule(jit.MainLib, mainMod);
             SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
+            using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
+
             List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> fooSym = [
-                new(jit.MangleAndIntern(FooBodySymbolName), flags),
+                new(mangledFooBodySymName, flags),
             ];
 
+            using var mangledBarBodySymName = jit.MangleAndIntern(BarBodySymbolName);
+
             List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> barSym = [
-                new(jit.MangleAndIntern(BarBodySymbolName), flags),
+                new(mangledBarBodySymName, flags),
             ];
 
             using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
@@ -49,10 +53,12 @@ namespace Ubiquity.NET.Llvm.Tests
 
             using var ism = new LocalIndirectStubsManager(triple);
             using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
+            using var mangledFoo = jit.MangleAndIntern("foo");
+            using var mangledBar = jit.MangleAndIntern("bar");
 
             List<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> reexports =[
-                new(jit.MangleAndIntern("foo"), new(jit.MangleAndIntern(FooBodySymbolName), flags)),
-                new(jit.MangleAndIntern("bar"), new(jit.MangleAndIntern(BarBodySymbolName), flags)),
+                new(mangledFoo, new(mangledFooBodySymName, flags)),
+                new(mangledBar, new(mangledBarBodySymName, flags)),
             ];
 
             using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
@@ -104,15 +110,20 @@ namespace Ubiquity.NET.Llvm.Tests
                     return;
                 }
 
-                // apply the data Layout
-                module.WithPerThreadModule(ApplyDataLayout);
+                // ownership of the module is transferred on success
+                // this protects it in the face of an exception
+                using(module)
+                {
+                    // apply the data Layout
+                    module.WithPerThreadModule(ApplyDataLayout);
 
-                // Finally emit the module to the JIT.
-                // This transfers ownership of both the responsibility AND the module
-                // to the native LLVM JIT.
-                jit.TransformLayer.Emit(r, module);
+                    // Finally emit the module to the JIT.
+                    // This transfers ownership of both the responsibility AND the module
+                    // to the native LLVM JIT.
+                    jit.TransformLayer.Emit(r, module);
+                }
 
-                ErrorInfo ApplyDataLayout(BitcodeModule module)
+                ErrorInfo ApplyDataLayout(IModule module)
                 {
                     module.DataLayoutString = jit.DataLayoutString;
 
@@ -130,7 +141,10 @@ namespace Ubiquity.NET.Llvm.Tests
         {
             using var threadSafeContext = new ThreadSafeContext();
             var ctx = threadSafeContext.PerThreadContext;
-            return new ThreadSafeModule(threadSafeContext, ctx.ParseModule(src, name));
+
+            // Ownership is transferred, this protects in the event of an exception
+            using var module = ctx.ParseModule(src, name);
+            return new ThreadSafeModule(threadSafeContext, module);
         }
 
         private const string MainModuleSource = """

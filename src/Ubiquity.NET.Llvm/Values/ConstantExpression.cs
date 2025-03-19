@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Values
         : Constant
     {
         /// <summary>Gets the constant instruction expression op code</summary>
-        public OpCode OpCode => ( OpCode )LLVMGetConstOpcode( ValueHandle );
+        public OpCode OpCode => ( OpCode )LLVMGetConstOpcode( Handle );
 
         /// <summary>Gets an IntToPtr expression to convert an integral value to a pointer</summary>
         /// <param name="value">Constant value to cast to a pointer</param>
@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( Resources.Pointer_type_expected, nameof( type ) );
             }
 
-            LLVMValueRef valueRef = LLVMConstIntToPtr( value.ValueHandle, type.GetTypeRef( ) );
+            LLVMValueRef valueRef = LLVMConstIntToPtr( value.Handle, type.GetTypeRef( ) );
             return FromHandle<Constant>( valueRef.ThrowIfInvalid( ) )!;
         }
 
@@ -45,7 +45,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( value );
 
-            var handle = LLVMConstBitCast( value.ValueHandle, toType.GetTypeRef( ) );
+            var handle = LLVMConstBitCast( value.Handle, toType.GetTypeRef( ) );
             return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }
 

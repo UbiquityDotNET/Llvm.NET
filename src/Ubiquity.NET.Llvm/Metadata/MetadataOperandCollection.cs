@@ -4,9 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Support class to provide read/update semantics to the operands of a container element</summary>
     /// <remarks>
@@ -24,12 +22,12 @@ namespace Ubiquity.NET.Llvm
             set
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                LibLLVMMDNodeReplaceOperand( Container.MetadataHandle, ( uint )index, value?.MetadataHandle ?? default );
+                LibLLVMMDNodeReplaceOperand( Container.Handle, ( uint )index, value?.Handle ?? default );
             }
         }
 
         /// <summary>Gets the count of operands in this collection</summary>
-        public int Count => checked(( int )LibLLVMMDNodeGetNumOperands( Container.MetadataHandle ));
+        public int Count => checked(( int )LibLLVMMDNodeGetNumOperands( Container.Handle ));
 
         /// <summary>Gets an enumerator for the operands in this collection</summary>
         /// <returns>Enumerator of operands</returns>
@@ -60,8 +58,8 @@ namespace Ubiquity.NET.Llvm
         {
             uint offset = ( uint )i.GetOffset(Count);
             offset.ThrowIfOutOfRange( 0u, ( uint )Count );
-            var node = LibLLVMGetOperandNode( LibLLVMMDNodeGetOperand( Container.MetadataHandle, offset ) );
-            return LlvmMetadata.FromHandle<TItem>( Container.Context, node );
+            var node = LibLLVMGetOperandNode( LibLLVMMDNodeGetOperand( Container.Handle, offset ) );
+            return (TItem)node.CreateMetadata()!;
         }
 
         internal MetadataOperandCollection( MDNode container )

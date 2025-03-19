@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// is always a pointer type, this provides the ElementType (e.g. the pointee type)
         /// for the alloca.
         /// </remarks>
-        public ITypeRef ElementType => TypeRef.FromHandle(LLVMGetAllocatedType(ValueHandle).ThrowIfInvalid())!;
+        public ITypeRef ElementType => LLVMGetAllocatedType(Handle).CreateType();
 
         internal Alloca( LLVMValueRef valueRef )
             : base( valueRef )

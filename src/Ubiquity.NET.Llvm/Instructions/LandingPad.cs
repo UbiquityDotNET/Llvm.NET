@@ -19,8 +19,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets a value indicating whether this <see cref="LandingPad"/> is a cleanup pad</summary>
         public bool IsCleanup
         {
-            get => LLVMIsCleanup( ValueHandle );
-            set => LLVMSetCleanup( ValueHandle, value );
+            get => LLVMIsCleanup( Handle );
+            set => LLVMSetCleanup( Handle, value );
         }
 
         /// <summary>Gets the collection of clauses for this landing pad</summary>

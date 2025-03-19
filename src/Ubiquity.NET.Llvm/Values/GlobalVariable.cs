@@ -15,22 +15,22 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets a value indicating whether this variable is initialized in an external module</summary>
         public bool IsExternallyInitialized
         {
-            get => LLVMIsExternallyInitialized( ValueHandle );
-            set => LLVMSetExternallyInitialized( ValueHandle, value );
+            get => LLVMIsExternallyInitialized( Handle );
+            set => LLVMSetExternallyInitialized( Handle, value );
         }
 
         /// <summary>Gets or sets a value indicating whether this global is a Constant</summary>
         public bool IsConstant
         {
-            get => LLVMIsGlobalConstant( ValueHandle );
-            set => LLVMSetGlobalConstant( ValueHandle, value );
+            get => LLVMIsGlobalConstant( Handle );
+            set => LLVMSetGlobalConstant( Handle, value );
         }
 
         /// <summary>Gets or sets a value indicating whether this global is stored per thread</summary>
         public bool IsThreadLocal
         {
-            get => LLVMIsThreadLocal( ValueHandle );
-            set => LLVMSetThreadLocal( ValueHandle, value );
+            get => LLVMIsThreadLocal( Handle );
+            set => LLVMSetThreadLocal( Handle, value );
         }
 
         /// <summary>Gets or sets the initial value for the variable</summary>
@@ -38,11 +38,11 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                var handle = LLVMGetInitializer( ValueHandle );
+                var handle = LLVMGetInitializer( Handle );
                 return handle == default ? null : FromHandle<Constant>( handle );
             }
 
-            set => LLVMSetInitializer( ValueHandle, value?.ValueHandle ?? LLVMValueRef.Zero );
+            set => LLVMSetInitializer( Handle, value?.Handle ?? LLVMValueRef.Zero );
         }
 
         /// <summary>Adds a <see cref="DIGlobalVariableExpression"/> for a <see cref="GlobalVariable"/></summary>
@@ -52,11 +52,11 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( expression );
 
-            LibLLVMGlobalVariableAddDebugExpression( ValueHandle, expression.MetadataHandle );
+            LibLLVMGlobalVariableAddDebugExpression( Handle, expression.Handle );
         }
 
         /// <summary>Removes the value from its parent module, but does not delete it</summary>
-        public void RemoveFromParent( ) => LibLLVMRemoveGlobalFromParent( ValueHandle );
+        public void RemoveFromParent( ) => LibLLVMRemoveGlobalFromParent( Handle );
 
         internal GlobalVariable( LLVMValueRef valueRef )
             : base( valueRef )

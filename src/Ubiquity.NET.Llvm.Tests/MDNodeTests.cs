@@ -7,6 +7,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
+using Ubiquity.NET.Llvm.Metadata;
 
 namespace Ubiquity.NET.Llvm.UT
 {
@@ -17,14 +18,17 @@ namespace Ubiquity.NET.Llvm.UT
         public void AppendingModuleFlagsTest( )
         {
             using var ctx = new Context( );
-            using var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" );
+            using var module = ctx.CreateBitcodeModule( "test.bc" );
+            using var diBuilder = new DIBuilder(module);
+            DICompileUnit cu = diBuilder.CreateCompileUnit(SourceLanguage.C99, "test.c", "unit-tests");
+
             module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", ctx.CreateMDNode( "testValue" ) );
             Assert.AreEqual( 1, module.ModuleFlags.Count );
             var flag = module.ModuleFlags[ "testMD" ];
             Assert.IsNotNull( flag );
             Assert.AreEqual( ModuleFlagBehavior.Append, flag.Behavior );
             Assert.AreEqual( "testMD", flag.Name );
-            Assert.IsInstanceOfType( flag.Metadata, typeof( MDTuple ) );
+            Assert.IsInstanceOfType<MDTuple>( flag.Metadata );
             var tuple = ( MDTuple )flag.Metadata;
             Assert.AreEqual( "testValue", tuple.GetOperandString( 0 ) );
         }
@@ -39,18 +43,21 @@ namespace Ubiquity.NET.Llvm.UT
             // this test needs updating for new operands)
             const int CompositeTypeOperandCount = 15;
 
-            var targetMachine = TargetTests.GetTargetMachine( );
+            using var targetMachine = TargetTests.GetTargetMachine( );
             using var ctx = new Context( );
-            using var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" );
+            using var module = ctx.CreateBitcodeModule( "test.bc" );
+            using var diBuilder = new DIBuilder(module);
+            DICompileUnit cu = diBuilder.CreateCompileUnit(SourceLanguage.C99, "test.c", "unit-tests");
+
             module.Layout = targetMachine.TargetData;
-            var intType = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
-            var arrayType = new DebugArrayType(intType, module, 3u);
+            var intType = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
+            var arrayType = new DebugArrayType(intType, in diBuilder, 3u);
             Assert.IsNotNull( arrayType );
 
             DICompositeType? mdnode = arrayType.DebugInfoType;
             Assert.IsNotNull( mdnode );
 
-            // BS warning - this is here to VALIDATE the claim that it is always going to be true.
+            // BS warning - this is here to VALIDATE the CLAIM that it is always going to be true.
 #pragma warning disable MSTEST0032 // Assertion condition is always true;
             Assert.IsNotNull( mdnode.Operands );
 #pragma warning restore MSTEST0032 // Assertion condition is always true
@@ -92,13 +99,13 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNull( mdnode.Discriminator );
             Assert.IsNull( mdnode.Operands[ 8 ] );
 
-            // TODO: New operand [9] => DataLocation (Metadata)[DIVariable][DIExpression]
-            // TODO: New Operand [10] => Associated (Metadata)
-            // TODO: New Operand [11] => Allocated (Metadata)
-            // TODO: New Operand [12] => Rank (Metadata)[ConstantInt][DIExpression]
-            // TODO: New Operand [13] => Annotations (Metadata)[DINodeArray]
-            // TODO: New Operand [14] => Specification (Metadata)[DebugInfoType]
-            Assert.AreSame( intType.DebugInfoType, mdnode.BaseType );
+            // TODO: New operand [9] => DataLocation (LlvmMetadata)[DIVariable][DIExpression]
+            // TODO: New Operand [10] => Associated (LlvmMetadata)
+            // TODO: New Operand [11] => Allocated (LlvmMetadata)
+            // TODO: New Operand [12] => Rank (LlvmMetadata)[ConstantInt][DIExpression]
+            // TODO: New Operand [13] => Annotations (LlvmMetadata)[DINodeArray]
+            // TODO: New Operand [14] => Specification (LlvmMetadata)[DebugInfoType]
+            Assert.AreEqual( intType.DebugInfoType, mdnode.BaseType );
         }
     }
 }

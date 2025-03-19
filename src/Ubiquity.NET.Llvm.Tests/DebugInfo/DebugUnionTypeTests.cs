@@ -25,11 +25,13 @@ namespace Ubiquity.NET.Llvm.UT
         {
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( );
+            using var diBuilder = new DIBuilder(module);
+
             const string nativeUnionName = "union.testUnion";
             const string unionSymbolName = "testUnion";
-            var testFile = module.DIBuilder.CreateFile( "test" );
+            var testFile = diBuilder.CreateFile( "test" );
 
-            var union = new DebugUnionType( module, nativeUnionName, null, unionSymbolName, module.DIBuilder.CreateFile("test") );
+            var union = new DebugUnionType( in diBuilder, nativeUnionName, null, unionSymbolName, diBuilder.CreateFile("test") );
             Assert.IsNotNull( union );
 
             Assert.IsTrue( module.Verify( out string errMsg ), errMsg );
@@ -89,21 +91,23 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void DebugUnionTypeTest2( )
         {
-            var testTriple = new Triple( "thumbv7m-none--eabi" );
-            var targetMachine = new TargetMachine( testTriple );
-            using var ctx = new Context( );
-            using var module = ctx.CreateBitcodeModule( "testModule" );
             const string nativeUnionName = "union.testUnion";
             const string unionSymbolName = "testUnion";
 
+            using var testTriple = new Triple( "thumbv7m-none--eabi" );
+            using var targetMachine = new TargetMachine( testTriple );
+            using var ctx = new Context( );
+            using var module = ctx.CreateBitcodeModule( "testModule" );
+            using var diBuilder = new DIBuilder(module);
+
             module.Layout = targetMachine.TargetData;
-            var diFile = module.DIBuilder.CreateFile( "test.cs" );
-            var diCompileUnit = module.DIBuilder.CreateCompileUnit( SourceLanguage.CSharp, "test.cs", "unit-test", false, string.Empty, 0 );
+            var diFile = diBuilder.CreateFile( "test.cs" );
+            var diCompileUnit = diBuilder.CreateCompileUnit( SourceLanguage.CSharp, "test.cs", "unit-test", false, string.Empty, 0 );
 
             // Create basic types used in this compilation
-            var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
-            var i16 = new DebugBasicType( module.Context.Int16Type, module, "short", DiTypeKind.Signed );
-            var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
+            var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
+            var i16 = new DebugBasicType( module.Context.Int16Type, in diBuilder, "short", DiTypeKind.Signed );
+            var f32 = new DebugBasicType( module.Context.FloatType, in diBuilder, "float", DiTypeKind.Float );
 
             var members = new[ ]
                     { new DebugMemberInfo( 0, "a", diFile, 3, i32 )
@@ -112,7 +116,7 @@ namespace Ubiquity.NET.Llvm.UT
                     };
 
             var llvmType = module.Context.CreateStructType( nativeUnionName );
-            var union = new DebugUnionType( llvmType, module, diCompileUnit, unionSymbolName, diFile, 0, DebugInfoFlags.None, members );
+            var union = new DebugUnionType( llvmType, in diBuilder, diCompileUnit, unionSymbolName, diFile, 0, DebugInfoFlags.None, members );
             Assert.IsNotNull( union );
             Assert.IsNotNull( union!.DebugInfoType );
             Assert.IsNotNull( union.NativeType );
@@ -165,7 +169,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( 0U, union.IntegerBitWidth );
 
             Assert.AreEqual( 1, union.NativeType.Members.Count );
-            Assert.AreSame( ctx.Int32Type, union.NativeType.Members[ 0 ] );
+            Assert.AreEqual( ctx.Int32Type, union.NativeType.Members[ 0 ] );
 
             Assert.IsNotNull( union.DebugInfoType.Elements );
             Assert.AreEqual( members.Length, union.DebugInfoType.Elements.Count );

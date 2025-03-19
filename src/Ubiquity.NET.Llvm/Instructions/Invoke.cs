@@ -13,80 +13,80 @@ namespace Ubiquity.NET.Llvm.Instructions
         , IAttributeAccessor
     {
         /// <summary>Gets the target function of the invocation</summary>
-        public Function TargetFunction => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
+        public Function TargetFunction => FromHandle<Function>( LLVMGetCalledValue( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets or sets the normal destination for the invoke</summary>
         public BasicBlock NormalDestination
         {
-            get => BasicBlock.FromHandle( LLVMGetNormalDest( ValueHandle ).ThrowIfInvalid() )!;
-            set => LLVMSetNormalDest( ValueHandle, value.ThrowIfNull().BlockHandle );
+            get => BasicBlock.FromHandle( LLVMGetNormalDest( Handle ).ThrowIfInvalid() )!;
+            set => LLVMSetNormalDest( Handle, value.ThrowIfNull().BlockHandle );
         }
 
         /// <summary>Gets the attributes for this call site</summary>
         public IAttributeDictionary Attributes { get; }
 
         /// <inheritdoc/>
-        public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
+        public void AddAttributeAtIndex(FunctionAttributeIndex index, AttributeValue attrib)
         {
             attrib.VerifyValidOn( index, this );
 
-            LLVMAddCallSiteAttribute( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
+            LLVMAddCallSiteAttribute( Handle, (LLVMAttributeIndex)index, attrib.NativeAttribute );
         }
 
         /// <inheritdoc/>
-        public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
+        public uint GetAttributeCountAtIndex(FunctionAttributeIndex index)
         {
-            return LLVMGetCallSiteAttributeCount( ValueHandle, ( LLVMAttributeIndex )index );
+            return LLVMGetCallSiteAttributeCount( Handle, (LLVMAttributeIndex)index );
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
+        public IEnumerable<AttributeValue> GetAttributesAtIndex(FunctionAttributeIndex index)
         {
             uint count = GetAttributeCountAtIndex( index );
-            if( count == 0 )
+            if(count == 0)
             {
-                return Enumerable.Empty<AttributeValue>( );
+                return Enumerable.Empty<AttributeValue>();
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            LLVMGetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, buffer );
+            LLVMGetCallSiteAttributes( Handle, (LLVMAttributeIndex)index, buffer );
             return from attribRef in buffer
-                   select AttributeValue.FromHandle( Context, attribRef );
+                   select new AttributeValue( attribRef );
         }
 
         /// <inheritdoc/>
-        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
+        public AttributeValue GetAttributeAtIndex(FunctionAttributeIndex index, AttributeKind kind)
         {
-            var handle = LLVMGetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
-            return AttributeValue.FromHandle( Context, handle );
+            var handle = LLVMGetCallSiteEnumAttribute( Handle, ( LLVMAttributeIndex )index, (uint)kind );
+            return new( handle );
         }
 
         /// <inheritdoc/>
-        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, string name )
-        {
-            ArgumentException.ThrowIfNullOrWhiteSpace( name );
-
-            var handle = LLVMGetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
-            return AttributeValue.FromHandle( Context, handle );
-        }
-
-        /// <inheritdoc/>
-        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
-        {
-            LLVMRemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
-        }
-
-        /// <inheritdoc/>
-        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
+        public AttributeValue GetAttributeAtIndex(FunctionAttributeIndex index, string name)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
-            LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+
+            var handle = LLVMGetCallSiteStringAttribute( Handle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            return new( handle );
         }
 
-        internal Invoke( LLVMValueRef valueRef )
+        /// <inheritdoc/>
+        public void RemoveAttributeAtIndex(FunctionAttributeIndex index, AttributeKind kind)
+        {
+            LLVMRemoveCallSiteEnumAttribute( Handle, (LLVMAttributeIndex)index, (uint)kind );
+        }
+
+        /// <inheritdoc/>
+        public void RemoveAttributeAtIndex(FunctionAttributeIndex index, string name)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
+            LLVMRemoveCallSiteStringAttribute( Handle, (LLVMAttributeIndex)index, name, (uint)name.Length );
+        }
+
+        internal Invoke(LLVMValueRef valueRef)
             : base( valueRef )
         {
-            Attributes = new ValueAttributeDictionary( this, ( ) => TargetFunction );
+            Attributes = new ValueAttributeDictionary( this, () => TargetFunction );
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="debugElementType">Debug type of the pointee</param>
-        /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
+        /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment on pointer</param>
-        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, BitcodeModule module, uint addressSpace = 0, string? name = null, uint alignment = 0 )
+        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, ref readonly DIBuilder diBuilder, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( debugElementType.ThrowIfNull().NativeType
-                  , module
+                  , in diBuilder
                   , debugElementType.DebugInfoType
                   , addressSpace
                   , name
@@ -32,14 +32,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class.</summary>
         /// <param name="llvmElementType">Native type of the pointee</param>
-        /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
+        /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment of pointer</param>
-        public DebugPointerType( ITypeRef llvmElementType, BitcodeModule module, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
+        public DebugPointerType( ITypeRef llvmElementType,  ref readonly DIBuilder diBuilder, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( llvmElementType.ThrowIfNull().CreatePointerType( addressSpace )
-                  , module
+                  , in diBuilder
                   , elementType
                   , name
                   , alignment
@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Initializes a new instance of the <see cref="DebugPointerType"/> class to bind with an existing pointer type</summary>
         /// <param name="llvmPtrType">Native type of the pointer</param>
-        /// <param name="module"><see cref="BitcodeModule"/> used for creating the pointer type and debug information</param>
+        /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
         /// <param name="elementType">Debug type of the pointee</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment for pointer type</param>
@@ -59,15 +59,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="ElementType"/> property as the elements the pointer refers to are
         /// unknown.
         /// </remarks>
-        public DebugPointerType( IPointerType llvmPtrType, BitcodeModule module, DIType? elementType, string? name = null, uint alignment = 0 )
-            : base( llvmPtrType,
-                    module.ThrowIfNull()
-                          .DIBuilder
-                          .CreatePointerType( elementType
-                                            , name
-                                            , module.Layout.BitSizeOf( llvmPtrType )
-                                            , alignment
-                                            )
+        public DebugPointerType( IPointerType llvmPtrType,  ref readonly DIBuilder diBuilder, DIType? elementType, string? name = null, uint alignment = 0 )
+            : base( llvmPtrType
+                  , diBuilder.CreatePointerType( elementType
+                                               , name
+                                               , diBuilder.OwningModule.ThrowIfNull().Layout.BitSizeOf( llvmPtrType )
+                                               , alignment
+                                               )
                   )
         {
         }
@@ -97,12 +95,6 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="IPointerType"/> cannot provide an element type as the pointer is
         /// opaque and the type it refers to is unknown.
         /// </remarks>
-        public ITypeRef? ElementType { get; private set; }
-
-        [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal interface implementation" )]
-        void IPointerType.TrySetElementType(ITypeRef? elementType)
-        {
-            ElementType ??= elementType;
-        }
+        public ITypeRef? ElementType { get; init; }
     }
 }

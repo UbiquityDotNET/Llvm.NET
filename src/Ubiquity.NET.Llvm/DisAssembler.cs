@@ -74,9 +74,13 @@ namespace Ubiquity.NET.Llvm
         Color = Constants.LLVMDisassembler_Option_Color,
     }
 
-    /// <summary>Dis-assembler</summary>
-    public class Disassembler
+    /// <summary>LLVM Disassembler</summary>
+    public sealed class Disassembler
+        : IDisposable
     {
+        /// <inheritdoc/>
+        public void Dispose() => Handle.Dispose();
+
         /// <summary>Initializes a new instance of the <see cref="Disassembler"/> class.</summary>
         /// <param name="triple">Triple for the instruction set to disassemble</param>
         /// <param name="tagType">TODO:Explain this...</param>
@@ -124,7 +128,7 @@ namespace Ubiquity.NET.Llvm
             {
                 ArgumentNullException.ThrowIfNull(triple);
                 CallBacksHandle = callBacks is null ? null : GCHandle.Alloc(callBacks);
-                DisasmHandle = LLVMCreateDisasmCPUFeatures(
+                Handle = LLVMCreateDisasmCPUFeatures(
                         triple.ToString( ) ?? string.Empty,
                         cpu,
                         features,
@@ -141,7 +145,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see langword="true"/> if the options are all supported</returns>
         public bool SetOptions( DisassemblerOptions options )
         {
-            return LLVMSetDisasmOptions( DisasmHandle, ( ulong )options );
+            return LLVMSetDisasmOptions( Handle, ( ulong )options );
         }
 
         /// <summary>Disassembles an instruction</summary>
@@ -157,14 +161,14 @@ namespace Ubiquity.NET.Llvm
                 using var nativeMemoryPinnedHandle = nativeMemory.Memory.Pin();
                 fixed( byte* ptr = &MemoryMarshal.GetReference( instruction ) )
                 {
-                    size_t instSize = LLVMDisasmInstruction(DisasmHandle, (nint)ptr, (ulong)instruction.Length, pc, (byte*)nativeMemoryPinnedHandle.Pointer, stringBufferSize);
+                    size_t instSize = LLVMDisasmInstruction(Handle, (nint)ptr, (ulong)instruction.Length, pc, (byte*)nativeMemoryPinnedHandle.Pointer, stringBufferSize);
                     return (new string((sbyte*)nativeMemoryPinnedHandle.Pointer), instSize);
                 }
             }
         }
 
         private readonly GCHandle? CallBacksHandle;
-        private readonly LLVMDisasmContextRef DisasmHandle;
+        private readonly LLVMDisasmContextRef Handle;
 
         #region Native marshalling callbacks
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

@@ -20,13 +20,15 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             {
                 Handle.Dispose();
             }
+
+            base.Dispose(disposing);
         }
 
-        internal LLVMOrcMaterializationUnitRef Handle { get; init; }
+        internal LLVMOrcMaterializationUnitRef Handle { get; }
 
         private protected MaterializationUnit(LLVMOrcMaterializationUnitRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
         // TODO: Make these an extension to a IReadOnlyDictionary<>

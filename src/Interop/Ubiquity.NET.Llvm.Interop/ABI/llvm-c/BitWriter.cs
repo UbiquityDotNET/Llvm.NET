@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRef M, string Path);
+        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRefAlias M, string Path);
 
 // It is debatable if the .NET projections should deal with a raw C "File descriptor", which is
 // exclusively a C/C++ runtime construct that does NOT exist in managed code.
@@ -32,6 +32,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMemoryBufferRef LLVMWriteBitcodeToMemoryBuffer(LLVMModuleRef M);
+        public static unsafe partial LLVMMemoryBufferRef LLVMWriteBitcodeToMemoryBuffer(LLVMModuleRefAlias M);
     }
 }

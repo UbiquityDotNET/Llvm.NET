@@ -53,6 +53,7 @@ namespace Ubiquity.NET.Llvm
             ItfImpl = impl;
         }
 
+        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Ownership is 'moved' to this type" )]
         private readonly InteropItf ItfImpl;
     }
 }

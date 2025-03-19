@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.Values
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                LLVMValueRef valueRef = LLVMGetParam( OwningFunction.ValueHandle, ( uint )index );
+                LLVMValueRef valueRef = LLVMGetParam( OwningFunction.Handle, ( uint )index );
                 return Value.FromHandle<Argument>( valueRef.ThrowIfInvalid( ) )!;
             }
         }
@@ -30,7 +30,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                uint count = LLVMCountParams( OwningFunction.ValueHandle );
+                uint count = LLVMCountParams( OwningFunction.Handle );
                 return ( int )Math.Min( count, int.MaxValue );
             }
         }
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             for( uint i = 0; i < Count; ++i )
             {
-                LLVMValueRef val = LLVMGetParam( OwningFunction.ValueHandle, i );
+                LLVMValueRef val = LLVMGetParam( OwningFunction.Handle, i );
                 yield return Value.FromHandle<Argument>( val.ThrowIfInvalid( ) )!;
             }
         }

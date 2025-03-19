@@ -87,17 +87,14 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="ArgumentException">Thrown when <paramref cref="Instruction"/> is from a different block</exception>
         public Instruction? GetNextInstruction( Instruction instruction )
         {
-            if( instruction == null )
-            {
-                throw new ArgumentNullException( nameof( instruction ) );
-            }
+            ArgumentNullException.ThrowIfNull( instruction );
 
             if( instruction.ContainingBlock != this )
             {
                 throw new ArgumentException( Resources.Instruction_is_from_a_different_block, nameof( instruction ) );
             }
 
-            var hInst = LLVMGetNextInstruction( instruction.ValueHandle );
+            var hInst = LLVMGetNextInstruction( instruction.Handle );
             return hInst == default ? null : FromHandle<Instruction>( hInst );
         }
 
@@ -106,7 +103,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
         }
 
-        internal LLVMBasicBlockRef BlockHandle => LLVMValueAsBasicBlock( ValueHandle );
+        internal LLVMBasicBlockRef BlockHandle => LLVMValueAsBasicBlock( Handle );
 
         internal static BasicBlock? FromHandle( LLVMBasicBlockRef basicBlockRef )
         {

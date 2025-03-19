@@ -17,7 +17,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
         public LlJIT()
         {
-            LLVMErrorRef err = LLVMOrcCreateLLJIT(out Handle, LLVMOrcLLJITBuilderRef.Zero);
+            using LLVMErrorRef err = LLVMOrcCreateLLJIT(out Handle, LLVMOrcLLJITBuilderRef.Zero);
             err.ThrowIfFailed();
         }
 
@@ -89,7 +89,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull(module);
 
-            LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle);
+            using LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle);
             errRef.ThrowIfFailed();
             module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
         }
@@ -113,7 +113,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             ArgumentNullException.ThrowIfNull(tracker);
             ArgumentNullException.ThrowIfNull(module);
 
-            LLVMErrorRef errorRef = LLVMOrcLLJITAddLLVMIRModuleWithRT(Handle, tracker.Handle, module.Handle);
+            using LLVMErrorRef errorRef = LLVMOrcLLJITAddLLVMIRModuleWithRT(Handle, tracker.Handle, module.Handle);
             errorRef.ThrowIfFailed();
             module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
         }
@@ -145,11 +145,13 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             {
                 Handle.Dispose();
             }
+
+            base.Dispose(disposing);
         }
 
         internal LlJIT(LLVMOrcLLJITRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
         private readonly LLVMOrcLLJITRef Handle;

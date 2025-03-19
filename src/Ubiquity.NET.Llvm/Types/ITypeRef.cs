@@ -55,7 +55,7 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>SIMD 'packed' format, or other <see cref="Ubiquity.NET.Llvm.Types.IVectorType"/> implementation</summary>
         Vector = LLVMTypeKind.LLVMVectorTypeKind,
 
-        /// <summary><see cref="Ubiquity.NET.Llvm.LlvmMetadata"/></summary>
+        /// <summary><see cref="Ubiquity.NET.Llvm.Metadata.LlvmMetadata"/></summary>
         Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
 
         /// <summary>Exception handler token</summary>
@@ -76,6 +76,7 @@ namespace Ubiquity.NET.Llvm.Types
 
     /// <summary>Interface for a Type in LLVM</summary>
     public interface ITypeRef
+        : IEquatable<ITypeRef>
     {
         /// <summary>Gets a value indicating whether the type is sized</summary>
         bool IsSized { get; }
@@ -107,8 +108,8 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>Gets a value indicating whether this type is a floating point type</summary>
         bool IsFloatingPoint { get; }
 
-        /// <summary>Gets the Context that owns this type</summary>
-        Context Context { get; }
+        /// <summary>Gets the ContextAlias that owns this type</summary>
+        IContext Context { get; }
 
         /// <summary>Gets the integer bit width of this type or 0 for non integer types</summary>
         [SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Justification = "Value is the bit width of an integer, name is appropriate" )]
@@ -141,9 +142,11 @@ namespace Ubiquity.NET.Llvm.Types
     /// <summary>Internal interface for getting access to the raw type handle internally</summary>
     /// <remarks>This is usually implemented as an explicit interface implementation so that it isn't exposed publicly</remarks>
     internal interface ITypeHandleOwner
+        : ITypeRef
+        , IEquatable<ITypeHandleOwner>
     {
         /// <summary>Gets the LibLLVM handle for the type</summary>
-        LLVMTypeRef TypeRefHandle { get; }
+        LLVMTypeRef Handle { get; }
     }
 
     internal static class TypeRefExtensions
@@ -151,7 +154,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal static LLVMTypeRef GetTypeRef( this ITypeRef self )
         {
             ArgumentNullException.ThrowIfNull( self );
-            return ( ( ITypeHandleOwner )self ).TypeRefHandle;
+            return ( ( ITypeHandleOwner )self ).Handle;
         }
     }
 }

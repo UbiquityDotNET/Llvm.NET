@@ -16,12 +16,17 @@ For an explanation of the benefits of the language feature see: https://www.hans
 */
 
 global using System;
+global using System.Collections;
 global using System.Collections.Generic;
+global using System.Collections.ObjectModel;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;
 global using System.IO;
 global using System.Linq;
+global using System.Runtime.CompilerServices;
+global using System.Runtime.InteropServices;
+global using System.Text;
 
 global using Ubiquity.NET.InteropHelpers;
 global using Ubiquity.NET.Llvm.DebugInfo;
@@ -29,6 +34,7 @@ global using Ubiquity.NET.Llvm.Instructions;
 global using Ubiquity.NET.Llvm.Interop;
 global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
+global using Ubiquity.NET.Llvm.Metadata;
 global using Ubiquity.NET.Llvm.Properties;
 global using Ubiquity.NET.Llvm.Types;
 global using Ubiquity.NET.Llvm.Values;

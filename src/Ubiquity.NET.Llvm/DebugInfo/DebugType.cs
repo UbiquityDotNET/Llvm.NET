@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-#pragma warning disable SA1649 // File name must match first type ( Justification -  Interface + internal Impl + public extensions )
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for Debug types bound with an LLVM type</summary>
@@ -37,6 +35,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         where TNative : class, ITypeRef
         where TDebug : DIType
     {
+        /// <inheritdoc/>
+        bool IEquatable<ITypeRef>.Equals(ITypeRef? other) => other is ITypeHandleOwner tho && tho.Equals( this );
+
+        /// <inheritdoc/>
+        bool IEquatable<ITypeHandleOwner>.Equals(ITypeHandleOwner? other)
+            => other is not null && ((ITypeHandleOwner)this).Handle.Equals(other.Handle);
+
         /// <summary>Gets or sets the Debug information type for this binding</summary>
         /// <remarks>
         /// <para>Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
@@ -76,7 +81,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Gets an intentionally undocumented value</summary>
         /// <remarks>internal use only</remarks>
-        LLVMTypeRef ITypeHandleOwner.TypeRefHandle => NativeType.GetTypeRef( );
+        LLVMTypeRef ITypeHandleOwner.Handle => NativeType.GetTypeRef( );
 
         /// <inheritdoc/>
         public bool IsSized => NativeType.IsSized;
@@ -85,7 +90,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public TypeKind Kind => NativeType.Kind;
 
         /// <inheritdoc/>
-        public Context Context => NativeType.Context;
+        public IContext Context => NativeType.Context;
 
         /// <inheritdoc/>
         public uint IntegerBitWidth => NativeType.IntegerBitWidth;
@@ -127,7 +132,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
 
         /// <inheritdoc/>
-        public DebugPointerType CreatePointerType( BitcodeModule bitcodeModule, uint addressSpace )
+        public DebugPointerType CreatePointerType( ref readonly DIBuilder diBuilder, uint addressSpace )
         {
             if( DebugInfoType == null )
             {
@@ -135,11 +140,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
-            return new DebugPointerType(nativePointer, bitcodeModule, DebugInfoType, string.Empty );
+            return new DebugPointerType(nativePointer, in diBuilder, DebugInfoType, string.Empty );
         }
 
         /// <inheritdoc/>
-        public DebugArrayType CreateArrayType( BitcodeModule bitcodeModule, uint lowerBound, uint count )
+        public DebugArrayType CreateArrayType( ref readonly DIBuilder diBuilder, uint lowerBound, uint count )
         {
             if( DebugInfoType == null )
             {
@@ -147,7 +152,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             var llvmArray = NativeType.CreateArrayType( count );
-            return new DebugArrayType( llvmArray, bitcodeModule, DebugInfoType, count, lowerBound );
+            return new DebugArrayType( llvmArray, in diBuilder, DebugInfoType, count, lowerBound );
         }
 
         /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessing the <see cref="DebugInfoType"/> property</summary>

@@ -27,7 +27,9 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// The returned entry has it's own ref count and callers must use the <see cref="SymbolStringPoolEntry.Dispose"/>
         /// method to release it.
         /// </remarks>
+#pragma warning disable IDISP012 // Property should not return created disposable
         public SymbolStringPoolEntry Name => new( NameField );
+#pragma warning restore IDISP012 // Property should not return created disposable
 
         /// <summary>Gets the flags for this instance</summary>
         public SymbolFlags Flags { get; init; }

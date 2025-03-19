@@ -34,14 +34,15 @@ namespace Kaleidoscope.Grammar
             var style = new Style
             {
                 TargetType = "Node",
-                Setter = new List<Setter>
-                {
+                Setter =
+                [
                     new Setter( )
                     {
                         Property = "Style",
                         Value = "glass"
                     }
-                }
+
+                ]
             };
 
             Graph.Styles.Add( style );
@@ -83,7 +84,7 @@ namespace Kaleidoscope.Grammar
             Push( new Node( )
             {
                 Id = context.GetUniqueNodeId( ),
-                Label = typeName.Substring( 0, typeName.Length - ContextTypeNameSuffix.Length ),
+                Label = typeName[ ..^ContextTypeNameSuffix.Length ],
                 Category = "TreeNode"
             } );
         }

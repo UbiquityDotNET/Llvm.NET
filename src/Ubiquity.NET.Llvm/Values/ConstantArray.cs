@@ -53,7 +53,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( "One or more value(s) types do not match specified array element type" );
             }
 
-            var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
+            var valueHandles = values.Select( v => v.Handle ).ToArray( );
             var handle = LLVMConstArray( elementType.GetTypeRef(), valueHandles, (uint)valueHandles.Length );
             return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }

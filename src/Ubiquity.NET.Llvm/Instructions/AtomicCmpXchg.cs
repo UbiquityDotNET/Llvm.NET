@@ -14,8 +14,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets a value indicating whether this instruction is weak or not</summary>
         public bool IsWeak
         {
-            get => LLVMGetWeak( ValueHandle );
-            set => LLVMSetWeak( ValueHandle, value );
+            get => LLVMGetWeak( Handle );
+            set => LLVMSetWeak( Handle, value );
         }
 
         internal AtomicCmpXchg( LLVMValueRef valueRef )

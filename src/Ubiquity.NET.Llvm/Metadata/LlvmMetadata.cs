@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Enumeration to define metadata type kind</summary>
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It's not a flags enum, get over it..." )]
@@ -103,6 +103,7 @@ namespace Ubiquity.NET.Llvm
 
     /// <summary>Root of the LLVM LlvmMetadata hierarchy</summary>
     public abstract class LlvmMetadata
+        : IEquatable<LlvmMetadata>
     {
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
@@ -110,89 +111,45 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentNullException.ThrowIfNull( other );
 
-            if( MetadataHandle == default )
+            if( Handle == default )
             {
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
-            LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
-            MetadataHandle = default;
+            LLVMMetadataReplaceAllUsesWith( Handle, other.Handle );
         }
 
         /// <summary>Formats the metadata as a string</summary>
         /// <returns>LlvmMetadata as a string</returns>
         public override string ToString( )
         {
-            return MetadataHandle == default
-                 ? string.Empty
-                 : LibLLVMMetadataAsString( MetadataHandle ).ToString() ?? string.Empty;
+            return Handle.IsNull ? string.Empty : MarshalManagedString();
         }
+
+        /// <inheritdoc/>
+        public bool Equals(LlvmMetadata? other) => other is not null && Handle.Equals(other.Handle);
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => Equals( obj as LlvmMetadata );
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => Handle.GetHashCode();
 
         /// <summary>Gets a value indicating this metadata's kind</summary>
-        public MetadataKind Kind => ( MetadataKind )LibLLVMGetMetadataID( MetadataHandle );
+        public MetadataKind Kind => ( MetadataKind )LibLLVMGetMetadataID( Handle );
 
-        internal LLVMMetadataRef MetadataHandle { get; /*protected*/ set; }
-
-        internal static T? FromHandle<T>( Context context, LLVMMetadataRef handle )
-            where T : LlvmMetadata
-        {
-            return handle == default ? null : ( T )context.GetNodeFor( handle );
-        }
-
-        internal class InterningFactory
-            : HandleInterningMapWithContext<LLVMMetadataRef, LlvmMetadata>
-        {
-            internal InterningFactory( Context context )
-                : base( context )
-            {
-            }
-
-            [SuppressMessage( "Maintainability", "CA1502:Avoid excessive complexity", Justification = "This is an internal factory method for mapping to a managed type" )]
-            private protected override LlvmMetadata ItemFactory( LLVMMetadataRef handle )
-            {
-                // use the native kind value to determine the managed type
-                // that should wrap this particular handle
-                var kind = ( MetadataKind )LibLLVMGetMetadataID( handle );
-                return kind switch
-                {
-                    MetadataKind.MDString => new MDString( handle ),
-                    MetadataKind.ConstantAsMetadata => new ConstantAsMetadata( handle ),
-                    MetadataKind.LocalAsMetadata => new LocalAsMetadata( handle ),
-                    MetadataKind.DistinctMDOperandPlaceholder => throw new NotSupportedException(), // new DistinctMDOperandPlaceHolder( handle ),
-                    MetadataKind.MDTuple => new MDTuple( handle ),
-                    MetadataKind.DILocation => new DILocation( handle ),
-                    MetadataKind.DIExpression => new DIExpression( handle ),
-                    MetadataKind.DIGlobalVariableExpression => new DIGlobalVariableExpression( handle ),
-                    MetadataKind.GenericDINode => new GenericDINode( handle ),
-                    MetadataKind.DISubrange => new DISubRange( handle ),
-                    MetadataKind.DIEnumerator => new DIEnumerator( handle ),
-                    MetadataKind.DIBasicType => new DIBasicType( handle ),
-                    MetadataKind.DIDerivedType => new DIDerivedType( handle ),
-                    MetadataKind.DICompositeType => new DICompositeType( handle ),
-                    MetadataKind.DISubroutineType => new DISubroutineType( handle ),
-                    MetadataKind.DIFile => new DIFile( handle ),
-                    MetadataKind.DICompileUnit => new DICompileUnit( handle ),
-                    MetadataKind.DISubprogram => new DISubProgram( handle ),
-                    MetadataKind.DILexicalBlock => new DILexicalBlock( handle ),
-                    MetadataKind.DILexicalBlockFile => new DILexicalBlockFile( handle ),
-                    MetadataKind.DINamespace => new DINamespace( handle ),
-                    MetadataKind.DIModule => new DIModule( handle ),
-                    MetadataKind.DITemplateTypeParameter => new DITemplateTypeParameter( handle ),
-                    MetadataKind.DITemplateValueParameter => new DITemplateValueParameter( handle ),
-                    MetadataKind.DIGlobalVariable => new DIGlobalVariable( handle ),
-                    MetadataKind.DILocalVariable => new DILocalVariable( handle ),
-                    MetadataKind.DIObjCProperty => new DIObjCProperty( handle ),
-                    MetadataKind.DIImportedEntity => new DIImportedEntity( handle ),
-                    MetadataKind.DIMacro => new DIMacro( handle ),
-                    MetadataKind.DIMacroFile => new DIMacroFile( handle ),
-                    _ => throw new NotSupportedException(),
-                };
-            }
-        }
+        /// <summary>Gets the internal native handle</summary>
+        protected internal LLVMMetadataRef Handle { get; }
 
         private protected LlvmMetadata( LLVMMetadataRef handle )
         {
-            MetadataHandle = handle;
+            Handle = handle;
+        }
+
+        private string MarshalManagedString( )
+        {
+            using var nativeRetVal = LibLLVMMetadataAsString( Handle );
+            return nativeRetVal.ToString() ?? string.Empty;
         }
     }
 }

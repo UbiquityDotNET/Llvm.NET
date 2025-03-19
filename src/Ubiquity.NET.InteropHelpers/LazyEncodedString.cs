@@ -29,7 +29,8 @@ namespace Ubiquity.NET.InteropHelpers
     /// even if the span provided to the constructor doesn't include one. (It has to copy the string anyway so why not be
     /// nice and robust)</para>
     /// </remarks>
-    public class LazyEncodedString
+    public sealed class LazyEncodedString
+        : IEquatable<LazyEncodedString>
     {
         /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from an existing managed string</summary>
         /// <param name="managed">string to lazy encode for native code use</param>
@@ -130,8 +131,23 @@ namespace Ubiquity.NET.InteropHelpers
             return NativeBytes.Value.AsMemory().Pin();
         }
 
+        /// <inheritdoc/>
+        public bool Equals(LazyEncodedString? other)
+        {
+            return other is not null && ManagedString.Value.Equals(other.ManagedString.Value, StringComparison.Ordinal);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => obj is LazyEncodedString s && Equals(s);
+
         /// <summary>Gets the native size (in bytes, including the terminator) of the memory for this string</summary>
         public int NativeSize => NativeBytes.Value.Length;
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return ManagedString.Value.GetHashCode(StringComparison.Ordinal);
+        }
 
         /// <summary>Implicit cast to a string via <see cref="ToString"/></summary>
         /// <param name="self">instance to cast</param>

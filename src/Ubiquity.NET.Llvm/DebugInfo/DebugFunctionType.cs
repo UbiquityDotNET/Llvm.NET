@@ -27,8 +27,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// and the underlying LLVM type</para>
     /// <note type="note">It is important to keep in mind that signatures are only concerned
     /// with types. That is, they do not include names of parameters. Parameter information is
-    /// provided by <see cref="DebugInfoBuilder.CreateArgument(DIScope, string, DIFile, uint, DIType, bool, DebugInfoFlags, ushort)"/>
-    /// and [DebugInfoBuilder.InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.InsertDeclare*)</note>
+    /// provided by <see cref="DIBuilder.CreateArgument(DIScope, string, DIFile, uint, DIType, bool, DebugInfoFlags, ushort)"/>
+    /// and [DIBuilder.InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare*)</note>
     /// </remarks>
     /// <seealso href="xref:llvm_langref#disubroutinetype">LLVM DISubroutineType</seealso>
     public class DebugFunctionType
@@ -37,22 +37,21 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DebugFunctionType"/> class.</summary>
         /// <param name="llvmType">Native LLVM function signature</param>
-        /// <param name="module"><see cref="BitcodeModule"/> to use when construction debug information</param>
+        /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
         /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
         /// <param name="retType">Return type for the function</param>
         /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
         public DebugFunctionType( IFunctionType llvmType
-                                , BitcodeModule module
+                                ,  ref readonly DIBuilder diBuilder
                                 , DebugInfoFlags debugFlags
                                 , IDebugType<ITypeRef, DIType> retType
                                 , params IDebugType<ITypeRef, DIType>[ ] argTypes
                                 )
             : base( llvmType.ThrowIfNull()
-                  , module.ThrowIfNull()
-                          .DIBuilder.CreateSubroutineType( debugFlags
-                                                         , retType.ThrowIfNull().DebugInfoType
-                                                         , argTypes.Select( t => t.DebugInfoType )
-                                                         )
+                  , diBuilder.CreateSubroutineType( debugFlags
+                                                  , retType.ThrowIfNull().DebugInfoType
+                                                  , argTypes.Select( t => t.DebugInfoType )
+                                                  )
                   )
         {
         }

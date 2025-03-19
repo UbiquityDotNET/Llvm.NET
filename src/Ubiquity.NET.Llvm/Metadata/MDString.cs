@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Stores a string in LlvmMetadata</summary>
     public class MDString
@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            return LibLLVMGetMDStringText( MetadataHandle, out uint _ ) ?? string.Empty;
+            return LibLLVMGetMDStringText( Handle, out uint _ ) ?? string.Empty;
         }
 
         internal MDString( LLVMMetadataRef handle )

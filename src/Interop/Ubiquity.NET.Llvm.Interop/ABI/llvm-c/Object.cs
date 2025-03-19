@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBinaryRef LLVMCreateBinary(LLVMMemoryBufferRef MemBuf, LLVMContextRef Context, out DisposeMessageString ErrorMessage);
+        public static unsafe partial LLVMBinaryRef LLVMCreateBinary(LLVMMemoryBufferRef MemBuf, LLVMContextRefAlias Context, out DisposeMessageString ErrorMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

@@ -57,8 +57,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets the kind of atomic operation for this instruction</summary>
         public AtomicRMWBinOp Kind
         {
-            get => ( AtomicRMWBinOp )LLVMGetAtomicRMWBinOp( ValueHandle );
-            set => LLVMSetAtomicRMWBinOp( ValueHandle, ( LLVMAtomicRMWBinOp )value.ThrowIfNotDefined() );
+            get => ( AtomicRMWBinOp )LLVMGetAtomicRMWBinOp( Handle );
+            set => LLVMSetAtomicRMWBinOp( Handle, ( LLVMAtomicRMWBinOp )value.ThrowIfNotDefined() );
         }
 
         internal AtomicRMW( LLVMValueRef valueRef )

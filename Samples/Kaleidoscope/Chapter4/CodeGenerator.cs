@@ -45,7 +45,6 @@ namespace Kaleidoscope.Chapter4
 
             RuntimeState = globalState;
             ThreadSafeContext = new();
-            InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
         }
         #endregion
 
@@ -54,6 +53,7 @@ namespace Kaleidoscope.Chapter4
         {
             KlsJIT.Dispose();
             Module?.Dispose();
+            InstructionBuilder?.Dispose();
             ThreadSafeContext.Dispose();
         }
         #endregion
@@ -72,7 +72,10 @@ namespace Kaleidoscope.Chapter4
                 return default;
             }
 
-            Context ctx = ThreadSafeContext.PerThreadContext;
+            IContext ctx = ThreadSafeContext.PerThreadContext;
+            InstructionBuilder?.Dispose();
+            InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
+            Module?.Dispose();
             Module = ctx.CreateBitcodeModule();
             Debug.Assert( Module is not null, "Module initialization failed" );
 
@@ -82,10 +85,13 @@ namespace Kaleidoscope.Chapter4
             {
                 // directly track modules for anonymous functions as calling the function is the guaranteed
                 // next step and then it is removed as nothing can reference it again.
+                // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
+                // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
+                // up. The object support is more for existing object files than for generated IR.
                 using ResourceTracker resourceTracker = KlsJIT.Add(ThreadSafeContext, Module);
                 Value retVal;
 
-                // invoking the function is an "unsafe" operation via a function pointer
+                // Invoking the function via a function pointer is an "unsafe" operation.
                 // Also note that .NET has no mechanism to catch native exceptions like
                 // access violations or stack overflows from infinite recursion. They will
                 // crash the app.
@@ -129,6 +135,7 @@ namespace Kaleidoscope.Chapter4
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
             switch(binaryOperator.Op)
             {
             case BuiltInOperatorKind.Less:
@@ -179,6 +186,7 @@ namespace Kaleidoscope.Chapter4
         public override Value? Visit(FunctionCallExpression functionCall)
         {
             ArgumentNullException.ThrowIfNull( functionCall );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             if(Module is null)
             {
@@ -209,6 +217,7 @@ namespace Kaleidoscope.Chapter4
         public override Value? Visit(FunctionDefinition definition)
         {
             ArgumentNullException.ThrowIfNull( definition );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -271,8 +280,14 @@ namespace Kaleidoscope.Chapter4
                 return function;
             }
 
-            Context ctx = ThreadSafeContext.PerThreadContext;
-            var llvmSignature = ctx.GetFunctionType( ctx.DoubleType, prototype.Parameters.Select( _ => ctx.DoubleType ) );
+            // "there be dragons here" - if the OO layer is caching values and always mapping them to a
+            // single managed instance then dispose will dispose the "real" thing and will NOT be a NOP
+            // on an alias references. The whole point of the "dispose as NOP for aliases" pattern is to
+            // make this sort of thing go away - consumers should not need to care. (Especially true when
+            // ownership of the thing is transferred to native. That should either bump a ref count or mark
+            // the managed as disposed but the Dispose() method is still a NOP)
+            IContext ctx = ThreadSafeContext.PerThreadContext;
+            var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
             retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
@@ -291,10 +306,10 @@ namespace Kaleidoscope.Chapter4
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
-        private BitcodeModule? Module;
+        private Module? Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly ThreadSafeContext ThreadSafeContext;
-        private readonly InstructionBuilder InstructionBuilder;
+        private InstructionBuilder? InstructionBuilder;
         private readonly Dictionary<string, Value> NamedValues = [];
         private readonly KaleidoscopeJIT KlsJIT = new( );
         private readonly Dictionary<string, ResourceTracker> FunctionModuleMap = [];

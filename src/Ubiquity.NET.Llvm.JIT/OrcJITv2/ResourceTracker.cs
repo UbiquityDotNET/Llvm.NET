@@ -28,7 +28,8 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <summary>Removes all resources managed by this tracker</summary>
         public void RemoveAll()
         {
-            LLVMOrcResourceTrackerRemove(Handle);
+            using var errorRef = LLVMOrcResourceTrackerRemove(Handle);
+            errorRef.ThrowIfFailed();
         }
 
         /// <inheritdoc/>
@@ -36,9 +37,9 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
         internal ResourceTracker(LLVMOrcResourceTrackerRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
-        internal LLVMOrcResourceTrackerRef Handle { get; init; }
+        internal LLVMOrcResourceTrackerRef Handle { get; }
     }
 }

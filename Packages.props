@@ -5,7 +5,8 @@
     -->
     <ItemGroup>
         <GlobalPackageReference Include="CSemVer.Build.Tasks" Version="2.0.5" />
-        <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0"  Condition="'$(NoCommonAnalyzers)' !=' true'" />
+        <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" Condition="'$(NoCommonAnalyzers)' !=' true'" />
+        <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
         <!--This analyzer is officially archived on GitHub and not actively maintained; and behind the times on language support -->
         <!--<GlobalPackageReference Include="RefactoringEssentials" Version="5.6.0" Condition="'$(NoCommonAnalyzers)' != 'true'" />-->
         <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(NoCommonAnalyzers)' != 'true'" />
@@ -43,7 +44,7 @@
 
         <!-- Tests all use the same framework versions -->
         <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-        <PackageReference Update="MSTest.TestAdapter" Version="3.8.1" />
-        <PackageReference Update="MSTest.TestFramework" Version="3.8.1" />
+        <PackageReference Update="MSTest.TestAdapter" Version="3.8.2" />
+        <PackageReference Update="MSTest.TestFramework" Version="3.8.2" />
     </ItemGroup>
 </Project>

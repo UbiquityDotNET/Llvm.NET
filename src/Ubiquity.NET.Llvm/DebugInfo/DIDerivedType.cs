@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                     : null;
 
         /// <summary>Initializes a new instance of the <see cref="DIDerivedType"/> class from an <see cref="LLVMMetadataRef"/></summary>
-        /// <param name="handle">Handle to wrap</param>
+        /// <param name="handle">NativeHandle to wrap</param>
         internal DIDerivedType( LLVMMetadataRef handle )
             : base( handle )
         {

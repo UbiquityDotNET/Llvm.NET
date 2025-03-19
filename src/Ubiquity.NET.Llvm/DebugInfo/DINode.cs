@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Llvm.Metadata;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>
@@ -11,7 +13,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : MDNode
     {
         /// <summary>Gets the Dwarf tag for the node</summary>
-        public Tag Tag => MetadataHandle == default ? Tag.None : ( Tag )LibLLVMDIDescriptorGetTag( MetadataHandle );
+        public Tag Tag => Handle == default ? Tag.None : ( Tag )LibLLVMDIDescriptorGetTag( Handle );
 
         internal DINode( LLVMMetadataRef handle )
             : base( handle )

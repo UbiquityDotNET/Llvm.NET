@@ -13,8 +13,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets the predicate for the comparison</summary>
         public Predicate Predicate => Opcode switch
         {
-            OpCode.ICmp => ( Predicate )LLVMGetICmpPredicate( ValueHandle ),
-            OpCode.FCmp => ( Predicate )LLVMGetFCmpPredicate( ValueHandle ),
+            OpCode.ICmp => ( Predicate )LLVMGetICmpPredicate( Handle ),
+            OpCode.FCmp => ( Predicate )LLVMGetFCmpPredicate( Handle ),
             _ => Predicate.BadFcmpPredicate,
         };
 

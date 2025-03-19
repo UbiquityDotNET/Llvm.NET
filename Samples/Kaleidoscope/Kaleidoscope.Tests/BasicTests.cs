@@ -63,15 +63,15 @@ namespace Kaleidoscope.Tests
             RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter4.CodeGenerator( state, writer ) );
         }
 
-#if KALEIDOSCOPE_JIT_SUPPORT
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]" )]
         public void Chapter5( )
         {
             using var input = File.OpenText( "ControlFlow.kls" );
-            RunBasicReplLoop( LanguageLevel.ControlFlow, input, ( state, writer ) => new Chapter5.CodeGenerator( state, false, writer ) );
+            RunBasicReplLoop( LanguageLevel.ControlFlow, input, ( state, writer ) => new Chapter5.CodeGenerator( state, writer ) );
         }
 
+#if KALEIDOSCOPE_JIT_SUPPORT
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is unvalidated in this test]" )]
         public void Chapter6( )

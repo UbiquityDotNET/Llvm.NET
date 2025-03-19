@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                LLVMUseRef current = LLVMGetFirstUse( ValueHandle );
+                LLVMUseRef current = LLVMGetFirstUse( Handle );
                 while( current != default )
                 {
                     // TODO: intern the use instances?

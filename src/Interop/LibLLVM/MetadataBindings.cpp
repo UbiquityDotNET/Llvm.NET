@@ -66,6 +66,12 @@ extern "C"
         return (LibLLVMDwarfTag )desc->getTag( );
     }
 
+    LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind( LLVMMetadataRef handle)
+    {
+        DICompileUnit* pCU = unwrap<DICompileUnit>(handle);
+        return (LLVMDWARFEmissionKind)pCU->getEmissionKind();
+    }
+
     LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl( LLVMDIBuilderRef Builder
                                                                , LLVMMetadataRef /*DIScope* */Scope
                                                                , char const* Name

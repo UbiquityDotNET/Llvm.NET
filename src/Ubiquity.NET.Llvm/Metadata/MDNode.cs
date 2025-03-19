@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>LlvmMetadata node for LLVM IR Bitcode modules</summary>
     /// <remarks>
@@ -20,20 +20,20 @@ namespace Ubiquity.NET.Llvm
         : LlvmMetadata
     {
         /// <summary>Gets the <see cref="Context"/> this node belongs to</summary>
-        public Context Context
+        public IContext Context
         {
             get
             {
                 ThrowIfDeleted( );
-                return GetMetadataContext( MetadataHandle );
+                return new ContextAlias(LibLLVMGetNodeContext( Handle ));
             }
         }
 
         /// <summary>Gets a value indicating whether this node was deleted</summary>
-        public bool IsDeleted => MetadataHandle == default;
+        public bool IsDeleted => Handle == default;
 
         /// <summary>Gets a value indicating whether this node is a temporary</summary>
-        public bool IsTemporary => LibLLVMIsTemporary( MetadataHandle );
+        public bool IsTemporary => LibLLVMIsTemporary( Handle );
 
         /// <summary>Gets a value indicating whether this node is resolved</summary>
         /// <remarks>
@@ -44,13 +44,13 @@ namespace Ubiquity.NET.Llvm
         /// <para>If <see cref="IsUniqued"/> is <see langword="true"/> then this returns <see langword="true"/>
         /// if this node has already dropped RAUW support (because all operands are resolved).</para>
         /// </remarks>
-        public bool IsResolved => LibLLVMIsResolved( MetadataHandle );
+        public bool IsResolved => LibLLVMIsResolved( Handle );
 
         /// <summary>Gets a value indicating whether this node is uniqued</summary>
-        public bool IsUniqued => LibLLVMIsUniqued( MetadataHandle );
+        public bool IsUniqued => LibLLVMIsUniqued( Handle );
 
         /// <summary>Gets a value indicating whether this node is distinct</summary>
-        public bool IsDistinct => LibLLVMIsDistinct( MetadataHandle );
+        public bool IsDistinct => LibLLVMIsDistinct( Handle );
 
         /// <summary>Gets the operands for this node, if any</summary>
         public MetadataOperandCollection Operands { get; }
@@ -66,19 +66,12 @@ namespace Ubiquity.NET.Llvm
                 throw new InvalidOperationException( Resources.Cannot_replace_non_temporary_or_resolved_MDNode );
             }
 
-            if( MetadataHandle == default )
+            if( Handle == default )
             {
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
 
-            // grab the context before replacement as replace deletes and invalidates the node
-            var context = Context;
-            LLVMMetadataReplaceAllUsesWith( MetadataHandle, other.MetadataHandle );
-
-            // remove current node mapping from the context.
-            // It won't be valid for use after clearing the handle
-            context!.RemoveDeletedNode( this );
-            MetadataHandle = default;
+            LLVMMetadataReplaceAllUsesWith( Handle, other.Handle );
         }
 
         /// <summary>Gets an operand by index as a specific type</summary>
@@ -125,25 +118,12 @@ namespace Ubiquity.NET.Llvm
             Operands = new MetadataOperandCollection( this );
         }
 
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Context created here is owned, and disposed of via the ContextCache" )]
-        internal static T? FromHandle<T>( LLVMMetadataRef handle )
-            where T : MDNode
-        {
-            return handle == default ? null : FromHandle<T>( GetMetadataContext( handle ), handle );
-        }
-
         private void ThrowIfDeleted( )
         {
             if( IsDeleted )
             {
                 throw new InvalidOperationException( "Cannot operate on a deleted node" );
             }
-        }
-
-        private static Context GetMetadataContext( LLVMMetadataRef metadataHandle )
-        {
-            var hContext = LibLLVMGetNodeContext( metadataHandle ).ThrowIfInvalid()!;
-            return ContextCache.GetContextFor( hContext );
         }
     }
 }

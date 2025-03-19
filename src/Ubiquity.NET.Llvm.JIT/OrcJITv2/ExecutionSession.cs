@@ -38,8 +38,13 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                                                 errorHandlerAddress,
                                                 out LLVMOrcLazyCallThroughManagerRef resultHandle
                                                 );
-                errRef.ThrowIfFailed();
-                return new(resultHandle);
+
+                // ownership is transferred to return, this handles release on exception
+                using(resultHandle)
+                {
+                    errRef.ThrowIfFailed();
+                    return new(resultHandle);
+                }
             }
         }
 
@@ -168,7 +173,12 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             unsafe
             {
                 using MemoryHandle nativeMem = name.Pin();
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+
+                // ownership is transferred (MOVE Semantics) to errInfo 'out' param
                 errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, (byte*)nativeMem.Pointer).ThrowIfInvalid());
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
+
                 if (errInfo.Success)
                 {
                     lib = new(libHandle);

@@ -186,20 +186,20 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetModuleDebugMetadataVersion(LLVMModuleRef Module);
+        public static unsafe partial uint LLVMGetModuleDebugMetadataVersion(LLVMModuleRefAlias Module);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMStripModuleDebugInfo(LLVMModuleRef Module);
+        public static unsafe partial bool LLVMStripModuleDebugInfo(LLVMModuleRefAlias Module);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilderDisallowUnresolved(LLVMModuleRef M);
+        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilderDisallowUnresolved(LLVMModuleRefAlias M);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilder(LLVMModuleRef M);
+        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilder(LLVMModuleRefAlias M);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -274,7 +274,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateDebugLocation(LLVMContextRef Ctx, uint Line, uint Column, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateDebugLocation(LLVMContextRefAlias Ctx, uint Line, uint Column, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -513,7 +513,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRef Ctx, out LLVMMetadataRef Data, size_t NumElements);
+        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRefAlias Ctx, out LLVMMetadataRef Data, size_t NumElements);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

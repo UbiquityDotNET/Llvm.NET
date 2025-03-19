@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
         internal LazyCallThroughManager(LLVMOrcLazyCallThroughManagerRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
         internal LLVMOrcLazyCallThroughManagerRef Handle { get; init; }

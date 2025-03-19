@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void CreateTargetMachineTest( )
         {
             var target = Target.FromTriple( DefaultTargetTriple );
-            var machine = GetTargetMachine( target );
+            using var machine = GetTargetMachine( target );
 
             Assert.IsNotNull( machine );
             Assert.AreSame( target, machine.Target );

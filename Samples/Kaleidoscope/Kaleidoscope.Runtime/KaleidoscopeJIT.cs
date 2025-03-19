@@ -40,9 +40,12 @@ namespace Kaleidoscope.Runtime
             // Add a materializer for the well-known symbols for the managed code implementations
             unsafe
             {
+                using var putchardName = MangleAndIntern("putchard");
+                using var printdName = MangleAndIntern("printd");
+
                 List<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols = [
-                    new(MangleAndIntern("putchard"), new(MakeRawPtr(&BuiltIns.PutChard), symFlags)),
-                    new(MangleAndIntern("printd"), new(MakeRawPtr(&BuiltIns.Printd), symFlags)),
+                    new(putchardName, new(MakeRawPtr(&BuiltIns.PutChard), symFlags)),
+                    new(printdName, new(MakeRawPtr(&BuiltIns.Printd), symFlags)),
                 ];
 
                 using var absoluteMaterializer = new AbsoluteMaterializationUnit(absoluteSymbols);
@@ -56,7 +59,7 @@ namespace Kaleidoscope.Runtime
         /// <param name="ctx">Thread safe context this module is part of</param>
         /// <param name="module">Module to add</param>
         /// <returns>Resource tracker for this instance</returns>
-        public ResourceTracker Add(ThreadSafeContext ctx, BitcodeModule module)
+        public ResourceTracker Add(ThreadSafeContext ctx, Module module)
         {
             ArgumentNullException.ThrowIfNull(ctx);
             ArgumentNullException.ThrowIfNull(module);

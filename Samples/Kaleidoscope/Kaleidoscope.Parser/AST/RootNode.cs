@@ -21,7 +21,7 @@ namespace Kaleidoscope.Grammar.AST
         public RootNode( SourceSpan location, IEnumerable<IAstNode> children )
         {
             Location = location;
-            ChildNodes = children.ToImmutableArray( );
+            ChildNodes = [ .. children ];
         }
 
         public SourceSpan Location { get; }

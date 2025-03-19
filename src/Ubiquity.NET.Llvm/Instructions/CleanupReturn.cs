@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         }
 
         /// <summary>Gets a value indicating whether this <see cref="CatchSwitch"/> has an unwind destination</summary>
-        public bool HasUnwindDestination => LibLLVMHasUnwindDest( ValueHandle );
+        public bool HasUnwindDestination => LibLLVMHasUnwindDest( Handle );
 
         /// <summary>Gets a value indicating whether this <see cref="CatchSwitch"/> unwinds to the caller</summary>
         public bool UnwindsToCaller => !HasUnwindDestination;
@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                     return null;
                 }
 
-                var handle = LLVMGetUnwindDest( ValueHandle );
+                var handle = LLVMGetUnwindDest( Handle );
                 return handle == default ? null : BasicBlock.FromHandle( handle );
             }
 
@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                     throw new InvalidOperationException( Resources.Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller );
                 }
 
-                LLVMSetUnwindDest( ValueHandle, value!.BlockHandle );
+                LLVMSetUnwindDest( Handle, value!.BlockHandle );
             }
         }
 

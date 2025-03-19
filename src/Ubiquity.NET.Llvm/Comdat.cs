@@ -32,43 +32,60 @@ namespace Ubiquity.NET.Llvm
     /// Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
     /// an effective NOP.
     /// </remarks>
-    public class Comdat
+    [SuppressMessage( "Style", "IDE0250:Make struct 'readonly'", Justification = "NO, it can't be, the Kind setter is NOT readonly" )]
+    public readonly ref struct Comdat
+        : IEquatable<Comdat>
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
-        public string Name => Module.IsDisposed ? string.Empty : LibLLVMComdatGetName( ComdatHandle ).ToString() ?? string.Empty;
-
-        /// <summary>Gets or sets the <see cref="ComdatKind"/> for this <see cref="Comdat"/></summary>
-        public ComdatKind Kind
+        public string Name
         {
-            get => Module.IsDisposed ? default : (ComdatKind)LLVMGetComdatSelectionKind( ComdatHandle );
-
-            set
+            get
             {
-                if(Module.IsDisposed)
+                if( Handle.IsNull )
                 {
-                    return;
+                    return string.Empty;
                 }
 
-                LLVMSetComdatSelectionKind( ComdatHandle, (LLVMComdatSelectionKind)value );
+                using var safeHandle = LibLLVMComdatGetName( Handle );
+                return safeHandle.ToString() ?? string.Empty;
             }
         }
 
-        /// <summary>Gets the module the <see cref="Comdat"/> belongs to</summary>
-        public BitcodeModule Module { get; }
+        #region IEquatable<Comdat>
 
-        /// <summary>Initializes a new instance of the <see cref="Comdat"/> class from an LLVM module and reference</summary>
-        /// <param name="module">Owning module for the comdat</param>
-        /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
-        internal Comdat( BitcodeModule module, LLVMComdatRef comdatRef )
+        /// <inheritdoc/>
+        public bool Equals(Comdat other) => Handle.Equals(other.Handle);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => Handle.GetHashCode();
+        #endregion
+
+        /// <summary>Gets a value indicating whether this instance represents a NULL/Invalid <see cref="Comdat"/></summary>
+        public bool IsNull => Handle.IsNull;
+
+        /// <summary>Gets or sets the <see cref="ComdatKind"/> for this <see cref="Comdat"/></summary>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Setter method is 'by definition' NOT readonly! DUH!" )]
+        public ComdatKind Kind
         {
-            ArgumentNullException.ThrowIfNull( module );
-            comdatRef.ThrowIfInvalid();
+            get => Handle.IsNull ? ComdatKind.Any : (ComdatKind)LLVMGetComdatSelectionKind( Handle );
 
-            Module = module;
-            ComdatHandle = comdatRef;
+            set
+            {
+                Handle.ThrowIfInvalid();
+                LLVMSetComdatSelectionKind( Handle, (LLVMComdatSelectionKind)value );
+            }
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Comdat"/> struct from an LLVM module and reference</summary>
+        /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
+        [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1642:Constructor summary documentation should begin with standard text", Justification = "Tooling is too stupid to see 'record struct'" )]
+        internal Comdat(LLVMComdatRef comdatRef )
+        {
+            comdatRef.ThrowIfInvalid();
+            Handle = comdatRef;
         }
 
         /// <summary>Gets the wrapped <see cref="LLVMComdatRef"/></summary>
-        internal LLVMComdatRef ComdatHandle { get; }
+        internal LLVMComdatRef Handle { get; }
     }
 }

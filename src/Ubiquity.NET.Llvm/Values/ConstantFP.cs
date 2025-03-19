@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public double GetValueWithLoss( out bool loosesInfo )
         {
-            return LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
+            return LLVMConstRealGetDouble( Handle, out loosesInfo );
         }
 
         internal ConstantFP( LLVMValueRef valueRef )

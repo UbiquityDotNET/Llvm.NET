@@ -14,13 +14,13 @@ namespace Ubiquity.NET.Llvm.Instructions
     {
         /// <summary>Gets the target function of the call</summary>
         public Function TargetFunction
-            => FromHandle<Function>( LLVMGetCalledValue( ValueHandle ).ThrowIfInvalid( ) )!;
+            => FromHandle<Function>( LLVMGetCalledValue( Handle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets or sets a value indicating whether the call is a tail call</summary>
         public bool IsTailCall
         {
-            get => LLVMIsTailCall( ValueHandle );
-            set => LLVMSetTailCall( ValueHandle, value );
+            get => LLVMIsTailCall( Handle );
+            set => LLVMSetTailCall( Handle, value );
         }
 
         /// <summary>Gets the attributes for this call site</summary>
@@ -30,13 +30,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
         {
             attrib.VerifyValidOn( index, this );
-            LLVMAddCallSiteAttribute( ValueHandle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
+            LLVMAddCallSiteAttribute( Handle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
         }
 
         /// <inheritdoc/>
         public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            return LLVMGetCallSiteAttributeCount( ValueHandle, ( LLVMAttributeIndex )index );
+            return LLVMGetCallSiteAttributeCount( Handle, ( LLVMAttributeIndex )index );
         }
 
         /// <inheritdoc/>
@@ -45,20 +45,20 @@ namespace Ubiquity.NET.Llvm.Instructions
             uint count = GetAttributeCountAtIndex( index );
             if( count == 0 )
             {
-                return Enumerable.Empty<AttributeValue>( );
+                return [];
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            LLVMGetCallSiteAttributes( ValueHandle, ( LLVMAttributeIndex )index, buffer );
+            LLVMGetCallSiteAttributes( Handle, ( LLVMAttributeIndex )index, buffer );
             return from attribRef in buffer
-                   select AttributeValue.FromHandle( Context, attribRef );
+                   select new AttributeValue( attribRef );
         }
 
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            var handle = LLVMGetCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
-            return AttributeValue.FromHandle( Context, handle );
+            var handle = LLVMGetCallSiteEnumAttribute( Handle, ( LLVMAttributeIndex )index, (uint)kind );
+            return new AttributeValue( handle );
         }
 
         /// <inheritdoc/>
@@ -69,21 +69,21 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Name_cannot_be_null_or_empty, nameof( name ) );
             }
 
-            var handle = LLVMGetCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
-            return AttributeValue.FromHandle( Context, handle );
+            var handle = LLVMGetCallSiteStringAttribute( Handle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            return new AttributeValue( handle );
         }
 
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, AttributeKind kind )
         {
-            LLVMRemoveCallSiteEnumAttribute( ValueHandle, ( LLVMAttributeIndex )index, (uint)kind );
+            LLVMRemoveCallSiteEnumAttribute( Handle, ( LLVMAttributeIndex )index, (uint)kind );
         }
 
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, string name )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
-            LLVMRemoveCallSiteStringAttribute( ValueHandle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
+            LLVMRemoveCallSiteStringAttribute( Handle, ( LLVMAttributeIndex )index, name, ( uint )name.Length );
         }
 
         internal CallInstruction( LLVMValueRef valueRef )

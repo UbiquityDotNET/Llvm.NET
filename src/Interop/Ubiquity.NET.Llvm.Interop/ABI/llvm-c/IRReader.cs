@@ -11,6 +11,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         // Takes ownership of the provided memory buffer.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMParseIRInContext(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMParseIRInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
     }
 }

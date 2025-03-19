@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
         internal LocalIndirectStubsManager(LLVMOrcIndirectStubsManagerRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
         internal LLVMOrcIndirectStubsManagerRef Handle { get; init; }

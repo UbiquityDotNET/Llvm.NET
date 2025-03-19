@@ -79,23 +79,25 @@ namespace CodeGenWithDebugInfo
 
             #region CreatingModule
             using var context = new Context( );
-            using var module = context.CreateBitcodeModule( moduleName, SourceLanguage.C99, srcPath, VersionIdentString );
+            using var module = context.CreateBitcodeModule( moduleName );
+            using var diBuilder = new DIBuilder(module);
+            DICompileUnit compilationUnit = diBuilder.CreateCompileUnit(SourceLanguage.C99, srcPath, VersionIdentString);
             module.SourceFileName = Path.GetFileName( srcPath );
-            module.TargetTriple = TargetDetails.TargetMachine.Triple;
-            module.Layout = TargetDetails.TargetMachine.TargetData;
-            Debug.Assert( module.DICompileUnit is not null, "Expected module with non-null compile unit" );
+            using var targetMachine = TargetDetails.CreateTargetMachine();
+            module.TargetTriple = targetMachine.Triple;
+            module.Layout = targetMachine.TargetData;
 
             TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
             #endregion
 
-            var diFile = module.DIBuilder.CreateFile( srcPath );
+            var diFile = diBuilder.CreateFile( srcPath );
 
             #region CreatingBasicTypesWithDebugInfo
             // Create basic types used in this compilation
-            var i32 = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
-            var f32 = new DebugBasicType( module.Context.FloatType, module, "float", DiTypeKind.Float );
+            var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
+            var f32 = new DebugBasicType( module.Context.FloatType, in diBuilder, "float", DiTypeKind.Float );
             var voidType = DebugType.Create( module.Context.VoidType, (DIType?)null );
-            var i32Array_0_32 = i32.CreateArrayType( module, 0, 32 );
+            var i32Array_0_32 = i32.CreateArrayType( in diBuilder, 0, 32 );
             #endregion
 
             #region CreatingStructureTypes
@@ -107,7 +109,7 @@ namespace CodeGenWithDebugInfo
                     new DebugMemberInfo( 2, "c", diFile, 5, i32Array_0_32 ),
                 };
 
-            var fooType = new DebugStructType( module, "struct.foo", module.DICompileUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
+            var fooType = new DebugStructType( in diBuilder, "struct.foo", compilationUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
             #endregion
 
             #region CreatingGlobalsAndMetadata
@@ -121,11 +123,11 @@ namespace CodeGenWithDebugInfo
 
             var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
             bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-            bar.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "bar", string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
+            bar.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, "bar", string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
 
             var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
             baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-            baz.AddDebugInfo( module.DIBuilder.CreateGlobalVariableExpression( module.DICompileUnit, "baz", string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
+            baz.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, "baz", string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
 
             // add module flags and compiler identifiers...
             // this can technically occur at any point, though placing it here makes
@@ -135,25 +137,25 @@ namespace CodeGenWithDebugInfo
 
             #region CreatingQualifiedTypes
             // create types for function args
-            var constFoo = module.DIBuilder.CreateQualifiedType( fooType.DebugInfoType, QualifiedTypeTag.Const );
-            var fooPtr = new DebugPointerType( fooType, module );
+            var constFoo = diBuilder.CreateQualifiedType( fooType.DebugInfoType, QualifiedTypeTag.Const );
+            var fooPtr = new DebugPointerType( fooType, in diBuilder );
             #endregion
 
             // Create the functions
             // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
             //       However, this is what Clang ends up doing for some reason so it is
             //       replicated here to aid in comparing the generated LL files.
-            Function doCopyFunc = DeclareDoCopyFunc( module, diFile, voidType );
-            Function copyFunc = DeclareCopyFunc( module, diFile, voidType, constFoo, fooPtr );
+            Function doCopyFunc = DeclareDoCopyFunc( in diBuilder, diFile, voidType );
+            Function copyFunc = DeclareCopyFunc( in diBuilder, diFile, voidType, constFoo, fooPtr );
 
-            CreateCopyFunctionBody( module, copyFunc, diFile, fooType, fooPtr, constFoo );
+            CreateCopyFunctionBody( in diBuilder, copyFunc, diFile, fooType, fooPtr, constFoo );
             CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
 
             // finalize the debug information
             // all temporaries must be replaced by now, this resolves any remaining
             // forward declarations and marks the builder to prevent adding any
             // nodes that are not completely resolved.
-            module.DIBuilder.Finish( );
+            diBuilder.Finish( );
 
             // verify the module is still good and print any errors found
             if( !module.Verify( out string msg ) )
@@ -165,8 +167,8 @@ namespace CodeGenWithDebugInfo
                 // Module is good, so generate the output files
                 module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
                 File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
-                TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileKind.ObjectFile );
-                TargetDetails.TargetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileKind.AssemblySource );
+                targetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileKind.ObjectFile );
+                targetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileKind.AssemblySource );
                 Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
             }
         }
@@ -177,11 +179,13 @@ namespace CodeGenWithDebugInfo
         }
 
         #region FunctionDeclarations
-        private static Function DeclareDoCopyFunc( BitcodeModule module, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
+        private static Function DeclareDoCopyFunc( ref readonly DIBuilder diBuilder, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
         {
-            var doCopySig = module.Context.CreateFunctionType( module.DIBuilder, voidType );
+            var module = diBuilder.OwningModule;
+            var doCopySig = module.Context.CreateFunctionType( in diBuilder, voidType );
 
-            var doCopyFunc = module.CreateFunction( scope: diFile
+            var doCopyFunc = module.CreateFunction( in diBuilder
+                                                  , scope: diFile
                                                   , name: "DoCopy"
                                                   , linkageName: null
                                                   , file: diFile
@@ -197,13 +201,15 @@ namespace CodeGenWithDebugInfo
             return doCopyFunc;
         }
 
-        private static Function DeclareCopyFunc( BitcodeModule module
-                                                 , DIFile diFile
-                                                 , IDebugType<ITypeRef, DIType> voidType
-                                                 , DIDerivedType constFoo
-                                                 , DebugPointerType fooPtr
-                                                 )
+        private static Function DeclareCopyFunc( ref readonly DIBuilder diBuilder
+                                               , DIFile diFile
+                                               , IDebugType<ITypeRef, DIType> voidType
+                                               , DIDerivedType constFoo
+                                               , DebugPointerType fooPtr
+                                               )
         {
+            var module = diBuilder.OwningModule;
+
             // Since the first parameter is passed by value
             // using the pointer + alloca + memcopy pattern, the actual
             // source, and therefore debug, signature is NOT a pointer.
@@ -212,13 +218,14 @@ namespace CodeGenWithDebugInfo
             // To get the correct debug info signature this inserts an
             // explicit DebugType<> that overrides the default behavior
             // to pair the LLVM pointer type with the original source type.
-            var copySig = module.Context.CreateFunctionType( module.DIBuilder
+            var copySig = module.Context.CreateFunctionType( in diBuilder
                                                            , voidType
                                                            , DebugType.Create( fooPtr, constFoo )
                                                            , fooPtr
                                                            );
 
-            var copyFunc = module.CreateFunction( scope: diFile
+            var copyFunc = module.CreateFunction( in diBuilder
+                                                , scope: diFile
                                                 , name: "copy"
                                                 , linkageName: null
                                                 , file: diFile
@@ -240,16 +247,16 @@ namespace CodeGenWithDebugInfo
         #endregion
 
         #region AddModuleFlags
-        private static void AddModuleFlags( BitcodeModule module )
+        private static void AddModuleFlags( Module module )
         {
-            module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DwarfVersionValue, 4 );
-            module.AddModuleFlag( ModuleFlagBehavior.Warning, BitcodeModule.DebugVersionValue, BitcodeModule.DebugMetadataVersion );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
             TargetDetails.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
         #endregion
 
-        private static void CreateCopyFunctionBody( BitcodeModule module
+        private static void CreateCopyFunctionBody( ref readonly DIBuilder diBuilder
                                                   , Function copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo
@@ -258,7 +265,7 @@ namespace CodeGenWithDebugInfo
                                                   )
         {
             Debug.Assert( copyFunc.DISubProgram != null, "Expected function with a valid debug subprogram" );
-            var diBuilder = module.DIBuilder;
+            IModule module = diBuilder.OwningModule;
 
             copyFunc.Parameters[ 0 ].Name = "src";
             copyFunc.Parameters[ 1 ].Name = "pDst";
@@ -267,7 +274,7 @@ namespace CodeGenWithDebugInfo
             var blk = copyFunc.AppendBasicBlock( "entry" );
 
             // create instruction builder to build the body
-            var instBuilder = new InstructionBuilder( blk );
+            using var instBuilder = new InstructionBuilder( blk );
 
             // create debug info locals for the arguments
             // NOTE: Debug parameter indices are 1 based!
@@ -329,7 +336,7 @@ namespace CodeGenWithDebugInfo
                        .Return( );
         }
 
-        private static void CreateDoCopyFunctionBody( BitcodeModule module
+        private static void CreateDoCopyFunctionBody( Module module
                                                     , Function doCopyFunc
                                                     , IStructType foo
                                                     , GlobalVariable bar
@@ -344,7 +351,7 @@ namespace CodeGenWithDebugInfo
             Debug.Assert( doCopyFunc.DISubProgram != null, "Expected non null subProgram" );
 
             // create instruction builder to build the body
-            var instBuilder = new InstructionBuilder( blk );
+            using var instBuilder = new InstructionBuilder( blk );
 
             bool param0ByVal = copyFunc.Attributes[ FunctionAttributeIndex.Parameter0 ].Contains( AttributeKind.ByVal );
             if( !param0ByVal )

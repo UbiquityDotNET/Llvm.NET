@@ -33,7 +33,9 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// instance the same as the original one or the ref count is never reduced and the native memory never reclaimed (That is, it leaks!)
         /// </remarks>
         public SymbolStringPoolEntry(SymbolStringPoolEntry other)
+#pragma warning disable CA2000 // Dispose objects before losing scope
             : this(other.Validate().AddRefHandle())
+#pragma warning restore CA2000 // Dispose objects before losing scope
         {
             // TODO: optimize this to use any lazy evaluated values available in other
         }
@@ -120,12 +122,12 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             }
         }
 
-        internal nint ToABI()
+        internal LLVMOrcSymbolStringPoolEntryRefAlias ToABI()
         {
             ObjectDisposedException.ThrowIf(IsDisposed, this);
 
             DangerousAddRef();
-            return Handle.DangerousGetHandle();
+            return LLVMOrcSymbolStringPoolEntryRefAlias.FromABI(Handle.DangerousGetHandle());
         }
 
         internal SymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef h)
@@ -135,7 +137,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 throw new ArgumentNullException(nameof(h));
             }
 
-            Handle = h;
+            Handle = h.Move();
             unsafe
             {
                 NativeStringPtr = new(()=>(nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -155,7 +157,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             }
         }
 
-        internal LLVMOrcSymbolStringPoolEntryRef Handle { get; init; }
+        internal LLVMOrcSymbolStringPoolEntryRef Handle { get; }
 
         /// <summary>Increases the ref count on this instance</summary>
         /// <remarks>

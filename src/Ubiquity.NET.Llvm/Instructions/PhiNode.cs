@@ -27,10 +27,10 @@ namespace Ubiquity.NET.Llvm.Instructions
 
             var allIncoming = additionalIncoming.Prepend( firstIncoming );
 
-            LLVMValueRef[ ] llvmValues = allIncoming.Select( vb => vb.Value.ValueHandle ).ToArray( );
-            LLVMBasicBlockRef[ ] llvmBlocks = allIncoming.Select( vb => vb.Block.BlockHandle ).ToArray( );
+            LLVMValueRef[ ] llvmValues = [ .. allIncoming.Select( vb => vb.Value.Handle ) ];
+            LLVMBasicBlockRef[ ] llvmBlocks = [ .. allIncoming.Select( vb => vb.Block.BlockHandle ) ];
 
-            LLVMAddIncoming( ValueHandle, llvmValues, llvmBlocks, ( uint )llvmValues.Length );
+            LLVMAddIncoming( Handle, llvmValues, llvmBlocks, ( uint )llvmValues.Length );
         }
 
         internal PhiNode( LLVMValueRef valueRef )

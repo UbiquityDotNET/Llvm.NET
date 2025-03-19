@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Kaleidoscope.Grammar
 {
@@ -31,7 +32,8 @@ namespace Kaleidoscope.Grammar
         }
 
         /// <summary>Gets a Default disposable action that does nothing</summary>
-        public static DisposableAction Nop => new( ( ) => { } );
+        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP012:Property should not return created disposable", Justification = "It's a NOP" )]
+        public static DisposableAction Nop => new( static ( ) => { } );
 
         private readonly Action OnDispose;
     }

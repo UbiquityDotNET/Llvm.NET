@@ -120,7 +120,7 @@ namespace Ubiquity.NET.Llvm.UT
 
         private static byte[] Range(byte start, byte length)
         {
-            return Enumerable.Range( start, length ).Select( n => ( byte )n ).ToArray( );
+            return [ .. Enumerable.Range( start, length ).Select( n => ( byte )n ) ];
         }
     }
 }

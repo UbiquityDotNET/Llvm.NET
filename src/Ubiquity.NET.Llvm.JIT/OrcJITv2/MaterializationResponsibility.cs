@@ -54,7 +54,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 
         internal MaterializationResponsibility(LLVMOrcMaterializationResponsibilityRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
         internal MaterializationResponsibility(nint h, bool alias = false)
@@ -62,6 +62,6 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             Handle = new(h, !alias);
         }
 
-        internal LLVMOrcMaterializationResponsibilityRef Handle { get; init; }
+        internal LLVMOrcMaterializationResponsibilityRef Handle { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Ubiquity.NET.Llvm.Values
     internal class ValueAttributeDictionary
         : IAttributeDictionary
     {
-        public Context Context => Container.Context;
+        public IContext Context => Container.Context;
 
         public ICollection<AttributeValue> this[ FunctionAttributeIndex key ]
         {
@@ -33,10 +33,10 @@ namespace Ubiquity.NET.Llvm.Values
         }
 
         public IEnumerable<FunctionAttributeIndex> Keys
-            => new ReadOnlyCollection<FunctionAttributeIndex>( GetValidKeys( ).ToList( ) );
+            => new ReadOnlyCollection<FunctionAttributeIndex>( [ .. GetValidKeys( ) ] );
 
         public IEnumerable<ICollection<AttributeValue>> Values
-            => new ReadOnlyCollection<ICollection<AttributeValue>>( this.Select( kvp => kvp.Value ).ToList( ) );
+            => new ReadOnlyCollection<ICollection<AttributeValue>>( [ .. this.Select( kvp => kvp.Value ) ] );
 
         public int Count => GetValidKeys( ).Count( );
 

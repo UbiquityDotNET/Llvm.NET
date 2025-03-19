@@ -20,20 +20,20 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [Obsolete( "Use LLVMParseBitcodeInContext2 instead" )]
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMParseBitcodeInContext(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMParseBitcodeInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out DisposeMessageString OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMParseBitcodeInContext2(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule);
+        public static unsafe partial LLVMStatus LLVMParseBitcodeInContext2(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule);
 
         [Obsolete( "Use LLVMGetBitcodeModuleInContext2 instead" )]
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext2(LLVMContextRef ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM);
+        public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext2(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM);
 
         [Obsolete( "Use LLVMGetBitcodeModule2 instead" )]
         [LibraryImport( LibraryName )]

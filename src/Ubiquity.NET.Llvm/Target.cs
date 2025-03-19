@@ -120,7 +120,7 @@ namespace Ubiquity.NET.Llvm
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
+            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
@@ -140,7 +140,7 @@ namespace Ubiquity.NET.Llvm
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
+            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 

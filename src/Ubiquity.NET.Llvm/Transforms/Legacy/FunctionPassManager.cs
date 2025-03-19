@@ -14,8 +14,8 @@ namespace Ubiquity.NET.Llvm.Transforms.Legacy
     {
         /// <summary>Initializes a new instance of the <see cref="FunctionPassManager"/> class.</summary>
         /// <param name="module">Module that owns the functions this manager works on</param>
-        public FunctionPassManager( BitcodeModule module )
-            : base( LLVMCreateFunctionPassManagerForModule( module.ThrowIfNull().ModuleHandle ) )
+        public FunctionPassManager( Module module )
+            : base( LLVMCreateFunctionPassManagerForModule( module.ThrowIfNull().GetUnownedHandle() ) )
         {
         }
 
@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Transforms.Legacy
         /// <returns><see langword="true"/>if any of the passes modified the module</returns>
         public bool Run( Function target )
         {
-            return LLVMRunFunctionPassManager( Handle, target.ThrowIfNull().ValueHandle );
+            return LLVMRunFunctionPassManager( Handle, target.ThrowIfNull().Handle );
         }
 
         /// <summary>Finalizes all of the function passes scheduled in the function pass manager.</summary>

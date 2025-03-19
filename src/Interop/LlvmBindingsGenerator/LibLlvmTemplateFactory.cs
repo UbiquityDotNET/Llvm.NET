@@ -58,11 +58,14 @@ namespace LlvmBindingsGenerator
 
             foreach( var handle in handles )
             {
-                if( HandleToTemplateMap.TryGetValue( handle.Name, out IHandleCodeTemplate? template ) )
+                bool templatesFound = false;
+                foreach(IHandleCodeTemplate template in HandleToTemplateMap[handle.Name])
                 {
-                    yield return new TemplateCodeGenerator( handle.Name, GeneratedCodePath, template );
+                    yield return new TemplateCodeGenerator( template.HandleName, GeneratedCodePath, template );
+                    templatesFound = true;
                 }
-                else
+
+                if(!templatesFound)
                 {
                     // Generate an error for any handle types parsed from native headers not accounted for in the YAML configuration.
                     Diagnostics.Error( "No Mapping for handle type {0} - {1}@{2}", handle.Name, handle.TranslationUnit.FileRelativePath, handle.LineNumberStart );
@@ -70,7 +73,7 @@ namespace LlvmBindingsGenerator
             }
         }
 
-        private readonly HandleTemplateMap HandleToTemplateMap;
+        private readonly ILookup<string, IHandleCodeTemplate> HandleToTemplateMap;
 
         private const string GeneratedCodePath = "GeneratedCode";
     }

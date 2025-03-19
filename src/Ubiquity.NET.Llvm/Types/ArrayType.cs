@@ -21,12 +21,12 @@ namespace Ubiquity.NET.Llvm.Types
     /// <remarks>
     /// Array's in LLVM are fixed length sequences of elements
     /// </remarks>
-    internal class ArrayType
+    internal sealed class ArrayType
         : SequenceType
         , IArrayType
     {
         /// <inheritdoc/>
-        public uint Length => LLVMGetArrayLength( TypeRefHandle );
+        public uint Length => LLVMGetArrayLength( Handle );
 
         internal ArrayType( LLVMTypeRef typeRef )
             : base( typeRef )

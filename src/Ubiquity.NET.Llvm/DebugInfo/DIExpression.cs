@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Llvm.Metadata;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information expression</summary>

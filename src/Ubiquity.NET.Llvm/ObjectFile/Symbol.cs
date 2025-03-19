@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         {
             get
             {
-                LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.Handle );
+                using LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.Handle );
                 LLVMMoveToContainingSection( iterator, IteratorRef );
                 return new Section( ContainingBinary, iterator, false );
             }
@@ -69,10 +69,15 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
         internal Symbol( TargetBinary binary, LLVMSymbolIteratorRef iterator, bool clone )
         {
-            IteratorRef = clone ? LibLLVMSymbolIteratorClone( iterator ) : iterator;
+            IteratorRef = clone ? LibLLVMSymbolIteratorClone( iterator ) : iterator.Move();
             ContainingBinary = binary;
         }
 
+#pragma warning disable IDISP006 // Implement IDisposable
+
+        // Can't dispose the iterator, this is just a reference to one element
+        // the enumerator that produces these owns the native iterator.
         internal LLVMSymbolIteratorRef IteratorRef { get; }
+#pragma warning restore IDISP006 // Implement IDisposable
     }
 }

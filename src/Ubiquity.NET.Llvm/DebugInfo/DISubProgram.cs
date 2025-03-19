@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the source line associated with this <see cref="DISubProgram"/></summary>
-        public uint Line => LLVMDISubprogramGetLine( MetadataHandle );
+        public uint Line => LLVMDISubprogramGetLine( Handle );
 
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
         public override string Name => GetOperandString( 2 );
@@ -55,12 +55,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         // Does the list include exceptions thrown by the complete call graph? or only those explicitly thrown by this function?
         public DITypeArray? ThrownTypes => Operands.Count < 11 ? null : new DITypeArray( GetOperand<MDTuple>( 10 ) );
 
+        // TODO: Annotations (11) [Metadata? name suggests an array but likely not a type array...]
+        // TODO: Target FuncName (12) [MDString]
+
         /// <summary>Determines if this instance describes a given <see cref="Function"/></summary>
         /// <param name="function"><see cref="Function"/> to test</param>
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public bool Describes( Function function )
-            => LibLLVMSubProgramDescribes( MetadataHandle, function.ThrowIfNull().ValueHandle );
+            => LibLLVMSubProgramDescribes( Handle, function.ThrowIfNull().Handle );
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

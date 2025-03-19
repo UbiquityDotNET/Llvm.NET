@@ -19,10 +19,10 @@ namespace Ubiquity.NET.Llvm.Transforms.Legacy
         /// <summary>Runs the passes added to this manager for the target module</summary>
         /// <param name="target">Module to run the passes on</param>
         /// <returns><see langword="true"/> if one of the passes modified the module</returns>
-        public bool Run( BitcodeModule target )
+        public bool Run( Module target )
         {
             ArgumentNullException.ThrowIfNull( target );
-            return LLVMRunPassManager( Handle, target.ModuleHandle );
+            return LLVMRunPassManager( Handle, target.GetUnownedHandle() );
         }
     }
 }

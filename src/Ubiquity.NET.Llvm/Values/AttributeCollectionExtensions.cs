@@ -62,8 +62,8 @@ namespace Ubiquity.NET.Llvm.Values
     /// <summary>Interface for objects that contain Attributes</summary>
     public interface IAttributeContainer
     {
-        /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.Context"/> that owns these attributes </summary>
-        Context Context { get; }
+        /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ContextAlias"/> that owns these attributes </summary>
+        IContext Context { get; }
 
         /// <summary>Gets the full set of Attributes keyed by <see cref="FunctionAttributeIndex"/></summary>
         IAttributeDictionary Attributes { get; }

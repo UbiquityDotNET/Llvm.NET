@@ -16,9 +16,6 @@ namespace Ubiquity.NET.Llvm.Values
     /// </remarks>
     public readonly record struct AttributeValue
     {
-        /// <summary>Gets the context that owns this <see cref="AttributeValue"/></summary>
-        public Context Context { get; }
-
         /// <summary>Gets the kind of the attribute</summary>
         /// <value>The unique ID for the named attribute</value>
         /// <remarks>
@@ -34,7 +31,7 @@ namespace Ubiquity.NET.Llvm.Values
         public string Name
             => IsString
                 ? LLVMGetStringAttributeKind( NativeAttribute, out uint _ ) ?? string.Empty
-                : LibLLVMGetEnumAttributeKindName(NativeAttribute).ToString() ?? string.Empty;
+                : GetEnumAttributeName();
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
@@ -44,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Values
         public UInt64 IntegerValue => IsEnum ? LLVMGetEnumAttributeValue( NativeAttribute ) : 0;
 
         /// <summary>Gets the Type value of this attribute, if any</summary>
-        public ITypeRef? TypeValue => IsType ? TypeRef.FromHandle( LLVMGetTypeAttributeValue( NativeAttribute ) ) : null;
+        public ITypeRef? TypeValue => IsType ? LLVMGetTypeAttributeValue( NativeAttribute ).CreateType() : null;
 
         /// <summary>Gets a value indicating whether this attribute is a target specific string value</summary>
         public bool IsString => LLVMIsStringAttribute( NativeAttribute );
@@ -64,14 +61,14 @@ namespace Ubiquity.NET.Llvm.Values
             ArgumentNullException.ThrowIfNull( value );
 
             // TODO: Attributes on globals??
-            if( !( value.IsCallSite || value.IsFunction ) )
+            if(!(value.IsCallSite || value.IsFunction))
             {
                 throw new ArgumentException( "Attributes only allowed on functions and call sites" );
             }
 
             // for now all string attributes are valid everywhere as they are target dependent
             // (e.g. no way to verify the validity of an arbitrary attribute without knowing the target)
-            if( IsString || IsType )
+            if(IsString || IsType)
             {
                 return;
             }
@@ -83,35 +80,21 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Attribute as a string</returns>
         public override string? ToString( )
         {
-            return LibLLVMAttributeToString( NativeAttribute ).ToString();
+            using var nativeRetVal = LibLLVMAttributeToString( NativeAttribute );
+            return nativeRetVal.ToString();
         }
 
-        internal static AttributeValue FromHandle( Context context, LLVMAttributeRef handle )
+        internal AttributeValue( LLVMAttributeRef nativeValue )
         {
-            return context.GetAttributeFor( handle );
+            NativeAttribute = nativeValue;
         }
 
         internal LLVMAttributeRef NativeAttribute { get; }
 
-        internal class InterningFactory
-            : HandleInterningMapWithContext<LLVMAttributeRef, AttributeValue>
+        private string GetEnumAttributeName( )
         {
-            internal InterningFactory( Context context )
-                : base( context )
-            {
-            }
-
-            private protected override AttributeValue ItemFactory( LLVMAttributeRef handle )
-            {
-                return new AttributeValue( Context, handle );
-            }
-        }
-
-        private AttributeValue( Context context, LLVMAttributeRef nativeValue )
-        {
-            ArgumentNullException.ThrowIfNull( context );
-            Context = context;
-            NativeAttribute = nativeValue;
+            using var nativeRetVal = LibLLVMGetEnumAttributeKindName( NativeAttribute );
+            return nativeRetVal.ToString() ?? string.Empty;
         }
     }
 }

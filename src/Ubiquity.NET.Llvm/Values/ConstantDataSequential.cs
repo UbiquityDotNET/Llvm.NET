@@ -24,10 +24,10 @@ namespace Ubiquity.NET.Llvm.Values
         : ConstantData
     {
         /// <summary>Gets a value indicating whether this constant is a string</summary>
-        public bool IsString => LibLLVMIsConstantCString( ValueHandle );
+        public bool IsString => LibLLVMIsConstantCString( Handle );
 
         /// <summary>Gets a value indicating whether this constant is a sequence of 8bit integral values</summary>
-        public bool IsI8Sequence => LLVMIsConstantString( ValueHandle );
+        public bool IsI8Sequence => LLVMIsConstantString( Handle );
 
         /// <summary>Extract a string value from the constant (Assumes encoding ASCII)</summary>
         /// <returns>Extracted string</returns>
@@ -61,13 +61,13 @@ namespace Ubiquity.NET.Llvm.Values
             {
                 unsafe
                 {
-                    return new( LibLLVMGetConstantDataSequentialRawData( ValueHandle, out size_t len ), len );
+                    return new( LibLLVMGetConstantDataSequentialRawData( Handle, out size_t len ), len );
                 }
             }
         }
 
         /// <summary>Gets the count of elements in this <see cref="ConstantDataSequential"/></summary>
-        public uint Count => LibLLVMGetConstantDataSequentialElementCount( ValueHandle );
+        public uint Count => LibLLVMGetConstantDataSequentialElementCount( Handle );
 
         internal ConstantDataSequential( LLVMValueRef valueRef )
             : base( valueRef )

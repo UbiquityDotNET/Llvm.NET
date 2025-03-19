@@ -13,10 +13,10 @@ namespace Ubiquity.NET.Llvm.Values
         : Value
     {
         /// <summary>Gets the function this argument belongs to</summary>
-        public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( ValueHandle ).ThrowIfInvalid( ) )!;
+        public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( Handle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the zero based index of the argument</summary>
-        public uint Index => LibLLVMGetArgumentIndex( ValueHandle );
+        public uint Index => LibLLVMGetArgumentIndex( Handle );
 
         /// <summary>Sets the alignment for the argument</summary>
         /// <param name="value">Alignment value for this argument</param>

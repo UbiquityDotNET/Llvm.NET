@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     using unsafe LLVMOrcDisposeCAPIDefinitionGeneratorFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, void /*retVal*/>;
     using unsafe LLVMOrcErrorReporterFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, nint /*LLVMErrorRef*/ /*Err*/, void /*retVal*/>;
     using unsafe LLVMOrcExecutionSessionLookupHandleResultFunction = delegate* unmanaged[Cdecl]<nint /*LLVMErrorRef*/ /*Err*/, LLVMOrcCSymbolMapPair* /*Result*/, size_t /*NumPairs*/, void* /*Ctx*/, void /*retVal*/>;
-    using unsafe LLVMOrcGenericIRModuleOperationFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, nint /*LLVMModuleRef*/ /*M*/, nint /*LLVMErrorRef*/ /*retVal*/ >;
+    using unsafe LLVMOrcGenericIRModuleOperationFunction = delegate* unmanaged[Cdecl]<void* /*Ctx*/, LLVMModuleRefAlias /*M*/, nint /*LLVMErrorRef*/ /*retVal*/ >;
     using unsafe LLVMOrcIRTransformLayerTransformFunction = delegate* unmanaged[Cdecl]<
         void* /*Ctx*/,
         /*[Out]*/ nint* /*LLVMOrcThreadSafeModuleRef*/ /*ModInOut*/,
@@ -88,23 +88,50 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     // Only an "unmanaged" struct is usable directly in native APIs
     // so these only store the raw handle value. Callers must account for any move or ref counted lifetimes, etc...
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolFlagsMapPair(/*LLVMOrcSymbolStringPoolEntryRef*/ nint Name, LLVMJITSymbolFlags Flags);
+    public readonly record struct LLVMOrcCSymbolFlagsMapPair(LLVMOrcSymbolStringPoolEntryRefAlias Name, LLVMJITSymbolFlags Flags);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolMapPair(/*LLVMOrcSymbolStringPoolEntryRef*/ nint Name, LLVMJITEvaluatedSymbol sym);
+    public readonly record struct LLVMOrcCSymbolMapPair(LLVMOrcSymbolStringPoolEntryRefAlias Name, LLVMJITEvaluatedSymbol sym);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolAliasMapEntry(/*LLVMOrcSymbolStringPoolEntryRef*/ nint Name, LLVMJITSymbolFlags Flags);
+    public readonly record struct LLVMOrcCSymbolAliasMapEntry(LLVMOrcSymbolStringPoolEntryRefAlias Name, LLVMJITSymbolFlags Flags);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolAliasMapPair(/*LLVMOrcSymbolStringPoolEntryRef*/ nint name, LLVMOrcCSymbolAliasMapEntry entry);
+    public readonly record struct LLVMOrcCSymbolAliasMapPair(LLVMOrcSymbolStringPoolEntryRefAlias name, LLVMOrcCSymbolAliasMapEntry entry);
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolsList
+    public readonly /*record*/ struct LLVMOrcCSymbolsList
+        : IEquatable<LLVMOrcCSymbolsList>
     {
-        // This is an Array/Span of LLVMOrcSymbolStringPoolEntryRef
-        public readonly nint /*LLVMOrcSymbolStringPoolEntryRef* */ Symbols;
+        // This is a pointer to a contiguous span of LLVMOrcSymbolStringPoolEntryRef (Length field indicates the size)
+        public unsafe readonly LLVMOrcSymbolStringPoolEntryRefAlias* Symbols;
         public readonly size_t Length;
+
+        // NOTE: unsafe types not supported by a "record" struct so have to do equality manually
+        #region IEquatable<LLVMOrcCSymbolsList>
+        public bool Equals( LLVMOrcCSymbolsList other )
+        {
+            // Nothing inherently unsafe about comparing pointers...
+            unsafe
+            {
+                return Symbols == other.Symbols;
+            }
+        }
+
+        public override bool Equals(object? obj ) => obj is LLVMOrcCSymbolsList other && Equals(other);
+
+        public override int GetHashCode( )
+        {
+            unsafe
+            {
+                return HashCode.Combine((nint)Symbols, Length);
+            }
+        }
+
+        public static bool operator ==( LLVMOrcCSymbolsList left, LLVMOrcCSymbolsList right ) => left.Equals( right );
+
+        public static bool operator !=( LLVMOrcCSymbolsList left, LLVMOrcCSymbolsList right ) => !(left == right);
+        #endregion
     }
 
     [StructLayout( LayoutKind.Sequential )]
@@ -184,19 +211,13 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef S);
-
-        // internal only RAW API, no safe handle - BEWARE!
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        internal static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(nint s);
+        public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRefAlias S);
 
         // This does NOT marshal the string, it only provides the raw pointer so that a span is constructible
         // from the pointer. The memory for the string is OWNED by the entry so the returned pointer is valid
         // for the lifetime of the referenced entry.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Keeping related or overloaded APIs together is WAY simpler on maintenance" )]
         public static unsafe partial byte* LLVMOrcSymbolStringPoolEntryStr(LLVMOrcSymbolStringPoolEntryRef S);
 
         [LibraryImport( LibraryName )]
@@ -411,10 +432,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeObjectLayer(LLVMOrcObjectLayerRef ObjLayer);
 
-        // ownership of the handles is transferred to native code in this call, thus they are declared as nint to allow MoveToNative()
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcIRTransformLayerEmit(LLVMOrcIRTransformLayerRef IRTransformLayer, /*LLVMOrcMaterializationResponsibilityRef*/ nint MR, /*LLVMOrcThreadSafeModuleRef*/nint TSM);
+        public static unsafe partial void LLVMOrcIRTransformLayerEmit(LLVMOrcIRTransformLayerRef IRTransformLayer, LLVMOrcMaterializationResponsibilityRef MR, LLVMOrcThreadSafeModuleRef TSM);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

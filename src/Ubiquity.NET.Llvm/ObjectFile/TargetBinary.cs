@@ -110,13 +110,13 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
         /// <summary>Initializes a new instance of the <see cref="TargetBinary"/> class.</summary>
         /// <param name="buffer">Memory buffer containing the raw binary data of the object file</param>
-        /// <param name="context">Context for the object file</param>
+        /// <param name="context">ContextAlias for the object file</param>
         /// <remarks>The <paramref name="buffer"/> is 'moved" into this instance. That is buffer is the
         /// <see cref="MemoryBuffer.IsDisposed"/> property is <see langword="true"/> after this call completes
         /// without any exceptions. If there is an exception, transfer is not complete and ownership remains
         /// with the caller.
         /// </remarks>
-        internal TargetBinary( MemoryBuffer buffer, Context context )
+        internal TargetBinary( MemoryBuffer buffer, IContext context )
         {
             ArgumentNullException.ThrowIfNull( buffer );
             ArgumentNullException.ThrowIfNull( context );
@@ -125,7 +125,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             try
             {
                 BackingBuffer = new(buffer.Handle.Move());
-                Handle = LLVMCreateBinary( BackingBuffer.Handle, context.Handle, out errMsg );
+                Handle = LLVMCreateBinary( BackingBuffer.Handle, context.GetUnownedHandle(), out errMsg );
                 if( Handle.IsInvalid )
                 {
                     throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
@@ -137,7 +137,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             }
         }
 
-        internal LLVMBinaryRef Handle { get; init; }
+        internal LLVMBinaryRef Handle { get; }
 
         private readonly MemoryBuffer BackingBuffer;
     }

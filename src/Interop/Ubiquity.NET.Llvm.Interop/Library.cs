@@ -874,6 +874,7 @@ namespace Ubiquity.NET.Llvm.Interop
             }
         }
 
+        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "This instance owns it, if it isn't released here - BOOM CRASH!" )]
         private static void InternalShutdownLLVM(IDisposable hLibLLVM)
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState

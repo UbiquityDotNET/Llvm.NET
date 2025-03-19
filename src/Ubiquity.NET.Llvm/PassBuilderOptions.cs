@@ -157,7 +157,7 @@ namespace Ubiquity.NET.Llvm
 
         private PassBuilderOptions(LLVMPassBuilderOptionsRef handle)
         {
-            Handle = handle;
+            Handle = handle.Move();
         }
     }
 }

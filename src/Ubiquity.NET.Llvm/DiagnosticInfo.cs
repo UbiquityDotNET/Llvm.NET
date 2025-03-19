@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Context.cs" company="Ubiquity.NET Contributors">
+// <copyright file="ContextAlias.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -29,11 +29,15 @@ namespace Ubiquity.NET.Llvm
         public DiagnosticSeverity Severity => (DiagnosticSeverity)LLVMGetDiagInfoSeverity(Handle);
 
         /// <summary>Gets the description for this diagnostic</summary>
+        /// <returns>The description</returns>
         /// <remarks>
         /// This produces a copy of the description that requires the caller
-        /// release it when done.
+        /// release it (via <see cref="IDisposable.Dispose"/> when done.
         /// </remarks>
-        public CStringHandle Description => LLVMGetDiagInfoDescription(Handle);
+        public CStringHandle GetDescription()
+        {
+            return LLVMGetDiagInfoDescription(Handle);
+        }
 
         internal DiagnosticInfo(nint abi)
         {

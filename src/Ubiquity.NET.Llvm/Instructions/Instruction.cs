@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Llvm.Metadata;
+
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction opcodes</summary>
@@ -425,16 +427,16 @@ namespace Ubiquity.NET.Llvm.Instructions
     {
         /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>
         public BasicBlock ContainingBlock
-            => BasicBlock.FromHandle( LLVMGetInstructionParent( ValueHandle ).ThrowIfInvalid( ) )!;
+            => BasicBlock.FromHandle( LLVMGetInstructionParent( Handle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the LLVM opcode for the instruction</summary>
-        public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( ValueHandle );
+        public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( Handle );
 
         /// <summary>Gets or sets the <see cref="DILocation"/> for this instruction</summary>
         public DILocation? Location
         {
-            get => MDNode.FromHandle<DILocation>( LLVMInstructionGetDebugLoc( ValueHandle ) );
-            set => LLVMInstructionSetDebugLoc( ValueHandle, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
+            get => (DILocation?)LLVMInstructionGetDebugLoc( Handle ).CreateMetadata( );
+            set => LLVMInstructionSetDebugLoc( Handle, value?.Handle ?? LLVMMetadataRef.Zero );
         }
 
         /// <summary>Gets a value indicating whether the opcode is for a memory access (<see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/>)</summary>
@@ -450,16 +452,16 @@ namespace Ubiquity.NET.Llvm.Instructions
         }
 
         /// <summary>Gets a value indicating whether this instruction has metadata</summary>
-        public bool HasMetadata => LLVMHasMetadata( ValueHandle );
+        public bool HasMetadata => LLVMHasMetadata( Handle );
 
         /// <summary>Gets or sets LlvmMetadata (as a value) for this instruction</summary>
         /// <param name="kindKey">LlvmMetadata kind to get</param>
         /// <returns>LlvmMetadata for the kind or <see langword="null"/> if not present</returns>
         public MetadataAsValue? this[ MetadataKind kindKey ]
         {
-            get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );
+            get => FromHandle<MetadataAsValue>( LLVMGetMetadata( Handle, ( uint )kindKey ) );
 
-            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ThrowIfNull()!.ValueHandle );
+            set => LLVMSetMetadata( Handle, ( uint )kindKey, value.ThrowIfNull()!.Handle );
         }
 
         /// <summary>Gets a snap-shot collection of the metadata for this instruction, filtering out all the debug location nodes</summary>
@@ -468,11 +470,11 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( ValueHandle, out size_t numEntries );
+                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( Handle, out size_t numEntries );
                 for( long i = 0; i < numEntries.ToInt32( ); ++i )
                 {
                     LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
-                    yield return MDNode.FromHandle<MDNode>( handle.ThrowIfInvalid( ) )!;
+                    yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
                 }
             }
         }
@@ -486,7 +488,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public uint Alignment
         {
-            get => IsMemoryAccess ? LLVMGetAlignment( ValueHandle ) : 0;
+            get => IsMemoryAccess ? LLVMGetAlignment( Handle ) : 0;
 
             set
             {
@@ -495,7 +497,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                     throw new InvalidOperationException( Resources.Alignment_only_allowed_on_memory_instructions );
                 }
 
-                LLVMSetAlignment( ValueHandle, value );
+                LLVMSetAlignment( Handle, value );
             }
         }
 

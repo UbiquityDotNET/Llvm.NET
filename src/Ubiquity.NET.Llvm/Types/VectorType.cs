@@ -17,11 +17,11 @@ namespace Ubiquity.NET.Llvm.Types
         uint Size { get; }
     }
 
-    internal class VectorType
+    internal sealed class VectorType
         : SequenceType
         , IVectorType
     {
-        public uint Size => LLVMGetVectorSize( TypeRefHandle );
+        public uint Size => LLVMGetVectorSize( Handle );
 
         internal VectorType( LLVMTypeRef typeRef )
             : base( typeRef )

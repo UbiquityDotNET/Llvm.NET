@@ -215,6 +215,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMContextRefAlias LibLLVMGetNodeContext(LLVMMetadataRef node);
 
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind( LLVMMetadataRef handle);
+
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
@@ -309,7 +313,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMAddNamedMetadataOperand2(LLVMModuleRef M, string name, LLVMMetadataRef Val);
+        public static unsafe partial void LibLLVMAddNamedMetadataOperand2(LLVMModuleRefAlias M, string name, LLVMMetadataRef Val);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

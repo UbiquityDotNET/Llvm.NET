@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Module Flags Tuple for a module</summary>
+    /// <summary>ModuleHandle Flags Tuple for a module</summary>
     public class ModuleFlag
     {
         /// <summary>Initializes a new instance of the <see cref="ModuleFlag"/> class.</summary>
@@ -32,22 +32,23 @@ namespace Ubiquity.NET.Llvm
         internal ModuleFlag( MDNode node )
         {
             ArgumentNullException.ThrowIfNull( node );
+
             if( node.Operands.Count != 3 )
             {
                 throw new ArgumentException( Resources.Expected_node_with_3_operands, nameof( node ) );
             }
 
-            if( !( node.Operands[ 0 ] is ConstantAsMetadata behavior ) )
+            if( node.Operands[ 0 ] is not ConstantAsMetadata behavior)
             {
                 throw new ArgumentException( Resources.Expected_ConstantAsMetadata_for_first_operand, nameof( node ) );
             }
 
-            if( !( behavior.Constant is ConstantInt behaviorConst ) )
+            if( behavior.Constant is not ConstantInt behaviorConst)
             {
                 throw new ArgumentException( Resources.Expected_ConstantInt_wrapped_in_first_operand, nameof( node ) );
             }
 
-            if( !( node.Operands[ 1 ] is MDString nameMd ) )
+            if( node.Operands[ 1 ] is not MDString nameMd)
             {
                 throw new ArgumentException( Resources.Expected_MDString_as_second_operand, nameof( node ) );
             }

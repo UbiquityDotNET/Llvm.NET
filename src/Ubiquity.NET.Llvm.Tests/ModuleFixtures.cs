@@ -19,6 +19,7 @@ namespace Ubiquity.NET.Llvm.UT
         {
             ArgumentNullException.ThrowIfNull( ctx );
 
+            LibLLVM?.Dispose();
             LibLLVM = Library.InitializeLLVM();
             LibLLVM.RegisterTarget( CodeGenTarget.All );
         }

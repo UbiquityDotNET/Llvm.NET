@@ -23,7 +23,7 @@ namespace Ubiquity.NET.LlvmTests
         public static void AssemblyInitialize( TestContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
-
+            LibLLVM?.Dispose();
             LibLLVM = Library.InitializeLLVM( );
 
             // Testing JIT so the only target of relevance is the native machine

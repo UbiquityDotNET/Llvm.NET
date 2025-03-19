@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 {
-    /// <summary>Thread safe Context for use with LLVM ORC JIT v2</summary>
+    /// <summary>Thread safe ContextAlias for use with LLVM ORC JIT v2</summary>
     public sealed class ThreadSafeContext
         : IDisposable
     {
@@ -20,16 +20,25 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <param name="perThreadModule">Module to add</param>
         /// <returns>ThreadSafe module added to this context</returns>
         /// <remarks>
-        /// This creates a new <see cref="ThreadSafeModule"/> in this context. The
-        /// resulting module has a ref count on the context and therefore it is
-        /// safe (and appropriate) to dispose of this instance.
+        /// <para>This creates a new <see cref="ThreadSafeModule"/> in this context. The
+        /// resulting <see cref="ThreadSafeModule"/> has a ref count on the context and
+        /// therefore it is safe (and appropriate) to dispose of this instance.</para>
+        /// <note type="important">
+        /// Ownership of the input <paramref name="perThreadModule"/> is transferred to
+        /// the returned value and is NOT usable after this call completes without exception
+        /// (Except to call Dispose which is a NOP). However if an exception occurs, then
+        /// ownership remains with the caller. Thus callers should ALWAYS call Dispose on the
+        /// result and should NOT assume it is valid.
+        /// </note>
         /// </remarks>
-        public ThreadSafeModule AddModule(BitcodeModule perThreadModule)
+        public ThreadSafeModule AddModule(Module perThreadModule)
         {
             ArgumentNullException.ThrowIfNull(perThreadModule);
             ObjectDisposedException.ThrowIf(Handle.IsClosed || Handle.IsInvalid, this);
-
-            return new(LLVMOrcCreateNewThreadSafeModule(perThreadModule.ModuleHandle, Handle).ThrowIfInvalid());
+            using var moduleRef = perThreadModule.GetOwnedHandle();
+            var retVal = new ThreadSafeModule(LLVMOrcCreateNewThreadSafeModule(moduleRef, Handle).ThrowIfInvalid());
+            moduleRef.SetHandleAsInvalid(); // transfer to native complete.
+            return retVal;
         }
 
         /// <inheritdoc/>
@@ -39,16 +48,16 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         }
 
         /// <summary>Gets the PerThreadContext for this instance</summary>
-        public Context PerThreadContext
+        public IContext PerThreadContext
         {
             get
             {
                 ObjectDisposedException.ThrowIf(Handle.IsClosed || Handle.IsInvalid, this);
 
-                return ContextCache.GetContextFor(LLVMOrcThreadSafeContextGetContext(Handle));
+                return new ContextAlias(LLVMOrcThreadSafeContextGetContext(Handle));
             }
         }
 
-        internal LLVMOrcThreadSafeContextRef Handle { get; init; }
+        internal LLVMOrcThreadSafeContextRef Handle { get; }
     }
 }

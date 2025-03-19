@@ -28,7 +28,11 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             r.ThrowIfIDisposed();
             tsm.ThrowIfIDisposed();
 
-            LLVMOrcIRTransformLayerEmit(Handle, r.Handle.MoveToNative(), tsm.Handle.MoveToNative());
+            LLVMOrcIRTransformLayerEmit(Handle, r.Handle, tsm.Handle);
+
+            // transfer of ownership complete, mark them as such now.
+            tsm.Handle.SetHandleAsInvalid();
+            r.Handle.SetHandleAsInvalid();
         }
 
         /// <summary>Sets the transform function for the transform layer</summary>
@@ -81,6 +85,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
             [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
             [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "All instances are created as an alias or 'moved' to native Dispose() not needed" )]
+            [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "Known Alias, no need for dispose" )]
             private static unsafe /*LLVMErrorRef*/ nint Transform(
                 void* context,
                 /*LLVMOrcThreadSafeModuleRef* */nint* modInOut,
@@ -90,14 +95,20 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 // Sanity check the input for safety.
                 if (resp == nint.Zero || *modInOut == nint.Zero)
                 {
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+                    // Not ignored, it's "moved" to native code
                     return ErrorInfo.Create("Internal Error: got a callback with invalid handle value!")
                                     .MoveToNative();
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
 
                 if(context is null)
                 {
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+                    // Not ignored, it's "moved" to native code
                     return ErrorInfo.Create("Internal Error: Invalid context provided for native callback")
                                     .MoveToNative();
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
 
                 try
@@ -106,7 +117,6 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                     {
                         // module and underlying LLVMModuleRef created here are aliases, no need to dispose them
                         ThreadSafeModule tsm = new(*modInOut, alias: true);
-
                         var responsibility = new MaterializationResponsibility(resp, alias: true);
 
                         self.TransformAction( tsm, responsibility, out ThreadSafeModule? replacedMod );
@@ -121,9 +131,11 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
                 }
                 catch(Exception ex)
                 {
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
                     // resulting instance is "moved" to native return; Dispose is wasted overhead for a NOP
                     return ErrorInfo.Create(ex)
                                     .MoveToNative();
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
             }
         }

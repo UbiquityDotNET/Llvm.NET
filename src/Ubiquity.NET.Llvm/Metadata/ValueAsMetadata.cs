@@ -6,20 +6,20 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Used to wrap an <see cref="Ubiquity.NET.Llvm.Values.Value"/> in the LlvmMetadata hierarchy</summary>
     public class ValueAsMetadata
         : LlvmMetadata
     {
         /// <summary>Gets the <see cref="Value"/> this node wraps</summary>
-        public Value? Value => Value.FromHandle( LibLLVMValueAsMetadataGetValue( MetadataHandle ) );
+        public Value? Value => Value.FromHandle( LibLLVMValueAsMetadataGetValue( Handle ) );
 
         /// <summary>Gets the type of <see cref="Value"/> this node wraps</summary>
         public ITypeRef? Type => Value?.NativeType;
 
         /// <summary>Gets the <see cref="Context"/> for the <see cref="Value"/> this node wraps</summary>
-        public Context? Context => Value?.Context;
+        public IContext? Context => Value?.Context;
 
         /// <summary>Implicit conversion to <see cref="Value"/></summary>
         /// <param name="md"><see cref="ValueAsMetadata"/> to get the value for</param>

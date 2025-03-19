@@ -6,6 +6,9 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
+
+using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration.Yaml
 {
@@ -22,7 +25,7 @@ namespace LlvmBindingsGenerator.Configuration.Yaml
 
         public IEnumerable<IHandleInfo> HandleMap => YamlConfig.HandleMap;
 
-        public HandleTemplateMap BuildTemplateMap( ) => YamlConfig.BuildTemplateMap( );
+        public ILookup<string, IHandleCodeTemplate> BuildTemplateMap( ) => YamlConfig.BuildTemplateMap( );
 
         private readonly YamlConfiguration YamlConfig;
     }

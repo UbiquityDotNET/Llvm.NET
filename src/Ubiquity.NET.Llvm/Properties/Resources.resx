@@ -229,8 +229,8 @@
   <data name="Expected_a_primitive_type" xml:space="preserve">
     <value>Expected a primitive type</value>
   </data>
-  <data name="LLVM_only_allows_one_DICompileUnit_per_module" xml:space="preserve">
-    <value>DICompileUnit already defined, LLVM only allows one DICompileUnit per module.</value>
+  <data name="LLVM_only_allows_one_DICompileUnit_per_builder" xml:space="preserve">
+    <value>DICompileUnit already defined, LLVM only allows one DICompileUnit per DIBuilder.</value>
   </data>
   <data name="Temporaries_must_be_resolved_before_finalizing_debug_information" xml:space="preserve">
     <value>Temporaries must be resolved before finalizing debug information:</value>

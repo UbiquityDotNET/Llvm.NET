@@ -18,12 +18,12 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the ifunc resolver</summary>
         public Constant Resolver
         {
-            get => FromHandle<Function>( LLVMGetGlobalIFuncResolver( ValueHandle ).ThrowIfInvalid( ) )!;
-            set => LLVMSetGlobalIFuncResolver( ValueHandle, value.ThrowIfNull().ValueHandle );
+            get => FromHandle<Function>( LLVMGetGlobalIFuncResolver( Handle ).ThrowIfInvalid( ) )!;
+            set => LLVMSetGlobalIFuncResolver( Handle, value.ThrowIfNull().Handle );
         }
 
         /// <summary>Removes this instance from the parent module without destroying it</summary>
-        public void RemoveFromParent( ) => LLVMRemoveGlobalIFunc( ValueHandle );
+        public void RemoveFromParent( ) => LLVMRemoveGlobalIFunc( Handle );
 
         internal GlobalIFunc( LLVMValueRef handle )
             : base( handle )

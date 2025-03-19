@@ -106,7 +106,7 @@ internal class Program
             // to the native LLVM JIT.
             jit.TransformLayer.Emit(r, module);
 
-            ErrorInfo ApplyDataLayout(BitcodeModule module)
+            ErrorInfo ApplyDataLayout(IModule module)
             {
                 module.DataLayoutString = jit.DataLayoutString;
 

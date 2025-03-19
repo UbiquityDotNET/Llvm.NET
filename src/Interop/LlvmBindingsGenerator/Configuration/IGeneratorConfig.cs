@@ -6,6 +6,9 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
+
+using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration
 {
@@ -15,6 +18,6 @@ namespace LlvmBindingsGenerator.Configuration
 
         IEnumerable<IHandleInfo> HandleMap { get; }
 
-        HandleTemplateMap BuildTemplateMap( );
+        ILookup<string, IHandleCodeTemplate> BuildTemplateMap( );
     }
 }

@@ -26,14 +26,7 @@ namespace Ubiquity.NET.Llvm.Types
         : TypeRef
         , ISequenceType
     {
-        public ITypeRef ElementType
-        {
-            get
-            {
-                var typeRef = LLVMGetElementType( this.GetTypeRef() );
-                return FromHandle( typeRef.ThrowIfInvalid( ) )!;
-            }
-        }
+        public ITypeRef ElementType => LLVMGetElementType( this.GetTypeRef() ).CreateType();
 
         internal SequenceType( LLVMTypeRef typeRef )
             : base( typeRef )

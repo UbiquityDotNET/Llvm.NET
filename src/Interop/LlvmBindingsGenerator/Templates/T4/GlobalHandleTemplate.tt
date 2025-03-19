@@ -47,6 +47,16 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Gets a Zero (<see langword="null"/>) value handle</summary>
         public static <#=HandleName#> Zero { get; } = new <#=HandleName#>(nint.Zero, false);
+<#if(NeedsAlias){#>
+
+        // Implicitly cast to an alias - still owned by this instance
+        public static implicit operator <#=HandleName#>Alias(<#=HandleName#> self)
+        {
+            ArgumentNullException.ThrowIfNull(self);
+            self.ThrowIfInvalid();
+            return <#=HandleName#>Alias.FromABI(self.DangerousGetHandle());
+        }
+<#}#>
 
         /// <inheritdoc/>
         protected override bool ReleaseHandle( )
@@ -60,22 +70,4 @@ namespace Ubiquity.NET.Llvm.Interop
             static unsafe extern void <#=HandleDisposeFunction#>( nint p );
         }
     }
-<#if(NeedsAlias){#>
-
-    /// <summary>Alias (non-owning) handle for a <see cref="<#=HandleName#>"/></summary>
-    ///<remarks>
-    /// Sometimes a global object is exposed via a child that maintains a reference to the parent.
-    /// In such cases, the handle isn't owned by the App (it's an alias) and therefore should not be
-    /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
-    /// perform any automatic cleanup. [That is, this is a PURE reference to an object]
-    ///</remarks>
-    [GeneratedCode("LlvmBindingsGenerator","<#=ToolVersion#>")]
-    public class <#=HandleName#>Alias
-        : <#=HandleName#>
-    {
-        public <#=HandleName#>Alias()
-            : base( nint.Zero, false )
-        {
-        }
-    }
-<#}#>}
+}

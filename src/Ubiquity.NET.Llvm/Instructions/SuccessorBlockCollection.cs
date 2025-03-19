@@ -23,18 +23,18 @@ namespace Ubiquity.NET.Llvm.Instructions
             get
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                return BasicBlock.FromHandle(LLVMGetSuccessor( Container.ValueHandle, (uint)index ))!;
+                return BasicBlock.FromHandle(LLVMGetSuccessor( Container.Handle, (uint)index ))!;
             }
 
             set
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                LLVMSetSuccessor( Container.ValueHandle, ( uint )index, value?.BlockHandle ?? default );
+                LLVMSetSuccessor( Container.Handle, ( uint )index, value?.BlockHandle ?? default );
             }
         }
 
         /// <summary>Gets the count of elements in this collection</summary>
-        public int Count => checked((int)LLVMGetNumSuccessors( Container.ValueHandle ));
+        public int Count => checked((int)LLVMGetNumSuccessors( Container.Handle ));
 
         /// <summary>Gets an enumerator for the <see cref="BasicBlock"/>s in this collection</summary>
         /// <returns>Enumerator for the collection</returns>
@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             for( int i = 0; i < Count; ++i )
             {
-                yield return BasicBlock.FromHandle( LLVMGetSuccessor( Container.ValueHandle, ( uint )i ) )!;
+                yield return BasicBlock.FromHandle( LLVMGetSuccessor( Container.Handle, ( uint )i ) )!;
             }
         }
 

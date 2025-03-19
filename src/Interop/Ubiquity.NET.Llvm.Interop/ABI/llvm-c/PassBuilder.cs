@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMRunPasses(LLVMModuleRef M, string Passes, LLVMTargetMachineRef TM, LLVMPassBuilderOptionsRef Options);
+        public static unsafe partial LLVMErrorRef LLVMRunPasses(LLVMModuleRefAlias M, string Passes, LLVMTargetMachineRef TM, LLVMPassBuilderOptionsRef Options);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

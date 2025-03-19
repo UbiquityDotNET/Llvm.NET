@@ -134,10 +134,47 @@ namespace Ubiquity.NET.Llvm.Interop
             
             #line default
             #line hidden
-            this.Write("(nint.Zero, false);\r\n\r\n        /// <inheritdoc/>\r\n        protected override bool" +
-                    " ReleaseHandle( )\r\n        {\r\n            ");
+            this.Write("(nint.Zero, false);\r\n");
             
-            #line 54 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 50 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+if(NeedsAlias){
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        // Implicitly cast to an alias - still owned by this instance\r\n        " +
+                    "public static implicit operator ");
+            
+            #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write("Alias(");
+            
+            #line 53 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write(" self)\r\n        {\r\n            ArgumentNullException.ThrowIfNull(self);\r\n        " +
+                    "    self.ThrowIfInvalid();\r\n            return ");
+            
+            #line 57 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
+            
+            #line default
+            #line hidden
+            this.Write("Alias.FromABI(self.DangerousGetHandle());\r\n        }\r\n");
+            
+            #line 59 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        /// <inheritdoc/>\r\n        protected override bool ReleaseHandle( )\r\n  " +
+                    "      {\r\n            ");
+            
+            #line 64 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleDisposeFunction));
             
             #line default
@@ -150,68 +187,12 @@ namespace Ubiquity.NET.Llvm.Interop
             [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
             static unsafe extern void ");
             
-            #line 60 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
+            #line 70 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(HandleDisposeFunction));
             
             #line default
             #line hidden
-            this.Write("( nint p );\r\n        }\r\n    }\r\n");
-            
-            #line 63 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-if(NeedsAlias){
-            
-            #line default
-            #line hidden
-            this.Write("\r\n    /// <summary>Alias (non-owning) handle for a <see cref=\"");
-            
-            #line 65 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write(@"""/></summary>
-    ///<remarks>
-    /// Sometimes a global object is exposed via a child that maintains a reference to the parent.
-    /// In such cases, the handle isn't owned by the App (it's an alias) and therefore should not be
-    /// disposed or destroyed. This handle type takes care of that in a type safe manner and does not
-    /// perform any automatic cleanup. [That is, this is a PURE reference to an object]
-    ///</remarks>
-    [GeneratedCode(""LlvmBindingsGenerator"",""");
-            
-            #line 72 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ToolVersion));
-            
-            #line default
-            #line hidden
-            this.Write("\")]\r\n    public class ");
-            
-            #line 73 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write("Alias\r\n        : ");
-            
-            #line 74 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n    {\r\n        public ");
-            
-            #line 76 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(HandleName));
-            
-            #line default
-            #line hidden
-            this.Write("Alias()\r\n            : base( nint.Zero, false )\r\n        {\r\n        }\r\n    }\r\n");
-            
-            #line 81 "D:\GitHub\Ubiquity.NET\Llvm.Net\src\Interop\LlvmBindingsGenerator\Templates\T4\GlobalHandleTemplate.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("}\r\n");
+            this.Write("( nint p );\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

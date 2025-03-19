@@ -16,13 +16,13 @@ namespace CodeGenWithDebugInfo
     {
         string ShortName { get; }
 
-        TargetMachine TargetMachine { get; }
-
-        IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( Context ctx );
+        IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx );
 
         void AddABIAttributesForByValueStructure( Function function, int paramIndex );
 
-        void AddModuleFlags( BitcodeModule module );
+        void AddModuleFlags( Module module );
+
+        TargetMachine CreateTargetMachine();
     }
     #endregion
 }

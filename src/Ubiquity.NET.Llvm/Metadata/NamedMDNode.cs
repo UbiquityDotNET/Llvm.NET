@@ -4,13 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Wraps an LLVM NamedMDNode</summary>
     /// <remarks>Despite its name a NamedMDNode is not itself an MDNode. It is owned directly by a
-    /// a <see cref="BitcodeModule"/> and contains a list of <see cref="MDNode"/> operands.</remarks>
+    /// a <see cref="Module"/> and contains a list of <see cref="MDNode"/> operands.</remarks>
     public class NamedMDNode
     {
         /// <summary>Gets the name of the node</summary>
@@ -20,7 +18,7 @@ namespace Ubiquity.NET.Llvm
         public IList<MDNode> Operands { get; }
 
         /// <summary>Gets the module that owns this node</summary>
-        public BitcodeModule ParentModule => BitcodeModule.FromHandle( LibLLVMNamedMetadataGetParentModule( NativeHandle ).ThrowIfInvalid( ) )!;
+        public IModule ParentModule => new ModuleAlias(LibLLVMNamedMetadataGetParentModule( NativeHandle ));
 
         /// <summary>Erases this node from its parent</summary>
         public void EraseFromParent( ) => LibLLVMNamedMetadataEraseFromParent( NativeHandle );
@@ -40,14 +38,14 @@ namespace Ubiquity.NET.Llvm
                 get
                 {
                     index.ThrowIfOutOfRange( 0, Count );
-                    var nodeHanlde = LibLLVMNamedMDNodeGetOperand( OwningNode.NativeHandle, ( uint )index );
-                    return LlvmMetadata.FromHandle<MDNode>( OwningNode.ParentModule.Context, nodeHanlde.ThrowIfInvalid( ) )!;
+                    var nodeHandle = LibLLVMNamedMDNodeGetOperand( OwningNode.NativeHandle, ( uint )index );
+                    return (MDNode)nodeHandle.CreateMetadata()!;
                 }
 
                 set
                 {
                     index.ThrowIfOutOfRange( 0, Count );
-                    LibLLVMNamedMDNodeSetOperand( OwningNode.NativeHandle, ( uint )index, value.MetadataHandle );
+                    LibLLVMNamedMDNodeSetOperand( OwningNode.NativeHandle, ( uint )index, value.Handle );
                 }
             }
 
@@ -79,7 +77,7 @@ namespace Ubiquity.NET.Llvm
             public void Add( MDNode item )
             {
                 ArgumentNullException.ThrowIfNull( item );
-                LibLLVMNamedMDNodeAddOperand( OwningNode.NativeHandle, item.MetadataHandle );
+                LibLLVMNamedMDNodeAddOperand( OwningNode.NativeHandle, item.Handle );
             }
 
             public void Clear( )

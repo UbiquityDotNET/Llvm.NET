@@ -45,6 +45,7 @@ namespace Kaleidoscope.Chapter3_5
         public void Dispose()
         {
             Module.Dispose();
+            InstructionBuilder.Dispose();
             Context.Dispose();
         }
 
@@ -171,7 +172,7 @@ namespace Kaleidoscope.Chapter3_5
                 function.Verify();
 
                 // pass pipeline is run against the module
-                var errInfo = function.ParentModule.TryRunPasses( PassNames );
+                using var errInfo = function.ParentModule.TryRunPasses( PassNames );
                 return errInfo.Success ? (Value)function : throw new CodeGeneratorException( errInfo.ToString() );
             }
             catch(CodeGeneratorException)
@@ -208,7 +209,7 @@ namespace Kaleidoscope.Chapter3_5
                 return function;
             }
 
-            var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
+            var llvmSignature = Context.GetFunctionType( returnType: Context.DoubleType, args: prototype.Parameters.Select( _ => Context.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
             retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
@@ -227,7 +228,7 @@ namespace Kaleidoscope.Chapter3_5
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
-        private readonly BitcodeModule Module;
+        private readonly Module Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;

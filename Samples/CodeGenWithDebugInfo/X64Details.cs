@@ -16,22 +16,26 @@ namespace CodeGenWithDebugInfo
     internal class X64Details
         : ITargetDependentDetails
     {
-        public X64Details(ILibLlvm libLLVM)
+        public X64Details( ILibLlvm libLLVM )
         {
             libLLVM.RegisterTarget( CodeGenTarget.X86 );
         }
 
         public string ShortName => "x86";
 
-        public TargetMachine TargetMachine => TargetMachine.FromTriple( new Triple( TripleName )
-                                                                      , Cpu
-                                                                      , Features
-                                                                      , CodeGenOpt.Aggressive
-                                                                      , RelocationMode.Default
-                                                                      , CodeModel.Small
-                                                                      );
+        public TargetMachine CreateTargetMachine( )
+        {
+            using var triple = new Triple( TripleName );
+            return TargetMachine.FromTriple( triple
+                                           , Cpu
+                                           , Features
+                                           , CodeGenOpt.Aggressive
+                                           , RelocationMode.Default
+                                           , CodeModel.Small
+                                           );
+        }
 
-        public void AddABIAttributesForByValueStructure(Function function, int paramIndex )
+        public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
         {
             if(function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct)
             {
@@ -39,12 +43,12 @@ namespace CodeGenWithDebugInfo
             }
         }
 
-        public void AddModuleFlags(BitcodeModule module)
+        public void AddModuleFlags( Module module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
         }
 
-        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes(Context ctx)
+        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
             => [
                 ctx.CreateAttribute( "disable-tail-calls", "false" ),
                 ctx.CreateAttribute( "less-precise-fpmad", "false" ),

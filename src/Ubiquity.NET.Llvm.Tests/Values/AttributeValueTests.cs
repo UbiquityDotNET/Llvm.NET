@@ -93,7 +93,7 @@ namespace Ubiquity.NET.Llvm.UT
         {
             using var ctx = new Context( );
             using var module = ctx.CreateBitcodeModule( );
-            var signature = ctx.GetFunctionType( ctx.DoubleType, ctx.Int8Type.CreatePointerType( ), ctx.Int32Type );
+            var signature = ctx.GetFunctionType( ctx.Int32Type , ctx.DoubleType, ctx.Int8Type.CreatePointerType( ));
             var function = module.CreateFunction( "test", signature );
             function.Parameters[ 0 ].AddAttributes( AttributeKind.Nest, AttributeKind.ByVal );
             var attributes = function.GetAttributesAtIndex( FunctionAttributeIndex.Parameter0 ).ToArray( );

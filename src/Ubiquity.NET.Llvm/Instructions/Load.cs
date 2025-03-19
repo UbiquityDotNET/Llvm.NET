@@ -14,8 +14,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets or sets a value indicating whether this load is volatile</summary>
         public bool IsVolatile
         {
-            get => LLVMGetVolatile( ValueHandle );
-            set => LLVMSetVolatile( ValueHandle, value );
+            get => LLVMGetVolatile( Handle );
+            set => LLVMSetVolatile( Handle, value );
         }
 
         internal Load( LLVMValueRef valueRef )

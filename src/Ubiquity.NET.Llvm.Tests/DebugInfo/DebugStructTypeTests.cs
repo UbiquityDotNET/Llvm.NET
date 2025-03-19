@@ -21,19 +21,21 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
+            using var diBuilder = new DIBuilder(testModule);
 
             string sourceName = "empty_struct";
             string linkageName = "_empty_struct";
 
-            var structType = new DebugStructType( module: testModule
+            var structType = new DebugStructType( in diBuilder
                                                 , nativeName: linkageName
                                                 , scope: null
                                                 , sourceName: sourceName
                                                 , file: null
                                                 , line: 0
                                                 , debugFlags: default
-                                                , members: Enumerable.Empty<DebugMemberInfo>()
+                                                , members: []
                                                 ); // rest of args use defaults...
+
             Assert.IsTrue( structType.IsSized );
             Assert.IsFalse( structType.IsPacked );
             Assert.IsTrue( structType.IsStruct );
@@ -46,19 +48,21 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
+            using var diBuilder = new DIBuilder(testModule);
 
             string sourceName = string.Empty;
             string linkageName = string.Empty;
 
-            var structType = new DebugStructType( module: testModule
+            var structType = new DebugStructType( in diBuilder
                                                 , nativeName: linkageName
                                                 , scope: null
                                                 , sourceName: sourceName
                                                 , file: null
                                                 , line: 0
                                                 , debugFlags: default
-                                                , members: Enumerable.Empty<DebugMemberInfo>()
+                                                , members: []
                                                 ); // rest of args use defaults...
+
             Assert.IsTrue( structType.IsSized );
             Assert.IsFalse( structType.IsPacked );
             Assert.IsTrue( structType.IsStruct );
@@ -71,13 +75,14 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
+            using var diBuilder = new DIBuilder(testModule);
 
-            var file = testModule.DIBuilder.CreateFile( "test.foo" );
+            var file = diBuilder.CreateFile( "test.foo" );
             uint line = 1234;
             string sourceName = string.Empty;
             string linkageName = string.Empty;
 
-            var debugStructType = new DebugStructType( testModule, linkageName, file, sourceName, file, line );
+            var debugStructType = new DebugStructType( in diBuilder, linkageName, file, sourceName, file, line );
             bool packed = false;
             var elements = new ITypeRef[] { context.Float128Type, context.Int32Type, context.Int64Type };
 
@@ -88,7 +93,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             Assert.AreEqual( elements.Length, debugStructType.Members.Count );
             for(int i =0; i < elements.Length; ++i )
             {
-                Assert.AreSame( elements[ i ], debugStructType.Members[ i ] );
+                Assert.AreEqual( elements[ i ], debugStructType.Members[ i ] );
             }
         }
 
