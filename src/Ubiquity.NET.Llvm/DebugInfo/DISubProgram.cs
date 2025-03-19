@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// <summary>Debug information for a SubProgram</summary>
     /// <seealso href="xref:llvm_langref#disubprogram"/>
     [SuppressMessage( "Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", Justification = "It is already correct 8^)" )]
-    public class DISubProgram
+    public sealed class DISubProgram
         : DILocalScope
     {
         /* TODO: Non-operand properties - need interop API to access these

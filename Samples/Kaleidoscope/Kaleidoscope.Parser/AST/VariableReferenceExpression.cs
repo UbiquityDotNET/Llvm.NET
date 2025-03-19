@@ -31,6 +31,15 @@ namespace Kaleidoscope.Grammar.AST
             return visitor.Visit( this );
         }
 
+        /// <inheritdoc/>
+        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : class
+            where TArg : struct, allows ref struct
+        {
+            ArgumentNullException.ThrowIfNull(visitor);
+            return visitor.Visit( this, in arg );
+        }
+
         public IEnumerable<IAstNode> Children
         {
             get

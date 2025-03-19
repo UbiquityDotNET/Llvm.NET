@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -15,11 +14,9 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
-using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Transforms;
 using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
@@ -27,19 +24,19 @@ using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 namespace Kaleidoscope.Chapter9
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
-    [SuppressMessage( "Microsoft.Maintainability", "CA1506", Justification = "AST visitor and code generator, splitting this would make things much more complicated" )]
     public sealed class CodeGenerator
-        : AstVisitorBase<Value>
+        : AstVisitorBase<Value, DIBuilder>
         , IDisposable
-        , IKaleidoscopeCodeGenerator<BitcodeModule>
+        , IKaleidoscopeCodeGenerator<Module>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath, bool disableOptimization = false )
+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath)
             : base( null )
         {
-            globalState.ValidateNotNull( nameof( globalState ) );
-            machine.ValidateNotNull( nameof( machine ) );
-            if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
+            ArgumentNullException.ThrowIfNull( globalState );
+            ArgumentNullException.ThrowIfNull( machine );
+
+            if(globalState.LanguageLevel > LanguageLevel.MutableVariables)
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
@@ -47,31 +44,11 @@ namespace Kaleidoscope.Chapter9
             RuntimeState = globalState;
             Context = new Context( );
             TargetMachine = machine;
-            DisableOptimizations = disableOptimization;
             InstructionBuilder = new InstructionBuilder( Context );
-
-            #region InitializeModuleAndPassManager
-            Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ), SourceLanguage.C, sourcePath, "Kaleidoscope Compiler" );
-            Debug.Assert( Module.DICompileUnit != null, "Expected non null compile unit" );
-            Debug.Assert( Module.DICompileUnit.File != null, "Expected non-null file for compile unit" );
-
+            Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ));
             Module.TargetTriple = machine.Triple;
             Module.Layout = TargetMachine.TargetData;
-            DoubleType = new DebugBasicType( Context.DoubleType, Module, "double", DiTypeKind.Float );
-
-            FunctionPassManager = new FunctionPassManager( Module );
-            FunctionPassManager.AddPromoteMemoryToRegisterPass( );
-
-            if( !DisableOptimizations )
-            {
-                FunctionPassManager.AddInstructionCombiningPass( )
-                                   .AddReassociatePass( )
-                                   .AddGVNPass( )
-                                   .AddCFGSimplificationPass( );
-            }
-
-            FunctionPassManager.Initialize( );
-            #endregion
+            SourcePath = sourcePath;
         }
         #endregion
 
@@ -79,21 +56,31 @@ namespace Kaleidoscope.Chapter9
         public void Dispose( )
         {
             Module.Dispose( );
+            InstructionBuilder.Dispose();
             Context.Dispose( );
         }
         #endregion
 
         #region Generate
-        public OptionalValue<BitcodeModule> Generate( IAstNode ast )
+        public OptionalValue<Module> Generate( IAstNode ast )
         {
-            ast.ValidateNotNull( nameof( ast ) );
-            ast.Accept( this );
+            ArgumentNullException.ThrowIfNull( ast );
+
+            using var diBuilder = new DIBuilder(Module);
+            var cu = diBuilder.CreateCompileUnit(SourceLanguage.C, SourcePath, "Kaleidoscope Compiler");
+
+            Debug.Assert( cu != null, "Expected non null compile unit" );
+            Debug.Assert( cu.File != null, "Expected non-null file for compile unit" );
+            DoubleType = new DebugBasicType( Context.DoubleType, in diBuilder, "double", DiTypeKind.Float );
+
+            // use this instance and the DIBuilder to visit the AST
+            ast.Accept( this, in diBuilder );
 
             if( AnonymousFunctions.Count > 0 )
             {
                 var mainFunction = Module.CreateFunction( "main", Context.GetFunctionType( Context.VoidType ) );
                 var block = mainFunction.AppendBasicBlock( "entry" );
-                var irBuilder = new InstructionBuilder( block );
+                using var irBuilder = new InstructionBuilder( block );
                 var printdFunc = Module.CreateFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
                 foreach( var anonFunc in AnonymousFunctions )
                 {
@@ -102,18 +89,6 @@ namespace Kaleidoscope.Chapter9
                 }
 
                 irBuilder.Return( );
-
-                // Use always inline and Dead Code Elimination module passes to inline all of the
-                // anonymous functions. This effectively strips all the calls just generated for main()
-                // and inlines each of the anonymous functions directly into main, dropping the now
-                // unused original anonymous functions all while retaining all of the original source
-                // debug information locations.
-                var mpm = new ModulePassManager( );
-                mpm.AddAlwaysInlinerPass( )
-                   .AddGlobalDCEPass( )
-                   .Run( Module );
-
-                Module.DIBuilder.Finish( );
             }
 
             return OptionalValue.Create( Module );
@@ -121,65 +96,68 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region ConstantExpression
-        public override Value? Visit( ConstantExpression constant )
+        public override Value? Visit(ConstantExpression constant, ref readonly DIBuilder diBuilder)
         {
-            constant.ValidateNotNull( nameof( constant ) );
+            ArgumentNullException.ThrowIfNull( constant );
+
             return Context.CreateConstant( constant.Value );
         }
         #endregion
 
         #region BinaryOperatorExpression
-        public override Value? Visit( BinaryOperatorExpression binaryOperator )
+        public override Value? Visit(BinaryOperatorExpression binaryOperator, ref readonly DIBuilder diBuilder)
         {
-            binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
+            ArgumentNullException.ThrowIfNull( binaryOperator );
             EmitLocation( binaryOperator );
 
-            switch( binaryOperator.Op )
+            switch(binaryOperator.Op)
             {
             case BuiltInOperatorKind.Less:
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
-                                                        , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                        , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+            {
+                var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+                                                        , binaryOperator.Left.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                                        , binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         ).RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
+                return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                         .RegisterName( "booltmp" );
+            }
 
             case BuiltInOperatorKind.Pow:
-                {
-                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow
-                                                  , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  ).RegisterName( "powtmp" );
-                }
+            {
+                var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ), in diBuilder );
+                return InstructionBuilder.Call( pow
+                                              , binaryOperator.Left.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              ).RegisterName( "powtmp" );
+            }
 
             case BuiltInOperatorKind.Add:
-                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "addtmp" );
 
             case BuiltInOperatorKind.Subtract:
-                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                return InstructionBuilder.FSub( binaryOperator.Left.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "subtmp" );
 
             case BuiltInOperatorKind.Multiply:
-                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                return InstructionBuilder.FMul( binaryOperator.Left.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "multmp" );
 
             case BuiltInOperatorKind.Divide:
-                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                return InstructionBuilder.FDiv( binaryOperator.Left.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                               ).RegisterName( "divtmp" );
 
             case BuiltInOperatorKind.Assign:
+            {
                 Alloca target = LookupVariable( ( ( VariableReferenceExpression )binaryOperator.Left ).Name );
-                Value value = binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr );
+                Value value = binaryOperator.Right.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr );
                 InstructionBuilder.Store( value, target );
                 return value;
+            }
 
             default:
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
@@ -188,25 +166,33 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region FunctionCallExpression
-        public override Value? Visit( FunctionCallExpression functionCall )
+        public override Value? Visit(FunctionCallExpression functionCall, ref readonly DIBuilder diBuilder)
         {
-            functionCall.ValidateNotNull( nameof( functionCall ) );
-            EmitLocation( functionCall );
+            ArgumentNullException.ThrowIfNull( functionCall );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
+            if(Module is null)
+            {
+                throw new InvalidOperationException( "Can't visit a function call without an active module" );
+            }
+
             string targetName = functionCall.FunctionPrototype.Name;
 
-            IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
+            Function? function;
+            if(RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ))
             {
-                function = GetOrDeclareFunction( target );
+                function = GetOrDeclareFunction( target, in diBuilder );
             }
-            else if( !Module.TryGetFunction( targetName, out function ) )
+            else if(!Module.TryGetFunction( targetName, out function ))
             {
                 throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
             }
 
-            var args = ( from expr in functionCall.Arguments
-                         select expr.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidExpr)
-                       ).ToArray();
+            var args = new Value[functionCall.Arguments.Count];
+            for(int i = 0; i < args.Length; ++i)
+            {
+                args[i] = functionCall.Arguments[i].Accept(this, in diBuilder) ?? throw new CodeGeneratorException(ExpectValidExpr);
+            }
 
             EmitLocation( functionCall );
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
@@ -214,11 +200,13 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region FunctionDefinition
-        public override Value? Visit( FunctionDefinition definition )
+        public override Value? Visit(FunctionDefinition definition, ref readonly DIBuilder diBuilder)
         {
-            definition.ValidateNotNull( nameof( definition ) );
-            var function = GetOrDeclareFunction( definition.Signature );
-            if( !function.IsDeclaration )
+            ArgumentNullException.ThrowIfNull( definition );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
+            var function = GetOrDeclareFunction( definition.Signature, in diBuilder );
+            if(!function.IsDeclaration)
             {
                 throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
             }
@@ -235,33 +223,31 @@ namespace Kaleidoscope.Chapter9
                 // will run past them when breaking on a function)
                 EmitLocation( null );
 
-                using( NamedValues.EnterScope( ) )
+                using(NamedValues.EnterScope())
                 {
-                    foreach( var param in definition.Signature.Parameters )
+                    foreach(var param in definition.Signature.Parameters)
                     {
                         var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                         .RegisterName( param.Name );
-                        AddDebugInfoForAlloca( argSlot, function, param );
+                        AddDebugInfoForAlloca( argSlot, function, param, in diBuilder );
                         InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
                         NamedValues[ param.Name ] = argSlot;
                     }
 
-                    foreach( LocalVariableDeclaration local in definition.LocalVariables )
+                    foreach(LocalVariableDeclaration local in definition.LocalVariables)
                     {
                         var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                           .RegisterName( local.Name );
-                        AddDebugInfoForAlloca( localSlot, function, local );
+                        AddDebugInfoForAlloca( localSlot, function, local, in diBuilder );
                         NamedValues[ local.Name ] = localSlot;
                     }
 
                     EmitBranchToNewBlock( "body" );
 
-                    var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
+                    var funcReturn = definition.Body.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidFunc );
                     InstructionBuilder.Return( funcReturn );
-                    Module.DIBuilder.Finish( function.DISubProgram );
-                    function.Verify( );
-
-                    FunctionPassManager.Run( function );
+                    diBuilder.Finish( function.DISubProgram );
+                    function.Verify();
 
                     if( definition.IsAnonymous )
                     {
@@ -274,18 +260,19 @@ namespace Kaleidoscope.Chapter9
                     return function;
                 }
             }
-            catch( CodeGeneratorException )
+            catch(CodeGeneratorException)
             {
-                function.EraseFromParent( );
+                function.EraseFromParent();
                 throw;
             }
         }
         #endregion
 
         #region VariableReferenceExpression
-        public override Value? Visit( VariableReferenceExpression reference )
+        public override Value? Visit(VariableReferenceExpression reference, ref readonly DIBuilder diBuilder)
         {
-            reference.ValidateNotNull( nameof( reference ) );
+            ArgumentNullException.ThrowIfNull( reference );
+
             var value = LookupVariable( reference.Name );
 
             EmitLocation( reference );
@@ -299,14 +286,16 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region ConditionalExpression
-        public override Value? Visit( ConditionalExpression conditionalExpression )
+        public override Value? Visit( ConditionalExpression conditionalExpression, ref readonly DIBuilder diBuilder )
         {
-            conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
+            ArgumentNullException.ThrowIfNull( conditionalExpression );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
             EmitLocation( conditionalExpression );
-            var condition = conditionalExpression.Condition.Accept( this );
-            if( condition == null )
+            var condition = conditionalExpression.Condition.Accept( this, in diBuilder );
+            if(condition == null)
             {
                 return null;
             }
@@ -316,11 +305,7 @@ namespace Kaleidoscope.Chapter9
             var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, Context.CreateConstant( 0.0 ) )
                                              .RegisterName( "ifcond" );
 
-            var function = InstructionBuilder.InsertFunction;
-            if( function is null )
-            {
-                throw new InternalCodeGeneratorException( "ICE: expected block that is attached to a function at this point" );
-            }
+            var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: expected block that is attached to a function at this point" );
 
             var thenBlock = function.AppendBasicBlock( "then" );
             var elseBlock = function.AppendBasicBlock( "else" );
@@ -332,8 +317,8 @@ namespace Kaleidoscope.Chapter9
 
             // InstructionBuilder.InserBlock after this point is !null
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
-            var thenValue = conditionalExpression.ThenExpression.Accept( this );
-            if( thenValue == null )
+            var thenValue = conditionalExpression.ThenExpression.Accept( this, in diBuilder );
+            if(thenValue == null)
             {
                 return null;
             }
@@ -343,8 +328,8 @@ namespace Kaleidoscope.Chapter9
 
             // generate else block
             InstructionBuilder.PositionAtEnd( elseBlock );
-            var elseValue = conditionalExpression.ElseExpression.Accept( this );
-            if( elseValue == null )
+            var elseValue = conditionalExpression.ElseExpression.Accept( this, in diBuilder );
+            if(elseValue == null)
             {
                 return null;
             }
@@ -364,25 +349,23 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region ForInExpression
-        public override Value? Visit( ForInExpression forInExpression )
+        public override Value? Visit(ForInExpression forInExpression, ref readonly DIBuilder diBuilder)
         {
-            forInExpression.ValidateNotNull( nameof( forInExpression ) );
+            ArgumentNullException.ThrowIfNull( forInExpression );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
             EmitLocation( forInExpression );
-            var function = InstructionBuilder.InsertFunction;
-            if( function is null )
-            {
-                throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
-            }
+            var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
             string varName = forInExpression.LoopVariable.Name;
             Alloca allocaVar = LookupVariable( varName );
 
             // Emit the start code first, without 'variable' in scope.
             Value? startVal;
-            if( forInExpression.LoopVariable.Initializer != null )
+            if(forInExpression.LoopVariable.Initializer != null)
             {
-                startVal = forInExpression.LoopVariable.Initializer.Accept( this );
-                if( startVal is null )
+                startVal = forInExpression.LoopVariable.Initializer.Accept( this, in diBuilder );
+                if(startVal is null)
                 {
                     return null;
                 }
@@ -391,6 +374,8 @@ namespace Kaleidoscope.Chapter9
             {
                 startVal = Context.CreateConstant( 0.0 );
             }
+
+            Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
 
             // store the value into allocated location
             InstructionBuilder.Store( startVal, allocaVar );
@@ -406,27 +391,27 @@ namespace Kaleidoscope.Chapter9
 
             // Within the loop, the variable is defined equal to the PHI node.
             // So, push a new scope for it and any values the body might set
-            using( NamedValues.EnterScope( ) )
+            using(NamedValues.EnterScope())
             {
                 EmitBranchToNewBlock( "ForInScope" );
 
                 // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
-                if( forInExpression.Body.Accept( this ) == null )
+                if(forInExpression.Body.Accept( this, in diBuilder ) == null)
                 {
                     return null;
                 }
 
-                Value? stepValue = forInExpression.Step.Accept( this );
-                if( stepValue == null )
+                Value? stepValue = forInExpression.Step.Accept( this, in diBuilder );
+                if(stepValue == null)
                 {
                     return null;
                 }
 
                 // Compute the end condition.
-                Value? endCondition = forInExpression.Condition.Accept( this );
-                if( endCondition == null )
+                Value? endCondition = forInExpression.Condition.Accept( this, in diBuilder );
+                if(endCondition == null)
                 {
                     return null;
                 }
@@ -458,35 +443,36 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region VarInExpression
-        public override Value? Visit( VarInExpression varInExpression )
+        public override Value? Visit( VarInExpression varInExpression, ref readonly DIBuilder diBuilder )
         {
-            varInExpression.ValidateNotNull( nameof( varInExpression ) );
+            ArgumentNullException.ThrowIfNull(varInExpression);
+
             EmitLocation( varInExpression );
-            using( NamedValues.EnterScope( ) )
+            using(NamedValues.EnterScope())
             {
                 EmitBranchToNewBlock( "VarInScope" );
-                foreach( var localVar in varInExpression.LocalVariables )
+                foreach(var localVar in varInExpression.LocalVariables)
                 {
                     EmitLocation( localVar );
                     Alloca alloca = LookupVariable( localVar.Name );
                     Value initValue = Context.CreateConstant( 0.0 );
-                    if( localVar.Initializer != null )
+                    if(localVar.Initializer != null)
                     {
-                        initValue = localVar.Initializer.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr );
+                        initValue = localVar.Initializer.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr );
                     }
 
                     InstructionBuilder.Store( initValue, alloca );
                 }
 
                 EmitLocation( varInExpression );
-                return varInExpression.Body.Accept( this );
+                return varInExpression.Body.Accept( this, in diBuilder);
             }
         }
         #endregion
 
         private Alloca LookupVariable( string name )
         {
-            if( !NamedValues.TryGetValue( name, out Alloca? value ) )
+            if(!NamedValues.TryGetValue( name, out Alloca? value ))
             {
                 // Source input is validated by the parser and AstBuilder, therefore
                 // this is the result of an internal error in the generator rather
@@ -501,6 +487,7 @@ namespace Kaleidoscope.Chapter9
         {
             var newBlock = InstructionBuilder.InsertFunction?.AppendBasicBlock( blockName )
                            ?? throw new InternalCodeGeneratorException("ICE: Expected an insertion block attached to a function at this point" );
+
             InstructionBuilder.Branch( newBlock );
             InstructionBuilder.PositionAtEnd( newBlock );
         }
@@ -536,15 +523,20 @@ namespace Kaleidoscope.Chapter9
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private IrFunction GetOrDeclareFunction( Prototype prototype )
+        private Function GetOrDeclareFunction(Prototype prototype, ref readonly DIBuilder diBuilder)
         {
-            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
+            if(Module is null)
+            {
+                throw new InvalidOperationException( "ICE: Can't get or declare a function without an active module" );
+            }
+
+            if(Module.TryGetFunction( prototype.Name, out Function? function ))
             {
                 return function;
             }
 
             // extern declarations don't get debug information
-            IrFunction retVal;
+            Function retVal;
             if( prototype.IsExtern )
             {
                 var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
@@ -555,11 +547,12 @@ namespace Kaleidoscope.Chapter9
                 var parameters = prototype.Parameters;
 
                 // DICompileUnit and File are checked for null in constructor
-                var debugFile = Module.DIBuilder.CreateFile( Module.DICompileUnit!.File!.FileName, Module.DICompileUnit!.File.Directory );
-                var signature = Context.CreateFunctionType( Module.DIBuilder, DoubleType, prototype.Parameters.Select( _ => DoubleType ) );
+                var debugFile = diBuilder.CreateFile( diBuilder.CompileUnit!.File!.FileName, diBuilder.CompileUnit!.File.Directory );
+                var signature = Context.CreateFunctionType( in diBuilder, DoubleType!, prototype.Parameters.Select( _ => DoubleType! ) );
                 var lastParamLocation = parameters.Count > 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
-                retVal = Module.CreateFunction( scope: Module.DICompileUnit
+                retVal = Module.CreateFunction(in diBuilder
+                                              , scope: diBuilder.CompileUnit
                                               , name: prototype.Name
                                               , linkageName: null
                                               , file: debugFile
@@ -574,7 +567,7 @@ namespace Kaleidoscope.Chapter9
             }
 
             int index = 0;
-            foreach( var argId in prototype.Parameters )
+            foreach(var argId in prototype.Parameters)
             {
                 retVal.Parameters[ index ].Name = argId.Name;
                 ++index;
@@ -588,7 +581,7 @@ namespace Kaleidoscope.Chapter9
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region AddDebugInfoForAlloca
-        private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, ParameterDeclaration param )
+        private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param, ref readonly DIBuilder diBuilder )
         {
             uint line = ( uint )param.Location.StartLine;
             uint col = ( uint )param.Location.StartColumn;
@@ -600,23 +593,23 @@ namespace Kaleidoscope.Chapter9
             Debug.Assert( function.DISubProgram.File != null, "expected function with a non-null DISubProgram.File" );
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected Instruction builder with non-null insertion block" );
 
-            DILocalVariable debugVar = Module.DIBuilder.CreateArgument( scope: function.DISubProgram
-                                                                      , name: param.Name
-                                                                      , file: function.DISubProgram.File
-                                                                      , line
-                                                                      , type: DoubleType
-                                                                      , alwaysPreserve: true
-                                                                      , debugFlags: DebugInfoFlags.None
-                                                                      , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
-                                                                      );
-            Module.DIBuilder.InsertDeclare( storage: argSlot
-                                          , varInfo: debugVar
-                                          , location: new DILocation( Context, line, col, function.DISubProgram )
-                                          , insertAtEnd: InstructionBuilder.InsertBlock
-                                          );
+            DILocalVariable debugVar = diBuilder.CreateArgument( scope: function.DISubProgram
+                                                               , name: param.Name
+                                                               , file: function.DISubProgram.File
+                                                               , line
+                                                               , type: DoubleType!
+                                                               , alwaysPreserve: true
+                                                               , debugFlags: DebugInfoFlags.None
+                                                               , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
+                                                               );
+            diBuilder.InsertDeclare( storage: argSlot
+                                   , varInfo: debugVar
+                                   , location: new DILocation( Context, line, col, function.DISubProgram )
+                                   , insertAtEnd: InstructionBuilder.InsertBlock
+                                   );
         }
 
-        private void AddDebugInfoForAlloca( Alloca argSlot, IrFunction function, LocalVariableDeclaration localVar )
+        private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar, ref readonly DIBuilder diBuilder )
         {
             uint line = ( uint )localVar.Location.StartLine;
             uint col = ( uint )localVar.Location.StartColumn;
@@ -628,34 +621,33 @@ namespace Kaleidoscope.Chapter9
             Debug.Assert( function.DISubProgram.File != null, "expected function with non-null DISubProgram.File" );
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected Instruction builder with non-null insertion block" );
 
-            DILocalVariable debugVar = Module.DIBuilder.CreateLocalVariable( scope: function.DISubProgram
-                                                                           , name: localVar.Name
-                                                                           , file: function.DISubProgram.File
-                                                                           , line
-                                                                           , type: DoubleType
-                                                                           , alwaysPreserve: false
-                                                                           , debugFlags: DebugInfoFlags.None
-                                                                           );
-            Module.DIBuilder.InsertDeclare( storage: argSlot
-                                          , varInfo: debugVar
-                                          , location: new DILocation( Context, line, col, function.DISubProgram )
-                                          , insertAtEnd: InstructionBuilder.InsertBlock
-                                          );
+            DILocalVariable debugVar = diBuilder.CreateLocalVariable( scope: function.DISubProgram
+                                                                    , name: localVar.Name
+                                                                    , file: function.DISubProgram.File
+                                                                    , line
+                                                                    , type: DoubleType!
+                                                                    , alwaysPreserve: false
+                                                                    , debugFlags: DebugInfoFlags.None
+                                                                    );
+            diBuilder.InsertDeclare( storage: argSlot
+                                   , varInfo: debugVar
+                                   , location: new DILocation( Context, line, col, function.DISubProgram )
+                                   , insertAtEnd: InstructionBuilder.InsertBlock
+                                   );
         }
         #endregion
 
         #region PrivateMembers
+        private readonly Module Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
-        private readonly BitcodeModule Module;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Alloca> NamedValues = new( );
-        private readonly FunctionPassManager FunctionPassManager;
-        private readonly bool DisableOptimizations;
         private readonly TargetMachine TargetMachine;
-        private readonly List<IrFunction> AnonymousFunctions = new( );
-        private readonly DebugBasicType DoubleType;
-        private readonly Stack<DILocalScope> LexicalBlocks = new( );
+        private readonly List<Function> AnonymousFunctions = [];
+        private DebugBasicType? DoubleType;
+        private readonly Stack<DILocalScope> LexicalBlocks = [];
+        private readonly string SourcePath;
         #endregion
     }
 }

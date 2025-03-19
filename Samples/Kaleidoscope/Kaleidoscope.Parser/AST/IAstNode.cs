@@ -26,6 +26,10 @@ namespace Kaleidoscope.Grammar.AST
         /// <returns>Result of visiting this node</returns>
         TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : class;
+
+        TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : class
+            where TArg : struct, allows ref struct;
     }
 
     /// <summary>Extensions for IAstNode</summary>

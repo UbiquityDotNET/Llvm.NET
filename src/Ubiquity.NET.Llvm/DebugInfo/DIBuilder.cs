@@ -1085,8 +1085,6 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         public readonly void Finish( )
         {
-            // TODO: Test if there is a Compile unit attached [LLVM will crash if not]
-
 #if HAVE_PER_CONTEXT_ENUMERABLE_METADA
             // TODO: Figure out API to enumerate the metadata owned by a context if it isn't "cached"
             var bldr = new StringBuilder( );
@@ -1220,7 +1218,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( location );
             ArgumentNullException.ThrowIfNull( insertAtEnd );
 
-            if(location.Scope?.SubProgram != varInfo.Scope.SubProgram)
+            // use default equality comparer as either one might be null
+            if(!EqualityComparer<DISubProgram>.Default.Equals(varInfo.Scope.SubProgram, location.Scope?.SubProgram))
             {
                 throw new ArgumentException( Resources.Mismatched_scopes_for_location_and_variable );
             }
@@ -1361,7 +1360,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull(location);
             ArgumentNullException.ThrowIfNull(insertAtEnd);
 
-            if( location.Scope != varInfo.Scope )
+            if( !location.Scope.Equals(varInfo.Scope) )
             {
                 throw new ArgumentException( Resources.Mismatched_scopes );
             }
@@ -1386,7 +1385,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="operations">Operation sequence for the expression</param>
         /// <returns><see cref="DIExpression"/></returns>
         public readonly DIExpression CreateExpression( params ExpressionOp[ ] operations )
-            => CreateExpression( ( IEnumerable<ExpressionOp> )operations );
+        {
+            return CreateExpression( ( IEnumerable<ExpressionOp> )operations );
+        }
 
         /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
         /// <param name="operations">Operation sequence for the expression</param>

@@ -98,6 +98,15 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         /// <inheritdoc/>
+        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : class
+            where TArg : struct, allows ref struct
+        {
+            ArgumentNullException.ThrowIfNull(visitor);
+            return visitor.Visit( this, in arg );
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<IAstNode> Children => Parameters;
 
         /// <inheritdoc/>

@@ -25,6 +25,15 @@ namespace Kaleidoscope.Grammar.AST
             return default;
         }
 
+        /// <inheritdoc/>
+        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : class
+            where TArg : struct, allows ref struct
+        {
+            ArgumentNullException.ThrowIfNull(visitor);
+            return default;
+        }
+
         /// <summary>Gets a singleton null node instance</summary>
         public static NullNode Instance => LazyInstance.Value;
 

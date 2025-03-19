@@ -35,4 +35,35 @@ namespace Kaleidoscope.Grammar.AST
 
         TResult? Visit( LocalVariableDeclaration localVariableDeclaration );
     }
+
+    public interface IAstVisitor<out TResult, TArg>
+        where TResult : class
+        where TArg : struct, allows ref struct
+    {
+        TResult? Visit( RootNode root, ref readonly TArg arg );
+
+        TResult? Visit( ErrorNode errorNode, ref readonly TArg arg );
+
+        TResult? Visit( Prototype prototype, ref readonly TArg arg );
+
+        TResult? Visit( FunctionDefinition definition, ref readonly TArg arg );
+
+        TResult? Visit( ConstantExpression constant, ref readonly TArg arg );
+
+        TResult? Visit( VariableReferenceExpression reference, ref readonly TArg arg );
+
+        TResult? Visit( FunctionCallExpression functionCall, ref readonly TArg arg );
+
+        TResult? Visit( BinaryOperatorExpression binaryOperator, ref readonly TArg arg );
+
+        TResult? Visit( VarInExpression varInExpression, ref readonly TArg arg );
+
+        TResult? Visit( ParameterDeclaration parameterDeclaration, ref readonly TArg arg );
+
+        TResult? Visit( ConditionalExpression conditionalExpression, ref readonly TArg arg );
+
+        TResult? Visit( ForInExpression forInExpression, ref readonly TArg arg );
+
+        TResult? Visit( LocalVariableDeclaration localVariableDeclaration, ref readonly TArg arg );
+    }
 }

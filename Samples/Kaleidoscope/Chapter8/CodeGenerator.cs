@@ -224,8 +224,6 @@ namespace Kaleidoscope.Chapter8
                     InstructionBuilder.Return( funcReturn );
                     function.Verify();
 
-                    // TODO: Run function optimization passes... (or not...)
-
                     if( definition.IsAnonymous )
                     {
                         function.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )

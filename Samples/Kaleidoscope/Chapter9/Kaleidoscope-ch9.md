@@ -12,7 +12,7 @@ chapter will add debugging information to the generated object file so that it i
 Source level debugging uses formatted data bound into the output binaries that helps the debugger map the
 state of the application to the original source code that created it. The exact format of the data depends
 on the target platform but the general idea holds for all of them. In order to isolate front-end developers
-from the actual format LLVM uses an abstract form of debug data that is based on the common DWARF
+from the actual format - LLVM uses an abstract form of debug data that is based on the common DWARF
 debugging format. Internally, the LLVM target will transform the abstract representation into the actual
 target binary form.
 
@@ -27,40 +27,27 @@ attached to each LLVM IR instruction. Optimization passes should keep the source
 instructions created, but merged instructions only get to keep a single source location. This is generally
 the cause of the observed "jumping around" when debugging optimized code. Additionally, optimizations can
 move variables in ways that are either optimized out, shared in memory, in registers or otherwise difficult
-to track. Thus, for the purposes of this tutorial we'll disable optimizations. (The DisableOptimizations
-property of the CodeGenerator was added previously to aid in observing the effects of optimizations and
-will serve to disable the optimizations for debugging in this chapter.)
+to track. Thus, for the purposes of this tutorial we'll skip optimizations.
 
 ## Setup for emitting debug information
-Debug information in Ubiquity.NET.Llvm is created with the [DebugInfoBuilder](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder).
+Debug information in Ubiquity.NET.Llvm is created with the [DIBuilder](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder).
 This is similar to the [InstructionBuilder](xref:Ubiquity.NET.Llvm.Instructions.InstructionBuilder). Using the
-DebugInfoBuilder requires a bit more knowledge on the general concepts of the DWARF debugging format, and
-in particular the [DebuggingMetadata](xref:llvm_sourcelevel_debugging) in LLVM. In Ubiquity.NET.Llvm you don't need
-to, and in fact can't, create an instance of the DebugInfoBuilder class. Instead it is lazy constructed
-internally to a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) and accessible through the
-[DIBuilder](xref:Ubiquity.NET.Llvm.BitcodeModule.DIBuilder) property. This simplifies creating the builder since it
-is bound to the module.
+DIBuilder requires a bit more knowledge on the general concepts of the DWARF debugging format, and
+in particular the [DebuggingMetadata](xref:llvm_sourcelevel_debugging) in LLVM. In Ubiquity.NET.Llvm you need
+to, create an instance of the DIBuilder class bound to a particular module. Such a builder is disposable and
+therefore requires a call to Dispose(). Normally this is handled in a `using` expression.
 
 Another important item for debug information is called the Compilation Unit. In Ubiquity.NET.Llvm that is the
 [DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit). The compile unit is the top level scope for
-storing debug information, there is only ever one per module and generally it represents the full source
-file that was used to create the module. Since the compile unit, like the builder is really tied to the
-module it is exposed as the [DICompileUnit](xref:Ubiquity.NET.Llvm.BitcodeModule.DICompileUnit) property. However,
-unlike a builder it isn't something that a module can automatically construct without more information.
+storing debug information generally it represents the full source file that was used to create the module.
+(Though with IR linking it is plausible that a module has multiple Compile Units associated).
+Unlike a builder it isn't something that is constructed without more information.
 Therefore, Ubiquity.NET.Llvm provides overloads for the creation of a module that includes the additional data
-needed to create the DICompileUnit for you.
+needed to create the DICompileUnit for you. It is important to note that a DIBuilder may have ONLY one
+DICompileUnit and that unit is used for all of the debug nodes it builds. It must be set when finalizing
+the debug information in order to properly resolve items to the compilation unit.
 
-The updated InitializeModuleAndPassManager() function looks like this:
-
-[!code-csharp[InitializeModuleAndPassManager](CodeGenerator.cs#InitializeModuleAndPassManager)]
-
-There are a few points of interest here. First the compile unit is created for the Kaleidoscope language,
-however it is using the [SourceLanguage.C](xref:Ubiquity.NET.Llvm.DebugInfo.SourceLanguage.C) value. This is
-because a debugger won't likely understand the Kaleidoscope language, runtime, or calling conventions.
-(We just invented it and only now setting up debugger support after all!) The good news is that the
-language follows the C language ABI in the code generation (generally a good idea unless you have a really
-good reason not to). Therefore, the C language is fairly accurate. This allows calling functions from the
-debugger and it will execute them.
+TODO: Discuss DIBuilder as a ref struct and that it must be passed through as part of the "visitor"
 
 Another point to note is that the module ID is derived from the source file path and the source file path
 is provided so that it becomes the root compile unit.
@@ -122,4 +109,6 @@ parameters and local variables.
 Adding debugging information in LLVM IR is rather straight forward. The bulk of the problem is in tracking
 the source location information in the parser. Fortunately for Ubiquity.NET.Llvm version of Kaleidoscope, the ANTLR4
 generated parsers do this for us already! Thus, combining the parser with Ubiquity.NET.Llvm makes building a full
-compiler for custom languages, including debug support a lot easier.
+compiler for custom languages, including debug support a lot easier. The most "complex" part is handling the
+correct ownership semantics for a DIBuilder but that is generally enforced by the compiler as it is a 
+`ref struct` type.
