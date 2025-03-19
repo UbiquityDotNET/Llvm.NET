@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Base class for a binary operator</summary>
-    public class BinaryOperator
+    public sealed class BinaryOperator
         : Instruction
     {
         internal BinaryOperator( LLVMValueRef valueRef )

@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to perform comparison of floating point values</summary>
     /// <seealso href="xref:llvm_langref#fcmp-instruction">LLVM fcmp Instruction</seealso>
-    public class FCmp
+    public sealed class FCmp
         : Cmp
     {
         internal FCmp( LLVMValueRef valueRef )

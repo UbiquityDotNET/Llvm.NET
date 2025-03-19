@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction for the LLVM intrinsic memset function</summary>
-    public class MemSet
+    public sealed class MemSet
         : MemIntrinsic
     {
         internal MemSet( LLVMValueRef valueRef )

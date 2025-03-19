@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to insert an element into a vector type</summary>
     /// <seealso href="xref:llvm_langref#insertelement-instruction">LLVM insertelement Instruction</seealso>
-    public class InsertElement
+    public sealed class InsertElement
         : Instruction
     {
         internal InsertElement( LLVMValueRef valueRef )

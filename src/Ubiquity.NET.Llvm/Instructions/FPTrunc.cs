@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to truncate a floating point value to another floating point type</summary>
     /// <seealso href="xref:llvm_langref#fptruncto-to-instruction">LLVM fptruncto .. to Instruction</seealso>
-    public class FPTrunc
+    public sealed class FPTrunc
         : Cast
     {
         internal FPTrunc( LLVMValueRef valueRef )

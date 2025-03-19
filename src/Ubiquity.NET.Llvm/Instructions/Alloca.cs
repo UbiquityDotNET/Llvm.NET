@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Llvm.Instructions
     /// entry block to the maximum extent possible.
     /// </remarks>
     /// <seealso href="xref:llvm_langref#alloca-instruction">LLVM alloca</seealso>
-    public class Alloca
+    public sealed class Alloca
         : UnaryInstruction
     {
         /// <summary>Gets the type of the alloca element</summary>

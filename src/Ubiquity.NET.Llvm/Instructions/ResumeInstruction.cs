@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Resume instruction</summary>
-    public class ResumeInstruction
+    public sealed class ResumeInstruction
         : Terminator
     {
         internal ResumeInstruction( LLVMValueRef valueRef )

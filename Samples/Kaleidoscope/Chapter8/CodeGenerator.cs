@@ -79,7 +79,7 @@ namespace Kaleidoscope.Chapter8
 
                 irBuilder.Return( );
 
-                var errInfo = Module.TryRunPasses("default<O3>");
+                using var errInfo = Module.TryRunPasses("default<O3>");
                 errInfo.ThrowIfFailed();
             }
 

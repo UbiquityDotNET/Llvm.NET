@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Initializes a new instance of the <see cref="Disassembler"/> class.</summary>
         /// <param name="triple">Triple for the instruction set to disassemble</param>
-        /// <param name="tagType">TODO:Explain this...</param>
+        /// <param name="tagType">TODO: Explain this...</param>
         /// <param name="callBacks">Optional callbacks [Default: <see langword="null"/>]</param>
         /// <remarks>The <paramref name="callBacks"/> parameter is experimental and recommended left as the default value</remarks>
         public Disassembler( Triple triple, int tagType, IDisassemblerCallbacks? callBacks = null)
@@ -92,7 +92,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Initializes a new instance of the <see cref="Disassembler"/> class.</summary>
         /// <param name="triple">Triple for the instruction set to disassemble</param>
         /// <param name="cpu">CPU string for the instruction set</param>
-        /// <param name="tagType">TODO:Explain this...</param>
+        /// <param name="tagType">TODO: Explain this...</param>
         /// <param name="callBacks">Optional callbacks [Default: <see langword="null"/>]</param>
         /// <remarks>The <paramref name="callBacks"/> parameter is experimental and recommended left as the default value</remarks>
         public Disassembler( Triple triple
@@ -174,7 +174,6 @@ namespace Ubiquity.NET.Llvm
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private static unsafe byte* NativeSymbolLookupCallback(void* disInfo, UInt64 referenceValue, UInt64* pReferenceType, UInt64 referencePC, byte** referenceName)
         {
-            // scoped var managedRefNameMarshaller = default( ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn );
             try
             {
                 if (GCHandle.FromIntPtr((nint)disInfo).Target is not IDisassemblerCallbacks callBacks)
@@ -184,7 +183,6 @@ namespace Ubiquity.NET.Llvm
 
                 string? managedRetVal = callBacks.SymbolLookup(referenceValue, ref *pReferenceType, referencePC, out string? managedRefName);
 
-                // managedRefNameMarshaller.FromManaged(managedRefName, stackalloc byte[ExecutionEncodingStringMarshaller.ManagedToUnmanagedIn.BufferSize]);
                 // Use of normal marshalling pattern is broken here... The lifetime of the effectively OUT byte pointer referenceName
                 // is undefined. If the marshalling allocates memory for the buffer then it is invalid as soon as this call returns
                 // so not much use as an OUT pointer...

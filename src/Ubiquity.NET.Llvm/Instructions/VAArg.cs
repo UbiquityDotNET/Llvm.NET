@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to load an argument of a specified type from a variadic argument list</summary>
-    public class VaArg
+    public sealed class VaArg
         : UnaryInstruction
     {
         internal VaArg( LLVMValueRef valueRef )

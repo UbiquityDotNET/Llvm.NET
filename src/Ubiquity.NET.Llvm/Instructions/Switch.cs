@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Switch instruction</summary>
-    public class Switch
+    public sealed class Switch
         : Terminator
     {
         /// <summary>Gets the default <see cref="BasicBlock"/> for the switch</summary>
@@ -18,15 +18,8 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="destination">Destination <see cref="BasicBlock"/> if the case matches</param>
         public void AddCase( Value onVal, BasicBlock destination )
         {
-            if( onVal == null )
-            {
-                throw new ArgumentNullException( nameof( onVal ) );
-            }
-
-            if( destination == null )
-            {
-                throw new ArgumentNullException( nameof( destination ) );
-            }
+            ArgumentNullException.ThrowIfNull( onVal );
+            ArgumentNullException.ThrowIfNull( destination );
 
             LLVMAddCase( Handle, onVal.Handle, destination.BlockHandle );
         }

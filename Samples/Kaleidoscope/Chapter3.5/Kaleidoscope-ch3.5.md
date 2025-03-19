@@ -3,13 +3,16 @@ uid: Kaleidoscope-ch3.5
 ---
 
 # 3.5 Kaleidoscope: Generating LLVM IR With optimizations
-This chapter focuses on the basics of optimization with LLVM IR. The general goal is
-to parse Kaleidoscope source code to generate a [Module](xref:Ubiquity.NET.Llvm.Module)
+This chapter focuses on the basics of optimization with LLVM IR. It diverges from the official tutorial
+where that mixes the optimization with the use of a JIT. This sub chapter is attempting to isolate those
+and was born as a means to test/validate the core library and optimization without a JIT. The general
+goal is to parse Kaleidoscope source code to generate a [Module](xref:Ubiquity.NET.Llvm.Module)
 representing the source as optimized LLVM IR. This is broken out as a distinct chapter to help
 identify the support for profiling and how it is different from the LLVM source samples that
 link directly to the LLVM libraries (That is, the samples are written in C++ AND continue to use
-the now VERY legacy optimization pass management support. [It is so legacy now that almost ALL remnants
-of it are removed from the LLVM-C API, not just dpeprecated])
+the C++ pass builder and management support. This level of functionality is only available as the
+legacy pass management system with VERY limited support in the LLVM-C API. [It is so legacy now that
+almost ALL remnants of it are removed from the LLVM-C API, not just dpeprecated])
 
 ## Code generation
 The Core of this sample doesn't change much from [Chapter 3](xref:Kaleidoscope-ch3). It simply adds

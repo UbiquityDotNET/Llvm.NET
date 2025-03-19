@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to invoke (call) a function with exception handling</summary>
     /// <seealso href="xref:llvm_langref#i-invoke">LLVM invoke Instruction</seealso>
-    public class Invoke
+    public sealed class Invoke
         : Terminator
         , IAttributeAccessor
     {

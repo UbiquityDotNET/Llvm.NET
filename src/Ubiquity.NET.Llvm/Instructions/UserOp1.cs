@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Custom operator that can be used in LLVM transform passes but should be removed before target instruction selection</summary>
-    public class UserOp1
+    public sealed class UserOp1
         : Instruction
     {
         internal UserOp1( LLVMValueRef valueRef )

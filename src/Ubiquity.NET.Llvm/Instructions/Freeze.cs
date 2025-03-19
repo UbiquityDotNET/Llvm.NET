@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Freeze a poison or undef value</summary>
-    public class Freeze
+    public sealed class Freeze
         : UnaryInstruction
     {
         /// <summary>Gets the value this instruction freezes</summary>

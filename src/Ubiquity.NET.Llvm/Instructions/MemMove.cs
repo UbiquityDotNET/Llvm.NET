@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Intrinsic call to target optimized memmove</summary>
-    public class MemMove
+    public sealed class MemMove
         : MemIntrinsic
     {
         internal MemMove( LLVMValueRef valueRef )

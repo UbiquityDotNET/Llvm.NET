@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to zero extend a value</summary>
-    public class ZeroExtend
+    public sealed class ZeroExtend
         : Cast
     {
         internal ZeroExtend( LLVMValueRef valueRef )

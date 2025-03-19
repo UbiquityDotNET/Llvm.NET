@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
+    <ProjectReference Include="..\Chapter3.5\Chapter3.5.csproj" />
     <ProjectReference Include="..\Chapter3\Chapter3.csproj" />
     <ProjectReference Include="..\Chapter4\Chapter4.csproj" />
     <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter5\Chapter5.csproj" />

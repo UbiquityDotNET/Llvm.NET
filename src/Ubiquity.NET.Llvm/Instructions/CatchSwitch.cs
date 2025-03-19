@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.Instructions
     /// <seealso href="xref:llvm_langref#i-catchswitch">LLVM catchswitch instruction</seealso>
     /// <seealso href="xref:llvm_exception_handling#exception-handling-in-llvm">Exception Handling in LLVM</seealso>
     /// <seealso href="xref:llvm_exception_handling#wineh">Exception Handling using the Windows Runtime</seealso>
-    public class CatchSwitch
+    public sealed class CatchSwitch
         : Instruction
     {
         /// <summary>Gets or sets the Parent pad for this <see cref="CatchSwitch"/></summary>

@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Sign extension instruction</summary>
-    public class SignExtend
+    public sealed class SignExtend
         : Cast
     {
         internal SignExtend( LLVMValueRef valueRef )

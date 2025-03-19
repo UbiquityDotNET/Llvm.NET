@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Atomic Compare and Exchange instruction</summary>
     /// <seealso href="xref:llvm_langref#cmpxchg-instruction">LLVM cmpxchg instruction</seealso>
-    public class AtomicCmpXchg
+    public sealed class AtomicCmpXchg
         : Instruction
     {
         /// <summary>Gets or sets a value indicating whether this instruction is weak or not</summary>

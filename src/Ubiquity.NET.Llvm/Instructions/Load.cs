@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to read from memory</summary>
     /// <seealso href="xref:llvm_langref#load-instruction">LLVM load Instruction</seealso>
-    public class Load
+    public sealed class Load
         : UnaryInstruction
     {
         /// <summary>Gets or sets a value indicating whether this load is volatile</summary>

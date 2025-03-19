@@ -288,7 +288,7 @@ namespace CodeGenWithDebugInfo
             //       The debug info will come from the declare intrinsic below.
             var dstAddr = instBuilder.Alloca( fooPtr )
                                      .RegisterName( "pDst.addr" )
-                                     .Alignment( ptrAlign );
+                                     .SetAlignment( ptrAlign );
 
             bool param0ByVal = copyFunc.Attributes[ FunctionAttributeIndex.Parameter0 ].Contains( AttributeKind.ByVal );
             if( param0ByVal )
@@ -301,7 +301,7 @@ namespace CodeGenWithDebugInfo
             }
 
             instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr )
-                       .Alignment( ptrAlign );
+                       .SetAlignment( ptrAlign );
 
             // insert declare pseudo instruction to attach debug info to the local declarations
             diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
@@ -320,7 +320,7 @@ namespace CodeGenWithDebugInfo
 
             var loadedDst = instBuilder.SetDebugLocation( 15, 6, copyFunc.DISubProgram )
                                        .Load( fooPtr, dstAddr )
-                                       .Alignment( ptrAlign );
+                                       .SetAlignment( ptrAlign );
 
             instBuilder.SetDebugLocation( 15, 13, copyFunc.DISubProgram );
             var dstPtr = instBuilder.BitCast( loadedDst, module.Context.Int8Type.CreatePointerType( ) );
@@ -359,7 +359,7 @@ namespace CodeGenWithDebugInfo
                 // create a temp local copy of the global structure
                 var dstAddr = instBuilder.Alloca( foo )
                                          .RegisterName( "agg.tmp" )
-                                         .Alignment( module.Layout.CallFrameAlignmentOf( foo ) );
+                                         .SetAlignment( module.Layout.CallFrameAlignmentOf( foo ) );
 
                 instBuilder.SetDebugLocation( 25, 11, doCopyFunc.DISubProgram );
                 var bitCastDst = instBuilder.BitCast( dstAddr, bytePtrType );

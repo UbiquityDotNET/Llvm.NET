@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to store a value to memory</summary>
-    public class Store
+    public sealed class Store
         : Instruction
     {
         /// <summary>Gets or sets a value indicating whether the store is volatile</summary>

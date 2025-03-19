@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Branch instruction</summary>
-    public class Branch
+    public sealed class Branch
         : Terminator
     {
         /// <summary>Gets a value indicating whether this branch is conditional</summary>

@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>PHI node instruction</summary>
-    public class PhiNode
+    public sealed class PhiNode
         : Instruction
     {
         /// <summary>Adds an incoming value and block to this <see cref="PhiNode"/></summary>

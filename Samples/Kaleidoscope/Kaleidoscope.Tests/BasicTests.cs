@@ -58,6 +58,14 @@ namespace Kaleidoscope.Tests
 
         [TestMethod]
         [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
+        public void Chapter3_5()
+        {
+            using var input = File.OpenText( "simpleExpressions.kls" );
+            RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3_5.CodeGenerator( state) );
+        }
+
+        [TestMethod]
+        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
         public void Chapter4()
         {
             using var input = File.OpenText( "simpleExpressions.kls" );

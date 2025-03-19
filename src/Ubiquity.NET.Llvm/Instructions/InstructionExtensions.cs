@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="self">Instruction to set the <see cref="Instruction.Alignment"/> for</param>
         /// <param name="value">New alignment for the instruction</param>
         /// <returns>To allow fluent style coding this returns the <paramref name="self"/> parameter</returns>
-        public static T Alignment<T>( this T self, uint value )
+        public static T SetAlignment<T>( this T self, uint value )
             where T : Instruction
         {
             ArgumentNullException.ThrowIfNull(self);
@@ -37,7 +37,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="self">Instruction to set the Volatile property for</param>
         /// <param name="value">Flag to indicate if the instruction's operation is volatile</param>
         /// <returns>To allow fluent style coding this returns the <paramref name="self"/> parameter</returns>
-        public static T IsVolatile<T>( this T self, bool value )
+        public static T SetIsVolatile<T>( this T self, bool value )
             where T : Instruction
         {
             ArgumentNullException.ThrowIfNull(self);

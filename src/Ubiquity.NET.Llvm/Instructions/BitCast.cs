@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>This class represents a no-op cast from one type to another</summary>
-    public class BitCast
+    public sealed class BitCast
         : Cast
     {
         internal BitCast( LLVMValueRef valueRef )

@@ -51,7 +51,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
     /// <summary>Atomic Read-Modify-Write instruction</summary>
     /// <seealso href="xref:llvm_langref#atomicrmw-instruction">LLVM atomicrmw instruction</seealso>
-    public class AtomicRMW
+    public sealed class AtomicRMW
             : Instruction
     {
         /// <summary>Gets or sets the kind of atomic operation for this instruction</summary>

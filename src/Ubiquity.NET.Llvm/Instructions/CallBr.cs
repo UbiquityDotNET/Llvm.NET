@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>CallBr instruction</summary>
     /// <seealso href="xref:llvm_langref#i-callbr"/>
-    public class CallBr
+    public sealed class CallBr
         : Instruction
         , IAttributeAccessor
     {
