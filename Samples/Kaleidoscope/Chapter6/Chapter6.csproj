@@ -5,6 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>kls6</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\mandel.kls" Link="mandel.kls" />

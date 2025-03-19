@@ -14,11 +14,9 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
-using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.JIT;
-using Ubiquity.NET.Llvm.Transforms;
+using Ubiquity.NET.Llvm.JIT.OrcJITv2;
 using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
@@ -32,114 +30,127 @@ namespace Kaleidoscope.Chapter6
         , IKaleidoscopeCodeGenerator<Value>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, bool disableOptimization = false, TextWriter? outputWriter = null )
+        public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
             : base( null )
         {
-            JIT.OutputWriter = outputWriter ?? Console.Out;
-            globalState.ValidateNotNull( nameof( globalState ) );
+            ArgumentNullException.ThrowIfNull( globalState );
+
+            // set the global output writer for KlsJIT execution
+            // the "built-in" functions need this to generate output somewhere.
+            KaleidoscopeJIT.OutputWriter = outputWriter ?? Console.Out;
             if( globalState.LanguageLevel > LanguageLevel.UserDefinedOperators )
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
 
             RuntimeState = globalState;
-            Context = new Context( );
-            DisableOptimizations = disableOptimization;
-            InitializeModuleAndPassManager( );
-            InstructionBuilder = new InstructionBuilder( Context );
+            ThreadSafeContext = new();
+            InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
         }
         #endregion
 
-        #region Dispose
-        public void Dispose( )
+        public void Dispose()
         {
-            JIT.Dispose( );
-            Module?.Dispose( );
-            Context.Dispose( );
+            KlsJIT.Dispose();
+            Module?.Dispose();
+            InstructionBuilder.Dispose();
+            ThreadSafeContext.Dispose();
         }
-        #endregion
 
-        #region Generate
-        public OptionalValue<Value> Generate( IAstNode ast )
+        public OptionalValue<Value> Generate(IAstNode ast)
         {
-            ast.ValidateNotNull( nameof( ast ) );
+            ArgumentNullException.ThrowIfNull( ast );
 
             // Prototypes, including extern are ignored as AST generation
             // adds them to the RuntimeState so that already has the declarations
-            if( ast is not FunctionDefinition definition )
+            // They are looked up and added to the module as extern if not already
+            // present if they are called.
+            if(ast is not FunctionDefinition definition)
             {
                 return default;
             }
 
-            InitializeModuleAndPassManager( );
-            Debug.Assert( Module is not null , "Module initialization failed" );
+            IContext ctx = ThreadSafeContext.PerThreadContext;
+            InstructionBuilder?.Dispose();
+            InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
 
-            var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
+            Module?.Dispose();
+            Module = ctx.CreateBitcodeModule();
+            Debug.Assert( Module is not null, "Module initialization failed" );
 
-            if( definition.IsAnonymous )
+            var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+
+            if(definition.IsAnonymous)
             {
-                // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
-                ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
-                var nativeFunc = JIT.GetFunctionDelegate<KaleidoscopeJIT.CallbackHandler0>( definition.Name );
-                var retVal = Context.CreateConstant( nativeFunc( ) );
-                JIT.RemoveModule( jitHandle );
-                return OptionalValue.Create<Value>( retVal );
+                // directly track modules for anonymous functions as calling the function is the guaranteed
+                // next step and then it is removed as nothing can reference it again.
+                // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
+                // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
+                // up. The object support is more for existing object files than for generated IR.
+                using ResourceTracker resourceTracker = KlsJIT.Add(ThreadSafeContext, Module);
+                Value retVal;
+
+                // Invoking the function via a function pointer is an "unsafe" operation.
+                // Also note that .NET has no mechanism to catch native exceptions like
+                // access violations or stack overflows from infinite recursion. They will
+                // crash the app.
+                unsafe
+                {
+                    var pFunc = (delegate* unmanaged[Cdecl]<double>)KlsJIT.Lookup(definition.Name);
+                    retVal = ctx.CreateConstant( pFunc() );
+                    resourceTracker.RemoveAll();
+                    return OptionalValue.Create<Value>( retVal );
+                }
             }
             else
             {
                 // Destroy any previously generated module for this function.
                 // This allows re-definition as the new module will provide the
-                // implementation. This is needed, otherwise both the MCJIT
-                // and OrcJit engines will resolve to the original module, despite
-                // claims to the contrary in the official tutorial text. (Though,
-                // to be fair it may have been true in the original JIT and might
-                // still be true for the interpreter)
-                if( FunctionModuleMap.Remove( definition.Name, out ulong handle ) )
+                // implementation.
+                if(FunctionModuleMap.Remove( definition.Name, out ResourceTracker? tracker ))
                 {
-                    JIT.RemoveModule( handle );
+                    tracker.RemoveAll();
+                    tracker.Dispose();
                 }
 
                 // Unknown if any future input will call the function so add it for lazy compilation.
                 // Native code is generated for the module automatically only when required.
-                ulong jitHandle = JIT.AddLazyCompiledModule( Module );
-                FunctionModuleMap.Add( definition.Name, jitHandle );
+                FunctionModuleMap.Add( definition.Name, KlsJIT.Add( ThreadSafeContext, Module ) );
                 return OptionalValue.Create<Value>( function );
             }
         }
-        #endregion
 
-        #region ConstantExpression
-        public override Value? Visit( ConstantExpression constant )
+        public override Value? Visit(ConstantExpression constant)
         {
-            constant.ValidateNotNull( nameof( constant ) );
-            return Context.CreateConstant( constant.Value );
+            ArgumentNullException.ThrowIfNull( constant );
+
+            return ThreadSafeContext.PerThreadContext.CreateConstant( constant.Value );
         }
-        #endregion
 
-        #region BinaryOperatorExpression
-        public override Value? Visit( BinaryOperatorExpression binaryOperator )
+        public override Value? Visit(BinaryOperatorExpression binaryOperator)
         {
-            binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
-            switch( binaryOperator.Op )
+            ArgumentNullException.ThrowIfNull( binaryOperator );
+
+            switch(binaryOperator.Op)
             {
             case BuiltInOperatorKind.Less:
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+            {
+                var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
                                                         , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         ).RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
+                return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                         .RegisterName( "booltmp" );
+            }
 
             case BuiltInOperatorKind.Pow:
-                {
-                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow
-                                                  , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  ).RegisterName( "powtmp" );
-                }
+            {
+                var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
+                return InstructionBuilder.Call( pow
+                                              , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              ).RegisterName( "powtmp" );
+            }
 
             case BuiltInOperatorKind.Add:
                 return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
@@ -165,25 +176,25 @@ namespace Kaleidoscope.Chapter6
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        #endregion
 
-        #region FunctionCallExpression
-        public override Value? Visit( FunctionCallExpression functionCall )
+        public override Value? Visit(FunctionCallExpression functionCall)
         {
-            if( Module is null )
+            ArgumentNullException.ThrowIfNull( functionCall );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
+            if(Module is null)
             {
                 throw new InvalidOperationException( "Can't visit a function call without an active module" );
             }
 
-            functionCall.ValidateNotNull( nameof( functionCall ) );
             string targetName = functionCall.FunctionPrototype.Name;
 
-            IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
+            Function? function;
+            if(RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ))
             {
                 function = GetOrDeclareFunction( target );
             }
-            else if( !Module.TryGetFunction( targetName, out function ) )
+            else if(!Module.TryGetFunction( targetName, out function ))
             {
                 throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
             }
@@ -194,14 +205,15 @@ namespace Kaleidoscope.Chapter6
 
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        #endregion
 
         #region FunctionDefinition
-        public override Value? Visit( FunctionDefinition definition )
+        public override Value? Visit(FunctionDefinition definition)
         {
-            definition.ValidateNotNull( nameof( definition ) );
+            ArgumentNullException.ThrowIfNull( definition );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
             var function = GetOrDeclareFunction( definition.Signature );
-            if( !function.IsDeclaration )
+            if(!function.IsDeclaration)
             {
                 throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
             }
@@ -210,34 +222,33 @@ namespace Kaleidoscope.Chapter6
             {
                 var entryBlock = function.AppendBasicBlock( "entry" );
                 InstructionBuilder.PositionAtEnd( entryBlock );
-                using( NamedValues.EnterScope( ) )
+                using(NamedValues.EnterScope())
                 {
-                    foreach( var param in definition.Signature.Parameters )
+                    foreach(var param in definition.Signature.Parameters)
                     {
                         NamedValues[ param.Name ] = function.Parameters[ param.Index ];
                     }
 
                     var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
                     InstructionBuilder.Return( funcReturn );
-                    function.Verify( );
+                    function.Verify();
 
-                    FunctionPassManager?.Run( function );
                     return function;
                 }
             }
-            catch( CodeGeneratorException )
+            catch(CodeGeneratorException)
             {
-                function.EraseFromParent( );
+                function.EraseFromParent();
                 throw;
             }
         }
         #endregion
 
-        #region VariableReferenceExpression
-        public override Value? Visit( VariableReferenceExpression reference )
+        public override Value? Visit(VariableReferenceExpression reference)
         {
-            reference.ValidateNotNull( nameof( reference ) );
-            if( !NamedValues.TryGetValue( reference.Name, out Value? value ) )
+            ArgumentNullException.ThrowIfNull( reference );
+
+            if(!NamedValues.TryGetValue( reference.Name, out Value? value ))
             {
                 // Source input is validated by the parser and AstBuilder, therefore
                 // this is the result of an internal error in the generator rather
@@ -247,26 +258,23 @@ namespace Kaleidoscope.Chapter6
 
             return value;
         }
-        #endregion
 
         #region ConditionalExpression
-        public override Value? Visit( ConditionalExpression conditionalExpression )
+        public override Value? Visit(ConditionalExpression conditionalExpression)
         {
-            conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
+            ArgumentNullException.ThrowIfNull( conditionalExpression );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
             var condition = conditionalExpression.Condition.Accept( this );
-            if( condition == null )
+            if(condition == null)
             {
                 return null;
             }
 
-            var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, Context.CreateConstant( 0.0 ) )
+            var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, ThreadSafeContext.PerThreadContext.CreateConstant( 0.0 ) )
                                              .RegisterName( "ifcond" );
 
-            var function = InstructionBuilder.InsertFunction;
-            if( function is null )
-            {
-                throw new InternalCodeGeneratorException( "ICE: expected block that is attached to a function at this point" );
-            }
+            var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: expected block that is attached to a function at this point" );
 
             var thenBlock = function.AppendBasicBlock( "then" );
             var elseBlock = function.AppendBasicBlock( "else" );
@@ -279,7 +287,7 @@ namespace Kaleidoscope.Chapter6
             // InstructionBuilder.InserBlock after this point is !null
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
             var thenValue = conditionalExpression.ThenExpression.Accept( this );
-            if( thenValue == null )
+            if(thenValue == null)
             {
                 return null;
             }
@@ -292,7 +300,7 @@ namespace Kaleidoscope.Chapter6
             // generate else block
             InstructionBuilder.PositionAtEnd( elseBlock );
             var elseValue = conditionalExpression.ElseExpression.Accept( this );
-            if( elseValue == null )
+            if(elseValue == null)
             {
                 return null;
             }
@@ -310,31 +318,29 @@ namespace Kaleidoscope.Chapter6
         }
         #endregion
 
-        #region ForInExpression
-        public override Value? Visit( ForInExpression forInExpression )
+        public override Value? Visit(ForInExpression forInExpression)
         {
-            forInExpression.ValidateNotNull( nameof( forInExpression ) );
-            var function = InstructionBuilder.InsertFunction;
-            if( function is null )
-            {
-                throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
-            }
+            ArgumentNullException.ThrowIfNull( forInExpression );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
+            var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
             string varName = forInExpression.LoopVariable.Name;
+            IContext ctx = ThreadSafeContext.PerThreadContext;
 
             // Emit the start code first, without 'variable' in scope.
             Value? startVal;
-            if( forInExpression.LoopVariable.Initializer != null )
+            if(forInExpression.LoopVariable.Initializer != null)
             {
                 startVal = forInExpression.LoopVariable.Initializer.Accept( this );
-                if( startVal is null )
+                if(startVal is null)
                 {
                     return null;
                 }
             }
             else
             {
-                startVal = Context.CreateConstant( 0.0 );
+                startVal = ctx.CreateConstant( 0.0 );
             }
 
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
@@ -351,27 +357,27 @@ namespace Kaleidoscope.Chapter6
             InstructionBuilder.PositionAtEnd( loopBlock );
 
             // Start the PHI node with an entry for Start.
-            var variable = InstructionBuilder.PhiNode( Context.DoubleType )
+            var variable = InstructionBuilder.PhiNode( ctx.DoubleType )
                                              .RegisterName( varName );
 
             variable.AddIncoming( startVal, preHeaderBlock );
 
             // Within the loop, the variable is defined equal to the PHI node.
             // So, push a new scope for it and any values the body might set
-            using( NamedValues.EnterScope( ) )
+            using(NamedValues.EnterScope())
             {
                 NamedValues[ varName ] = variable;
 
                 // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
-                if( forInExpression.Body.Accept( this ) == null )
+                if(forInExpression.Body.Accept( this ) == null)
                 {
                     return null;
                 }
 
                 Value? stepValue = forInExpression.Step.Accept( this );
-                if( stepValue == null )
+                if(stepValue == null)
                 {
                     return null;
                 }
@@ -381,13 +387,13 @@ namespace Kaleidoscope.Chapter6
 
                 // Compute the end condition.
                 Value? endCondition = forInExpression.Condition.Accept( this );
-                if( endCondition == null )
+                if(endCondition == null)
                 {
                     return null;
                 }
 
                 // Convert condition to a bool by comparing non-equal to 0.0.
-                endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, Context.CreateConstant( 0.0 ) )
+                endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, ctx.CreateConstant( 0.0 ) )
                                                  .RegisterName( "loopcond" );
 
                 // capture loop end result block for loop variable PHI node
@@ -404,51 +410,31 @@ namespace Kaleidoscope.Chapter6
                 variable.AddIncoming( nextVar, loopEndBlock );
 
                 // for expression always returns 0.0 for consistency, there is no 'void'
-                return Context.DoubleType.GetNullValue( );
+                return ctx.DoubleType.GetNullValue();
             }
         }
-        #endregion
-
-        #region InitializeModuleAndPassManager
-        private void InitializeModuleAndPassManager( )
-        {
-            Module = Context.CreateBitcodeModule( );
-            Module.Layout = JIT.TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module );
-
-            if( !DisableOptimizations )
-            {
-                FunctionPassManager.AddInstructionCombiningPass( )
-                                   .AddReassociatePass( )
-                                   .AddGVNPass( )
-                                   .AddCFGSimplificationPass( );
-            }
-
-            FunctionPassManager.Initialize( );
-        }
-        #endregion
-
-        #region GetOrDeclareFunction
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private IrFunction GetOrDeclareFunction( Prototype prototype )
+        private Function GetOrDeclareFunction(Prototype prototype)
         {
-            if( Module is null )
+            if(Module is null)
             {
                 throw new InvalidOperationException( "ICE: Can't get or declare a function without an active module" );
             }
 
-            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
+            if(Module.TryGetFunction( prototype.Name, out Function? function ))
             {
                 return function;
             }
 
-            var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
+            IContext ctx = ThreadSafeContext.PerThreadContext;
+            var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
+            retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
             int index = 0;
-            foreach( var argId in prototype.Parameters )
+            foreach(var argId in prototype.Parameters)
             {
                 retVal.Parameters[ index ].Name = argId.Name;
                 ++index;
@@ -456,21 +442,18 @@ namespace Kaleidoscope.Chapter6
 
             return retVal;
         }
-        #endregion
 
         private const string ExpectValidExpr = "Expected a valid expression";
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
+        private Module? Module;
         private readonly DynamicRuntimeState RuntimeState;
-        private readonly Context Context;
-        private readonly InstructionBuilder InstructionBuilder;
+        private readonly ThreadSafeContext ThreadSafeContext;
+        private InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Value> NamedValues = new( );
-        private FunctionPassManager? FunctionPassManager;
-        private readonly bool DisableOptimizations;
-        private BitcodeModule? Module;
-        private readonly KaleidoscopeJIT JIT = new( );
-        private readonly Dictionary<string, ulong> FunctionModuleMap = new( );
+        private readonly KaleidoscopeJIT KlsJIT = new( );
+        private readonly Dictionary<string, ResourceTracker> FunctionModuleMap = [];
         #endregion
     }
 }

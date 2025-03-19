@@ -31,15 +31,17 @@ namespace Kaleidoscope.Chapter6
             switch( resultValue )
             {
             case ConstantFP result:
+                // If the cursor is not at the beginning of a line
+                // generate a new line for it
                 if( Console.CursorLeft > 0 )
                 {
                     Console.WriteLine( );
                 }
 
-                Console.WriteLine( "Evaluated to {0}", result.Value );
+                Console.WriteLine( "{0}", result.Value );
                 break;
 
-            case IrFunction function:
+            case Function function:
 #if SAVE_LLVM_IR
                 string safeFileName = Utilities.GetSafeFileName( function.Name );
                 _ = function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( safeFileName, "ll" ), out string _ );

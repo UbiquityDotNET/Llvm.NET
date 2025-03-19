@@ -13,6 +13,7 @@
     <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter5\Chapter5.csproj" />
     <ProjectReference Include="..\Chapter5\Chapter5.csproj" />
     <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter6\Chapter6.csproj" />
+    <ProjectReference Include="..\Chapter6\Chapter6.csproj" />
     <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter7\Chapter7.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
