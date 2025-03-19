@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Support class to provide read/update semantics to the operands of a container element</summary>

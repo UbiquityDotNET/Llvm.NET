@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Metadata;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug Global variable expression</summary>

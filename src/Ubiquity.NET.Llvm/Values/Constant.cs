@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Metadata;
-
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
 namespace Ubiquity.NET.Llvm.Values

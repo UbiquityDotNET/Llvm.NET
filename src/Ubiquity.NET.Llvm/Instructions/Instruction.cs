@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Metadata;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction opcodes</summary>

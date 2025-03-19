@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Support class to provide read only list semantics to the parameters of a method</summary>

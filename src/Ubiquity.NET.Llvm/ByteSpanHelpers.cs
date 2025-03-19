@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.InteropServices;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Utility class to provide extension methods for a span of bytes</summary>

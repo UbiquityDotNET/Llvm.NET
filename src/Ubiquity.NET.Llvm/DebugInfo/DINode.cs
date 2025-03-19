@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Metadata;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Root of the object hierarchy for Debug information metadata nodes</summary>

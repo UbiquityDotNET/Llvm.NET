@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.ObjectModel;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>re-usable implementation of IAttributeDictionary for containers that implement IAttributeAccessor</summary>

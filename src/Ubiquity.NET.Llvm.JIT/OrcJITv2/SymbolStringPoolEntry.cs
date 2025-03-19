@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
     /// </remarks>
     public sealed class SymbolStringPoolEntry
         : IEquatable<SymbolStringPoolEntry>
-        /*, IEquatable<ReadOnlySpan<byte>> // Not allowed in C# 12/NET 8.0*/
+        , IEquatable<ReadOnlySpan<byte>>
         , IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class from another entry (Add ref construction)</summary>

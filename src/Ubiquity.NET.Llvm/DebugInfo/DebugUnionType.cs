@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.ObjectModel;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug representation of a union type</summary>

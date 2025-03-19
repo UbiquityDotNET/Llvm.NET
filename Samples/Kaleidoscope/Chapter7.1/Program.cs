@@ -7,9 +7,9 @@
 using System;
 using System.Reflection;
 
-using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm;
 
-using static Ubiquity.NET.Llvm.Interop.Library;
+using static Ubiquity.NET.Llvm.Library;
 
 namespace Kaleidoscope.Chapter71
 {
@@ -21,11 +21,16 @@ namespace Kaleidoscope.Chapter71
             var repl = new ReplEngine( );
 
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {repl.LanguageFeatureLevel}";
-            Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( ).Name}: {helloMsg}";
+            Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
+
+            // On Windows the exit keyboard sequence includes the <enter> key press.
+            // Any other platform it's still less then obvious, so provide some help.
+            Console.WriteLine($"    Use Ctrl-Z{(OperatingSystem.IsWindows() ? " (followed by <Enter>)" : string.Empty)} to exit this application.");
 
             using var libLlvm = InitializeLLVM( );
             libLlvm.RegisterTarget( CodeGenTarget.Native );
+
             repl.Run( Console.In );
         }
     }

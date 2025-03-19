@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.InteropServices;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Represents the success or failure of an operation with "try" semantics</summary>

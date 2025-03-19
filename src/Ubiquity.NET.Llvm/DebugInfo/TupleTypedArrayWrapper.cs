@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Generic wrapper to treat an MDTuple as an array of elements of a specific type</summary>

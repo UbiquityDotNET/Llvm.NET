@@ -14,6 +14,7 @@ using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Ubiquity.NET.Llvm.Values;
 
 namespace Kaleidoscope.Tests
@@ -87,15 +88,13 @@ namespace Kaleidoscope.Tests
             RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, writer ) );
         }
 
-#if LAZY_FUNCTION_GENERATOR_SUPPORTED
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
         public void Chapter71( )
         {
             using var input = File.OpenText( "fibi.kls" );
-            RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter71.CodeGenerator( state, false, writer ) );
+            RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter71.CodeGenerator( state, writer ) );
         }
-#endif
 
         private void RunBasicReplLoop( LanguageLevel level
                                      , TextReader input

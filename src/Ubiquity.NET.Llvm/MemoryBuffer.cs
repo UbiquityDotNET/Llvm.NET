@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.InteropServices;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>LLVM MemoryBuffer</summary>

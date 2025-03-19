@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Delegate for a diagnostic info callback</summary>

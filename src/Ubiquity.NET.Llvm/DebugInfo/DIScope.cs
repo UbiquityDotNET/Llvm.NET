@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Metadata;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for all Debug information scopes</summary>

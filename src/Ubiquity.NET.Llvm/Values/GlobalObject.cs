@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Metadata;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Base class for Global objects in an LLVM ModuleHandle</summary>

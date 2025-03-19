@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public static partial class ModuleBindings

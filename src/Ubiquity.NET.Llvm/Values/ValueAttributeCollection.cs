@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     internal class ValueAttributeCollection
