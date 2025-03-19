@@ -102,7 +102,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         {
             var debugStructType = new DebugStructType( TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO );
             bool packed = false;
-            BitcodeModule module = null;
+            Module module = null;
             DIScope? scope = null;
             DIFile? file = null;
             uint line = 0;
@@ -126,7 +126,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         {
             var debugStructType = new DebugStructType( TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO, TODO );
             bool packed = false;
-            BitcodeModule module = null;
+            Module module = null;
             DIScope? scope = null;
             DIFile? file = null;
             uint line = 0;

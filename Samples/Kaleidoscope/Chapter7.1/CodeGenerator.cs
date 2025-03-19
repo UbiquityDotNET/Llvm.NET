@@ -31,7 +31,7 @@ namespace Kaleidoscope.Chapter71
         , IDisposable
         , IKaleidoscopeCodeGenerator<Value>
     {
-        public CodeGenerator( DynamicRuntimeState globalState, TextWriter? outputWriter = null )
+        public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -55,7 +55,7 @@ namespace Kaleidoscope.Chapter71
         }
 
         #region Dispose
-        public void Dispose( )
+        public void Dispose()
         {
             JitLCTM.Dispose();
             JitISM.Dispose();
@@ -67,7 +67,7 @@ namespace Kaleidoscope.Chapter71
         #endregion
 
         #region Generate
-        public OptionalValue<Value> Generate( IAstNode ast )
+        public OptionalValue<Value> Generate(IAstNode ast)
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -83,7 +83,6 @@ namespace Kaleidoscope.Chapter71
             IContext ctx = ThreadSafeContext.PerThreadContext;
             InstructionBuilder?.Dispose();
             InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
-
             Module?.Dispose();
             Module = ctx.CreateBitcodeModule();
             Debug.Assert( Module is not null, "Module initialization failed" );
@@ -93,7 +92,7 @@ namespace Kaleidoscope.Chapter71
                 // Generate the LLVM IR for this function
                 var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
 
-                // directly track modules for anonymous functions as calling the function is the guaranteed
+                // Directly track modules for anonymous functions as calling the function is the guaranteed
                 // next step and then it is removed as nothing can reference it again.
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
@@ -113,23 +112,25 @@ namespace Kaleidoscope.Chapter71
                     return OptionalValue.Create<Value>( retVal );
                 }
             }
-
-            // It is unknown if any future input will call the function so don't even generate IR
-            // until it is needed. JIT triggers the callback to 'Materialize' the IR module when
-            // the symbol is looked up so the JIT can then generate native code only when required.
-            AddLazyMaterializer(definition);
-            return default;
+            else
+            {
+                // It is unknown if any future input will call the function so don't even generate IR
+                // until it is needed. JIT triggers the callback to 'Materialize' the IR module when
+                // the symbol is looked up so the JIT can then generate native code only when required.
+                AddLazyMaterializer(definition);
+                return default;
+            }
         }
 #endregion
 
-        public override Value? Visit( ConstantExpression constant )
+        public override Value? Visit(ConstantExpression constant)
         {
             ArgumentNullException.ThrowIfNull( constant );
 
             return ThreadSafeContext.PerThreadContext.CreateConstant( constant.Value );
         }
 
-        public override Value? Visit( BinaryOperatorExpression binaryOperator )
+        public override Value? Visit(BinaryOperatorExpression binaryOperator)
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
@@ -187,10 +188,10 @@ namespace Kaleidoscope.Chapter71
             }
         }
 
-        public override Value? Visit( FunctionCallExpression functionCall )
+        public override Value? Visit(FunctionCallExpression functionCall)
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             if(Module is null)
             {
@@ -216,10 +217,10 @@ namespace Kaleidoscope.Chapter71
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
 
-        public override Value? Visit( FunctionDefinition definition )
+        public override Value? Visit(FunctionDefinition definition)
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -264,9 +265,10 @@ namespace Kaleidoscope.Chapter71
             }
         }
 
-        public override Value? Visit( VariableReferenceExpression reference )
+        public override Value? Visit(VariableReferenceExpression reference)
         {
             ArgumentNullException.ThrowIfNull( reference );
+
             var value = LookupVariable( reference.Name );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -276,10 +278,10 @@ namespace Kaleidoscope.Chapter71
                                      .RegisterName( reference.Name );
         }
 
-        public override Value? Visit( ConditionalExpression conditionalExpression )
+        public override Value? Visit(ConditionalExpression conditionalExpression)
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
@@ -334,10 +336,10 @@ namespace Kaleidoscope.Chapter71
                                      .RegisterName( "ifresult" );
         }
 
-        public override Value? Visit( ForInExpression forInExpression )
+        public override Value? Visit(ForInExpression forInExpression)
         {
             ArgumentNullException.ThrowIfNull( forInExpression );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
@@ -429,6 +431,7 @@ namespace Kaleidoscope.Chapter71
         public override Value? Visit( VarInExpression varInExpression )
         {
             ArgumentNullException.ThrowIfNull(varInExpression);
+
             IContext ctx = ThreadSafeContext.PerThreadContext;
             using(NamedValues.EnterScope())
             {
@@ -473,7 +476,7 @@ namespace Kaleidoscope.Chapter71
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction( Prototype prototype )
+        private Function GetOrDeclareFunction(Prototype prototype)
         {
             if(Module is null)
             {
@@ -488,7 +491,6 @@ namespace Kaleidoscope.Chapter71
             IContext ctx = ThreadSafeContext.PerThreadContext;
             var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
-            retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
             int index = 0;
             foreach(var argId in prototype.Parameters)

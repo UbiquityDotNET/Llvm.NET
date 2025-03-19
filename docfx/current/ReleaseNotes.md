@@ -69,7 +69,7 @@ Some APIs had inconsistent, misspelled or confusing names and were updated.
 ### Obsoleted APIs
 | Obsolete API              | Alternative API                | Justification |
 |---------------------------|--------------------------------|---------------|
-| BitcodeModule.AddFunction | BitcodeModule.CreateFunction() | The Create vs Add between debug info and raw native was always confusing |
+| Module.AddFunction | Module.CreateFunction() | The Create vs Add between debug info and raw native was always confusing |
 
 ### Types no longer disposable
 Some types are no longer disposable. The LLVMObjectRef type uses SafeHandle, which eliminates the need
@@ -197,12 +197,12 @@ Ubiquity.NET.Llvm library:
    ensure that a function pass manager, which is bound to a module, is destroyed before
    the module it is bound to. Failure to do so can result in app crashes from access
    violations in the native LLVM code.
-7. BitcodeModule
+7. Module
     1. MakeShared and shared refs of modules is removed. (This was created for
         OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
         same ownership transfer model as the legacy engines. E.g. the ownership for the module
         is transferred to the JIT engine)
-    2. BitCodeModule is now Disposable backed by a safe handle, this allows for detaching and
+    2. Module is now Disposable backed by a safe handle, this allows for detaching and
        invalidating the underlying LLVMModuleRef when the module is provided to the JIT
     3. CreateFunction() signature changed, Dropped the default null node parameters
        not supported by the LLVM-C implementation.

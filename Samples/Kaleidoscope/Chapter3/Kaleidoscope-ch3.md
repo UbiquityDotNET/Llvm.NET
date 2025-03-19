@@ -4,7 +4,7 @@ uid: Kaleidoscope-ch3
 
 # 3. Kaleidoscope: Generating LLVM IR
 This chapter focuses on the basics of transforming the ANTLR parse tree into LLVM IR. The general goal is
-to parse Kaleidoscope source code to generate a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) representing
+to parse Kaleidoscope source code to generate a [Module](xref:Ubiquity.NET.Llvm.Module) representing
 the source as LLVM IR.
 
 ## Basic code flow
@@ -74,7 +74,7 @@ The exact set of members varies for each chapter but the basic ideas remain acro
 |-----|-------------|
 | RuntimeState | Contains information about the language and dynamic runtime state needed for resolving operator precedence |
 | Context | Current [Context](xref:Ubiquity.NET.Llvm.Context) for LLVM generation |
-| Module | Current [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) to generate LLVM IR in|
+| Module | Current [Module](xref:Ubiquity.NET.Llvm.Module) to generate LLVM IR in|
 | InstructionBuilder | Current  [InstructionBuilder](xref:Ubiquity.NET.Llvm.Instructions.InstructionBuilder) used to generate LLVM IR instructions |
 | NamedValues | Contains a mapping of named variables to the generated [Value](xref:Ubiquity.NET.Llvm.Values.Value) |
 

@@ -63,6 +63,11 @@ namespace Kaleidoscope.Chapter3_5
             }
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+            if(!function.ParentModule.Verify(out string msg))
+            {
+                throw new CodeGeneratorException(msg);
+            }
+
             return OptionalValue.Create<Value>( function );
         }
 

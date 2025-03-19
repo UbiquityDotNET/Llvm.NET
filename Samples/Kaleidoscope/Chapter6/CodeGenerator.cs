@@ -73,16 +73,19 @@ namespace Kaleidoscope.Chapter6
             IContext ctx = ThreadSafeContext.PerThreadContext;
             InstructionBuilder?.Dispose();
             InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
-
             Module?.Dispose();
             Module = ctx.CreateBitcodeModule();
             Debug.Assert( Module is not null, "Module initialization failed" );
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+            if(!function.ParentModule.Verify(out string msg))
+            {
+                throw new CodeGeneratorException(msg);
+            }
 
             if(definition.IsAnonymous)
             {
-                // directly track modules for anonymous functions as calling the function is the guaranteed
+                // Directly track modules for anonymous functions as calling the function is the guaranteed
                 // next step and then it is removed as nothing can reference it again.
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
@@ -431,7 +434,6 @@ namespace Kaleidoscope.Chapter6
             IContext ctx = ThreadSafeContext.PerThreadContext;
             var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
-            retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
             int index = 0;
             foreach(var argId in prototype.Parameters)

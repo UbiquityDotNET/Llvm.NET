@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using System;
 
 using Kaleidoscope.Grammar.AST;
 
@@ -13,9 +14,14 @@ namespace Kaleidoscope.Runtime
         void ShowError( ErrorNode node );
 
         void ShowError( string msg );
+    }
 
-        bool CheckAndShowParseErrors( IAstNode node )
+    public static class ParseErrorLoggerExtensions
+    {
+        public static bool CheckAndShowParseErrors(this IParseErrorLogger self, IAstNode node )
         {
+            ArgumentNullException.ThrowIfNull(self);
+
             var errors = node.CollectErrors( );
             if( errors.Count == 0 )
             {
@@ -24,7 +30,7 @@ namespace Kaleidoscope.Runtime
 
             foreach( var err in errors )
             {
-                ShowError( err );
+                self.ShowError( err );
             }
 
             return true;

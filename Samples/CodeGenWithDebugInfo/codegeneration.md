@@ -59,13 +59,13 @@ The sample determines which target to use based on the second command line argum
 
 [!code-csharp[Main](Program.cs#TargetDetailsSelection)]
 
-## Creating the BitcodeModule
-To generate code in Ubiquity.NET.Llvm a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule) is required as
+## Creating the Module
+To generate code in Ubiquity.NET.Llvm a [Module](xref:Ubiquity.NET.Llvm.Module) is required as
 a container for the LLVM IR. To create a module a [Context](xref:Ubiquity.NET.Llvm.Context) is
 required.
 
 >[!NOTE]
->The Context and BitcodeModule are Disposable types in Ubiquity.NET.Llvm to manage some complex and
+>The Context and Module are Disposable types in Ubiquity.NET.Llvm to manage some complex and
 hidden ownership transfers that can happen with the different forms of JIT/Execution engines.
 This may not always be true in future versions of the library, but for now they must be disposable.
 
@@ -88,7 +88,7 @@ details interface for the selected target.
 
 ## Creating the DICompileUnit
 LLVM Debug information is all scoped to a top level [DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit).
-There is exactly one DICompileUnit for a BitcodeModule and all debug information metadata is ultimately
+There is exactly one DICompileUnit for a Module and all debug information metadata is ultimately
 a child of that unit. The sample creates the compilation unit just after the module is created and the
 target specific information is added to it. In this sample there is a direct 1:1 correlation between the
 compile unit and the source file so it creates a [DIFile](xref:Ubiquity.NET.Llvm.DebugInfo.DIFile) for the source
@@ -151,7 +151,7 @@ The full initialized const data for bar is the created from [Context.CreateNamed
 [!code-csharp[Main](Program.cs#AddModuleFlags)]
 
 Once the constant data is available an LLVM global is created for it with a name that matches the source name
-via [AddGlobal](xref:Ubiquity.NET.Llvm.BitcodeModule.AddGlobal*). To ensure the linker lays out the structure
+via [AddGlobal](xref:Ubiquity.NET.Llvm.Module.AddGlobal*). To ensure the linker lays out the structure
 correctly the code uses the layout information for the module to get the ABI required alignment for 
 the global and sets the [Alignment](xref:Ubiquity.NET.Llvm.Values.GlobalObject.Alignment) property for the global.
 Finally the debug information for the global is created as a [DIGlobalVariableExpression](xref:Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)

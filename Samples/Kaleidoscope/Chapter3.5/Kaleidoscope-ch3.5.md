@@ -4,7 +4,7 @@ uid: Kaleidoscope-ch3.5
 
 # 3.5 Kaleidoscope: Generating LLVM IR With optimizations
 This chapter focuses on the basics of optimization with LLVM IR. The general goal is
-to parse Kaleidoscope source code to generate a [BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule)
+to parse Kaleidoscope source code to generate a [Module](xref:Ubiquity.NET.Llvm.Module)
 representing the source as optimized LLVM IR. This is broken out as a distinct chapter to help
 identify the support for profiling and how it is different from the LLVM source samples that
 link directly to the LLVM libraries (That is, the samples are written in C++ AND continue to use

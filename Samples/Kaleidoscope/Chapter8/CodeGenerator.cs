@@ -13,10 +13,8 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
-using Ubiquity.ArgValidators;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Transforms;
 using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
@@ -27,16 +25,16 @@ namespace Kaleidoscope.Chapter8
     public sealed class CodeGenerator
         : AstVisitorBase<Value>
         , IDisposable
-        , IKaleidoscopeCodeGenerator<BitcodeModule>
+        , IKaleidoscopeCodeGenerator<Module>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, bool disableOptimization = false )
+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine)
             : base( null )
         {
-            globalState.ValidateNotNull( nameof( globalState ) );
-            machine.ValidateNotNull( nameof( machine ) );
+            ArgumentNullException.ThrowIfNull( globalState );
+            ArgumentNullException.ThrowIfNull( machine );
 
-            if( globalState.LanguageLevel > LanguageLevel.MutableVariables )
+            if(globalState.LanguageLevel > LanguageLevel.MutableVariables)
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
@@ -44,23 +42,10 @@ namespace Kaleidoscope.Chapter8
             RuntimeState = globalState;
             Context = new Context( );
             TargetMachine = machine;
-            DisableOptimizations = disableOptimization;
             InstructionBuilder = new InstructionBuilder( Context );
             Module = Context.CreateBitcodeModule( );
             Module.TargetTriple = machine.Triple;
             Module.Layout = TargetMachine.TargetData;
-            FunctionPassManager = new FunctionPassManager( Module );
-            FunctionPassManager.AddPromoteMemoryToRegisterPass( );
-
-            if( !DisableOptimizations )
-            {
-                FunctionPassManager.AddInstructionCombiningPass( )
-                                   .AddReassociatePass( )
-                                   .AddGVNPass( )
-                                   .AddCFGSimplificationPass( );
-            }
-
-            FunctionPassManager.Initialize( );
         }
         #endregion
 
@@ -68,21 +53,23 @@ namespace Kaleidoscope.Chapter8
         public void Dispose( )
         {
             Module.Dispose( );
+            InstructionBuilder.Dispose();
             Context.Dispose( );
         }
         #endregion
 
         #region Generate
-        public OptionalValue<BitcodeModule> Generate( IAstNode ast )
+        public OptionalValue<Module> Generate( IAstNode ast )
         {
-            ast.ValidateNotNull( nameof( ast ) );
+            ArgumentNullException.ThrowIfNull( ast );
+
             ast.Accept( this );
 
             if( AnonymousFunctions.Count > 0 )
             {
                 var mainFunction = Module.CreateFunction( "main", Context.GetFunctionType( Context.VoidType ) );
                 var block = mainFunction.AppendBasicBlock( "entry" );
-                var irBuilder = new InstructionBuilder( block );
+                using var irBuilder = new InstructionBuilder( block );
                 var printdFunc = Module.CreateFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
                 foreach( var anonFunc in AnonymousFunctions )
                 {
@@ -92,15 +79,8 @@ namespace Kaleidoscope.Chapter8
 
                 irBuilder.Return( );
 
-                // Use always inline and Dead Code Elimination module passes to inline all of the
-                // anonymous functions. This effectively strips all the calls just generated for main()
-                // and inlines each of the anonymous functions directly into main, dropping the now
-                // unused original anonymous functions all while retaining all of the original source
-                // debug information locations.
-                var mpm = new ModulePassManager( );
-                mpm.AddAlwaysInlinerPass( )
-                   .AddGlobalDCEPass( )
-                   .Run( Module );
+                var errInfo = Module.TryRunPasses("default<O3>");
+                errInfo.ThrowIfFailed();
             }
 
             return OptionalValue.Create( Module );
@@ -108,37 +88,39 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region ConstantExpression
-        public override Value? Visit( ConstantExpression constant )
+        public override Value? Visit(ConstantExpression constant)
         {
-            constant.ValidateNotNull( nameof( constant ) );
+            ArgumentNullException.ThrowIfNull( constant );
+
             return Context.CreateConstant( constant.Value );
         }
         #endregion
 
         #region BinaryOperatorExpression
-        public override Value? Visit( BinaryOperatorExpression binaryOperator )
+        public override Value? Visit(BinaryOperatorExpression binaryOperator)
         {
-            binaryOperator.ValidateNotNull( nameof( binaryOperator ) );
-            switch( binaryOperator.Op )
+            ArgumentNullException.ThrowIfNull( binaryOperator );
+
+            switch(binaryOperator.Op)
             {
             case BuiltInOperatorKind.Less:
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+            {
+                var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
                                                         , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         ).RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
+                return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                         .RegisterName( "booltmp" );
+            }
 
             case BuiltInOperatorKind.Pow:
-                {
-                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow
-                                                  , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  ).RegisterName( "powtmp" );
-                }
+            {
+                var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
+                return InstructionBuilder.Call( pow
+                                              , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              ).RegisterName( "powtmp" );
+            }
 
             case BuiltInOperatorKind.Add:
                 return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
@@ -161,10 +143,12 @@ namespace Kaleidoscope.Chapter8
                                               ).RegisterName( "divtmp" );
 
             case BuiltInOperatorKind.Assign:
+            {
                 Alloca target = LookupVariable( ( ( VariableReferenceExpression )binaryOperator.Left ).Name );
                 Value value = binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr );
                 InstructionBuilder.Store( value, target );
                 return value;
+            }
 
             default:
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
@@ -172,18 +156,24 @@ namespace Kaleidoscope.Chapter8
         }
         #endregion
 
-        #region FunctionCallExpression
-        public override Value? Visit( FunctionCallExpression functionCall )
+        public override Value? Visit(FunctionCallExpression functionCall)
         {
-            functionCall.ValidateNotNull( nameof( functionCall ) );
+            ArgumentNullException.ThrowIfNull( functionCall );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
+            if(Module is null)
+            {
+                throw new InvalidOperationException( "Can't visit a function call without an active module" );
+            }
+
             string targetName = functionCall.FunctionPrototype.Name;
 
-            IrFunction? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
+            Function? function;
+            if(RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ))
             {
                 function = GetOrDeclareFunction( target );
             }
-            else if( !Module.TryGetFunction( targetName, out function ) )
+            else if(!Module.TryGetFunction( targetName, out function ))
             {
                 throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
             }
@@ -194,14 +184,15 @@ namespace Kaleidoscope.Chapter8
 
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        #endregion
 
         #region FunctionDefinition
-        public override Value? Visit( FunctionDefinition definition )
+        public override Value? Visit(FunctionDefinition definition)
         {
-            definition.ValidateNotNull( nameof( definition ) );
+            ArgumentNullException.ThrowIfNull( definition );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
             var function = GetOrDeclareFunction( definition.Signature );
-            if( !function.IsDeclaration )
+            if(!function.IsDeclaration)
             {
                 throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
             }
@@ -210,9 +201,9 @@ namespace Kaleidoscope.Chapter8
             {
                 var entryBlock = function.AppendBasicBlock( "entry" );
                 InstructionBuilder.PositionAtEnd( entryBlock );
-                using( NamedValues.EnterScope( ) )
+                using(NamedValues.EnterScope())
                 {
-                    foreach( var param in definition.Signature.Parameters )
+                    foreach(var param in definition.Signature.Parameters)
                     {
                         var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                         .RegisterName( param.Name );
@@ -220,7 +211,7 @@ namespace Kaleidoscope.Chapter8
                         NamedValues[ param.Name ] = argSlot;
                     }
 
-                    foreach( LocalVariableDeclaration local in definition.LocalVariables )
+                    foreach(LocalVariableDeclaration local in definition.LocalVariables)
                     {
                         var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                           .RegisterName( local.Name );
@@ -231,9 +222,9 @@ namespace Kaleidoscope.Chapter8
 
                     var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
                     InstructionBuilder.Return( funcReturn );
-                    function.Verify( );
+                    function.Verify();
 
-                    FunctionPassManager.Run( function );
+                    // TODO: Run function optimization passes... (or not...)
 
                     if( definition.IsAnonymous )
                     {
@@ -246,18 +237,19 @@ namespace Kaleidoscope.Chapter8
                     return function;
                 }
             }
-            catch( CodeGeneratorException )
+            catch(CodeGeneratorException)
             {
-                function.EraseFromParent( );
+                function.EraseFromParent();
                 throw;
             }
         }
         #endregion
 
         #region VariableReferenceExpression
-        public override Value? Visit( VariableReferenceExpression reference )
+        public override Value? Visit(VariableReferenceExpression reference)
         {
-            reference.ValidateNotNull( nameof( reference ) );
+            ArgumentNullException.ThrowIfNull( reference );
+
             var value = LookupVariable( reference.Name );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -271,11 +263,13 @@ namespace Kaleidoscope.Chapter8
         #region ConditionalExpression
         public override Value? Visit( ConditionalExpression conditionalExpression )
         {
-            conditionalExpression.ValidateNotNull( nameof( conditionalExpression ) );
+            ArgumentNullException.ThrowIfNull( conditionalExpression );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
             var condition = conditionalExpression.Condition.Accept( this );
-            if( condition == null )
+            if(condition == null)
             {
                 return null;
             }
@@ -283,11 +277,7 @@ namespace Kaleidoscope.Chapter8
             var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, Context.CreateConstant( 0.0 ) )
                                              .RegisterName( "ifcond" );
 
-            var function = InstructionBuilder.InsertFunction;
-            if( function is null )
-            {
-                throw new InternalCodeGeneratorException( "ICE: expected block that is attached to a function at this point" );
-            }
+            var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: expected block that is attached to a function at this point" );
 
             var thenBlock = function.AppendBasicBlock( "then" );
             var elseBlock = function.AppendBasicBlock( "else" );
@@ -300,7 +290,7 @@ namespace Kaleidoscope.Chapter8
             // InstructionBuilder.InserBlock after this point is !null
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
             var thenValue = conditionalExpression.ThenExpression.Accept( this );
-            if( thenValue == null )
+            if(thenValue == null)
             {
                 return null;
             }
@@ -311,7 +301,7 @@ namespace Kaleidoscope.Chapter8
             // generate else block
             InstructionBuilder.PositionAtEnd( elseBlock );
             var elseValue = conditionalExpression.ElseExpression.Accept( this );
-            if( elseValue == null )
+            if(elseValue == null)
             {
                 return null;
             }
@@ -331,24 +321,22 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region ForInExpression
-        public override Value? Visit( ForInExpression forInExpression )
+        public override Value? Visit(ForInExpression forInExpression)
         {
-            forInExpression.ValidateNotNull( nameof( forInExpression ) );
-            var function = InstructionBuilder.InsertFunction;
-            if( function is null )
-            {
-                throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
-            }
+            ArgumentNullException.ThrowIfNull( forInExpression );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+
+            var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
             string varName = forInExpression.LoopVariable.Name;
             Alloca allocaVar = LookupVariable( varName );
 
             // Emit the start code first, without 'variable' in scope.
             Value? startVal;
-            if( forInExpression.LoopVariable.Initializer != null )
+            if(forInExpression.LoopVariable.Initializer != null)
             {
                 startVal = forInExpression.LoopVariable.Initializer.Accept( this );
-                if( startVal is null )
+                if(startVal is null)
                 {
                     return null;
                 }
@@ -357,6 +345,8 @@ namespace Kaleidoscope.Chapter8
             {
                 startVal = Context.CreateConstant( 0.0 );
             }
+
+            Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
 
             // store the value into allocated location
             InstructionBuilder.Store( startVal, allocaVar );
@@ -372,27 +362,27 @@ namespace Kaleidoscope.Chapter8
 
             // Within the loop, the variable is defined equal to the PHI node.
             // So, push a new scope for it and any values the body might set
-            using( NamedValues.EnterScope( ) )
+            using(NamedValues.EnterScope())
             {
                 EmitBranchToNewBlock( "ForInScope" );
 
                 // Emit the body of the loop.  This, like any other expression, can change the
                 // current BB.  Note that we ignore the value computed by the body, but don't
                 // allow an error.
-                if( forInExpression.Body.Accept( this ) == null )
+                if(forInExpression.Body.Accept( this ) == null)
                 {
                     return null;
                 }
 
                 Value? stepValue = forInExpression.Step.Accept( this );
-                if( stepValue == null )
+                if(stepValue == null)
                 {
                     return null;
                 }
 
                 // Compute the end condition.
                 Value? endCondition = forInExpression.Condition.Accept( this );
-                if( endCondition == null )
+                if(endCondition == null)
                 {
                     return null;
                 }
@@ -426,15 +416,16 @@ namespace Kaleidoscope.Chapter8
         #region VarInExpression
         public override Value? Visit( VarInExpression varInExpression )
         {
-            varInExpression.ValidateNotNull( nameof( varInExpression ) );
-            using( NamedValues.EnterScope( ) )
+            ArgumentNullException.ThrowIfNull(varInExpression);
+
+            using(NamedValues.EnterScope())
             {
                 EmitBranchToNewBlock( "VarInScope" );
-                foreach( var localVar in varInExpression.LocalVariables )
+                foreach(var localVar in varInExpression.LocalVariables)
                 {
                     Alloca alloca = LookupVariable( localVar.Name );
                     Value initValue = Context.CreateConstant( 0.0 );
-                    if( localVar.Initializer != null )
+                    if(localVar.Initializer != null)
                     {
                         initValue = localVar.Initializer.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr );
                     }
@@ -449,7 +440,7 @@ namespace Kaleidoscope.Chapter8
 
         private Alloca LookupVariable( string name )
         {
-            if( !NamedValues.TryGetValue( name, out Alloca? value ) )
+            if(!NamedValues.TryGetValue( name, out Alloca? value ))
             {
                 // Source input is validated by the parser and AstBuilder, therefore
                 // this is the result of an internal error in the generator rather
@@ -464,6 +455,7 @@ namespace Kaleidoscope.Chapter8
         {
             var newBlock = InstructionBuilder.InsertFunction?.AppendBasicBlock( blockName )
                            ?? throw new InternalCodeGeneratorException("ICE: Expected an insertion block attached to a function at this point" );
+
             InstructionBuilder.Branch( newBlock );
             InstructionBuilder.PositionAtEnd( newBlock );
         }
@@ -472,9 +464,14 @@ namespace Kaleidoscope.Chapter8
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private IrFunction GetOrDeclareFunction( Prototype prototype )
+        private Function GetOrDeclareFunction(Prototype prototype)
         {
-            if( Module.TryGetFunction( prototype.Name, out IrFunction? function ) )
+            if(Module is null)
+            {
+                throw new InvalidOperationException( "ICE: Can't get or declare a function without an active module" );
+            }
+
+            if(Module.TryGetFunction( prototype.Name, out Function? function ))
             {
                 return function;
             }
@@ -483,7 +480,7 @@ namespace Kaleidoscope.Chapter8
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
 
             int index = 0;
-            foreach( var argId in prototype.Parameters )
+            foreach(var argId in prototype.Parameters)
             {
                 retVal.Parameters[ index ].Name = argId.Name;
                 ++index;
@@ -497,15 +494,13 @@ namespace Kaleidoscope.Chapter8
         private const string ExpectValidFunc = "Expected a valid function";
 
         #region PrivateMembers
+        private readonly Module Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly Context Context;
-        private readonly BitcodeModule Module;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly ScopeStack<Alloca> NamedValues = new( );
-        private readonly FunctionPassManager FunctionPassManager;
-        private readonly bool DisableOptimizations;
         private readonly TargetMachine TargetMachine;
-        private readonly List<IrFunction> AnonymousFunctions = new( );
+        private readonly List<Function> AnonymousFunctions = [];
         #endregion
     }
 }

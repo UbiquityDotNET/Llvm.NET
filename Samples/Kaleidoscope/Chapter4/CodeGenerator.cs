@@ -80,10 +80,14 @@ namespace Kaleidoscope.Chapter4
             Debug.Assert( Module is not null, "Module initialization failed" );
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+            if(!function.ParentModule.Verify(out string msg))
+            {
+                throw new CodeGeneratorException(msg);
+            }
 
             if(definition.IsAnonymous)
             {
-                // directly track modules for anonymous functions as calling the function is the guaranteed
+                // Directly track modules for anonymous functions as calling the function is the guaranteed
                 // next step and then it is removed as nothing can reference it again.
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
@@ -280,16 +284,9 @@ namespace Kaleidoscope.Chapter4
                 return function;
             }
 
-            // "there be dragons here" - if the OO layer is caching values and always mapping them to a
-            // single managed instance then dispose will dispose the "real" thing and will NOT be a NOP
-            // on an alias references. The whole point of the "dispose as NOP for aliases" pattern is to
-            // make this sort of thing go away - consumers should not need to care. (Especially true when
-            // ownership of the thing is transferred to native. That should either bump a ref count or mark
-            // the managed as disposed but the Dispose() method is still a NOP)
             IContext ctx = ThreadSafeContext.PerThreadContext;
             var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
-            retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
             int index = 0;
             foreach(var argId in prototype.Parameters)

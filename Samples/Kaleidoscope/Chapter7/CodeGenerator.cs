@@ -30,7 +30,7 @@ namespace Kaleidoscope.Chapter7
         , IKaleidoscopeCodeGenerator<Value>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, TextWriter? outputWriter = null )
+        public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -49,7 +49,7 @@ namespace Kaleidoscope.Chapter7
         }
         #endregion
 
-        public void Dispose( )
+        public void Dispose()
         {
             KlsJIT.Dispose();
             Module?.Dispose();
@@ -57,7 +57,7 @@ namespace Kaleidoscope.Chapter7
             ThreadSafeContext.Dispose();
         }
 
-        public OptionalValue<Value> Generate( IAstNode ast )
+        public OptionalValue<Value> Generate(IAstNode ast)
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -73,16 +73,19 @@ namespace Kaleidoscope.Chapter7
             IContext ctx = ThreadSafeContext.PerThreadContext;
             InstructionBuilder?.Dispose();
             InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
-
             Module?.Dispose();
             Module = ctx.CreateBitcodeModule();
             Debug.Assert( Module is not null, "Module initialization failed" );
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+            if(!function.ParentModule.Verify(out string msg))
+            {
+                throw new CodeGeneratorException(msg);
+            }
 
             if(definition.IsAnonymous)
             {
-                // directly track modules for anonymous functions as calling the function is the guaranteed
+                // Directly track modules for anonymous functions as calling the function is the guaranteed
                 // next step and then it is removed as nothing can reference it again.
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
@@ -120,7 +123,7 @@ namespace Kaleidoscope.Chapter7
             }
         }
 
-        public override Value? Visit( ConstantExpression constant )
+        public override Value? Visit(ConstantExpression constant)
         {
             ArgumentNullException.ThrowIfNull( constant );
 
@@ -128,7 +131,7 @@ namespace Kaleidoscope.Chapter7
         }
 
         #region BinaryOperatorExpression
-        public override Value? Visit( BinaryOperatorExpression binaryOperator )
+        public override Value? Visit(BinaryOperatorExpression binaryOperator)
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
@@ -187,10 +190,10 @@ namespace Kaleidoscope.Chapter7
         }
         #endregion
 
-        public override Value? Visit( FunctionCallExpression functionCall )
+        public override Value? Visit(FunctionCallExpression functionCall)
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             if(Module is null)
             {
@@ -217,10 +220,10 @@ namespace Kaleidoscope.Chapter7
         }
 
         #region FunctionDefinition
-        public override Value? Visit( FunctionDefinition definition )
+        public override Value? Visit(FunctionDefinition definition)
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -267,9 +270,10 @@ namespace Kaleidoscope.Chapter7
         #endregion
 
         #region VariableReferenceExpression
-        public override Value? Visit( VariableReferenceExpression reference )
+        public override Value? Visit(VariableReferenceExpression reference)
         {
             ArgumentNullException.ThrowIfNull( reference );
+
             var value = LookupVariable( reference.Name );
 
             // since the Alloca is created as a non-opaque pointer it is OK to just use the
@@ -281,10 +285,10 @@ namespace Kaleidoscope.Chapter7
         #endregion
 
         #region ConditionalExpression
-        public override Value? Visit( ConditionalExpression conditionalExpression )
+        public override Value? Visit(ConditionalExpression conditionalExpression)
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
@@ -341,10 +345,10 @@ namespace Kaleidoscope.Chapter7
         #endregion
 
         #region ForInExpression
-        public override Value? Visit( ForInExpression forInExpression )
+        public override Value? Visit(ForInExpression forInExpression)
         {
             ArgumentNullException.ThrowIfNull( forInExpression );
-            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
+            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
 
             var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
@@ -438,6 +442,7 @@ namespace Kaleidoscope.Chapter7
         public override Value? Visit( VarInExpression varInExpression )
         {
             ArgumentNullException.ThrowIfNull(varInExpression);
+
             IContext ctx = ThreadSafeContext.PerThreadContext;
             using(NamedValues.EnterScope())
             {
@@ -483,11 +488,9 @@ namespace Kaleidoscope.Chapter7
             InstructionBuilder.PositionAtEnd( newBlock );
         }
 
-        #region GetOrDeclareFunction
-
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction( Prototype prototype )
+        private Function GetOrDeclareFunction(Prototype prototype)
         {
             if(Module is null)
             {
@@ -502,7 +505,6 @@ namespace Kaleidoscope.Chapter7
             IContext ctx = ThreadSafeContext.PerThreadContext;
             var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ => ctx.DoubleType ) );
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
-            retVal.AddAttribute( FunctionAttributeIndex.Function, prototype.IsExtern ? AttributeKind.BuiltIn : AttributeKind.NoBuiltIn );
 
             int index = 0;
             foreach(var argId in prototype.Parameters)
@@ -513,7 +515,6 @@ namespace Kaleidoscope.Chapter7
 
             return retVal;
         }
-        #endregion
 
         private const string ExpectValidExpr = "Expected a valid expression";
         private const string ExpectValidFunc = "Expected a valid function";
