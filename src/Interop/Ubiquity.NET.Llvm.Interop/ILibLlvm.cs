@@ -21,6 +21,9 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>ARM 32 bit targets</summary>
         ARM,
 
+        /// <summary>AVR target</summary>
+        AVR,
+
         /// <summary>BPF target</summary>
         BPF,
 
@@ -29,6 +32,9 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Lanai target</summary>
         Lanai,
+
+        /// <summary>LoongArch target</summary>
+        LoongArch,
 
         /// <summary>MIPS target</summary>
         MIPS,
@@ -42,8 +48,14 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>PowerPV target</summary>
         PowerPC,
 
+        /// <summary>RISC-V target</summary>
+        RISCV,
+
         /// <summary>Sparc target</summary>
         Sparc,
+
+        /// <summary>SPIR-V target</summary>
+        SpirV,
 
         /// <summary>SystemZ target</summary>
         SystemZ,
@@ -56,9 +68,6 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>XCore target</summary>
         XCore,
-
-        /// <summary>RISC-V target</summary>
-        RISCV,
 
         /// <summary>All available targets</summary>
         All = int.MaxValue
