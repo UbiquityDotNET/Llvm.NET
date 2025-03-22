@@ -16,7 +16,6 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>JIT .NET Bindings for LLVM</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

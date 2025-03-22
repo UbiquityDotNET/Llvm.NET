@@ -11,14 +11,12 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <IsAotCompatible>True</IsAotCompatible>
 
-    <!--NuGet packaging support, only applied for release builds as it just takes too long for quick inner loop developement -->
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <MinClientVersion>4.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>.NET Bindings for LLVM</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

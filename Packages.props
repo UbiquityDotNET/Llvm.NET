@@ -7,7 +7,14 @@
         <GlobalPackageReference Include="CSemVer.Build.Tasks" Version="2.0.5" />
         <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" Condition="'$(NoCommonAnalyzers)' !=' true'" />
         <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
-        <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(NoCommonAnalyzers)' != 'true'" />
+        <!--
+        While some aspects of this analyzer are helpful, it hasn't been without issues. Worse, the last non-preview release
+        was Apr of 2019, That's a LONG time ago. Even the most recent preview (beta) was back in Dec. of 2023. So not much
+        sign of life/activity nor hope of updates to bug fixes. It's sad to see this go as relying on a developer/reviewers
+        to follow the rules is a recipe for failures. Automation is how that works. (With occasional overrides that should
+        get the attention of a reviewer).
+        -->
+        <!--<GlobalPackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(NoCommonAnalyzers)' != 'true'" />-->
     </ItemGroup>
 
     <!--
