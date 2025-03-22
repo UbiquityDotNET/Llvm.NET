@@ -9,7 +9,7 @@
     Projects importing this property sheet can still override those settings.
 
     Implementation Note:
-        ALL properties defined here should be done conditional to allow inheriting from
+        ALL properties defined here should be done conditionally to allow inheriting from
         a parent. Conditional properties makes this project a well behaved sub module for
         other projects that might want to set the build outputs etc... into a different place.
     -->
@@ -54,24 +54,22 @@
         <!--<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>-->
     </PropertyGroup>
     <Choose>
-        <!-- Apply standard analyzers and rule sets for all C# projects -->
+        <!-- Apply standard properties for all C# projects -->
         <When Condition="'$(MSBuildProjectExtension)'=='.csproj' and '$(DisableDirProps)'!='true'">
             <PropertyGroup>
-                <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset</CodeAnalysisRuleSet>
                 <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
                 <Determenistic>true</Determenistic>
-                <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
+                <IsTestProject>$(MSBuildProjectName.Contains('UT'))</IsTestProject>
                 <Nullable>enable</Nullable>
                 <!--
-                DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't support it.
-                Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.
+                DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't
+                support it. Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.
                 -->
                 <ImplicitUsings>disable</ImplicitUsings>
-                <!-- NOTE: Top-Level statements blocked as an error in .editorconfig and Implicit using statements VERIFIED in the targets file -->
+                <!-- NOTE: Top-Level statements blocked as an error in .editorconfig and ImplicitUsings 'feature' VERIFIED in the targets file -->
             </PropertyGroup>
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
-                <None Include="$(MSBuildThisFileDirectory)Ubiquity.NET.ruleset" Link="Ubiquity.NET.ruleset" />
             </ItemGroup>
         </When>
         <When Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">

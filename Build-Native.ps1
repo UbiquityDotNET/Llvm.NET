@@ -62,7 +62,8 @@ try
     # support for native lib projects in NuGet is tenuous at best. Due to various compiler version dependencies
     # and incompatibilities libs are generally not something published in a package. However, since the build time
     # for the libraries exceeds the time allowed for most hosted build services, or the size of the output exceeds
-    # allowed footprint these must be pre-built for the automated builds.
+    # allowed footprint these must be pre-built for the automated builds. [At least, until an OSS friendly solution
+    # is found anyway]
     Install-LlvmLibs $buildInfo
 
     $msBuildProperties = @{ Configuration = $Configuration
@@ -72,11 +73,11 @@ try
 
     # Build and run the source generator as it produces the EXPORTS.g.def needed for the native code to build
     Write-Information "Building LllvmBindingsGenerator"
-    dotnet build 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -p:$msbuildPropertyList
+    Invoke-DotNet build 'src\Interop\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj' -p:$msbuildPropertyList
 
     Write-Information "Generating P/Invoke Bindings"
-    Write-Verbose "LlvmBindingsGenerator.exe $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
-    dotnet "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net8.0\LlvmBindingsGenerator.dll" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
+    Write-Verbose "LlvmBindingsGenerator $($buildInfo['LlvmLibsRoot']) $(Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') $(Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')"
+    Invoke-DotNet "$($buildInfo['BuildOutputPath'])\bin\LlvmBindingsGenerator\$Configuration\net8.0\LlvmBindingsGenerator.dll" $buildInfo['LlvmLibsRoot'] (Join-Path $buildInfo['SrcRootPath'] 'Interop\LibLLVM') (Join-Path $buildInfo['SrcRootPath'] 'Interop\Ubiquity.NET.Llvm.Interop')
     if($LASTEXITCODE -eq 0)
     {
         # now build the native DLL that consumes the generated output for the bindings

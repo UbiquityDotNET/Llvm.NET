@@ -108,7 +108,11 @@ namespace LlvmBindingsGenerator
                 {
                     for( uint num = 0u; num < parserResult.LibrariesCount; num++ )
                     {
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+                        // This is "cloned" from CppSharp code and it is assumed to transfer ownership
+                        // documentation is sadly lacking on most of this library
                         Context.Symbols.Libraries.Add( ClangParser.ConvertLibrary( parserResult.GetLibraries( num ) ) );
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                     }
                 }
             }
@@ -310,7 +314,7 @@ namespace LlvmBindingsGenerator
 
             for( uint i = 0; i < result.DiagnosticsCount; ++i )
             {
-                var diag = result.GetDiagnostics( i );
+                using ParserDiagnostic diag = result.GetDiagnostics( i );
 
                 if( diag.Level == ParserDiagnosticLevel.Warning && !Options.Verbose )
                 {

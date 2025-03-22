@@ -1,10 +1,35 @@
 # Release Notes
-# V13.0.0.Alpha
-Split JIT support into a distinct Library. The JIT support is an area undergoing a LOT
-of active development in LLVM. This leaves many aspects of it non-functional or partially
-functional on some platforms. To ensure that the main core of Llvm.NET is able to progress,
-the JIT support now lives in a distinct package (That has a dependency on the core so that
-only one reference is needed.
+# V20.0.1.Alpha
+Major re-work to support .NET 9 and later with focus on performance and heading towards AOT.
+Major changes include:
+* OrcJIT v2 support
+    - Including functioning lazy materialization from the AST
+        - Even on Microsoft Windows! :wink:
+* Opaque pointers
+    - Underlying LLVM uses only opaque pointers however these wrappers account for
+      that as much as possible without change to calling code. The wrappers when used
+      with debug information support tracking the LLVM type of the `pointee` for you
+      in most cases. Though if not using any debug information or otherwise dealing
+      in the raw types applications will need to keep track of the type of a pointer
+      instead of relying on the LLVM IR to do that for you.
+* Dropped reference equality to support multi-threaded nature of OrcJIT.
+    - Things got compilated and broke around chapter 5 of kaleidoscope. The basic
+      problem with interning is that it doesn't account for ownership. In fact it
+      downright ignores the point. This is a serious problem when dealing with a
+      multi-threaded JIT engine as you might end up disposing something you own that
+      was transferred to the native API or worse an alias is resolved to an owned
+      instance which is then destroyed - OOPS! [Bad idea - seemed like a good idea
+      at the time! :facepalm: ]
+* Consumers need to consider IDispose and "ownership" in general
+    - Usually this is as simple as a `using` statement to properly handle
+      cleanup in scope if there is an exception. Sometimes it takes a bit more
+      thought to handle properly.
+
+[Additional notes on this release go here...]
+## Breaking changes
+This is a major release and there are a LOT of changes though they are all fairly small. A look
+at the samples and test code will show that the core of the library didn't change but some things
+about how you use it did.
 
 # v10.0.0
 

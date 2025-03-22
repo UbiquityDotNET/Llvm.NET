@@ -54,7 +54,16 @@ namespace Ubiquity.NET.Llvm.Interop
             : base( nint.Zero, ownsHandle )
         {
             IsOwned = ownsHandle;
+
+#if DEBUG
+
+            // In a debug build capture the stack for creation of this instance
+            // that way it is still available if there is an access violation
+            // in the dispose. Usually such a thing indicates the source did NOT
+            // properly apply a using. So it is VERY helpful in debugging odf finalizer
+            // failures to locate the source.
             CaptureStack();
+#endif
         }
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value and ownership</summary>
@@ -67,6 +76,7 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             SetHandle(handle);
             IsOwned = ownsHandle;
+#if DEBUG
 
             // In a debug build capture the stack for creation of this instance
             // that way it is still available if there is an access violation
@@ -74,6 +84,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // properly apply a using. So it is VERY helpful in debugging odf finalizer
             // failures to locate the source.
             CaptureStack();
+#endif
         }
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value</summary>
@@ -87,13 +98,12 @@ namespace Ubiquity.NET.Llvm.Interop
 #if DEBUG
         /// <summary>Gets creation stack - Debugging aid</summary>
         protected string? CreationStack { get; private set; }
-#endif
 
-        [Conditional("DEBUG")]
         private void CaptureStack()
         {
             CreationStack = Environment.StackTrace;
         }
+#endif
     }
 
     public static class GlobalHandleBaseExtensions

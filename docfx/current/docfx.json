@@ -10,11 +10,15 @@
                     "src": "../.."
                 }
             ],
-            "dest": "api"
+            "dest": "api",
+            "categoryLayout": "Nested",
+            "namespaceLayout": "Nested",
+            "memberLayout": "SeparatePages",
+            "enumSortOrder": "DeclaringOrder",
         }
     ],
     "build": {
-        "xrefService": ["https://xref.docs.microsoft.com/query?uid={uid}"],
+        "xref": [ "./llvm-xref.yml", "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json" ],
         "content": [
             {
                 "files": [
@@ -31,7 +35,8 @@
             {
                 "files": [
                     "Kaleidoscope/**/Kaleidoscope*.md",
-                    "CodeGenWithDebugInfo/codegeneration.md"
+                    "CodeGenWithDebugInfo/codegeneration.md",
+                    "OrcV2VeryLazy/OrcV2VeryLazy.md"
                 ],
                 "src": "../../samples",
                 "dest": "articles/samples"
@@ -60,6 +65,7 @@
                 "exclude": [ "obj/**" ]
             }
         ],
+        "template": [ "default", "modern" ],
         "dest": "../../BuildOutput/docs/current",
         "globalMetadataFiles": [],
         "fileMetadataFiles": [],
@@ -67,10 +73,9 @@
         "noLangKeyword": false,
         "globalMetadata": {
             "_appTitle": "Ubiquity.NET.Llvm",
-            "_appFooter": "Copyright (C) 2017-2021, Ubiquity.NET Contributors",
+            "_appFooter": "Copyright (C) 2017-2025, Ubiquity.NET Contributors",
             "_appLogoPath": "DragonSharp48x48.png",
             "_disableBreadcrumb": true,
-            "llvmVersion": "10.0.0",
             "assemblies": [
                 "Ubiquity.NET.Llvm"
             ],

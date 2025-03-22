@@ -17,17 +17,18 @@
          - [Chapter 1 - Language Introduction](xref:Kaleidoscope-Overview)
          - [Chapter 2 - Implementing the parser](xref:Kaleidoscope-ch2)
          - [Chapter 3 - Generating LLVM IR](xref:Kaleidoscope-ch3)
+             * [Chapter 3.5 - Generating LLVM IR with optimization](xref:Kaleidoscope-ch3.5)
          - [Chapter 4 - JIT and Optimizer Support](xref:Kaleidoscope-ch4)
          - [Chapter 5 - Control Flow](xref:Kaleidoscope-ch5)
          - [Chapter 6 - User Defined Operators](xref:Kaleidoscope-ch6)
          - [Chapter 7 - Mutable Variables](xref:Kaleidoscope-ch7)
-         - [Chapter 7.1 - Extreme Lazy JIT](xref:Kaleidoscope-ch7.1)
+             * [Chapter 7.1 - Extreme Lazy JIT](xref:Kaleidoscope-ch7.1)
          - [Chapter 8 - AOT Compilation](xref:Kaleidoscope-ch8)
          - [Chapter 9 - Debug Information](xref:Kaleidoscope-ch9)
-         * Appendix
-            - [ParseTree Visitor](xref:Kaleidoscope-ParseTreeVisitor)
-            - [ParseTree Examples](xref:Kaleidoscope-Parsetree-examples)
-            - [AST](xref:Kaleidoscope-AST)
+         - Appendix
+            * [ParseTree Visitor](xref:Kaleidoscope-ParseTreeVisitor)
+            * [ParseTree Examples](xref:Kaleidoscope-Parsetree-examples)
+            * [AST](xref:Kaleidoscope-AST)
 * [Internal Details](articles/InternalDetails/index.md)
    - LLVM-C API Handles
       * [Wrapping LLVM-C Handles](articles/InternalDetails/llvm-handles.md)

@@ -18,6 +18,8 @@
                 "src": ".."
             }
         ],
+        "xref": [ "./versions-xref.yml" ],
+        "template": [ "default", "modern" ],
         "dest": "../../BuildOutput/docs",
         "globalMetadataFiles": [],
         "fileMetadataFiles": [],
@@ -28,7 +30,6 @@
             "_appFooter": "Copyright (C) 2017-2021, Ubiquity.NET Contributors",
             "_appLogoPath": "DragonSharp48x48.png",
             "_disableBreadcrumb": true,
-            "llvmVersion": "10.0.0",
             "_gitContribute": {
                 "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
                 "branch": "develop"

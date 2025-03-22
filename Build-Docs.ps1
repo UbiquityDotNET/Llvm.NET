@@ -16,27 +16,68 @@
 .PARAMETER NoClone
     Skip cloning of the docs repository. Useful for inner loop development where you only do the clone once when iterating on
     doc updates.
+
+.PARAMETER ShowDocs
+    Show the docs via `docfx serve --open-browser ...`. This option is useful for inner loop development of the docs as it allows
+    opening a browser on the newly created docs for testing/checking the contents are produced correctly.
 #>
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
     [switch]$FullInit,
-    [switch]$NoClone
+    [switch]$NoClone,
+    [switch]$ShowDocs
 )
+
+function Invoke-DocFX
+{
+    docfx $args
+    if(!$?)
+    {
+        throw "Invoke of dotnet failed [$LastExitCode]"
+    }
+}
+
+function Get-FullBuildNumber
+{
+    # docfx no longer supports the docfxconsole and insists on doing everything manually
+    # with the command line instead of within a project file... So do it the hard way...
+
+    # First step is to generate a JSON file with the version information that comes
+    # from the MSBUILD tasks in the `CSemVer.Build.Tasks` NUGET package. To do that
+    # a no target project is used to capture the results of the versioning into a
+    # JSON file, then that file is read in to get the values for PS so that a consistent
+    # build number is used for the docs generation.
+
+    # generate the CurrentVersionInfo.json file
+    Invoke-DotNet build ./BuildVersion.proj | Out-Null
+
+    # Read in the generated JSON for use in PS
+    $versionInfo = Get-Content ./CurrentVersionInfo.json | ConvertFrom-Json -AsHashTable
+    return "$($versionInfo['FullBuildNumber'])"
+}
+
+$docFXToolVersion = '2.78.3'
+
+$InformationPreference = 'Continue'
+$ErrorInformationPreference = 'Stop'
 
 Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    . ./repo-buildutils.ps1
 
-    $msBuildProperties = @{ Configuration = $Configuration
-                            LlvmVersion = $buildInfo['LlvmVersion']
-                          }
-    $msBuildPropertyList = ConvertTo-PropertyList $msBuildProperties
+    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $msBuildPropertyList = ConvertTo-PropertyList @{
+        Configuration = $Configuration
+    }
+
+    # make sure the supported tool is installed.
+    Invoke-DotNet tool install --global docfx --version $docFXToolVersion | Out-Null
 
     $docsOutputPath = $buildInfo['DocsOutputPath']
+    Write-Verbose "Docs OutputPath: $docsOutputPath"
 
     # Clone docs output location so it is available as a destination for the Generated docs content
     # and the versioned docs links can function correctly for locally generated docs
@@ -44,40 +85,47 @@ try
     {
         if(Test-Path -PathType Container $docsOutputPath)
         {
+            Write-Information "Cleaning $docsOutputPath"
             Remove-Item -Path $docsOutputPath -Recurse -Force
         }
 
         Write-Information "Cloning Docs repository"
-        git clone https://github.com/UbiquityDotNET/Llvm.NET.git -b gh-pages $docsOutputPath -q
-        if(!$?)
-        {
-            throw "Git clone failed"
-        }
+        Invoke-Git clone $buildInfo['OfficialGitRemoteUrl'] -b gh-pages $docsOutputPath -q
     }
 
     # remove all contents from 'current' docs to ensure clean generated docs for this release
     $currentVersionDocsPath = Join-Path $docsOutputPath 'current'
     if(Test-Path -PathType Container $currentVersionDocsPath)
     {
+        Write-Information 'Cleaning current version folder'
         Remove-Item -Path $currentVersionDocsPath -Recurse -Force
     }
 
-    $docfxRestoreBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Restore.binlog
-    $docfxBuildBinLogPath = Join-Path $buildInfo['BinLogsPath'] Ubiquity.NET.Llvm-docfx-Build.binlog
+    $fullBuildNumber = Get-FullBuildNumber
 
-    Write-Information "Building top level docs index"
-    dotnet build 'docfx\index\Ubiquity.NET.Llvm.Docfx.Index.csproj' -p:$msBuildPropertyList
+    push-location './docfx/current'
+    try
+    {
+        Write-Information "Building current version library docs [FullBuildNumber=$fullBuildNumber]"
+        Invoke-DocFX -m _buildVersion=$fullBuildNumber -o $docsOutputPath --warningsAsErrors
 
-    Write-Information "Building current version library docs"
-    dotnet build 'docfx\current\Ubiquity.NET.Llvm.Docfx.API.csproj' -p:$msBuildPropertyList
+        Set-Location ..\index
+        Write-Information "Building main landing page with version links [FullBuildNumber=$fullBuildNumber]"
+        Invoke-DocFX -m _buildVersion="$fullBuildNumber"
+    }
+    finally
+    {
+        Pop-Location
+    }
 
-    # NOTE: Current state of DocFX requires a distinct restore pass.
-    #Invoke-MSBuild -Targets 'Restore' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxRestoreBinLogPath") )
-    #Invoke-MSBuild -Targets 'Build' -Project docfx\Ubiquity.NET.Llvm.DocFX.sln -Properties $msBuildProperties -LoggerArgs ($buildInfo['MsBuildLoggerArgs'] + @("/bl:$docfxBuildBinLogPath") )
+    if($ShowDocs)
+    {
+        Invoke-DocFx serve --open-browser $docsOutputPath
+    }
 }
 catch
 {
-    # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+    # Everything from the official docs to the various articles in the blog-sphere says this isn't needed
     # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
     # information is retained and the error reported will include the correct source file and line number
     # data for the error. Without this, only the error message is retained and the location information is
@@ -86,6 +134,6 @@ catch
 }
 finally
 {
-    Push-Location
+    Pop-Location
     $env:Path = $oldPath
 }

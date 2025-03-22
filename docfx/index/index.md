@@ -29,4 +29,5 @@ leveraging LLVM from .NET applications.
 
 ## Releases
 [Current](xref:current-release)  
+[v10.0.0](xref:release-10-0-0)  
 [v8.0.1](xref:release-8-0-1)  

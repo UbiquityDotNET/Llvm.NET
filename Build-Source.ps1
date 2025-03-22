@@ -12,11 +12,17 @@
 .PARAMETER FullInit
     Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
     as well as writes details of the initialization to the information and verbose streams.
+
+.PARAMETER ZipNuget
+    Zips all of the nuget packages into a single zip. This is NOT ordinarily needed and consumes a significant abount of time
+    so it is provided as a flag. Publishing of NUGET packages is now part of the GitHub actions for automated builds and does
+    not need this.
 #>
 Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
-    [switch]$FullInit
+    [switch]$FullInit,
+    [switch]$ZipNuget
 )
 
 Push-Location $PSScriptRoot
@@ -35,15 +41,18 @@ try
 
     # build the Managed code support
     Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
-    dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
+    Invoke-DotNet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
 
-    # Create a ZIP file of all the nuget packages
-    pushd $buildInfo['NuGetOutputPath']
-    Compress-Archive -Force -Path *.* -DestinationPath (join-path $buildInfo['BuildOutputPath'] Nuget.Packages.zip)
+    # Create a ZIP file of all the nuget packages if asked
+    if($ZipNuget)
+    {
+        Set-Location $buildInfo['NuGetOutputPath']
+        Compress-Archive -Force -Path *.* -DestinationPath (join-path $buildInfo['BuildOutputPath'] Nuget.Packages.zip)
+    }
 }
 catch
 {
-    # Everything from the official docs to the various articles in the blog-sphere says this isn't needed
+    # Everything from the official docs to the various articles in the blog-sphere say this isn't needed
     # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
     # information is retained and the error reported will include the correct source file and line number
     # data for the error. Without this, only the error message is retained and the location information is

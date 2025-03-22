@@ -56,7 +56,7 @@ is provided so that it becomes the root compile unit.
 > It is important to note that when using the DIBuilder it must be "finalized" in order to resolve internal
 > forward references in the debug metadata. The exact details of this aren't generally relevant, just
 > remember that somewhere after generating all code and debug information to call the 
-> [Finish](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.Finish(Ubiquity.NET.Llvm.DebugInfo.DISubProgram))
+> [Finish](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Finish(Ubiquity.NET.Llvm.DebugInfo.DISubProgram))
 > method. (In Ubiquity.NET.Llvm this method is called Finish() to avoid conflicts with the .NET runtime defined
 > Finalize() and to avoid confusion on the term as the idea of "finalization" has a very different meaning
 > in .NET then what applies to the DIBuilder).

@@ -4,9 +4,26 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// until compiler bug [#40325](https://github.com/dotnet/roslyn/issues/40325) is resolved disable this
+// as adding the parameter would result in 'warning: Duplicate parameter 'passes' found in comments, the latter one is ignored.'
+// when generating the final documentation. (It picks the first one and reports a warning).
+// Unfortunately there's no way to suppress this without cluttering up the code with pragmas.
+// [ Sadly the SuppressMessageAttribute does NOT work for this warning. ]
+#pragma warning disable CS1573 // Parameter has no matching param tag in the XML comment (but other parameters do)
+
 namespace Ubiquity.NET.Llvm
 {
-    /// <summary>Interface for an un-owned LLVM bitcode module</summary>
+    /// <summary>Interface for an LLVM bitcode module</summary>
+    /// <remarks>
+    /// This interface is used for ALL modules owned/unowned when a module is owned
+    /// and the app must dispose it a <see cref="Module"/> instance is provided. That
+    /// type implements this interface AND the standard <see cref="IDisposable"/>
+    /// interface as the caller is responsible for disposal of the instance. When
+    /// this interface is returned the caller does not own the implementation and
+    /// cannot dispose of it. (Generally only methods that act as a factory for a
+    /// module will provide a concreate <see cref="Module"/> instance that the
+    /// caller owns. Others are references to a module owned by the container)
+    /// </remarks>
     public interface IModule
     {
         /// <summary>Gets or sets the name of the source file generating this module</summary>
@@ -65,7 +82,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Appends inline assembly to the module's inline assembly</summary>
         /// <param name="asm">assembly text</param>
-        public void AppendInlineAsm(string asm);
+        public void AppendInlineAsm( string asm );
 
         /// <summary>Tries running the specified passes on this function</summary>
         /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
@@ -80,18 +97,16 @@ namespace Ubiquity.NET.Llvm
         /// and may produce an exception.
         /// </note>
         /// </remarks>
-        public ErrorInfo TryRunPasses(params string[] passes);
+        public ErrorInfo TryRunPasses( params string[] passes );
 
         /// <inheritdoc cref="TryRunPasses(string[])"/>
         /// <param name="options">Options for the passes</param>
-        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
-        public ErrorInfo TryRunPasses(PassBuilderOptions options, params string[] passes);
+        public ErrorInfo TryRunPasses( PassBuilderOptions options, params string[] passes );
 
         /// <inheritdoc cref="TryRunPasses(string[])"/>
         /// <param name="targetMachine">Target machine for the passes</param>
         /// <param name="options">Options for the passes</param>
-        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
-        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes);
+        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params string[] passes );
 
         /// <summary>Link another module into this one</summary>
         /// <param name="srcModule">module to link into this one</param>
@@ -101,18 +116,18 @@ namespace Ubiquity.NET.Llvm
         /// when this method returns.
         /// </note>
         /// </remarks>
-        public void Link(Module srcModule);
+        public void Link( Module srcModule );
 
         /// <summary>Verifies a bit-code module</summary>
         /// <param name="errorMessage">Error messages describing any issues found in the bit-code. Empty string if no error</param>
         /// <returns>true if the verification succeeded and false if not.</returns>
-        public bool Verify(out string errorMessage);
+        public bool Verify( out string errorMessage );
 
         /// <summary>Looks up a function in the module by name</summary>
         /// <param name="name">Name of the function</param>
         /// <param name="function">The function or <see langword="null"/> if not found</param>
         /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
-        public bool TryGetFunction(string name, [MaybeNullWhen( false )] out Function function);
+        public bool TryGetFunction( string name, [MaybeNullWhen( false )] out Function function );
 
         /// <summary>Create and add a global indirect function</summary>
         /// <param name="name">Name of the function</param>
@@ -120,13 +135,13 @@ namespace Ubiquity.NET.Llvm
         /// <param name="addressSpace">Address space for the indirect function</param>
         /// <param name="resolver">Resolver for the indirect function</param>
         /// <returns>New <see cref="GlobalIFunc"/></returns>
-        public GlobalIFunc CreateAndAddGlobalIFunc(string name, ITypeRef type, uint addressSpace, Function resolver);
+        public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, Function resolver );
 
         /// <summary>Get a named Global Indirect function in the module</summary>
         /// <param name="name">Name of the ifunc to find</param>
         /// <param name="function">Function or <see langword="null"/> if not found</param>
         /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
-        public bool TryGetNamedGlobalIFunc(string name, [MaybeNullWhen( false )] out GlobalIFunc function);
+        public bool TryGetNamedGlobalIFunc( string name, [MaybeNullWhen( false )] out GlobalIFunc function );
 
         /// <summary>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</summary>
         /// <param name="name">Name of the function to add</param>
@@ -138,7 +153,7 @@ namespace Ubiquity.NET.Llvm
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        public Function CreateFunction(string name, IFunctionType signature);
+        public Function CreateFunction( string name, IFunctionType signature );
 
         /// <summary>Writes a bit-code module to a file</summary>
         /// <param name="path">Path to write the bit-code into</param>
@@ -147,13 +162,13 @@ namespace Ubiquity.NET.Llvm
         /// So if an invalid module is saved it might not work with any
         /// later stage processing tools.
         /// </remarks>
-        public void WriteToFile(string path);
+        public void WriteToFile( string path );
 
         /// <summary>Writes this module as LLVM IR source to a file</summary>
         /// <param name="path">File to write the LLVM IR source to</param>
         /// <param name="errMsg">Error messages encountered, if any</param>
         /// <returns><see langword="true"/> if successful or <see langword="false"/> if not</returns>
-        public bool WriteToTextFile(string path, out string errMsg);
+        public bool WriteToTextFile( string path, out string errMsg );
 
         /// <summary>Creates a string representation of the module</summary>
         /// <returns>LLVM textual representation of the module</returns>
@@ -165,23 +180,23 @@ namespace Ubiquity.NET.Llvm
         /// to see the contents of the IR for a module you can use this method
         /// in the immediate or watch windows.
         /// </remarks>
-        public string? WriteToString();
+        public string? WriteToString( );
 
         /// <summary>Writes the LLVM IR bit code into a memory buffer</summary>
         /// <returns><see cref="MemoryBuffer"/> containing the bit code module</returns>
-        public MemoryBuffer WriteToBuffer();
+        public MemoryBuffer WriteToBuffer( );
 
         /// <summary>Add an alias to the module</summary>
         /// <param name="aliasee">Value being aliased</param>
         /// <param name="aliasName">Name of the alias</param>
         /// <param name="addressSpace">Address space for the alias [Default: 0]</param>
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
-        public GlobalAlias AddAlias(Value aliasee, string aliasName, uint addressSpace = 0);
+        public GlobalAlias AddAlias( Value aliasee, string aliasName, uint addressSpace = 0 );
 
         /// <summary>Get an alias by name</summary>
         /// <param name="name">name of the alias to get</param>
         /// <returns>Alias matching <paramref name="name"/> or null if no such alias exists</returns>
-        public GlobalAlias? GetAlias(string name);
+        public GlobalAlias? GetAlias( string name );
 
         /// <summary>Adds a global to this module with a specific address space</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
@@ -191,7 +206,7 @@ namespace Ubiquity.NET.Llvm
         /// <openissues>
         /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
         /// </openissues>
-        public GlobalVariable AddGlobalInAddressSpace(uint addressSpace, ITypeRef typeRef, string name);
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
@@ -200,7 +215,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobalInAddressSpace(uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal);
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
@@ -210,7 +225,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constVal">Initial value for the global</param>
         /// <param name="name">Name of the variable</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobalInAddressSpace(uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name);
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the value</param>
@@ -219,7 +234,7 @@ namespace Ubiquity.NET.Llvm
         /// <openissues>
         /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
         /// </openissues>
-        public GlobalVariable AddGlobal(ITypeRef typeRef, string name);
+        public GlobalVariable AddGlobal( ITypeRef typeRef, string name );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the value</param>
@@ -227,7 +242,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="linkage">Linkage type for this global</param>
         /// <param name="constVal">Initial value for the global</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobal(ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal);
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the value</param>
@@ -236,38 +251,38 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constVal">Initial value for the global</param>
         /// <param name="name">Name of the variable</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobal(ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name);
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name );
 
         /// <summary>Retrieves a <see cref="ITypeRef"/> by name from the module</summary>
         /// <param name="name">Name of the type</param>
         /// <returns>The type or null if no type with the specified name exists in the module</returns>
-        public ITypeRef? GetTypeByName(string name);
+        public ITypeRef? GetTypeByName( string name );
 
         /// <summary>Retrieves a named global from the module</summary>
         /// <param name="name">Name of the global</param>
         /// <returns><see cref="GlobalVariable"/> or <see langword="null"/> if not found</returns>
-        public GlobalVariable? GetNamedGlobal(string name);
+        public GlobalVariable? GetNamedGlobal( string name );
 
         /// <summary>Adds a module flag to the module</summary>
         /// <param name="behavior">ModuleHandle flag behavior for this flag</param>
         /// <param name="name">Name of the flag</param>
         /// <param name="value">Value of the flag</param>
-        public void AddModuleFlag(ModuleFlagBehavior behavior, string name, UInt32 value);
+        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, UInt32 value );
 
         /// <summary>Adds a module flag to the module</summary>
         /// <param name="behavior">ModuleHandle flag behavior for this flag</param>
         /// <param name="name">Name of the flag</param>
         /// <param name="value">Value of the flag</param>
-        public void AddModuleFlag(ModuleFlagBehavior behavior, string name, LlvmMetadata value);
+        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value );
 
         /// <summary>Adds operand value to named metadata</summary>
         /// <param name="name">Name of the metadata</param>
         /// <param name="value">operand value</param>
-        public void AddNamedMetadataOperand(string name, LlvmMetadata value);
+        public void AddNamedMetadataOperand( string name, LlvmMetadata value );
 
         /// <summary>Adds an llvm.ident metadata string to the module</summary>
         /// <param name="version">version information to place in the llvm.ident metadata</param>
-        public void AddVersionIdentMetadata(string version);
+        public void AddVersionIdentMetadata( string version );
 
         /// <summary>Creates a Function definition with Debug information</summary>
         /// <param name="diBuilder">The debug info builder to use to create the function (must be associated with this module)</param>
@@ -347,22 +362,22 @@ namespace Ubiquity.NET.Llvm
         /// space, or bit widths. That is instead of 'llvm.memset.p0i8.i32' use 'llvm.memset.p.i'.
         /// </note>
         /// </remarks>
-        public Function GetIntrinsicDeclaration(string name, params ITypeRef[] args);
+        public Function GetIntrinsicDeclaration( string name, params ITypeRef[] args );
 
         /// <summary>Gets a declaration for an LLVM intrinsic function</summary>
         /// <param name="id">id of the intrinsic</param>
         /// <param name="args">Arguments for the intrinsic</param>
         /// <returns>Function declaration</returns>
-        public Function GetIntrinsicDeclaration(UInt32 id, params ITypeRef[] args);
+        public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args );
 
         /// <summary>Clones the current module into the same context</summary>
         /// <returns>Cloned module</returns>
-        public Module Clone();
+        public Module Clone( );
 
         /// <summary>Clones the module into a new <see cref="IContext"/></summary>
         /// <param name="targetContext"><see cref="IContext"/> to clone the module into</param>
         /// <returns>Cloned copy of the module</returns>
-        public Module Clone(IContext targetContext);
+        public Module Clone( IContext targetContext );
     }
 
     // Internal helper to get the underlying ABI handle as an "Alias" handle
@@ -370,13 +385,13 @@ namespace Ubiquity.NET.Llvm
     // the two.
     internal static class ModuleExtensions
     {
-        internal static LLVMModuleRefAlias GetUnownedHandle(this IModule self)
+        internal static LLVMModuleRefAlias GetUnownedHandle( this IModule self )
         {
             if(self is IHandleWrapper<LLVMModuleRefAlias> wrapper)
             {
                 return wrapper.Handle;
             }
-            else if (self is IGlobalHandleOwner<LLVMModuleRef> owner)
+            else if(self is IGlobalHandleOwner<LLVMModuleRef> owner)
             {
                 // implicitly cast to the unowned alias handle
                 // ownership is retained by "self"
@@ -384,20 +399,20 @@ namespace Ubiquity.NET.Llvm
             }
             else
             {
-                throw new ArgumentException("Internal Error - Unknown module type!", nameof(self));
+                throw new ArgumentException( "Internal Error - Unknown module type!", nameof( self ) );
             }
         }
 
         // Convenience accessor extension method to resolve ugly casting
         // to templated interface and make semantic intent clear.
-        internal static LLVMModuleRef GetOwnedHandle(this IGlobalHandleOwner<LLVMModuleRef> owner)
+        internal static LLVMModuleRef GetOwnedHandle( this IGlobalHandleOwner<LLVMModuleRef> owner )
         {
             return owner.OwnedHandle;
         }
 
         // Convenience accessor extension method to resolve ugly casting
         // to templated interface and make semantic intent clear.
-        internal static void InvalidateFromMove(this IGlobalHandleOwner<LLVMModuleRef> owner)
+        internal static void InvalidateFromMove( this IGlobalHandleOwner<LLVMModuleRef> owner )
         {
             owner.InvalidateFromMove();
         }

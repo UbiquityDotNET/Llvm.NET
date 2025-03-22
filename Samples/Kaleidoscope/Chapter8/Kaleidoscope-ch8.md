@@ -70,12 +70,11 @@ else
 ```
 
 These settings are leveraged after generating from the tree to create the main function. A simple
-loop generates a call to each expression along with the call to print the results. Once, that
-is completed a [ModulePassManager](xref:Ubiquity.NET.Llvm.Transforms.ModulePassManager) is created to run
-the Always inliner and a global dead code elimination pass. The always inliner will inline the functions
-marked as inline and the dead code elimination pass will eliminate unused internal/private global symbols.
-This has the effect of generating the main function with all top level expressions inlined and the originally
-generated anonymous functions removed. 
+loop generates a call to each expression along with the call to print the results. 
+> NOTE: 
+The always inliner will inline the functions marked as inline and the dead code elimination pass will
+eliminate unused internal/private global symbols. This has the effect of generating the main function
+with all top level expressions inlined and the originally generated anonymous functions removed. 
 
 [!code-csharp[Generate](CodeGenerator.cs#Generate)]
 

@@ -23,8 +23,8 @@
 
 .DESCRIPTION
     This script is used by the automated build to perform the actual build. The Ubiquity.NET
-    family of projects all employ a PowerShell driven build that is generally divorced from the
-    automated build infrastructure used. This is done for several reasons, but the most
+    family of projects all employ a PowerShell driven build that is generally divorced from
+    the automated build infrastructure used. This is done for several reasons, but the most
     important ones are the ability to reproduce the build locally for inner development and
     for flexibility in selecting the actual back end. The back ends have changed a few times
     over the years and re-writing the entire build in terms of those back ends each time is
@@ -40,7 +40,7 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
-pushd $PSScriptRoot
+Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
@@ -61,7 +61,7 @@ try
     if((Test-Path -PathType Container $buildInfo['BuildOutputPath']) -and $ForceClean )
     {
         Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $buildInfo['BuildOutputPath']
+        remove-Item -Recurse -Force -Path $buildInfo['BuildOutputPath']
     }
 
     New-Item -ItemType Directory $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
@@ -87,7 +87,7 @@ catch
 }
 finally
 {
-    popd
+    Pop-Location
     $env:Path = $oldPath
 }
 

@@ -4,6 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// until compiler bug [#40325](https://github.com/dotnet/roslyn/issues/40325) is resolved disable this
+// as adding the parameter would result in 'warning: Duplicate parameter 'passes' found in comments, the latter one is ignored.'
+// when generating the final documentation. (It picks the first one and reports a warning).
+// Unfortunately there's no way to suppress this without cluttering up the code with pragmas.
+// [ Sadly the SuppressMessageAttribute does NOT work for this warning. ]
+#pragma warning disable CS1573 // Parameter has no matching param tag in the XML comment (but other parameters do)
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AnalysisBindings;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -68,7 +75,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// convention with the difference in that the callee is responsible for popping the arguments
         /// from the stack.
         /// </remarks>
-        X86StdCall = 64,
+        X86StdCall = FirstTargetSpecific,
 
         /// <summary>X86 fast call convention</summary>
         /// <remarks>
@@ -439,7 +446,6 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <inheritdoc cref="TryRunPasses(string[])"/>
         /// <param name="options">Options for the passes</param>
-        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
         public ErrorInfo TryRunPasses(PassBuilderOptions options, params string[] passes)
         {
             ArgumentNullException.ThrowIfNull(passes);
@@ -457,7 +463,6 @@ namespace Ubiquity.NET.Llvm.Values
         /// <inheritdoc cref="TryRunPasses(string[])"/>
         /// <param name="targetMachine">Target machine for the passes</param>
         /// <param name="options">Options for the passes</param>
-        /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
         public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes)
         {
             ArgumentNullException.ThrowIfNull(targetMachine);

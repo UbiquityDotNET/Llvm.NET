@@ -155,7 +155,7 @@ via [AddGlobal](xref:Ubiquity.NET.Llvm.Module.AddGlobal*). To ensure the linker 
 correctly the code uses the layout information for the module to get the ABI required alignment for 
 the global and sets the [Alignment](xref:Ubiquity.NET.Llvm.Values.GlobalObject.Alignment) property for the global.
 Finally the debug information for the global is created as a [DIGlobalVariableExpression](xref:Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
-using [CreateGlobalVariableExpression](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.CreateGlobalVariableExpression*)
+using [CreateGlobalVariableExpression](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateGlobalVariableExpression*)
 finally the added to the variable to complete the creation.
 
 For the `baz` instance the process is almost identical. The major difference is that the value of the
@@ -213,7 +213,7 @@ in the sample test.c file. There are a few points to make about the function gen
 As discussed the arguments and locals are allocated in the entry block however that only makes them usable in
 the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
 To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
-a variable. In Ubiquity.NET.Llvm this is emitted using the [InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DebugInfoBuilder.InsertDeclare*)
+a variable. In Ubiquity.NET.Llvm this is emitted using the [InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare*)
 method.
 
 ### Calling LLVM Intrinsics

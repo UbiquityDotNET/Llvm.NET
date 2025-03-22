@@ -1,11 +1,13 @@
 # Interning LLVM handle to Managed wrappers
+***[As of LLVM20 support implementation this library no longer performs ANY INTERNING. This topic should be deleted]***
+
 Many of the underlying object instances in LLVM are interned/uniqued. That is,
 there will only be one instance of a type with a given value within some scope.
 
 In LLVM the most common scope for uniqueing is the [Context](xref:Ubiquity.NET.Llvm.Context) type.
 In essence this class is an interning class factory for the LLVM IR system for a given
 thread. Most object instances are ultimately owned by the context or a 
-[BitcodeModule](xref:Ubiquity.NET.Llvm.BitcodeModule). LLVM-C APIs use opaque pointers for LLVM
+[BitcodeModule](xref:Ubiquity.NET.Llvm.Module). LLVM-C APIs use opaque pointers for LLVM
 objects. This is projected to the low level Ubiquity.NET.Llvm.Native namespace as structs that wrap
 an IntPtr to enforce some type safety. Furthermore, the LLVM-C API uses the highest level
 of an object inheritance graph that it can when declaring the opaque type for the return
@@ -16,7 +18,7 @@ In addition to opaque pointers an additional challenge exists in mapping such po
 to projected instances. Any projection is essentially a wrapper around the opaque
 pointer. However, when an API returns an opaque pointer the interop layer needs to
 determine what to do with it. A naive first approach (actually used in Ubiquity.NET.Llvm early
- versions) is to simply create a new instance of the wrapper type giving it the
+versions) is to simply create a new instance of the wrapper type giving it the
 opaque pointer to work from. This will work for a while, until the code needs to compare
 two instances. Ordinarily reference types are compared with reference equality. However,
 if two projected instances are the same then reference equality will fail. While it is

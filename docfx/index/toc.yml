@@ -5,3 +5,5 @@
   href: https://github.com/UbiquityDotNET/Llvm.NET
 - name: LLVM.org
   href: http://LLVM.org
+- name: LLVM Docs
+  href: https://releases.llvm.org/20.1.0/docs/index.html

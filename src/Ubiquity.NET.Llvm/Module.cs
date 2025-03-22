@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm
     /// <summary>LLVM Bitcode module</summary>
     /// <remarks>
     /// A module is the basic unit for containing code in LLVM. Modules are an in memory
-    /// representation of the LLVM Intermediate Representation (IR) bit-code. Each
+    /// representation of the LLVM Intermediate Representation (IR) bit-code.
     /// </remarks>
     public sealed class Module
         : IModule

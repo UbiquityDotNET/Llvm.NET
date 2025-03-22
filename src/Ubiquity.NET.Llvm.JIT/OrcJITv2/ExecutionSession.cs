@@ -93,11 +93,12 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
 #if FUTURE_DEVELOPMENT_AREA
         // CONSIDER: It might be better if this was a method on the JIT (and internal on this type)
         // so that the JIT instance could hold on to the lifetime to keep callers from needing to
-        // deal with lifetime management. Lifetime management and native callbacis is a difficult
+        // deal with lifetime management. Lifetime management and native callbacks is is a difficult
         // issue, made more complex by AOT support. Marshal.GetFunctionPointerForDelegate MUST
         // dynamically build a native callable thunk, that performs all marshalling. But that is
         // not an option for AOT scenarios. [Sadly that API doesn't appear to be flagged as off
         // limits for an AOT compatible app/library...]
+        // TODO: Follow pattern in other places of this library and define a custom holder.
 
         /// <summary>Set the error reporter for the session</summary>
         /// <param name="errorReporter">Error reporter to set</param>
@@ -152,7 +153,7 @@ namespace Ubiquity.NET.Llvm.JIT.OrcJITv2
         /// <returns><see langword="true"/> if successful and <see langword="false"/> if not</returns>
         /// <remarks>
         /// <para>This will add symbols for any attached platforms. If there are no attached platforms then this
-        /// is the same as calling <see cref="O:GetOrCreateBareDyLib"/>.</para>
+        /// is the same as calling <see cref="GetOrCreateBareDyLib"/>.</para>
         /// <para><paramref name="name"/> is a LazyEncodedString to allow for the possibility of retrieval of the name from
         /// native code and then providing it back again without going through any sort of marshal/unmarshal sequence. This
         /// allows for the most efficient use of data that is likely to come from the underlying native code.

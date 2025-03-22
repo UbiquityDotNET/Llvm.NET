@@ -2,6 +2,9 @@ references:
   - uid: current-release
     name: Current Release
     href: current/index.html
+  - uid: release-10-0-0
+    name: v10.0.0
+    href: v10.0.0/index.html
   - uid: release-8-0-1
     name: v8.0.1
     href: v8.0.1/index.html

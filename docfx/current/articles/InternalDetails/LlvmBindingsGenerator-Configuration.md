@@ -1,4 +1,6 @@
 ﻿# LlvmBindings Configuration
+[As of LLVM 20 support this is mostly deprecated support, This needs updating]
+
 The bindings generator uses a configuration data structure that consists of a
 number of tables used by the code generation passes for resolving the various
 ambiguities of generating the code. The configuration is an instance of the

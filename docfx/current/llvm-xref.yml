@@ -1,22 +1,22 @@
 references:
   - uid: llvm_langref
     name: LLVM Language reference
-    href: http://releases.llvm.org/10.0.0/docs/LangRef.html
+    href: http://releases.llvm.org/20.1.0/docs/LangRef.html
   - uid: llvm_sourceleveldebugging
     name: LLVM Source Level Debugging
-    href: http://releases.llvm.org/10.0.0/docs/SourceLevelDebugging.html
+    href: http://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html
   - uid: llvm_docs_garbagecollection
     name: LLVM Garbage Collection
-    href: http://releases.llvm.org/10.0.0/docs/GarbageCollection.html
+    href: http://releases.llvm.org/20.1.0/docs/GarbageCollection.html
   - uid: llvm_docs_passes
     name: LLVM Analysis and Transform Passes
-    href: http://releases.llvm.org/10.0.0/docs/Passes.html
+    href: http://releases.llvm.org/20.1.0/docs/Passes.html
   - uid: llvm_exception_handling
     name: LLVM Exception Handling
-    href: http://releases.llvm.org/10.0.0/docs/ExceptionHandling.html
+    href: http://releases.llvm.org/20.1.0/docs/ExceptionHandling.html
   - uid: llvm_misunderstood_gep
     name: LLVM The Misunderstood GEP Instruction
-    href: http://releases.llvm.org/10.0.0/docs/GetElementPtr.html
+    href: http://releases.llvm.org/20.1.0/docs/GetElementPtr.html
   - uid: llvm_sourcelevel_debugging
     name: LLVM Source Level Debugging
-    href: http://releases.llvm.org/10.0.0/docs/SourceLevelDebugging.html
+    href: http://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html

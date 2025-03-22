@@ -6,7 +6,7 @@
 function Ensure-PathExists
 {
     param([Parameter(Mandatory=$true, ValueFromPipeLine)]$path)
-    mkdir -Force -ErrorAction SilentlyContinue $path | Out-Null
+    New-Item -Force -ErrorAction SilentlyContinue -Name $path -ItemType Directory | Out-Null
 }
 
 function Get-DefaultBuildPaths([string]$repoRoot)
@@ -96,7 +96,7 @@ function Update-Submodules
     Updates Git submodules for this repository
 #>
     Write-Information "Updating submodules"
-    git submodule -q update --init --recursive
+    Invoke-Git submodule -q update --init --recursive
 }
 
 function Find-OnPath
@@ -117,6 +117,9 @@ function Find-OnPath
     Write-Information "Searching for $exeName..."
     try
     {
+        # TODO: where.exe is a Windows specific name, Other platforms use a different extension
+        #       The use of an explicit extension here is the PS escape to NOT use any internal
+        #       commands or alias and call the external executable.
         $path = where.exe $exeName 2>$null | select -First 1
     }
     catch
@@ -563,6 +566,24 @@ function Get-GitHubTaggedRelease($org, $project, $tag)
 #>
 
     Get-GithubReleases $org $project | ?{$_.tag_name -eq $tag}
+}
+
+function Invoke-DotNet
+{
+<#
+.SYNOPSIS
+    Invokes dotnet external tool and throws an exception if it fails
+
+.DESCRIPTION
+    This invokes 'dotnet.exe test ...' with any arguments provided. If the
+    the exit status is not success then this will throw an exception that
+    identifies the failure and the exit code.
+#>
+    dotnet $args
+    if(!$?)
+    {
+        throw "Invoke of dotnet failed [$LastExitCode]"
+    }
 }
 
 function Invoke-DotNetTest($buildInfo, $projectRelativePath)

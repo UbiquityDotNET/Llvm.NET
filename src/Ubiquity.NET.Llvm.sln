@@ -52,7 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo Items", "Repo Items", 
 		..\Packages.props = ..\Packages.props
 		..\.github\workflows\pr-build.yml = ..\.github\workflows\pr-build.yml
 		..\Push-Docs.ps1 = ..\Push-Docs.ps1
-		Push-Nuget.ps1 = Push-Nuget.ps1
 		..\README.md = ..\README.md
 		..\.github\workflows\release-build.yml = ..\.github\workflows\release-build.yml
 		..\docfx\current\ReleaseNotes.md = ..\docfx\current\ReleaseNotes.md
@@ -85,6 +84,51 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interop", "Interop", "{5348150E-6276-4A5F-99FD-A7936E75D206}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrcV2VeryLazy", "..\Samples\OrcV2VeryLazy\OrcV2VeryLazy.csproj", "{3D534AD9-820D-4ABC-95BD-DCA0DF6C05E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx", "docfx", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\ReadMe.md = ..\docfx\ReadMe.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "index", "index", "{52001414-3472-479D-84A3-D2875E6CA279}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\index\docfx.json = ..\docfx\index\docfx.json
+		..\docfx\index\index.md = ..\docfx\index\index.md
+		..\docfx\index\ReadMe.md = ..\docfx\index\ReadMe.md
+		..\docfx\index\toc.yml = ..\docfx\index\toc.yml
+		..\docfx\index\versions-xref.yml = ..\docfx\index\versions-xref.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "current", "current", "{C2FA0515-206D-4A3C-B8CD-8DC89C0186FE}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\current\docfx.json = ..\docfx\current\docfx.json
+		..\docfx\current\index.md = ..\docfx\current\index.md
+		..\docfx\current\llvm-xref.yml = ..\docfx\current\llvm-xref.yml
+		..\docfx\current\ReleaseNotes.md = ..\docfx\current\ReleaseNotes.md
+		..\docfx\current\toc.yml = ..\docfx\current\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "articles", "articles", "{93AFFAD1-2564-4A81-816B-E59AEC90174C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{985A8790-EACA-4CB4-BC2E-A6282A29974D}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\current\articles\Samples\index.md = ..\docfx\current\articles\Samples\index.md
+		ReadMe.md = ReadMe.md
+		..\docfx\current\articles\Samples\toc.md = ..\docfx\current\articles\Samples\toc.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InternalDetails", "InternalDetails", "{9AD040CF-D795-411C-91F4-A76E8E502EBD}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\current\articles\InternalDetails\handleref-interning.md = ..\docfx\current\articles\InternalDetails\handleref-interning.md
+		..\docfx\current\articles\InternalDetails\index.md = ..\docfx\current\articles\InternalDetails\index.md
+		..\docfx\current\articles\InternalDetails\llvm-handles.md = ..\docfx\current\articles\InternalDetails\llvm-handles.md
+		..\docfx\current\articles\InternalDetails\LlvmBindingsGenerator-Configuration.md = ..\docfx\current\articles\InternalDetails\LlvmBindingsGenerator-Configuration.md
+		..\docfx\current\articles\InternalDetails\LlvmBindingsGenerator-Overview.md = ..\docfx\current\articles\InternalDetails\LlvmBindingsGenerator-Overview.md
+		..\docfx\current\articles\InternalDetails\LlvmBindingsGenerator-YAML-Config-format.md = ..\docfx\current\articles\InternalDetails\LlvmBindingsGenerator-YAML-Config-format.md
+		..\docfx\current\articles\InternalDetails\marshal-LLVMBool.md = ..\docfx\current\articles\InternalDetails\marshal-LLVMBool.md
+		..\docfx\current\articles\InternalDetails\marshal-string.md = ..\docfx\current\articles\InternalDetails\marshal-string.md
+		..\docfx\current\articles\InternalDetails\toc.md = ..\docfx\current\articles\InternalDetails\toc.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -204,6 +248,11 @@ Global
 		{16142073-B70D-48B3-B63B-23211F2C7CFE} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9} = {5348150E-6276-4A5F-99FD-A7936E75D206}
 		{3D534AD9-820D-4ABC-95BD-DCA0DF6C05E1} = {2204ABFA-65AA-4506-8FB0-D742B583246A}
+		{52001414-3472-479D-84A3-D2875E6CA279} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C2FA0515-206D-4A3C-B8CD-8DC89C0186FE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{93AFFAD1-2564-4A81-816B-E59AEC90174C} = {C2FA0515-206D-4A3C-B8CD-8DC89C0186FE}
+		{985A8790-EACA-4CB4-BC2E-A6282A29974D} = {93AFFAD1-2564-4A81-816B-E59AEC90174C}
+		{9AD040CF-D795-411C-91F4-A76E8E502EBD} = {93AFFAD1-2564-4A81-816B-E59AEC90174C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF28D186-279B-4E91-9BE8-644B6E018432}

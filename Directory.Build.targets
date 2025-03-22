@@ -115,7 +115,7 @@
 
     <!-- see https://stackoverflow.com/questions/53278544/nuget-versioning-with-projectreference-dependencies for inspiration of this -->
     <!--
-    This updates the require version of the referenced package in the package generated for *this* project.
+    This updates the required version of the referenced package in the package generated for *this* project.
     -->
     <Target Name="UseExplicitPackageVersions" BeforeTargets="_SetNuSpecPropertiesWithBuildInfo">
         <ItemGroup>
