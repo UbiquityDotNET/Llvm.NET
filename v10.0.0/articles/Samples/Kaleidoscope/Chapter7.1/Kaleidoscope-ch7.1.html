@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>7. Kaleidoscope: Extreme Lazy JIT | Ubiquity.NET.Llvm </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="7. Kaleidoscope: Extreme Lazy JIT | Ubiquity.NET.Llvm ">
+    <meta name="generator" content="docfx 2.58.5.0">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../toc">
+    <meta property="docfx:tocrel" content="../../toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../index.html">
+                <img id="logo" class="svg" src="../../../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="Source Repository">Source Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/10.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Samples</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a class="">Code Generation</a>
+                          </li>
+                          <li class="">
+                            <a href="../../CodeGenWithDebugInfo/codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="../../Kaleidoscope/Kaleidoscope-Overview.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter2/Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter3/Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter4/Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter5/Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter6/Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter7/Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter7.1/Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter8/Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter9/Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a class="">Appendix</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/AST/Kaleidoscope-AST.html" title="Kaleidoscope AST" class="">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/ANTLR/Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/ANTLR/Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Kaleidoscope-ch7.1">
+
+<div class="CAUTION"><h5>Caution</h5><p>This sample is presently not functional. There are bugs in the LLVM OrcJIT support on Windows platforms
+that prevents the fully lazy function generation callbacks from working. (See LLVM
+bugs <a href="https://bugs.llvm.org/show_bug.cgi?id=25493">25493</a> and <a href="https://bugs.llvm.org/show_bug.cgi?id=28699">28699</a> for details.)</p>
+</div>
+<h1 id="7-kaleidoscope-extreme-lazy-jit">7. Kaleidoscope: Extreme Lazy JIT</h1>
+<p>In the previous chapters the code generation took an AST, converted it to LLVM IR, handed the IR to the
+JIT, which then generated the native code. For a top level anonymous expression that is pretty much all
+you need. But what if a function is defined but not used (yet)? The process of generating the IR, and then
+subsequently the native code, is all wasted overhead in such a case. That&#39;s not really following through on
+the &quot;Just-In-Time&quot; part of the JIT. This chapter focuses on resolving that with truly lazy JIT that doesn&#39;t
+even generate the LLVM IR for a function until it is called for the first time.</p>
+<h2 id="performance-trade-offs">Performance trade-offs</h2>
+<p>As with many things in software, there are trade-offs involved. In this case the trade-off is when you JIT
+compile vs. lazy compile. This choice is a major element to efficient use of a JIT. The more you have to JIT
+before anything can actually run the slower the application startup is. If you defer too much then the execution
+slows down as everything needs to compile code. Ultimately, there is no one &quot;right&quot; solution as many factors
+contribute to the results, including the level of optimizations applied during generation. (e.g. it might
+achieve better results to generate unoptimized code during startup, and later regenerate optimized versions
+of the most frequently used code.)</p>
+<p>The approach to balancing the trade-offs taken in this chapter is to eagerly compile top level expressions
+as it is obvious they are going to be called, and discarded afterwards. For function definitions, it isn&#39;t
+clear if the functions will or won&#39;t be called. While, the code generation could scan the function to find
+all functions it calls to generate them all at the same time - there is no guarantee that the input arguments
+to the function will go through a path that needs them all. Thus, for Kaleidoscope, function definitions are
+all lazy compiled on first use.</p>
+<h2 id="general-concept-of-lazy-compilation">General Concept of Lazy Compilation</h2>
+<p>The general idea is that the language runtime registers every lazy JIT function with the JIT by name with a
+callback function to handle generating code for that function. This does two things in the JIT:</p>
+<ol>
+<li>Adds the name to the function symbol table in the JIT</li>
+<li>Creates a stub implementation function in native code that will call back to the JIT when application
+code calls the function.</li>
+</ol>
+<p>The stub is implemented by the JIT to call back into the JIT in a way that includes the information needed
+to identify the correct function to generate code for. The JIT will do some of it&#39;s own internal setup and
+then call the code generation callback registered by the runtime code generator. This callback is what actually
+generates the LLVM IR, and ultimately the native code, for the function.</p>
+<p>Once the function is generated the generator uses the JIT to update the stub so that, in the future, it will just
+call to the generated function directly. One somewhat confusing aspect of this is that there are two symbols in
+the JIT for what is really only one function. One, is the stub that remains at a fixed location (to allow pointer
+to function patterns to work) the other is the JIT compiled actual implementation of the function. They can&#39;t both
+have the same name so the code generation for the implementation must use a unique name.</p>
+<h2 id="code-changes-for-lazy-jit">Code changes for lazy JIT</h2>
+<p>Since the lazy JIT registers the callback stub with the function&#39;s name when the actual function is generated
+it needs a new name. So, we add a new helper method to effectively clone a FunctionDefinition AST node while
+renaming it. This only needs a shallow clone so there isn&#39;t a lot of overhead for it.</p>
+<pre><code class="lang-csharp" name="CloneAndRenameFunction">private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
+{
+    // clone the definition with a new name, note that this is really
+    // a shallow clone so there&#39;s minimal overhead for the cloning.
+    var newSignature = new Prototype( definition.Signature.Location
+                                    , definition.Signature.Name + &quot;$impl&quot;
+                                    , definition.Signature.Parameters
+                                    );
+
+    var implDefinition = new FunctionDefinition( definition.Location
+                                               , newSignature
+                                               , definition.Body
+                                               , definition.LocalVariables.ToImmutableArray( )
+                                               );
+    return implDefinition;
+}
+</code></pre><p>The name used is the original function name plus the suffix <code>$impl</code> tacked onto the end.</p>
+<p>The next requirement is to change how we generate the functions. For an anonymous function the generation
+is pretty much the same. There&#39;s really no point in going through the process of setting up the lazy JIT
+when the next thing to do is get the address of the function and call it. For other definitions, though,
+things get different as they are selected for lazy JIT.</p>
+<pre><code class="lang-csharp" name="Generate">        public OptionalValue&lt;Value&gt; Generate( IAstNode ast )
+        {
+            ast.ValidateNotNull( nameof( ast ) );
+
+            // Prototypes, including extern are ignored as AST generation
+            // adds them to the RuntimeState so that already has the declarations
+            if( !( ast is FunctionDefinition definition ) )
+            {
+                return default;
+            }
+
+            // Anonymous functions are called immediately then removed from the JIT
+            // so no point in setting them up as a lazy compilation item.
+            if( definition.IsAnonymous )
+            {
+                InitializeModuleAndPassManager( );
+                Debug.Assert( Module != null, &quot;Expected non-null Module at this point&quot; );
+                var function = ( IrFunction )(definition.Accept( this ) ?? throw new CodeGeneratorException(ExpectValidFunc));
+
+                // eagerly compile modules for anonymous functions as calling the function is the guaranteed next step
+                ulong jitHandle = JIT.AddEagerlyCompiledModule( Module );
+                var nativeFunc = JIT.GetFunctionDelegate&lt;KaleidoscopeJIT.CallbackHandler0&gt;( definition.Name );
+                var retVal = Context.CreateConstant( nativeFunc( ) );
+                JIT.RemoveModule( jitHandle );
+                return OptionalValue.Create&lt;Value&gt;( retVal );
+            }
+
+            // LLVM 10 is transitioning to ORC JIT v2 and unfortunately,
+            // the lazy function generator is doing it&#39;s own symbol resolution that doesn&#39;t
+            // account for the COFF export bug
+#if LAZY_FUNCTION_GENERATOR_SUPPORTED
+            // Unknown if any future input will call the function so don&#39;t even generate IR
+            // until it is needed. JIT triggers the callback to generate the IR module so the JIT
+            // can then generate native code only when required.
+            FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+            // register the generator as a stub with the original source name
+            JIT.AddLazyFunctionGenerator( definition.Name, ( ) =&gt;
+            {
+                InitializeModuleAndPassManager( );
+                var function = ( IrFunction? )implDefinition.Accept( this );
+                if( function is null )
+                {
+                    throw new CodeGeneratorException( &quot;Failed to lazy generate function - this is an application crash scenario&quot; );
+                }
+
+                return (implDefinition.Name, function.ParentModule);
+            } );
+            return default;
+#else
+            throw new NotSupportedException( &quot;Truly Lazy JIT not currently supported due to issues in underlying LLVM-C ORCJIT support.&quot; );
+#endif
+        }
+</code></pre><p>Function definitions for lazy JIT are first cloned and renamed, as discussed previously. Then a lazy
+function generator is registered for the name of the function. This creates the stub function exported
+by the function&#39;s name with a callback that knows how to generate the LLVM IR for the function. The
+actual code generation call back is a lambda that simply initializes a new module and pass manager,
+generates the function using the visitor pattern and returns the function&#39;s implementation name and
+the containing module as a tuple. (This is where keeping the code generation ignorant of the JIT comes
+in handy as the same code is called to generate a module and doesn&#39;t need to care if it is eager or lazy)</p>
+<p>The JIT implementation will do the following after the generator
+callback returns:</p>
+<ol>
+<li>Add the returned module to the JIT</li>
+<li>Generate native code for the module</li>
+<li>Get the address of the implementation function</li>
+<li>Update the stub for the function with the address of the function instead of the internal callback</li>
+<li>return the address to the JIT engine so it can ultimately call the function and continue on it&#39;s merry way.</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>Implementing Lazy JIT support with Ubiquity.NET.Llvm is pretty simple and straight forward. It took many times more
+words to describe then actual lines of code. Efficiently, supporting lazy JIT is a much more complex matter.
+There are trade-offs doing things lazy, in particular the application can stall for a period, while the
+system generates new code to run &quot;on the fly&quot;. Optimizations, when fully enabled, add additional time to
+the code generation. While, for some applications, it may be obvious whether these factors matter or not, in
+general it&#39;s not something that can be known, thus the quest for optimal efficiency includes decisions
+on eager vs lazy JIT as well as optimized JIT or not. This can include lazy JIT with minimal optimization
+during startup of an app. Once things are up and going the engine can come back to re-generate the functions
+with full optimization. All sorts of possibilities exist, but the basics of how the lazy and eager generation
+works doesn&#39;t change no matter what approach a given language or runtime wants to use.</p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/samples/Kaleidoscope/Chapter7.1/Kaleidoscope-ch7.1.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../styles/main.js"></script>
+  </body>
+</html>

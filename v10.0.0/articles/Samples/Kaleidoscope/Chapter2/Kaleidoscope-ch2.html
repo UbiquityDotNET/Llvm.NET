@@ -1,0 +1,658 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>2. Kaleidoscope: Implementing the parser | Ubiquity.NET.Llvm </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="2. Kaleidoscope: Implementing the parser | Ubiquity.NET.Llvm ">
+    <meta name="generator" content="docfx 2.58.5.0">
+    
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="../../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../../toc">
+    <meta property="docfx:tocrel" content="../../toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../../index.html">
+                <img id="logo" class="svg" src="../../../../DragonSharp48x48.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../../../../api/index.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="Source Repository">Source Repository</a>
+                      </li>
+                      <li>
+                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
+                      </li>
+                      <li>
+                          <a href="http://releases.llvm.org/10.0.0/docs/index.html" title="LLVM Docs">LLVM Docs</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Samples</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a class="">Code Generation</a>
+                          </li>
+                          <li class="">
+                            <a href="../../CodeGenWithDebugInfo/codegeneration.html" title="CodeGenerator With Debug Information" class="">CodeGenerator With Debug Information</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a class="">Kaleidoscope</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="../../Kaleidoscope/Kaleidoscope-Overview.html" title="Chapter 1 - Language Introduction" class="">Chapter 1 - Language Introduction</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter2/Kaleidoscope-ch2.html" title="Chapter 2 - Implementing the parser" class="">Chapter 2 - Implementing the parser</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter3/Kaleidoscope-ch3.html" title="Chapter 3 - Generating LLVM IR" class="">Chapter 3 - Generating LLVM IR</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter4/Kaleidoscope-ch4.html" title="Chapter 4 - JIT and Optimizer Support" class="">Chapter 4 - JIT and Optimizer Support</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter5/Kaleidoscope-ch5.html" title="Chapter 5 - Control Flow" class="">Chapter 5 - Control Flow</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter6/Kaleidoscope-ch6.html" title="Chapter 6 - User Defined Operators" class="">Chapter 6 - User Defined Operators</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter7/Kaleidoscope-ch7.html" title="Chapter 7 - Mutable Variables" class="">Chapter 7 - Mutable Variables</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter7.1/Kaleidoscope-ch7.1.html" title="Chapter 7.1 - Extreme Lazy JIT" class="">Chapter 7.1 - Extreme Lazy JIT</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter8/Kaleidoscope-ch8.html" title="Chapter 8 - AOT Compilation" class="">Chapter 8 - AOT Compilation</a>
+                          </li>
+                          <li class="">
+                            <a href="../../Kaleidoscope/Chapter9/Kaleidoscope-ch9.html" title="Chapter 9 - Debug Information" class="">Chapter 9 - Debug Information</a>
+                          </li>
+                          <li class="">
+                            <span class="expand-stub"></span>
+                            <a class="">Appendix</a>
+                              
+                              <ul class="nav level3">
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope-Runtime.html" title="Kaleidoscope.Runtime" class="">Kaleidoscope.Runtime</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/AST/Kaleidoscope-AST.html" title="Kaleidoscope AST" class="">Kaleidoscope AST</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/ANTLR/Kaleidoscope-ParseTreeVisitor.html" title="ParseTree Visitor" class="">ParseTree Visitor</a>
+                                </li>
+                                <li class="">
+                                  <a href="../../Kaleidoscope/Kaleidoscope.Parser/ANTLR/Kaleidoscope-Parsetree-examples.html" title="ParseTree Examples" class="">ParseTree Examples</a>
+                                </li>
+                              </ul>  </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Kaleidoscope-ch2">
+<h1 id="2-kaleidoscope-implementing-the-parser">2. Kaleidoscope: Implementing the parser</h1>
+
+<p>The chapter 2 sample doesn&#39;t actually generate any code. Instead it focuses on the general
+structure of the samples and parsing of the language. The sample for this chapter enables all
+language features to allow exploring the language and how it is parsed to help better understand
+the rest of the chapters better. It is hoped that users of this library find this helpful.</p>
+<p>The Ubiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
+This has several advantages including logical isolation of the parsing and code generation.
+Additionally, it provides a single formal definition of the grammar for the language. Understanding
+the language grammar from reading the LVM tutorials and source was a difficult task since it isn&#39;t
+formally defined in one place. (There are some EBNF like comments in the official LLVM tutorial
+code but it is spread around without much real discussion of the language the tutorials guide you
+to implement)</p>
+<h2 id="formal-grammar">Formal Grammar</h2>
+<h3 id="lexer-symbols">Lexer symbols</h3>
+<p>The Kaleidoscope lexer consists of several tokens and is defined in the
+<a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/master/Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4">Kaleidoscope.g4</a>
+grammar file.</p>
+<pre><code class="lang-antlr">// Lexer Rules -------
+fragment NonZeroDecimalDigit_: [1-9];
+fragment DecimalDigit_: [0-9];
+fragment Digits_: &#39;0&#39; | [1-9][0-9]*;
+fragment EndOfFile_: &#39;\u0000&#39; | &#39;\u001A&#39;;
+fragment EndOfLine_
+    : (&#39;\r&#39; &#39;\n&#39;)
+    | (&#39;\r&#39; |&#39;\n&#39; | &#39;\u2028&#39; | &#39;\u2029&#39;)
+    | EndOfFile_
+    ;
+
+LPAREN: &#39;(&#39;;
+RPAREN: &#39;)&#39;;
+COMMA: &#39;,&#39;;
+SEMICOLON: &#39;;&#39;;
+DEF: &#39;def&#39;;
+EXTERN: &#39;extern&#39;;
+
+ASSIGN:&#39;=&#39;;
+ASTERISK: &#39;*&#39;;
+PLUS: &#39;+&#39;;
+MINUS:&#39;-&#39;;
+LEFTANGLE: &#39;&lt;&#39;;
+SLASH: &#39;/&#39;;
+
+EXCLAMATION: &#39;!&#39;;
+PERCENT: &#39;%&#39;;
+AMPERSAND:&#39;&amp;&#39;;
+PERIOD:&#39;.&#39;;
+COLON: &#39;:&#39;;
+RIGHTANGLE: &#39;&gt;&#39;;
+QMARK: &#39;?&#39;;
+ATSIGN: &#39;@&#39;;
+BACKSLASH: &#39;\\&#39;;
+CARET: &#39;^&#39;;
+UNDERSCORE: &#39;_&#39;;
+VBAR: &#39;|&#39;;
+EQUALEQUAL: &#39;==&#39;;
+NOTEQUAL: &#39;!=&#39;;
+PLUSPLUS: &#39;++&#39;;
+MINUSMINUS: &#39;--&#39;;
+
+IF:     {FeatureControlFlow}? &#39;if&#39;;
+THEN:   {FeatureControlFlow}? &#39;then&#39;;
+ELSE:   {FeatureControlFlow}? &#39;else&#39;;
+FOR:    {FeatureControlFlow}? &#39;for&#39;;
+IN:     {FeatureControlFlow}? &#39;in&#39;;
+VAR:    {FeatureMutableVars}? &#39;var&#39;;
+UNARY:  {FeatureUserOperators}? &#39;unary&#39;;
+BINARY: {FeatureUserOperators}? &#39;binary&#39;;
+
+LineComment: &#39;#&#39; ~[\r\n]* EndOfLine_ -&gt; skip;
+WhiteSpace: [ \t\r\n\f]+ -&gt; skip;
+
+Identifier: [a-zA-Z][a-zA-Z0-9]*;
+Number: Digits_ (&#39;.&#39; DecimalDigit_+)?;
+</code></pre><p>This includes basic numeric patterns as well as Identifiers and the symbols allowed for operators
+and keywords for the language. Subsequent chapters will introduce the meaning and use of each of
+these.</p>
+<h4 id="language-feature-defined-keywords">Language Feature Defined Keywords</h4>
+<p>Chapters 5-7 each introduce new language features that introduce new keywords into the language.
+In order to maintain a single grammar for all chapters the lexer uses a technique of ANTLR4 called
+<a href="https://github.com/antlr/antlr4/blob/master/doc/predicates.md">Semantic Predicates</a>.
+These are basically boolean expressions that determine if a given rule should be applied while
+parsing the input language. These are applied to the rules for the feature specific keywords. Thus,
+at runtime, if a given feature is disabled then the keyword is not recognized.</p>
+<pre><code class="lang-antlr">IF:     {FeatureControlFlow}? &#39;if&#39;;
+THEN:   {FeatureControlFlow}? &#39;then&#39;;
+ELSE:   {FeatureControlFlow}? &#39;else&#39;;
+FOR:    {FeatureControlFlow}? &#39;for&#39;;
+IN:     {FeatureControlFlow}? &#39;in&#39;;
+VAR:    {FeatureMutableVars}? &#39;var&#39;;
+UNARY:  {FeatureUserOperators}? &#39;unary&#39;;
+BINARY: {FeatureUserOperators}? &#39;binary&#39;;
+</code></pre><div class="NOTE"><h5>Note</h5><p>There are some important distinctions in the Ubiquity.NET.Llvm implementation of Kaleidoscope, with regard to the
+symbols allowed for user defined operators. The official LLVM version allows defining an operator &#39;=&#39;,
+(in chapter 6). However, in Chapter 7, when Mutable variables are introduced the &#39;=&#39; is reserved by the
+language for assignment. Thus, any code written for chapter 6 with a user defined &#39;=&#39; operator would not
+work in later versions. Thus, the Ubiquity.NET.Llvm version reserves the &#39;=&#39; in all versions, but uses the &#39;==&#39;
+operator for equality comparisons. (It also adds the &#39;++&#39; and &#39;--&#39; tokens as user operators [The official
+LLVM implementation only allows a single character as the operator lexeme])</p>
+<p>Additionally the Ubiquity.NET.Llvm implementation adds the built-in &#39;^&#39; operator for exponentiation.</p>
+</div>
+<h3 id="parser">Parser</h3>
+<p>The parser, like the lexer, uses Semantic Predicates, which allows for dynamic adaptation of the grammar
+and parser to handle variations or versions of the language. The Sample code uses the predicates to
+selectively enable language features as the chapters progress, without needing to change the grammar or
+generated parser code. The parser code provides a simple means of expressing the language support level.
+Semantic predicates play a vital role in supporting user defined operators with user defined precedence.</p>
+<h4 id="parser-grammar">Parser grammar</h4>
+<p>A full tutorial on ANTLR is beyond the scope of this article but the basics should be familiar enough to
+anyone acquainted with EBNF form to make enough sense out of it. Don&#39;t worry too much about the details at
+this point as subsequent chapters will cover salient points as new features are enabled.</p>
+<h5 id="operators">Operators</h5>
+<p>In order to support the parser detecting attempts to overload built-in operators and to handle the fact
+that some operators don&#39;t make any sense as unary operators (e.g. you can&#39;t create a user defined unary
+&#39;=&#39; operator. Technically, you could implement that but it would make for some confusing code. If you really
+like hard to read and comprehend code there are <a href="https://en.wikipedia.org/wiki/Brainfuck">other languages</a>
+better suited to that end 8^) )</p>
+<p>To manage detection of appropriate operator tokens the grammar uses a set of parser rules that group the
+operator tokens by their allowed kinds. This allows subsequent rules to simply refer to the kind of
+operator expected and not worry about the actual tokens involved. It also allows the parser to detect
+syntax and usage errors like trying to create a user defined &#39;+&#39; operator.</p>
+<pre><code class="lang-antlr">// built-in operator symbols
+builtinop
+    : ASSIGN
+    | ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
+    ;
+
+// Allowed user defined binary symbols
+userdefinedop
+    : EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
+    ;
+
+// unary ops can re-use built-in binop symbols (Except ASSIGN)
+unaryop
+    : ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
+    | EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
+    ;
+
+// All binary operators
+binaryop
+    : ASSIGN
+    | ASTERISK
+    | PLUS
+    | MINUS
+    | SLASH
+    | LEFTANGLE
+    | CARET
+    | EXCLAMATION
+    | PERCENT
+    | AMPERSAND
+    | PERIOD
+    | COLON
+    | RIGHTANGLE
+    | QMARK
+    | ATSIGN
+    | BACKSLASH
+    | UNDERSCORE
+    | VBAR
+    | EQUALEQUAL
+    | NOTEQUAL
+    | PLUSPLUS
+    | MINUSMINUS
+    ;
+</code></pre><h3 id="initializers">Initializers</h3>
+<p>The Initializers rule provides a way to handle a common sequence in the language in multiple different
+contexts (sort of like a function in most programming languages, in fact, ANTLR rules are implemented
+in the generated parser as methods).</p>
+<pre><code class="lang-antlr">// pull the initializer out to a distinct rule so it is easier to get at
+// the list of initializers when walking the parse tree
+initializer
+    : Identifier (ASSIGN expression[0])?
+    ;
+</code></pre><h3 id="primary-expressions-atoms">Primary Expressions (Atoms)</h3>
+<p>There are a number of primary expressions (also known as &#39;Atoms&#39;) that are not left recursive in their
+definition. These are split out to a distinct rule to aid in the support of left recursion and the need
+for user defined operator precedence.</p>
+<pre><code class="lang-antlr">// Non Left recursive expressions (a.k.a. atoms)
+primaryExpression
+    : LPAREN expression[0] RPAREN                                                 # ParenExpression
+    | Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN            # FunctionCallExpression
+    | VAR initializer (COMMA initializer)* IN expression[0]                       # VarInExpression
+    | IF expression[0] THEN expression[0] ELSE expression[0]                      # ConditionalExpression
+    | FOR initializer COMMA expression[0] (COMMA expression[0])? IN expression[0] # ForExpression
+    | {IsPrefixOp()}? unaryop expression[0]                                       # UnaryOpExpression
+    | Identifier                                                                  # VariableExpression
+    | Number                                                                      # ConstExpression
+    ;
+</code></pre><p>Let&#39;s look at each of these in turn to get a better understanding of the language.</p>
+<h3 id="parenexpression">ParenExpression</h3>
+<pre><code class="lang-antlr">LPAREN expression[0] RPAREN
+</code></pre><p>This is a simple rule for sub-expressions within parenthesis for example: <code>(1+2)/3</code> the parenthesis groups
+the addition so that it occurs before the division since, normally the precedence of division is higher.
+The parse tree for that expression looks like this:</p>
+<p><img src="parsetree-paren-expr.svg" alt="Parse Tree"></p>
+<h3 id="functioncallexpression">FunctionCallExpression</h3>
+<pre><code class="lang-antlr">Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN
+</code></pre><p>This rule covers a function call which can have 0 or more comma delimited arguments. The parse tree
+for the call <code>foo(1, 2, 3);</code> is:</p>
+<p><img src="parsetree-func-call.svg" alt="Parse Tree"></p>
+<h3 id="varinexpression">VarInExpression</h3>
+<pre><code class="lang-antlr">VAR initializer (COMMA initializer)* IN expression[0]
+</code></pre><p>The VarInExpression rule provides variable declaration, with optional initialization. The scope of the
+variables is that of the expression on the right of the <code>in</code> keyword. The <code>var ... in ...</code> expression is
+in many ways like a declaration of an inline function. The variables declared are scoped to the internal
+implementation of the function. Once the function produces the return value the variables no longer exist.</p>
+<h3 id="conditionalexpression">ConditionalExpression</h3>
+<pre><code class="lang-antlr">IF expression[0] THEN expression[0] ELSE expression[0]
+</code></pre><p>Conditional expressions use the very common and familiar if-then-else syntax and semantics with one
+notable unique quality. In Kaleidoscope every language construct is an expression, there are no statements.
+Expressions all produce a value. So the result of the conditional expression is the result of the
+sub-expression selected based on the condition. The condition value is computed and if the result == 0.0
+(false) the <code>else</code> expression is used to produce the final result. Otherwise, the <code>then</code> expression is
+executed to produce the result. Thus, the actual semantics are more like the ternary operator found C and
+other languages:</p>
+<pre><code class="lang-C">condition ? thenExpression : elseExpression
+</code></pre><p>Example:</p>
+<pre><code class="lang-Kaleidoscope">def fib(x)
+  if x &lt; 3 then
+    1
+  else
+    fib(x-1)+fib(x-2);
+</code></pre><h3 id="forinexpression">ForInExpression</h3>
+<p>The ForInExpression provides support for classic for loop constructs. In particular it provides a variable
+scope for a loop value, a condition to test when to exit the loop and an optional step value for incrementing
+the loop value (default is 1.0).</p>
+<pre><code class="lang-Kaleidoscope">extern putchard(char);
+def printstar(n)
+  for i = 1, i &lt; n, 1.0 in
+    putchard(42);  # ascii 42 = &#39;*&#39;
+
+# print 100 &#39;*&#39; characters
+printstar(100);
+</code></pre><div class="NOTE"><h5>Note</h5><p>Technically, there are no statements in Kaleidoscope, everything is an expression and has a value. putchard()
+implicitly returns a value as does printstar(). (e.g. there is no void return - ALL functions implicitly
+return a floating point value, even if it is always 0.0).</p>
+</div>
+<p>For loops with mutable values support in the language may provide a result that isn&#39;t always 0.0, for
+example:</p>
+<pre><code class="lang-Kaleidoscope"># Define &#39;:&#39; for sequencing: as a low-precedence operator that ignores operands
+# and just returns the RHS.
+def binary : 1 (x y) y;
+
+# Recursive fib, we could do this before.
+def fib(x)
+  if (x &lt; 3) then
+    1
+  else
+    fib(x-1)+fib(x-2);
+
+# Iterative fib.
+def fibi(x)
+  var a = 1, b = 1, c in
+  (for i = 3, i &lt; x in
+     c = a + b :
+     a = b :
+     b = c) :
+  b;
+
+# Call it.
+fibi(10);
+</code></pre><h2 id="parse-tree">Parse Tree</h2>
+<p>ANTLR produces a low level parse tree with nodes corresponding to each of the rules defined in the grammar.
+In most cases this is extremely verbose and more details than is actually needed for generating code. (Though,
+it can be used as-is in some cases.) Typically code generation will walk the parse tree to provide a simpler
+Abstract Syntax Tree that represents the actual language concepts independent of the syntax of the language.
+ANTLR will generate a parser based on the grammar description input file. This generated parser (and lexer)
+includes a context type for each rule of the grammar. The C# target for ANTLR generates these types as partial
+classes so they are extensible from the parser assembly without needing to derive a new type or use virtual
+methods etc. Thus, the Kaleidoscope.Grammar assembly contains partial class extensions that provide simpler
+property accessors and support methods to aid is generating the AST.</p>
+<p>See <a class="xref" href="../Kaleidoscope.Parser/ANTLR/Kaleidoscope-Parsetree-examples.html">Kaleidoscope Parse Tree Examples</a> for more information and example
+diagrams of the parse tree for various language constructs.</p>
+<h2 id="abstract-syntax-tree-ast">Abstract Syntax Tree (AST)</h2>
+<p>To further simplify code generators the Kaleidoscope.Runtime library contains the AstBuilder type that is
+an ANTLR parse tree visitor. AstBuilder will convert a raw ANTLR IParseTree into a a tree of <code>IAstNode</code> elements.
+That is, it visits the declarations and definitions in the parse tree to produce a full tree of declarations
+and definitions as they appeared in the source. For interactive modes - the tree will have only one top level node.
+However, when parsing a whole source file, the parse tree may contain multiple declarations and definitions under
+a RootNode.</p>
+<p>The <a class="xref" href="../Kaleidoscope.Parser/AST/Kaleidoscope-AST.html">Kaleidoscope AST</a> is a means of simplifying the original parse tree into
+constructs that are easy for the code generation to use directly and to validate the syntax of the input source.
+In the case of Kaleidoscope there are a few types of nodes that are used to generate LLVM IR. The AstBuilder class
+is responsible for generating an AST from an ANTLR4 parse tree.</p>
+<p>The major simplifying transformations performed in building the AST are:</p>
+<ul>
+<li>Convert top-level functions to a pair of FunctionDeclaration and FunctionDefinition</li>
+<li>Convert user defined operator definition to simple FunctionDefinition with a special name for the operator</li>
+<li>Convert user defined operator expressions into simple function calls to the operator function</li>
+</ul>
+<div class="NOTE"><h5>Note</h5><p>An interesting consequence of these transformations into the AST form is that the concept of user defined
+operators no longer exists in the AST! The AST only deals in function declarations, definitions and the built-in
+operators. All issues of precedence are implicitly resolved in the ordering of the nodes in the AST.
+Thus, the code generation doesn&#39;t need to consider the issue of user defined operators or operator
+precedence at all. (<a class="xref" href="../Chapter6/Kaleidoscope-ch6.html">Chapter 6</a> covers the details of user defined operators and how
+the Kaleidoscope sample language uses ANTLR to implement them.)</p>
+</div>
+<h2 id="basic-application-architecture">Basic Application Architecture</h2>
+<p>Generally speaking, there are four main components to most of the sample chapter applications.</p>
+<ol>
+<li>The main driver application (e.g. program.cs)</li>
+<li>The Read-Evaluate-Print-Loop (e.g. ReplEngine.cs)</li>
+<li>Runtime support (e.g. Kaliedoscope.Runtime and Kaleidoscope.Parser libraries)</li>
+<li>The code generator (e.g. CodeGenerator.cs)</li>
+</ol>
+<h3 id="driver">Driver</h3>
+<p>While each chapter is a bit different from the others. Many of the chapters are virtually identical for
+the driver. In particular Chapters 3-7 only really differ in the name of the app and window title etc... </p>
+<pre><code class="lang-csharp" name="Program.cs">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;Program.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System;
+using System.Reflection;
+
+namespace Kaleidoscope.Chapter2
+{
+    public static class Program
+    {
+        #region Main
+
+        /// &lt;summary&gt;C# version of the LLVM Kaleidoscope language tutorial (Chapter 2)&lt;/summary&gt;
+        public static void Main( )
+        {
+            var repl = new ReplEngine( );
+
+            string helloMsg = $&quot;Ubiquity.NET.Llvm Kaleidoscope Parse evaluator - {repl.LanguageFeatureLevel}&quot;;
+            Console.Title = $&quot;{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}&quot;;
+            Console.WriteLine( helloMsg );
+
+            repl.Run( Console.In, Grammar.DiagnosticRepresentations.Dgml );
+        }
+        #endregion
+    }
+}
+</code></pre><h3 id="read-evaluate-print-loop">Read, Evaluate, Print loop</h3>
+<p>The Kaleidoscope.Runtime library contains an abstract base class for building a standard REPL engine from an
+input TextReader. The base class handles converting the input reader into a sequence of statements, and
+parsing them into AST nodes. The nodes are provided to an application provided generator that produces the
+output result. The REPL engine base uses the abstract ShowResults method to actually show the results.</p>
+<pre><code class="lang-csharp" name="Program.cs">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;ReplEngine.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System;
+
+using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
+using Kaleidoscope.Runtime;
+
+namespace Kaleidoscope.Chapter2
+{
+    internal class ReplEngine
+        : ReadEvaluatePrintLoopBase&lt;IAstNode&gt;
+    {
+        public ReplEngine( )
+            : base( LanguageLevel.MutableVariables )
+        {
+        }
+
+        public override IKaleidoscopeCodeGenerator&lt;IAstNode&gt; CreateGenerator( DynamicRuntimeState state )
+        {
+            return new CodeGenerator( );
+        }
+
+        public override void ShowResults( IAstNode resultValue )
+        {
+            Console.WriteLine( &quot;PARSED: {0}&quot;, resultValue );
+            var graph = resultValue.CreateGraph( );
+        }
+    }
+}
+</code></pre><h3 id="runtime-support">Runtime Support</h3>
+<p>The Parser contains the support for parsing the Kaleidoscope language from the REPL loop interactive
+input. The parser stack also maintains the global state of the runtime, which controls the language features
+enabled, and if user defined operators are enabled, contains the operators defined along with their
+precedence.</p>
+<p>After the parser is created an enumerable sequence of statements is created for the parser to process.
+This results in a sequence of AST nodes. After construction, the sequence is used to iterate over all of
+the nodes generated from the user input.</p>
+<p>This use of an enumerator sequences is a bit of a different approach to things for running an interpreter Read,
+Evaluate Print Loop, but once you get your head around it, the sequence provides a nice clean and flexible
+mechanism for building a pipeline of transformations from the text input into the result output.</p>
+<h3 id="codegenerator">CodeGenerator</h3>
+<p>The code generator will transform the AST node into the final output for the program. For the basic samples
+(Chapter 3-7) it indicates the value of any JITed and executed top level expressions, or the name of any functions
+defined. Chapter 2 uses a generator that simply produces the node it was given as the app doesn&#39;t actually use LLVM
+(it focuses on parsing the language only and the REPL infrastructure). This, helps to keep the samples
+consistent and as similar as possible to allow direct file comparisons to show the changes for a particular feature.
+The separation of concerns also aids in making the grammar, runtime and code generation unit-testable without the
+driver.</p>
+<pre><code class="lang-csharp" name="ShowResults">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;CodeGenerator.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using Kaleidoscope.Grammar.AST;
+using Kaleidoscope.Runtime;
+
+namespace Kaleidoscope.Chapter2
+{
+    internal sealed class CodeGenerator
+        : IKaleidoscopeCodeGenerator&lt;IAstNode&gt;
+    {
+        public void Dispose( )
+        {
+        }
+
+        public OptionalValue&lt;IAstNode&gt; Generate( IAstNode ast )
+        {
+            return OptionalValue.Create( ast );
+        }
+    }
+}
+</code></pre><h3 id="special-case-for-chapter-2">Special case for Chapter 2</h3>
+<p>Chapter 2 sample code, while still following the general patterns used in all of the chapters, is a bit
+unique, it doesn&#39;t actually use Ubiquity.NET.Llvm at all! Instead, it is only focused on the language and parsing.
+This helps in understanding the basic patterns of the code. Furthermore, this chapter serves as an aid in
+understanding the language itself. Of particular use is the ability to generate DGML and <a href="http://blockdiag.com">blockdiag</a>
+representations of the parse tree for a given parse.</p>
+<div class="NOTE"><h5>Note</h5><p>All of the diagrams in these tutorials were created by generating the blockdiag files and then producing
+the SVG files from that. Having a nice visual representation of a parse tree result is helpful to understanding
+the parsing and various parse tree node types.</p>
+</div>
+<p>The visual graph is also immensely valuable when making changes to the grammar so you can see the results
+of a parse and more readily understand why something isn&#39;t right. In fact, this feature was created to
+help track down bugs in the parsing for user defined operator precedence that was difficult to figure out.
+Once the visualization was available it became quite easy to see the problems. Thus, Chapter 2 is both
+a simple introductory example and a tool for use when doing more advanced language tweaking or extension.</p>
+</article>
+          </div>
+          <div class="contribution-panel mobile-hide">
+              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/samples/Kaleidoscope/Chapter2/Kaleidoscope-ch2.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../../styles/main.js"></script>
+  </body>
+</html>
