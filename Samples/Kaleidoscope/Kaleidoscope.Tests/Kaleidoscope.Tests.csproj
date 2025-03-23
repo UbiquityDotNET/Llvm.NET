@@ -3,23 +3,19 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <DefineConstants Condition="'$(KaleidoscopeJitSupport)'=='true'">$(DefineConstants);KALEIDOSCOPE_JIT_SUPPORT</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
-    <ProjectReference Include="..\Chapter3.5\Chapter3.5.csproj" />
     <ProjectReference Include="..\Chapter3\Chapter3.csproj" />
+    <ProjectReference Include="..\Chapter3.5\Chapter3.5.csproj" />
     <ProjectReference Include="..\Chapter4\Chapter4.csproj" />
-    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter5\Chapter5.csproj" />
     <ProjectReference Include="..\Chapter5\Chapter5.csproj" />
-    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter6\Chapter6.csproj" />
     <ProjectReference Include="..\Chapter6\Chapter6.csproj" />
     <ProjectReference Include="..\Chapter7.1\Chapter7.1.csproj" />
-    <ProjectReference Condition="'$(KaleidoscopeJitSupport)'=='true'" Include="..\Chapter7\Chapter7.csproj" />
     <ProjectReference Include="..\Chapter7\Chapter7.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
+    <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
   </ItemGroup>
 
   <ItemGroup>

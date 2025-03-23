@@ -12,6 +12,6 @@
       <PackageReference Include="MSTest.TestAdapter" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj" />
+    <ProjectReference Include="..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
   </ItemGroup>
 </Project>

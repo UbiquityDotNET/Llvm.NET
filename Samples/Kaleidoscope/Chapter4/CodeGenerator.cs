@@ -16,7 +16,7 @@ using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.JIT.OrcJITv2;
+using Ubiquity.NET.Llvm.OrcJITv2;
 using Ubiquity.NET.Llvm.Values;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;

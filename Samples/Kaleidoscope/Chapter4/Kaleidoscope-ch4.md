@@ -37,13 +37,13 @@ function names and the JIT tracker created for them is maintained. Additionally,
 function prototypes is retained to enable matching a function call to a previously defined function.
 Since the JIT support uses a module per function approach, lookups on the current module aren't sufficient.
 
-Th JIT engine use a [ThreadSafeContext](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2.ThreadSafeContext) and
-[ThreadSafeModule](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2.ThreadSafeModule) to manage callbacks nd materialization in
+Th JIT engine use a [ThreadSafeContext](xref:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext) and
+[ThreadSafeModule](xref:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule) to manage callbacks nd materialization in
 the JIT while supporting multiple threads of execution. Thus the context type for all modules and generation
 options needs the new type.
 
 As described previously the names of functions the module is generated for is held in a dictionary wiht the
-[ResourceTracker](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2.ResourceTracker) for that module to ensure it is 'removable'.
+[ResourceTracker](xref:Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker) for that module to ensure it is 'removable'.
 
 #### Generator initialization
 The initialization of the generator requires updating to support the new members.
@@ -52,7 +52,7 @@ The initialization of the generator requires updating to support the new members
 
 In particular, the static output writer is set for the jit to use whatever writer was provided. Normally,
 this is the system console but for testing it can be any standard `TextWriter`. Then the 
-[ThreadSafeContext](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2.ThreadSafeContext) is created for the generator and used to
+[ThreadSafeContext](xref:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext) is created for the generator and used to
 create the instruction builder.
 
 #### JIT Engine
@@ -61,7 +61,7 @@ OrcJIT engine.
 
 [!code-csharp[Kaleidoscope JIT](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeJIT.cs)]
 
-[LlJIT](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2.LlJIT) provides support for declaring functions that are external to the JIT
+[LlJIT](xref:Ubiquity.NET.Llvm.OrcJITv2.LlJIT) provides support for declaring functions that are external to the JIT
 that the JIT'd module code can call (Absolutes). For Kaleidoscope, two such functions are defined directly in
 KaleidoscopeJIT (putchard and printd), which is consistent with the same functions used in the official
 LLVM C++ tutorial. Thus, allowing sharing of samples between the two. These functions are used to provide
@@ -101,7 +101,7 @@ awareness of the JIT. This will help when adding truly lazy JIT compilation in [
 and AOT compilation in [Chapter 8](xref:Kaleidoscope-ch8)
 
 #### GetOrDeclareFunction()
-Next is to update the GetOrDeclareFunction() to handle the new support for [ThreadSafeContext](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2.ThreadSafeContext)
+Next is to update the GetOrDeclareFunction() to handle the new support for [ThreadSafeContext](xref:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext)
 and a snity check for the nullability of a module. 
 
 [!code-csharp[Main](CodeGenerator.cs#GetOrDeclareFunction)]

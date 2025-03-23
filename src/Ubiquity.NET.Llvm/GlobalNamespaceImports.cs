@@ -16,6 +16,7 @@ For an explanation of the benefits of the language feature see: https://www.hans
 */
 
 global using System;
+global using System.Buffers;
 global using System.Collections;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
@@ -27,6 +28,7 @@ global using System.Linq;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
 global using System.Text;
+global using System.Threading;
 
 global using Ubiquity.NET.InteropHelpers;
 global using Ubiquity.NET.Llvm.DebugInfo;

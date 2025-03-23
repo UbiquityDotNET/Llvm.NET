@@ -11,13 +11,13 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Ubiquity.NET.Llvm;
-using Ubiquity.NET.Llvm.JIT.OrcJITv2;
+using Ubiquity.NET.Llvm.OrcJITv2;
 
 namespace Kaleidoscope.Runtime
 {
     /// <summary>JIT engine for Kaleidoscope language</summary>
     /// <remarks>
-    /// This engine uses the <see cref="Ubiquity.NET.Llvm.JIT.OrcJITv2.LlJIT"/> engine to support lazy
+    /// This engine uses the <see cref="Ubiquity.NET.Llvm.OrcJITv2.LlJIT"/> engine to support lazy
     /// compilation of LLVM IR modules added to the JIT.
     /// </remarks>
     public sealed class KaleidoscopeJIT

@@ -11,7 +11,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.Llvm.JIT.OrcJITv2;
+using Ubiquity.NET.Llvm.OrcJITv2;
 
 namespace Ubiquity.NET.Llvm.Tests
 {

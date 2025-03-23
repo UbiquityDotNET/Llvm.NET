@@ -79,7 +79,11 @@
                 "exclude": [ "obj/**" ]
             }
         ],
-        "template": [ "default", "modern" ],
+        "template": [
+            "default",
+            "modern",
+            "templates/Ubiquity"
+        ],
         "globalMetadataFiles": [],
         "fileMetadataFiles": [],
         "postProcessors": [],

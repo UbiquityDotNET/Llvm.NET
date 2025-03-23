@@ -1,31 +1,22 @@
-## Namespaces
-This library is divided into several namespaces based on general use and purpose
+## Ubiquity.NET.LLvm
+The Ubiquity.NET.LLvm library provides a .NET compatible OO wrapper around an extended LLVM-C
+API. This allows use of the LLVM backend with a C# (or other .NET language) as the front-end.
 
-### [Ubiquity.NET.Llvm](xref:Ubiquity.NET.Llvm)
-This is the top level namespace containing the basic classes and types for initializing and
-shutting down the underlying LLVM library.
-
-### [Ubiquity.NET.Llvm.DebugInfo](xref:Ubiquity.NET.Llvm.DebugInfo)
-This namespace contains the Debug metadata support for defining debug source information in generated code.
-
-### [Ubiquity.NET.Llvm.Instructions](xref:Ubiquity.NET.Llvm.Instructions)
-This namespace contains the instruction classes and instruction builder for the LLVM IR instructions
-
-### [Ubiquity.NET.Llvm.JIT.OrcJITv2](xref:Ubiquity.NET.Llvm.JIT.OrcJITv2)
-This namespace contains the support for the LLVM Just-In-Time compilation engine.
-
-### [Ubiquity.NET.Llvm.Transforms.Legacy](xref:Ubiquity.NET.Llvm.Transforms.Legacy)
-This namespace contains the limited support for the legacy LLVM pass managers.
-
-### [Ubiquity.NET.Llvm.Types](xref:Ubiquity.NET.Llvm.Types)
-This namespace contains the support for defining and querying LLVM types
-
-### [Ubiquity.NET.Llvm.Values](xref:Ubiquity.NET.Llvm.Values)
-This namespace contains support for manipulating LLVM Values and the hierarchy of value object types
-
-### Ubiquity.NET.Llvm.Interop
->[!WARNING]
->This namespace contains the low level interop layer for the native LLVM C API surface.
->As a low level API that is NOT intended for consumption by third-parties this API is
->not documented nor guranteed stable. ***It may even be eliminated in the future without
-> any additional warning!!*** 
+In Version 20.1.0 a number of issues were resolved using newer .NET as well as in LLVM design
+itself that allows for a fundamentally new implementation. While there isn't a LOT of code
+that consumers have to change (See the samples and compare against older versions) there are
+important factors to consider in the new library:
+1) Ownership
+    - The previous variants of the library did NOT generally consider ownership carefully. It
+      routinely provided types that under some circumstances require disposal, and others did
+      not (Alias). This caused problems for the internning of projected types as the behavior
+      of the first instance interned was used. (Usually leading to leaks or strange crashes at
+      very unrelated times).
+3) No Internning of projected types
+    - Projected types are no longer internned, this dramatically increases performance and
+      reduces the complexity of maintenance of this library. Generally it should have little
+      impact as anything that produces an alias where the type might in other cases require
+      the owner to dispose it should now produce an interface.
+2) Assumption of Reference Equality
+    1) In the new library there is NO guarantee of reference equality for reference types.
+        - Such types MAY be value equal if they refer to the same underlying native instance.

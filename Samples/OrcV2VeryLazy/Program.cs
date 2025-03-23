@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
-using Ubiquity.NET.Llvm.JIT.OrcJITv2;
+using Ubiquity.NET.Llvm.OrcJITv2;
 
 internal class Program
 {

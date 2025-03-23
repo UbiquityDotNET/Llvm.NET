@@ -109,7 +109,7 @@ implement the for loop constructs for the language.
 
 The general idea is to transform the loops in Kaleidoscope such as this:
 
-```Kaliedoscope
+```Kaleidoscope
 extern putchard(char);
 def printstar(n)
   for i = 1, i < n, 1.0 in
