@@ -55,7 +55,7 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>SIMD 'packed' format, or other <see cref="Ubiquity.NET.Llvm.Types.IVectorType"/> implementation</summary>
         Vector = LLVMTypeKind.LLVMVectorTypeKind,
 
-        /// <summary><see cref="Ubiquity.NET.Llvm.Metadata.LlvmMetadata"/></summary>
+        /// <summary><see cref="Ubiquity.NET.Llvm.Metadata.IrMetadata"/></summary>
         Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
 
         /// <summary>Exception handler token</summary>

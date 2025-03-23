@@ -7,6 +7,7 @@
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>Pass manager for running passes against an entire module</summary>
+    [Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module instead")]
     public sealed class ModulePassManager
         : PassManager
     {

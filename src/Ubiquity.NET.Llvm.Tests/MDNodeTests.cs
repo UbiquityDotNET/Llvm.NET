@@ -99,12 +99,12 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNull( mdnode.Discriminator );
             Assert.IsNull( mdnode.Operands[ 8 ] );
 
-            // TODO: New operand [9] => DataLocation (LlvmMetadata)[DIVariable][DIExpression]
-            // TODO: New Operand [10] => Associated (LlvmMetadata)
-            // TODO: New Operand [11] => Allocated (LlvmMetadata)
-            // TODO: New Operand [12] => Rank (LlvmMetadata)[ConstantInt][DIExpression]
-            // TODO: New Operand [13] => Annotations (LlvmMetadata)[DINodeArray]
-            // TODO: New Operand [14] => Specification (LlvmMetadata)[DebugInfoType]
+            // TODO: New operand [9] => DataLocation (IrMetadata)[DIVariable][DIExpression]
+            // TODO: New Operand [10] => Associated (IrMetadata)
+            // TODO: New Operand [11] => Allocated (IrMetadata)
+            // TODO: New Operand [12] => Rank (IrMetadata)[ConstantInt][DIExpression]
+            // TODO: New Operand [13] => Annotations (IrMetadata)[DINodeArray]
+            // TODO: New Operand [14] => Specification (IrMetadata)[DebugInfoType]
             Assert.AreEqual( intType.DebugInfoType, mdnode.BaseType );
         }
     }

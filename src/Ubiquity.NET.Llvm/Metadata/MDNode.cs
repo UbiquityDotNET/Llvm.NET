@@ -6,18 +6,18 @@
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>LlvmMetadata node for LLVM IR Bitcode modules</summary>
+    /// <summary>IrMetadata node for LLVM IR Bitcode modules</summary>
     /// <remarks>
-    /// <para>LlvmMetadata nodes may be uniqued, or distinct. Temporary nodes with
-    /// support for <see cref="ReplaceAllUsesWith(LlvmMetadata)"/> may be used to
+    /// <para>IrMetadata nodes may be uniqued, or distinct. Temporary nodes with
+    /// support for <see cref="ReplaceAllUsesWith(IrMetadata)"/> may be used to
     /// defer uniqueing until the forward references are known.</para>
-    /// <para>There is limited support for <see cref="ReplaceAllUsesWith(LlvmMetadata)"/>
+    /// <para>There is limited support for <see cref="ReplaceAllUsesWith(IrMetadata)"/>
     /// at construction. At construction, if any operand is a temporary or otherwise unresolved
     /// uniqued node, the node itself is unresolved. As soon as all operands become resolved
-    /// the node will no longer support <see cref="ReplaceAllUsesWith(LlvmMetadata)"/></para>
+    /// the node will no longer support <see cref="ReplaceAllUsesWith(IrMetadata)"/></para>
     /// </remarks>
     public class MDNode
-        : LlvmMetadata
+        : IrMetadata
     {
         /// <summary>Gets the <see cref="Context"/> this node belongs to</summary>
         public IContext Context
@@ -57,7 +57,7 @@ namespace Ubiquity.NET.Llvm.Metadata
 
         /// <summary>Replace all uses of this node with a new node</summary>
         /// <param name="other">Node to replace this one with</param>
-        public override void ReplaceAllUsesWith( LlvmMetadata other )
+        public override void ReplaceAllUsesWith( IrMetadata other )
         {
             ArgumentNullException.ThrowIfNull( other );
 
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <exception cref="InvalidCastException">When the operand is not castable to <typeparamref name="T"/></exception>
         /// <exception cref="ArgumentOutOfRangeException">When the index is out of range for the operands of this node</exception>
         public T? GetOperand<T>( int index )
-            where T : LlvmMetadata
+            where T : IrMetadata
         {
             return Operands.GetOperand<T>( index );
         }
@@ -97,7 +97,7 @@ namespace Ubiquity.NET.Llvm.Metadata
 
         public TempMDNode Clone() {...}
 
-        public void ReplaceOperandWith(unsigned i, LlvmMetadata other) {...}
+        public void ReplaceOperandWith(unsigned i, IrMetadata other) {...}
         public static MDNode Concat(MDNode a, MDNode b) {...}
         public static MDNode Intersect(MDNode a, MDNode b) {...}
         public static MDNode GetMostGenericTBAA(MDNode a, MDNode b) {...}

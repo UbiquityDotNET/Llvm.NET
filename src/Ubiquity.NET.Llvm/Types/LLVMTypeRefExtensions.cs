@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.Types
                 // case TypeKind.Float128:
                 // case TypeKind.Label:
                 // case TypeKind.Integer: => IntegerType
-                // case TypeKind.LlvmMetadata:
+                // case TypeKind.IrMetadata:
                 // case TypeKind.X86MMX:
                 */
                 _ => new TypeRef( handle ),

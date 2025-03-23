@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     [SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Collection doesn't make sense for this type" )]
     public class TupleTypedArrayWrapper<T>
         : IReadOnlyList<T?>
-        where T : LlvmMetadata
+        where T : IrMetadata
     {
         /// <summary>Gets the underlying tuple for this wrapper</summary>
         public MDTuple? Tuple { get; }

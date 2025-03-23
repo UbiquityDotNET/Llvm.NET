@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Llvm.Metadata
             Operands = new OperandIterator( this );
         }
 
-        // private iterator for LlvmMetadata operands
+        // private iterator for IrMetadata operands
         private class OperandIterator
             : IList<MDNode>
         {

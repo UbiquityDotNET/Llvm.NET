@@ -157,10 +157,10 @@ namespace Ubiquity.NET.Llvm
         public void AddModuleFlag( ModuleFlagBehavior behavior, string name, uint value ) => Impl.AddModuleFlag( behavior, name, value );
 
         /// <inheritdoc/>
-        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value ) => Impl.AddModuleFlag( behavior, name, value );
+        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata value ) => Impl.AddModuleFlag( behavior, name, value );
 
         /// <inheritdoc/>
-        public void AddNamedMetadataOperand( string name, LlvmMetadata value ) => Impl.AddNamedMetadataOperand( name, value );
+        public void AddNamedMetadataOperand( string name, IrMetadata value ) => Impl.AddNamedMetadataOperand( name, value );
 
         /// <inheritdoc/>
         public void AddVersionIdentMetadata( string version ) => Impl.AddVersionIdentMetadata( version );

@@ -43,8 +43,8 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Sets metadata for this value</summary>
         /// <param name="kindID">Id id for the metadata</param>
-        /// <param name="node">LlvmMetadata wrapped as a value</param>
-        public void SetMetadata( uint kindID, LlvmMetadata node )
+        /// <param name="node">IrMetadata wrapped as a value</param>
+        public void SetMetadata( uint kindID, IrMetadata node )
         {
             ArgumentNullException.ThrowIfNull( node );
             LLVMGlobalSetMetadata( Handle, kindID, node.Handle );

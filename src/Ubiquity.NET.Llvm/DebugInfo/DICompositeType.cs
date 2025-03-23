@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         // public MDNode? /*DIVariable|DIExpression*/ Associated => GetOperand<MDNode>(10);
         // etc...
 
-        /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API LlvmMetadata handle</summary>
+        /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API IrMetadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>
         internal DICompositeType( LLVMMetadataRef handle )
             : base( handle )

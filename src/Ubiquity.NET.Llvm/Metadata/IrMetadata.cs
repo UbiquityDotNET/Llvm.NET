@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LlvmMetadata.cs" company="Ubiquity.NET Contributors">
+// <copyright file="IrMetadata.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm.Metadata
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "It's not a flags enum, get over it..." )]
     public enum MetadataKind
     {
-        /// <summary>LlvmMetadata string</summary>
+        /// <summary>IrMetadata string</summary>
         MDString = LibLLVMMetadataKind.LibLLVMMetadataKind_MDString,
 
         /// <summary>Constant Value as metadata</summary>
@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <summary>Distinct metadata place holder</summary>
         DistinctMDOperandPlaceholder = LibLLVMMetadataKind.LibLLVMMetadataKind_DistinctMDOperandPlaceholder,
 
-        /// <summary>LlvmMetadata tuple</summary>
+        /// <summary>IrMetadata tuple</summary>
         MDTuple = LibLLVMMetadataKind.LibLLVMMetadataKind_MDTuple,
 
         /// <summary>Debug info location</summary>
@@ -101,13 +101,13 @@ namespace Ubiquity.NET.Llvm.Metadata
         DIMacroFile = LibLLVMMetadataKind.LibLLVMMetadataKind_DIMacroFile,
     }
 
-    /// <summary>Root of the LLVM LlvmMetadata hierarchy</summary>
-    public abstract class LlvmMetadata
-        : IEquatable<LlvmMetadata>
+    /// <summary>Root of the LLVM IR Metadata hierarchy</summary>
+    public abstract class IrMetadata
+        : IEquatable<IrMetadata>
     {
         /// <summary>Replace all uses of this descriptor with another</summary>
         /// <param name="other">New descriptor to replace this one with</param>
-        public virtual void ReplaceAllUsesWith( LlvmMetadata other )
+        public virtual void ReplaceAllUsesWith( IrMetadata other )
         {
             ArgumentNullException.ThrowIfNull( other );
 
@@ -120,17 +120,17 @@ namespace Ubiquity.NET.Llvm.Metadata
         }
 
         /// <summary>Formats the metadata as a string</summary>
-        /// <returns>LlvmMetadata as a string</returns>
+        /// <returns>IrMetadata as a string</returns>
         public override string ToString( )
         {
             return Handle.IsNull ? string.Empty : MarshalManagedString();
         }
 
         /// <inheritdoc/>
-        public bool Equals(LlvmMetadata? other) => other is not null && Handle.Equals(other.Handle);
+        public bool Equals(IrMetadata? other) => other is not null && Handle.Equals(other.Handle);
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => Equals( obj as LlvmMetadata );
+        public override bool Equals(object? obj) => Equals( obj as IrMetadata );
 
         /// <inheritdoc/>
         public override int GetHashCode() => Handle.GetHashCode();
@@ -141,7 +141,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <summary>Gets the internal native handle</summary>
         protected internal LLVMMetadataRef Handle { get; }
 
-        private protected LlvmMetadata( LLVMMetadataRef handle )
+        private protected IrMetadata( LLVMMetadataRef handle )
         {
             Handle = handle;
         }

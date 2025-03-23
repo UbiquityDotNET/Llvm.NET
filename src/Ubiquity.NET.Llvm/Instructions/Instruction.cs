@@ -452,9 +452,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets a value indicating whether this instruction has metadata</summary>
         public bool HasMetadata => LLVMHasMetadata( Handle );
 
-        /// <summary>Gets or sets LlvmMetadata (as a value) for this instruction</summary>
-        /// <param name="kindKey">LlvmMetadata kind to get</param>
-        /// <returns>LlvmMetadata for the kind or <see langword="null"/> if not present</returns>
+        /// <summary>Gets or sets IrMetadata (as a value) for this instruction</summary>
+        /// <param name="kindKey">IrMetadata kind to get</param>
+        /// <returns>IrMetadata for the kind or <see langword="null"/> if not present</returns>
         public MetadataAsValue? this[ MetadataKind kindKey ]
         {
             get => FromHandle<MetadataAsValue>( LLVMGetMetadata( Handle, ( uint )kindKey ) );

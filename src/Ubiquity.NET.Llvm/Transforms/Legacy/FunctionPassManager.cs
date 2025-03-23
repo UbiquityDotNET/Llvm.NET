@@ -9,6 +9,7 @@ using Function = Ubiquity.NET.Llvm.Values.Function;
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>LLVM pass manager for functions</summary>
+    [Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Function instead")]
     public sealed class FunctionPassManager
         : PassManager
     {

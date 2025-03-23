@@ -51,7 +51,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the LLVM token type for this context</summary>
         public ITypeRef TokenType { get; }
 
-        /// <summary>Gets the LLVM LlvmMetadata type for this context</summary>
+        /// <summary>Gets the LLVM IrMetadata type for this context</summary>
         public ITypeRef MetadataType { get; }
 
         /// <summary>Gets the LLVM X86 80-bit floating point type for this context</summary>
@@ -365,7 +365,7 @@ namespace Ubiquity.NET.Llvm
         /// <exception cref="LlvmException">Any errors parsing the IR</exception>
         public Module ParseModule(LazyEncodedString src, LazyEncodedString name);
 
-        /// <summary>Gets non-zero LlvmMetadata kind ID for a given name</summary>
+        /// <summary>Gets non-zero IrMetadata kind ID for a given name</summary>
         /// <param name="name">name of the metadata kind</param>
         /// <returns>integral constant for the ID</returns>
         /// <remarks>

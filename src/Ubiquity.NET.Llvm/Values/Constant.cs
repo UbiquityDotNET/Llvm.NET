@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Values
                 : FromHandle<Constant>( LLVMConstNull( typeRef.GetTypeRef( ) ).ThrowIfInvalid( ) )!;
         }
 
-        /// <summary>Gets the constant as a LlvmMetadata node</summary>
+        /// <summary>Gets the constant as a IrMetadata node</summary>
         /// <returns>Constant value as a metadata constant</returns>
         public ConstantAsMetadata ToMetadata( )
             => (ConstantAsMetadata)LibLLVMConstantAsMetadata( Handle ).ThrowIfInvalid().CreateMetadata()!;

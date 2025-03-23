@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Contains a local Value as LlvmMetadata</summary>
+    /// <summary>Contains a local Value as IrMetadata</summary>
     public class LocalAsMetadata
         : ValueAsMetadata
     {

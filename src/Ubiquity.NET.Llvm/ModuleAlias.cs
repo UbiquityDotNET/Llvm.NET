@@ -503,7 +503,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AddModuleFlag(ModuleFlagBehavior behavior, string name, LlvmMetadata value)
+        public void AddModuleFlag(ModuleFlagBehavior behavior, string name, IrMetadata value)
         {
             behavior.ThrowIfNotDefined();
             ArgumentNullException.ThrowIfNull( value );
@@ -513,7 +513,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AddNamedMetadataOperand(string name, LlvmMetadata value)
+        public void AddNamedMetadataOperand(string name, IrMetadata value)
         {
             ArgumentNullException.ThrowIfNull( value );
             ArgumentException.ThrowIfNullOrWhiteSpace( name );

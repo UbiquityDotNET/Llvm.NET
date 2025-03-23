@@ -7,6 +7,7 @@
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>Common base class for pass managers</summary>
+    [Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module or Function instead")]
     public class PassManager
     {
         /// <summary>Add target specific analysis passes to this manager</summary>

@@ -8,9 +8,9 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Used to wrap an <see cref="Ubiquity.NET.Llvm.Values.Value"/> in the LlvmMetadata hierarchy</summary>
+    /// <summary>Used to wrap an <see cref="Ubiquity.NET.Llvm.Values.Value"/> in the IrMetadata hierarchy</summary>
     public class ValueAsMetadata
-        : LlvmMetadata
+        : IrMetadata
     {
         /// <summary>Gets the <see cref="Value"/> this node wraps</summary>
         public Value? Value => Value.FromHandle( LibLLVMValueAsMetadataGetValue( Handle ) );

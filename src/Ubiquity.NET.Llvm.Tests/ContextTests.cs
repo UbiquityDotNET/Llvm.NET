@@ -905,7 +905,7 @@ namespace Ubiquity.NET.Llvm.UT
         }
 
         [TestMethod]
-        [TestCategory( "LlvmMetadata String" )]
+        [TestCategory( "IrMetadata String" )]
         public void CreateMetadataStringTest( )
         {
             using var context = new Context();
@@ -916,7 +916,7 @@ namespace Ubiquity.NET.Llvm.UT
         }
 
         [TestMethod]
-        [TestCategory( "LlvmMetadata String" )]
+        [TestCategory( "IrMetadata String" )]
         public void CreateMetadataStringWithEmptyArgTest( )
         {
             using var context = new Context();
@@ -926,7 +926,7 @@ namespace Ubiquity.NET.Llvm.UT
         }
 
         [TestMethod]
-        [TestCategory( "LlvmMetadata String" )]
+        [TestCategory( "IrMetadata String" )]
         public void CreateMetadataStringWithNullArgTest( )
         {
             using var context = new Context();

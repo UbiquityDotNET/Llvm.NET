@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the <see cref="Context"/> this module belongs to</summary>
         public IContext Context { get; }
 
-        /// <summary>Gets the LlvmMetadata for module level flags</summary>
+        /// <summary>Gets the IrMetadata for module level flags</summary>
         public IReadOnlyDictionary<string, ModuleFlag> ModuleFlags { get; }
 
         /// <summary>Gets the Debug Compile units for this module</summary>
@@ -273,12 +273,12 @@ namespace Ubiquity.NET.Llvm
         /// <param name="behavior">ModuleHandle flag behavior for this flag</param>
         /// <param name="name">Name of the flag</param>
         /// <param name="value">Value of the flag</param>
-        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata value );
+        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata value );
 
         /// <summary>Adds operand value to named metadata</summary>
         /// <param name="name">Name of the metadata</param>
         /// <param name="value">operand value</param>
-        public void AddNamedMetadataOperand( string name, LlvmMetadata value );
+        public void AddNamedMetadataOperand( string name, IrMetadata value );
 
         /// <summary>Adds an llvm.ident metadata string to the module</summary>
         /// <param name="version">version information to place in the llvm.ident metadata</param>

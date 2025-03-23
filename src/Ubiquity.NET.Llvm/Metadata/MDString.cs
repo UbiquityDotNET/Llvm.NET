@@ -6,9 +6,9 @@
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Stores a string in LlvmMetadata</summary>
+    /// <summary>Stores a string in IrMetadata</summary>
     public class MDString
-        : LlvmMetadata
+        : IrMetadata
     {
         /// <summary>Gets the string from the metadata node</summary>
         /// <returns>String this node wraps</returns>

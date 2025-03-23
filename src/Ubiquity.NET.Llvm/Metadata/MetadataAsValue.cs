@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Llvm.Metadata
     public class MetadataAsValue
         : Value
     {
-        /// <summary>Gets a list of the operands for the LlvmMetadata</summary>
+        /// <summary>Gets a list of the operands for the IrMetadata</summary>
         public ValueOperandListCollection<Value> Operands { get; }
 
         internal MetadataAsValue( LLVMValueRef valueRef )
@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         }
 
         /*
-        //public static implicit operator LlvmMetadata( MetadataAsValue self )
+        //public static implicit operator IrMetadata( MetadataAsValue self )
         //{
         //    // TODO: Add support to get the metadata ref from the value...
         //    // e.g. call C++ MetadataAsValue.getMetadata()

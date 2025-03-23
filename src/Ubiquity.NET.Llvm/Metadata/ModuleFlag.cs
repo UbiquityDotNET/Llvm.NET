@@ -12,8 +12,8 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <summary>Initializes a new instance of the <see cref="ModuleFlag"/> class.</summary>
         /// <param name="behavior">Behavior for the flag</param>
         /// <param name="name">Name of the flag</param>
-        /// <param name="metadata">LlvmMetadata for the flag</param>
-        public ModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata metadata )
+        /// <param name="metadata">IrMetadata for the flag</param>
+        public ModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata metadata )
         {
             Behavior = behavior;
             Name = name;
@@ -26,8 +26,8 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <summary>Gets the name of flag</summary>
         public string Name { get; }
 
-        /// <summary>Gets the LlvmMetadata for this flag</summary>
-        public LlvmMetadata Metadata { get; }
+        /// <summary>Gets the IrMetadata for this flag</summary>
+        public IrMetadata Metadata { get; }
 
         internal ModuleFlag( MDNode node )
         {

@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <remarks>
         /// <para>Setting the debug type is only allowed when the debug type is null or <see cref="MDNode.IsTemporary"/>
         /// is <see langword="true"/>. If the debug type node is a temporary setting the type will replace all uses
-        /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(LlvmMetadata)"/></para>
+        /// of the temporary type automatically, via <see cref="MDNode.ReplaceAllUsesWith(IrMetadata)"/></para>
         /// <para>Since setting this property will replace all uses with (RAUW) the new value then setting this property
         /// with <see langword="null"/> is not allowed. However, until set this property will be <see  langword="null"/></para>
         /// </remarks>

@@ -1392,7 +1392,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             ValidateDIFileProperties( context, unit.File!, directory ?? string.Empty, fileName ?? string.Empty );
         }
 
-        private static void ValidateMetadataStringOperand( string operandName, string? expected, LlvmMetadata? md )
+        private static void ValidateMetadataStringOperand( string operandName, string? expected, IrMetadata? md )
         {
             // use IsNullOrEmpty here (NOT IsNullOrWhitespace or just 'is null' as LLVM is supposed
             // to transform an empty string to a null operand.

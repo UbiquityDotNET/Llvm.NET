@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Tuple of LlvmMetadata nodes</summary>
+    /// <summary>Tuple of IrMetadata nodes</summary>
     /// <remarks>
     /// This acts as a container of nodes in the metadata hierarchy
     /// </remarks>

@@ -58,7 +58,7 @@ namespace Ubiquity.NET.Llvm.Values
         public bool Contains( T? item ) => this.Any( n => n == item );
 
         /// <summary>Specialized indexer to get the element as a specific derived type</summary>
-        /// <typeparam name="TItem">Type of the element (must be derived from <see cref="LlvmMetadata"/></typeparam>
+        /// <typeparam name="TItem">Type of the element (must be derived from <see cref="IrMetadata"/></typeparam>
         /// <param name="i">index for the item</param>
         /// <returns>Item at the specified index</returns>
         /// <exception cref="ArgumentOutOfRangeException">index is out of range for the collection</exception>

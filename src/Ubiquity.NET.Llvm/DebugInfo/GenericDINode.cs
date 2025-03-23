@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
-    /// <summary>Generic tagged DWARF-like LlvmMetadata node</summary>
+    /// <summary>Generic tagged DWARF-like IrMetadata node</summary>
     public class GenericDINode
         : DINode
     {
