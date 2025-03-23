@@ -57,7 +57,7 @@ namespace Kaleidoscope.Chapter6
             ThreadSafeContext.Dispose();
         }
 
-        public OptionalValue<Value> Generate(IAstNode ast)
+        public Value? Generate(IAstNode ast)
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -102,7 +102,7 @@ namespace Kaleidoscope.Chapter6
                     var pFunc = (delegate* unmanaged[Cdecl]<double>)KlsJIT.Lookup(definition.Name);
                     retVal = ctx.CreateConstant( pFunc() );
                     resourceTracker.RemoveAll();
-                    return OptionalValue.Create<Value>( retVal );
+                    return retVal;
                 }
             }
             else
@@ -119,7 +119,7 @@ namespace Kaleidoscope.Chapter6
                 // Unknown if any future input will call the function so add it for lazy compilation.
                 // Native code is generated for the module automatically only when required.
                 FunctionModuleMap.Add( definition.Name, KlsJIT.Add( ThreadSafeContext, Module ) );
-                return OptionalValue.Create<Value>( function );
+                return function;
             }
         }
 

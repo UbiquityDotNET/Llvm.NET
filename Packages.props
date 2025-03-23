@@ -26,7 +26,7 @@
         <PackageReference Update="Antlr4" Version="4.6.6"/>
         <PackageReference Update="OpenSoftware.DgmlBuilder" Version="2.1.0" />
         <PackageReference Update="CommandLineParser" Version="2.9.1" />
-        <PackageReference Update="System.Reactive" Version="6.0.1" />
+        <PackageReference Update="System.Linq.Async" Version="6.0.1"/>
 
         <!-- docfx.console is deprecated, TODO: Convert everything to use docfx -->
         <PackageReference Update="docfx.console" Version="2.58.5" />

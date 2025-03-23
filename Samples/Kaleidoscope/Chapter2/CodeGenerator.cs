@@ -16,9 +16,9 @@ namespace Kaleidoscope.Chapter2
         {
         }
 
-        public OptionalValue<IAstNode> Generate( IAstNode ast )
+        public IAstNode? Generate( IAstNode ast )
         {
-            return OptionalValue.Create( ast );
+            return ast;
         }
     }
 }

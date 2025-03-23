@@ -5,6 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>kls3</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,4 +13,5 @@
     <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
   </ItemGroup>
+
 </Project>

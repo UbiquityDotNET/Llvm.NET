@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
@@ -30,7 +31,7 @@ namespace Kaleidoscope.Tests
 
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in these test]" )]
-        public void Chapter2( )
+        public async Task Chapter2( )
         {
             // simple basic test to ensure the well-known good input script
             // parses without errors.
@@ -42,7 +43,7 @@ namespace Kaleidoscope.Tests
                         select parser.Parse( stmt );
 
             // Read, Parse, Print loop
-            foreach( IAstNode node in nodes )
+            await foreach( IAstNode node in nodes )
             {
                 TestContext.WriteLine( "PARSED: {0}", node );
             }
@@ -50,61 +51,61 @@ namespace Kaleidoscope.Tests
 
         [TestMethod]
         [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
-        public void Chapter3()
+        public async Task Chapter3()
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
-            RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3.CodeGenerator( state) );
+            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3.CodeGenerator( state) );
         }
 
         [TestMethod]
         [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
-        public void Chapter3_5()
+        public async Task Chapter3_5()
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
-            RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3_5.CodeGenerator( state) );
+            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3_5.CodeGenerator( state) );
         }
 
         [TestMethod]
         [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
-        public void Chapter4()
+        public async Task Chapter4()
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
-            RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter4.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter4.CodeGenerator( state, writer ) );
         }
 
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
-        public void Chapter5( )
+        public async Task Chapter5( )
         {
             using var input = File.OpenText( "ControlFlow.kls" );
-            RunBasicReplLoop( LanguageLevel.ControlFlow, input, ( state, writer ) => new Chapter5.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.ControlFlow, input, ( state, writer ) => new Chapter5.CodeGenerator( state, writer ) );
         }
 
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
-        public void Chapter6( )
+        public async Task Chapter6( )
         {
             using var input = File.OpenText( "mandel.kls" );
-            RunBasicReplLoop( LanguageLevel.UserDefinedOperators, input, ( state, writer ) => new Chapter6.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.UserDefinedOperators, input, ( state, writer ) => new Chapter6.CodeGenerator( state, writer ) );
         }
 
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
-        public void Chapter7( )
+        public async Task Chapter7( )
         {
             using var input = File.OpenText( "fibi.kls" );
-            RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, writer ) );
         }
 
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
-        public void Chapter71( )
+        public async Task Chapter71( )
         {
             using var input = File.OpenText( "fibi.kls" );
-            RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter71.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter71.CodeGenerator( state, writer ) );
         }
 
-        private void RunBasicReplLoop( LanguageLevel level
+        private async Task RunBasicReplLoop( LanguageLevel level
                                      , TextReader input
                                      , Func<DynamicRuntimeState, TextWriter, IKaleidoscopeCodeGenerator<Value>> generatorFactory
                                      )
@@ -117,19 +118,16 @@ namespace Kaleidoscope.Tests
             var replSeq = from stmt in input.ToStatements( _=>{ } )
                           select parser.Parse( stmt );
 
-            foreach( IAstNode node in replSeq )
+            await foreach( IAstNode node in replSeq )
             {
                 var errors = node.CollectErrors();
                 Assert.AreEqual( 0, errors.Count );
 
                 var result = generator.Generate( node );
 
-                // Validate guarantees of OptionalValue<T>
-                Assert.IsTrue( ( result.HasValue && result.Value is not null) || ( !result.HasValue && result.Value is null ) );
-
-                if( result.HasValue )
+                if( result is not null )
                 {
-                    switch( result.Value )
+                    switch( result )
                     {
                     case ConstantFP value:
                         TestContext.WriteLine( "Evaluated to {0}", value.Value );
@@ -140,7 +138,7 @@ namespace Kaleidoscope.Tests
                         break;
 
                     default:
-                        TestContext.WriteLine( result.Value!.ToString( ) );
+                        TestContext.WriteLine( result.ToString( ) );
                         break;
                     }
                 }

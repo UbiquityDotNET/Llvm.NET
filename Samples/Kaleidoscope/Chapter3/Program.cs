@@ -6,6 +6,8 @@
 
 using System;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Ubiquity.NET.Llvm;
 
@@ -18,9 +20,18 @@ namespace Kaleidoscope.Chapter3
         #region Main
 
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 3)</summary>
-        public static void Main( )
+        public static async Task Main( )
         {
             var repl = new ReplEngine( );
+
+            using CancellationTokenSource cts = new();
+            Console.CancelKeyPress += ( _, e ) =>
+            {
+                e.Cancel = true;
+                cts.Cancel();
+                Console.WriteLine();
+                Console.WriteLine("good bye!");
+            };
 
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {repl.LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
@@ -28,7 +39,7 @@ namespace Kaleidoscope.Chapter3
 
             using var libLlvm = InitializeLLVM( );
             libLlvm.RegisterTarget( CodeGenTarget.Native );
-            repl.Run( Console.In );
+            await repl.Run( Console.In, cts.Token );
         }
         #endregion
     }

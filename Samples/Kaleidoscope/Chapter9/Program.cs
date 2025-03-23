@@ -59,12 +59,12 @@ namespace Kaleidoscope.Chapter9
             var ast = parser.Parse( rdr );
             if( !errorLogger.CheckAndShowParseErrors( ast ) )
             {
-                (bool hasValue, Module? module) = generator.Generate( ast );
-                if( !hasValue )
+                Module? module = generator.Generate( ast );
+                if( module is null )
                 {
                     Console.Error.WriteLine( "No module generated" );
                 }
-                else if( !module!.Verify( out string errMsg ) )
+                else if( !module.Verify( out string errMsg ) )
                 {
                     Console.Error.WriteLine( errMsg );
                 }

@@ -33,6 +33,6 @@ namespace Kaleidoscope.Runtime
         /// callback to the application that will then generate the code for the function "on the fly". In this case,
         /// only a top level expression is immediately generated/executed to produce a value.</para>
         /// </remarks>
-        OptionalValue<TResult> Generate( IAstNode ast );
+        TResult? Generate( IAstNode ast );
     }
 }

@@ -6,13 +6,16 @@
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj" />
-      <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
+        <PackageReference Include="System.Linq.Async" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\src\Ubiquity.NET.Llvm.JIT\Ubiquity.NET.Llvm.JIT.csproj" />
+        <ProjectReference Include="..\Kaleidoscope.Parser\Kaleidoscope.Grammar.csproj" />
     </ItemGroup>
 </Project>

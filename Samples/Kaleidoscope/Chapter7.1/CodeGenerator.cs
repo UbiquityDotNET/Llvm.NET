@@ -67,7 +67,7 @@ namespace Kaleidoscope.Chapter71
         #endregion
 
         #region Generate
-        public OptionalValue<Value> Generate(IAstNode ast)
+        public Value? Generate(IAstNode ast)
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -109,7 +109,7 @@ namespace Kaleidoscope.Chapter71
                     var pFunc = (delegate* unmanaged[Cdecl]<double>)KlsJIT.Lookup(definition.Name);
                     retVal = ctx.CreateConstant( pFunc() );
                     resourceTracker.RemoveAll();
-                    return OptionalValue.Create<Value>( retVal );
+                    return retVal;
                 }
             }
             else

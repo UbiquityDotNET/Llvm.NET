@@ -59,7 +59,7 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region Generate
-        public OptionalValue<Module> Generate( IAstNode ast )
+        public Module? Generate( IAstNode ast )
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -83,7 +83,7 @@ namespace Kaleidoscope.Chapter8
                 errInfo.ThrowIfFailed();
             }
 
-            return OptionalValue.Create( Module );
+            return Module;
         }
         #endregion
 

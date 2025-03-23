@@ -49,7 +49,7 @@ namespace Kaleidoscope.Chapter3_5
             Context.Dispose();
         }
 
-        public OptionalValue<Value> Generate(IAstNode ast)
+        public Value? Generate(IAstNode ast)
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -63,12 +63,7 @@ namespace Kaleidoscope.Chapter3_5
             }
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
-            if(!function.ParentModule.Verify(out string msg))
-            {
-                throw new CodeGeneratorException(msg);
-            }
-
-            return OptionalValue.Create<Value>( function );
+            return function.ParentModule.Verify(out string msg) ? (Value)function : throw new CodeGeneratorException(msg);
         }
 
         public override Value? Visit(ConstantExpression constant)

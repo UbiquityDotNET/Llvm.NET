@@ -6,6 +6,8 @@
 
 using System;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Ubiquity.NET.Llvm;
 
@@ -16,22 +18,26 @@ namespace Kaleidoscope.Chapter5
     public static class Program
     {
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 5)</summary>
-        public static void Main( )
+        public static async Task Main( )
         {
             var repl = new ReplEngine( );
+
+            using CancellationTokenSource cts = new();
+            Console.CancelKeyPress += ( _, e ) =>
+            {
+                e.Cancel = true;
+                cts.Cancel();
+                Console.WriteLine();
+                Console.WriteLine("good bye!");
+            };
 
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {repl.LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
-            // On Windows the exit keyboard sequence includes the <enter> key press.
-            // Any other platform it's still less then obvious, so provide some help.
-            Console.WriteLine($"    Use Ctrl-Z{(OperatingSystem.IsWindows() ? " (followed by <Enter>)" : string.Empty)} to exit this application.");
-
             using var libLlvm = InitializeLLVM( );
             libLlvm.RegisterTarget( CodeGenTarget.Native );
-
-            repl.Run( Console.In );
+            await repl.Run( Console.In, cts.Token );
         }
     }
 }

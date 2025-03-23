@@ -7,6 +7,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
@@ -28,7 +30,12 @@ namespace Kaleidoscope.Runtime
 
         public abstract void ShowResults( T resultValue );
 
-        public void Run( TextReader input, DiagnosticRepresentations diagnostics = DiagnosticRepresentations.None )
+        public async Task Run( TextReader input, CancellationToken cancelToken = default)
+        {
+            await Run(input, DiagnosticRepresentations.None, cancelToken);
+        }
+
+        public async Task Run( TextReader input, DiagnosticRepresentations diagnostics, CancellationToken cancelToken = default)
         {
             var parser = new Parser( LanguageFeatureLevel, diagnostics );
             using var generator = CreateGenerator( parser.GlobalState );
@@ -36,19 +43,19 @@ namespace Kaleidoscope.Runtime
             ShowPrompt( ReadyState.StartExpression );
 
             // Create sequence of parsed AST RootNodes to feed the REPL loop
-            var replSeq = from stmt in input.ToStatements( ShowPrompt )
+            var replSeq = from stmt in input.ToStatements( ShowPrompt, cancelToken: cancelToken )
                           let node = parser.Parse( stmt )
                           where !ErrorLogger.CheckAndShowParseErrors( node )
                           select node;
 
-            foreach( IAstNode node in replSeq )
+            await foreach( IAstNode node in replSeq.WithCancellation(cancelToken) )
             {
                 try
                 {
                     var result = generator.Generate( node );
-                    if( result.HasValue )
+                    if( result is not null )
                     {
-                        ShowResults( result.Value! );
+                        ShowResults( result );
                     }
                 }
                 catch( CodeGeneratorException ex )

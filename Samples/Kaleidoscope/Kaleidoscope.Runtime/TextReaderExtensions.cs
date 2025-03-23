@@ -6,23 +6,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 namespace Kaleidoscope.Runtime
 {
     /// <summary>Utility class to provide extensions for REPL Loop</summary>
     public static class TextReaderExtensions
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "StyleCop.CSharp.LayoutRules", "SA1500:Braces for multi-line statements should not share line", Justification = "Do/While Loop" )]
-        public static IEnumerable<string> ToLines( this TextReader input )
+        [SuppressMessage( "StyleCop.CSharp.LayoutRules", "SA1500:Braces for multi-line statements should not share line", Justification = "Do/While Loop" )]
+        public static async IAsyncEnumerable<string> ToLinesAsync( this TextReader input, [EnumeratorCancellation] CancellationToken cancelToken = default )
         {
             ArgumentNullException.ThrowIfNull( input );
 
             string? line;
             do
             {
-                line = input.ReadLine( );
+                line = await input.ReadLineAsync(cancelToken);
                 if( line != null )
                 {
                     yield return line;
@@ -34,13 +37,22 @@ namespace Kaleidoscope.Runtime
         /// <param name="reader">Input reader</param>
         /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
         /// <returns>Observable sequence of complete statements ready for parsing</returns>
-        public static IEnumerable<string> ToStatements( this TextReader reader, Action<ReadyState>? prompt )
+        public static async IAsyncEnumerable<string> ToStatements(
+            this TextReader reader,
+            Action<ReadyState>? prompt,
+            [EnumeratorCancellation] CancellationToken cancelToken = default
+            )
         {
             var stateManager = new ReadyStateManager( prompt );
             var bldr = new StringBuilder( );
-            foreach( string line in reader.ToLines( ) )
+            await foreach( string line in reader.ToLinesAsync( cancelToken) )
             {
-                var partials = SplitLines(bldr, line);
+                if(cancelToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                var partials = SplitLines(bldr, line, cancelToken);
                 foreach( var (txt, isPartial) in partials )
                 {
                     stateManager.UpdateState( txt, isPartial );
@@ -54,7 +66,11 @@ namespace Kaleidoscope.Runtime
             }
         }
 
-        private static IEnumerable<(string Txt, bool IsPartial)> SplitLines( StringBuilder buffer, string line )
+        private static IEnumerable<(string Txt, bool IsPartial)> SplitLines(
+            StringBuilder buffer,
+            string line,
+            CancellationToken cancelToken = default
+            )
         {
             string[ ] statements = line.Split( ';' );
 
@@ -70,6 +86,11 @@ namespace Kaleidoscope.Runtime
 
             for( int i = 0; i < completeStatements; ++i )
             {
+                if (cancelToken.IsCancellationRequested)
+                {
+                    yield break;
+                }
+
                 string statement = statements[ i ];
                 buffer.Append( statement );
                 buffer.Append( ';' );
