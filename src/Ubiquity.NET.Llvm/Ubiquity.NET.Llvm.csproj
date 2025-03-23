@@ -38,10 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="NugetPkg\build\Ubiquity.NET.Llvm.props" PackagePath="build" />
-  </ItemGroup>
-
-  <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>

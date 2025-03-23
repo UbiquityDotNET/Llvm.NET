@@ -130,6 +130,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "namespaces", "namespaces", "{7E4852CD-E433-41AB-8EAC-08C161E5FE61}"
 	ProjectSection(SolutionItems) = preProject
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.DebugInfo.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.DebugInfo.md
+		Ubiquity.NET.Llvm.Instructions.md = Ubiquity.NET.Llvm.Instructions.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.md
 	EndProjectSection
 EndProject

@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             _ => Predicate.BadFcmpPredicate,
         };
 
-        /* TODO: Predicate {set;} */
+        /* TODO: Predicate {set;} // new LibLLVM API, based on current Get*/
 
         internal Cmp( LLVMValueRef valueRef )
             : base( valueRef )
