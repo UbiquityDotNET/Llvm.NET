@@ -1,4 +1,4 @@
-![Logo](../DragonSharp.png)
+![Logo](DragonSharp.png)
 
 # Ubiquity.NET.Llvm
 Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 

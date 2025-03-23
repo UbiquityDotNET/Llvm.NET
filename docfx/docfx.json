@@ -7,19 +7,29 @@
                         "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj",
                         "src/Ubiquity.NET.Llvm.JIT/Ubiquity.NET.Llvm.JIT.csproj"
                     ],
-                    "src": "../.."
+                    "src": ".."
                 }
             ],
-            "dest": "api",
+            "dest": "current/api",
             "categoryLayout": "Nested",
             "namespaceLayout": "Nested",
             "memberLayout": "SeparatePages",
-            "enumSortOrder": "DeclaringOrder",
+            "enumSortOrder": "DeclaringOrder"
         }
     ],
     "build": {
-        "xref": [ "./llvm-xref.yml", "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json" ],
+        "xref": [
+            "versions-xref.yml",
+            "current/llvm-xref.yml",
+            "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json"
+        ],
         "content": [
+            {
+                "files": [
+                    "toc.yml",
+                    "index.md"
+                ]
+            },
             {
                 "files": [
                     "toc.yml",
@@ -30,16 +40,17 @@
                     "articles/**.md",
                     "articles/**.yml"
                 ],
-                "exclude": [ "obj/**" ]
+                "src": "current",
+                "dest": "current"
             },
             {
                 "files": [
                     "Kaleidoscope/**/Kaleidoscope*.md",
-                    "CodeGenWithDebugInfo/codegeneration.md",
-                    "OrcV2VeryLazy/OrcV2VeryLazy.md"
+                    "CodeGenWithDebugInfo/**/codegeneration.md",
+                    "OrcV2VeryLazy/**/OrcV2VeryLazy.md"
                 ],
-                "src": "../../samples",
-                "dest": "articles/samples"
+                "src": "../Samples",
+                "dest": "current/articles/Samples"
             }
         ],
         "resource": [
@@ -49,24 +60,26 @@
                     "DragonSharp48x48.png",
                     "DragonSharp.png"
                 ],
-                "src": ".."
+                "src": "."
             },
             {
                 "files": [
-                    "/samples/**/*.svg"
+                    "/Samples/**/*.svg"
                 ],
-                "dest": "articles",
-                "src": "../.."
+                "src": "..",
+                "dest": "current/articles"
             }
         ],
         "overwrite": [
             {
-                "files": [ "apidoc/**.md" ],
+                "files": [
+                    "**/apidoc/**.md",
+                    "current/namespaces/**.md"
+                ],
                 "exclude": [ "obj/**" ]
             }
         ],
         "template": [ "default", "modern" ],
-        "dest": "../../BuildOutput/docs/current",
         "globalMetadataFiles": [],
         "fileMetadataFiles": [],
         "postProcessors": [],

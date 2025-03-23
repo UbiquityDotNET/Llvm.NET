@@ -24,12 +24,16 @@ namespace Ubiquity.NET.InteropHelpers
         /// <inheritdoc/>
         public int CompareTo(size_t other) => Size.CompareTo(other.Size);
 
+        /// <inheritdoc/>
         public static bool operator >(size_t left, size_t right) => left.Size < right.Size;
 
+        /// <inheritdoc/>
         public static bool operator >=(size_t left, size_t right) => left.Size >= right.Size;
 
+        /// <inheritdoc/>
         public static bool operator <(size_t left, size_t right) => left.Size < right.Size;
 
+        /// <inheritdoc/>
         public static bool operator <=(size_t left, size_t right) => left.Size <= right.Size;
 
         /// <summary>Converts a size to an int</summary>
@@ -58,7 +62,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromUInt32(UInt32 size) => new( (nuint)size );
+        public static size_t FromUInt32(UInt32 size) => new( size );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.UInt64"/></summary>
         /// <param name="size">value to convert</param>

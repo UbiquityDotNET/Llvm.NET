@@ -87,21 +87,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrcV2VeryLazy", "..\Samples
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx", "docfx", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
+		..\docfx\docfx.json = ..\docfx\docfx.json
+		..\docfx\DragonSharp.png = ..\docfx\DragonSharp.png
+		..\docfx\DragonSharp48x48.png = ..\docfx\DragonSharp48x48.png
+		..\docfx\favicon.ico = ..\docfx\favicon.ico
+		..\docfx\index.md = ..\docfx\index.md
 		..\docfx\ReadMe.md = ..\docfx\ReadMe.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "index", "index", "{52001414-3472-479D-84A3-D2875E6CA279}"
-	ProjectSection(SolutionItems) = preProject
-		..\docfx\index\docfx.json = ..\docfx\index\docfx.json
-		..\docfx\index\index.md = ..\docfx\index\index.md
-		..\docfx\index\ReadMe.md = ..\docfx\index\ReadMe.md
-		..\docfx\index\toc.yml = ..\docfx\index\toc.yml
-		..\docfx\index\versions-xref.yml = ..\docfx\index\versions-xref.yml
+		..\docfx\toc.yml = ..\docfx\toc.yml
+		..\docfx\versions-xref.yml = ..\docfx\versions-xref.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "current", "current", "{C2FA0515-206D-4A3C-B8CD-8DC89C0186FE}"
 	ProjectSection(SolutionItems) = preProject
-		..\docfx\current\docfx.json = ..\docfx\current\docfx.json
 		..\docfx\current\index.md = ..\docfx\current\index.md
 		..\docfx\current\llvm-xref.yml = ..\docfx\current\llvm-xref.yml
 		..\docfx\current\ReleaseNotes.md = ..\docfx\current\ReleaseNotes.md
@@ -128,6 +125,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InternalDetails", "Internal
 		..\docfx\current\articles\InternalDetails\marshal-LLVMBool.md = ..\docfx\current\articles\InternalDetails\marshal-LLVMBool.md
 		..\docfx\current\articles\InternalDetails\marshal-string.md = ..\docfx\current\articles\InternalDetails\marshal-string.md
 		..\docfx\current\articles\InternalDetails\toc.md = ..\docfx\current\articles\InternalDetails\toc.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "namespaces", "namespaces", "{7E4852CD-E433-41AB-8EAC-08C161E5FE61}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\current\namespaces\Ubiquity.NET.Llvm.DebugInfo.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.DebugInfo.md
+		..\docfx\current\namespaces\Ubiquity.NET.Llvm.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{1C1E173D-01DA-48AC-B2AB-FD464AAEB7C0}"
+	ProjectSection(SolutionItems) = preProject
+		..\docfx\current\api\index.md = ..\docfx\current\api\index.md
 	EndProjectSection
 EndProject
 Global
@@ -248,11 +256,12 @@ Global
 		{16142073-B70D-48B3-B63B-23211F2C7CFE} = {62418FA2-81F2-475F-B735-7B108EBE960D}
 		{E889787A-8DC4-4CA9-ABD0-FF6646B37BA9} = {5348150E-6276-4A5F-99FD-A7936E75D206}
 		{3D534AD9-820D-4ABC-95BD-DCA0DF6C05E1} = {2204ABFA-65AA-4506-8FB0-D742B583246A}
-		{52001414-3472-479D-84A3-D2875E6CA279} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{C2FA0515-206D-4A3C-B8CD-8DC89C0186FE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{93AFFAD1-2564-4A81-816B-E59AEC90174C} = {C2FA0515-206D-4A3C-B8CD-8DC89C0186FE}
 		{985A8790-EACA-4CB4-BC2E-A6282A29974D} = {93AFFAD1-2564-4A81-816B-E59AEC90174C}
 		{9AD040CF-D795-411C-91F4-A76E8E502EBD} = {93AFFAD1-2564-4A81-816B-E59AEC90174C}
+		{7E4852CD-E433-41AB-8EAC-08C161E5FE61} = {C2FA0515-206D-4A3C-B8CD-8DC89C0186FE}
+		{1C1E173D-01DA-48AC-B2AB-FD464AAEB7C0} = {C2FA0515-206D-4A3C-B8CD-8DC89C0186FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF28D186-279B-4E91-9BE8-644B6E018432}

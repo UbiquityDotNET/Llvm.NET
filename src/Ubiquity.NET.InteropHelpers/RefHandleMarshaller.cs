@@ -18,7 +18,7 @@ namespace Ubiquity.NET.InteropHelpers
     /// the documentation for source generator custom marshallers (especially for arrays)
     /// is so poor that it wasn't plausible to implement this support as a custom marshaller.
     /// Instead these APIs are declared to simplify and control the marshalling as safely
-    /// as possible. Callers must use one of the overloads to `WithManagedArrayAsNativePointer`
+    /// as possible. Callers must use one of the overloads to <see cref="O:WithManagedArrayAsNativePointer"/>
     /// to allocate, build, call an operation delegate, and then release the native array.
     /// That is, the hard and tedious work of allocating, copying the managed array and pinning
     /// the array for native consumption is ALL handled in the methods provided by this class.

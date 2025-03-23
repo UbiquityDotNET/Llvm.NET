@@ -27,7 +27,7 @@ namespace Ubiquity.NET.InteropHelpers
     /// this assumes that the native code MIGHT dispose of this instance and that callers
     /// could otherwise account for the ref count increase to hold the instance alive. That
     /// is, by holding a GCHandle to self, with an AddRef'd handle the instance would live
-    /// until the app is terminated! Thus applications suing this MUST understand the native
+    /// until the app is terminated! Thus applications using this MUST understand the native
     /// code use and account for the disposable of any instances with this as a member.</para>
     /// </remarks>
     public sealed class SafeGCHandle

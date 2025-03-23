@@ -41,6 +41,13 @@ namespace Ubiquity.NET.InteropHelpers
         /// </ImplementationNotes>
         public static Encoding Encoding { get; set; } = Encoding.UTF8;
 
+        /// <summary>Creates a ReadOnlySpan from a null terminated native string</summary>
+        /// <param name="nativePtr">The null terminated string</param>
+        /// <returns>ReadOnlySpan for the string</returns>
+        /// <remarks>
+        /// This does NOT perform any encoding or decoding, just gets the span of the
+        /// underlying native bytes.
+        /// </remarks>
         public static ReadOnlySpan<byte> ReadOnlySpanFromNullTerminated(byte* nativePtr)
         {
             return MemoryMarshal.CreateReadOnlySpanFromNullTerminated( nativePtr );

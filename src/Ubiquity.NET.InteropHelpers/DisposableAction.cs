@@ -23,7 +23,7 @@ namespace Ubiquity.NET.InteropHelpers
             OnDispose = onDispose ?? throw new ArgumentNullException( nameof( onDispose ) );
         }
 
-        /// <summary>Runs the action provided in the constructor (<see cref="Ubiquity.NET.Llvm.Interop.DisposableAction(System.Action)" /></summary>
+        /// <summary>Runs the action provided in the constructor (<see cref="DisposableAction(System.Action)" /></summary>
         public void Dispose()
         {
             OnDispose();

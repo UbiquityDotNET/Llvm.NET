@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// use of this tends to have a "code smell" and is usually avoided
+// don't include this unless absolutely needed. If not needed, this
+// should be removed.
+#if SUPPORT_WRITE_ONCE
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -130,3 +134,4 @@ namespace Ubiquity.NET.InteropHelpers
         public static bool operator !=(WriteOnce<T> left, WriteOnce<T> right) => !(left == right);
     }
 }
+#endif

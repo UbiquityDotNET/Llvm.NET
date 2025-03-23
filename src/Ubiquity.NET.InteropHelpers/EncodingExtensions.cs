@@ -22,7 +22,7 @@ namespace Ubiquity.NET.InteropHelpers
     /// </remarks>
     public static class EncodingExtensions
     {
-        /// <summary>Provides conversion of the span of bytes to managed code using the <see cref="NativeCodeExecutionEncoding"/></summary>
+        /// <summary>Provides conversion of a span of bytes to managed code</summary>
         /// <param name="self">The encoding to use for conversion</param>
         /// <param name="span">Input span to convert with or without a null terminator.</param>
         /// <returns>string containing the decoded characters from the input <paramref name="span"/></returns>
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.InteropHelpers
                  : self.GetString( span[^1] == 0 ? span[..^1] : span); // drop the null terminator if there is one.
         }
 
-        /// <summary>Provides conversion of the native bytes to managed code using the <see cref="NativeCodeExecutionEncoding"/></summary>
+        /// <summary>Provides conversion of the native bytes to managed code</summary>
         /// <param name="self">The encoding to use for conversion</param>
         /// <param name="nativeStringPtr">pointer to the native code string to convert</param>
         /// <returns>string containing the decoded characters from the input <paramref name="nativeStringPtr"/></returns>

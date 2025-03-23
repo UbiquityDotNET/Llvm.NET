@@ -24,29 +24,33 @@ internal class Program
         jit.AddModule(jit.MainLib, mainMod);
         SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
+        using var internedFooBodyName = jit.MangleAndIntern(FooBodySymbolName);
         List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> fooSym = [
-            new(jit.MangleAndIntern(FooBodySymbolName), flags),
+            new(internedFooBodyName, flags),
         ];
 
-        List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> barSym = [
-            new(jit.MangleAndIntern(BarBodySymbolName), flags),
-        ];
-
-        // Just use the local function, it captures what is needed and all data is
-        // disposed from this instance. Normally, the materialization actually needs
-        // to retain data (Commonly the AST of some function) that is held in a type
-        // that implements IDisposable. But that is not needed in this sample.
+        // ownership of this Materialization Unit (MU) is "moved" to the JITDyLib in the
+        // call to Define. Applying a "using" ensures it is released even if an exception
+        // occurs that prevents completion of the transfer. When transfer completes the
+        // MU is marked as disposed but a call to Dispose() is a safe NOP. Thus, this handles
+        // all conditions consistently
         using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
-        using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
         jit.MainLib.Define(fooMu);
+
+        using var internedBarBodyName = jit.MangleAndIntern(BarBodySymbolName);
+        List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> barSym = [
+            new(internedBarBodyName, flags),
+        ];
+
+        using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
         jit.MainLib.Define(barMu);
 
         using var ism = new LocalIndirectStubsManager(triple);
         using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
 
         List<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> reexports =[
-            new(jit.MangleAndIntern("foo"), new(jit.MangleAndIntern(FooBodySymbolName), flags)),
-            new(jit.MangleAndIntern("bar"), new(jit.MangleAndIntern(BarBodySymbolName), flags)),
+            new(jit.MangleAndIntern("foo"), new(internedFooBodyName, flags)),
+            new(jit.MangleAndIntern("bar"), new(internedBarBodyName, flags)),
         ];
 
         using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
