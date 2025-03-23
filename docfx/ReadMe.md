@@ -1,14 +1,14 @@
 # Documentation
-DocFX is used to generate the documentation for this library. The template used is
-a customized form of the 'statictoc' template to support a "dark" theme and a few
-other adjustments. Sadly, the `modern` template requires a dynamic back end wich
-eliminates mots OSS use (as they generally use `gh-pages` from GitHub - like this
-repo does.) There are two different "sites" built.
-1) The main landing site (index) for the project
-    1) This is an intentionally small site that provides the main landing page and
-       links to older docs versions along with the current version
-2) The actual documentation for the current version
-    1) This is the real "meat" of the docs
+DocFX is used to generate the documentation for this library. There is confusion on
+what the statictoc template means and requires. It is ***LITERALLY*** that the Table
+of Contents (TOC) is staticly generated. So that the entire site is servable from a
+file path. This ***DOES NOT*** mean that the default+modern template is unusable for
+hosted static site scenarios like 'gh-pages' in GitHub. It only means that the TOC
+support will ***require*** a hosted site to provide the contents needed by the generated
+TOC client side scripting. That's it. Don't fear the built-in templates (Despite the lack 
+of decent docs explaining the details [Yeah, this project previously fell into those gaps
+and even constructed a custom template to deal with it... Sigh, what a waste of time...
+:facepalm: ])
 
 DocFX has obsoleted the `docfxconsole` NuGet pacakge that was used to run docfx for
 a project via MSBUILD. Instead it focused on a .NET tool to do it all via the
@@ -17,12 +17,13 @@ different site builds. The PowerShell script `Build-Docs.ps1` was updated to use
 new tool directly. Using that script should have little or no impact on the overall
 flow.
 
-## Docs Index
-This folder contains the DocFx project for the top level index for this repo.
-The top level index contains a general high level overview of the project as
-well as links to the version specific full documentation. (e.g. this is
-intentionally a small project that doesn't change except to include links
-to newer versions of the documentation.) Older documentation is NOT wiped
-out by new versions. (For final releases anyway, pre-release docs overwrite
-any previous pre-releases to keep the number of docs versions to a sane level.)
+There are two "levels" to the docs for this project to allow the old docs to continue
+to exist.
 
+1) Index
+    1) This is a small thin layer that provides a general overview and links to the
+       docs for older versions.
+    2) Prior documentation is retained in folders following the `v.<Major>.<minor>.<Patch>`
+       patttern.
+2) Current documentation
+    1) This contains all of the current documentation
