@@ -3,8 +3,6 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-using System.Buffers;
-
 // this file declares and uses the "experimental" interface `IDisassemblerCallbacks`.
 #pragma warning disable LLVM001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 

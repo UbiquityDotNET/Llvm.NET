@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.ComponentModel;
-using System.Linq;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interop methods for the Ubiquity.NET LibLLVM library</summary>

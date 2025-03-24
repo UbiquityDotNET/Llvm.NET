@@ -2,8 +2,6 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
-using System.Threading;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Abstract base class for implementing the Disposable pattern</summary>

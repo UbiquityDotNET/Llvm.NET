@@ -48,7 +48,7 @@ namespace Kaleidoscope.Chapter71
             ThreadSafeContext = new();
             InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
 
-            // set JIT to support lzy compilation
+            // set up support needed for lazy compilation
             string triple = KlsJIT.TripleString;
             JitISM = new LocalIndirectStubsManager(triple);
             JitLCTM = KlsJIT.Session.CreateLazyCallThroughManager(triple);
@@ -89,8 +89,8 @@ namespace Kaleidoscope.Chapter71
 
             if(definition.IsAnonymous)
             {
-                // Generate the LLVM IR for this function
-                var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+                // Generate the LLVM IR for this function into the module
+                _ = definition.Accept( this ) as Function ?? throw new CodeGeneratorException( ExpectValidFunc );
 
                 // Directly track modules for anonymous functions as calling the function is the guaranteed
                 // next step and then it is removed as nothing can reference it again.
@@ -187,7 +187,6 @@ namespace Kaleidoscope.Chapter71
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-
         public override Value? Visit(FunctionCallExpression functionCall)
         {
             ArgumentNullException.ThrowIfNull( functionCall );
@@ -216,7 +215,6 @@ namespace Kaleidoscope.Chapter71
 
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-
         public override Value? Visit(FunctionDefinition definition)
         {
             ArgumentNullException.ThrowIfNull( definition );
@@ -264,7 +262,6 @@ namespace Kaleidoscope.Chapter71
                 throw;
             }
         }
-
         public override Value? Visit(VariableReferenceExpression reference)
         {
             ArgumentNullException.ThrowIfNull( reference );
@@ -277,7 +274,6 @@ namespace Kaleidoscope.Chapter71
             return InstructionBuilder.Load( value.ElementType, value )
                                      .RegisterName( reference.Name );
         }
-
         public override Value? Visit(ConditionalExpression conditionalExpression)
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
@@ -513,8 +509,8 @@ namespace Kaleidoscope.Chapter71
                 new(mangledBodyName, new(SymbolGenericOption.Exported | SymbolGenericOption.Callable)),
             ];
 
-            // NOTE: ownership of this MU is passed to LLVM in the JITDyLib.Define() call
-            // the Dispose is NORMALLY a NOP, but in case of an exception BEFORE transfer
+            // NOTE: ownership of this MU is passed to LLVM in the JITDyLib.Define() call.
+            // The Dispose is NORMALLY a NOP, but in case of an exception BEFORE transfer
             // to native completes this will destroy the MU so it is covered either way.
             using var materializer = new CustomMaterializationUnit($"{definition.Name}MU", Materialize, symbols);
             KlsJIT.MainLib.Define(materializer);
@@ -537,8 +533,9 @@ namespace Kaleidoscope.Chapter71
             // symbol is looked up and the materializer runs.
             // NOTE: This function is called by the JIT asynchronously when the
             // symbol is resolved to an address in the JIT the first time. Thus,
-            // it MUST not capture any IDisposable as those are most likely already
-            // disposed by the time this is called.
+            // it MUST not capture any IDisposable objects such as the mangled
+            // symbol names as they are most likely already disposed by the time
+            // this is called.
             void Materialize(MaterializationResponsibility r)
             {
                 // symbol strings returned are NOT owned by this function so Dispose() isn't needed
@@ -555,10 +552,17 @@ namespace Kaleidoscope.Chapter71
 
                     Module?.Dispose();
                     Module = ThreadSafeContext.PerThreadContext.CreateBitcodeModule();
-                    var function = ( Function? )implDefinition.Accept( this ) ?? throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
-                    tsm = new(ThreadSafeContext, Module);
-                    Module?.Dispose();
-                    Module = null;
+                    try
+                    {
+                        // generate a function from the AST into the module
+                        _ = implDefinition.Accept( this ) ?? throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
+                        tsm = new(ThreadSafeContext, Module);
+                    }
+                    finally
+                    {
+                        Module?.Dispose();
+                        Module = null;
+                    }
                 }
                 else
                 {
@@ -576,7 +580,7 @@ namespace Kaleidoscope.Chapter71
                 {
                     // Finally emit the module to the JIT.
                     // This transfers ownership of both the responsibility AND the module
-                    // to the native LLVM JIT. THe JIT will perform any addition transforms
+                    // to the native LLVM JIT. The JIT will perform any additional transforms
                     // that are registered (for KLS that includes setting the data layout
                     // and running optimization passes)
                     KlsJIT.TransformLayer.Emit(r, tsm);

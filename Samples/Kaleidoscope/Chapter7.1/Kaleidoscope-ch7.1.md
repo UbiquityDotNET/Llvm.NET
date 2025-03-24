@@ -81,12 +81,13 @@ things get different as they are selected for lazy JIT.
 [!code-csharp[Generate](CodeGenerator.cs#Generate)]
 
 Function definitions for lazy JIT are first cloned and renamed, as discussed previously. Then a lazy
-function generator is registered for the name of the function. This creates the stub function exported
+module materializer is registered for the name of the function. This creates the stub function exported
 by the function's name with a callback that knows how to generate the LLVM IR for the function. The
-actual code generation call back is a lambda that simply initializes a new module and pass manager,
-generates the function using the visitor pattern and returns the function's implementation name and
-the containing module as a tuple. (This is where keeping the code generation ignorant of the JIT comes
-in handy as the same code is called to generate a module and doesn't need to care if it is eager or lazy)
+actual code generation call back is a local function that has captured the AST so it initializes a
+new module, generates the function using the visitor pattern to generatio LLVM IR for the function
+into the freshly allocated module. (This is where keeping the code generation ignorant of the JIT
+comes in handy as the same code is called to generate a function into a module and doesn't need to
+care if it is eager or lazy)
 
 The JIT implementation will do the following after the generator
 callback returns:
@@ -106,7 +107,7 @@ will generate the IR for a given symbol by processing the AST into a module and 
 
 ## Conclusion
 Implementing Lazy JIT support with Ubiquity.NET.Llvm is a bit more complex, but still not significant. It
-took many times more words to describe then actual lines of code. Efficiently, supporting lazy JIT is a
+took amost as many words to describe then actual lines of code. Efficiently, supporting lazy JIT is a
 much more complex matter. There are trade-offs doing things lazy, in particular the application can stall
 for a period, while the system generates new code to run "on the fly". Optimizations, when fully enabled,
 add additional time to the code generation. While, for some applications, it may be obvious whether these
@@ -115,4 +116,6 @@ efficiency includes decisions on eager vs lazy JIT as well as optimized JIT or n
 JIT with minimal optimization during startup of an app. Once things are up and going the engine can come
 back to re-generate the functions with full optimization. All sorts of possibilities exist, but the
 basics of how the lazy and eager generation works doesn't change no matter what approach a given language
-or runtime wants to use.
+or runtime wants to use. For most DSLs like Kaleidoscope these tradeoffs are not generally relevant as
+the fundamental point is to simplify expression of a particular domain problem in domain terminology.
+Performance tradeoffs are often not that important for such cases.

@@ -65,7 +65,6 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         /// <inheritdoc/>
-        [SuppressMessage( "StyleCop.CSharp.LayoutRules", "SA1515:Single-line comment should be preceded by blank line", Justification = "Annoying analyzer for comments on disabled warnings..." )]
         public void Dispose()
         {
             var previousState = (InitializationState)Interlocked.CompareExchange( ref CurrentInitializationState
@@ -116,6 +115,7 @@ namespace Ubiquity.NET.Llvm.Interop
             }
         }
 
+        // NOTE: This needs to be VERY fast as it is called for EVERY LibraryImportAttribute.
         private static nint NativeLibResolver( string libraryName, Assembly assembly, DllImportSearchPath? searchPath )
         {
             // Any library other than the one known about here gets default handling

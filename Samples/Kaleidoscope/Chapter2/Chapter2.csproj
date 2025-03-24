@@ -6,6 +6,7 @@
     <AssemblyName>kls2</AssemblyName>
     <RootNamespace>Kaleidoscope</RootNamespace>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <PublishAot>True</PublishAot>
   </PropertyGroup>
 
   <ItemGroup>
