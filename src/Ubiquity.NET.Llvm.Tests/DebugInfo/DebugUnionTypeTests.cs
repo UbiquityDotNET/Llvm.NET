@@ -100,7 +100,8 @@ namespace Ubiquity.NET.Llvm.UT
             using var module = ctx.CreateBitcodeModule( "testModule" );
             using var diBuilder = new DIBuilder(module);
 
-            module.Layout = targetMachine.TargetData;
+            using var layout = targetMachine.CreateTargetData();
+            module.Layout = layout;
             var diFile = diBuilder.CreateFile( "test.cs" );
             var diCompileUnit = diBuilder.CreateCompileUnit( SourceLanguage.CSharp, "test.cs", "unit-test", false, string.Empty, 0 );
 

@@ -46,30 +46,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
             SymbolStringPoolEntry? initSymbol = null
             )
-            : base( MakeHandle( name, symbols, materializeAction, null, null, initSymbol ) )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="CustomMaterializationUnit"/> class.</summary>
-        /// <param name="name">Name of this instance</param>
-        /// <param name="materializeAction">Action to perform to materialize the symbol</param>
-        /// <param name="dataOwner">Disposable to hold any data used by the materialization</param>
-        /// <param name="symbols">symbols the materializer works on</param>
-        /// <param name="initSymbol">Symbol of static initializer (if any)</param>
-        /// <remarks>
-        /// This implementation will maintain the lifetime of the provided delegates and disposable until the materialization
-        /// is completed or abandoned. Since the <paramref name="materializeAction"/> is NOT called when materialization is
-        /// abandoned the <paramref name="dataOwner"/> is disposed. This allows for cases where the data used by the <paramref name="materializeAction"/>
-        /// is not held by the action itself or needs to support early disposal instead of remaining at the whims of the GC.
-        /// </remarks>
-        public CustomMaterializationUnit(
-            LazyEncodedString name,
-            MaterializationAction materializeAction,
-            IDisposable dataOwner,
-            IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
-            SymbolStringPoolEntry? initSymbol = null
-            )
-            : base( MakeHandle( name, symbols, materializeAction, null, dataOwner, initSymbol ) )
+            : base( MakeHandle( name, symbols, materializeAction, null, initSymbol ) )
         {
         }
 
@@ -77,24 +54,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="name">Name of this instance</param>
         /// <param name="materializeAction">Action to perform to materialize the symbol</param>
         /// <param name="discardAction">Action to perform when the JIT discards/replaces a symbol</param>
-        /// <param name="dataOwner">Disposable to hold any data used by the materialization</param>
         /// <param name="symbols">symbols the materializer works on</param>
         /// <param name="initSymbol">Symbol of static initializer (if any)</param>
         /// <remarks>
-        /// This implementation will maintain the lifetime of the provided delegates and disposable until the materialization
-        /// is completed or abandoned. Since the <paramref name="materializeAction"/> is NOT called when materialization is
-        /// abandoned the <paramref name="dataOwner"/> is disposed. This allows for cases where the data used by the <paramref name="materializeAction"/>
+        /// This implementation will maintain the lifetime of the provided delegates via an internally allocated disposable
+        /// until the materialization is completed or abandoned. If <paramref name="materializeAction"/> is not called, then
+        /// the <paramref name="discardAction"/> is. This allows for cases where the data used by the <paramref name="materializeAction"/>
         /// is not held by the action itself or needs to support early disposal instead of remaining at the whims of the GC.
         /// </remarks>
         public CustomMaterializationUnit(
             LazyEncodedString name,
             MaterializationAction materializeAction,
             DiscardAction? discardAction,
-            IDisposable? dataOwner,
             IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
             SymbolStringPoolEntry? initSymbol = null
             )
-            : base( MakeHandle( name, symbols, materializeAction, discardAction, dataOwner, initSymbol ) )
+            : base( MakeHandle( name, symbols, materializeAction, discardAction, initSymbol ) )
         {
         }
 
@@ -104,7 +79,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
             MaterializationAction materializeAction,
             DiscardAction? discardAction,
-            IDisposable? dataOwner,
             SymbolStringPoolEntry? initSymbol = null
             )
         {
@@ -112,7 +86,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull( materializeAction );
 
             // This will internally manage the lifetime
-            using var materializer = new CustomMaterializer(materializeAction, discardAction, dataOwner);
+            using var materializer = new CustomMaterializer(materializeAction, discardAction);
             unsafe
             {
                 using var nativeSyms = InitializeNativeCopy(symbols);

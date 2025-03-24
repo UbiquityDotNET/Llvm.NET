@@ -27,7 +27,6 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( DefaultTargetTriple, machine.Triple );
             Assert.AreEqual( DefaultTargetCpu, machine.Cpu );
             Assert.AreEqual( DefaultTargetFeatures, machine.Features );
-            Assert.IsNotNull( machine.TargetData );
         }
 
         [TestMethod]

@@ -25,18 +25,28 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the symbol associated with this relocation</summary>
         public Symbol Symbol => new( Section.ContainingBinary, LLVMGetRelocationSymbol( IteratorRef ) );
 
-#pragma warning disable IDISP012 // Property should not return created disposable
-
         // TODO: Remove DisposeMessageString as a return type. Pretty much all are just converting to a string
         //       and the IDisposable makes that a real PITA, let the marshalling do it.
         // CONSIDER: Remove DisposeMessageString as out param as well...
 
         /// <summary>Gets the kind of relocation as a string for display purposes</summary>
-        public DisposeMessageString Description => LLVMGetRelocationTypeName( IteratorRef );
-
+        public string Description
+        {
+            get
+            {
+                using var disposeString = LLVMGetRelocationTypeName( IteratorRef );
+                return disposeString.ToString() ?? string.Empty;
+            }
+        }
         /// <summary>Gets the relocation value as a string</summary>
-        public DisposeMessageString Value => LLVMGetRelocationValueString( IteratorRef );
-#pragma warning restore IDISP012 // Property should not return created disposable
+        public string Value
+        {
+            get
+            {
+                using var disposeString = LLVMGetRelocationValueString( IteratorRef );
+                return disposeString.ToString() ?? string.Empty;
+            }
+        }
 
         /// <summary>Gets the relocation type for this relocation</summary>
         /// <remarks>The meaning of the values are target obj file format specific, there is no standard</remarks>

@@ -45,7 +45,9 @@ namespace Kaleidoscope.Chapter8
             InstructionBuilder = new InstructionBuilder( Context );
             Module = Context.CreateBitcodeModule( );
             Module.TargetTriple = machine.Triple;
-            Module.Layout = TargetMachine.TargetData;
+
+            using var layout = TargetMachine.CreateTargetData();
+            Module.Layout = layout;
         }
         #endregion
 

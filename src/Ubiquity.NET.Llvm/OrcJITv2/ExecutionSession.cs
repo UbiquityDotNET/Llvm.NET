@@ -178,7 +178,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 using MemoryHandle nativeMem = name.Pin();
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
 
-                // ownership is transferred (MOVE Semantics) to errInfo 'out' param
+                // ownership of return LLVMErrorRef is transferred (MOVE Semantics) to errInfo 'out' param
                 errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, (byte*)nativeMem.Pointer).ThrowIfInvalid());
 #pragma warning restore IDISP004 // Don't ignore created IDisposable
 

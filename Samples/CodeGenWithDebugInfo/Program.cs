@@ -85,7 +85,8 @@ namespace CodeGenWithDebugInfo
             module.SourceFileName = Path.GetFileName( srcPath );
             using var targetMachine = TargetDetails.CreateTargetMachine();
             module.TargetTriple = targetMachine.Triple;
-            module.Layout = targetMachine.TargetData;
+            using var layout = targetMachine.CreateTargetData();
+            module.Layout = layout;
 
             TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
             #endregion

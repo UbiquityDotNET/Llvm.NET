@@ -15,7 +15,7 @@ namespace Kaleidoscope.Grammar
     /// It is most valuable when the scope extends beyond a single function
     /// where a try/finally simply won't work.
     /// </remarks>
-    internal struct DisposableAction
+    internal readonly struct DisposableAction
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="DisposableAction"/> struct.</summary>

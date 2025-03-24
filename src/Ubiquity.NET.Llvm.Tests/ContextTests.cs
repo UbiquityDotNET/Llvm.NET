@@ -149,7 +149,8 @@ namespace Ubiquity.NET.Llvm.UT
             DICompileUnit cu = diBuilder.CreateCompileUnit( SourceLanguage.C99, "test.c", "unit-tests" );
 
             Assert.IsNotNull( module );
-            module.Layout = targetMachine.TargetData;
+            using var layout = targetMachine.CreateTargetData();
+            module.Layout = layout;
 
             var i16 = new DebugBasicType( context.Int16Type, in diBuilder, "int16", DiTypeKind.Signed );
             var i32 = new DebugBasicType( context.Int32Type, in diBuilder, "int32", DiTypeKind.Signed );
@@ -200,7 +201,8 @@ namespace Ubiquity.NET.Llvm.UT
             DICompileUnit cu = diBuilder.CreateCompileUnit( SourceLanguage.C99, "test.c", "unit-tests" );
 
             Assert.IsNotNull( module );
-            module.Layout = targetMachine.TargetData;
+            using var layout = targetMachine.CreateTargetData();
+            module.Layout = layout;
 
             var i16 = new DebugBasicType( context.Int16Type, in diBuilder, "int16", DiTypeKind.Signed );
             var i32 = new DebugBasicType( context.Int32Type, in diBuilder, "int32", DiTypeKind.Signed );

@@ -49,7 +49,8 @@ namespace Ubiquity.NET.Llvm.UT
             using var diBuilder = new DIBuilder(module);
             DICompileUnit cu = diBuilder.CreateCompileUnit(SourceLanguage.C99, "test.c", "unit-tests");
 
-            module.Layout = targetMachine.TargetData;
+            using var layout = targetMachine.CreateTargetData();
+            module.Layout = layout;
             var intType = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
             var arrayType = new DebugArrayType(intType, in diBuilder, 3u);
             Assert.IsNotNull( arrayType );

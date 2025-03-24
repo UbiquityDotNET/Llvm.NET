@@ -23,11 +23,16 @@ namespace Ubiquity.NET.Llvm
         : ILibLlvm
     {
         /// <inheritdoc/>
-        public void Dispose() => ItfImpl.Dispose();
+        public void Dispose()
+        {
+            ItfImpl.Dispose();
+        }
 
         /// <inheritdoc/>
         public void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All)
-            => ItfImpl.RegisterTarget((InteropCodeGenTarget)target, (InteropTargetRegistration)registrations);
+        {
+            ItfImpl.RegisterTarget((InteropCodeGenTarget)target, (InteropTargetRegistration)registrations);
+        }
 
         // TODO: Does LLVM 20 fix the problem of re-init from same process? [Some static init wasn't re-run and stale data left in place]
 

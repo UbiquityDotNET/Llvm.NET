@@ -66,10 +66,11 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        /// <summary>Gets Layout information for this machine</summary>
-#pragma warning disable IDISP012 // Property should not return created disposable
-        public DataLayout TargetData => new( LLVMCreateTargetDataLayout( Handle ) );
-#pragma warning restore IDISP012 // Property should not return created disposable
+        /// <summary>Creates Data Layout information for this machine</summary>
+        public DataLayout CreateTargetData()
+        {
+            return new( LLVMCreateTargetDataLayout( Handle ) );
+        }
 
         /// <summary>Generate code for the target machine from a module</summary>
         /// <param name="module"><see cref="Module"/> to generate the code from</param>

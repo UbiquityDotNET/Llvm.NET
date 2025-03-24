@@ -43,7 +43,9 @@ namespace Ubiquity.NET.Llvm.UT
             using var hostTriple = Triple.GetHostTriple();
             using var tm = TargetMachine.FromTriple( hostTriple );
             module.TargetTriple = tm.Triple;
-            module.Layout = tm.TargetData;
+
+            using var layout = tm.CreateTargetData();
+            module.Layout = layout;
 
             var doubleType = new DebugBasicType( llvmContext.DoubleType, in diBuilder, "double", DiTypeKind.Float );
             var voidType = DebugType.Create<ITypeRef, DIType>( module.Context.VoidType, null );

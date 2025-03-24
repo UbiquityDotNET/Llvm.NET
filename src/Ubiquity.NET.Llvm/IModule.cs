@@ -54,6 +54,12 @@ namespace Ubiquity.NET.Llvm
         public LazyEncodedString DataLayoutString { get; set; }
 
         /// <summary>Gets or sets the target data layout for this module</summary>
+        /// <remarks>
+        /// The setter uses a by value copy where the input value is serialized to
+        /// a string and then set via <see cref="DataLayoutString"/>. That is, even
+        /// if the implementation of <see cref="IDataLayout"/> is for an <see cref="IDisposable"/>
+        /// type no ownership transfer occurs.
+        /// </remarks>
         public IDataLayout Layout { get; set; }
 
         /// <summary>Gets or sets the Target Triple describing the target, ABI and OS</summary>
