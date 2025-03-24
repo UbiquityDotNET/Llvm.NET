@@ -129,14 +129,12 @@ namespace Ubiquity.NET.Llvm
             // Sadly this duplicates the string and then releases it
             // TODO: [Optimization] LibLLVM extension method to get the original raw pointer directly
             //       then the LazyEncodedString will perform the copy only once!
-            using var nativeTxt = LLVMCopyStringRepOfTargetData( NativeHandle );
-            return new(nativeTxt.ReadOnlySpan);
+            return LLVMCopyStringRepOfTargetData( NativeHandle );
         }
 
         public override string? ToString( )
         {
-            using var safeHandle = LLVMCopyStringRepOfTargetData( NativeHandle );
-            return safeHandle.ToString();
+            return LLVMCopyStringRepOfTargetData( NativeHandle );
         }
 
         public ulong ByteSizeOf( ITypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;

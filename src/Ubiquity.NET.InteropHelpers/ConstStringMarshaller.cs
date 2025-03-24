@@ -10,6 +10,11 @@ using System.Runtime.InteropServices.Marshalling;
 namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for `char const*` strings that are simple aliases requiring no release</summary>
+    /// <remarks>
+    /// This marshaller is strictly one-way, from unmanaged pointer into a managed <see cref="string"/>.
+    /// It is normally applied to return values of interop methods. For support of the other direction
+    /// use <see cref="ExecutionEncodingStringMarshaller"/>.
+    /// </remarks>
     [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedOut, typeof(ConstStringMarshaller))]
     public static unsafe class ConstStringMarshaller
     {
@@ -18,7 +23,9 @@ namespace Ubiquity.NET.InteropHelpers
         /// <returns>A managed string.</returns>
         /// <seealso cref="ExecutionEncodingStringMarshaller.Encoding"/>
         public static string? ConvertToManaged(byte* unmanaged)
-            => ExecutionEncodingStringMarshaller.ConvertToManaged(unmanaged);
+        {
+            return ExecutionEncodingStringMarshaller.ConvertToManaged(unmanaged);
+        }
 
         /// <summary> [Intentional NOP] Frees the memory for the unmanaged string.</summary>
         /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>

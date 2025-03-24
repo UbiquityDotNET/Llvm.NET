@@ -37,34 +37,13 @@ namespace Ubiquity.NET.Llvm
         public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( Handle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple
-        {
-            get
-            {
-                using var nativeRetVal = LLVMGetTargetMachineTriple( Handle );
-                return nativeRetVal.ToString() ?? string.Empty;
-            }
-        }
+        public string Triple => LLVMGetTargetMachineTriple( Handle );
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu
-        {
-            get
-            {
-                using var nativeRetval = LLVMGetTargetMachineCPU( Handle );
-                return nativeRetval.ToString() ?? string.Empty;
-            }
-        }
+        public string Cpu => LLVMGetTargetMachineCPU( Handle );
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features
-        {
-            get
-            {
-                using var nativeRetVal = LLVMGetTargetMachineFeatureString( Handle );
-                return nativeRetVal.ToString() ?? string.Empty;
-            }
-        }
+        public string Features => LLVMGetTargetMachineFeatureString( Handle );
 
         /// <summary>Creates Data Layout information for this machine</summary>
         public DataLayout CreateTargetData()
@@ -93,23 +72,15 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
-            DisposeMessageString? errTxt = null;
-            try
+            var status = LLVMTargetMachineEmitToFile( Handle
+                                                    , module.GetUnownedHandle()
+                                                    , path
+                                                    , ( LLVMCodeGenFileType )fileType
+                                                    , out string errTxt
+                                                    );
+            if( status.Failed )
             {
-                var status = LLVMTargetMachineEmitToFile( Handle
-                                                        , module.GetUnownedHandle()
-                                                        , path
-                                                        , ( LLVMCodeGenFileType )fileType
-                                                        , out errTxt
-                                                        );
-                if( status.Failed )
-                {
-                    throw new InternalCodeGeneratorException( errTxt?.ToString() ?? string.Empty);
-                }
-            }
-            finally
-            {
-                errTxt?.Dispose();
+                throw new InternalCodeGeneratorException( errTxt ?? "Error emitting to file, but LLVM provided no error message!");
             }
         }
 
@@ -132,24 +103,16 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
-            DisposeMessageString? errTxt = null;
-            try
-            {
-                var status = LLVMTargetMachineEmitToMemoryBuffer( Handle
-                                                                , module.GetUnownedHandle()
-                                                                , ( LLVMCodeGenFileType )fileType
-                                                                , out errTxt
-                                                                , out var bufferHandle
-                                                                );
+            var status = LLVMTargetMachineEmitToMemoryBuffer( Handle
+                                                            , module.GetUnownedHandle()
+                                                            , ( LLVMCodeGenFileType )fileType
+                                                            , out string errTxt
+                                                            , out var bufferHandle
+                                                            );
 
-                return status.Failed
-                     ? throw new InternalCodeGeneratorException( errTxt?.ToString() ?? string.Empty )
-                     : new MemoryBuffer( bufferHandle );
-            }
-            finally
-            {
-                errTxt?.Dispose();
-            }
+            return status.Failed
+                    ? throw new InternalCodeGeneratorException( errTxt ?? "Error emitting to buffer, but LLVM provided no error message!" )
+                    : new MemoryBuffer( bufferHandle );
         }
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the triple and specified parameters</summary>

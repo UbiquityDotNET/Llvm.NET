@@ -276,16 +276,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><see langword="true"/> if no errors found</returns>
         public bool Verify( [MaybeNullWhen(true)] out string errMsg )
         {
-            errMsg = null;
-            if(LibLLVMVerifyFunctionEx( Handle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out DisposeMessageString? nativeMsg ).Failed)
-            {
-                errMsg = nativeMsg?.ToString() ?? string.Empty;
-                nativeMsg?.Dispose();
-                return false;
-            }
-
-            nativeMsg?.Dispose();
-            return true;
+            return LibLLVMVerifyFunctionEx( Handle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
         }
 
         /// <summary>Add a new basic block to the beginning of a function</summary>

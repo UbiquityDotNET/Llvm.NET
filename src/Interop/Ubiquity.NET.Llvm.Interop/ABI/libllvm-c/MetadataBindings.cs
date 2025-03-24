@@ -250,9 +250,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LibLLVMDILocationGetInlinedAtScope(LLVMMetadataRef location);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LibLLVMMetadataAsString(LLVMMetadataRef descriptor);
+        public static unsafe partial string LibLLVMMetadataAsString(LLVMMetadataRef descriptor);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

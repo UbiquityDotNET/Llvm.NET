@@ -123,7 +123,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <returns>IrMetadata as a string</returns>
         public override string ToString( )
         {
-            return Handle.IsNull ? string.Empty : MarshalManagedString();
+            return Handle.IsNull ? string.Empty : LibLLVMMetadataAsString( Handle );
         }
 
         /// <inheritdoc/>
@@ -144,12 +144,6 @@ namespace Ubiquity.NET.Llvm.Metadata
         private protected IrMetadata( LLVMMetadataRef handle )
         {
             Handle = handle;
-        }
-
-        private string MarshalManagedString( )
-        {
-            using var nativeRetVal = LibLLVMMetadataAsString( Handle );
-            return nativeRetVal.ToString() ?? string.Empty;
         }
     }
 }

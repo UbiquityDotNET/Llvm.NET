@@ -121,19 +121,11 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             ArgumentNullException.ThrowIfNull( buffer );
             ArgumentNullException.ThrowIfNull( context );
 
-            DisposeMessageString? errMsg = null;
-            try
+            BackingBuffer = new( buffer.Handle.Move() );
+            Handle = LLVMCreateBinary( BackingBuffer.Handle, context.GetUnownedHandle(), out string? errMsg );
+            if( Handle.IsInvalid )
             {
-                BackingBuffer = new(buffer.Handle.Move());
-                Handle = LLVMCreateBinary( BackingBuffer.Handle, context.GetUnownedHandle(), out errMsg );
-                if( Handle.IsInvalid )
-                {
-                    throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
-                }
-            }
-            finally
-            {
-                errMsg?.Dispose();
+                throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
             }
         }
 

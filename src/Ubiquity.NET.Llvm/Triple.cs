@@ -646,8 +646,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Normalized Triple string</returns>
         public override string? ToString( )
         {
-            using var abiHandle = LibLLVMTripleAsString( Handle, true );
-            return abiHandle.ToString();
+            return LibLLVMTripleAsString( Handle, true );
          }
 
         /// <summary>Gets the Architecture of the triple</summary>
@@ -692,8 +691,7 @@ namespace Ubiquity.NET.Llvm
         /// </overloads>
         public static string GetCanonicalName( ArchKind archType )
         {
-            using var safeHandle = LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType );
-            return safeHandle.ToString() ?? string.Empty;
+            return LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType );
         }
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
@@ -701,8 +699,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( VendorKind vendorType )
         {
-            using var nativeRetVal = LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType );
-            return nativeRetVal.ToString() ?? string.Empty;
+            return LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType );
         }
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
@@ -710,8 +707,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( OSKind osType )
         {
-            using var nativeRetval = LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType );
-            return nativeRetval.ToString() ?? string.Empty;
+            return LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType );
         }
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
@@ -719,8 +715,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( EnvironmentKind envType )
         {
-            using var nativeRetVal = LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType );
-            return nativeRetVal.ToString() ?? string.Empty;
+            return LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType );
         }
 
         /// <inheritdoc/>
@@ -748,8 +743,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( unNormalizedTriple );
 
-            using var nativeRetval = LLVMNormalizeTargetTriple( unNormalizedTriple );
-            return nativeRetval.ToString() ?? string.Empty;
+            return LLVMNormalizeTargetTriple( unNormalizedTriple );
         }
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>

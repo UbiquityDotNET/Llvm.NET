@@ -170,18 +170,9 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( targetTriple );
 
-            DisposeMessageString? errorMsg = null;
-            try
-            {
-                return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out errorMsg ).Failed
-                    ? throw new InternalCodeGeneratorException( errorMsg?.ToString() ?? string.Empty )
-                    : FromHandle( targetHandle );
-            }
-            finally
-            {
-                // release any error message
-                errorMsg?.Dispose();
-            }
+            return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMsg ).Failed
+                ? throw new InternalCodeGeneratorException( errorMsg ?? "Failed to get target from triple and no message provided from LLVM!" )
+                : FromHandle( targetHandle );
         }
 
         internal Target( LLVMTargetRef targetHandle )

@@ -37,19 +37,7 @@ namespace Ubiquity.NET.Llvm
         : IEquatable<Comdat>
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
-        public string Name
-        {
-            get
-            {
-                if( Handle.IsNull )
-                {
-                    return string.Empty;
-                }
-
-                using var safeHandle = LibLLVMComdatGetName( Handle );
-                return safeHandle.ToString() ?? string.Empty;
-            }
-        }
+        public string Name => Handle.IsNull ? string.Empty : LibLLVMComdatGetName( Handle );
 
         #region IEquatable<Comdat>
 

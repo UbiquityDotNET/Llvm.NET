@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm.Interop
     /// is called.
     /// </remarks>
     /// <ImplementationNote>
-    /// While this is a "handle" it is NOT a generated one as the behavior is VERY specialized. So it lives in this
+    /// While this is a "handle" it is NOT a generated one as the behavior is VERY specialized. Thus, it lives in this
     /// library so it can leverage the <see cref="ErrorMessageString"/> for release of any error messages materialized.
     /// </ImplementationNote>
     [SecurityCritical]
@@ -112,8 +112,19 @@ namespace Ubiquity.NET.Llvm.Interop
             static unsafe extern nint /*LLVMErrorRef*/ LLVMCreateStringError(byte* ErrMsg);
         }
 
+        protected override void Dispose( bool disposing )
+        {
+            // if a message was previously realized, dispose of it now.
+            if (disposing && LazyMessage.IsValueCreated)
+            {
+                LazyMessage.Value?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
         /// <inheritdoc/>
-        [SecurityCritical]
+        [ SecurityCritical]
         protected override bool ReleaseHandle()
         {
             LLVMConsumeError( handle );

@@ -29,9 +29,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
     public static partial class Object
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBinaryRef LLVMCreateBinary(LLVMMemoryBufferRef MemBuf, LLVMContextRefAlias Context, out DisposeMessageString ErrorMessage);
+        public static unsafe partial LLVMBinaryRef LLVMCreateBinary(LLVMMemoryBufferRef MemBuf, LLVMContextRefAlias Context, out string ErrorMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -47,7 +47,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBinaryRef LLVMMachOUniversalBinaryCopyObjectForArch(LLVMBinaryRef BR, string Arch, size_t ArchLen, out DisposeMessageString ErrorMessage);
+        public static unsafe partial LLVMBinaryRef LLVMMachOUniversalBinaryCopyObjectForArch(
+            LLVMBinaryRef BR,
+            string Arch,
+            size_t ArchLen,
+            [MarshalUsing(typeof(DisposeMessageMarshaller))] out string ErrorMessage
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -139,13 +144,13 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt64 LLVMGetRelocationType(LLVMRelocationIteratorRef RI);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LLVMGetRelocationTypeName(LLVMRelocationIteratorRef RI);
+        public static unsafe partial string LLVMGetRelocationTypeName(LLVMRelocationIteratorRef RI);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LLVMGetRelocationValueString(LLVMRelocationIteratorRef RI);
+        public static unsafe partial string LLVMGetRelocationValueString(LLVMRelocationIteratorRef RI);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

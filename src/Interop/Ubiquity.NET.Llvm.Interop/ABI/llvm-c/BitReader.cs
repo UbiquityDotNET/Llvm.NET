@@ -9,36 +9,36 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     public static partial class BitReader
     {
         [Obsolete( "Use LLVMParseBitcode2 instead" )]
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMParseBitcode(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMParseBitcode(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out string OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMParseBitcode2(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule);
 
         [Obsolete( "Use LLVMParseBitcodeInContext2 instead" )]
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMParseBitcodeInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMParseBitcodeInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule, out string OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMParseBitcodeInContext2(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutModule);
 
         [Obsolete( "Use LLVMGetBitcodeModuleInContext2 instead" )]
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out string OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMGetBitcodeModuleInContext2(LLVMContextRefAlias ContextRef, LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM);
 
         [Obsolete( "Use LLVMGetBitcodeModule2 instead" )]
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMGetBitcodeModule(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMGetBitcodeModule(LLVMMemoryBufferRef MemBuf, out LLVMModuleRef OutM, out string OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

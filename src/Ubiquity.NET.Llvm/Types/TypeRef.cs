@@ -87,8 +87,7 @@ namespace Ubiquity.NET.Llvm.Types
         /// <returns>Formatted string for this type</returns>
         public override string? ToString()
         {
-            using var nativeRetVal = LLVMPrintTypeToString( Handle );
-            return nativeRetVal.ToString();
+            return LLVMPrintTypeToString( Handle );
         }
 
         internal TypeRef(LLVMTypeRef typeRef)

@@ -472,19 +472,14 @@ namespace Ubiquity.NET.Llvm
                 using var nativeSrcHandle = src.Pin();
                 using var mb = new MemoryBuffer((byte*)nativeSrcHandle.Pointer, src.NativeSize, name, requiresNullTerminator: true);
 
-                LLVMStatus result = LLVMParseIRInContext(NativeHandle, mb.Handle, out LLVMModuleRef? moduleRef, out DisposeMessageString? errMsg);
+                LLVMStatus result = LLVMParseIRInContext(NativeHandle, mb.Handle, out LLVMModuleRef? moduleRef, out string? errMsg);
                 if(result.Failed)
                 {
                     Debug.Assert( errMsg is not null, "Internal Error - Got a failed status but NULL message!");
-                    Debug.Assert( !errMsg.IsClosed && !errMsg.IsInvalid, "Unexpected state from LLVM interop!" );
-                    using(errMsg)
-                    {
-                        throw new LlvmException( errMsg.ToString() ?? string.Empty );
-                    }
+                    throw new LlvmException( errMsg );
                 }
 
-                Debug.Assert( errMsg.IsInvalid, "Internal Error - Got a success status but a valid message!");
-                errMsg?.Dispose();
+                Debug.Assert( errMsg is null, "Internal Error - Got a success status but a valid message!");
 
                 if (moduleRef is null || moduleRef.IsInvalid)
                 {

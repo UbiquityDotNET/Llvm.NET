@@ -64,7 +64,7 @@ namespace Ubiquity.NET.InteropHelpers
             }
 
             int exactByteCount = Encoding.GetByteCount(managed) + 1; // Includes null terminator
-            byte* mem = (byte*)Marshal.AllocCoTaskMem(exactByteCount);
+            byte* mem = (byte*)NativeMemory.Alloc((nuint)exactByteCount);
             Span<byte> buffer = new (mem, exactByteCount);
 
             int numBytes = Encoding.GetBytes(managed, buffer); // Does NOT include null terminator
@@ -77,12 +77,16 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="unmanaged">The unmanaged string to convert.</param>
         /// <returns>A managed string.</returns>
         public static string? ConvertToManaged(byte* unmanaged)
-            => Encoding.MarshalString(unmanaged);
+        {
+            return Encoding.MarshalString(unmanaged);
+        }
 
-        /// <summary>Frees the memory for the unmanaged string using the CoTask allocator.</summary>
+        /// <summary>Frees the memory for the unmanaged string representation allocated by <see cref="ConvertToUnmanaged"/></summary>
         /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>
         public static void Free(byte* unmanaged)
-            => Marshal.FreeCoTaskMem((IntPtr)unmanaged);
+        {
+            NativeMemory.Free(unmanaged);
+        }
 
         /// <summary>Custom marshaller to marshal a managed string as an unmanaged string using the <see cref="Encoding"/> property for encoding the native string.</summary>
         [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Standard pattern for custom marshallers" )]

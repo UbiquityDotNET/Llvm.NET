@@ -16,9 +16,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
     public static partial class Analysis
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMVerifyModule(LLVMModuleRefAlias M, LLVMVerifierFailureAction Action, out DisposeMessageString OutMessage);
+        public static unsafe partial LLVMStatus LLVMVerifyModule(LLVMModuleRefAlias M, LLVMVerifierFailureAction Action, out string OutMessage);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

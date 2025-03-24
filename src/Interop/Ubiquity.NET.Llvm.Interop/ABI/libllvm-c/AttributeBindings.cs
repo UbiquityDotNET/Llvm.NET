@@ -133,16 +133,16 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
     public static partial class AttributeBindings
     {
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LibLLVMAttributeToString(LLVMAttributeRef attribute);
+        public static unsafe partial string LibLLVMAttributeToString(LLVMAttributeRef attribute);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LibLLVMGetAttributeKindName(LibLLVMAttrKind attrKind);
+        public static unsafe partial string LibLLVMGetAttributeKindName(LibLLVMAttrKind attrKind);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial DisposeMessageString LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute);
+        public static unsafe partial string LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute);
     }
 }

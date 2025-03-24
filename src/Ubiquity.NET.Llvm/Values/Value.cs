@@ -81,8 +81,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>string version of the value formatted by LLVM</returns>
         public override string? ToString( )
         {
-            using var disposeString = LLVMPrintValueToString( Handle );
-            return disposeString.ToString();
+            return LLVMPrintValueToString( Handle );
         }
 
         /// <summary>Replace all uses of a <see cref="Value"/> with another one</summary>

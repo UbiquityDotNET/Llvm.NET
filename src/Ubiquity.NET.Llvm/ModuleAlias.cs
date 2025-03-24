@@ -258,23 +258,7 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public bool Verify(out string errorMessage)
         {
-            errorMessage = string.Empty;
-            DisposeMessageString? llvmMsg = null;
-            try
-            {
-                LLVMStatus retVal = LLVMVerifyModule( NativeHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out llvmMsg );
-                if(retVal.Failed)
-                {
-                    errorMessage = llvmMsg.ToString() ?? string.Empty;
-                    return false;
-                }
-
-                return true;
-            }
-            finally
-            {
-                llvmMsg?.Dispose();
-            }
+            return LLVMVerifyModule( NativeHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errorMessage ).Succeeded;
         }
 
         /// <inheritdoc/>
@@ -352,30 +336,13 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
-            errMsg = string.Empty;
-            DisposeMessageString? llvmMsg = null;
-            try
-            {
-                LLVMStatus result = LLVMPrintModuleToFile( NativeHandle, path, out llvmMsg );
-                if(result.Failed)
-                {
-                    errMsg = llvmMsg.ToString() ?? string.Empty;
-                    return false;
-                }
-
-                return true;
-            }
-            finally
-            {
-                llvmMsg?.Dispose();
-            }
+            return LLVMPrintModuleToFile( NativeHandle, path, out errMsg ).Succeeded;
         }
 
         /// <inheritdoc/>
         public string? WriteToString()
         {
-            using DisposeMessageString nativeRetVal = LLVMPrintModuleToString( NativeHandle );
-            return nativeRetVal.ToString();
+            return LLVMPrintModuleToString( NativeHandle );
         }
 
         /// <inheritdoc/>

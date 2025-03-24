@@ -80,8 +80,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Attribute as a string</returns>
         public override string? ToString( )
         {
-            using var nativeRetVal = LibLLVMAttributeToString( NativeAttribute );
-            return nativeRetVal.ToString();
+            return LibLLVMAttributeToString( NativeAttribute );
         }
 
         internal AttributeValue( LLVMAttributeRef nativeValue )
@@ -93,8 +92,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         private string GetEnumAttributeName( )
         {
-            using var nativeRetVal = LibLLVMGetEnumAttributeKindName( NativeAttribute );
-            return nativeRetVal.ToString() ?? string.Empty;
+            return LibLLVMGetEnumAttributeKindName( NativeAttribute );
         }
     }
 }

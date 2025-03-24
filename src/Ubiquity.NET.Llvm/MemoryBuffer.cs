@@ -21,10 +21,9 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
             // Inconsistent API design - returns a status and, in case of failures, an out message instead of LLVMErrorRef
-            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out DisposeMessageString msg ).Failed )
+            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out string msg ).Failed )
             {
                 string errMsg = msg.ToString() ?? string.Empty;
-                msg.Dispose();
                 throw new InternalCodeGeneratorException( errMsg );
             }
 

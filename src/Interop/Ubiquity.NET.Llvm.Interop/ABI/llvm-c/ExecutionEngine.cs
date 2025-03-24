@@ -62,25 +62,31 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial double LLVMGenericValueToFloat(LLVMTypeRef TyRef, LLVMGenericValueRef GenVal);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMCreateExecutionEngineForModule(out LLVMExecutionEngineRef OutEE, LLVMModuleRef M, out DisposeMessageString OutError);
+        public static unsafe partial LLVMStatus LLVMCreateExecutionEngineForModule(out LLVMExecutionEngineRef OutEE, LLVMModuleRef M, out string OutError);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMCreateInterpreterForModule(out LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, out DisposeMessageString OutError);
+        public static unsafe partial LLVMStatus LLVMCreateInterpreterForModule(out LLVMExecutionEngineRef OutInterp, LLVMModuleRef M, out string OutError);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMCreateJITCompilerForModule(out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, out DisposeMessageString OutError);
+        public static unsafe partial LLVMStatus LLVMCreateJITCompilerForModule(out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, uint OptLevel, out string OutError);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMInitializeMCJITCompilerOptions(out LLVMMCJITCompilerOptions Options, size_t SizeOfOptions);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMCreateMCJITCompilerForModule(out LLVMExecutionEngineRef OutJIT, LLVMModuleRef M, out LLVMMCJITCompilerOptions Options, size_t SizeOfOptions, out DisposeMessageString OutError);
+        public static unsafe partial LLVMStatus LLVMCreateMCJITCompilerForModule(
+            out LLVMExecutionEngineRef OutJIT,
+            LLVMModuleRef M,
+            out LLVMMCJITCompilerOptions Options,
+            size_t SizeOfOptions,
+            out string OutError
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -106,9 +112,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMAddModule(LLVMExecutionEngineRef EE, LLVMModuleRef M);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMRemoveModule(LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, out DisposeMessageString OutError);
+        public static unsafe partial LLVMStatus LLVMRemoveModule(LLVMExecutionEngineRef EE, LLVMModuleRef M, out LLVMModuleRef OutMod, out string OutError);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -142,10 +148,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt64 LLVMGetFunctionAddress(LLVMExecutionEngineRef EE, string Name);
 
-        [LibraryImport( LibraryName )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMExecutionEngineGetErrMsg(LLVMExecutionEngineRef EE, out DisposeMessageString OutError);
+        public static unsafe partial bool LLVMExecutionEngineGetErrMsg(LLVMExecutionEngineRef EE, out string OutError);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

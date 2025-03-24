@@ -18,8 +18,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public override string? ToString()
         {
-            using var safeHandle = LLVMPrintDbgRecordToString(Handle);
-            return safeHandle.ToString();
+            return LLVMPrintDbgRecordToString(Handle);
         }
 
         /// <summary>Gets the next record in a sequence or a default constructed instance (<see cref="DebugRecord.IsNull"/> is <see langword="true"/>)</summary>
