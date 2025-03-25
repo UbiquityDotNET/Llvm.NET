@@ -306,10 +306,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LibLLVMConstantAsMetadata(LLVMValueRef Val);
 
+        // NOTE: return value MAY not be null terminated, use len to know the size!
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
+        public static unsafe partial byte* LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

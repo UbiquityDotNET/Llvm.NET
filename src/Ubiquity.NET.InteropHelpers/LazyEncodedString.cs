@@ -16,9 +16,9 @@ namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Lazily encoded string with implicit casting to a read only span of bytes or a normal managed string</summary>
     /// <remarks>
-    /// <para>This class handles capturing a managed string  or a span for a native one. It supports a lazily evaluated
-    /// representation of the string as a sequence of native bytes or a managed string. The encoding ONLY happens once,
-    /// and ONLY when needed the first time. This reduces the overhead to a onetime hit for any strings that "sometimes"
+    /// <para>This class handles capturing a managed string or a span of bytes for a native one. It supports a lazily
+    /// evaluated representation of the string as a sequence of native bytes or a managed string. The encoding ONLY happens
+    /// once, and ONLY when needed the first time. This reduces the overhead to a onetime hit for any strings that "sometimes"
     /// get passed to native code or "sometimes" get used in managed code as a string.</para>
     /// <para>This is essentially a pair of <see cref="Lazy{T}"/> members to handle conversions in one direction.
     /// Constructors exist for an existing <see cref="ReadOnlySpan{T}"/> of bytes and another for a string. Each constructor
@@ -27,7 +27,7 @@ namespace Ubiquity.NET.InteropHelpers
     /// <para>This class handles all the subtle complexity regarding terminators as most of the encoding APIs in .NET will
     /// drop/ignore a string terminator but native code usually needs it. Thus, this ensures the presence of a terminator
     /// even if the span provided to the constructor doesn't include one. (It has to copy the string anyway so why not be
-    /// nice and robust)</para>
+    /// nice and robust at the cost of one byte of allocated space)</para>
     /// </remarks>
     public sealed class LazyEncodedString
         : IEquatable<LazyEncodedString>
@@ -134,7 +134,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <inheritdoc/>
         public bool Equals(LazyEncodedString? other)
         {
-            return other is not null && ManagedString.Value.Equals(other.ManagedString.Value, StringComparison.Ordinal);
+            return other is not null && (ReferenceEquals( this, other) || ManagedString.Value.Equals(other.ManagedString.Value, StringComparison.Ordinal));
         }
 
         /// <inheritdoc/>

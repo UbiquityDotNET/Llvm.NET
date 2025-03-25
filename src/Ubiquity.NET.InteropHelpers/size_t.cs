@@ -10,7 +10,7 @@ using System.Numerics;
 
 namespace Ubiquity.NET.InteropHelpers
 {
-    // TODO: This should have the same interfaces as System.IntPtr and implemented through the native pointer
+    // TODO: This should have the same interfaces as System.UIntPtr and implemented through the native pointer
     // If C#/.NET had the concept of a proper typedef that's what this would be instead of this HUGE mess...
 
     /// <summary>CLR equivalent to the C/C++ architecture specific size_t</summary>
@@ -103,6 +103,13 @@ namespace Ubiquity.NET.InteropHelpers
             Size = size;
         }
 
+        // NOTE: This assumes that size_t is the same as an unsigned native pointer
+        // This is the most typical implementation but not the official documented
+        // or required behavior. (It says it is implementation defined but at least
+        // 16 bits). The spec [CWG 1122](https://cplusplus.github.io/CWG/issues/1122.html)
+        // recommends selection of types "whose 'integer conversion ranks' are no
+        // greater than that of `signed long int` unless a larger size is necessary
+        // to contain all the possible values".
         internal readonly nuint Size;
     }
 }

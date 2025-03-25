@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Owning implementation of <see cref="IDataLayout"/></summary>
@@ -14,17 +16,14 @@ namespace Ubiquity.NET.Llvm
     {
         #region IEquatable<IDataLayout>
 
-        /// <inheritdoc/>
         public bool Equals(IDataLayout? other)
             => other is not null
             && (NativeHandle.Equals(other) || ToLazyEncodedString().Equals(other.ToLazyEncodedString()));
 
-        /// <inheritdoc/>
         public override bool Equals(object? obj)=> obj is DataLayoutAlias alias
                                                  ? Equals(alias)
                                                  : Equals(obj as IDataLayout);
 
-        /// <inheritdoc/>
         public override int GetHashCode() => ToLazyEncodedString().GetHashCode();
         #endregion
 
@@ -126,10 +125,11 @@ namespace Ubiquity.NET.Llvm
 
         public LazyEncodedString ToLazyEncodedString()
         {
-            // Sadly this duplicates the string and then releases it
-            // TODO: [Optimization] LibLLVM extension method to get the original raw pointer directly
-            //       then the LazyEncodedString will perform the copy only once!
-            return LLVMCopyStringRepOfTargetData( NativeHandle );
+            unsafe
+            {
+                byte* pStr = LibLLVMGetDataLayoutString(NativeHandle, out size_t len);
+                return new(new ReadOnlySpan<byte>(pStr, len.ToInt32()));
+            }
         }
 
         public override string? ToString( )

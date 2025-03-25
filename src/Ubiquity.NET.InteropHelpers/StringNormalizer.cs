@@ -52,7 +52,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <returns>Managed string with normalized line endings that match the system</returns>
         public static unsafe string? NormalizeLineEndings(byte* abiString, LineEndingKind srcKind = LineEndingKind.LineFeed)
         {
-            return NormalizeLineEndings( ConstStringMarshaller.ConvertToManaged(abiString), srcKind, SystemLineEndings );
+            return NormalizeLineEndings( ExecutionEncodingStringMarshaller.ConvertToManaged(abiString), srcKind, SystemLineEndings );
         }
 
         /// <summary>Normalize a managed string with system defined line endings to a specified kind</summary>

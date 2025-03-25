@@ -14,7 +14,19 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            return LibLLVMGetMDStringText( Handle, out uint _ ) ?? string.Empty;
+            unsafe
+            {
+                // Return may not have a terminator so go through LazyEncodedString
+                // as a span of bytes.
+                byte* pNativeString = LibLLVMGetMDStringText( Handle, out uint len );
+                if (len == 0)
+                {
+                    return string.Empty;
+                }
+
+                var s = new LazyEncodedString(new ReadOnlySpan<byte>(pNativeString, checked((int)len)));
+                return s.ToString();
+            }
         }
 
         internal MDString( LLVMMetadataRef handle )

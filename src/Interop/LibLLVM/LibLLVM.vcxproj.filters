@@ -58,6 +58,9 @@
     <ClCompile Include="PassBuilderOptionsBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLayoutBindings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\libllvm-c\PassBuilderOptionsBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libllvm-c\DataLayoutBindings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

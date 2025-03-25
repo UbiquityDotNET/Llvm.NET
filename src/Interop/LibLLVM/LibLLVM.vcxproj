@@ -90,6 +90,7 @@
     <ClCompile Include="AnalysisBindings.cpp" />
     <ClCompile Include="AttributeBindings.cpp" />
     <ClCompile Include="ContextBindings.cpp" />
+    <ClCompile Include="DataLayoutBindings.cpp" />
     <ClCompile Include="ObjectFileBindings.cpp" />
     <ClCompile Include="InlinedExports.cpp" />
     <ClCompile Include="IRBindings.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="include\libllvm-c\AnalysisBindings.h" />
     <ClInclude Include="include\libllvm-c\AttributeBindings.h" />
     <ClInclude Include="include\libllvm-c\ContextBindings.h" />
+    <ClInclude Include="include\libllvm-c\DataLayoutBindings.h" />
     <ClInclude Include="include\libllvm-c\IRBindings.h" />
     <ClInclude Include="include\libllvm-c\MetadataBindings.h" />
     <ClInclude Include="include\libllvm-c\ModuleBindings.h" />

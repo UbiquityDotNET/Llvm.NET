@@ -49,7 +49,6 @@ global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Analysis;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitReader;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitWriter;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Blake3;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
