@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="X64Details.cs" company="Ubiquity.NET Contributors">
+// <copyright file="X64ABI.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,10 +13,10 @@ using Ubiquity.NET.Llvm.Values;
 
 namespace CodeGenWithDebugInfo
 {
-    internal class X64Details
-        : ITargetDependentDetails
+    internal class X64ABI
+        : ITargetABI
     {
-        public X64Details( ILibLlvm libLLVM )
+        public X64ABI( ILibLlvm libLLVM )
         {
             libLLVM.RegisterTarget( CodeGenTarget.X86 );
         }

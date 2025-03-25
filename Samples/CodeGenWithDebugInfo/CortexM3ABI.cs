@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="CortexM3Details.cs" company="Ubiquity.NET Contributors">
+// <copyright file="CortexM3ABI.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,10 +13,10 @@ using Ubiquity.NET.Llvm.Values;
 
 namespace CodeGenWithDebugInfo
 {
-    internal class CortexM3Details
-        : ITargetDependentDetails
+    internal class CortexM3ABI
+        : ITargetABI
     {
-        public CortexM3Details( ILibLlvm libLLVM )
+        public CortexM3ABI( ILibLlvm libLLVM )
         {
             libLLVM.RegisterTarget( CodeGenTarget.ARM );
         }

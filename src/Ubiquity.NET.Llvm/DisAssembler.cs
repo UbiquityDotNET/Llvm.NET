@@ -3,8 +3,9 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+
 // this file declares and uses the "experimental" interface `IDisassemblerCallbacks`.
-#pragma warning disable LLVM001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable LLVM002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
 // regions are used sparingly and help mark the NATIVE ONLY callbacks
 #pragma warning disable SA1124 // Do not use regions
@@ -21,7 +22,7 @@ namespace Ubiquity.NET.Llvm
     /// but also applies to the <see cref="nint"/> `TagBuf` parameter of <see cref="OpInfo(ulong, ulong, ulong, ulong, int, nint)"/>
     /// </remarks>
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related only used here" )]
-    [Experimental("LLVM001")]
+    [Experimental("LLVM002")]
     public interface IDisassemblerCallbacks
     {
         /// <summary>Purpose not fully known or well explained in LLVM docs</summary>
@@ -29,7 +30,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="Offset">offset [Of what? Relative to what?]</param>
         /// <param name="OpSize">OpSize [Not entirely clear what an "op" is or how a size matters]</param>
         /// <param name="InstSize">Instruction size [Also not clear why this matters or what an implementation should do about it]</param>
-        /// <param name="TagType">Tag type [Bets guess: discriminator type for the opaque buffer]</param>
+        /// <param name="TagType">Tag type [Best guess: discriminator type for the opaque buffer]</param>
         /// <param name="TagBuf">Raw pointer to the buffer. [It is currently assumed this is readonly and the size and shape are determined by <paramref name="TagType"/>]</param>
         /// <returns>Unknown</returns>
         int OpInfo(UInt64 PC, UInt64 Offset, UInt64 OpSize, UInt64 InstSize, int TagType, nint TagBuf);

@@ -32,8 +32,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         // TODO: Make these an extension to a IReadOnlyDictionary<>
+        // NOTE these are all VERY similar but NOT generic as that would require some sort of
+        // generic interface for the ToABI() support. That would require either exposing raw
+        // interop types as part of the documented API surface of this library OR an explicit
+        // interface implementation, which would require boxing to get at the function...
         private protected static IMemoryOwner<LLVMOrcCSymbolMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
+            [ValidatedNotNull] IReadOnlyDictionary<SymbolStringPoolEntry, EvaluatedSymbol> symbols
             )
         {
             ArgumentNullException.ThrowIfNull(symbols);
@@ -41,19 +45,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             var nativeArrayOwner = MemoryPool<LLVMOrcCSymbolMapPair>.Shared.Rent(symbols.Count);
             var nativeSpan = nativeArrayOwner.Memory.Span;
             int i = 0;
+            using var enumerator = symbols.GetEnumerator();
             try
             {
                 for(; i < symbols.Count; ++i)
                 {
-                    nativeSpan[ i ] = symbols[ i ].ToABI();
+                    enumerator.MoveNext();
+                    // NOTE: This will AddRef the handle for the name (Key)
+                    //       As the native code will assume ownership of the name
+                    nativeSpan[ i ] = enumerator.Current.ToABI();
                 }
             }
             catch
             {
                 // release any addrefs made so far...
+                enumerator.Reset();
                 for(; i >=0; --i)
                 {
-                    symbols[i].Key.DangerousRelease();
+                    enumerator.MoveNext();
+                    enumerator.Current.Key.DangerousRelease();
                 }
 
                 throw;
@@ -63,7 +73,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         private protected static IMemoryOwner<LLVMOrcCSymbolAliasMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols
+            [ValidatedNotNull] IReadOnlyDictionary<SymbolStringPoolEntry, SymbolAliasMapEntry> symbols
             )
         {
             ArgumentNullException.ThrowIfNull(symbols);
@@ -71,19 +81,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             var nativeArrayOwner = MemoryPool<LLVMOrcCSymbolAliasMapPair>.Shared.Rent(symbols.Count);
             var nativeSpan = nativeArrayOwner.Memory.Span;
             int i = 0;
+            using var enumerator = symbols.GetEnumerator();
             try
             {
                 for(; i < symbols.Count; ++i)
                 {
-                    nativeSpan[ i ] = symbols[ i ].ToABI();
+                    enumerator.MoveNext();
+                    // NOTE: This will AddRef the handle for the name (Key)
+                    //       As the native code will assume ownership of the name
+                    nativeSpan[ i ] = enumerator.Current.ToABI();
                 }
             }
             catch
             {
                 // release any addrefs made so far...
+                enumerator.Reset();
                 for(; i >=0; --i)
                 {
-                    symbols[i].Key.DangerousRelease();
+                    enumerator.MoveNext();
+                    enumerator.Current.Key.DangerousRelease();
                 }
 
                 throw;
@@ -93,7 +109,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         private protected static IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
+            [ValidatedNotNull] IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
             )
         {
             ArgumentNullException.ThrowIfNull(symbols);
@@ -101,19 +117,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             var nativeArrayOwner = MemoryPool<LLVMOrcCSymbolFlagsMapPair>.Shared.Rent(symbols.Count);
             var nativeSpan = nativeArrayOwner.Memory.Span;
             int i = 0;
+            using var enumerator = symbols.GetEnumerator();
+
             try
             {
                 for(; i < symbols.Count; ++i)
                 {
-                    nativeSpan[ i ] = symbols[ i ].ToABI();
+                    enumerator.MoveNext();
+                    // NOTE: This will AddRef the handle for the name (Key)
+                    //       As the native code will assume ownership of the name
+                    nativeSpan[ i ] = enumerator.Current.ToABI();
                 }
             }
             catch
             {
                 // release any addrefs made so far...
+                enumerator.Reset();
                 for(; i >=0; --i)
                 {
-                    symbols[i].Key.DangerousRelease();
+                    enumerator.MoveNext();
+                    enumerator.Current.Key.DangerousRelease();
                 }
 
                 throw;

@@ -50,14 +50,14 @@ In this sample that is handled in the constructor of the target dependent detail
 would allow command line options for the CPU target variants and feature sets. For this sample those are just
 hard coded into the target details class to keep things simple and focused on the rest of the code generation.
 
-[!code-csharp[Main](ITargetDependentDetails.cs#ITargetDependentDetails)]
+[!code-csharp[Main](ITargetABI.cs#ITargetABI)]
 
 This interface isolates the rest of the code from knowing which architecture is used, and theoretically
 could include support for additional targets beyond the two in the sample source.
 
 The sample determines which target to use based on the second command line argument to the application
 
-[!code-csharp[Main](Program.cs#TargetDetailsSelection)]
+[!code-csharp[Main](Program.cs#TargetABISelection)]
 
 ## Creating the Module
 To generate code in Ubiquity.NET.Llvm a [Module](xref:Ubiquity.NET.Llvm.Module) is required as

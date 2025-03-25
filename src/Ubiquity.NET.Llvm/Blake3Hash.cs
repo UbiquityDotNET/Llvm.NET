@@ -6,9 +6,14 @@
 
 using System.Security.Cryptography;
 
-namespace Ubiquity.NET.Llvm.Interop
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Blake3;
+
+namespace Ubiquity.NET.Llvm
 {
-    /// <summary>LLVM implementation of the Blake3 hash algorithm</summary>
+    /// <summary>.NET Wrapper around the LLVM implementation of the Blake3 hash algorithm</summary>
+    /// <seealso href="https://en.wikipedia.org/wiki/BLAKE_(hash_function)"/>
+    /// <seealso href="https://llvm.org/doxygen/md_lib_Support_BLAKE3_README.html"/>
+    /// <seealso href="https://llvm.org/doxygen/classllvm_1_1BLAKE3.html"/>
     public class Blake3Hash
         : HashAlgorithm
     {

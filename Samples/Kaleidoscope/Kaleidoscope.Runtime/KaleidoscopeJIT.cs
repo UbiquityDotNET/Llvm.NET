@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -43,10 +42,10 @@ namespace Kaleidoscope.Runtime
                 using var putchardName = MangleAndIntern("putchard");
                 using var printdName = MangleAndIntern("printd");
 
-                List<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols = [
-                    new(putchardName, new(MakeRawPtr(&BuiltIns.PutChard), symFlags)),
-                    new(printdName, new(MakeRawPtr(&BuiltIns.Printd), symFlags)),
-                ];
+                var absoluteSymbols = new DictionaryBuilder<SymbolStringPoolEntry, EvaluatedSymbol> {
+                    [putchardName] = new(MakeRawPtr(&BuiltIns.PutChard), symFlags),
+                    [printdName] = new(MakeRawPtr(&BuiltIns.Printd), symFlags),
+                }.ToImmutable();
 
                 using var absoluteMaterializer = new AbsoluteMaterializationUnit(absoluteSymbols);
                 MainLib.Define(absoluteMaterializer);

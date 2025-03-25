@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public CustomMaterializationUnit(
             LazyEncodedString name,
             MaterializationAction materializeAction,
-            IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
+            IReadOnlyDictionary<SymbolStringPoolEntry, SymbolFlags> symbols,
             SymbolStringPoolEntry? initSymbol = null
             )
             : base( MakeHandle( name, symbols, materializeAction, null, initSymbol ) )
@@ -66,7 +66,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             LazyEncodedString name,
             MaterializationAction materializeAction,
             DiscardAction? discardAction,
-            IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
+            IReadOnlyDictionary<SymbolStringPoolEntry, SymbolFlags> symbols,
             SymbolStringPoolEntry? initSymbol = null
             )
             : base( MakeHandle( name, symbols, materializeAction, discardAction, initSymbol ) )
@@ -76,7 +76,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         // Provides construction of a materialization unit handle for the base type
         private static LLVMOrcMaterializationUnitRef MakeHandle(
             LazyEncodedString name,
-            IReadOnlyList<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
+            IReadOnlyDictionary<SymbolStringPoolEntry, SymbolFlags> symbols,
             MaterializationAction materializeAction,
             DiscardAction? discardAction,
             SymbolStringPoolEntry? initSymbol = null

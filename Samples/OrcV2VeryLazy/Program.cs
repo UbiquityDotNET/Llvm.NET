@@ -25,9 +25,9 @@ internal class Program
         SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
         using var internedFooBodyName = jit.MangleAndIntern(FooBodySymbolName);
-        List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> fooSym = [
-            new(internedFooBodyName, flags),
-        ];
+        var fooSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            [internedFooBodyName] = flags,
+        }.ToImmutable();
 
         // ownership of this Materialization Unit (MU) is "moved" to the JITDyLib in the
         // call to Define. Applying a "using" ensures it is released even if an exception
@@ -38,9 +38,9 @@ internal class Program
         jit.MainLib.Define(fooMu);
 
         using var internedBarBodyName = jit.MangleAndIntern(BarBodySymbolName);
-        List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> barSym = [
-            new(internedBarBodyName, flags),
-        ];
+        var barSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            [internedBarBodyName] = flags,
+        }.ToImmutable();
 
         using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
         jit.MainLib.Define(barMu);
@@ -48,10 +48,13 @@ internal class Program
         using var ism = new LocalIndirectStubsManager(triple);
         using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
 
-        List<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> reexports =[
-            new(jit.MangleAndIntern("foo"), new(internedFooBodyName, flags)),
-            new(jit.MangleAndIntern("bar"), new(internedBarBodyName, flags)),
-        ];
+        using var internedFoo = jit.MangleAndIntern("foo");
+        using var internedBar = jit.MangleAndIntern("bar");
+
+        var reexports = new DictionaryBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+            [internedFoo] = new(internedFooBodyName, flags),
+            [internedBar] = new(internedBarBodyName, flags),
+        }.ToImmutable();
 
         using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
         jit.MainLib.Define(lazyReExports);

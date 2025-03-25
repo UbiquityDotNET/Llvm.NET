@@ -18,7 +18,7 @@ namespace Ubiquity.NET.InteropHelpers
     /// the documentation for source generator custom marshallers (especially for arrays)
     /// is so poor that it wasn't plausible to implement this support as a custom marshaller.
     /// Instead these APIs are declared to simplify and control the marshalling as safely
-    /// as possible. Callers must use one of the overloads to <see cref="O:WithManagedArrayAsNativePointer"/>
+    /// as possible. Callers must use one of the overloads to <see cref="O:WithNativePointer"/>
     /// to allocate, build, call an operation delegate, and then release the native array.
     /// That is, the hard and tedious work of allocating, copying the managed array and pinning
     /// the array for native consumption is ALL handled in the methods provided by this class.
@@ -48,7 +48,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// copied to it (Without any AddRefs etc... the managed array OWNS the handles) before
         /// pinning the memory for the native handles and calling <paramref name="op"/>
         /// </remarks>
-        public static TRetVal WithManagedArrayAsNativePointer<THandle, TRetVal>(THandle[] managedArray, ReturningOp<TRetVal> op)
+        public static TRetVal WithNativePointer<THandle, TRetVal>(this THandle[] managedArray, ReturningOp<TRetVal> op)
             where THandle : SafeHandle
         {
             ArgumentNullException.ThrowIfNull(managedArray);
@@ -68,8 +68,8 @@ namespace Ubiquity.NET.InteropHelpers
         /// <typeparam name="THandle"><see cref="SafeHandle"/> type to marshal</typeparam>
         /// <param name="managedArray">Managed array of handles to marshal (by reference)</param>
         /// <param name="op">Operation to perform with the native array.</param>
-        /// <inheritdoc cref="WithManagedArrayAsNativePointer{THandle, TRetVal}(THandle[], ReturningOp{TRetVal})" path="/remarks"/>
-        public static void WithManagedArrayAsNativePointer<THandle>(THandle[] managedArray, VoidOp op)
+        /// <inheritdoc cref="WithNativePointer{THandle, TRetVal}(THandle[], ReturningOp{TRetVal})" path="/remarks"/>
+        public static void WithManagedArrayAsNativePointer<THandle>(this THandle[] managedArray, VoidOp op)
             where THandle : SafeHandle
         {
             ArgumentNullException.ThrowIfNull(managedArray);

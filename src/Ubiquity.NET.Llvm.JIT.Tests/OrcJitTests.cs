@@ -35,15 +35,15 @@ namespace Ubiquity.NET.Llvm.Tests
 
             using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
 
-            List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> fooSym = [
-                new(mangledFooBodySymName, flags),
-            ];
+            var fooSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+                [mangledFooBodySymName] = flags,
+            }.ToImmutable();
 
             using var mangledBarBodySymName = jit.MangleAndIntern(BarBodySymbolName);
 
-            List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> barSym = [
-                new(mangledBarBodySymName, flags),
-            ];
+            var barSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+                [mangledBarBodySymName] = flags,
+            }.ToImmutable();
 
             using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
             using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
@@ -56,10 +56,10 @@ namespace Ubiquity.NET.Llvm.Tests
             using var mangledFoo = jit.MangleAndIntern("foo");
             using var mangledBar = jit.MangleAndIntern("bar");
 
-            List<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> reexports =[
-                new(mangledFoo, new(mangledFooBodySymName, flags)),
-                new(mangledBar, new(mangledBarBodySymName, flags)),
-            ];
+            var reexports = new DictionaryBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+                [mangledFoo] = new(mangledFooBodySymName, flags),
+                [mangledBar] = new(mangledBarBodySymName, flags),
+            }.ToImmutable();
 
             using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
             jit.MainLib.Define(lazyReExports);

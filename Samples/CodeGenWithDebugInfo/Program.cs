@@ -58,15 +58,15 @@ namespace CodeGenWithDebugInfo
 
             using var libLLVM = InitializeLLVM( );
 
-            #region TargetDetailsSelection
+            #region TargetABISelection
             switch( args[ 0 ].ToUpperInvariant( ) )
             {
             case "M3":
-                TargetDetails = new CortexM3Details( libLLVM );
+                TargetABI = new CortexM3ABI( libLLVM );
                 break;
 
             case "X64":
-                TargetDetails = new X64Details( libLLVM );
+                TargetABI = new X64ABI( libLLVM );
                 break;
 
             default:
@@ -74,7 +74,7 @@ namespace CodeGenWithDebugInfo
                 return;
             }
 
-            string moduleName = $"test_{TargetDetails.ShortName}.bc";
+            string moduleName = $"test_{TargetABI.ShortName}.bc";
             #endregion
 
             #region CreatingModule
@@ -83,12 +83,12 @@ namespace CodeGenWithDebugInfo
             using var diBuilder = new DIBuilder(module);
             DICompileUnit compilationUnit = diBuilder.CreateCompileUnit(SourceLanguage.C99, srcPath, VersionIdentString);
             module.SourceFileName = Path.GetFileName( srcPath );
-            using var targetMachine = TargetDetails.CreateTargetMachine();
+            using var targetMachine = TargetABI.CreateTargetMachine();
             module.TargetTriple = targetMachine.Triple;
             using var layout = targetMachine.CreateTargetData();
             module.Layout = layout;
 
-            TargetDependentAttributes = TargetDetails.BuildTargetDependentFunctionAttributes( context );
+            TargetDependentAttributes = TargetABI.BuildTargetDependentFunctionAttributes( context );
             #endregion
 
             var diFile = diBuilder.CreateFile( srcPath );
@@ -242,7 +242,7 @@ namespace CodeGenWithDebugInfo
                                                  .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
 
             Debug.Assert( !fooPtr.IsOpaquePtr(), "Expected the debug info for a pointer was created with a valid ElementType");
-            TargetDetails.AddABIAttributesForByValueStructure( copyFunc, 0 );
+            TargetABI.AddABIAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
         #endregion
@@ -252,7 +252,7 @@ namespace CodeGenWithDebugInfo
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
-            TargetDetails.AddModuleFlags( module );
+            TargetABI.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
         #endregion
@@ -391,7 +391,7 @@ namespace CodeGenWithDebugInfo
 
         // these fields are initialized in main before being used elsewhere
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        private static ITargetDependentDetails TargetDetails;
+        private static ITargetABI TargetABI;
 
         private static IEnumerable<AttributeValue> TargetDependentAttributes { get; set; }
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.

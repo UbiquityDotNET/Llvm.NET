@@ -504,10 +504,11 @@ namespace Kaleidoscope.Chapter71
             FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
             using var mangledName = KlsJIT.MangleAndIntern(definition.Name);
             using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
+            var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
-            List<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols = [
-                new(mangledBodyName, new(SymbolGenericOption.Exported | SymbolGenericOption.Callable)),
-            ];
+            var symbols = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+                [mangledBodyName] = commonSymbolFlags,
+            }.ToImmutable();
 
             // NOTE: ownership of this MU is passed to LLVM in the JITDyLib.Define() call.
             // The Dispose is NORMALLY a NOP, but in case of an exception BEFORE transfer
@@ -515,9 +516,9 @@ namespace Kaleidoscope.Chapter71
             using var materializer = new CustomMaterializationUnit($"{definition.Name}MU", Materialize, symbols);
             KlsJIT.MainLib.Define(materializer);
 
-            List<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> reexports =[
-                new(mangledName, new(mangledBodyName, new(SymbolGenericOption.Exported | SymbolGenericOption.Callable)))
-            ];
+            var reexports = new DictionaryBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>{
+                [mangledName] = new(mangledBodyName, commonSymbolFlags)
+            }.ToImmutable();
 
             // NOTE: ownership of this MU is passed to LLVM in the JITDyLib.Define() call
             // the Dispose is NORMALLY a NOP, but in case of an exception BEFORE transfer
