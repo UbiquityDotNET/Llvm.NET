@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
 
@@ -58,6 +59,7 @@ namespace Kaleidoscope.Runtime
         /// <param name="ctx">Thread safe context this module is part of</param>
         /// <param name="module">Module to add</param>
         /// <returns>Resource tracker for this instance</returns>
+        [MustUseReturnValue]
         public ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module)
         {
             ArgumentNullException.ThrowIfNull(ctx);

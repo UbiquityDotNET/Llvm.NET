@@ -53,6 +53,7 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         /// <exception cref="InvalidOperationException">Native Interop library already loaded for a different target</exception>
         /// <exception cref="ArgumentOutOfRangeException">The target provided is undefined or <see cref="CodeGenTarget.All"/></exception>
+        [MustUseReturnValue]
         public static ILibLlvm InitializeLLVM(CodeGenTarget target = CodeGenTarget.Native)
         {
             return new Library(InteropLib.InitializeLLVM((InteropCodeGenTarget)target));

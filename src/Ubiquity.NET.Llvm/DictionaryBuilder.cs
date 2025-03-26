@@ -51,6 +51,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc cref="ImmutableDictionary{TKey, TValue}.Builder.ToImmutable"/>
+        [MustUseReturnValue]
         public ImmutableDictionary<TKey, TValue> ToImmutable()
         {
             return Builder.ToImmutable();

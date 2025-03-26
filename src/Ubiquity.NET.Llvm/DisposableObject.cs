@@ -15,11 +15,16 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        [SuppressMessage( "Design", "CA1063:Implement IDisposable Correctly", Justification = "This guarantees dispose is idempotent" )]
+        /// <remarks>
+        /// This implementation guarantees that Dispose is an idempotent call and does NOT trigger any exceptions. That is,
+        /// if already disposed, derived types will never see a call to <see cref="Dispose(bool)"/> as this will silently
+        /// treat it as a NOP. Additionally, this follows the standard pattern such that finalization is suppressed when
+        /// disposing.
+        /// </remarks>
+        [SuppressMessage( "Design", "CA1063:Implement IDisposable Correctly", Justification = "This guarantees dispose is idempotent, and therefore superior to the official pattern" )]
         public void Dispose()
         {
-            bool needsDispose = Interlocked.Exchange( ref IsDisposed_, 1 ) == 0;
-            if(needsDispose)
+            if(!Interlocked.Exchange( ref IsDisposed_, true ))
             {
                 Dispose( true );
                 GC.SuppressFinalize( this );
@@ -27,7 +32,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets a value indicating whether the object is disposed or not</summary>
-        public bool IsDisposed => IsDisposed_ != 0;
+        public bool IsDisposed => IsDisposed_;
 
         /// <summary>Abstract method that is implemented by derived types to perform the dispose operation</summary>
         /// <param name="disposing">Indicates if this is a dispose or finalize operation</param>
@@ -43,6 +48,6 @@ namespace Ubiquity.NET.Llvm
 
         // do not write directly to this field, it should only be done with interlocked calls in Dispose() to ensure correct behavior
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Indicates the field should never be directly written to" )]
-        private int IsDisposed_;
+        private bool IsDisposed_;
     }
 }

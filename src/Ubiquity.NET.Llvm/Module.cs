@@ -268,7 +268,7 @@ namespace Ubiquity.NET.Llvm
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
 
-            // modRef is invalid on failed conditions and transferred to new module; Dispose not needed
+            // modRef is invalid on failed conditions and transferred to new module on success; Dispose not needed
             return LLVMParseBitcodeInContext2( context.GetUnownedHandle(), buffer.Handle, out LLVMModuleRef modRef ).Failed
                 ? throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer )
                 : new( modRef );
