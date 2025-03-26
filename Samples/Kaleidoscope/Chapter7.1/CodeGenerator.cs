@@ -57,6 +57,9 @@ namespace Kaleidoscope.Chapter71
         #region Dispose
         public void Dispose()
         {
+            // NOTE: There is no map of resource trackers as the JIT handles
+            // calling Destroy on a materializer to release any resources it
+            // might own.
             JitLCTM.Dispose();
             JitISM.Dispose();
             KlsJIT.Dispose();
@@ -97,7 +100,7 @@ namespace Kaleidoscope.Chapter71
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
                 // up. The object support is more for existing object files than for generated IR.
-                using ResourceTracker resourceTracker = KlsJIT.Add(ThreadSafeContext, Module);
+                using ResourceTracker resourceTracker = KlsJIT.AddWithTracking(ThreadSafeContext, Module);
                 Value retVal;
 
                 // Invoking the function via a function pointer is an "unsafe" operation.
@@ -300,7 +303,7 @@ namespace Kaleidoscope.Chapter71
             // generate then block instructions
             InstructionBuilder.PositionAtEnd( thenBlock );
 
-            // InstructionBuilder.InserBlock after this point is !null
+            // InstructionBuilder.InsertBlock after this point is !null
             Debug.Assert( InstructionBuilder.InsertBlock != null, "expected non-null InsertBlock" );
             var thenValue = conditionalExpression.ThenExpression.Accept( this );
             if(thenValue == null)

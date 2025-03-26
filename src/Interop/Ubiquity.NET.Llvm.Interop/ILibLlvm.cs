@@ -73,17 +73,17 @@ namespace Ubiquity.NET.Llvm.Interop
         All = int.MaxValue
     }
 
-    /// <summary>Target tools to register/enable</summary>
+    /// <summary>ResolverTarget tools to register/enable</summary>
     [Flags]
     public enum TargetRegistration
     {
         /// <summary>Register nothing</summary>
         None = 0x00,
 
-        /// <summary>Register the Target class</summary>
+        /// <summary>Register the ResolverTarget class</summary>
         Target = 0x01,
 
-        /// <summary>Register the Target info for the target</summary>
+        /// <summary>Register the ResolverTarget info for the target</summary>
         TargetInfo = 0x02,
 
         /// <summary>Register the target machine(s) for a target</summary>
@@ -117,9 +117,10 @@ namespace Ubiquity.NET.Llvm.Interop
     public interface ILibLlvm
         : IDisposable
     {
-        /// <summary>Registers components for ARM AArch64 target(s)</summary>
-        /// <param name="target">Target architecture to register/initialize</param>
-        /// <param name="registrations">Flags indicating which components to register/enable</param>
+        /// <summary>Registers components for the specified targets</summary>
+        /// <param name="target">ResolverTarget architecture to register/initialize</param>
+        /// <param name="registrations">Flags indicating which components for the target to register/enable</param>
+        /// <
         void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
     }
 }

@@ -20,11 +20,6 @@ using namespace llvm;
 
 extern "C"
 {
-    void LibLLVMGetVersionInfo( LibLLVMVersionInfo* pVersionInfo )
-    {
-        *pVersionInfo = { LLVM_VERSION_MAJOR, LLVM_VERSION_MINOR, LLVM_VERSION_PATCH };
-    }
-
     LLVMBool LibLLVMHasUnwindDest( LLVMValueRef Invoke )
     {
         if ( CleanupReturnInst* CRI = dyn_cast< CleanupReturnInst >( unwrap( Invoke ) ) )

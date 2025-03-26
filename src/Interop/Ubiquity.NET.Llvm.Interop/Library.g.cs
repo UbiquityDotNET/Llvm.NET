@@ -105,7 +105,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /*
         internal static void RegisterXXX( TargetRegistration registrations = TargetRegistration.All )
         {
-            if( registrations.HasFlag( TargetRegistration.Target ) )
+            if( registrations.HasFlag( TargetRegistration.ResolverTarget ) )
             {
                 LLVMInitializeXXXTarget( );
             }

@@ -20,7 +20,10 @@ namespace Ubiquity.NET.Llvm.UT
             ArgumentNullException.ThrowIfNull( ctx );
 
             LibLLVM?.Dispose();
-            LibLLVM = Library.InitializeLLVM();
+
+            // Native is assumed, Tests also use Cortex-M3; so load that variant of
+            // the interop APIs.
+            LibLLVM = Library.InitializeLLVM( CodeGenTarget.ARM );
             LibLLVM.RegisterTarget( CodeGenTarget.All );
         }
 

@@ -20,10 +20,6 @@ namespace Kaleidosocope.Tests
         {
             ArgumentNullException.ThrowIfNull( ctx );
 
-            // LLVM really doesn't like being re-initialized in the same module
-            // the LLVM-C un-init seems to undo things more aggressively than the init
-            // does. (e.g. it wipes out things assumed init via static construction so
-            // they are not re-initialized [Not verified, but that would explain the behavior]
             LibLLVM?.Dispose();
             LibLLVM = Library.InitializeLLVM( );
             LibLLVM.RegisterTarget( CodeGenTarget.Native );

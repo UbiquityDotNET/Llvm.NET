@@ -61,9 +61,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Determines if this instance describes a given <see cref="Function"/></summary>
         /// <param name="function"><see cref="Function"/> to test</param>
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public bool Describes( Function function )
-            => LibLLVMSubProgramDescribes( Handle, function.ThrowIfNull().Handle );
+        {
+            return function.DISubProgram is not null && function.DISubProgram.Equals(this);
+        }
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

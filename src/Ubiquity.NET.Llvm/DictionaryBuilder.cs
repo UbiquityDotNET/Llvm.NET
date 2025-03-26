@@ -11,9 +11,18 @@ namespace Ubiquity.NET.Llvm
     /// <typeparam name="TKey">Type of the key</typeparam>
     /// <typeparam name="TValue">Type of the value</typeparam>
     /// <remarks>
-    /// This implementation is based on a post on StackOverflow by Ian Griffiths (updated for latest language
+    /// <para>
+    /// For unknown reasons <see cref="ImmutableDictionary{TKey, TValue}"/> does not have an equivalent
+    /// to <see cref="CollectionBuilderAttribute"/> (Perhaps because there is none for a dictionary?)
+    /// the normal behavior of initializing a mutable dictionary and then converting it to immutable
+    /// has sub-par performance as it needs to allocate the mutable form, add the members, then allocate
+    /// the immutable form and COPY all the members. This includes the overhead of building and maintaining
+    /// the hash codes for all the keys - just to copy it and destroy it... MUCH better performance is achieved
+    /// by building the immutable array directly then converting it into the final immutable form.
+    /// </para>
+    /// <para>This implementation is based on a post on StackOverflow by Ian Griffiths (updated for latest language
     /// and runtime version functionality). It provides collection initialization support for
-    /// <see cref="ImmutableDictionary{TKey, TValue}"/>.
+    /// <see cref="ImmutableDictionary{TKey, TValue}"/>.</para>
     /// </remarks>
     /// <seealso href="https://stackoverflow.com/questions/24033629/how-can-i-create-a-new-instance-of-immutabledictionary"/>
     [SuppressMessage( "Design", "CA1010:Generic interface should also be implemented", Justification = "IEnumerable is unused but must exist to support collection initializers" )]

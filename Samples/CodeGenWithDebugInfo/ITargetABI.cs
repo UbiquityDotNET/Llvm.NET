@@ -4,7 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Values;
@@ -23,12 +25,13 @@ namespace CodeGenWithDebugInfo
     /// </remarks>
     /// <seealso href="https://discourse.llvm.org/t/llvm-introduce-an-abi-lowering-library/84554"/>
     internal interface ITargetABI
+        : IDisposable
     {
         string ShortName { get; }
 
-        IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx );
+        ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx );
 
-        void AddABIAttributesForByValueStructure( Function function, int paramIndex );
+        void AddAttributesForByValueStructure( Function function, int paramIndex );
 
         void AddModuleFlags( Module module );
 

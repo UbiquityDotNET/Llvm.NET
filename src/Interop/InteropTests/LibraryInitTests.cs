@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
@@ -14,26 +16,38 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         [TestMethod]
         public void TestLibraryInit( )
         {
-            using var lib = Library.InitializeLLVM();
+            using var lib = Library.InitializeLLVM(CodeGenTarget.Native);
             Assert.IsNotNull(lib);
         }
 
         [TestMethod]
         public void TestLibraryReInit( )
         {
-            using(var lib = Library.InitializeLLVM())
+            using(var lib = Library.InitializeLLVM(CodeGenTarget.Native))
             {
                 Assert.IsNotNull(lib);
-                lib.RegisterTarget(CodeGenTarget.Native);
             }
 
-            // re-initialize the library without unloading it
-            // (There is no API to allow unloading it at present)
-            using(var lib = Library.InitializeLLVM())
+            _ = Assert.ThrowsExactly<InvalidOperationException>(()=>
             {
-                Assert.IsNotNull(lib);
-                lib.RegisterTarget(CodeGenTarget.ARM);
-            }
+                // attempt to re-initialize the library. This is expected
+                // to fail. The runtime has already resolved the address of
+                // the import functions and has no way to "invalidate" the
+                // resolution to an address. Thus it is not possible to reload
+                // the library with a different one, or even unload and then
+                // reload again as it might land the methods at a different
+                // address.
+                using var lib = Library.InitializeLLVM( CodeGenTarget.ARM );
+            } );
+        }
+
+        [TestMethod]
+        public void TestLibraryInitWithAllFails( )
+        {
+            _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(()=>
+            {
+                using var lib = Library.InitializeLLVM( CodeGenTarget.All );
+            } );
         }
     }
 }

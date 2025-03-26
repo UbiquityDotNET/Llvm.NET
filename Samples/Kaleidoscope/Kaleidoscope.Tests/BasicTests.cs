@@ -24,10 +24,10 @@ namespace Kaleidoscope.Tests
     [SuppressMessage( "StyleCop.CSharp.SpacingRules", "SA1012:Opening braces should be spaced correctly", Justification = "Empty lambda" )]
     public class BasicTests
     {
-// initialized by test framework
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        public TestContext TestContext { get; set; }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        public BasicTests(TestContext testContext)
+        {
+            RuntimeContext = testContext;
+        }
 
         [TestMethod]
         [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in these test]" )]
@@ -45,7 +45,7 @@ namespace Kaleidoscope.Tests
             // Read, Parse, Print loop
             await foreach( IAstNode node in nodes )
             {
-                TestContext.WriteLine( "PARSED: {0}", node );
+                RuntimeContext.WriteLine( "PARSED: {0}", node );
             }
         }
 
@@ -106,12 +106,12 @@ namespace Kaleidoscope.Tests
         }
 
         private async Task RunBasicReplLoop( LanguageLevel level
-                                     , TextReader input
-                                     , Func<DynamicRuntimeState, TextWriter, IKaleidoscopeCodeGenerator<Value>> generatorFactory
-                                     )
+                                           , TextReader input
+                                           , Func<DynamicRuntimeState, TextWriter, IKaleidoscopeCodeGenerator<Value>> generatorFactory
+                                           )
         {
             var parser = new Parser( level );
-            using var outputWriter = new TestContextTextWriter( TestContext );
+            using var outputWriter = new TestContextTextWriter( RuntimeContext );
             using var generator = generatorFactory( parser.GlobalState, outputWriter );
 
             // Create sequence of parsed AST RootNodes to feed the 'REPL' loop
@@ -130,19 +130,21 @@ namespace Kaleidoscope.Tests
                     switch( result )
                     {
                     case ConstantFP value:
-                        TestContext.WriteLine( "Evaluated to {0}", value.Value );
+                        outputWriter.WriteLine( "Evaluated to {0}", value.Value );
                         break;
 
                     case Function function:
-                        TestContext.WriteLine( "Generated:\n{0}", function.ToString( ) );
+                        outputWriter.WriteLine( "Generated:\n{0}", function.ToString( ) );
                         break;
 
                     default:
-                        TestContext.WriteLine( result.ToString( ) );
+                        outputWriter.WriteLine( result.ToString( ) );
                         break;
                     }
                 }
             }
         }
+
+        private readonly TestContext RuntimeContext;
     }
 }

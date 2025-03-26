@@ -51,6 +51,11 @@ namespace Kaleidoscope.Chapter6
 
         public void Dispose()
         {
+            foreach(var tracker in FunctionModuleMap.Values)
+            {
+                tracker.Dispose();
+            }
+
             KlsJIT.Dispose();
             Module?.Dispose();
             InstructionBuilder.Dispose();
@@ -90,7 +95,7 @@ namespace Kaleidoscope.Chapter6
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
                 // up. The object support is more for existing object files than for generated IR.
-                using ResourceTracker resourceTracker = KlsJIT.Add(ThreadSafeContext, Module);
+                using ResourceTracker resourceTracker = KlsJIT.AddWithTracking(ThreadSafeContext, Module);
                 Value retVal;
 
                 // Invoking the function via a function pointer is an "unsafe" operation.
@@ -118,7 +123,7 @@ namespace Kaleidoscope.Chapter6
 
                 // Unknown if any future input will call the function so add it for lazy compilation.
                 // Native code is generated for the module automatically only when required.
-                FunctionModuleMap.Add( definition.Name, KlsJIT.Add( ThreadSafeContext, Module ) );
+                FunctionModuleMap.Add( definition.Name, KlsJIT.AddWithTracking( ThreadSafeContext, Module ) );
                 return function;
             }
         }
@@ -409,7 +414,7 @@ namespace Kaleidoscope.Chapter6
                 InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
-                // Add a new entry to the PHI node for the back-edge.
+                // AddWithTracking a new entry to the PHI node for the back-edge.
                 variable.AddIncoming( nextVar, loopEndBlock );
 
                 // for expression always returns 0.0 for consistency, there is no 'void'

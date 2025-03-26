@@ -36,7 +36,7 @@ namespace Kaleidoscope.Runtime
             OptimizationPasses = optimizationPasses;
             SymbolFlags symFlags = new(SymbolGenericOption.Callable);
 
-            // Add a materializer for the well-known symbols for the managed code implementations
+            // AddWithTracking a materializer for the well-known symbols for the managed code implementations
             unsafe
             {
                 using var putchardName = MangleAndIntern("putchard");
@@ -58,16 +58,16 @@ namespace Kaleidoscope.Runtime
         /// <param name="ctx">Thread safe context this module is part of</param>
         /// <param name="module">Module to add</param>
         /// <returns>Resource tracker for this instance</returns>
-        public ResourceTracker Add(ThreadSafeContext ctx, Module module)
+        public ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module)
         {
             ArgumentNullException.ThrowIfNull(ctx);
             ArgumentNullException.ThrowIfNull(module);
 
-            ResourceTracker retVal = MainLib.CreateResourceTracker();
+            ResourceTracker tracker = MainLib.CreateResourceTracker();
 
             using ThreadSafeModule tsm = new(ctx, module);
-            AddModule(retVal, tsm);
-            return retVal;
+            AddModule(tracker, tsm);
+            return tracker;
         }
 
         /// <summary>Gets or sets the output writer for output from the program.</summary>

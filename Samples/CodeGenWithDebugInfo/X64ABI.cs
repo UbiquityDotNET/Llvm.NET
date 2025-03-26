@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Types;
@@ -13,15 +13,20 @@ using Ubiquity.NET.Llvm.Values;
 
 namespace CodeGenWithDebugInfo
 {
-    internal class X64ABI
+    internal sealed class X64ABI
         : ITargetABI
     {
-        public X64ABI( ILibLlvm libLLVM )
+        public X64ABI( )
         {
-            libLLVM.RegisterTarget( CodeGenTarget.X86 );
+            LlvmLib = Library.InitializeLLVM( CodeGenTarget.X86 );
         }
 
         public string ShortName => "x86";
+
+        public void Dispose()
+        {
+            LlvmLib.Dispose();
+        }
 
         public TargetMachine CreateTargetMachine( )
         {
@@ -35,7 +40,7 @@ namespace CodeGenWithDebugInfo
                                            );
         }
 
-        public void AddABIAttributesForByValueStructure( Function function, int paramIndex )
+        public void AddAttributesForByValueStructure( Function function, int paramIndex )
         {
             if(function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct)
             {
@@ -48,7 +53,7 @@ namespace CodeGenWithDebugInfo
             module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
         }
 
-        public IEnumerable<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
+        public ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
             => [
                 ctx.CreateAttribute( "disable-tail-calls", "false" ),
                 ctx.CreateAttribute( "less-precise-fpmad", "false" ),
@@ -62,6 +67,8 @@ namespace CodeGenWithDebugInfo
                 ctx.CreateAttribute( "use-soft-float", "false" ),
                 ctx.CreateAttribute( AttributeKind.UWTable )
             ];
+
+        private readonly ILibLlvm LlvmLib;
 
         private const string Cpu = "x86-64";
         private const string Features = "+sse,+sse2";

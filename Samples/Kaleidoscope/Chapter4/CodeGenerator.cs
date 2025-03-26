@@ -51,6 +51,11 @@ namespace Kaleidoscope.Chapter4
         #region Dispose
         public void Dispose()
         {
+            foreach(var tracker in FunctionModuleMap.Values)
+            {
+                tracker.Dispose();
+            }
+
             KlsJIT.Dispose();
             Module?.Dispose();
             InstructionBuilder?.Dispose();
@@ -92,7 +97,7 @@ namespace Kaleidoscope.Chapter4
                 // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
                 // up. The object support is more for existing object files than for generated IR.
-                using ResourceTracker resourceTracker = KlsJIT.Add(ThreadSafeContext, Module);
+                using ResourceTracker resourceTracker = KlsJIT.AddWithTracking(ThreadSafeContext, Module);
                 Value retVal;
 
                 // Invoking the function via a function pointer is an "unsafe" operation.
@@ -120,7 +125,7 @@ namespace Kaleidoscope.Chapter4
 
                 // Unknown if any future input will call the function so add it for lazy compilation.
                 // Native code is generated for the module automatically only when required.
-                FunctionModuleMap.Add( definition.Name, KlsJIT.Add( ThreadSafeContext, Module ) );
+                FunctionModuleMap.Add( definition.Name, KlsJIT.AddWithTracking( ThreadSafeContext, Module ) );
                 return function;
             }
         }

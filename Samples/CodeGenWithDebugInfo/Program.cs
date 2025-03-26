@@ -17,8 +17,6 @@ using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
-using static Ubiquity.NET.Llvm.Library;
-
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Sample application" )]
 
 #pragma warning disable SA1512, SA1513, SA1515 // single line comments used to tag regions for extraction into docs
@@ -56,25 +54,15 @@ namespace CodeGenWithDebugInfo
             srcPath = Path.GetFullPath( srcPath );
             #endregion
 
-            using var libLLVM = InitializeLLVM( );
-
             #region TargetABISelection
-            switch( args[ 0 ].ToUpperInvariant( ) )
+            using var targetABI = AbiFactory(args[0]);
+            if (targetABI is null)
             {
-            case "M3":
-                TargetABI = new CortexM3ABI( libLLVM );
-                break;
-
-            case "X64":
-                TargetABI = new X64ABI( libLLVM );
-                break;
-
-            default:
                 ShowUsage( );
                 return;
             }
 
-            string moduleName = $"test_{TargetABI.ShortName}.bc";
+            string moduleName = $"test_{targetABI.ShortName}.bc";
             #endregion
 
             #region CreatingModule
@@ -83,12 +71,12 @@ namespace CodeGenWithDebugInfo
             using var diBuilder = new DIBuilder(module);
             DICompileUnit compilationUnit = diBuilder.CreateCompileUnit(SourceLanguage.C99, srcPath, VersionIdentString);
             module.SourceFileName = Path.GetFileName( srcPath );
-            using var targetMachine = TargetABI.CreateTargetMachine();
+            using var targetMachine = targetABI.CreateTargetMachine();
             module.TargetTriple = targetMachine.Triple;
             using var layout = targetMachine.CreateTargetData();
             module.Layout = layout;
 
-            TargetDependentAttributes = TargetABI.BuildTargetDependentFunctionAttributes( context );
+            var abiAttributes = targetABI.BuildTargetDependentFunctionAttributes( context );
             #endregion
 
             var diFile = diBuilder.CreateFile( srcPath );
@@ -133,7 +121,7 @@ namespace CodeGenWithDebugInfo
             // add module flags and compiler identifiers...
             // this can technically occur at any point, though placing it here makes
             // comparing against clang generated files easier
-            AddModuleFlags( module );
+            AddModuleFlags(targetABI, module );
             #endregion
 
             #region CreatingQualifiedTypes
@@ -146,8 +134,8 @@ namespace CodeGenWithDebugInfo
             // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
             //       However, this is what Clang ends up doing for some reason so it is
             //       replicated here to aid in comparing the generated LL files.
-            Function doCopyFunc = DeclareDoCopyFunc( in diBuilder, diFile, voidType );
-            Function copyFunc = DeclareCopyFunc( in diBuilder, diFile, voidType, constFoo, fooPtr );
+            Function doCopyFunc = DeclareDoCopyFunc( in diBuilder, diFile, voidType, abiAttributes );
+            Function copyFunc = DeclareCopyFunc(targetABI, in diBuilder, diFile, voidType, constFoo, fooPtr, abiAttributes );
 
             CreateCopyFunctionBody( in diBuilder, copyFunc, diFile, fooType, fooPtr, constFoo );
             CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
@@ -179,8 +167,23 @@ namespace CodeGenWithDebugInfo
             Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).Location ) );
         }
 
+        private static ITargetABI? AbiFactory(string arg)
+        {
+            return arg.ToUpperInvariant() switch
+            {
+                "M3" => new CortexM3ABI(),
+                "X64" => new X64ABI(),
+                _ => null,
+            };
+        }
+
         #region FunctionDeclarations
-        private static Function DeclareDoCopyFunc( ref readonly DIBuilder diBuilder, DIFile diFile, IDebugType<ITypeRef, DIType> voidType )
+        private static Function DeclareDoCopyFunc(
+            ref readonly DIBuilder diBuilder,
+            DIFile diFile,
+            IDebugType<ITypeRef, DIType> voidType,
+            IEnumerable<AttributeValue> abiAttributes
+            )
         {
             var module = diBuilder.OwningModule;
             var doCopySig = module.Context.CreateFunctionType( in diBuilder, voidType );
@@ -198,15 +201,17 @@ namespace CodeGenWithDebugInfo
                                                   , debugFlags: DebugInfoFlags.None
                                                   , isOptimized: false
                                                   ).AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoInline, AttributeKind.NoUnwind, AttributeKind.OptimizeNone )
-                                                   .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
+                                                   .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
             return doCopyFunc;
         }
 
-        private static Function DeclareCopyFunc( ref readonly DIBuilder diBuilder
+        private static Function DeclareCopyFunc( ITargetABI abi
+                                               , ref readonly DIBuilder diBuilder
                                                , DIFile diFile
                                                , IDebugType<ITypeRef, DIType> voidType
                                                , DIDerivedType constFoo
                                                , DebugPointerType fooPtr
+                                               , IEnumerable<AttributeValue> abiAttributes
                                                )
         {
             var module = diBuilder.OwningModule;
@@ -239,20 +244,20 @@ namespace CodeGenWithDebugInfo
                                                 , isOptimized: false
                                                 ).Linkage( Linkage.Internal ) // static function
                                                  .AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoUnwind, AttributeKind.NoInline, AttributeKind.OptimizeNone )
-                                                 .AddAttributes( FunctionAttributeIndex.Function, TargetDependentAttributes );
+                                                 .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
 
             Debug.Assert( !fooPtr.IsOpaquePtr(), "Expected the debug info for a pointer was created with a valid ElementType");
-            TargetABI.AddABIAttributesForByValueStructure( copyFunc, 0 );
+            abi.AddAttributesForByValueStructure( copyFunc, 0 );
             return copyFunc;
         }
         #endregion
 
         #region AddModuleFlags
-        private static void AddModuleFlags( Module module )
+        private static void AddModuleFlags(ITargetABI abi, Module module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
-            TargetABI.AddModuleFlags( module );
+            abi.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }
         #endregion
@@ -386,14 +391,7 @@ namespace CodeGenWithDebugInfo
                        .Return( );
         }
 
-        // obviously this is not clang but using an identical name helps in comparisons with actual clang output
+        // obviously this is not clang but using an identical name helps in text comparisons with actual clang output
         private const string VersionIdentString = "clang version 5.0.0 (tags/RELEASE_500/rc4)";
-
-        // these fields are initialized in main before being used elsewhere
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        private static ITargetABI TargetABI;
-
-        private static IEnumerable<AttributeValue> TargetDependentAttributes { get; set; }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
     }
 }

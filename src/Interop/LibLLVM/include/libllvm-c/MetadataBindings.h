@@ -40,7 +40,6 @@ extern "C" {
     typedef struct LLVMOpaqueMDOperand* LibLLVMMDOperandRef;
 
     LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType );
-    LLVMBool LibLLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F );
     LLVMContextRef LibLLVMGetNodeContext( LLVMMetadataRef /*MDNode*/ node );
     LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind(LLVMMetadataRef handle);
 

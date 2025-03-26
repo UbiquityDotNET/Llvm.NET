@@ -6,20 +6,8 @@
 
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
-    [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LibLLVMVersionInfo
-    {
-        public readonly int Major;
-        public readonly int Minor;
-        public readonly int Patch;
-    }
-
     public static partial class IRBindings
     {
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMGetVersionInfo(out LibLLVMVersionInfo pVersionInfo);
-
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]

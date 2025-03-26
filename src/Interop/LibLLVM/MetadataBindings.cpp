@@ -38,12 +38,6 @@ extern "C"
         return wrap( &pNode->getContext( ) );
     }
 
-    LLVMBool LibLLVMSubProgramDescribes( LLVMMetadataRef subProgram, LLVMValueRef /*const Function **/F )
-    {
-        DISubprogram* pSub = unwrap<DISubprogram>( subProgram );
-        return pSub->describes( unwrap<Function>( F ) );
-    }
-
     LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef /*DIBasicType*/ basicType )
     {
         return static_cast< LibLLVMDwarfAttributeEncoding >( unwrap<DIBasicType>( basicType )->getEncoding( ) );

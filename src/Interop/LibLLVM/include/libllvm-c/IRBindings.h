@@ -28,15 +28,6 @@
 extern "C" {
 #endif
 
-    typedef struct LibLLVMVersionInfo
-    {
-        int Major;
-        int Minor;
-        int Patch;
-    }LibLLVMVersionInfo;
-
-    void LibLLVMGetVersionInfo( LibLLVMVersionInfo* pVersionInfo );
-
     LLVMBool LibLLVMHasUnwindDest( LLVMValueRef Invoke );
 #ifdef __cplusplus
 }

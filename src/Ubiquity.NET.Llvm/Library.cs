@@ -6,8 +6,7 @@
 
 /*
 This is mostly a simple wrapper around the interop code. It exists here to aid in isolating consumers
-of this library from direct dependencies on the interop library. It is marked as private assets = "all"
-so that it does not automatically flow as a dependency to consumers. If a consumer has a reason to access
+of this library from direct dependencies on the interop library. If a consumer has a reason to access
 the low level interop (Test code sometimes does) it must explicitly reference it.
 */
 
@@ -34,31 +33,39 @@ namespace Ubiquity.NET.Llvm
             ItfImpl.RegisterTarget((InteropCodeGenTarget)target, (InteropTargetRegistration)registrations);
         }
 
-        // TODO: Does LLVM 20 fix the problem of re-init from same process? [Some static init wasn't re-run and stale data left in place]
-
         /// <summary>Initializes the native LLVM library support</summary>
-        /// <returns>
-        /// <see cref="ILibLlvm"/> implementation for the library
-        /// </returns>
+        /// <param name="target">Target to use in resolving the proper library that implements the LLVM native code. [Default: CodeGenTarget.Native]</param>
+        /// <returns><see cref="ILibLlvm"/> implementation for the library</returns>
         /// <remarks>
-        /// This can only be called once per application to initialize the
-        /// LLVM library. <see cref="System.IDisposable.Dispose()"/> will release
-        /// any resources allocated by the library. The V10 LLVM library does
-        /// *NOT* support re-initialization within the same process. Thus, this
-        /// is best used at the top level of the application and released at or
-        /// near process exit.
+        /// <para>This can be called multiple times per application BUT all such calls MUST use the same value for
+        /// <paramref name="target"/> in order to load the underlying native LLVM library.</para>
+        /// <para><see cref="Dispose()"/> will release any resources allocated by the library but NOT the library itself.
+        /// That is loaded once the first time this is called. The .NET runtime does *NOT* support re-load of a P/Invoke
+        /// library within the same process. Thus, this is best used at the top level of the application and released at
+        /// or near process exit. An access violation crash is likely to occur if any attempts to use the library's functions
+        /// occurs after it is unloaded as there is no way to invalidate the results of resolving the method + library into
+        /// an address.</para>
+        /// <para>While any variant of the native library will support <see cref="CodeGenTarget.Native"/> they can support up
+        /// to one other target. Thus if the consumer is ever going to support cross-platform scenarios, then it MUST specify
+        /// the target the first time this is called. This restriction is a tradeoff from the cost of building the native interop
+        /// library. Building all possible processor targets into a single library for every possible runtime is just not feasible
+        /// in the automated builds for most projects let alone a no budget OSS project like this one.</para>
         /// </remarks>
-        public static ILibLlvm InitializeLLVM()
+        /// <exception cref="InvalidOperationException">Native Interop library already loaded for a different target</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The target provided is undefined or <see cref="CodeGenTarget.All"/></exception>
+        public static ILibLlvm InitializeLLVM(CodeGenTarget target = CodeGenTarget.Native)
         {
-            return new Library(InteropLib.InitializeLLVM());
+            return new Library(InteropLib.InitializeLLVM((InteropCodeGenTarget)target));
         }
 
+        // "MOVE" construction, this instance takes over responsibility
+        // of calling dispose.
         internal Library(InteropItf impl)
         {
             ItfImpl = impl;
         }
 
-        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Ownership is 'moved' to this type" )]
+        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "MOVE semantics mean owned by this instance now" )]
         private readonly InteropItf ItfImpl;
     }
 }
