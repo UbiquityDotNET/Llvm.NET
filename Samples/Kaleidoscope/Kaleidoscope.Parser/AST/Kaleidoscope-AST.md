@@ -26,10 +26,10 @@ basic categories of nodes:
       * [Var-In](#var-in)
 
 ## AST Node
-The IAstNode interface forms the common interface for all AST nodes, it provides the common properties
-for all nodes.
+The AstNode class forms the common base for all AST nodes, it provides the common location
+support for all nodes.
 
-[!code-csharp[IAstNode](IAstNode.cs)]
+[!code-csharp[IAstNode](AstNode.cs)]
 
 ## Function Definition
 FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
