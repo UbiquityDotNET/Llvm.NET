@@ -30,6 +30,7 @@ global using System.Runtime.InteropServices;
 global using System.Text;
 global using System.Threading;
 
+global using Ubiquity.NET.Extensions;
 global using Ubiquity.NET.InteropHelpers;
 global using Ubiquity.NET.Llvm.DebugInfo;
 global using Ubiquity.NET.Llvm.Instructions;

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Ubiquity.NET.InteropHelpers
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Disposable type that runs a specified action on dispose</summary>
     /// <remarks>

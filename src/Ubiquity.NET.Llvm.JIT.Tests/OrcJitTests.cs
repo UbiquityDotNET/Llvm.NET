@@ -9,6 +9,7 @@ using System.Diagnostics;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.OrcJITv2;
 using Ubiquity.NET.Runtime.Utils;

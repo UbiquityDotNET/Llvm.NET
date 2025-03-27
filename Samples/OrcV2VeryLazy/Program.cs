@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;

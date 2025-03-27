@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Ubiquity.NET.InteropHelpers
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>The kind of line endings for a string of characters</summary>
     public enum LineEndingKind
@@ -46,22 +46,13 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Gets the system (<see cref="Environment"/>) line ending kind for the current environment</summary>
         public static LineEndingKind SystemLineEndings => LazySystemKind.Value;
 
-        /// <summary>Converts a native string into a managed string with managed environment line endings</summary>
-        /// <param name="abiString">Native string pointer</param>
-        /// <param name="srcKind">Line ending kind for the native ABI [default: <see cref="LineEndingKind.LineFeed"/></param>
-        /// <returns>Managed string with normalized line endings that match the system</returns>
-        public static unsafe string? NormalizeLineEndings(byte* abiString, LineEndingKind srcKind = LineEndingKind.LineFeed)
-        {
-            return NormalizeLineEndings( ExecutionEncodingStringMarshaller.ConvertToManaged(abiString), srcKind, SystemLineEndings );
-        }
-
         /// <summary>Normalize a managed string with system defined line endings to a specified kind</summary>
         /// <param name="txt">input string to convert</param>
         /// <param name="dstKind">destination kind of string to convert</param>
         /// <returns>Normalized string; If dstKind matches the current system environment then this returns <paramref name="txt"/> un-modified</returns>
-        public static string? NormalizeLineEndings(this string? txt, LineEndingKind dstKind)
+        public static string? NormalizeLineEndings(this string txt, LineEndingKind dstKind)
         {
-            return NormalizeLineEndings(txt, SystemLineEndings, dstKind);
+            return txt.NormalizeLineEndings(SystemLineEndings, dstKind);
         }
 
         /// <summary>Converts a string into a string with managed environment line endings</summary>
@@ -69,7 +60,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="srcKind">Line ending kind for the source (<paramref name="txt"/>)</param>
         /// <param name="dstKind">Line ending kind for the destination (return string)</param>
         /// <returns>Normalized string; If the <paramref name="srcKind"/> is the same as <paramref name="dstKind"/> this is returns <paramref name="txt"/> un-modified</returns>
-        public static string? NormalizeLineEndings(this string? txt, LineEndingKind srcKind, LineEndingKind dstKind)
+        public static string? NormalizeLineEndings(this string txt, LineEndingKind srcKind, LineEndingKind dstKind)
         {
             // shortcut optimization for environments that match the ABI assumption
             // as well as any null or empty strings

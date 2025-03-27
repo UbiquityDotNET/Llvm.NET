@@ -15,6 +15,7 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 using Kaleidoscope.Runtime;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.OrcJITv2;

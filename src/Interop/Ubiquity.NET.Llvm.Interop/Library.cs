@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Reflection;
+using Ubiquity.NET.Extensions;
 
 namespace Ubiquity.NET.Llvm.Interop
 {

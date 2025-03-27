@@ -151,11 +151,21 @@ namespace Ubiquity.NET.InteropHelpers
 
         /// <summary>Implicit cast to a string via <see cref="ToString"/></summary>
         /// <param name="self">instance to cast</param>
-        public static implicit operator string(LazyEncodedString self) => self.ThrowIfNull().ToString();
+        public static implicit operator string(LazyEncodedString self)
+        {
+            ArgumentNullException.ThrowIfNull(self);
+
+            return self.ToString();
+        }
 
         /// <summary>Implicit cast to a span via <see cref="ToReadOnlySpan"/></summary>
         /// <param name="self">instance to cast</param>
-        public static implicit operator ReadOnlySpan<byte>(LazyEncodedString self) => self.ThrowIfNull().ToReadOnlySpan();
+        public static implicit operator ReadOnlySpan<byte>(LazyEncodedString self)
+        {
+            ArgumentNullException.ThrowIfNull(self);
+
+            return self.ToReadOnlySpan();
+        }
 
         /// <summary>Convenient implicit conversion of a managed string into a Lazily encoded string</summary>
         /// <param name="managed">managed string to wrap with lazy encoding support</param>

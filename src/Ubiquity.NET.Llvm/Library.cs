@@ -10,6 +10,8 @@ of this library from direct dependencies on the interop library. If a consumer h
 the low level interop (Test code sometimes does) it must explicitly reference it.
 */
 
+using Ubiquity.NET.Extensions;
+
 using InteropCodeGenTarget = Ubiquity.NET.Llvm.Interop.CodeGenTarget;
 using InteropItf = Ubiquity.NET.Llvm.Interop.ILibLlvm;
 using InteropLib = Ubiquity.NET.Llvm.Interop.Library;

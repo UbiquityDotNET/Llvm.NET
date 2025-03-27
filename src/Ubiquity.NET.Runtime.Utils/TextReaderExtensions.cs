@@ -16,6 +16,10 @@ namespace Ubiquity.NET.Runtime.Utils
     /// <summary>Utility class to provide extensions for REPL Loop</summary>
     public static class TextReaderExtensions
     {
+        /// <summary>Provides an async sequence of lines from a reader</summary>
+        /// <param name="input">reader to retrieve lines from</param>
+        /// <param name="cancelToken">Cancelation token to cancel production of lines</param>
+        /// <returns>Async sequence of lines from <paramref name="input"/></returns>
         public static async IAsyncEnumerable<string> ToLinesAsync( this TextReader input, [EnumeratorCancellation] CancellationToken cancelToken = default )
         {
             ArgumentNullException.ThrowIfNull( input );
@@ -34,10 +38,27 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <summary>Async operator to encapsulate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
         /// <param name="reader">Input reader</param>
         /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
-        /// <returns>Observable sequence of complete statements ready for parsing</returns>
+        /// <param name="cancelToken">Cancelation token for the async operation</param>
+        /// <returns>Async sequence of complete statements ready for parsing</returns>
+        public static IAsyncEnumerable<string> ToStatements(
+            this TextReader reader,
+            Action<ReadyState>? prompt,
+            CancellationToken cancelToken = default
+            )
+        {
+            return ToStatements(reader, prompt, ';', cancelToken);
+        }
+
+        /// <summary>Async operator to encapsulate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
+        /// <param name="reader">Input reader</param>
+        /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
+        /// <param name="terminationChar">Character to mark termination of the statement</param>
+        /// <param name="cancelToken">Cancelation token for the async operation</param>
+        /// <returns>Async sequence of complete statements ready for parsing</returns>
         public static async IAsyncEnumerable<string> ToStatements(
             this TextReader reader,
             Action<ReadyState>? prompt,
+            char terminationChar,
             [EnumeratorCancellation] CancellationToken cancelToken = default
             )
         {
@@ -50,7 +71,7 @@ namespace Ubiquity.NET.Runtime.Utils
                     break;
                 }
 
-                var partials = SplitLines(bldr, line, cancelToken);
+                var partials = SplitLines(bldr, line, terminationChar, cancelToken);
                 foreach( var (txt, isPartial) in partials )
                 {
                     stateManager.UpdateState( txt, isPartial );
@@ -67,10 +88,11 @@ namespace Ubiquity.NET.Runtime.Utils
         private static IEnumerable<(string Txt, bool IsPartial)> SplitLines(
             StringBuilder buffer,
             string line,
+            char terminationChar,
             CancellationToken cancelToken = default
             )
         {
-            string[ ] statements = line.Split( ';' );
+            string[ ] statements = line.Split( terminationChar );
 
             // if the last line in the group was terminated with a ; the
             // the last entry is an empty string, but a single blank line
@@ -91,7 +113,7 @@ namespace Ubiquity.NET.Runtime.Utils
 
                 string statement = statements[ i ];
                 buffer.Append( statement );
-                buffer.Append( ';' );
+                buffer.Append( terminationChar );
                 buffer.AppendLine( );
 
                 yield return (buffer.ToString( ), false);

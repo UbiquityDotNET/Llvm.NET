@@ -9,7 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
 using Ubiquity.NET.Runtime.Utils;

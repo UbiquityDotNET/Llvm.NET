@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Extensions;
 
 namespace Ubiquity.NET.Runtime.Utils
 {

@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Ubiquity.NET.InteropHelpers
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>`MustUseRetVal` analyzer compatible attribute</summary>
     /// <seealso href="https://www.nuget.org/packages/MustUseRetVal"/>

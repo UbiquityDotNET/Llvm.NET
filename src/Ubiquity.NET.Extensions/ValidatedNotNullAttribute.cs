@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Ubiquity.NET.InteropHelpers
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Attribute to mark parameters as validated not null in a method</summary>
     /// <remarks>

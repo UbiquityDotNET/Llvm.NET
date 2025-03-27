@@ -7,7 +7,7 @@
 using System;
 using System.IO.Hashing;
 
-namespace Ubiquity.NET.InteropHelpers
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Utility class to provide extension methods for a span of bytes</summary>
     public static class ByteSpanHelpers

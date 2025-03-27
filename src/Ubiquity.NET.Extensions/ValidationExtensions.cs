@@ -8,7 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Ubiquity.NET.InteropHelpers
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Extension class to provide Fluent validation of arguments</summary>
     /// <remarks>

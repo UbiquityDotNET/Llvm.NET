@@ -8,9 +8,7 @@ using System.Collections;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
-using Ubiquity.NET.InteropHelpers;
-
-namespace Ubiquity.NET.Runtime.Utils
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Simple type to support direct creation of an immutable array via <see cref="ImmutableDictionary{TKey, TValue}.Builder"/></summary>
     /// <typeparam name="TKey">Type of the key</typeparam>
