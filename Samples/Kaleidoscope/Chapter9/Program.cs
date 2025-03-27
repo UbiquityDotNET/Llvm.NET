@@ -9,9 +9,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Runtime.Utils;
 
 using static Ubiquity.NET.Llvm.Library;
 

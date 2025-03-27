@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <IsAotCompatible>True</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
+  </ItemGroup>
+
+</Project>

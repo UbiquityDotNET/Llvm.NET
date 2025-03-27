@@ -24,15 +24,12 @@ global using System.Runtime.InteropServices.Marshalling;
 global using System.Threading;
 
 global using Ubiquity.NET.InteropHelpers;
-global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
 global using Ubiquity.NET.Llvm.Interop.Properties;
 
 // Extended C API
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.IRBindings;
 
 // Official LLVM-C API
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Blake3;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Blake3Constants;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;

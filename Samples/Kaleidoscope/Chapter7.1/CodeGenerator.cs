@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -20,6 +19,7 @@ using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.OrcJITv2;
 using Ubiquity.NET.Llvm.Values;
+using Ubiquity.NET.Runtime.Utils;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -27,9 +27,9 @@ namespace Kaleidoscope.Chapter71
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
     public sealed class CodeGenerator
-        : AstVisitorBase<Value>
+        : KaleidoscopeAstVisitorBase<Value>
         , IDisposable
-        , IKaleidoscopeCodeGenerator<Value>
+        , ICodeGenerator<Value>
     {
         public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
             : base( null )

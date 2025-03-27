@@ -4,13 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Kaleidoscope.Grammar.AST;
-using Kaleidoscope.Runtime;
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Chapter2
 {
     internal sealed class CodeGenerator
-        : IKaleidoscopeCodeGenerator<IAstNode>
+        : ICodeGenerator<IAstNode>
     {
         public void Dispose( )
         {

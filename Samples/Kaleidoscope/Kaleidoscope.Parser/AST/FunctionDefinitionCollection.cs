@@ -8,9 +8,11 @@ using System.Collections.ObjectModel;
 
 using Kaleidoscope.Grammar.AST;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar
 {
-    public class FunctionDefinitionCollection
+    public sealed class FunctionDefinitionCollection
         : KeyedCollection<string, FunctionDefinition>
     {
         public void AddOrReplaceItem( FunctionDefinition item )

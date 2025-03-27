@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 using Antlr4.Runtime;
 
+using Ubiquity.NET.ANTLR.Utils;
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar.ANTLR
 {
     internal partial class KaleidoscopeParser

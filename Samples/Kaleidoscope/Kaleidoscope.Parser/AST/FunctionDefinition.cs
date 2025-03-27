@@ -4,9 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -15,8 +16,9 @@ namespace Kaleidoscope.Grammar.AST
     /// This supports construction of anonymous functions
     /// that do not have an explicit prototype in the source language
     /// </remarks>
-    public class FunctionDefinition
-        : IAstNode
+    public sealed class FunctionDefinition
+        : AstNode
+        , IAstNode
     {
         public FunctionDefinition( SourceSpan location
                                  , Prototype signature
@@ -33,15 +35,13 @@ namespace Kaleidoscope.Grammar.AST
                                  , IImmutableList<LocalVariableDeclaration> localVariables
                                  , bool isAnonymous = false
                                  )
+            : base(location)
         {
             Signature = signature;
             Body = body;
             IsAnonymous = isAnonymous;
-            Location = location;
             LocalVariables = localVariables;
         }
-
-        public SourceSpan Location { get; }
 
         /// <summary>Gets the prototype signature for the function</summary>
         public Prototype Signature { get; }
@@ -59,23 +59,23 @@ namespace Kaleidoscope.Grammar.AST
 
         public IReadOnlyList<LocalVariableDeclaration> LocalVariables { get; }
 
-        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull( visitor );
-            return visitor.Visit( this );
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
         }
 
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
-        public IEnumerable<IAstNode> Children
+        public override IEnumerable<IAstNode> Children
         {
             get
             {

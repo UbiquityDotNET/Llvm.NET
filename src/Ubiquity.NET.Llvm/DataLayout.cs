@@ -111,6 +111,7 @@ namespace Ubiquity.NET.Llvm
         public static DataLayout Parse( ReadOnlySpan<byte> utf8Text, IFormatProvider? provider )
         {
             #pragma warning disable IDISP007 // Don't dispose injected
+            // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
             // nativeRef is NOT injected, it's an OUT param and owned by this call site
             using var errRef = ParseLayout(utf8Text, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
@@ -127,6 +128,7 @@ namespace Ubiquity.NET.Llvm
             result = null;
 
             #pragma warning disable IDISP007 // Don't dispose injected
+            // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
             // nativeRef is NOT injected, it's an OUT param and owned by this call site
             using var errRef = ParseLayout(utf8Text, out LLVMTargetDataRef nativeRef);
             using(nativeRef)

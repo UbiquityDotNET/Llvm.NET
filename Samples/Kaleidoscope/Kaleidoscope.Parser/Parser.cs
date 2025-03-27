@@ -14,28 +14,10 @@ using Antlr4.Runtime.Tree;
 using Kaleidoscope.Grammar.ANTLR;
 using Kaleidoscope.Grammar.AST;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar
 {
-    /// <summary>Enumeration to define the kinds of diagnostic intermediate data to generate for each function definition</summary>
-    [Flags]
-    public enum DiagnosticRepresentations
-    {
-        /// <summary>No diagnostics</summary>
-        None,
-
-        /// <summary>Generate an XML representation of the parse tree</summary>
-        Xml,
-
-        /// <summary>Generate a DGML representation of the parse tree</summary>
-        Dgml,
-
-        /// <summary>Generates a BlockDiag representation of the parse tree</summary>
-        BlockDiag,
-
-        /// <summary>Emits debug tracing during the parse to an attached debugger</summary>
-        DebugTraceParser
-    }
-
     /// <summary>Common parse stack for the Kaleidoscope language</summary>
     /// <remarks>
     /// A great value of ANTLR is its flexibility, but that comes at the cost

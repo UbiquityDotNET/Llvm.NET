@@ -7,20 +7,22 @@
 using System;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
+using Kaleidoscope.Grammar.Visualizers;
 using Kaleidoscope.Runtime;
+
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Chapter2
 {
     internal class ReplEngine
-        : ReadEvaluatePrintLoopBase<IAstNode>
+        : KaleidoscopeReadEvaluatePrintLoopBase<IAstNode>
     {
         public ReplEngine( )
             : base( LanguageLevel.MutableVariables )
         {
         }
 
-        public override IKaleidoscopeCodeGenerator<IAstNode> CreateGenerator( DynamicRuntimeState state )
+        public override ICodeGenerator<IAstNode> CreateGenerator( DynamicRuntimeState state )
         {
             return new CodeGenerator( );
         }
@@ -29,6 +31,7 @@ namespace Kaleidoscope.Chapter2
         {
             Console.WriteLine( "PARSED: {0}", resultValue );
             var graph = resultValue.CreateGraph( );
+            // use graph in a debugger, possibly save select graphs to disk for evaluation...
         }
     }
 }

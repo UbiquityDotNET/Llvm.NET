@@ -8,10 +8,12 @@ using System.Collections.Generic;
 
 using OpenSoftware.DgmlTools.Model;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar.AST
 {
-    internal class AstGraphGenerator
-        : AstVisitorBase<object>
+    public class AstGraphGenerator
+        : KaleidoscopeAstVisitorBase<object>
     {
         public AstGraphGenerator( )
             : base( null )
@@ -153,7 +155,7 @@ namespace Kaleidoscope.Grammar.AST
                 Label = node.GetType( ).Name,
                 Category = "TreeNode"
             };
-            graphNode.Properties.Add( "SourceInteval", node.Location.ToString( ) );
+            graphNode.Properties.Add( "SourceInterval", node.Location.ToString( ) );
 
             if( NodeStack.Count > 0 )
             {

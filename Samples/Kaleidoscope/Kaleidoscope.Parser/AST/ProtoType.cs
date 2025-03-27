@@ -4,11 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -17,8 +17,9 @@ namespace Kaleidoscope.Grammar.AST
     /// This is used to enable consistent representation when the prototype
     /// is synthesized during code generation (i.e. Anonymous expressions)
     /// </remarks>
-    public class Prototype
-        : IAstNode
+    public sealed class Prototype
+        : AstNode
+        , IAstNode
     {
         /// <summary>Initializes a new instance of the <see cref="Prototype"/> class.</summary>
         /// <param name="location">Source location covering the complete signature</param>
@@ -55,7 +56,7 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="name">name of the function</param>
         /// <param name="isCompilerGenerated">Indicates if this is a compiler generated prototype</param>
         public Prototype( SourceSpan location, string name, bool isCompilerGenerated )
-            : this( location, name, isCompilerGenerated, false, Enumerable.Empty<ParameterDeclaration>( ) )
+            : this( location, name, isCompilerGenerated, false, [] )
         {
         }
 
@@ -65,17 +66,20 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="isCompilerGenerated">Indicates if this is a compiler generated prototype</param>
         /// <param name="isExtern">Indicates if this is an external prototype</param>
         /// <param name="parameters">names of each parameter</param>
-        public Prototype( SourceSpan location, string name, bool isCompilerGenerated, bool isExtern, IEnumerable<ParameterDeclaration> parameters )
+        public Prototype(
+            SourceSpan location,
+            string name,
+            bool isCompilerGenerated,
+            bool isExtern,
+            IEnumerable<ParameterDeclaration> parameters
+            )
+            : base(location)
         {
-            Location = location;
             Name = name;
-            Parameters = parameters.ToImmutableArray( );
+            Parameters = [ .. parameters ];
             IsCompilerGenerated = isCompilerGenerated;
             IsExtern = isExtern;
         }
-
-        /// <inheritdoc/>
-        public SourceSpan Location { get; }
 
         /// <summary>Gets the name of the function</summary>
         public string Name { get; }
@@ -89,25 +93,24 @@ namespace Kaleidoscope.Grammar.AST
         /// <summary>Gets the parameters for the function</summary>
         public IReadOnlyList<ParameterDeclaration> Parameters { get; }
 
-        /// <inheritdoc/>
-        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this );
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
+        }
+
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
         /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
-        {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<IAstNode> Children => Parameters;
+        public override IEnumerable<IAstNode> Children => Parameters;
 
         /// <inheritdoc/>
         public override string ToString( )

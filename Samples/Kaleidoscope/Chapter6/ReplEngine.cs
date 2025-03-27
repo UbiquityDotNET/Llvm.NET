@@ -10,18 +10,19 @@ using Kaleidoscope.Grammar;
 using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Llvm.Values;
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Chapter6
 {
     internal class ReplEngine
-        : ReadEvaluatePrintLoopBase<Value>
+        : KaleidoscopeReadEvaluatePrintLoopBase<Value>
     {
         public ReplEngine( )
             : base( LanguageLevel.UserDefinedOperators )
         {
         }
 
-        public override IKaleidoscopeCodeGenerator<Value> CreateGenerator( DynamicRuntimeState state )
+        public override ICodeGenerator<Value> CreateGenerator( DynamicRuntimeState state )
         {
             return new CodeGenerator( state );
         }

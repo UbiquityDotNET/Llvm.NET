@@ -18,6 +18,7 @@ using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.OrcJITv2;
 using Ubiquity.NET.Llvm.Values;
+using Ubiquity.NET.Runtime.Utils;
 
 using ConstantExpression = Kaleidoscope.Grammar.AST.ConstantExpression;
 
@@ -25,9 +26,9 @@ namespace Kaleidoscope.Chapter5
 {
     /// <summary>Performs LLVM IR Code generation from the Kaleidoscope AST</summary>
     public sealed class CodeGenerator
-        : AstVisitorBase<Value>
+        : KaleidoscopeAstVisitorBase<Value>
         , IDisposable
-        , IKaleidoscopeCodeGenerator<Value>
+        , ICodeGenerator<Value>
     {
         #region Initialization
         public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)

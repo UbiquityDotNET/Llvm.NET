@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Runtime
 {
@@ -111,7 +112,7 @@ namespace Kaleidoscope.Runtime
             return (UInt64)funcPtr;
         }
 
-        // These are the built-ins known by Kaleidoscope and used by many of the sample chapters.
+        // These are the built-in functions known by the Kaleidoscope JIT and used by many of the sample chapters.
         // They are registered with the JIT in the constructor as absolute symbols.
         private static class BuiltIns
         {

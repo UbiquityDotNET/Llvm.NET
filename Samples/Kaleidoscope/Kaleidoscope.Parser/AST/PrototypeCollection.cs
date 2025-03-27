@@ -9,9 +9,11 @@ using System.Collections.ObjectModel;
 
 using Kaleidoscope.Grammar.AST;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar
 {
-    public class PrototypeCollection
+    public sealed class PrototypeCollection
         : KeyedCollection<string, Prototype>
     {
         public void AddOrReplaceItem( Prototype info )

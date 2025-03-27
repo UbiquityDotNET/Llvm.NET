@@ -91,11 +91,11 @@ namespace CodeGenWithDebugInfo
 
             #region CreatingStructureTypes
             // create the LLVM structure type and body with full debug information
-            var fooBody = new[ ]
+            var fooBody = new DebugMemberInfo[ ]
                 {
-                    new DebugMemberInfo( 0, "a", diFile, 3, i32 ),
-                    new DebugMemberInfo( 1, "b", diFile, 4, f32 ),
-                    new DebugMemberInfo( 2, "c", diFile, 5, i32Array_0_32 ),
+                    new( 0, "a", diFile, 3, i32 ),
+                    new( 1, "b", diFile, 4, f32 ),
+                    new( 2, "c", diFile, 5, i32Array_0_32 ),
                 };
 
             var fooType = new DebugStructType( in diBuilder, "struct.foo", compilationUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );

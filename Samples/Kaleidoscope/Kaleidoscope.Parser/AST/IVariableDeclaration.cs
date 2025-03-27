@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar.AST
 {
     public interface IVariableDeclaration

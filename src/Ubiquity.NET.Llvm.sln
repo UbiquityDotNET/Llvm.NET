@@ -130,8 +130,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "namespaces", "namespaces", 
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.DebugInfo.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.DebugInfo.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.Instructions.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.Instructions.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.md
-		..\docfx\current\namespaces\Ubiquity.NET.Llvm.ObjectFile.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.ObjectFile.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.Metadata.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.Metadata.md
+		..\docfx\current\namespaces\Ubiquity.NET.Llvm.ObjectFile.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.ObjectFile.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.OrcJITv2.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.OrcJITv2.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.Transforms.Legacy.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.Transforms.Legacy.md
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.Types.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.Types.md
@@ -154,6 +154,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "public", "public", "{BC13FE
 	ProjectSection(SolutionItems) = preProject
 		..\docfx\templates\Ubiquity\public\main.js = ..\docfx\templates\Ubiquity\public\main.js
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.Runtime.Utils", "Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj", "{E624FCCB-FFCD-468A-9D48-A407A64B145E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ubiquity.NET.ANTLR.Utils", "Ubiquity.NET.ANTLR.Utils\Ubiquity.NET.ANTLR.Utils.csproj", "{E4A525A4-8AE3-40CB-861C-9F398E127AF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -245,6 +249,14 @@ Global
 		{3D534AD9-820D-4ABC-95BD-DCA0DF6C05E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D534AD9-820D-4ABC-95BD-DCA0DF6C05E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D534AD9-820D-4ABC-95BD-DCA0DF6C05E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E624FCCB-FFCD-468A-9D48-A407A64B145E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E624FCCB-FFCD-468A-9D48-A407A64B145E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E624FCCB-FFCD-468A-9D48-A407A64B145E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E624FCCB-FFCD-468A-9D48-A407A64B145E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4A525A4-8AE3-40CB-861C-9F398E127AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4A525A4-8AE3-40CB-861C-9F398E127AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4A525A4-8AE3-40CB-861C-9F398E127AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4A525A4-8AE3-40CB-861C-9F398E127AF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

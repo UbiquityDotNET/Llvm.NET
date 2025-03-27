@@ -4,24 +4,24 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar.AST
 {
-    public class LocalVariableDeclaration
-        : IVariableDeclaration
+    public sealed class LocalVariableDeclaration
+        : AstNode
+        , IVariableDeclaration
     {
         public LocalVariableDeclaration( SourceSpan location, string name, IExpression? initializer, bool compilerGenerated = false )
+            : base(location)
         {
-            Location = location;
             Name = name;
             Initializer = initializer;
             CompilerGenerated = compilerGenerated;
         }
-
-        public SourceSpan Location { get; }
 
         public string Name { get; }
 
@@ -29,24 +29,23 @@ namespace Kaleidoscope.Grammar.AST
 
         public bool CompilerGenerated { get; }
 
-        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-
-            return visitor.Visit( this );
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
         }
 
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
-        public IEnumerable<IAstNode> Children
+        public override IEnumerable<IAstNode> Children
         {
             get
             {

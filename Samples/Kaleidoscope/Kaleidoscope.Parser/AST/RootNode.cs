@@ -4,45 +4,45 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar.AST
 {
-    public class RootNode
-        : IAstNode
+    public sealed class RootNode
+        : AstNode
+        , IAstNode
     {
         public RootNode( SourceSpan location, IAstNode child )
-            : this( location, new IAstNode[ ] { child } )
+            : this( location, [child] )
         {
         }
 
         public RootNode( SourceSpan location, IEnumerable<IAstNode> children )
+            : base(location)
         {
-            Location = location;
             ChildNodes = [ .. children ];
         }
 
-        public SourceSpan Location { get; }
-
-        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this );
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
         }
 
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
-        public IEnumerable<IAstNode> Children => ChildNodes;
+        public override IEnumerable<IAstNode> Children => ChildNodes;
 
         public override string ToString( )
         {

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
+using Ubiquity.NET.Runtime.Utils;
 
 internal class Program
 {
@@ -12,7 +12,7 @@ internal class Program
     {
         using var libLLVM = Library.InitializeLLVM( );
 
-        // Testing JIT so the only target of relevance is the native machine
+        // Using JIT so the only target of relevance is the native machine
         libLLVM.RegisterTarget( CodeGenTarget.Native );
 
         using var jit = new LlJIT();

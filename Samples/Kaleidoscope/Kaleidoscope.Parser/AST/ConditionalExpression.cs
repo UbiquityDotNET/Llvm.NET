@@ -4,13 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.AST
 {
-    public class ConditionalExpression
-        : IExpression
+    public sealed class ConditionalExpression
+        : AstNode
+        , IExpression
     {
         public ConditionalExpression( SourceSpan location
                                     , IExpression condition
@@ -18,15 +20,13 @@ namespace Kaleidoscope.Grammar.AST
                                     , IExpression elseExpression
                                     , LocalVariableDeclaration resultVar
                                     )
+            : base(location)
         {
-            Location = location;
             Condition = condition;
             ThenExpression = thenExpression;
             ElseExpression = elseExpression;
             ResultVariable = resultVar;
         }
-
-        public SourceSpan Location { get; }
 
         public IExpression Condition { get; }
 
@@ -34,29 +34,30 @@ namespace Kaleidoscope.Grammar.AST
 
         public IExpression ElseExpression { get; }
 
-        // compiler generated result variable supports building conditional
-        // expressions without the need for SSA form by using mutable variables
-        // The result is assigned a value from both sides of the branch. In
-        // pure SSA form this isn't needed as a PHI node would be used instead.
+        // Compiler generated result variable supports building conditional
+        // expressions without the need for SSA form in the AST/Code generation
+        // by using mutable variables. The result is assigned a value from both
+        // sides of the branch. In pure SSA form this isn't needed as a PHI node
+        // would be used instead.
         public LocalVariableDeclaration ResultVariable { get; }
 
-        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this );
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
         }
 
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
-        public IEnumerable<IAstNode> Children
+        public override IEnumerable<IAstNode> Children
         {
             get
             {

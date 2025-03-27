@@ -52,10 +52,10 @@ namespace Kaleidoscope.Grammar
         /// and a declaration takes it's place so that there is a sort of "Garbage Collection" to
         /// remove definitions when no longer needed.
         /// </remarks>
-        public FunctionDefinitionCollection FunctionDefinitions { get; } = new FunctionDefinitionCollection( );
+        public FunctionDefinitionCollection FunctionDefinitions { get; } = [];
 
         /// <summary>Gets a collection of declared functions</summary>
-        public PrototypeCollection FunctionDeclarations { get; } = new PrototypeCollection( );
+        public PrototypeCollection FunctionDeclarations { get; } = [];
 
         /// <summary>Generates a new unique name for an anonymous function</summary>
         /// <returns>Name for an anonymous function</returns>
@@ -113,33 +113,28 @@ namespace Kaleidoscope.Grammar
         {
             // internally operators are stored as token type integers to accommodate
             // simpler condition checks and switching on operator types in code generation
-            switch( kind )
+            return kind switch
             {
-            case OperatorKind.InfixLeftAssociative:
-            case OperatorKind.InfixRightAssociative:
-                return BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, precedence, false ) );
-
-            case OperatorKind.PreFix:
-                return UnaryOps.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, 0, false ) );
-
-            // case OperatorKind.None:
-            default:
-                throw new ArgumentException( "unknown kind", nameof( kind ) );
-            }
+                OperatorKind.InfixLeftAssociative or
+                OperatorKind.InfixRightAssociative => BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, precedence, false ) ),
+                OperatorKind.PreFix => UnaryOps.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, 0, false ) ),
+                // case OperatorKind.None:
+                _ => throw new ArgumentException( "unknown kind", nameof( kind ) ),
+            };
         }
 
-        private readonly OperatorInfoCollection UnaryOps = new( );
+        private readonly OperatorInfoCollection UnaryOps = [];
 
-        private readonly OperatorInfoCollection BinOpPrecedence = new( )
-        {
-            new OperatorInfo( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
-            new OperatorInfo( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
-            new OperatorInfo( MINUS,     OperatorKind.InfixLeftAssociative, 20, true),
-            new OperatorInfo( ASTERISK,  OperatorKind.InfixLeftAssociative, 40, true),
-            new OperatorInfo( SLASH,     OperatorKind.InfixLeftAssociative, 40, true),
-            new OperatorInfo( CARET,     OperatorKind.InfixRightAssociative, 50, true),
-            new OperatorInfo( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true)
-        };
+        private readonly OperatorInfoCollection BinOpPrecedence =
+        [
+            new( LEFTANGLE, OperatorKind.InfixLeftAssociative, 10, true),
+            new( PLUS,      OperatorKind.InfixLeftAssociative, 20, true),
+            new( MINUS,     OperatorKind.InfixLeftAssociative, 20, true),
+            new( ASTERISK,  OperatorKind.InfixLeftAssociative, 40, true),
+            new( SLASH,     OperatorKind.InfixLeftAssociative, 40, true),
+            new( CARET,     OperatorKind.InfixRightAssociative, 50, true),
+            new( ASSIGN,    OperatorKind.InfixRightAssociative, 2, true)
+        ];
 
         private int AnonymousNameIndex;
     }

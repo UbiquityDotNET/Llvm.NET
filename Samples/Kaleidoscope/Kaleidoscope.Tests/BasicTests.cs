@@ -11,12 +11,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
-using Kaleidoscope.Runtime;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.Values;
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Tests
 {
@@ -107,7 +106,7 @@ namespace Kaleidoscope.Tests
 
         private async Task RunBasicReplLoop( LanguageLevel level
                                            , TextReader input
-                                           , Func<DynamicRuntimeState, TextWriter, IKaleidoscopeCodeGenerator<Value>> generatorFactory
+                                           , Func<DynamicRuntimeState, TextWriter, ICodeGenerator<Value>> generatorFactory
                                            )
         {
             var parser = new Parser( level );

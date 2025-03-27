@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Kaleidoscope.Grammar
@@ -18,29 +17,12 @@ namespace Kaleidoscope.Grammar
         PreFix
     }
 
-    [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Equality operators make no sense for this type" )]
-    internal struct OperatorInfo
+    internal readonly record struct OperatorInfo(int TokenType, OperatorKind Kind, int Precedence, bool IsBuiltIn)
     {
         public OperatorInfo( int tokenType, OperatorKind kind, int precedence )
             : this( tokenType, kind, precedence, false )
         {
         }
-
-        public OperatorInfo( int tokenType, OperatorKind kind, int precedence, bool isBuiltIn )
-        {
-            TokenType = tokenType;
-            Kind = kind;
-            Precedence = precedence;
-            IsBuiltIn = isBuiltIn;
-        }
-
-        public int TokenType { get; }
-
-        public OperatorKind Kind { get; }
-
-        public int Precedence { get; }
-
-        public bool IsBuiltIn { get; }
     }
 
     internal class OperatorInfoCollection

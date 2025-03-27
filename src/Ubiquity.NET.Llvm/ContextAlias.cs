@@ -294,7 +294,6 @@ namespace Ubiquity.NET.Llvm
 
         public MDString CreateMetadataString(string? value)
         {
-            // ArgumentNullException.ThrowIfNull(value);
             var handle = LLVMMDStringInContext2( NativeHandle, value, ( uint )( value?.Length ?? 0 ) );
             return new MDString( handle );
         }

@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -22,8 +23,9 @@ namespace Kaleidoscope.Grammar.AST
     }
 
     /// <summary>AST Expression node for a binary operator</summary>
-    public class BinaryOperatorExpression
-        : IExpression
+    public sealed class BinaryOperatorExpression
+        : AstNode
+        , IExpression
     {
         /// <summary>Initializes a new instance of the <see cref="BinaryOperatorExpression"/> class.</summary>
         /// <param name="location">Source location of the operator expression</param>
@@ -31,15 +33,12 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="op">Operator type</param>
         /// <param name="rhs">Right hand side expression for the operator</param>
         public BinaryOperatorExpression( SourceSpan location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
+            : base(location)
         {
-            Location = location;
             Left = lhs;
             Op = op;
             Right = rhs;
         }
-
-        /// <inheritdoc/>
-        public SourceSpan Location { get; }
 
         /// <summary>Gets the left hand side expression</summary>
         public IExpression Left { get; }
@@ -54,7 +53,7 @@ namespace Kaleidoscope.Grammar.AST
         public IExpression Right { get; }
 
         /// <inheritdoc/>
-        public IEnumerable<IAstNode> Children
+        public sealed override IEnumerable<IAstNode> Children
         {
             get
             {
@@ -63,21 +62,20 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this );
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
         }
 
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
         {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
         /// <inheritdoc/>

@@ -4,9 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.IO;
-
-using Kaleidoscope.Grammar.AST;
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar
 {
@@ -28,6 +26,7 @@ namespace Kaleidoscope.Grammar
 
     /// <summary>Interface for a Kaleidoscope parser</summary>
     public interface IKaleidoscopeParser
+        : IParser
     {
         /// <summary>Gets or sets the language level for parsing</summary>
         LanguageLevel LanguageLevel { get; set; }
@@ -43,27 +42,5 @@ namespace Kaleidoscope.Grammar
 
         /// <summary>Gets the additional diagnostics for this parser stack</summary>
         DiagnosticRepresentations Diagnostics { get; }
-
-        /// <summary>Try parsing the given input text</summary>
-        /// <param name="txt">Text to parse</param>
-        /// <returns>Parse results as an <see cref="IAstNode"/></returns>
-        /// <remarks>
-        /// If the parse fails then the result is <see langword="false"/>.
-        /// Errors from the parse are reported through error listeners provided
-        /// to the parser. Normally this is done via the constructor of a type
-        /// implementing this interface.
-        /// </remarks>
-        IAstNode Parse( string txt );
-
-        /// <summary>Try parsing the given input text as full source, potentially containing multiple definitions</summary>
-        /// <param name="reader">TextReader to parse</param>
-        /// <returns>Parse results as an <see cref="IAstNode"/></returns>
-        /// <remarks>
-        /// If the parse fails then the result is <see langword="null"/>.
-        /// Errors from the parse are reported through error listeners provided
-        /// to the parser. Normally this is done via the constructor of a type
-        /// implementing this interface.
-        /// </remarks>
-        IAstNode Parse( TextReader reader );
     }
 }

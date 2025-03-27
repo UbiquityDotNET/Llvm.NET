@@ -88,13 +88,13 @@ details interface for the selected target.
 
 ## Creating the DICompileUnit
 LLVM Debug information is all scoped to a top level [DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit).
-There is exactly one DICompileUnit for a Module and all debug information metadata is ultimately
-a child of that unit. The sample creates the compilation unit just after the module is created and the
-target specific information is added to it. In this sample there is a direct 1:1 correlation between the
-compile unit and the source file so it creates a [DIFile](xref:Ubiquity.NET.Llvm.DebugInfo.DIFile) for the source
-at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
+There is exactly one DICompileUnit for a [DIBuilder](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder) and all debug
+information metadata is ultimately a child of that unit. The sample creates the compilation unit just after the
+module is created and the target specific information is added to it. In this sample there is a direct 1:1
+correlation between the compile unit and the source file so it creates a [DIFile](xref:Ubiquity.NET.Llvm.DebugInfo.DIFile)
+for the source at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
 the normal pattern for creating the compile unit when generating debugging information. Though it is possible
-to create it independently and add it to the module there isn't and real benefit to doing so.
+to create it independently but there usually isn't any real benefit to doing so.
 
 ## Creating basic types with debug information
 In LLVM types are fairly minimalistic and only contain the basic structural information for generating

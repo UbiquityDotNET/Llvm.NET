@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Ubiquity.NET.InteropHelpers
 {
@@ -28,10 +27,6 @@ namespace Ubiquity.NET.InteropHelpers
         {
             OnDispose();
         }
-
-        /// <summary>Gets a Default disposable action that does nothing</summary>
-        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP012:Property should not return created disposable", Justification = "It's a NOP" )]
-        public static DisposableAction Nop => new( () => { } );
 
         private readonly Action OnDispose;
     }

@@ -13,6 +13,9 @@ using Antlr4.Runtime.Tree;
 
 using Kaleidoscope.Grammar.ANTLR;
 
+using Ubiquity.NET.ANTLR.Utils;
+using Ubiquity.NET.Runtime.Utils;
+
 using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.AST
@@ -57,23 +60,44 @@ namespace Kaleidoscope.Grammar.AST
                 return new ErrorNode( context.GetSourceSpan( ), $"Call to unknown function '{context.CaleeName}'" );
             }
 
-            var args = from expCtx in context.expression( )
-                       select ( IExpression )expCtx.Accept( this );
+            var argNodes = ( from expCtx in context.expression( )
+                             select expCtx.Accept( this )
+                           ).ToList();
 
-            return new FunctionCallExpression( context.GetSourceSpan( ), function, args );
+            foreach(var arg in argNodes)
+            {
+                if(arg is not IExpression)
+                {
+                    return arg;
+                }
+            }
+
+            return new FunctionCallExpression( context.GetSourceSpan( ), function, argNodes.Cast<IExpression>() );
         }
 
         public override IAstNode VisitExpression( ExpressionContext context )
         {
             // Expression: PrimaryExpression (op expression)*
             // where the sub-expressions are in evaluation order
-            IAstNode lhs = context.Atom.Accept( this );
+            IAstNode lhsNode = context.Atom.Accept( this );
+
             foreach( var (op, rhs) in context.OperatorExpressions )
             {
-                lhs = CreateBinaryOperatorNode( ( IExpression )lhs, op, ( IExpression )rhs.Accept( this ) );
+                if (lhsNode is not IExpression lhsExp)
+                {
+                    return lhsNode;
+                }
+
+                var rhsNode = rhs.Accept( this );
+                if (rhsNode is not IExpression rhsExp)
+                {
+                    return rhsNode;
+                }
+
+                lhsNode = CreateBinaryOperatorNode( lhsExp, op, rhsExp );
             }
 
-            return lhs;
+            return lhsNode;
         }
 
         public override IAstNode VisitExternalDeclaration( ExternalDeclarationContext context )
@@ -98,16 +122,22 @@ namespace Kaleidoscope.Grammar.AST
                 Push( param );
             }
 
-            var body = ( IExpression )context.BodyExpression.Accept( this );
+            var body = context.BodyExpression.Accept( this );
+            var errors = body.CollectErrors( );
+
+            // test for a non-expression (ErrorNode)
+            if( body is not IExpression exp)
+            {
+                return body;
+            }
 
             var retVal = new FunctionDefinition( context.GetSourceSpan( )
                                                , sig
-                                               , body
+                                               , exp
                                                , LocalVariables.ToImmutableArray( )
                                                );
 
             // only add valid definitions to the runtime state.
-            var errors = retVal.CollectErrors( );
             if( errors.Count == 0 )
             {
                 RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
@@ -126,16 +156,17 @@ namespace Kaleidoscope.Grammar.AST
         {
             BeginFunctionDefinition( );
             var sig = new Prototype( context.GetSourceSpan( ), RuntimeState.GenerateAnonymousName( ), true );
-            var body = ( IExpression )context.expression( ).Accept( this );
-            var retVal = new FunctionDefinition( context.GetSourceSpan( ), sig, body, true );
+            var bodyNode = context.expression( ).Accept( this );
+            var errors = bodyNode.CollectErrors();
 
             // only add valid definitions to the runtime state.
-            var errors = retVal.CollectErrors( );
-            if( errors.Count == 0 )
+            if( errors.Count > 0 || bodyNode is not IExpression bodyExp)
             {
-                RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
+                return bodyNode;
             }
 
+            var retVal = new FunctionDefinition( context.GetSourceSpan( ), sig, bodyExp, true );
+            RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
             return retVal;
         }
 
@@ -156,8 +187,8 @@ namespace Kaleidoscope.Grammar.AST
                 return new ErrorNode( context.GetSourceSpan( ), $"reference to unknown unary operator function {calleeName}" );
             }
 
-            var arg = ( IExpression )context.Rhs.Accept( this );
-            return new FunctionCallExpression( context.GetSourceSpan( ), function, arg );
+            var arg = context.Rhs.Accept( this );
+            return arg is not IExpression exp ? arg : new FunctionCallExpression( context.GetSourceSpan( ), function, exp );
         }
         #endregion
 
@@ -181,15 +212,32 @@ namespace Kaleidoscope.Grammar.AST
         public override IAstNode VisitConditionalExpression( ConditionalExpressionContext context )
         {
             var expressionSpan = context.GetSourceSpan( );
+            var condition = context.Condition.Accept( this );
+            if (condition is not IExpression conditionExp)
+            {
+                return condition;
+            }
+
+            var thenClause = context.ThenExpression.Accept( this );
+            if(thenClause is not IExpression thenExp)
+            {
+                return thenClause;
+            }
+
+            var elseClause = context.ElseExpression.Accept( this );
+            if (elseClause is not IExpression elseExp)
+            {
+                return elseClause;
+            }
 
             // compiler generated result variable supports building conditional
             // expressions without the need for SSA form using mutable variables
             // The result is assigned a value from both sides of the branch. In
             // pure SSA form this isn't needed as a PHI node would be used instead.
             var retVal = new ConditionalExpression( expressionSpan
-                                                  , ( IExpression )context.Condition.Accept( this )
-                                                  , ( IExpression )context.ThenExpression.Accept( this )
-                                                  , ( IExpression )context.ElseExpression.Accept( this )
+                                                  , conditionExp
+                                                  , thenExp
+                                                  , elseExp
                                                   , new LocalVariableDeclaration( expressionSpan, $"$ifresult${LocalVarIndex++}", null, true)
                                                   );
             Push( retVal.ResultVariable );
@@ -205,11 +253,25 @@ namespace Kaleidoscope.Grammar.AST
             {
                 Push( initializer );
 
-                var step = ( IExpression )(context.StepExpression?.Accept( this ) ?? new ConstantExpression( default, 1.0 ));
-                var body = ( IExpression )context.BodyExpression.Accept( this );
+                var conditionNode = context.EndExpression.Accept( this );
+                if (conditionNode is not IExpression conditionExp)
+                {
+                    return conditionNode;
+                }
 
-                var condition = ( IExpression )context.EndExpression.Accept( this );
-                retVal = new ForInExpression( context.GetSourceSpan( ), initializer, condition, step, body );
+                var stepNode = context.StepExpression?.Accept( this ) ?? new ConstantExpression( default, 1.0 );
+                if (stepNode is not IExpression stepExp)
+                {
+                    return stepNode;
+                }
+
+                var bodyNode = context.BodyExpression.Accept( this );
+                if (bodyNode is not IExpression bodyExp)
+                {
+                    return bodyNode;
+                }
+
+                retVal = new ForInExpression( context.GetSourceSpan( ), initializer, conditionExp, stepExp, bodyExp );
             }
 
             return retVal;
@@ -227,9 +289,8 @@ namespace Kaleidoscope.Grammar.AST
                     Push( local );
                 }
 
-                var body = ( IExpression )context.Scope.Accept( this );
-
-                return new VarInExpression( context.GetSourceSpan( ), localVariables, body );
+                var bodyNode = context.Scope.Accept( this );
+                return bodyNode is not IExpression bodyExp ? bodyNode : new VarInExpression( context.GetSourceSpan( ), localVariables, bodyExp );
             }
         }
 
@@ -280,7 +341,7 @@ namespace Kaleidoscope.Grammar.AST
                  : null;
         }
 
-        private IExpression CreateBinaryOperatorNode( IExpression lhs, BinaryopContext op, IExpression rhs )
+        private IAstNode CreateBinaryOperatorNode( IExpression lhs, BinaryopContext op, IExpression rhs )
         {
             switch( op.OpToken.Type )
             {
@@ -385,7 +446,7 @@ namespace Kaleidoscope.Grammar.AST
         }
 
         private int LocalVarIndex;
-        private readonly List<LocalVariableDeclaration> LocalVariables = new();
+        private readonly List<LocalVariableDeclaration> LocalVariables = [];
         private readonly ScopeStack<IVariableDeclaration> NamedValues = new( );
         private readonly DynamicRuntimeState RuntimeState;
     }

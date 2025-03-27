@@ -6,6 +6,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]

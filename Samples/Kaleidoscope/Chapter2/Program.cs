@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Chapter2
 {
     public static class Program
@@ -33,7 +35,7 @@ namespace Kaleidoscope.Chapter2
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
-            await repl.Run( Console.In, Grammar.DiagnosticRepresentations.Dgml, cts.Token );
+            await repl.Run( Console.In, DiagnosticRepresentations.Dgml, cts.Token );
         }
         #endregion
     }

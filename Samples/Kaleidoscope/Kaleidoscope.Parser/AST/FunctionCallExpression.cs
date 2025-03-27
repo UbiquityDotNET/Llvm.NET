@@ -4,56 +4,50 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
+
+using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.AST
 {
-    public class FunctionCallExpression
-        : IExpression
+    public sealed class FunctionCallExpression
+        : AstNode
+        , IExpression
     {
-        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, IEnumerable<IExpression> args )
+        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IEnumerable<IExpression> args )
+            : base(location)
         {
-            Location = location;
             FunctionPrototype = functionPrototype;
-            Arguments = args.ToImmutableArray( );
+            Arguments = [ .. args ];
         }
-
-        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IExpression[ ] args )
-            : this( location, functionPrototype, ( IEnumerable<IExpression> )args )
-        {
-        }
-
-        public SourceSpan Location { get; }
 
         public Prototype FunctionPrototype { get; }
 
         public IReadOnlyList<IExpression> Arguments { get; }
 
-        public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
-            where TResult : class
-        {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this );
-        }
-
-        /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TResult : class
-            where TArg : struct, allows ref struct
-        {
-            ArgumentNullException.ThrowIfNull(visitor);
-            return visitor.Visit( this, in arg );
-        }
-
-        public IEnumerable<IAstNode> Children
+        public override IEnumerable<IAstNode> Children
         {
             get
             {
                 yield return FunctionPrototype;
             }
+        }
+
+        public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
+                   ? klsVisitor.Visit(this)
+                   : visitor.Visit(this);
+        }
+
+        public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
+                   ? klsVisitor.Visit(this, in arg)
+                   : visitor.Visit(this, in arg);
         }
 
         public override string ToString( )

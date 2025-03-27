@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
+    <ProjectReference Include="..\..\src\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
   </ItemGroup>
 
 </Project>

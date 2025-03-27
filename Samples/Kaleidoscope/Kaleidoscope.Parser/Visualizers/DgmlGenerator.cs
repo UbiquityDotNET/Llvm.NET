@@ -13,6 +13,8 @@ using Kaleidoscope.Grammar.ANTLR;
 
 using OpenSoftware.DgmlTools.Model;
 
+using Ubiquity.NET.ANTLR.Utils;
+
 using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar

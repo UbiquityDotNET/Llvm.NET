@@ -36,7 +36,7 @@ that is built-in to ANTLR4. However, that requires fixing the precedence for ope
 Thus, Kaleidoscope doesn't use the default left-recursion support, but does use the same concepts with
 custom semantic predicates in the code behind.
 
-```antlr
+``` antlr
 // pull the initializer out to a distinct rule so it is easier to get at
 // the list of initializers when walking the parse tree
 initializer
@@ -171,8 +171,8 @@ to maintain. However, the language design of the Kaleidoscope language requires 
 the parser can handle precedence correctly. Using the state, listener and semantic predicates keeps the roles
 of each part clear while allowing for completely isolating the feedback to the parsing alone.
 
-#### AST
-When building the AST Prototypes for user defined operators are transformed to a FunctionDeclaration
+### AST
+When building the AST, Prototypes for user defined operators are transformed to a FunctionDeclaration
 [!code-csharp[UserOperatorPrototypes](../../../Samples/Kaleidoscope/Kaleidoscope.Parser/AST/AstBuilder.cs#UserOperatorPrototypes)]
 
 During construction of the AST all occurrences of a user defined operator expression are transformed into a function

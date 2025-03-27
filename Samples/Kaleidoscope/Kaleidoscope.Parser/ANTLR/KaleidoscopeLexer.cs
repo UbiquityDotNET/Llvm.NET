@@ -6,6 +6,9 @@
 
 using Antlr4.Runtime;
 
+using Ubiquity.NET.ANTLR.Utils;
+using Ubiquity.NET.Runtime.Utils;
+
 namespace Kaleidoscope.Grammar.ANTLR
 {
     // partial extension to handle creating virtual tokens/Identifiers depending
