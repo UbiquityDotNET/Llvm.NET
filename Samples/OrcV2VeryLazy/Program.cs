@@ -5,7 +5,6 @@ using Ubiquity.NET.Extensions;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
-using Ubiquity.NET.Runtime.Utils;
 
 internal class Program
 {

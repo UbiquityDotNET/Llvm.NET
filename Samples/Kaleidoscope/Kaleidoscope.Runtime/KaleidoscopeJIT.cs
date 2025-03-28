@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
-using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Runtime
 {

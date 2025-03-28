@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using Kaleidoscope.Grammar.AST;
 
 using Ubiquity.NET.Extensions;
-using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar
 {
