@@ -17,17 +17,9 @@ namespace Ubiquity.NET.Llvm.Values
         public IContext Context => Container.Context;
 
         public ICollection<AttributeValue> this[ FunctionAttributeIndex key ]
-        {
-            get
-            {
-                if( !ContainsKey( key ) )
-                {
-                    throw new KeyNotFoundException( );
-                }
-
-                return new ValueAttributeCollection( Container, key );
-            }
-        }
+            => ContainsKey( key )
+               ? (ICollection<AttributeValue>)new ValueAttributeCollection( Container, key )
+               : throw new KeyNotFoundException();
 
         public IEnumerable<FunctionAttributeIndex> Keys
             => new ReadOnlyCollection<FunctionAttributeIndex>( [ .. GetValidKeys( ) ] );
@@ -46,14 +38,9 @@ namespace Ubiquity.NET.Llvm.Values
                    ).GetEnumerator( );
         }
 
-        public bool TryGetValue( FunctionAttributeIndex key, /*[MaybeNullWhen( false )]*/ out ICollection<AttributeValue> value )
+        public bool TryGetValue( FunctionAttributeIndex key, [MaybeNullWhen( false )] out ICollection<AttributeValue> value )
         {
-            // sadly the runtime provided interface doesn't correctly apply the MaybeNullWhen attribute,
-            // and the compiler generates warning:
-            // CS8767: Nullability of reference types in type of parameter 'value' of 'bool ValueAttributeDictionary.TryGetValue(FunctionAttributeIndex key, out ICollection<AttributeValue> value)' doesn't match implicitly implemented member 'bool IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>.TryGetValue(FunctionAttributeIndex key, out ICollection<AttributeValue> value)' because of nullability attributes.
-            // Yeah, clear as mud, right?
-            // So, use the ! to silence the compiler and don't use the attribute, sigh... what a mess...
-            value = null!;
+            value = null;
             if( ContainsKey( key ) )
             {
                 return false;

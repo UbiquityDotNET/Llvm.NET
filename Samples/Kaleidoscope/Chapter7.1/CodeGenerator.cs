@@ -510,7 +510,7 @@ namespace Kaleidoscope.Chapter71
             using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
             var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
-            var symbols = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            var symbols = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
                 [mangledBodyName] = commonSymbolFlags,
             }.ToImmutable();
 
@@ -520,7 +520,7 @@ namespace Kaleidoscope.Chapter71
             using var materializer = new CustomMaterializationUnit($"{definition.Name}MU", Materialize, symbols);
             KlsJIT.MainLib.Define(materializer);
 
-            var reexports = new DictionaryBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>{
+            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>{
                 [mangledName] = new(mangledBodyName, commonSymbolFlags)
             }.ToImmutable();
 

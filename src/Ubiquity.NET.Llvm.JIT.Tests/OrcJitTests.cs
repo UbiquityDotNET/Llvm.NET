@@ -35,13 +35,13 @@ namespace Ubiquity.NET.Llvm.Tests
 
             using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
 
-            var fooSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
                 [mangledFooBodySymName] = flags,
             }.ToImmutable();
 
             using var mangledBarBodySymName = jit.MangleAndIntern(BarBodySymbolName);
 
-            var barSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
                 [mangledBarBodySymName] = flags,
             }.ToImmutable();
 
@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using var mangledFoo = jit.MangleAndIntern("foo");
             using var mangledBar = jit.MangleAndIntern("bar");
 
-            var reexports = new DictionaryBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
                 [mangledFoo] = new(mangledFooBodySymName, flags),
                 [mangledBar] = new(mangledBarBodySymName, flags),
             }.ToImmutable();

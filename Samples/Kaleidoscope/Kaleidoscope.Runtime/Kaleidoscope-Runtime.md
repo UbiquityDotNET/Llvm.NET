@@ -5,32 +5,14 @@ uid: Kaleidoscope-Runtime
 # Kaleidoscope.Runtime Library
 The Kaleidoscope.Runtime Library provides a set of common support libraries to aid in keeping the
 tutorial chapter code focused on the code generation and JIT support in Ubiquity.NET.Llvm rather then the
-particulars of parsing or the Kaleidoscope language in general.
+particulars of the Kaleidoscope language in general. It serves as a useful reference for the implementation
+of other custom DSLs. (Along with a core part of the sample infrastructure of this repository)
 
-## REPL Loop infrastructure
-The Kaleidoscope.Runtime library contains the basic infrastructure for the classic Read, Evaluate,
-Print, Loop (REPL) common for interactive/interpreted/JIT language runtimes. An area in need of some
-effort is clean shutdown of the REPL and hosting application. Currently it releies on simply closing
-window or a brutal "kill" via Ctrl-C.
-
-### TextReaderExtensions class
-The TextReaderExtensions class provides a means to read lines from a TextReader as an `IEnumerable<string>`.
-Additionally it supports reading statements from an `IEnumerable<string>` to `IEnumerable<(string Txt, bool IsPartial)>`
-the `Txt` member of the tuple is the text from a line of input and the bool `IsPartial` indicates if, the line is
-terminated by a semicolon. The extension correctly handles lines with additional text following a semicolon by
-splitting the input into multiple lines. Everything up to, and including, the semicolon is yielded with IsPatial
-set to false. Then the rest of the line up to the next new line is yielded with IsPartial set to true. (The
-implementation supports an arbitrary number of semicolons on the same line and yields complete statements for
-each one)
-
-## Parser
-Kaleidoscope for Ubiquity.NET.Llvm leverages ANTLR4 for parsing the language into a parse tree. Since ANTRL is a
-generalized parsing infrastructure it has a lot of flexibility depending on the needs of a language and
-application. While that flexibility is generally a value, it does come with added complexity. The ParserStack
-class encapsulates the complexity as needed for the Kaleidoscope language code generation to minimize
-the repetition of boiler-plate code, and in particular the correct set of listeners for errors and user
-operators. This stack supports two distinct modes of parsing, interactive REPL, and FULL source as used
-for ahead of time compilation.
+## Kaleidoscope specific REPL Loop support
+The Kaleidoscope.Runtime library contains a language/runtime specific implementation of the classic Read,
+Evaluate, Print, Loop (REPL) common for interactive/interpreted/JIT language runtimes. This uses an
+asychronous pattern and allows cancelation via a standard cancellation token. This supports a clean shutown
+via a CTRl-C handler etc...
 
 ## Kaleidoscope JIT engine
 The JIT engine used for Kaleidoscope is based on the Ubiquity.NET.Llvm OrcJIT v2, which, unsurprisingly, uses

@@ -31,13 +31,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Handle = h.Move();
         }
 
-        // TODO: Make these an extension to a IReadOnlyDictionary<>
+        // TODO: Make these an extension to a IReadOnlyCollection<KeyValuePair<k,v>>
         // NOTE these are all VERY similar but NOT generic as that would require some sort of
         // generic interface for the ToABI() support. That would require either exposing raw
         // interop types as part of the documented API surface of this library OR an explicit
         // interface implementation, which would require boxing to get at the function...
         private protected static IMemoryOwner<LLVMOrcCSymbolMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] IReadOnlyDictionary<SymbolStringPoolEntry, EvaluatedSymbol> symbols
+            [ValidatedNotNull] IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
             )
         {
             ArgumentNullException.ThrowIfNull(symbols);
@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         private protected static IMemoryOwner<LLVMOrcCSymbolAliasMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] IReadOnlyDictionary<SymbolStringPoolEntry, SymbolAliasMapEntry> symbols
+            [ValidatedNotNull] IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols
             )
         {
             ArgumentNullException.ThrowIfNull(symbols);

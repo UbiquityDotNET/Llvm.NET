@@ -43,7 +43,7 @@ namespace Kaleidoscope.Runtime
                 using var putchardName = MangleAndIntern("putchard");
                 using var printdName = MangleAndIntern("printd");
 
-                var absoluteSymbols = new DictionaryBuilder<SymbolStringPoolEntry, EvaluatedSymbol> {
+                var absoluteSymbols = new KvpArrayBuilder<SymbolStringPoolEntry, EvaluatedSymbol> {
                     [putchardName] = new(MakeRawPtr(&BuiltIns.PutChard), symFlags),
                     [printdName] = new(MakeRawPtr(&BuiltIns.Printd), symFlags),
                 }.ToImmutable();

@@ -25,7 +25,7 @@ internal class Program
         SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
         using var internedFooBodyName = jit.MangleAndIntern(FooBodySymbolName);
-        var fooSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+        var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
             [internedFooBodyName] = flags,
         }.ToImmutable();
 
@@ -38,7 +38,7 @@ internal class Program
         jit.MainLib.Define(fooMu);
 
         using var internedBarBodyName = jit.MangleAndIntern(BarBodySymbolName);
-        var barSym = new DictionaryBuilder<SymbolStringPoolEntry, SymbolFlags> {
+        var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
             [internedBarBodyName] = flags,
         }.ToImmutable();
 
@@ -51,7 +51,7 @@ internal class Program
         using var internedFoo = jit.MangleAndIntern("foo");
         using var internedBar = jit.MangleAndIntern("bar");
 
-        var reexports = new DictionaryBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+        var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
             [internedFoo] = new(internedFooBodyName, flags),
             [internedBar] = new(internedBarBodyName, flags),
         }.ToImmutable();
