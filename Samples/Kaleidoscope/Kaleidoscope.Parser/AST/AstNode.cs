@@ -7,12 +7,12 @@ namespace Kaleidoscope.Grammar.AST
     public abstract class AstNode
         : IAstNode
     {
-        protected AstNode(SourceSpan location)
+        protected AstNode(SourceLocation location)
         {
             Location = location;
         }
 
-        public SourceSpan Location { get; }
+        public SourceLocation Location { get; }
 
         public abstract IEnumerable<IAstNode> Children { get; }
 

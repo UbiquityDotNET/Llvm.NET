@@ -9,7 +9,7 @@
 
 ## Table of Contents
 * [Release Notes](ReleaseNotes.md)
-* [Library API Documentation](api/index.md)
+* [Library API Documentation](api-llvm/index.md)
 * [Samples](articles/Samples/index.md)
    - Code Generation
       * [CodeGenerator With Debug Information](xref:code-generation-with-debug-info)

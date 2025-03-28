@@ -17,11 +17,11 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class UnaryPrototypeContext
         {
-            public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
+            public override IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
             {
                 get
                 {
-                    yield return (Identifier( ).GetText( ), 0, Identifier( ).GetSourceSpan( ));
+                    yield return (Identifier( ).GetText( ), 0, Identifier( ).GetSourceLocation( ));
                 }
             }
 

@@ -13,15 +13,19 @@ using Ubiquity.NET.Runtime.Utils;
 
 namespace Ubiquity.NET.ANTLR.Utils
 {
+    /// <summary>Adapter to translate ANTLR error listeners to an <see cref="IParseErrorListener"/></summary>
     public class ParseErrorListenerAdapter
         : IAntlrErrorListener<int>
         , IAntlrErrorListener<IToken>
     {
+        /// <summary>Initializes a new instance of the <see cref="ParseErrorListenerAdapter"/> class</summary>
+        /// <param name="innerListener">Inner listener to route all notifications to</param>
         public ParseErrorListenerAdapter( IParseErrorListener innerListener )
         {
             InnerListener = innerListener;
         }
 
+        /// <inheritdoc/>
         public void SyntaxError( [NotNull] IRecognizer recognizer
                                , [Nullable] int offendingSymbol
                                , int line
@@ -34,13 +38,14 @@ namespace Ubiquity.NET.ANTLR.Utils
                                                       , recognizer.InputStream.SourceName
                                                       , recognizer.State
                                                       , string.Empty
-                                                      , new SourceSpan( line, charPositionInLine, line, charPositionInLine )
+                                                      , new SourceLocation( line, charPositionInLine, line, charPositionInLine )
                                                       , msg
                                                       , e
                                                       )
                                      );
         }
 
+        /// <inheritdoc/>
         public void SyntaxError( [NotNull] IRecognizer recognizer
                                , [Nullable] IToken offendingSymbol
                                , int line
@@ -53,7 +58,7 @@ namespace Ubiquity.NET.ANTLR.Utils
                                                       , recognizer.InputStream.SourceName
                                                       , recognizer.State
                                                       , offendingSymbol.Text
-                                                      , new SourceSpan( line, charPositionInLine, line, charPositionInLine )
+                                                      , new SourceLocation( line, charPositionInLine, line, charPositionInLine )
                                                       , msg
                                                       , e
                                                       )

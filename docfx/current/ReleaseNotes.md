@@ -1,21 +1,21 @@
 # Release Notes
 # V20.0.1.Alpha
-Major re-work to support .NET 9 and later with focus on performance and heading towards AOT.
+Major re-work to support LLVM 20 and .NET 9 and later with focus on performance and heading towards AOT.
 Major changes include:
 * OrcJIT v2 support
     - Including functioning lazy materialization from the AST
         - Even on Microsoft Windows! :wink:
 * Opaque pointers
     - Underlying LLVM uses only opaque pointers however these wrappers account for
-      that as much as possible without change to calling code. The wrappers when used
-      with debug information support tracking the LLVM type of the `pointee` for you
-      in most cases. Though if not using any debug information or otherwise dealing
+      that as much as possible without significant impact on calling code. The wrappers,
+      when used with debug information, support tracking the LLVM type of the `pointee`
+      for you in most cases. Though if not using any debug information or otherwise dealing
       in the raw types applications will need to keep track of the type of a pointer
       instead of relying on the LLVM IR to do that for you.
 * Dropped reference equality to support multi-threaded nature of OrcJIT.
-    - Things got compilated and broke around chapter 5 of kaleidoscope. The basic
-      problem with interning is that it doesn't account for ownership. In fact it
-      downright ignores the point. This is a serious problem when dealing with a
+    - Things got complicated and broke around chapter 5 of the Kaleidoscope tutorials.
+      The basic problem with interning is that it doesn't account for ownership. In fact
+      it downright ignores the point. This is a serious problem when dealing with a
       multi-threaded JIT engine as you might end up disposing something you own that
       was transferred to the native API or worse an alias is resolved to an owned
       instance which is then destroyed - OOPS! [Bad idea - seemed like a good idea
@@ -23,7 +23,8 @@ Major changes include:
 * Consumers need to consider IDispose and "ownership" in general
     - Usually this is as simple as a `using` statement to properly handle
       cleanup in scope if there is an exception. Sometimes it takes a bit more
-      thought to handle properly.
+      thought to handle properly. (.NET, C# and the general community have no concept of the
+      common native code "move semantics" pattern)
 
 [Additional notes on this release go here...]
 ## Breaking changes

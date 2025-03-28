@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Runtime.Utils
     public class NullNode
         : IAstNode
     {
-        public SourceSpan Location { get; } = default;
+        public SourceLocation Location { get; } = default;
 
         public IEnumerable<IAstNode> Children { get; } = Enumerable.Empty<IAstNode>( );
 

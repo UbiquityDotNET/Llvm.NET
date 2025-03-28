@@ -32,7 +32,7 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="lhs">Left hand side expression for the operator</param>
         /// <param name="op">Operator type</param>
         /// <param name="rhs">Right hand side expression for the operator</param>
-        public BinaryOperatorExpression( SourceSpan location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
+        public BinaryOperatorExpression( SourceLocation location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
             : base(location)
         {
             Left = lhs;

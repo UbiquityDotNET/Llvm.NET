@@ -18,5 +18,9 @@ multiple other Ubiquity.NET projects.
     - These are useful when passing parameters to a function that produces a
       result that is fed to the base constructor. These are also useful in body
       expressions to validate input parameters.
-* DirectoryBuilder to enable dictionary initializer style initialization with
-  `ImmutableDictionary<TKey, TValue>` 
+* DictionaryBuilder to enable dictionary initializer style initialization of
+  `ImmutableDictionary<TKey, TValue>` with significantly reduced overhead.
+    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build the dictionary.
+      When the `ToImmutable()` method is called the builder is converted to the immutable state without any
+      overhead of a copy or re-construction of hash tables etc...
+

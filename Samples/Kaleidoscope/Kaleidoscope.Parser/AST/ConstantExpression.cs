@@ -15,7 +15,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ConstantExpression( SourceSpan location, double value )
+        public ConstantExpression( SourceLocation location, double value )
             : base(location)
         {
             Value = value;

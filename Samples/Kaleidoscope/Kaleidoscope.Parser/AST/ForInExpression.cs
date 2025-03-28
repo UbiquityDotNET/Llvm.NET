@@ -14,7 +14,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ForInExpression( SourceSpan location
+        public ForInExpression( SourceLocation location
                               , LocalVariableDeclaration loopVariable
                               , IExpression condition
                               , IExpression step

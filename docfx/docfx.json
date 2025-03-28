@@ -1,20 +1,20 @@
 {
+    "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
     "metadata": [
         {
             "src": [
                 {
                     "files": [
-                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj",
-                        "src/Ubiquity.NET.Llvm.JIT/Ubiquity.NET.Llvm.JIT.csproj"
+                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj"
                     ],
                     "src": ".."
                 }
             ],
-            "dest": "current/api",
-            "categoryLayout": "Nested",
-            "namespaceLayout": "Nested",
-            "memberLayout": "SeparatePages",
-            "enumSortOrder": "DeclaringOrder"
+            "dest": "current/api-llvm",
+            "categoryLayout": "nested",
+            "namespaceLayout": "nested",
+            "memberLayout": "separatePages",
+            "enumSortOrder": "declaringOrder"
         }
     ],
     "build": {
@@ -35,8 +35,8 @@
                     "toc.yml",
                     "index.md",
                     "ReleaseNotes.md",
-                    "api/**.md",
-                    "api/**.yml",
+                    "api-llvm/**.md",
+                    "api-llvm/**.yml",
                     "articles/**.md",
                     "articles/**.yml"
                 ],

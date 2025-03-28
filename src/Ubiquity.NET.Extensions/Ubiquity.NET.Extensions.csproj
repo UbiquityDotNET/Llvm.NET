@@ -22,11 +22,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IO.Hashing" />
+    <None Include="ReadMe.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="PackageReadme.md" Pack="true" PackagePath="\Readme.md" />
+    <PackageReference Include="System.IO.Hashing" />
   </ItemGroup>
 
 </Project>

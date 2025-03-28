@@ -20,7 +20,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IAstNode
     {
-        public FunctionDefinition( SourceSpan location
+        public FunctionDefinition( SourceLocation location
                                  , Prototype signature
                                  , IExpression body
                                  , bool isAnonymous = false
@@ -29,7 +29,7 @@ namespace Kaleidoscope.Grammar.AST
         {
         }
 
-        public FunctionDefinition( SourceSpan location
+        public FunctionDefinition( SourceLocation location
                                  , Prototype signature
                                  , IExpression body
                                  , IImmutableList<LocalVariableDeclaration> localVariables

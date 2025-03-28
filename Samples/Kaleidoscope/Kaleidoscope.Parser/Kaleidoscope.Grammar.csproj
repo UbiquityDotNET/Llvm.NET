@@ -42,6 +42,10 @@
     </UsingTask>
 
     <Target Name="ForceAntlrGeneratedCodeToInternal" AfterTargets="Antlr4Compile;Antlr4DesignTimeGrammarCompilation">
-        <ReplaceFileText Condition="'%(Antlr4GeneratedCodeFiles.FullPath)'!=''" InputFileName="%(Antlr4GeneratedCodeFiles.FullPath)" OutputFileName="%(Antlr4GeneratedCodeFiles.FullPath)" MatchExpression="public (partial class|interface)" ReplacementText="internal $1" />
+        <ReplaceFileText Condition="'%(Antlr4GeneratedCodeFiles.FullPath)'!=''"
+            InputFileName="%(Antlr4GeneratedCodeFiles.FullPath)"
+            OutputFileName="%(Antlr4GeneratedCodeFiles.FullPath)"
+            MatchExpression="public (partial class|interface)"
+            ReplacementText="internal $1" />
     </Target>
 </Project>

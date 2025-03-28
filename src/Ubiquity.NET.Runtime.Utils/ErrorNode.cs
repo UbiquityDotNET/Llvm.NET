@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Runtime.Utils
     public class ErrorNode
         : IAstNode
     {
-        public ErrorNode( SourceSpan location, string err )
+        public ErrorNode( SourceLocation location, string err )
         {
             ArgumentNullException.ThrowIfNull(err);
 
@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Runtime.Utils
             Error = err;
         }
 
-        public SourceSpan Location { get; }
+        public SourceLocation Location { get; }
 
         public string Error { get; }
 

@@ -15,12 +15,12 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IAstNode
     {
-        public RootNode( SourceSpan location, IAstNode child )
+        public RootNode( SourceLocation location, IAstNode child )
             : this( location, [child] )
         {
         }
 
-        public RootNode( SourceSpan location, IEnumerable<IAstNode> children )
+        public RootNode( SourceLocation location, IEnumerable<IAstNode> children )
             : base(location)
         {
             ChildNodes = [ .. children ];

@@ -15,7 +15,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public FunctionCallExpression( SourceSpan location, Prototype functionPrototype, params IEnumerable<IExpression> args )
+        public FunctionCallExpression( SourceLocation location, Prototype functionPrototype, params IEnumerable<IExpression> args )
             : base(location)
         {
             FunctionPrototype = functionPrototype;

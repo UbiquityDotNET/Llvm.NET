@@ -14,7 +14,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ConditionalExpression( SourceSpan location
+        public ConditionalExpression( SourceLocation location
                                     , IExpression condition
                                     , IExpression thenExpression
                                     , IExpression elseExpression

@@ -138,9 +138,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "namespaces", "namespaces", 
 		..\docfx\current\namespaces\Ubiquity.NET.Llvm.Values.md = ..\docfx\current\namespaces\Ubiquity.NET.Llvm.Values.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{1C1E173D-01DA-48AC-B2AB-FD464AAEB7C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api-llvm", "api-llvm", "{1C1E173D-01DA-48AC-B2AB-FD464AAEB7C0}"
 	ProjectSection(SolutionItems) = preProject
-		..\docfx\current\api\index.md = ..\docfx\current\api\index.md
+		..\docfx\current\api-llvm\index.md = ..\docfx\current\api-llvm\index.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{81241FE3-1998-4D1B-8BFF-68EC30F91BBF}"

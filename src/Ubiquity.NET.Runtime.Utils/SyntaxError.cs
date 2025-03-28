@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Runtime.Utils
 
     public class SyntaxError
     {
-        public SyntaxError( ParseErrorSource source, string sourceFile, int id, string symbol, SourceSpan location, string message, Exception? exception )
+        public SyntaxError( ParseErrorSource source, string sourceFile, int id, string symbol, SourceLocation location, string message, Exception? exception )
         {
             ArgumentNullException.ThrowIfNull( sourceFile );
             ArgumentNullException.ThrowIfNull( symbol );
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Runtime.Utils
 
         public int Id { get; }
 
-        public SourceSpan Location { get; }
+        public SourceLocation Location { get; }
 
         public string Message { get; }
 

@@ -18,8 +18,8 @@ namespace Kaleidoscope.Grammar.ANTLR
         {
             public override string Name => Identifier( 0 ).GetText( );
 
-            public override IEnumerable<(string Name, int Index, SourceSpan Span)> Parameters
-                => Identifier( ).Skip( 1 ).Select( ( id, i ) => (id.GetText( ), i, id.GetSourceSpan( )) );
+            public override IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
+                => Identifier( ).Skip( 1 ).Select( ( id, i ) => (id.GetText( ), i, id.GetSourceLocation( )) );
         }
     }
 }
