@@ -1,0 +1,1008 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Predicate
+  id: Predicate
+  parent: Ubiquity.NET.Llvm.Instructions
+  children:
+  - Ubiquity.NET.Llvm.Instructions.Predicate.BadFcmpPredicate
+  - Ubiquity.NET.Llvm.Instructions.Predicate.BadIcmpPredicate
+  - Ubiquity.NET.Llvm.Instructions.Predicate.Equal
+  - Ubiquity.NET.Llvm.Instructions.Predicate.False
+  - Ubiquity.NET.Llvm.Instructions.Predicate.FirstFcmpPredicate
+  - Ubiquity.NET.Llvm.Instructions.Predicate.FirstIcmpPredicate
+  - Ubiquity.NET.Llvm.Instructions.Predicate.LastFcmpPredicate
+  - Ubiquity.NET.Llvm.Instructions.Predicate.LastIcmpPredicate
+  - Ubiquity.NET.Llvm.Instructions.Predicate.NotEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.Ordered
+  - Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndNotEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.True
+  - Ubiquity.NET.Llvm.Instructions.Predicate.Unordered
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedAndEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrNotEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThan
+  - Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThanOrEqual
+  langs:
+  - csharp
+  - vb
+  name: Predicate
+  nameWithType: Predicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Predicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 13
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unified predicate enumeration
+  remarks: >-
+    For floating point predicates "Ordered" means that neither operand is a QNAN
+
+    while unordered means that either operand may be a QNAN.
+  example: []
+  syntax:
+    content: public enum Predicate
+    content.vb: Public Enum Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.False
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.False
+  id: "False"
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: "False"
+  nameWithType: Predicate.False
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.False
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: "False"
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 17
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: No comparison, always returns floating point false
+  example: []
+  syntax:
+    content: False = 0
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndEqual
+  id: OrderedAndEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndEqual
+  nameWithType: Predicate.OrderedAndEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 20
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndEqual = 1
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThan
+  id: OrderedAndGreaterThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndGreaterThan
+  nameWithType: Predicate.OrderedAndGreaterThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndGreaterThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 23
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and greater than floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndGreaterThan = 2
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThanOrEqual
+  id: OrderedAndGreaterThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndGreaterThanOrEqual
+  nameWithType: Predicate.OrderedAndGreaterThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndGreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndGreaterThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 26
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and greater than or equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndGreaterThanOrEqual = 3
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThan
+  id: OrderedAndLessThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndLessThan
+  nameWithType: Predicate.OrderedAndLessThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndLessThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 29
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and less than floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndLessThan = 4
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThanOrEqual
+  id: OrderedAndLessThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndLessThanOrEqual
+  nameWithType: Predicate.OrderedAndLessThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndLessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndLessThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 32
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and less than or equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndLessThanOrEqual = 5
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndNotEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndNotEqual
+  id: OrderedAndNotEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndNotEqual
+  nameWithType: Predicate.OrderedAndNotEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.OrderedAndNotEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndNotEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 35
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and not equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndNotEqual = 6
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.Ordered
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.Ordered
+  id: Ordered
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: Ordered
+  nameWithType: Predicate.Ordered
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.Ordered
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Ordered
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 38
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered floating point comparison
+  example: []
+  syntax:
+    content: Ordered = 7
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.Unordered
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.Unordered
+  id: Unordered
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: Unordered
+  nameWithType: Predicate.Unordered
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.Unordered
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Unordered
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 41
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered floating point comparison
+  example: []
+  syntax:
+    content: Unordered = 8
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedAndEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedAndEqual
+  id: UnorderedAndEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedAndEqual
+  nameWithType: Predicate.UnorderedAndEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedAndEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedAndEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 44
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered and equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedAndEqual = 9
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThan
+  id: UnorderedOrGreaterThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrGreaterThan
+  nameWithType: Predicate.UnorderedOrGreaterThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrGreaterThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 47
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or greater than floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrGreaterThan = 10
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThanOrEqual
+  id: UnorderedOrGreaterThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrGreaterThanOrEqual
+  nameWithType: Predicate.UnorderedOrGreaterThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrGreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrGreaterThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 50
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or greater than or Equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrGreaterThanOrEqual = 11
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThan
+  id: UnorderedOrLessThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrLessThan
+  nameWithType: Predicate.UnorderedOrLessThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrLessThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 53
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or Less than floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrLessThan = 12
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThanOrEqual
+  id: UnorderedOrLessThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrLessThanOrEqual
+  nameWithType: Predicate.UnorderedOrLessThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrLessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrLessThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 56
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or Less than or Equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrLessThanOrEqual = 13
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrNotEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrNotEqual
+  id: UnorderedOrNotEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrNotEqual
+  nameWithType: Predicate.UnorderedOrNotEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnorderedOrNotEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrNotEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 59
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or not equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrNotEqual = 14
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.True
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.True
+  id: "True"
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: "True"
+  nameWithType: Predicate.True
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.True
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: "True"
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 62
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: No comparison, always returns true
+  example: []
+  syntax:
+    content: True = 15
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.FirstFcmpPredicate
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.FirstFcmpPredicate
+  id: FirstFcmpPredicate
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: FirstFcmpPredicate
+  nameWithType: Predicate.FirstFcmpPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.FirstFcmpPredicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstFcmpPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 65
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Tag for the first floating point compare predicate, all floating point predicates are greater than or equal to this value
+  example: []
+  syntax:
+    content: FirstFcmpPredicate = 0
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.LastFcmpPredicate
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.LastFcmpPredicate
+  id: LastFcmpPredicate
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: LastFcmpPredicate
+  nameWithType: Predicate.LastFcmpPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.LastFcmpPredicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastFcmpPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 68
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Tag for the last floating point compare predicate, all floating point predicates are less than or equal to this value
+  example: []
+  syntax:
+    content: LastFcmpPredicate = 15
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.BadFcmpPredicate
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.BadFcmpPredicate
+  id: BadFcmpPredicate
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: BadFcmpPredicate
+  nameWithType: Predicate.BadFcmpPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.BadFcmpPredicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BadFcmpPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 71
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Any value greater than or equal to this is not valid for Fcmp operations
+  example: []
+  syntax:
+    content: BadFcmpPredicate = 16
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.Equal
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.Equal
+  id: Equal
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: Equal
+  nameWithType: Predicate.Equal
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.Equal
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equal
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 74
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer equality comparison
+  example: []
+  syntax:
+    content: Equal = 32
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.NotEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.NotEqual
+  id: NotEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: NotEqual
+  nameWithType: Predicate.NotEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.NotEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NotEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 77
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer not equal comparison
+  example: []
+  syntax:
+    content: NotEqual = 33
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThan
+  id: UnsignedGreaterThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnsignedGreaterThan
+  nameWithType: Predicate.UnsignedGreaterThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnsignedGreaterThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 80
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer unsigned greater than comparison
+  example: []
+  syntax:
+    content: UnsignedGreaterThan = 34
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThanOrEqual
+  id: UnsignedGreaterThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnsignedGreaterThanOrEqual
+  nameWithType: Predicate.UnsignedGreaterThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedGreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnsignedGreaterThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 83
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer unsigned greater than or equal comparison
+  example: []
+  syntax:
+    content: UnsignedGreaterThanOrEqual = 35
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThan
+  id: UnsignedLessThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnsignedLessThan
+  nameWithType: Predicate.UnsignedLessThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnsignedLessThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 86
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer unsigned less than comparison
+  example: []
+  syntax:
+    content: UnsignedLessThan = 36
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThanOrEqual
+  id: UnsignedLessThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: UnsignedLessThanOrEqual
+  nameWithType: Predicate.UnsignedLessThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.UnsignedLessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnsignedLessThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 89
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer unsigned less than or equal comparison
+  example: []
+  syntax:
+    content: UnsignedLessThanOrEqual = 37
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThan
+  id: SignedGreaterThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: SignedGreaterThan
+  nameWithType: Predicate.SignedGreaterThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignedGreaterThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 92
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer signed greater than comparison
+  example: []
+  syntax:
+    content: SignedGreaterThan = 38
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThanOrEqual
+  id: SignedGreaterThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: SignedGreaterThanOrEqual
+  nameWithType: Predicate.SignedGreaterThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.SignedGreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignedGreaterThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 95
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer signed greater than or equal comparison
+  example: []
+  syntax:
+    content: SignedGreaterThanOrEqual = 39
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThan
+  id: SignedLessThan
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: SignedLessThan
+  nameWithType: Predicate.SignedLessThan
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignedLessThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 98
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer signed less than comparison
+  example: []
+  syntax:
+    content: SignedLessThan = 40
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThanOrEqual
+  id: SignedLessThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: SignedLessThanOrEqual
+  nameWithType: Predicate.SignedLessThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.SignedLessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignedLessThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 101
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Integer signed less than or equal comparison
+  example: []
+  syntax:
+    content: SignedLessThanOrEqual = 41
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.FirstIcmpPredicate
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.FirstIcmpPredicate
+  id: FirstIcmpPredicate
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: FirstIcmpPredicate
+  nameWithType: Predicate.FirstIcmpPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.FirstIcmpPredicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstIcmpPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 104
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Tag for the first integer compare predicate, all integer predicates are greater than or equal to this value
+  example: []
+  syntax:
+    content: FirstIcmpPredicate = 32
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.LastIcmpPredicate
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.LastIcmpPredicate
+  id: LastIcmpPredicate
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: LastIcmpPredicate
+  nameWithType: Predicate.LastIcmpPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.LastIcmpPredicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastIcmpPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 107
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Tag for the last integer compare predicate, all integer predicates are less than or equal to this value
+  example: []
+  syntax:
+    content: LastIcmpPredicate = 41
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate.BadIcmpPredicate
+  commentId: F:Ubiquity.NET.Llvm.Instructions.Predicate.BadIcmpPredicate
+  id: BadIcmpPredicate
+  parent: Ubiquity.NET.Llvm.Instructions.Predicate
+  langs:
+  - csharp
+  - vb
+  name: BadIcmpPredicate
+  nameWithType: Predicate.BadIcmpPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate.BadIcmpPredicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BadIcmpPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 110
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Any value Greater than or equal to this is not valid for cmp operations
+  example: []
+  syntax:
+    content: BadIcmpPredicate = 42
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.Predicate
+references:
+- uid: Ubiquity.NET.Llvm.Instructions
+  commentId: N:Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Instructions
+  nameWithType: Ubiquity.NET.Llvm.Instructions
+  fullName: Ubiquity.NET.Llvm.Instructions
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Instructions
+    name: Instructions
+    href: Ubiquity.NET.Llvm.Instructions.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Instructions
+    name: Instructions
+    href: Ubiquity.NET.Llvm.Instructions.html
+- uid: Ubiquity.NET.Llvm.Instructions.Predicate
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Predicate
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Predicate.html
+  name: Predicate
+  nameWithType: Predicate
+  fullName: Ubiquity.NET.Llvm.Instructions.Predicate

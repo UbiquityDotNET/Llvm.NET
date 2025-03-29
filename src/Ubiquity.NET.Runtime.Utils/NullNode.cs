@@ -15,10 +15,13 @@ namespace Ubiquity.NET.Runtime.Utils
     public class NullNode
         : IAstNode
     {
+        /// <inheritdoc/>
         public SourceLocation Location { get; } = default;
 
+        /// <inheritdoc/>
         public IEnumerable<IAstNode> Children { get; } = Enumerable.Empty<IAstNode>( );
 
+        /// <inheritdoc/>
         public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
         {
             return default;

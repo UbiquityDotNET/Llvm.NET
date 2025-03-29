@@ -1,0 +1,441 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  id: LocalIndirectStubsManager
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  children:
+  - Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  - Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose
+  langs:
+  - csharp
+  - vb
+  name: LocalIndirectStubsManager
+  nameWithType: LocalIndirectStubsManager
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LocalIndirectStubsManager.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LocalIndirectStubsManager
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LocalIndirectStubsManager.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: LLVM ORC JIT v2 Local Indirect Stubs Manager
+  example: []
+  syntax:
+    content: 'public sealed class LocalIndirectStubsManager : IDisposable'
+    content.vb: Public NotInheritable Class LocalIndirectStubsManager Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  id: '#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString)'
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  langs:
+  - csharp
+  - vb
+  name: LocalIndirectStubsManager(LazyEncodedString)
+  nameWithType: LocalIndirectStubsManager.LocalIndirectStubsManager(LazyEncodedString)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.LocalIndirectStubsManager(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LocalIndirectStubsManager.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LocalIndirectStubsManager.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public LocalIndirectStubsManager(LazyEncodedString triple)
+    parameters:
+    - id: triple
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+      description: Triple string for the manager
+    content.vb: Public Sub New(triple As LazyEncodedString)
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.#ctor*
+  nameWithType.vb: LocalIndirectStubsManager.New(LazyEncodedString)
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.New(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  name.vb: New(LazyEncodedString)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose
+  id: Dispose
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: LocalIndirectStubsManager.Dispose()
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LocalIndirectStubsManager.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Dispose
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LocalIndirectStubsManager.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: Ubiquity.NET.Llvm.OrcJITv2
+  commentId: N:Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.OrcJITv2
+  nameWithType: Ubiquity.NET.Llvm.OrcJITv2
+  fullName: Ubiquity.NET.Llvm.OrcJITv2
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.html
+  name: LocalIndirectStubsManager
+  nameWithType: LocalIndirectStubsManager
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.#ctor
+  href: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.html#Ubiquity_NET_Llvm_OrcJITv2_LocalIndirectStubsManager__ctor_Ubiquity_NET_InteropHelpers_LazyEncodedString_
+  name: LocalIndirectStubsManager
+  nameWithType: LocalIndirectStubsManager.LocalIndirectStubsManager
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.LocalIndirectStubsManager
+  nameWithType.vb: LocalIndirectStubsManager.New
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.New
+  name.vb: New
+- uid: Ubiquity.NET.InteropHelpers.LazyEncodedString
+  commentId: T:Ubiquity.NET.InteropHelpers.LazyEncodedString
+  parent: Ubiquity.NET.InteropHelpers
+  name: LazyEncodedString
+  nameWithType: LazyEncodedString
+  fullName: Ubiquity.NET.InteropHelpers.LazyEncodedString
+- uid: Ubiquity.NET.InteropHelpers
+  commentId: N:Ubiquity.NET.InteropHelpers
+  name: Ubiquity.NET.InteropHelpers
+  nameWithType: Ubiquity.NET.InteropHelpers
+  fullName: Ubiquity.NET.InteropHelpers
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose
+  href: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.html#Ubiquity_NET_Llvm_OrcJITv2_LocalIndirectStubsManager_Dispose
+  name: Dispose
+  nameWithType: LocalIndirectStubsManager.Dispose
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

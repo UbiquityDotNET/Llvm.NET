@@ -20,9 +20,6 @@ namespace Ubiquity.NET.Runtime.Utils
     /// the common case of nested scopes where a new 'local scope' may override some of the symbols
     /// in a parent scope. Any values in any parent not overridden by the child are visible to the
     /// child scope.</para>
-    /// <para>Usually, though not required, the type <typeparamref name="T"/> is <see cref="Values.Value"/>
-    /// or <see cref="Instructions.Alloca"/> to allow a code generator to track a value or mutable variable
-    /// with the source name in multiple scope layers.</para>
     /// </remarks>
     [SuppressMessage( "Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Semantically this type *is* a Stack" )]
     public class ScopeStack<T>

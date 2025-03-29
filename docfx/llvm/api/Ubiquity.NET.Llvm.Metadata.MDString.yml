@@ -1,0 +1,492 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Metadata.MDString
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MDString
+  id: MDString
+  parent: Ubiquity.NET.Llvm.Metadata
+  children:
+  - Ubiquity.NET.Llvm.Metadata.MDString.ToString
+  langs:
+  - csharp
+  - vb
+  name: MDString
+  nameWithType: MDString
+  fullName: Ubiquity.NET.Llvm.Metadata.MDString
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDString.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MDString
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDString.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Stores a string in IrMetadata
+  example: []
+  syntax:
+    content: 'public class MDString : IrMetadata, IEquatable<IrMetadata>'
+    content.vb: Public Class MDString Inherits IrMetadata Implements IEquatable(Of IrMetadata)
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.Metadata.MDString.ToString
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDString.ToString
+  id: ToString
+  parent: Ubiquity.NET.Llvm.Metadata.MDString
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: MDString.ToString()
+  fullName: Ubiquity.NET.Llvm.Metadata.MDString.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDString.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ToString
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDString.cs
+    startLine: 14
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets the string from the metadata node
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: String this node wraps
+    content.vb: Public Overrides Function ToString() As String
+  overridden: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  overload: Ubiquity.NET.Llvm.Metadata.MDString.ToString*
+references:
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  commentId: T:Ubiquity.NET.Llvm.Metadata.IrMetadata
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  name: IrMetadata
+  nameWithType: IrMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<IrMetadata>
+  nameWithType: IEquatable<IrMetadata>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Metadata.IrMetadata>
+  nameWithType.vb: IEquatable(Of IrMetadata)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  name.vb: IEquatable(Of IrMetadata)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: ReplaceAllUsesWith(IrMetadata)
+  nameWithType: IrMetadata.ReplaceAllUsesWith(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: Equals(IrMetadata)
+  nameWithType: IrMetadata.Equals(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  name: Equals(object)
+  nameWithType: IrMetadata.Equals(object)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(object)
+  nameWithType.vb: IrMetadata.Equals(Object)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  name: GetHashCode()
+  nameWithType: IrMetadata.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  commentId: P:Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Kind
+  name: Kind
+  nameWithType: IrMetadata.Kind
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+  commentId: P:Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Handle
+  name: Handle
+  nameWithType: IrMetadata.Handle
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  name: ToString()
+  nameWithType: IrMetadata.ToString()
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.MDString.ToString*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDString.ToString
+  href: Ubiquity.NET.Llvm.Metadata.MDString.html#Ubiquity_NET_Llvm_Metadata_MDString_ToString
+  name: ToString
+  nameWithType: MDString.ToString
+  fullName: Ubiquity.NET.Llvm.Metadata.MDString.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

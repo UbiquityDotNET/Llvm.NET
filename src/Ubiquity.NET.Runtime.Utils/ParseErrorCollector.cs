@@ -5,21 +5,25 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
+    /// <summary>Implementation of <see cref="IParseErrorListener"/> to collect any errors that occur during a parse</summary>
     public class ParseErrorCollector
         : IParseErrorListener
     {
+        /// <inheritdoc/>
+        /// <remarks>
+        /// This will collect every error reported during a parse
+        /// </remarks>
         public void SyntaxError( SyntaxError syntaxError )
         {
             ArgumentNullException.ThrowIfNull( syntaxError );
-            Errors.Add( new ErrorNode( syntaxError.Location, syntaxError.ToString( ) ) );
+            ErrorNodes = ErrorNodes.Add( new ErrorNode( syntaxError.Location, syntaxError.ToString( ) ) );
         }
 
-        public IReadOnlyCollection<IAstNode> ErrorNodes => Errors.AsReadOnly( );
-
-        private readonly List<ErrorNode> Errors = [];
+        /// <summary>Gets the error nodes found by this listener</summary>
+        public ImmutableArray<ErrorNode> ErrorNodes {get; private set; } = [];
     }
 }

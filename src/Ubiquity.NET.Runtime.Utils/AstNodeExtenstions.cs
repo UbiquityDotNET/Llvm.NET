@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -22,13 +22,12 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="node">Node to traverse for errors</param>
         /// <remarks>Traverses the node hierarchy to find all error node at any depth</remarks>
         /// <returns>Collection of errors found</returns>
-        public static IReadOnlyCollection<ErrorNode> CollectErrors( this IAstNode node )
+        public static ImmutableArray<ErrorNode> CollectErrors( this IAstNode node )
         {
             ArgumentNullException.ThrowIfNull(node);
 
             var collector = new ErrorNodeCollector();
-            node.Accept( collector );
-            return collector.Errors;
+            return node.Accept( collector );
         }
     }
 }

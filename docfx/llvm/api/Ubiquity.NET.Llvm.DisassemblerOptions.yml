@@ -1,0 +1,281 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions
+  commentId: T:Ubiquity.NET.Llvm.DisassemblerOptions
+  id: DisassemblerOptions
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.DisassemblerOptions.AsmPrinterVariant
+  - Ubiquity.NET.Llvm.DisassemblerOptions.Color
+  - Ubiquity.NET.Llvm.DisassemblerOptions.ImmediateAsHex
+  - Ubiquity.NET.Llvm.DisassemblerOptions.InstructionComments
+  - Ubiquity.NET.Llvm.DisassemblerOptions.None
+  - Ubiquity.NET.Llvm.DisassemblerOptions.PrintLatency
+  - Ubiquity.NET.Llvm.DisassemblerOptions.UseMarkup
+  langs:
+  - csharp
+  - vb
+  name: DisassemblerOptions
+  nameWithType: DisassemblerOptions
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DisassemblerOptions
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 48
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Options flags for the disassembler
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum DisassemblerOptions
+    content.vb: >-
+      <Flags>
+
+      Public Enum DisassemblerOptions
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.None
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.None
+  id: None
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: DisassemblerOptions.None
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.None
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: None
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: No options
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.UseMarkup
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.UseMarkup
+  id: UseMarkup
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: UseMarkup
+  nameWithType: DisassemblerOptions.UseMarkup
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.UseMarkup
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UseMarkup
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Produce marked up assembly
+  example: []
+  syntax:
+    content: UseMarkup = 1
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.ImmediateAsHex
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.ImmediateAsHex
+  id: ImmediateAsHex
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: ImmediateAsHex
+  nameWithType: DisassemblerOptions.ImmediateAsHex
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.ImmediateAsHex
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImmediateAsHex
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Print immediate as HEX
+  example: []
+  syntax:
+    content: ImmediateAsHex = 2
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.AsmPrinterVariant
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.AsmPrinterVariant
+  id: AsmPrinterVariant
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: AsmPrinterVariant
+  nameWithType: DisassemblerOptions.AsmPrinterVariant
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.AsmPrinterVariant
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AsmPrinterVariant
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 61
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Use the alternate assembly printer variant
+  example: []
+  syntax:
+    content: AsmPrinterVariant = 4
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.InstructionComments
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.InstructionComments
+  id: InstructionComments
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: InstructionComments
+  nameWithType: DisassemblerOptions.InstructionComments
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.InstructionComments
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InstructionComments
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 64
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Set comments on instructions
+  example: []
+  syntax:
+    content: InstructionComments = 8
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.PrintLatency
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.PrintLatency
+  id: PrintLatency
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: PrintLatency
+  nameWithType: DisassemblerOptions.PrintLatency
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.PrintLatency
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PrintLatency
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 67
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Print latency information alongside instructions
+  example: []
+  syntax:
+    content: PrintLatency = 16
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions.Color
+  commentId: F:Ubiquity.NET.Llvm.DisassemblerOptions.Color
+  id: Color
+  parent: Ubiquity.NET.Llvm.DisassemblerOptions
+  langs:
+  - csharp
+  - vb
+  name: Color
+  nameWithType: DisassemblerOptions.Color
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions.Color
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DisAssembler.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Color
+    path: ../src/Ubiquity.NET.Llvm/DisAssembler.cs
+    startLine: 70
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Print in color
+  example: []
+  syntax:
+    content: Color = 32
+    return:
+      type: Ubiquity.NET.Llvm.DisassemblerOptions
+references:
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.DisassemblerOptions
+  commentId: T:Ubiquity.NET.Llvm.DisassemblerOptions
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.DisassemblerOptions.html
+  name: DisassemblerOptions
+  nameWithType: DisassemblerOptions
+  fullName: Ubiquity.NET.Llvm.DisassemblerOptions

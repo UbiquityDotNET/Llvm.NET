@@ -1,0 +1,3392 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeKind
+  id: AttributeKind
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+  - Ubiquity.NET.Llvm.Values.AttributeKind.AllocAlign
+  - Ubiquity.NET.Llvm.Values.AttributeKind.AllocKind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.AllocSize
+  - Ubiquity.NET.Llvm.Values.AttributeKind.AllocatedPointer
+  - Ubiquity.NET.Llvm.Values.AttributeKind.AlwaysInline
+  - Ubiquity.NET.Llvm.Values.AttributeKind.BuiltIn
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ByRef
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ByVal
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Captures
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Cold
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Convergent
+  - Ubiquity.NET.Llvm.Values.AttributeKind.CoroDestroyOnlyWhenComplete
+  - Ubiquity.NET.Llvm.Values.AttributeKind.CoroElideSafe
+  - Ubiquity.NET.Llvm.Values.AttributeKind.DeadOnUnwind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+  - Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+  - Ubiquity.NET.Llvm.Values.AttributeKind.DisableSanitizerInstrumentation
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ElementType
+  - Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeListAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.FirstEnumAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.FirstIntAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.FirstTypeAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.FnRetThunkExtern
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Hot
+  - Ubiquity.NET.Llvm.Values.AttributeKind.HybridPatchable
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ImmArg
+  - Ubiquity.NET.Llvm.Values.AttributeKind.InAlloca
+  - Ubiquity.NET.Llvm.Values.AttributeKind.InReg
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Initializes
+  - Ubiquity.NET.Llvm.Values.AttributeKind.InlineHint
+  - Ubiquity.NET.Llvm.Values.AttributeKind.JumpTable
+  - Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeListAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.LastEnumAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.LastIntAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.LastTypeAttr
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Memory
+  - Ubiquity.NET.Llvm.Values.AttributeKind.MinSize
+  - Ubiquity.NET.Llvm.Values.AttributeKind.MustProgress
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Naked
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Nest
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoAlias
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoBuiltIn
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoCallback
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoCapture
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoCfCheck
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoDivergenceSource
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoDuplicate
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoExt
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoFPClass
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoFree
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoImplicitFloat
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoInline
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoMerge
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoProfile
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoRecurse
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoRedZone
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoReturn
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeBounds
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeCoverage
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoSync
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoUndef
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NoUnwind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NonLazyBind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NonNull
+  - Ubiquity.NET.Llvm.Values.AttributeKind.None
+  - Ubiquity.NET.Llvm.Values.AttributeKind.NullPointerIsValid
+  - Ubiquity.NET.Llvm.Values.AttributeKind.OptForFuzzing
+  - Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForDebugging
+  - Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForSize
+  - Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeNone
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Preallocated
+  - Ubiquity.NET.Llvm.Values.AttributeKind.PresplitCoroutine
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Range
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ReadNone
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ReadOnly
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Returned
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ReturnsTwice
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SExt
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SafeStack
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeAddress
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeHWAddress
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemTag
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemory
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeNumericalStability
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtime
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtimeBlocking
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeThread
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeType
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ShadowCallStack
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SkipProfile
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Speculatable
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SpeculativeLoadHardening
+  - Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+  - Ubiquity.NET.Llvm.Values.AttributeKind.StackProtect
+  - Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectReq
+  - Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectStrong
+  - Ubiquity.NET.Llvm.Values.AttributeKind.StrictFP
+  - Ubiquity.NET.Llvm.Values.AttributeKind.StructRet
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SwiftAsync
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SwiftError
+  - Ubiquity.NET.Llvm.Values.AttributeKind.SwiftSelf
+  - Ubiquity.NET.Llvm.Values.AttributeKind.UWTable
+  - Ubiquity.NET.Llvm.Values.AttributeKind.VScaleRange
+  - Ubiquity.NET.Llvm.Values.AttributeKind.WillReturn
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Writable
+  - Ubiquity.NET.Llvm.Values.AttributeKind.WriteOnly
+  - Ubiquity.NET.Llvm.Values.AttributeKind.ZExt
+  langs:
+  - csharp
+  - vb
+  name: AttributeKind
+  nameWithType: AttributeKind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AttributeKind
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 27
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Id values for enumerated LLVM attributes
+  remarks: >-
+    <div class="IMPORTANT"><h5>important</h5><p>LLVM officially documents NO stability for the names or
+
+    values of the enumerations here. Unfortunately, the C API only ever deals in
+
+    an integral value (C++ consumers have FULL access to the Attribute::AttrKind
+
+    enumeration...). This leaves any language bindings with the ONLY option of
+
+    redefining the enum OR dealing only in unnamed integral values. Using just
+
+    an integer is a VERY bad experience as it leans toward the "magic" number
+
+    scenario. Worse is that the meaning of said "magic" values could change.
+
+    This is built from the headers of a specific version and is bound to that.
+
+    So, while the names and values may change over time they WON'T change for
+
+    a given release of LLVM. (And likely won't change across even a minor version
+
+    change. But, sadly, there is no promise on that...) Thus projections/bindings
+
+    and, more importantly consumers of such, are stuck with the reality that this
+
+    is an area that is likely to cause breaking changes.
+
+    </p></div>
+
+    <p>
+
+    </p>
+  example: []
+  syntax:
+    content: public enum AttributeKind
+    content.vb: Public Enum AttributeKind
+  extensionMethods:
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind
+  - Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.None
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.None
+  id: None
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: AttributeKind.None
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.None
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: None
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 32
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: None = 0
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.FirstEnumAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.FirstEnumAttr
+  id: FirstEnumAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: FirstEnumAttr
+  nameWithType: AttributeKind.FirstEnumAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.FirstEnumAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstEnumAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 33
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: FirstEnumAttr = 1
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.AllocAlign
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.AllocAlign
+  id: AllocAlign
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: AllocAlign
+  nameWithType: AttributeKind.AllocAlign
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.AllocAlign
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AllocAlign
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 34
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: AllocAlign = 1
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.AllocatedPointer
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.AllocatedPointer
+  id: AllocatedPointer
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: AllocatedPointer
+  nameWithType: AttributeKind.AllocatedPointer
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.AllocatedPointer
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AllocatedPointer
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 35
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: AllocatedPointer = 2
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.AlwaysInline
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.AlwaysInline
+  id: AlwaysInline
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: AlwaysInline
+  nameWithType: AttributeKind.AlwaysInline
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.AlwaysInline
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AlwaysInline
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 36
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: AlwaysInline = 3
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.BuiltIn
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.BuiltIn
+  id: BuiltIn
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: BuiltIn
+  nameWithType: AttributeKind.BuiltIn
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.BuiltIn
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BuiltIn
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: BuiltIn = 4
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Cold
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Cold
+  id: Cold
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Cold
+  nameWithType: AttributeKind.Cold
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Cold
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Cold
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 38
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Cold = 5
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Convergent
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Convergent
+  id: Convergent
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Convergent
+  nameWithType: AttributeKind.Convergent
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Convergent
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Convergent
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 39
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Convergent = 6
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.CoroDestroyOnlyWhenComplete
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.CoroDestroyOnlyWhenComplete
+  id: CoroDestroyOnlyWhenComplete
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: CoroDestroyOnlyWhenComplete
+  nameWithType: AttributeKind.CoroDestroyOnlyWhenComplete
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.CoroDestroyOnlyWhenComplete
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CoroDestroyOnlyWhenComplete
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 40
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: CoroDestroyOnlyWhenComplete = 7
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.CoroElideSafe
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.CoroElideSafe
+  id: CoroElideSafe
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: CoroElideSafe
+  nameWithType: AttributeKind.CoroElideSafe
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.CoroElideSafe
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CoroElideSafe
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 41
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: CoroElideSafe = 8
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.DeadOnUnwind
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.DeadOnUnwind
+  id: DeadOnUnwind
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: DeadOnUnwind
+  nameWithType: AttributeKind.DeadOnUnwind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.DeadOnUnwind
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DeadOnUnwind
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 42
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: DeadOnUnwind = 9
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.DisableSanitizerInstrumentation
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.DisableSanitizerInstrumentation
+  id: DisableSanitizerInstrumentation
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: DisableSanitizerInstrumentation
+  nameWithType: AttributeKind.DisableSanitizerInstrumentation
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.DisableSanitizerInstrumentation
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DisableSanitizerInstrumentation
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: DisableSanitizerInstrumentation = 10
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.FnRetThunkExtern
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.FnRetThunkExtern
+  id: FnRetThunkExtern
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: FnRetThunkExtern
+  nameWithType: AttributeKind.FnRetThunkExtern
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.FnRetThunkExtern
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FnRetThunkExtern
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 44
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: FnRetThunkExtern = 11
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Hot
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Hot
+  id: Hot
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Hot
+  nameWithType: AttributeKind.Hot
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Hot
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Hot
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 45
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Hot = 12
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.HybridPatchable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.HybridPatchable
+  id: HybridPatchable
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: HybridPatchable
+  nameWithType: AttributeKind.HybridPatchable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.HybridPatchable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: HybridPatchable
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: HybridPatchable = 13
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ImmArg
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ImmArg
+  id: ImmArg
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ImmArg
+  nameWithType: AttributeKind.ImmArg
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ImmArg
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImmArg
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 47
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ImmArg = 14
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.InReg
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.InReg
+  id: InReg
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: InReg
+  nameWithType: AttributeKind.InReg
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.InReg
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InReg
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 48
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: InReg = 15
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.InlineHint
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.InlineHint
+  id: InlineHint
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: InlineHint
+  nameWithType: AttributeKind.InlineHint
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.InlineHint
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InlineHint
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: InlineHint = 16
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.JumpTable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.JumpTable
+  id: JumpTable
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: JumpTable
+  nameWithType: AttributeKind.JumpTable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.JumpTable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: JumpTable
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 50
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: JumpTable = 17
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.MinSize
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.MinSize
+  id: MinSize
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: MinSize
+  nameWithType: AttributeKind.MinSize
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.MinSize
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MinSize
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 51
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: MinSize = 18
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.MustProgress
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.MustProgress
+  id: MustProgress
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: MustProgress
+  nameWithType: AttributeKind.MustProgress
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.MustProgress
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MustProgress
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: MustProgress = 19
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Naked
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Naked
+  id: Naked
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Naked
+  nameWithType: AttributeKind.Naked
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Naked
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Naked
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 53
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Naked = 20
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Nest
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Nest
+  id: Nest
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Nest
+  nameWithType: AttributeKind.Nest
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Nest
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Nest
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 54
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Nest = 21
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoAlias
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoAlias
+  id: NoAlias
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoAlias
+  nameWithType: AttributeKind.NoAlias
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoAlias
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoAlias
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoAlias = 22
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoBuiltIn
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoBuiltIn
+  id: NoBuiltIn
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoBuiltIn
+  nameWithType: AttributeKind.NoBuiltIn
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoBuiltIn
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoBuiltIn
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 56
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoBuiltIn = 23
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoCallback
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoCallback
+  id: NoCallback
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoCallback
+  nameWithType: AttributeKind.NoCallback
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoCallback
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoCallback
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 57
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoCallback = 24
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoCapture
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoCapture
+  id: NoCapture
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoCapture
+  nameWithType: AttributeKind.NoCapture
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoCapture
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoCapture
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoCapture = 25
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoCfCheck
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoCfCheck
+  id: NoCfCheck
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoCfCheck
+  nameWithType: AttributeKind.NoCfCheck
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoCfCheck
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoCfCheck
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 59
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoCfCheck = 26
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoDivergenceSource
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoDivergenceSource
+  id: NoDivergenceSource
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoDivergenceSource
+  nameWithType: AttributeKind.NoDivergenceSource
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoDivergenceSource
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoDivergenceSource
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 60
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoDivergenceSource = 27
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoDuplicate
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoDuplicate
+  id: NoDuplicate
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoDuplicate
+  nameWithType: AttributeKind.NoDuplicate
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoDuplicate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoDuplicate
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 61
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoDuplicate = 28
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoExt
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoExt
+  id: NoExt
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoExt
+  nameWithType: AttributeKind.NoExt
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoExt
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoExt
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 62
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoExt = 29
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoFree
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoFree
+  id: NoFree
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoFree
+  nameWithType: AttributeKind.NoFree
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoFree
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoFree
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 63
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoFree = 30
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoImplicitFloat
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoImplicitFloat
+  id: NoImplicitFloat
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoImplicitFloat
+  nameWithType: AttributeKind.NoImplicitFloat
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoImplicitFloat
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoImplicitFloat
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 64
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoImplicitFloat = 31
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoInline
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoInline
+  id: NoInline
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoInline
+  nameWithType: AttributeKind.NoInline
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoInline
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoInline
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 65
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoInline = 32
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoMerge
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoMerge
+  id: NoMerge
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoMerge
+  nameWithType: AttributeKind.NoMerge
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoMerge
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoMerge
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 66
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoMerge = 33
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoProfile
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoProfile
+  id: NoProfile
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoProfile
+  nameWithType: AttributeKind.NoProfile
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoProfile
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoProfile
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 67
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoProfile = 34
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoRecurse
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoRecurse
+  id: NoRecurse
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoRecurse
+  nameWithType: AttributeKind.NoRecurse
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoRecurse
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoRecurse
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 68
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoRecurse = 35
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoRedZone
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoRedZone
+  id: NoRedZone
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoRedZone
+  nameWithType: AttributeKind.NoRedZone
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoRedZone
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoRedZone
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 69
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoRedZone = 36
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoReturn
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoReturn
+  id: NoReturn
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoReturn
+  nameWithType: AttributeKind.NoReturn
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoReturn
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoReturn
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 70
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoReturn = 37
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeBounds
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeBounds
+  id: NoSanitizeBounds
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoSanitizeBounds
+  nameWithType: AttributeKind.NoSanitizeBounds
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeBounds
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoSanitizeBounds
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 71
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoSanitizeBounds = 38
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeCoverage
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeCoverage
+  id: NoSanitizeCoverage
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoSanitizeCoverage
+  nameWithType: AttributeKind.NoSanitizeCoverage
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoSanitizeCoverage
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoSanitizeCoverage
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 72
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoSanitizeCoverage = 39
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoSync
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoSync
+  id: NoSync
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoSync
+  nameWithType: AttributeKind.NoSync
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoSync
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoSync
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 73
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoSync = 40
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoUndef
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoUndef
+  id: NoUndef
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoUndef
+  nameWithType: AttributeKind.NoUndef
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoUndef
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoUndef
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 74
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoUndef = 41
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoUnwind
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoUnwind
+  id: NoUnwind
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoUnwind
+  nameWithType: AttributeKind.NoUnwind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoUnwind
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoUnwind
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 75
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoUnwind = 42
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NonLazyBind
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NonLazyBind
+  id: NonLazyBind
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NonLazyBind
+  nameWithType: AttributeKind.NonLazyBind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NonLazyBind
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NonLazyBind
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 76
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NonLazyBind = 43
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NonNull
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NonNull
+  id: NonNull
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NonNull
+  nameWithType: AttributeKind.NonNull
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NonNull
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NonNull
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 77
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NonNull = 44
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NullPointerIsValid
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NullPointerIsValid
+  id: NullPointerIsValid
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NullPointerIsValid
+  nameWithType: AttributeKind.NullPointerIsValid
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NullPointerIsValid
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NullPointerIsValid
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 78
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NullPointerIsValid = 45
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.OptForFuzzing
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.OptForFuzzing
+  id: OptForFuzzing
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: OptForFuzzing
+  nameWithType: AttributeKind.OptForFuzzing
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.OptForFuzzing
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OptForFuzzing
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 79
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: OptForFuzzing = 46
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForDebugging
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForDebugging
+  id: OptimizeForDebugging
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: OptimizeForDebugging
+  nameWithType: AttributeKind.OptimizeForDebugging
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForDebugging
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OptimizeForDebugging
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 80
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: OptimizeForDebugging = 47
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForSize
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForSize
+  id: OptimizeForSize
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: OptimizeForSize
+  nameWithType: AttributeKind.OptimizeForSize
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeForSize
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OptimizeForSize
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 81
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: OptimizeForSize = 48
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeNone
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeNone
+  id: OptimizeNone
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: OptimizeNone
+  nameWithType: AttributeKind.OptimizeNone
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.OptimizeNone
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OptimizeNone
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 82
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: OptimizeNone = 49
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.PresplitCoroutine
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.PresplitCoroutine
+  id: PresplitCoroutine
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: PresplitCoroutine
+  nameWithType: AttributeKind.PresplitCoroutine
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.PresplitCoroutine
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PresplitCoroutine
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 83
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: PresplitCoroutine = 50
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ReadNone
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ReadNone
+  id: ReadNone
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ReadNone
+  nameWithType: AttributeKind.ReadNone
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ReadNone
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ReadNone
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 84
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ReadNone = 51
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ReadOnly
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ReadOnly
+  id: ReadOnly
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ReadOnly
+  nameWithType: AttributeKind.ReadOnly
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ReadOnly
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ReadOnly
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 85
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ReadOnly = 52
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Returned
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Returned
+  id: Returned
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Returned
+  nameWithType: AttributeKind.Returned
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Returned
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Returned
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 86
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Returned = 53
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ReturnsTwice
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ReturnsTwice
+  id: ReturnsTwice
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ReturnsTwice
+  nameWithType: AttributeKind.ReturnsTwice
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ReturnsTwice
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ReturnsTwice
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 87
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ReturnsTwice = 54
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SExt
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SExt
+  id: SExt
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SExt
+  nameWithType: AttributeKind.SExt
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SExt
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SExt
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 88
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SExt = 55
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SafeStack
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SafeStack
+  id: SafeStack
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SafeStack
+  nameWithType: AttributeKind.SafeStack
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SafeStack
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SafeStack
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 89
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SafeStack = 56
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeAddress
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeAddress
+  id: SanitizeAddress
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeAddress
+  nameWithType: AttributeKind.SanitizeAddress
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeAddress
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeAddress
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 90
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeAddress = 57
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeHWAddress
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeHWAddress
+  id: SanitizeHWAddress
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeHWAddress
+  nameWithType: AttributeKind.SanitizeHWAddress
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeHWAddress
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeHWAddress
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 91
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeHWAddress = 58
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemTag
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemTag
+  id: SanitizeMemTag
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeMemTag
+  nameWithType: AttributeKind.SanitizeMemTag
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemTag
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeMemTag
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 92
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeMemTag = 59
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemory
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemory
+  id: SanitizeMemory
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeMemory
+  nameWithType: AttributeKind.SanitizeMemory
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeMemory
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeMemory
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 93
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeMemory = 60
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeNumericalStability
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeNumericalStability
+  id: SanitizeNumericalStability
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeNumericalStability
+  nameWithType: AttributeKind.SanitizeNumericalStability
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeNumericalStability
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeNumericalStability
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 94
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeNumericalStability = 61
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtime
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtime
+  id: SanitizeRealtime
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeRealtime
+  nameWithType: AttributeKind.SanitizeRealtime
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtime
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeRealtime
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 95
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeRealtime = 62
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtimeBlocking
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtimeBlocking
+  id: SanitizeRealtimeBlocking
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeRealtimeBlocking
+  nameWithType: AttributeKind.SanitizeRealtimeBlocking
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeRealtimeBlocking
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeRealtimeBlocking
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 96
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeRealtimeBlocking = 63
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeThread
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeThread
+  id: SanitizeThread
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeThread
+  nameWithType: AttributeKind.SanitizeThread
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeThread
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeThread
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 97
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeThread = 64
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeType
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeType
+  id: SanitizeType
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SanitizeType
+  nameWithType: AttributeKind.SanitizeType
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SanitizeType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SanitizeType
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 98
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SanitizeType = 65
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ShadowCallStack
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ShadowCallStack
+  id: ShadowCallStack
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ShadowCallStack
+  nameWithType: AttributeKind.ShadowCallStack
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ShadowCallStack
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ShadowCallStack
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 99
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ShadowCallStack = 66
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SkipProfile
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SkipProfile
+  id: SkipProfile
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SkipProfile
+  nameWithType: AttributeKind.SkipProfile
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SkipProfile
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SkipProfile
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 100
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SkipProfile = 67
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Speculatable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Speculatable
+  id: Speculatable
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Speculatable
+  nameWithType: AttributeKind.Speculatable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Speculatable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Speculatable
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 101
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Speculatable = 68
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SpeculativeLoadHardening
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SpeculativeLoadHardening
+  id: SpeculativeLoadHardening
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SpeculativeLoadHardening
+  nameWithType: AttributeKind.SpeculativeLoadHardening
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SpeculativeLoadHardening
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SpeculativeLoadHardening
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 102
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SpeculativeLoadHardening = 69
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StackProtect
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StackProtect
+  id: StackProtect
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: StackProtect
+  nameWithType: AttributeKind.StackProtect
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StackProtect
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StackProtect
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 103
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: StackProtect = 70
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectReq
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectReq
+  id: StackProtectReq
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: StackProtectReq
+  nameWithType: AttributeKind.StackProtectReq
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectReq
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StackProtectReq
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 104
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: StackProtectReq = 71
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectStrong
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectStrong
+  id: StackProtectStrong
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: StackProtectStrong
+  nameWithType: AttributeKind.StackProtectStrong
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StackProtectStrong
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StackProtectStrong
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 105
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: StackProtectStrong = 72
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StrictFP
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StrictFP
+  id: StrictFP
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: StrictFP
+  nameWithType: AttributeKind.StrictFP
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StrictFP
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StrictFP
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 106
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: StrictFP = 73
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SwiftAsync
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SwiftAsync
+  id: SwiftAsync
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SwiftAsync
+  nameWithType: AttributeKind.SwiftAsync
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SwiftAsync
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SwiftAsync
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 107
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SwiftAsync = 74
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SwiftError
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SwiftError
+  id: SwiftError
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SwiftError
+  nameWithType: AttributeKind.SwiftError
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SwiftError
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SwiftError
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 108
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SwiftError = 75
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.SwiftSelf
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.SwiftSelf
+  id: SwiftSelf
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: SwiftSelf
+  nameWithType: AttributeKind.SwiftSelf
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.SwiftSelf
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SwiftSelf
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 109
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: SwiftSelf = 76
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.WillReturn
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.WillReturn
+  id: WillReturn
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: WillReturn
+  nameWithType: AttributeKind.WillReturn
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.WillReturn
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: WillReturn
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 110
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: WillReturn = 77
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Writable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Writable
+  id: Writable
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Writable
+  nameWithType: AttributeKind.Writable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Writable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Writable
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 111
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Writable = 78
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.WriteOnly
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.WriteOnly
+  id: WriteOnly
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: WriteOnly
+  nameWithType: AttributeKind.WriteOnly
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.WriteOnly
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: WriteOnly
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 112
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: WriteOnly = 79
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ZExt
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ZExt
+  id: ZExt
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ZExt
+  nameWithType: AttributeKind.ZExt
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ZExt
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ZExt
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 113
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ZExt = 80
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.LastEnumAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.LastEnumAttr
+  id: LastEnumAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: LastEnumAttr
+  nameWithType: AttributeKind.LastEnumAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.LastEnumAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastEnumAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 114
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: LastEnumAttr = 80
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.FirstTypeAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.FirstTypeAttr
+  id: FirstTypeAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: FirstTypeAttr
+  nameWithType: AttributeKind.FirstTypeAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.FirstTypeAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstTypeAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 115
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: FirstTypeAttr = 81
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ByRef
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ByRef
+  id: ByRef
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ByRef
+  nameWithType: AttributeKind.ByRef
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ByRef
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ByRef
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 116
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ByRef = 81
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ByVal
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ByVal
+  id: ByVal
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ByVal
+  nameWithType: AttributeKind.ByVal
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ByVal
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ByVal
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 117
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ByVal = 82
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.ElementType
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.ElementType
+  id: ElementType
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: ElementType
+  nameWithType: AttributeKind.ElementType
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.ElementType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ElementType
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 118
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: ElementType = 83
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.InAlloca
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.InAlloca
+  id: InAlloca
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: InAlloca
+  nameWithType: AttributeKind.InAlloca
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.InAlloca
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InAlloca
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 119
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: InAlloca = 84
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Preallocated
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Preallocated
+  id: Preallocated
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Preallocated
+  nameWithType: AttributeKind.Preallocated
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Preallocated
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Preallocated
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 120
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Preallocated = 85
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StructRet
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StructRet
+  id: StructRet
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: StructRet
+  nameWithType: AttributeKind.StructRet
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StructRet
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StructRet
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 121
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: StructRet = 86
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.LastTypeAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.LastTypeAttr
+  id: LastTypeAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: LastTypeAttr
+  nameWithType: AttributeKind.LastTypeAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.LastTypeAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastTypeAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 122
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: LastTypeAttr = 86
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.FirstIntAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.FirstIntAttr
+  id: FirstIntAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: FirstIntAttr
+  nameWithType: AttributeKind.FirstIntAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.FirstIntAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstIntAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 123
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: FirstIntAttr = 87
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+  id: Alignment
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Alignment
+  nameWithType: AttributeKind.Alignment
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Alignment
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 124
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Alignment = 87
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.AllocKind
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.AllocKind
+  id: AllocKind
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: AllocKind
+  nameWithType: AttributeKind.AllocKind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.AllocKind
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AllocKind
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 125
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: AllocKind = 88
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.AllocSize
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.AllocSize
+  id: AllocSize
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: AllocSize
+  nameWithType: AttributeKind.AllocSize
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.AllocSize
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AllocSize
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 126
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: AllocSize = 89
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Captures
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Captures
+  id: Captures
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Captures
+  nameWithType: AttributeKind.Captures
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Captures
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Captures
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 127
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Captures = 90
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+  id: Dereferenceable
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Dereferenceable
+  nameWithType: AttributeKind.Dereferenceable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Dereferenceable
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 128
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Dereferenceable = 91
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+  id: DereferenceableOrNull
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: DereferenceableOrNull
+  nameWithType: AttributeKind.DereferenceableOrNull
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DereferenceableOrNull
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 129
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: DereferenceableOrNull = 92
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Memory
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Memory
+  id: Memory
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Memory
+  nameWithType: AttributeKind.Memory
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Memory
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Memory
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 130
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Memory = 93
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.NoFPClass
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.NoFPClass
+  id: NoFPClass
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: NoFPClass
+  nameWithType: AttributeKind.NoFPClass
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.NoFPClass
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoFPClass
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 131
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: NoFPClass = 94
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+  id: StackAlignment
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: StackAlignment
+  nameWithType: AttributeKind.StackAlignment
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StackAlignment
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 132
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: StackAlignment = 95
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.UWTable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.UWTable
+  id: UWTable
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: UWTable
+  nameWithType: AttributeKind.UWTable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.UWTable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UWTable
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 133
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: UWTable = 96
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.VScaleRange
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.VScaleRange
+  id: VScaleRange
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: VScaleRange
+  nameWithType: AttributeKind.VScaleRange
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.VScaleRange
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VScaleRange
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 134
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: VScaleRange = 97
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.LastIntAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.LastIntAttr
+  id: LastIntAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: LastIntAttr
+  nameWithType: AttributeKind.LastIntAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.LastIntAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastIntAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 135
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: LastIntAttr = 97
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeAttr
+  id: FirstConstantRangeAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: FirstConstantRangeAttr
+  nameWithType: AttributeKind.FirstConstantRangeAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstConstantRangeAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 136
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: FirstConstantRangeAttr = 98
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Range
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Range
+  id: Range
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Range
+  nameWithType: AttributeKind.Range
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Range
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Range
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 137
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Range = 98
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeAttr
+  id: LastConstantRangeAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: LastConstantRangeAttr
+  nameWithType: AttributeKind.LastConstantRangeAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastConstantRangeAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 138
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: LastConstantRangeAttr = 98
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeListAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeListAttr
+  id: FirstConstantRangeListAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: FirstConstantRangeListAttr
+  nameWithType: AttributeKind.FirstConstantRangeListAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.FirstConstantRangeListAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FirstConstantRangeListAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 139
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: FirstConstantRangeListAttr = 99
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Initializes
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Initializes
+  id: Initializes
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: Initializes
+  nameWithType: AttributeKind.Initializes
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Initializes
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Initializes
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 140
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: Initializes = 99
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeListAttr
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeListAttr
+  id: LastConstantRangeListAttr
+  parent: Ubiquity.NET.Llvm.Values.AttributeKind
+  langs:
+  - csharp
+  - vb
+  name: LastConstantRangeListAttr
+  nameWithType: AttributeKind.LastConstantRangeListAttr
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.LastConstantRangeListAttr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LastConstantRangeListAttr
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeKind.cs
+    startLine: 141
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  syntax:
+    content: LastConstantRangeListAttr = 99
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  definition: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_GetAttributeName_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: GetAttributeName(AttributeKind)
+  nameWithType: AttributeKindExtensions.GetAttributeName(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: GetAttributeName
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_GetAttributeName_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: GetAttributeName
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_GetAttributeName_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  definition: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsConstantRangeKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsConstantRangeKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  definition: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeListKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsConstantRangeListKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsConstantRangeListKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeListKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeListKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeListKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeListKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  definition: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsEnumKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsEnumKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsEnumKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsEnumKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsEnumKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsEnumKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsEnumKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  definition: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsIntKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsIntKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsIntKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsIntKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsIntKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsIntKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsIntKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  definition: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsTypeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsTypeKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsTypeKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsTypeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsTypeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsTypeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsTypeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_GetAttributeName_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: GetAttributeName(AttributeKind)
+  nameWithType: AttributeKindExtensions.GetAttributeName(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: GetAttributeName
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_GetAttributeName_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.GetAttributeName(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: GetAttributeName
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_GetAttributeName_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html
+  name: AttributeKindExtensions
+  nameWithType: AttributeKindExtensions
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsConstantRangeKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsConstantRangeKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeListKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsConstantRangeListKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsConstantRangeListKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeListKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeListKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsConstantRangeListKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsConstantRangeListKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsConstantRangeListKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsEnumKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsEnumKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsEnumKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsEnumKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsEnumKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsEnumKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsEnumKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsEnumKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsIntKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsIntKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsIntKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsIntKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsIntKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsIntKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsIntKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsIntKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsTypeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: IsTypeKind(AttributeKind)
+  nameWithType: AttributeKindExtensions.IsTypeKind(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsTypeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsTypeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.IsTypeKind(Ubiquity.NET.Llvm.Values.AttributeKind)
+    name: IsTypeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKindExtensions.html#Ubiquity_NET_Llvm_Values_AttributeKindExtensions_IsTypeKind_Ubiquity_NET_Llvm_Values_AttributeKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeKind
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  name: AttributeKind
+  nameWithType: AttributeKind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind

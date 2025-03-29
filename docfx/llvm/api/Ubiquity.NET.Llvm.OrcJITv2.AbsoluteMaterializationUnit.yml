@@ -1,0 +1,605 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+  id: AbsoluteMaterializationUnit
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  children:
+  - Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.#ctor(System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}})
+  langs:
+  - csharp
+  - vb
+  name: AbsoluteMaterializationUnit
+  nameWithType: AbsoluteMaterializationUnit
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/AbsoluteMaterializationUnit.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AbsoluteMaterializationUnit
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/AbsoluteMaterializationUnit.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Materialization unit for absolute symbols in an LLVM ORC v2 JIT
+  example: []
+  syntax:
+    content: 'public class AbsoluteMaterializationUnit : MaterializationUnit, IDisposable'
+    content.vb: Public Class AbsoluteMaterializationUnit Inherits MaterializationUnit Implements IDisposable
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.DisposableObject
+  - Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(System.Boolean)
+  - Ubiquity.NET.Llvm.DisposableObject.Dispose
+  - Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.#ctor(System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}})
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.#ctor(System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}})
+  id: '#ctor(System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}})'
+  parent: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+  langs:
+  - csharp
+  - vb
+  name: AbsoluteMaterializationUnit(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>>)
+  nameWithType: AbsoluteMaterializationUnit.AbsoluteMaterializationUnit(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>>)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.AbsoluteMaterializationUnit(System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol>>)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/AbsoluteMaterializationUnit.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/AbsoluteMaterializationUnit.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public AbsoluteMaterializationUnit(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols)
+    parameters:
+    - id: absoluteSymbols
+      type: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}}
+      description: Absolute (pre-evaluated) symbols to add to the JIT
+    content.vb: Public Sub New(absoluteSymbols As IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, EvaluatedSymbol)))
+  overload: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.#ctor*
+  nameWithType.vb: AbsoluteMaterializationUnit.New(IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, EvaluatedSymbol)))
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.New(System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol)))
+  name.vb: New(IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, EvaluatedSymbol)))
+references:
+- uid: Ubiquity.NET.Llvm.OrcJITv2
+  commentId: N:Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.OrcJITv2
+  nameWithType: Ubiquity.NET.Llvm.OrcJITv2
+  fullName: Ubiquity.NET.Llvm.OrcJITv2
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.DisposableObject
+  commentId: T:Ubiquity.NET.Llvm.DisposableObject
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.DisposableObject.html
+  name: DisposableObject
+  nameWithType: DisposableObject
+  fullName: Ubiquity.NET.Llvm.DisposableObject
+- uid: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.html
+  name: MaterializationUnit
+  nameWithType: MaterializationUnit
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(System.Boolean)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit
+  isExternal: true
+  href: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.html#Ubiquity_NET_Llvm_OrcJITv2_MaterializationUnit_Dispose_System_Boolean_
+  name: Dispose(bool)
+  nameWithType: MaterializationUnit.Dispose(bool)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(bool)
+  nameWithType.vb: MaterializationUnit.Dispose(Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(Boolean)
+  name.vb: Dispose(Boolean)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(System.Boolean)
+    name: Dispose
+    href: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.html#Ubiquity_NET_Llvm_OrcJITv2_MaterializationUnit_Dispose_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(System.Boolean)
+    name: Dispose
+    href: Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.html#Ubiquity_NET_Llvm_OrcJITv2_MaterializationUnit_Dispose_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Ubiquity.NET.Llvm.DisposableObject.Dispose
+  commentId: M:Ubiquity.NET.Llvm.DisposableObject.Dispose
+  parent: Ubiquity.NET.Llvm.DisposableObject
+  href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose
+  name: Dispose()
+  nameWithType: DisposableObject.Dispose()
+  fullName: Ubiquity.NET.Llvm.DisposableObject.Dispose()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DisposableObject.Dispose
+    name: Dispose
+    href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DisposableObject.Dispose
+    name: Dispose
+    href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+  commentId: P:Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+  parent: Ubiquity.NET.Llvm.DisposableObject
+  href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_IsDisposed
+  name: IsDisposed
+  nameWithType: DisposableObject.IsDisposed
+  fullName: Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+  href: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.html
+  name: AbsoluteMaterializationUnit
+  nameWithType: AbsoluteMaterializationUnit
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit
+- uid: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.#ctor
+  href: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.html#Ubiquity_NET_Llvm_OrcJITv2_AbsoluteMaterializationUnit__ctor_System_Collections_Generic_IReadOnlyCollection_System_Collections_Generic_KeyValuePair_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Ubiquity_NET_Llvm_OrcJITv2_EvaluatedSymbol___
+  name: AbsoluteMaterializationUnit
+  nameWithType: AbsoluteMaterializationUnit.AbsoluteMaterializationUnit
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.AbsoluteMaterializationUnit
+  nameWithType.vb: AbsoluteMaterializationUnit.New
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.AbsoluteMaterializationUnit.New
+  name.vb: New
+- uid: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>>
+  nameWithType: IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>>
+  fullName: System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol>>
+  nameWithType.vb: IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, EvaluatedSymbol))
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol))
+  name.vb: IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, EvaluatedSymbol))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: System.Collections.Generic.KeyValuePair`2
+    name: KeyValuePair
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2
+  - name: <
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+    name: SymbolStringPoolEntry
+    href: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol
+    name: EvaluatedSymbol
+    href: Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.KeyValuePair`2
+    name: KeyValuePair
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+    name: SymbolStringPoolEntry
+    href: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol
+    name: EvaluatedSymbol
+    href: Ubiquity.NET.Llvm.OrcJITv2.EvaluatedSymbol.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

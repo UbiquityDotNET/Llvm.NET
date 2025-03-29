@@ -1,0 +1,946 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MetadataKind
+  id: MetadataKind
+  parent: Ubiquity.NET.Llvm.Metadata
+  children:
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.ConstantAsMetadata
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIBasicType
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompileUnit
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompositeType
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIDerivedType
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIEnumerator
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIExpression
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIFile
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariable
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariableExpression
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIImportedEntity
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlock
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlockFile
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocalVariable
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocation
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacro
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacroFile
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIModule
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DINamespace
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DIObjCProperty
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubprogram
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubrange
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubroutineType
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateTypeParameter
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateValueParameter
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.DistinctMDOperandPlaceholder
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.GenericDINode
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.LocalAsMetadata
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.MDString
+  - Ubiquity.NET.Llvm.Metadata.MetadataKind.MDTuple
+  langs:
+  - csharp
+  - vb
+  name: MetadataKind
+  nameWithType: MetadataKind
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MetadataKind
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Enumeration to define metadata type kind
+  example: []
+  syntax:
+    content: public enum MetadataKind
+    content.vb: Public Enum MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.MDString
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.MDString
+  id: MDString
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: MDString
+  nameWithType: MetadataKind.MDString
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.MDString
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MDString
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 13
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: IrMetadata string
+  example: []
+  syntax:
+    content: MDString = 0
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.ConstantAsMetadata
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.ConstantAsMetadata
+  id: ConstantAsMetadata
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: ConstantAsMetadata
+  nameWithType: MetadataKind.ConstantAsMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.ConstantAsMetadata
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ConstantAsMetadata
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Constant Value as metadata
+  example: []
+  syntax:
+    content: ConstantAsMetadata = 1
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.LocalAsMetadata
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.LocalAsMetadata
+  id: LocalAsMetadata
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: LocalAsMetadata
+  nameWithType: MetadataKind.LocalAsMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.LocalAsMetadata
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LocalAsMetadata
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 19
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Local value as metadata
+  example: []
+  syntax:
+    content: LocalAsMetadata = 2
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DistinctMDOperandPlaceholder
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DistinctMDOperandPlaceholder
+  id: DistinctMDOperandPlaceholder
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DistinctMDOperandPlaceholder
+  nameWithType: MetadataKind.DistinctMDOperandPlaceholder
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DistinctMDOperandPlaceholder
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DistinctMDOperandPlaceholder
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Distinct metadata place holder
+  example: []
+  syntax:
+    content: DistinctMDOperandPlaceholder = 3
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.MDTuple
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.MDTuple
+  id: MDTuple
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: MDTuple
+  nameWithType: MetadataKind.MDTuple
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.MDTuple
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MDTuple
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: IrMetadata tuple
+  example: []
+  syntax:
+    content: MDTuple = 5
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocation
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocation
+  id: DILocation
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DILocation
+  nameWithType: MetadataKind.DILocation
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocation
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DILocation
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 28
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info location
+  example: []
+  syntax:
+    content: DILocation = 6
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIExpression
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIExpression
+  id: DIExpression
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIExpression
+  nameWithType: MetadataKind.DIExpression
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIExpression
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIExpression
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 31
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info expression
+  example: []
+  syntax:
+    content: DIExpression = 7
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariableExpression
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariableExpression
+  id: DIGlobalVariableExpression
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIGlobalVariableExpression
+  nameWithType: MetadataKind.DIGlobalVariableExpression
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariableExpression
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIGlobalVariableExpression
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 34
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info global variable expression
+  example: []
+  syntax:
+    content: DIGlobalVariableExpression = 8
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.GenericDINode
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.GenericDINode
+  id: GenericDINode
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: GenericDINode
+  nameWithType: MetadataKind.GenericDINode
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.GenericDINode
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GenericDINode
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Generic Debug info node
+  example: []
+  syntax:
+    content: GenericDINode = 9
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubrange
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubrange
+  id: DISubrange
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DISubrange
+  nameWithType: MetadataKind.DISubrange
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubrange
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DISubrange
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 40
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info sub range
+  example: []
+  syntax:
+    content: DISubrange = 10
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIEnumerator
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIEnumerator
+  id: DIEnumerator
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIEnumerator
+  nameWithType: MetadataKind.DIEnumerator
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIEnumerator
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIEnumerator
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info enumerator
+  example: []
+  syntax:
+    content: DIEnumerator = 11
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIBasicType
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIBasicType
+  id: DIBasicType
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIBasicType
+  nameWithType: MetadataKind.DIBasicType
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIBasicType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIBasicType
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info basic type
+  example: []
+  syntax:
+    content: DIBasicType = 12
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIDerivedType
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIDerivedType
+  id: DIDerivedType
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIDerivedType
+  nameWithType: MetadataKind.DIDerivedType
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIDerivedType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIDerivedType
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info derived type
+  example: []
+  syntax:
+    content: DIDerivedType = 13
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompositeType
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompositeType
+  id: DICompositeType
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DICompositeType
+  nameWithType: MetadataKind.DICompositeType
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompositeType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DICompositeType
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info composite type
+  example: []
+  syntax:
+    content: DICompositeType = 14
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubroutineType
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubroutineType
+  id: DISubroutineType
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DISubroutineType
+  nameWithType: MetadataKind.DISubroutineType
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubroutineType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DISubroutineType
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info subroutine type
+  example: []
+  syntax:
+    content: DISubroutineType = 15
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIFile
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIFile
+  id: DIFile
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIFile
+  nameWithType: MetadataKind.DIFile
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIFile
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIFile
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info file reference
+  example: []
+  syntax:
+    content: DIFile = 16
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompileUnit
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompileUnit
+  id: DICompileUnit
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DICompileUnit
+  nameWithType: MetadataKind.DICompileUnit
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DICompileUnit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DICompileUnit
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 61
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info Compilation Unit
+  example: []
+  syntax:
+    content: DICompileUnit = 17
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubprogram
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubprogram
+  id: DISubprogram
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DISubprogram
+  nameWithType: MetadataKind.DISubprogram
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DISubprogram
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DISubprogram
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 64
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info sub program
+  example: []
+  syntax:
+    content: DISubprogram = 18
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlock
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlock
+  id: DILexicalBlock
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DILexicalBlock
+  nameWithType: MetadataKind.DILexicalBlock
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlock
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DILexicalBlock
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 67
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info lexical block
+  example: []
+  syntax:
+    content: DILexicalBlock = 19
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlockFile
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlockFile
+  id: DILexicalBlockFile
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DILexicalBlockFile
+  nameWithType: MetadataKind.DILexicalBlockFile
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILexicalBlockFile
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DILexicalBlockFile
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 70
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info lexical block file
+  example: []
+  syntax:
+    content: DILexicalBlockFile = 20
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DINamespace
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DINamespace
+  id: DINamespace
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DINamespace
+  nameWithType: MetadataKind.DINamespace
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DINamespace
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DINamespace
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 73
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info namespace
+  example: []
+  syntax:
+    content: DINamespace = 21
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIModule
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIModule
+  id: DIModule
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIModule
+  nameWithType: MetadataKind.DIModule
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIModule
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIModule
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 76
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info fro a module
+  example: []
+  syntax:
+    content: DIModule = 22
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateTypeParameter
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateTypeParameter
+  id: DITemplateTypeParameter
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DITemplateTypeParameter
+  nameWithType: MetadataKind.DITemplateTypeParameter
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateTypeParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DITemplateTypeParameter
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 79
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for a template type parameter
+  example: []
+  syntax:
+    content: DITemplateTypeParameter = 23
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateValueParameter
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateValueParameter
+  id: DITemplateValueParameter
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DITemplateValueParameter
+  nameWithType: MetadataKind.DITemplateValueParameter
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DITemplateValueParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DITemplateValueParameter
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 82
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for a template value parameter
+  example: []
+  syntax:
+    content: DITemplateValueParameter = 24
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariable
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariable
+  id: DIGlobalVariable
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIGlobalVariable
+  nameWithType: MetadataKind.DIGlobalVariable
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIGlobalVariable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIGlobalVariable
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 85
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for a global variable
+  example: []
+  syntax:
+    content: DIGlobalVariable = 25
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocalVariable
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocalVariable
+  id: DILocalVariable
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DILocalVariable
+  nameWithType: MetadataKind.DILocalVariable
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DILocalVariable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DILocalVariable
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 88
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for a local variable
+  example: []
+  syntax:
+    content: DILocalVariable = 26
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIObjCProperty
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIObjCProperty
+  id: DIObjCProperty
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIObjCProperty
+  nameWithType: MetadataKind.DIObjCProperty
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIObjCProperty
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIObjCProperty
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 91
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for an Objective C style property
+  example: []
+  syntax:
+    content: DIObjCProperty = 28
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIImportedEntity
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIImportedEntity
+  id: DIImportedEntity
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIImportedEntity
+  nameWithType: MetadataKind.DIImportedEntity
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIImportedEntity
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIImportedEntity
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 94
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for an imported entity
+  example: []
+  syntax:
+    content: DIImportedEntity = 29
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacro
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacro
+  id: DIMacro
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIMacro
+  nameWithType: MetadataKind.DIMacro
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacro
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIMacro
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 97
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for a macro
+  example: []
+  syntax:
+    content: DIMacro = 31
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacroFile
+  commentId: F:Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacroFile
+  id: DIMacroFile
+  parent: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  langs:
+  - csharp
+  - vb
+  name: DIMacroFile
+  nameWithType: MetadataKind.DIMacroFile
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind.DIMacroFile
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DIMacroFile
+    path: ../src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs
+    startLine: 100
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Debug info for a macro file
+  example: []
+  syntax:
+    content: DIMacroFile = 32
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataKind
+references:
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataKind
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MetadataKind
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.MetadataKind.html
+  name: MetadataKind
+  nameWithType: MetadataKind
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataKind

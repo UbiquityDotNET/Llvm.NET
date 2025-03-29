@@ -1,0 +1,173 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  commentId: T:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  id: FunctionAttributeIndex
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Function
+  - Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Parameter0
+  - Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.ReturnType
+  langs:
+  - csharp
+  - vb
+  name: FunctionAttributeIndex
+  nameWithType: FunctionAttributeIndex
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FunctionAttributeIndex
+    path: ../src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+    startLine: 14
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Function index for attributes
+  remarks: >-
+    Attributes on functions apply to the function itself, the return type
+
+    or one of the function's parameters. This enumeration is used to
+
+    identify where the attribute applies.
+  example: []
+  syntax:
+    content: public enum FunctionAttributeIndex
+    content.vb: Public Enum FunctionAttributeIndex
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Function
+  commentId: F:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Function
+  id: Function
+  parent: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  langs:
+  - csharp
+  - vb
+  name: Function
+  nameWithType: FunctionAttributeIndex.Function
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Function
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Function
+    path: ../src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+    startLine: 17
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: The attribute applies to the function itself
+  example: []
+  syntax:
+    content: Function = -1
+    return:
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.ReturnType
+  commentId: F:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.ReturnType
+  id: ReturnType
+  parent: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  langs:
+  - csharp
+  - vb
+  name: ReturnType
+  nameWithType: FunctionAttributeIndex.ReturnType
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.ReturnType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ReturnType
+    path: ../src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+    startLine: 20
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: The attribute applies to the return type of the function
+  example: []
+  syntax:
+    content: ReturnType = 0
+    return:
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Parameter0
+  commentId: F:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Parameter0
+  id: Parameter0
+  parent: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  langs:
+  - csharp
+  - vb
+  name: Parameter0
+  nameWithType: FunctionAttributeIndex.Parameter0
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.Parameter0
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Parameter0
+    path: ../src/Ubiquity.NET.Llvm/Values/IAttributeAccessor.cs
+    startLine: 27
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: The attribute applies to the first parameter of the function
+  remarks: >-
+    Additional parameters are identified by simply adding an integer value to
+
+    this value. (i.e. Parameter1 == FunctionAttributeIndex.Parameter0 + 1 )
+  example: []
+  syntax:
+    content: Parameter0 = 1
+    return:
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  commentId: T:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  name: FunctionAttributeIndex
+  nameWithType: FunctionAttributeIndex
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex

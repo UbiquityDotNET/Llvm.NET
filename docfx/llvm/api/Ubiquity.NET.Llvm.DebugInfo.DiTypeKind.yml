@@ -1,0 +1,643 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  id: DiTypeKind
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children:
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ASCII
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Address
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Boolean
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ComplexFloat
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.DecimalFloat
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Edited
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Float
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.HiUser
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ImaginaryFloat
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Invalid
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.LoUser
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.NumericString
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.PackedDecimal
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Signed
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedChar
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedFixed
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UCS
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UTF
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Unsigned
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedChar
+  - Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedFixed
+  langs:
+  - csharp
+  - vb
+  name: DiTypeKind
+  nameWithType: DiTypeKind
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DiTypeKind
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 190
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Primitive type supported by the debug information
+  example: []
+  syntax:
+    content: public enum DiTypeKind
+    content.vb: Public Enum DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Invalid
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Invalid
+  id: Invalid
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Invalid
+  nameWithType: DiTypeKind.Invalid
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Invalid
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Invalid
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 192
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Invalid = 0
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Address
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Address
+  id: Address
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Address
+  nameWithType: DiTypeKind.Address
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Address
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Address
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 193
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Address = 1
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Boolean
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Boolean
+  id: Boolean
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Boolean
+  nameWithType: DiTypeKind.Boolean
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Boolean
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Boolean
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 194
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Boolean = 2
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ComplexFloat
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ComplexFloat
+  id: ComplexFloat
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: ComplexFloat
+  nameWithType: DiTypeKind.ComplexFloat
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ComplexFloat
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ComplexFloat
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 195
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ComplexFloat = 3
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Float
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Float
+  id: Float
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Float
+  nameWithType: DiTypeKind.Float
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Float
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 196
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Float = 4
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Signed
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Signed
+  id: Signed
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Signed
+  nameWithType: DiTypeKind.Signed
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Signed
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Signed
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 197
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Signed = 5
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedChar
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedChar
+  id: SignedChar
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: SignedChar
+  nameWithType: DiTypeKind.SignedChar
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedChar
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignedChar
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 198
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SignedChar = 6
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Unsigned
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Unsigned
+  id: Unsigned
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Unsigned
+  nameWithType: DiTypeKind.Unsigned
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Unsigned
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Unsigned
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 199
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Unsigned = 7
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedChar
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedChar
+  id: UnsignedChar
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: UnsignedChar
+  nameWithType: DiTypeKind.UnsignedChar
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedChar
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnsignedChar
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 200
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UnsignedChar = 8
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ImaginaryFloat
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ImaginaryFloat
+  id: ImaginaryFloat
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: ImaginaryFloat
+  nameWithType: DiTypeKind.ImaginaryFloat
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ImaginaryFloat
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImaginaryFloat
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 201
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ImaginaryFloat = 9
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.PackedDecimal
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.PackedDecimal
+  id: PackedDecimal
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: PackedDecimal
+  nameWithType: DiTypeKind.PackedDecimal
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.PackedDecimal
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PackedDecimal
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 202
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: PackedDecimal = 10
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.NumericString
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.NumericString
+  id: NumericString
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: NumericString
+  nameWithType: DiTypeKind.NumericString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.NumericString
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NumericString
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 203
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: NumericString = 11
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Edited
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Edited
+  id: Edited
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: Edited
+  nameWithType: DiTypeKind.Edited
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.Edited
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Edited
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 204
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Edited = 12
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedFixed
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedFixed
+  id: SignedFixed
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: SignedFixed
+  nameWithType: DiTypeKind.SignedFixed
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.SignedFixed
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignedFixed
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 205
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SignedFixed = 13
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedFixed
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedFixed
+  id: UnsignedFixed
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: UnsignedFixed
+  nameWithType: DiTypeKind.UnsignedFixed
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UnsignedFixed
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnsignedFixed
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 206
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UnsignedFixed = 14
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.DecimalFloat
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.DecimalFloat
+  id: DecimalFloat
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: DecimalFloat
+  nameWithType: DiTypeKind.DecimalFloat
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.DecimalFloat
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DecimalFloat
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 207
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: DecimalFloat = 15
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UTF
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UTF
+  id: UTF
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: UTF
+  nameWithType: DiTypeKind.UTF
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UTF
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UTF
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 208
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UTF = 16
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UCS
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UCS
+  id: UCS
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: UCS
+  nameWithType: DiTypeKind.UCS
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.UCS
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UCS
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 209
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UCS = 17
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ASCII
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ASCII
+  id: ASCII
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: ASCII
+  nameWithType: DiTypeKind.ASCII
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.ASCII
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ASCII
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 210
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ASCII = 18
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.LoUser
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.LoUser
+  id: LoUser
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: LoUser
+  nameWithType: DiTypeKind.LoUser
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.LoUser
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LoUser
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 211
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: LoUser = 128
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.HiUser
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.HiUser
+  id: HiUser
+  parent: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  langs:
+  - csharp
+  - vb
+  name: HiUser
+  nameWithType: DiTypeKind.HiUser
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.HiUser
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: HiUser
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 212
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: HiUser = 255
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+references:
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DiTypeKind
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind.html
+  name: DiTypeKind
+  nameWithType: DiTypeKind
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DiTypeKind

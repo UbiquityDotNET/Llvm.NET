@@ -2,81 +2,87 @@
     "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
     "metadata": [
         {
+            // LLVM OO Wrappers library
             "src": [
                 {
                     "files": [
-                        "src/Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj"
+                        "**.csproj"
                     ],
-                    "src": ".."
+                    "src": "../src/Ubiquity.NET.Llvm"
                 }
             ],
-            "dest": "current/api-llvm",
-            "categoryLayout": "nested",
-            "namespaceLayout": "nested",
-            "memberLayout": "separatePages",
-            "enumSortOrder": "declaringOrder"
+            "dest": "llvm/api"
         }
     ],
     "build": {
+        // xref YAML files that contain mappings from an XREF ID to the actual URL for the content in an external source
         "xref": [
-            "versions-xref.yml",
-            "current/llvm-xref.yml",
+            "llvm/api/llvm-xref.yml",
             "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json"
         ],
         "content": [
             {
+                // Root of the site; only uses the index and TOC
+                // NOTE: File paths are relative to the location of this docfx.json file
                 "files": [
-                    "toc.yml",
-                    "index.md"
+                    "index.md",
+                    "toc.yml"
                 ]
             },
             {
+                // LLVM project additional content, Includes the gnerated metadata API folder
+                // NOTE: File paths are relative to the location of this file
                 "files": [
-                    "toc.yml",
-                    "index.md",
-                    "ReleaseNotes.md",
-                    "api-llvm/**.md",
-                    "api-llvm/**.yml",
-                    "articles/**.md",
-                    "articles/**.yml"
+                    "llvm/**.{md,yml}"
                 ],
-                "src": "current",
-                "dest": "current"
+                "dest": "llvm",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
             },
             {
+                // Pull in the LLVM samples as content.
+                // NOTE: DOCFX does NOT support use of ".." as the leading portion of a path in the "files" property
+                // instead it is ONLY allowed in the "src" property.
+                // Thus, file paths are relative to the samples directory
                 "files": [
-                    "Kaleidoscope/**/Kaleidoscope*.md",
-                    "CodeGenWithDebugInfo/**/codegeneration.md",
-                    "OrcV2VeryLazy/**/OrcV2VeryLazy.md"
+                    "**.{md,yml}"
                 ],
-                "src": "../Samples",
-                "dest": "current/articles/Samples"
+                "src": "../src/Samples",
+                "dest": "llvm/articles/Samples",
+                "exclude": [
+                    "**/ReadMe.md"
+                ]
             }
         ],
         "resource": [
             {
+                // General site resources
                 "files": [
                     "favicon.ico",
-                    "DragonSharp48x48.png",
-                    "DragonSharp.png"
-                ],
-                "src": "."
+                    "**.png",
+                    "**.svg"
+                ]
             },
             {
+                // LVM library samples specific resources
+                // TODO: Move the samples folder so this is included above
                 "files": [
-                    "/Samples/**/*.svg"
+                    "**.png",
+                    "**.svg"
                 ],
-                "src": "..",
-                "dest": "current/articles"
+                "src": "../src/Samples",
+                "dest": "llvm/articles/Samples"
             }
         ],
         "overwrite": [
             {
                 "files": [
-                    "**/apidoc/**.md",
-                    "current/namespaces/**.md"
-                ],
-                "exclude": [ "obj/**" ]
+                    "**/apidocs/**.md",
+                    "**/namespaces/**.md"
+                ]
             }
         ],
         "template": [
@@ -87,15 +93,11 @@
         "globalMetadataFiles": [],
         "fileMetadataFiles": [],
         "postProcessors": [],
-        "noLangKeyword": false,
         "globalMetadata": {
-            "_appTitle": "Ubiquity.NET.Llvm",
+            "_appTitle": "Ubiquity.NET",
             "_appFooter": "Copyright (C) 2017-2025, Ubiquity.NET Contributors",
-            "_appLogoPath": "DragonSharp48x48.png",
+            "_appLogoPath": "DragonSharp48x48.png", // TODO: change this to something more generic...
             "_disableBreadcrumb": true,
-            "assemblies": [
-                "Ubiquity.NET.Llvm"
-            ],
             "_gitContribute": {
                 "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
                 "branch": "develop"

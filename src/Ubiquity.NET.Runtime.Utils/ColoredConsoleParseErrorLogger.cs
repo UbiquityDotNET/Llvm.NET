@@ -8,23 +8,32 @@ using System;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
+    /// <summary>Implementation of <see cref="IParseErrorLogger"/> that uses colorized console output</summary>
     public class ColoredConsoleParseErrorLogger
         : IParseErrorLogger
     {
-        public void ShowError( ErrorNode node )
+        /// <inheritdoc/>
+        public void LogError( ErrorNode node )
         {
             ArgumentNullException.ThrowIfNull( node );
-            ShowError( node.ToString( ) );
+            LogError( node.ToString( ) );
         }
 
-        public void ShowError( string msg )
+        /// <inheritdoc/>
+        public void LogError( string msg )
         {
             if( !string.IsNullOrWhiteSpace( msg ) )
             {
                 var color = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Error.WriteLine( msg );
-                Console.ForegroundColor = color;
+                try
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Error.WriteLine( msg );
+                }
+                finally
+                {
+                    Console.ForegroundColor = color;
+                }
             }
         }
     }

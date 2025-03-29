@@ -48,21 +48,20 @@ export default {
         };
     });
 
-    // Add Kaleidoscope language support for highlightjs.org
+    // Add VERY simple Kaleidoscope language support for highlightjs.org
     hljs.registerLanguage("Kaleidoscope", function (e) {
+        const NUMBER = {
+            className: 'number',
+            variants: [
+                { begin: '-?\\d+(?:[.]\\d+)?(?:[eE][-+]?\\d+(?:[.]\\d+)?)?' }
+            ],
+            relevance: 0
+        };
         return {
-            k: 'def extern if then else for in var unary binary',
-            c: [
-                e.C(
-                    '#', '\\n', { r: 0 }
-                ),
-                {
-                    cN: 'number',
-                    v: [
-                        { b: '-?\\d+(?:[.]\\d+)?(?:[eE][-+]?\\d+(?:[.]\\d+)?)?' }
-                    ],
-                    r: 0
-                }
+            keywords: 'def extern if then else for in var unary binary',
+            contains: [
+                e.Comment('#', '\\n', { relevance: 0 }),
+                NUMBER
             ]
         };
     });

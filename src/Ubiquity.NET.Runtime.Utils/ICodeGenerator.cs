@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Runtime.Utils
     /// <typeparam name="TResult">Result type of the generation</typeparam>
     /// <remarks>
     /// For eager JIT and AOT compilation <typeparamref name="TResult"/> is normally
-    /// <see cref="Llvm.Values.Value"/>. Though any type is viable.
+    /// a "value" for the JIT or IR. Though any type is viable.
     /// </remarks>
     public interface ICodeGenerator<TResult>
         : IDisposable
@@ -22,9 +22,9 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <returns>Generated result</returns>
         /// <remarks>
         /// <para>The behavior of this method depends on the implementation. The common case is to
-        /// actually generate an LLVM module for the JIT engine. Normally, any anonymous expressions
+        /// actually generate a module for the JIT engine. Normally, any anonymous expressions
         /// are JIT compiled and executed. The result of executing the expression is returned.
-        /// For Function definitions or declarations, the <see cref="Llvm.Values.IrFunction"/> is returned.
+        /// For Function definitions or declarations, the function is returned.
         /// However, that's not required. In a simple syntax analyzer, the generate may do nothing
         /// more than generate diagrams or other diagnostics from the input tree.</para>
         /// <para>For a lazy compilation JIT the generator will defer the actual generation of code and instead

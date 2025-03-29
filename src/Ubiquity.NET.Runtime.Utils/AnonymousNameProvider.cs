@@ -23,6 +23,7 @@ namespace Ubiquity.NET.Runtime.Utils
             NamePrefix = prefix;
         }
 
+        /// <inheritdoc/>
         public IEnumerator<string> GetEnumerator( )
         {
             int anonymousIndex = 0;
@@ -34,6 +35,7 @@ namespace Ubiquity.NET.Runtime.Utils
             // ReSharper disable once IteratorNeverReturns
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator( )
         {
             return GetEnumerator( );

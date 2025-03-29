@@ -4,6 +4,8 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <IsAotCompatible>True</IsAotCompatible>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
     <!--NuGet packaging support -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -22,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>

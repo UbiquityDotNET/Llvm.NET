@@ -1,0 +1,3405 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.IContext
+  commentId: T:Ubiquity.NET.Llvm.IContext
+  id: IContext
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.IContext.BoolType
+  - Ubiquity.NET.Llvm.IContext.CreateAttribute(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateAttribute(System.String,System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind)
+  - Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind,System.UInt64)
+  - Ubiquity.NET.Llvm.IContext.CreateBasicBlock(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateBitcodeModule
+  - Ubiquity.NET.Llvm.IContext.CreateBitcodeModule(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Boolean)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Byte)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Double)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int16)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int32)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int64)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.SByte)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.Single)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt16)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt32)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt32,System.UInt64,System.Boolean)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt64)
+  - Ubiquity.NET.Llvm.IContext.CreateConstant(Ubiquity.NET.Llvm.Types.ITypeRef,System.UInt64,System.Boolean)
+  - Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+  - Ubiquity.NET.Llvm.IContext.CreateConstantStruct(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  - Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  - Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  - Ubiquity.NET.Llvm.IContext.CreateMDNode(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateMetadataString(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct(Ubiquity.NET.Llvm.Types.IStructType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  - Ubiquity.NET.Llvm.IContext.CreateStructType(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  - Ubiquity.NET.Llvm.IContext.CreateStructType(System.String)
+  - Ubiquity.NET.Llvm.IContext.CreateStructType(System.String,System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  - Ubiquity.NET.Llvm.IContext.DiscardValueName
+  - Ubiquity.NET.Llvm.IContext.DoubleType
+  - Ubiquity.NET.Llvm.IContext.Float128Type
+  - Ubiquity.NET.Llvm.IContext.FloatType
+  - Ubiquity.NET.Llvm.IContext.GetFunctionType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  - Ubiquity.NET.Llvm.IContext.GetFunctionType(Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  - Ubiquity.NET.Llvm.IContext.GetIntType(System.UInt32)
+  - Ubiquity.NET.Llvm.IContext.GetMDKindId(System.String)
+  - Ubiquity.NET.Llvm.IContext.GetPointerTypeFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.IContext.HalfFloatType
+  - Ubiquity.NET.Llvm.IContext.Int128Type
+  - Ubiquity.NET.Llvm.IContext.Int16Type
+  - Ubiquity.NET.Llvm.IContext.Int32Type
+  - Ubiquity.NET.Llvm.IContext.Int64Type
+  - Ubiquity.NET.Llvm.IContext.Int8Type
+  - Ubiquity.NET.Llvm.IContext.MetadataType
+  - Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes
+  - Ubiquity.NET.Llvm.IContext.OpenBinary(System.String)
+  - Ubiquity.NET.Llvm.IContext.ParseModule(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  - Ubiquity.NET.Llvm.IContext.PpcFloat128Type
+  - Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler(Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction)
+  - Ubiquity.NET.Llvm.IContext.TokenType
+  - Ubiquity.NET.Llvm.IContext.VoidType
+  - Ubiquity.NET.Llvm.IContext.X86Float80Type
+  langs:
+  - csharp
+  - vb
+  name: IContext
+  nameWithType: IContext
+  fullName: Ubiquity.NET.Llvm.IContext
+  type: Interface
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IContext
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Interface for an unowned LLVM Context
+  remarks: >-
+    This interface is intended to distinguish between an unowned reference to
+
+    a context and something that is owned and requires a call to
+
+    <xref href="System.IDisposable.Dispose" data-throw-if-not-resolved="false"></xref>. A <xref href="Ubiquity.NET.Llvm.Context" data-throw-if-not-resolved="false"></xref> is an owned
+
+    type that callers ***MUST** dispose, an <xref href="Ubiquity.NET.Llvm.IContext" data-throw-if-not-resolved="false"></xref> interface
+
+    is not.
+  example: []
+  syntax:
+    content: public interface IContext
+    content.vb: Public Interface IContext
+- uid: Ubiquity.NET.Llvm.IContext.VoidType
+  commentId: P:Ubiquity.NET.Llvm.IContext.VoidType
+  id: VoidType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: VoidType
+  nameWithType: IContext.VoidType
+  fullName: Ubiquity.NET.Llvm.IContext.VoidType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VoidType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM void type for this context
+  example: []
+  syntax:
+    content: ITypeRef VoidType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property VoidType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.VoidType*
+- uid: Ubiquity.NET.Llvm.IContext.BoolType
+  commentId: P:Ubiquity.NET.Llvm.IContext.BoolType
+  id: BoolType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: BoolType
+  nameWithType: IContext.BoolType
+  fullName: Ubiquity.NET.Llvm.IContext.BoolType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BoolType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 24
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM boolean type for this context
+  example: []
+  syntax:
+    content: ITypeRef BoolType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property BoolType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.BoolType*
+- uid: Ubiquity.NET.Llvm.IContext.Int8Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Int8Type
+  id: Int8Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: Int8Type
+  nameWithType: IContext.Int8Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int8Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Int8Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 27
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM 8 bit integer type for this context
+  example: []
+  syntax:
+    content: ITypeRef Int8Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property Int8Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.Int8Type*
+- uid: Ubiquity.NET.Llvm.IContext.Int16Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Int16Type
+  id: Int16Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: Int16Type
+  nameWithType: IContext.Int16Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int16Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Int16Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 30
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM 16 bit integer type for this context
+  example: []
+  syntax:
+    content: ITypeRef Int16Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property Int16Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.Int16Type*
+- uid: Ubiquity.NET.Llvm.IContext.Int32Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Int32Type
+  id: Int32Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: Int32Type
+  nameWithType: IContext.Int32Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int32Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Int32Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 33
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM 32 bit integer type for this context
+  example: []
+  syntax:
+    content: ITypeRef Int32Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property Int32Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.Int32Type*
+- uid: Ubiquity.NET.Llvm.IContext.Int64Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Int64Type
+  id: Int64Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: Int64Type
+  nameWithType: IContext.Int64Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int64Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Int64Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 36
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM 64 bit integer type for this context
+  example: []
+  syntax:
+    content: ITypeRef Int64Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property Int64Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.Int64Type*
+- uid: Ubiquity.NET.Llvm.IContext.Int128Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Int128Type
+  id: Int128Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: Int128Type
+  nameWithType: IContext.Int128Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int128Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Int128Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 39
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM 128 bit integer type for this context
+  example: []
+  syntax:
+    content: ITypeRef Int128Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property Int128Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.Int128Type*
+- uid: Ubiquity.NET.Llvm.IContext.HalfFloatType
+  commentId: P:Ubiquity.NET.Llvm.IContext.HalfFloatType
+  id: HalfFloatType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: HalfFloatType
+  nameWithType: IContext.HalfFloatType
+  fullName: Ubiquity.NET.Llvm.IContext.HalfFloatType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: HalfFloatType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 42
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM half precision floating point type for this context
+  example: []
+  syntax:
+    content: ITypeRef HalfFloatType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property HalfFloatType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.HalfFloatType*
+- uid: Ubiquity.NET.Llvm.IContext.FloatType
+  commentId: P:Ubiquity.NET.Llvm.IContext.FloatType
+  id: FloatType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: FloatType
+  nameWithType: IContext.FloatType
+  fullName: Ubiquity.NET.Llvm.IContext.FloatType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FloatType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 45
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM single precision floating point type for this context
+  example: []
+  syntax:
+    content: ITypeRef FloatType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property FloatType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.FloatType*
+- uid: Ubiquity.NET.Llvm.IContext.DoubleType
+  commentId: P:Ubiquity.NET.Llvm.IContext.DoubleType
+  id: DoubleType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: DoubleType
+  nameWithType: IContext.DoubleType
+  fullName: Ubiquity.NET.Llvm.IContext.DoubleType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DoubleType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 48
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM double precision floating point type for this context
+  example: []
+  syntax:
+    content: ITypeRef DoubleType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property DoubleType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.DoubleType*
+- uid: Ubiquity.NET.Llvm.IContext.TokenType
+  commentId: P:Ubiquity.NET.Llvm.IContext.TokenType
+  id: TokenType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: TokenType
+  nameWithType: IContext.TokenType
+  fullName: Ubiquity.NET.Llvm.IContext.TokenType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TokenType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 51
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM token type for this context
+  example: []
+  syntax:
+    content: ITypeRef TokenType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property TokenType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.TokenType*
+- uid: Ubiquity.NET.Llvm.IContext.MetadataType
+  commentId: P:Ubiquity.NET.Llvm.IContext.MetadataType
+  id: MetadataType
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: MetadataType
+  nameWithType: IContext.MetadataType
+  fullName: Ubiquity.NET.Llvm.IContext.MetadataType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MetadataType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 54
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM IrMetadata type for this context
+  example: []
+  syntax:
+    content: ITypeRef MetadataType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property MetadataType As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.MetadataType*
+- uid: Ubiquity.NET.Llvm.IContext.X86Float80Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.X86Float80Type
+  id: X86Float80Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: X86Float80Type
+  nameWithType: IContext.X86Float80Type
+  fullName: Ubiquity.NET.Llvm.IContext.X86Float80Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: X86Float80Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 57
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM X86 80-bit floating point type for this context
+  example: []
+  syntax:
+    content: ITypeRef X86Float80Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property X86Float80Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.X86Float80Type*
+- uid: Ubiquity.NET.Llvm.IContext.Float128Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Float128Type
+  id: Float128Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: Float128Type
+  nameWithType: IContext.Float128Type
+  fullName: Ubiquity.NET.Llvm.IContext.Float128Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float128Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 60
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM 128-Bit floating point type
+  example: []
+  syntax:
+    content: ITypeRef Float128Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property Float128Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.Float128Type*
+- uid: Ubiquity.NET.Llvm.IContext.PpcFloat128Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.PpcFloat128Type
+  id: PpcFloat128Type
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: PpcFloat128Type
+  nameWithType: IContext.PpcFloat128Type
+  fullName: Ubiquity.NET.Llvm.IContext.PpcFloat128Type
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PpcFloat128Type
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 63
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the LLVM PPC 128-bit floating point type
+  example: []
+  syntax:
+    content: ITypeRef PpcFloat128Type { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property PpcFloat128Type As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.PpcFloat128Type*
+- uid: Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes
+  commentId: P:Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes
+  id: OdrUniqueDebugTypes
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: OdrUniqueDebugTypes
+  nameWithType: IContext.OdrUniqueDebugTypes
+  fullName: Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OdrUniqueDebugTypes
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 66
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets or sets a value indicating whether the context keeps a map for uniqueing debug info identifiers across the context
+  example: []
+  syntax:
+    content: bool OdrUniqueDebugTypes { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property OdrUniqueDebugTypes As Boolean
+  overload: Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes*
+- uid: Ubiquity.NET.Llvm.IContext.DiscardValueName
+  commentId: P:Ubiquity.NET.Llvm.IContext.DiscardValueName
+  id: DiscardValueName
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: DiscardValueName
+  nameWithType: IContext.DiscardValueName
+  fullName: Ubiquity.NET.Llvm.IContext.DiscardValueName
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DiscardValueName
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 69
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets or sets a value indicating whether this context is configured to discard value names
+  example: []
+  syntax:
+    content: bool DiscardValueName { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property DiscardValueName As Boolean
+  overload: Ubiquity.NET.Llvm.IContext.DiscardValueName*
+- uid: Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler(Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction)
+  commentId: M:Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler(Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction)
+  id: SetDiagnosticHandler(Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: SetDiagnosticHandler(DiagnosticInfoCallbackAction)
+  nameWithType: IContext.SetDiagnosticHandler(DiagnosticInfoCallbackAction)
+  fullName: Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler(Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SetDiagnosticHandler
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 88
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Set a custom diagnostic handler
+  example: []
+  syntax:
+    content: void SetDiagnosticHandler(DiagnosticInfoCallbackAction handler)
+    parameters:
+    - id: handler
+      type: Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction
+      description: handler
+    content.vb: Sub SetDiagnosticHandler(handler As DiagnosticInfoCallbackAction)
+  overload: Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler*
+- uid: Ubiquity.NET.Llvm.IContext.GetPointerTypeFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IContext.GetPointerTypeFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: GetPointerTypeFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: GetPointerTypeFor(ITypeRef)
+  nameWithType: IContext.GetPointerTypeFor(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IContext.GetPointerTypeFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetPointerTypeFor
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 93
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Get a type that is a pointer to a value of a given type
+  example: []
+  syntax:
+    content: IPointerType GetPointerTypeFor(ITypeRef elementType)
+    parameters:
+    - id: elementType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type of value the pointer points to
+    return:
+      type: Ubiquity.NET.Llvm.Types.IPointerType
+      description: <xref href="Ubiquity.NET.Llvm.Types.IPointerType" data-throw-if-not-resolved="false"></xref> for a pointer that references a value of type <code class="paramref">elementType</code>
+    content.vb: Function GetPointerTypeFor(elementType As ITypeRef) As IPointerType
+  overload: Ubiquity.NET.Llvm.IContext.GetPointerTypeFor*
+- uid: Ubiquity.NET.Llvm.IContext.GetIntType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.IContext.GetIntType(System.UInt32)
+  id: GetIntType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: GetIntType(uint)
+  nameWithType: IContext.GetIntType(uint)
+  fullName: Ubiquity.NET.Llvm.IContext.GetIntType(uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetIntType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 104
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Get's an LLVM integer type of arbitrary bit width
+  remarks: >-
+    For standard integer bit widths (e.g. 1,8,16,32,64) this will return
+
+    the same type as the corresponding specialized property.
+
+    (e.g. GetIntType(1) is the same as <xref href="Ubiquity.NET.Llvm.IContext.BoolType" data-throw-if-not-resolved="false"></xref>,
+     GetIntType(16) is the same as <xref href="Ubiquity.NET.Llvm.IContext.Int16Type" data-throw-if-not-resolved="false"></xref>, etc... )
+  example: []
+  syntax:
+    content: ITypeRef GetIntType(uint bitWidth)
+    parameters:
+    - id: bitWidth
+      type: System.UInt32
+      description: Width of the integer type in bits
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Integer <xref href="Ubiquity.NET.Llvm.Types.ITypeRef" data-throw-if-not-resolved="false"></xref> for the specified width
+    content.vb: Function GetIntType(bitWidth As UInteger) As ITypeRef
+  overload: Ubiquity.NET.Llvm.IContext.GetIntType*
+  nameWithType.vb: IContext.GetIntType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.GetIntType(UInteger)
+  name.vb: GetIntType(UInteger)
+- uid: Ubiquity.NET.Llvm.IContext.GetFunctionType(Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  commentId: M:Ubiquity.NET.Llvm.IContext.GetFunctionType(Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  id: GetFunctionType(Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: GetFunctionType(ITypeRef, params IEnumerable<ITypeRef>)
+  nameWithType: IContext.GetFunctionType(ITypeRef, params IEnumerable<ITypeRef>)
+  fullName: Ubiquity.NET.Llvm.IContext.GetFunctionType(Ubiquity.NET.Llvm.Types.ITypeRef, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetFunctionType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 110
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Get an LLVM Function type (e.g. signature)
+  example: []
+  syntax:
+    content: IFunctionType GetFunctionType(ITypeRef returnType, params IEnumerable<ITypeRef> args)
+    parameters:
+    - id: returnType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Return type of the function
+    - id: args
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef}
+      description: Potentially empty set of function argument types
+    return:
+      type: Ubiquity.NET.Llvm.Types.IFunctionType
+      description: Signature type for the specified signature
+    content.vb: Function GetFunctionType(returnType As ITypeRef, args As IEnumerable(Of ITypeRef)) As IFunctionType
+  overload: Ubiquity.NET.Llvm.IContext.GetFunctionType*
+  nameWithType.vb: IContext.GetFunctionType(ITypeRef, IEnumerable(Of ITypeRef))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.GetFunctionType(Ubiquity.NET.Llvm.Types.ITypeRef, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  name.vb: GetFunctionType(ITypeRef, IEnumerable(Of ITypeRef))
+- uid: Ubiquity.NET.Llvm.IContext.GetFunctionType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  commentId: M:Ubiquity.NET.Llvm.IContext.GetFunctionType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  id: GetFunctionType(System.Boolean,Ubiquity.NET.Llvm.Types.ITypeRef,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: GetFunctionType(bool, ITypeRef, params IEnumerable<ITypeRef>)
+  nameWithType: IContext.GetFunctionType(bool, ITypeRef, params IEnumerable<ITypeRef>)
+  fullName: Ubiquity.NET.Llvm.IContext.GetFunctionType(bool, Ubiquity.NET.Llvm.Types.ITypeRef, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetFunctionType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 117
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Get an LLVM Function type (e.g. signature)
+  example: []
+  syntax:
+    content: IFunctionType GetFunctionType(bool isVarArgs, ITypeRef returnType, params IEnumerable<ITypeRef> args)
+    parameters:
+    - id: isVarArgs
+      type: System.Boolean
+      description: Flag to indicate if the method supports C/C++ style VarArgs
+    - id: returnType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Return type of the function
+    - id: args
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef}
+      description: Potentially empty set of function argument types
+    return:
+      type: Ubiquity.NET.Llvm.Types.IFunctionType
+      description: Signature type for the specified signature
+    content.vb: Function GetFunctionType(isVarArgs As Boolean, returnType As ITypeRef, args As IEnumerable(Of ITypeRef)) As IFunctionType
+  overload: Ubiquity.NET.Llvm.IContext.GetFunctionType*
+  nameWithType.vb: IContext.GetFunctionType(Boolean, ITypeRef, IEnumerable(Of ITypeRef))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.GetFunctionType(Boolean, Ubiquity.NET.Llvm.Types.ITypeRef, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  name.vb: GetFunctionType(Boolean, ITypeRef, IEnumerable(Of ITypeRef))
+- uid: Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  id: CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateFunctionType(ref readonly DIBuilder, IDebugType<ITypeRef, DIType>, params IEnumerable<IDebugType<ITypeRef, DIType>>)
+  nameWithType: IContext.CreateFunctionType(ref readonly DIBuilder, IDebugType<ITypeRef, DIType>, params IEnumerable<IDebugType<ITypeRef, DIType>>)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateFunctionType(ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateFunctionType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 124
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a FunctionType with Debug information
+  example: []
+  syntax:
+    content: DebugFunctionType CreateFunctionType(ref readonly DIBuilder diBuilder, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes)
+    parameters:
+    - id: diBuilder
+      type: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+      description: <xref href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder" data-throw-if-not-resolved="false"></xref>to use to create the debug information
+    - id: retType
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+      description: Return type of the function
+    - id: argTypes
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}}
+      description: Argument types of the function
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType
+      description: Function signature
+    content.vb: Function CreateFunctionType(diBuilder As DIBuilder, retType As IDebugType(Of ITypeRef, DIType), argTypes As IEnumerable(Of IDebugType(Of ITypeRef, DIType))) As DebugFunctionType
+  overload: Ubiquity.NET.Llvm.IContext.CreateFunctionType*
+  nameWithType.vb: IContext.CreateFunctionType(DIBuilder, IDebugType(Of ITypeRef, DIType), IEnumerable(Of IDebugType(Of ITypeRef, DIType)))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder, Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType)))
+  name.vb: CreateFunctionType(DIBuilder, IDebugType(Of ITypeRef, DIType), IEnumerable(Of IDebugType(Of ITypeRef, DIType)))
+- uid: Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  id: CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateFunctionType(ref readonly DIBuilder, bool, IDebugType<ITypeRef, DIType>, params IEnumerable<IDebugType<ITypeRef, DIType>>)
+  nameWithType: IContext.CreateFunctionType(ref readonly DIBuilder, bool, IDebugType<ITypeRef, DIType>, params IEnumerable<IDebugType<ITypeRef, DIType>>)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateFunctionType(ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, bool, Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateFunctionType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 135
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a FunctionType with Debug information
+  example: []
+  syntax:
+    content: DebugFunctionType CreateFunctionType(ref readonly DIBuilder diBuilder, bool isVarArg, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes)
+    parameters:
+    - id: diBuilder
+      type: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+      description: <xref href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder" data-throw-if-not-resolved="false"></xref>to use to create the debug information
+    - id: isVarArg
+      type: System.Boolean
+      description: Flag to indicate if this function is variadic
+    - id: retType
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+      description: Return type of the function
+    - id: argTypes
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}}
+      description: Argument types of the function
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType
+      description: Function signature
+    content.vb: Function CreateFunctionType(diBuilder As DIBuilder, isVarArg As Boolean, retType As IDebugType(Of ITypeRef, DIType), argTypes As IEnumerable(Of IDebugType(Of ITypeRef, DIType))) As DebugFunctionType
+  overload: Ubiquity.NET.Llvm.IContext.CreateFunctionType*
+  nameWithType.vb: IContext.CreateFunctionType(DIBuilder, Boolean, IDebugType(Of ITypeRef, DIType), IEnumerable(Of IDebugType(Of ITypeRef, DIType)))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder, Boolean, Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType)))
+  name.vb: CreateFunctionType(DIBuilder, Boolean, IDebugType(Of ITypeRef, DIType), IEnumerable(Of IDebugType(Of ITypeRef, DIType)))
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstantStruct(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstantStruct(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  id: CreateConstantStruct(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstantStruct(bool, params IEnumerable<Constant>)
+  nameWithType: IContext.CreateConstantStruct(bool, params IEnumerable<Constant>)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstantStruct(bool, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Values.Constant>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstantStruct
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 157
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a constant structure from a set of values
+  remarks: >-
+    <div class="NOTE"><h5>note</h5><p>The actual concrete return type depends on the parameters provided and will be one of the following:
+
+    <table><thead><tr><th class="term"><xref href="Ubiquity.NET.Llvm.Values.Constant" data-throw-if-not-resolved="false"></xref> derived type</th><th class="description">Description</th></tr></thead><tbody><tr><td class="term">ConstantAggregateZero</td><td class="description">If all the member values are zero constants</td></tr><tr><td class="term">UndefValue</td><td class="description">If all the member values are UndefValue</td></tr><tr><td class="term">ConstantStruct</td><td class="description">All other cases</td></tr></tbody></table>
+
+    </p></div>
+  example: []
+  syntax:
+    content: Constant CreateConstantStruct(bool packed, params IEnumerable<Constant> values)
+    parameters:
+    - id: packed
+      type: System.Boolean
+      description: Flag to indicate if the structure is packed and no alignment should be applied to the members
+    - id: values
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant}
+      description: Set of values to use in forming the structure
+    return:
+      type: Ubiquity.NET.Llvm.Values.Constant
+      description: Newly created <xref href="Ubiquity.NET.Llvm.Values.Constant" data-throw-if-not-resolved="false"></xref>
+    content.vb: Function CreateConstantStruct(packed As Boolean, values As IEnumerable(Of Constant)) As Constant
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstantStruct*
+  nameWithType.vb: IContext.CreateConstantStruct(Boolean, IEnumerable(Of Constant))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstantStruct(Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Values.Constant))
+  name.vb: CreateConstantStruct(Boolean, IEnumerable(Of Constant))
+- uid: Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct(Ubiquity.NET.Llvm.Types.IStructType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct(Ubiquity.NET.Llvm.Types.IStructType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  id: CreateNamedConstantStruct(Ubiquity.NET.Llvm.Types.IStructType,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateNamedConstantStruct(IStructType, params IEnumerable<Constant>)
+  nameWithType: IContext.CreateNamedConstantStruct(IStructType, params IEnumerable<Constant>)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct(Ubiquity.NET.Llvm.Types.IStructType, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Values.Constant>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateNamedConstantStruct
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 175
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a constant instance of a specified structure type from a set of values
+  remarks: >-
+    <div class="NOTE"><h5>note</h5><p>The actual concrete return type depends on the parameters provided and will be one of the following:
+
+    <table><thead><tr><th class="term"><xref href="Ubiquity.NET.Llvm.Values.Constant" data-throw-if-not-resolved="false"></xref> derived type</th><th class="description">Description</th></tr></thead><tbody><tr><td class="term">ConstantAggregateZero</td><td class="description">If all the member values are zero constants</td></tr><tr><td class="term">UndefValue</td><td class="description">If all the member values are UndefValue</td></tr><tr><td class="term">ConstantStruct</td><td class="description">All other cases</td></tr></tbody></table>
+
+    </p></div>
+  example: []
+  syntax:
+    content: Constant CreateNamedConstantStruct(IStructType type, params IEnumerable<Constant> values)
+    parameters:
+    - id: type
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: Type of the structure to create
+    - id: values
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant}
+      description: Set of values to use in forming the structure
+    return:
+      type: Ubiquity.NET.Llvm.Values.Constant
+      description: Newly created <xref href="Ubiquity.NET.Llvm.Values.Constant" data-throw-if-not-resolved="false"></xref>
+    content.vb: Function CreateNamedConstantStruct(type As IStructType, values As IEnumerable(Of Constant)) As Constant
+  overload: Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct*
+  nameWithType.vb: IContext.CreateNamedConstantStruct(IStructType, IEnumerable(Of Constant))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct(Ubiquity.NET.Llvm.Types.IStructType, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Values.Constant))
+  name.vb: CreateNamedConstantStruct(IStructType, IEnumerable(Of Constant))
+- uid: Ubiquity.NET.Llvm.IContext.CreateStructType(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateStructType(System.String)
+  id: CreateStructType(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateStructType(string)
+  nameWithType: IContext.CreateStructType(string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateStructType(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateStructType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 186
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create an opaque structure type (e.g. a forward reference)
+  remarks: >-
+    This method creates an opaque type. The <xref href="Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean%2cSystem.Collections.Generic.IEnumerable%7bUbiquity.NET.Llvm.Types.ITypeRef%7d)" data-throw-if-not-resolved="false"></xref> method provides a means
+
+    to add a body, including indication of packed status, to an opaque type at a later time if the
+
+    details of the body are required. (If only pointers to the type are required then the body isn't
+
+    required)
+  example: []
+  syntax:
+    content: IStructType CreateStructType(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: Name of the type (use <xref href="System.String.Empty" data-throw-if-not-resolved="false"></xref> for anonymous types)
+    return:
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: New type
+    content.vb: Function CreateStructType(name As String) As IStructType
+  overload: Ubiquity.NET.Llvm.IContext.CreateStructType*
+  nameWithType.vb: IContext.CreateStructType(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateStructType(String)
+  name.vb: CreateStructType(String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateStructType(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateStructType(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  id: CreateStructType(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateStructType(bool, params IEnumerable<ITypeRef>)
+  nameWithType: IContext.CreateStructType(bool, params IEnumerable<ITypeRef>)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateStructType(bool, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateStructType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 194
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create an anonymous structure type (e.g. Tuple)
+  example: []
+  syntax:
+    content: IStructType CreateStructType(bool packed, params IEnumerable<ITypeRef> elements)
+    parameters:
+    - id: packed
+      type: System.Boolean
+      description: Flag to indicate if the structure is "packed"
+    - id: elements
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef}
+      description: Types of the fields of the structure
+    return:
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: <xref href="Ubiquity.NET.Llvm.Types.IStructType" data-throw-if-not-resolved="false"></xref> with the specified body defined.
+    content.vb: Function CreateStructType(packed As Boolean, elements As IEnumerable(Of ITypeRef)) As IStructType
+  overload: Ubiquity.NET.Llvm.IContext.CreateStructType*
+  nameWithType.vb: IContext.CreateStructType(Boolean, IEnumerable(Of ITypeRef))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateStructType(Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  name.vb: CreateStructType(Boolean, IEnumerable(Of ITypeRef))
+- uid: Ubiquity.NET.Llvm.IContext.CreateStructType(System.String,System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateStructType(System.String,System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  id: CreateStructType(System.String,System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateStructType(string, bool, params IEnumerable<ITypeRef>)
+  nameWithType: IContext.CreateStructType(string, bool, params IEnumerable<ITypeRef>)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateStructType(string, bool, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateStructType
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 206
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new structure type in this <xref href="Ubiquity.NET.Llvm.ContextAlias" data-throw-if-not-resolved="false"></xref>
+  remarks: If the elements argument list is empty then a complete 0 sized struct is created
+  example: []
+  syntax:
+    content: IStructType CreateStructType(string name, bool packed, params IEnumerable<ITypeRef> elements)
+    parameters:
+    - id: name
+      type: System.String
+      description: Name of the structure (use <xref href="System.String.Empty" data-throw-if-not-resolved="false"></xref> for anonymous types)
+    - id: packed
+      type: System.Boolean
+      description: Flag indicating if the structure is packed
+    - id: elements
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef}
+      description: Types for the structures elements in layout order
+    return:
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: <xref href="Ubiquity.NET.Llvm.Types.IStructType" data-throw-if-not-resolved="false"></xref> with the specified body defined.
+    content.vb: Function CreateStructType(name As String, packed As Boolean, elements As IEnumerable(Of ITypeRef)) As IStructType
+  overload: Ubiquity.NET.Llvm.IContext.CreateStructType*
+  nameWithType.vb: IContext.CreateStructType(String, Boolean, IEnumerable(Of ITypeRef))
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateStructType(String, Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  name.vb: CreateStructType(String, Boolean, IEnumerable(Of ITypeRef))
+- uid: Ubiquity.NET.Llvm.IContext.CreateMetadataString(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateMetadataString(System.String)
+  id: CreateMetadataString(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateMetadataString(string?)
+  nameWithType: IContext.CreateMetadataString(string?)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateMetadataString(string?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateMetadataString
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 215
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a metadata string from the given string
+  remarks: >-
+    if <code class="paramref">value</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> then the result
+
+    represents an empty string.
+  example: []
+  syntax:
+    content: MDString CreateMetadataString(string? value)
+    parameters:
+    - id: value
+      type: System.String
+      description: string to create as metadata
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MDString
+      description: new metadata string
+    content.vb: Function CreateMetadataString(value As String) As MDString
+  overload: Ubiquity.NET.Llvm.IContext.CreateMetadataString*
+  nameWithType.vb: IContext.CreateMetadataString(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateMetadataString(String)
+  name.vb: CreateMetadataString(String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateMDNode(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateMDNode(System.String)
+  id: CreateMDNode(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateMDNode(string)
+  nameWithType: IContext.CreateMDNode(string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateMDNode(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateMDNode
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 220
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create an <xref href="Ubiquity.NET.Llvm.Metadata.MDNode" data-throw-if-not-resolved="false"></xref> from a string
+  example: []
+  syntax:
+    content: MDNode CreateMDNode(string value)
+    parameters:
+    - id: value
+      type: System.String
+      description: String value
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MDNode
+      description: New node with the string as the first element of the <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.Operands" data-throw-if-not-resolved="false"></xref> property (as an MDString)
+    content.vb: Function CreateMDNode(value As String) As MDNode
+  overload: Ubiquity.NET.Llvm.IContext.CreateMDNode*
+  nameWithType.vb: IContext.CreateMDNode(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateMDNode(String)
+  name.vb: CreateMDNode(String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String)
+  id: CreateConstantString(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstantString(string)
+  nameWithType: IContext.CreateConstantString(string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstantString(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstantString
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 231
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create a constant data string value
+  remarks: >-
+    This converts the string to ANSI form and creates an LLVM constant array of i8
+
+    characters for the data with a terminating null character. To control the enforcement
+
+    of a terminating null character, use the <xref href="Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String%2cSystem.Boolean)" data-throw-if-not-resolved="false"></xref>
+
+    overload to specify the intended behavior.
+  example: []
+  syntax:
+    content: ConstantDataArray CreateConstantString(string value)
+    parameters:
+    - id: value
+      type: System.String
+      description: string to convert into an LLVM constant value
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantDataArray
+      description: new <xref href="Ubiquity.NET.Llvm.Values.ConstantDataArray" data-throw-if-not-resolved="false"></xref>
+    content.vb: Function CreateConstantString(value As String) As ConstantDataArray
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstantString*
+  nameWithType.vb: IContext.CreateConstantString(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstantString(String)
+  name.vb: CreateConstantString(String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+  id: CreateConstantString(System.String,System.Boolean)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstantString(string, bool)
+  nameWithType: IContext.CreateConstantString(string, bool)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstantString(string, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstantString
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 241
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create a constant data string value
+  remarks: >-
+    This converts the string to ANSI form and creates an LLVM constant array of i8
+
+    characters for the data. Enforcement of a null terminator depends on the value of <code class="paramref">nullTerminate</code>
+  example: []
+  syntax:
+    content: ConstantDataArray CreateConstantString(string value, bool nullTerminate)
+    parameters:
+    - id: value
+      type: System.String
+      description: string to convert into an LLVM constant value
+    - id: nullTerminate
+      type: System.Boolean
+      description: flag to indicate if the string should include a null terminator
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantDataArray
+      description: new <xref href="Ubiquity.NET.Llvm.Values.ConstantDataArray" data-throw-if-not-resolved="false"></xref>
+    content.vb: Function CreateConstantString(value As String, nullTerminate As Boolean) As ConstantDataArray
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstantString*
+  nameWithType.vb: IContext.CreateConstantString(String, Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstantString(String, Boolean)
+  name.vb: CreateConstantString(String, Boolean)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Boolean)
+  id: CreateConstant(System.Boolean)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(bool)
+  nameWithType: IContext.CreateConstant(bool)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 246
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 1
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(bool constValue)
+    parameters:
+    - id: constValue
+      type: System.Boolean
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As Boolean) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Boolean)
+  name.vb: CreateConstant(Boolean)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Byte)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Byte)
+  id: CreateConstant(System.Byte)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(byte)
+  nameWithType: IContext.CreateConstant(byte)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(byte)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 251
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 8
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(byte constValue)
+    parameters:
+    - id: constValue
+      type: System.Byte
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As Byte) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Byte)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Byte)
+  name.vb: CreateConstant(Byte)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.SByte)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.SByte)
+  id: CreateConstant(System.SByte)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(sbyte)
+  nameWithType: IContext.CreateConstant(sbyte)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(sbyte)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 256
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 8
+  example: []
+  syntax:
+    content: Constant CreateConstant(sbyte constValue)
+    parameters:
+    - id: constValue
+      type: System.SByte
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.Constant
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As SByte) As Constant
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(SByte)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(SByte)
+  name.vb: CreateConstant(SByte)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int16)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int16)
+  id: CreateConstant(System.Int16)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(short)
+  nameWithType: IContext.CreateConstant(short)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(short)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 261
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 16
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(short constValue)
+    parameters:
+    - id: constValue
+      type: System.Int16
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As Short) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Short)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Short)
+  name.vb: CreateConstant(Short)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt16)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt16)
+  id: CreateConstant(System.UInt16)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(ushort)
+  nameWithType: IContext.CreateConstant(ushort)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(ushort)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 266
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 16
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(ushort constValue)
+    parameters:
+    - id: constValue
+      type: System.UInt16
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As UShort) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(UShort)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(UShort)
+  name.vb: CreateConstant(UShort)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int32)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int32)
+  id: CreateConstant(System.Int32)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(int)
+  nameWithType: IContext.CreateConstant(int)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(int)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 271
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 32
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(int constValue)
+    parameters:
+    - id: constValue
+      type: System.Int32
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As Integer) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Integer)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Integer)
+  name.vb: CreateConstant(Integer)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt32)
+  id: CreateConstant(System.UInt32)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(uint)
+  nameWithType: IContext.CreateConstant(uint)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 276
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 32
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(uint constValue)
+    parameters:
+    - id: constValue
+      type: System.UInt32
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As UInteger) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(UInteger)
+  name.vb: CreateConstant(UInteger)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int64)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Int64)
+  id: CreateConstant(System.Int64)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(long)
+  nameWithType: IContext.CreateConstant(long)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(long)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 281
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 64
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(long constValue)
+    parameters:
+    - id: constValue
+      type: System.Int64
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As Long) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Long)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Long)
+  name.vb: CreateConstant(Long)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt64)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt64)
+  id: CreateConstant(System.UInt64)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(ulong)
+  nameWithType: IContext.CreateConstant(ulong)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(ulong)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 286
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 64
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(ulong constValue)
+    parameters:
+    - id: constValue
+      type: System.UInt64
+      description: Value for the constant
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(constValue As ULong) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(ULong)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(ULong)
+  name.vb: CreateConstant(ULong)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt32,System.UInt64,System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.UInt32,System.UInt64,System.Boolean)
+  id: CreateConstant(System.UInt32,System.UInt64,System.Boolean)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(uint, ulong, bool)
+  nameWithType: IContext.CreateConstant(uint, ulong, bool)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(uint, ulong, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 293
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> with a bit length of 64
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(uint bitWidth, ulong constValue, bool signExtend)
+    parameters:
+    - id: bitWidth
+      type: System.UInt32
+      description: Bit width of the integer
+    - id: constValue
+      type: System.UInt64
+      description: Value for the constant
+    - id: signExtend
+      type: System.Boolean
+      description: flag to indicate if the constant value should be sign extended
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: <xref href="Ubiquity.NET.Llvm.Values.ConstantInt" data-throw-if-not-resolved="false"></xref> representing the value
+    content.vb: Function CreateConstant(bitWidth As UInteger, constValue As ULong, signExtend As Boolean) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(UInteger, ULong, Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(UInteger, ULong, Boolean)
+  name.vb: CreateConstant(UInteger, ULong, Boolean)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(Ubiquity.NET.Llvm.Types.ITypeRef,System.UInt64,System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(Ubiquity.NET.Llvm.Types.ITypeRef,System.UInt64,System.Boolean)
+  id: CreateConstant(Ubiquity.NET.Llvm.Types.ITypeRef,System.UInt64,System.Boolean)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(ITypeRef, ulong, bool)
+  nameWithType: IContext.CreateConstant(ITypeRef, ulong, bool)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(Ubiquity.NET.Llvm.Types.ITypeRef, ulong, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 300
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create a constant value of the specified integer type
+  example: []
+  syntax:
+    content: ConstantInt CreateConstant(ITypeRef intType, ulong constValue, bool signExtend)
+    parameters:
+    - id: intType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Integer type
+    - id: constValue
+      type: System.UInt64
+      description: value
+    - id: signExtend
+      type: System.Boolean
+      description: flag to indicate if <code class="paramref">constValue</code> is sign extended
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantInt
+      description: Constant for the specified value
+    content.vb: Function CreateConstant(intType As ITypeRef, constValue As ULong, signExtend As Boolean) As ConstantInt
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(ITypeRef, ULong, Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Ubiquity.NET.Llvm.Types.ITypeRef, ULong, Boolean)
+  name.vb: CreateConstant(ITypeRef, ULong, Boolean)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Single)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Single)
+  id: CreateConstant(System.Single)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(float)
+  nameWithType: IContext.CreateConstant(float)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(float)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 305
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a constant floating point value for a given value
+  example: []
+  syntax:
+    content: ConstantFP CreateConstant(float constValue)
+    parameters:
+    - id: constValue
+      type: System.Single
+      description: Value to make into a <xref href="Ubiquity.NET.Llvm.Values.ConstantFP" data-throw-if-not-resolved="false"></xref>
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantFP
+      description: Constant value
+    content.vb: Function CreateConstant(constValue As Single) As ConstantFP
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Single)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Single)
+  name.vb: CreateConstant(Single)
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant(System.Double)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstant(System.Double)
+  id: CreateConstant(System.Double)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateConstant(double)
+  nameWithType: IContext.CreateConstant(double)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant(double)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateConstant
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 310
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a constant floating point value for a given value
+  example: []
+  syntax:
+    content: ConstantFP CreateConstant(double constValue)
+    parameters:
+    - id: constValue
+      type: System.Double
+      description: Value to make into a <xref href="Ubiquity.NET.Llvm.Values.ConstantFP" data-throw-if-not-resolved="false"></xref>
+    return:
+      type: Ubiquity.NET.Llvm.Values.ConstantFP
+      description: Constant value
+    content.vb: Function CreateConstant(constValue As Double) As ConstantFP
+  overload: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  nameWithType.vb: IContext.CreateConstant(Double)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstant(Double)
+  name.vb: CreateConstant(Double)
+- uid: Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind)
+  id: CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateAttribute(AttributeKind)
+  nameWithType: IContext.CreateAttribute(AttributeKind)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateAttribute
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 315
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a simple boolean attribute
+  example: []
+  syntax:
+    content: AttributeValue CreateAttribute(AttributeKind kind)
+    parameters:
+    - id: kind
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+      description: Id of attribute
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeValue
+      description: <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref> with the specified Id set
+    content.vb: Function CreateAttribute(kind As AttributeKind) As AttributeValue
+  overload: Ubiquity.NET.Llvm.IContext.CreateAttribute*
+- uid: Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind,System.UInt64)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind,System.UInt64)
+  id: CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind,System.UInt64)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateAttribute(AttributeKind, ulong)
+  nameWithType: IContext.CreateAttribute(AttributeKind, ulong)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind, ulong)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateAttribute
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 333
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates an attribute with an integer value parameter
+  remarks: >-
+    <p>Not all attributes support a value and those that do don't all support
+
+    a full 64bit value. The following table provides the kinds of attributes
+
+    accepting a value and the allowed size of the values.</p>
+
+    <table><thead><tr><th class="term"><xref href="Ubiquity.NET.Llvm.Values.AttributeKind" data-throw-if-not-resolved="false"></xref></th><th class="term">Bit Length</th></tr></thead><tbody><tr><td class="term"><xref href="Ubiquity.NET.Llvm.Values.AttributeKind.Alignment" data-throw-if-not-resolved="false"></xref></td><td class="term">32</td></tr><tr><td class="term"><xref href="Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment" data-throw-if-not-resolved="false"></xref></td><td class="term">32</td></tr><tr><td class="term"><xref href="Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable" data-throw-if-not-resolved="false"></xref></td><td class="term">64</td></tr><tr><td class="term"><xref href="Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull" data-throw-if-not-resolved="false"></xref></td><td class="term">64</td></tr></tbody></table>
+  example: []
+  syntax:
+    content: AttributeValue CreateAttribute(AttributeKind kind, ulong value)
+    parameters:
+    - id: kind
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+      description: The kind of attribute
+    - id: value
+      type: System.UInt64
+      description: Value for the attribute
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeValue
+      description: <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref> with the specified kind and value
+    content.vb: Function CreateAttribute(kind As AttributeKind, value As ULong) As AttributeValue
+  overload: Ubiquity.NET.Llvm.IContext.CreateAttribute*
+  nameWithType.vb: IContext.CreateAttribute(AttributeKind, ULong)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateAttribute(Ubiquity.NET.Llvm.Values.AttributeKind, ULong)
+  name.vb: CreateAttribute(AttributeKind, ULong)
+- uid: Ubiquity.NET.Llvm.IContext.CreateAttribute(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateAttribute(System.String)
+  id: CreateAttribute(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateAttribute(string)
+  nameWithType: IContext.CreateAttribute(string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateAttribute(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateAttribute
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 338
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Adds a valueless named attribute
+  example: []
+  syntax:
+    content: AttributeValue CreateAttribute(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: Attribute name
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeValue
+      description: <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref> with the specified name
+    content.vb: Function CreateAttribute(name As String) As AttributeValue
+  overload: Ubiquity.NET.Llvm.IContext.CreateAttribute*
+  nameWithType.vb: IContext.CreateAttribute(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateAttribute(String)
+  name.vb: CreateAttribute(String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateAttribute(System.String,System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateAttribute(System.String,System.String)
+  id: CreateAttribute(System.String,System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateAttribute(string, string)
+  nameWithType: IContext.CreateAttribute(string, string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateAttribute(string, string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateAttribute
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 344
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Adds a Target specific named attribute with value
+  example: []
+  syntax:
+    content: AttributeValue CreateAttribute(string name, string value)
+    parameters:
+    - id: name
+      type: System.String
+      description: Name of the attribute
+    - id: value
+      type: System.String
+      description: Value of the attribute
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeValue
+      description: <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref> with the specified name and value
+    content.vb: Function CreateAttribute(name As String, value As String) As AttributeValue
+  overload: Ubiquity.NET.Llvm.IContext.CreateAttribute*
+  nameWithType.vb: IContext.CreateAttribute(String, String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateAttribute(String, String)
+  name.vb: CreateAttribute(String, String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateBasicBlock(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateBasicBlock(System.String)
+  id: CreateBasicBlock(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateBasicBlock(string)
+  nameWithType: IContext.CreateBasicBlock(string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateBasicBlock(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateBasicBlock
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 349
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Create a named <xref href="Ubiquity.NET.Llvm.Values.BasicBlock" data-throw-if-not-resolved="false"></xref> without inserting it into a function
+  example: []
+  syntax:
+    content: BasicBlock CreateBasicBlock(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: Name of the block to create
+    return:
+      type: Ubiquity.NET.Llvm.Values.BasicBlock
+      description: <xref href="Ubiquity.NET.Llvm.Values.BasicBlock" data-throw-if-not-resolved="false"></xref> created
+    content.vb: Function CreateBasicBlock(name As String) As BasicBlock
+  overload: Ubiquity.NET.Llvm.IContext.CreateBasicBlock*
+  nameWithType.vb: IContext.CreateBasicBlock(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateBasicBlock(String)
+  name.vb: CreateBasicBlock(String)
+- uid: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateBitcodeModule
+  id: CreateBitcodeModule
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateBitcodeModule()
+  nameWithType: IContext.CreateBitcodeModule()
+  fullName: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateBitcodeModule
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 353
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new instance of the <xref href="Ubiquity.NET.Llvm.Module" data-throw-if-not-resolved="false"></xref> class in this context
+  example: []
+  syntax:
+    content: Module CreateBitcodeModule()
+    return:
+      type: Ubiquity.NET.Llvm.Module
+      description: <xref href="Ubiquity.NET.Llvm.Module" data-throw-if-not-resolved="false"></xref>
+    content.vb: Function CreateBitcodeModule() As [Module]
+  overload: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule*
+- uid: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateBitcodeModule(System.String)
+  id: CreateBitcodeModule(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: CreateBitcodeModule(string)
+  nameWithType: IContext.CreateBitcodeModule(string)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateBitcodeModule
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 358
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Creates a new instance of the <xref href="Ubiquity.NET.Llvm.Module" data-throw-if-not-resolved="false"></xref> class in a given context
+  example: []
+  syntax:
+    content: Module CreateBitcodeModule(string moduleId)
+    parameters:
+    - id: moduleId
+      type: System.String
+      description: ModuleHandle's ID
+    return:
+      type: Ubiquity.NET.Llvm.Module
+      description: <xref href="Ubiquity.NET.Llvm.Module" data-throw-if-not-resolved="false"></xref>
+    content.vb: Function CreateBitcodeModule(moduleId As String) As [Module]
+  overload: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule*
+  nameWithType.vb: IContext.CreateBitcodeModule(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule(String)
+  name.vb: CreateBitcodeModule(String)
+- uid: Ubiquity.NET.Llvm.IContext.ParseModule(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  commentId: M:Ubiquity.NET.Llvm.IContext.ParseModule(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  id: ParseModule(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: ParseModule(LazyEncodedString, LazyEncodedString)
+  nameWithType: IContext.ParseModule(LazyEncodedString, LazyEncodedString)
+  fullName: Ubiquity.NET.Llvm.IContext.ParseModule(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ParseModule
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 365
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Parse LLVM IR source for a module, into this context
+  example: []
+  syntax:
+    content: Module ParseModule(LazyEncodedString src, LazyEncodedString name)
+    parameters:
+    - id: src
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+      description: LLVM IR Source code of the module
+    - id: name
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+      description: Name of the module buffer
+    return:
+      type: Ubiquity.NET.Llvm.Module
+      description: Newly created module parsed from the IR
+    content.vb: Function ParseModule(src As LazyEncodedString, name As LazyEncodedString) As [Module]
+  overload: Ubiquity.NET.Llvm.IContext.ParseModule*
+  exceptions:
+  - type: Ubiquity.NET.Llvm.Interop.LlvmException
+    commentId: T:Ubiquity.NET.Llvm.Interop.LlvmException
+    description: Any errors parsing the IR
+- uid: Ubiquity.NET.Llvm.IContext.GetMDKindId(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.GetMDKindId(System.String)
+  id: GetMDKindId(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: GetMDKindId(string)
+  nameWithType: IContext.GetMDKindId(string)
+  fullName: Ubiquity.NET.Llvm.IContext.GetMDKindId(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetMDKindId
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 373
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets non-zero IrMetadata kind ID for a given name
+  remarks: These IDs are uniqued across all modules in this context.
+  example: []
+  syntax:
+    content: uint GetMDKindId(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: name of the metadata kind
+    return:
+      type: System.UInt32
+      description: integral constant for the ID
+    content.vb: Function GetMDKindId(name As String) As UInteger
+  overload: Ubiquity.NET.Llvm.IContext.GetMDKindId*
+  nameWithType.vb: IContext.GetMDKindId(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.GetMDKindId(String)
+  name.vb: GetMDKindId(String)
+- uid: Ubiquity.NET.Llvm.IContext.OpenBinary(System.String)
+  commentId: M:Ubiquity.NET.Llvm.IContext.OpenBinary(System.String)
+  id: OpenBinary(System.String)
+  parent: Ubiquity.NET.Llvm.IContext
+  langs:
+  - csharp
+  - vb
+  name: OpenBinary(string)
+  nameWithType: IContext.OpenBinary(string)
+  fullName: Ubiquity.NET.Llvm.IContext.OpenBinary(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/IContext.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OpenBinary
+    path: ../src/Ubiquity.NET.Llvm/IContext.cs
+    startLine: 379
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Opens a <xref href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary" data-throw-if-not-resolved="false"></xref> from a path
+  example: []
+  syntax:
+    content: TargetBinary OpenBinary(string path)
+    parameters:
+    - id: path
+      type: System.String
+      description: path to the object file binary
+    return:
+      type: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+      description: new object file
+    content.vb: Function OpenBinary(path As String) As TargetBinary
+  overload: Ubiquity.NET.Llvm.IContext.OpenBinary*
+  exceptions:
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: File IO failures
+  nameWithType.vb: IContext.OpenBinary(String)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.OpenBinary(String)
+  name.vb: OpenBinary(String)
+references:
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Context
+  commentId: T:Ubiquity.NET.Llvm.Context
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Context.html
+  name: Context
+  nameWithType: Context
+  fullName: Ubiquity.NET.Llvm.Context
+- uid: Ubiquity.NET.Llvm.IContext
+  commentId: T:Ubiquity.NET.Llvm.IContext
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IContext.html
+  name: IContext
+  nameWithType: IContext
+  fullName: Ubiquity.NET.Llvm.IContext
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.IContext.VoidType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.VoidType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_VoidType
+  name: VoidType
+  nameWithType: IContext.VoidType
+  fullName: Ubiquity.NET.Llvm.IContext.VoidType
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef
+  commentId: T:Ubiquity.NET.Llvm.Types.ITypeRef
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  name: ITypeRef
+  nameWithType: ITypeRef
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: Ubiquity.NET.Llvm.IContext.BoolType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.BoolType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_BoolType
+  name: BoolType
+  nameWithType: IContext.BoolType
+  fullName: Ubiquity.NET.Llvm.IContext.BoolType
+- uid: Ubiquity.NET.Llvm.IContext.Int8Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.Int8Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Int8Type
+  name: Int8Type
+  nameWithType: IContext.Int8Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int8Type
+- uid: Ubiquity.NET.Llvm.IContext.Int16Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.Int16Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Int16Type
+  name: Int16Type
+  nameWithType: IContext.Int16Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int16Type
+- uid: Ubiquity.NET.Llvm.IContext.Int32Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.Int32Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Int32Type
+  name: Int32Type
+  nameWithType: IContext.Int32Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int32Type
+- uid: Ubiquity.NET.Llvm.IContext.Int64Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.Int64Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Int64Type
+  name: Int64Type
+  nameWithType: IContext.Int64Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int64Type
+- uid: Ubiquity.NET.Llvm.IContext.Int128Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.Int128Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Int128Type
+  name: Int128Type
+  nameWithType: IContext.Int128Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int128Type
+- uid: Ubiquity.NET.Llvm.IContext.HalfFloatType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.HalfFloatType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_HalfFloatType
+  name: HalfFloatType
+  nameWithType: IContext.HalfFloatType
+  fullName: Ubiquity.NET.Llvm.IContext.HalfFloatType
+- uid: Ubiquity.NET.Llvm.IContext.FloatType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.FloatType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_FloatType
+  name: FloatType
+  nameWithType: IContext.FloatType
+  fullName: Ubiquity.NET.Llvm.IContext.FloatType
+- uid: Ubiquity.NET.Llvm.IContext.DoubleType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.DoubleType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_DoubleType
+  name: DoubleType
+  nameWithType: IContext.DoubleType
+  fullName: Ubiquity.NET.Llvm.IContext.DoubleType
+- uid: Ubiquity.NET.Llvm.IContext.TokenType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.TokenType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_TokenType
+  name: TokenType
+  nameWithType: IContext.TokenType
+  fullName: Ubiquity.NET.Llvm.IContext.TokenType
+- uid: Ubiquity.NET.Llvm.IContext.MetadataType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.MetadataType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_MetadataType
+  name: MetadataType
+  nameWithType: IContext.MetadataType
+  fullName: Ubiquity.NET.Llvm.IContext.MetadataType
+- uid: Ubiquity.NET.Llvm.IContext.X86Float80Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.X86Float80Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_X86Float80Type
+  name: X86Float80Type
+  nameWithType: IContext.X86Float80Type
+  fullName: Ubiquity.NET.Llvm.IContext.X86Float80Type
+- uid: Ubiquity.NET.Llvm.IContext.Float128Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.Float128Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Float128Type
+  name: Float128Type
+  nameWithType: IContext.Float128Type
+  fullName: Ubiquity.NET.Llvm.IContext.Float128Type
+- uid: Ubiquity.NET.Llvm.IContext.PpcFloat128Type*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.PpcFloat128Type
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_PpcFloat128Type
+  name: PpcFloat128Type
+  nameWithType: IContext.PpcFloat128Type
+  fullName: Ubiquity.NET.Llvm.IContext.PpcFloat128Type
+- uid: Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_OdrUniqueDebugTypes
+  name: OdrUniqueDebugTypes
+  nameWithType: IContext.OdrUniqueDebugTypes
+  fullName: Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.IContext.DiscardValueName*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.DiscardValueName
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_DiscardValueName
+  name: DiscardValueName
+  nameWithType: IContext.DiscardValueName
+  fullName: Ubiquity.NET.Llvm.IContext.DiscardValueName
+- uid: Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_SetDiagnosticHandler_Ubiquity_NET_Llvm_DiagnosticInfoCallbackAction_
+  name: SetDiagnosticHandler
+  nameWithType: IContext.SetDiagnosticHandler
+  fullName: Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler
+- uid: Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction
+  commentId: T:Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction.html
+  name: DiagnosticInfoCallbackAction
+  nameWithType: DiagnosticInfoCallbackAction
+  fullName: Ubiquity.NET.Llvm.DiagnosticInfoCallbackAction
+- uid: Ubiquity.NET.Llvm.Types.IPointerType
+  commentId: T:Ubiquity.NET.Llvm.Types.IPointerType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IPointerType.html
+  name: IPointerType
+  nameWithType: IPointerType
+  fullName: Ubiquity.NET.Llvm.Types.IPointerType
+- uid: Ubiquity.NET.Llvm.IContext.GetPointerTypeFor*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.GetPointerTypeFor
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_GetPointerTypeFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: GetPointerTypeFor
+  nameWithType: IContext.GetPointerTypeFor
+  fullName: Ubiquity.NET.Llvm.IContext.GetPointerTypeFor
+- uid: Ubiquity.NET.Llvm.IContext.BoolType
+  commentId: P:Ubiquity.NET.Llvm.IContext.BoolType
+  parent: Ubiquity.NET.Llvm.IContext
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_BoolType
+  name: BoolType
+  nameWithType: IContext.BoolType
+  fullName: Ubiquity.NET.Llvm.IContext.BoolType
+- uid: Ubiquity.NET.Llvm.IContext.Int16Type
+  commentId: P:Ubiquity.NET.Llvm.IContext.Int16Type
+  parent: Ubiquity.NET.Llvm.IContext
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_Int16Type
+  name: Int16Type
+  nameWithType: IContext.Int16Type
+  fullName: Ubiquity.NET.Llvm.IContext.Int16Type
+- uid: Ubiquity.NET.Llvm.IContext.GetIntType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.GetIntType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_GetIntType_System_UInt32_
+  name: GetIntType
+  nameWithType: IContext.GetIntType
+  fullName: Ubiquity.NET.Llvm.IContext.GetIntType
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Ubiquity.NET.Llvm.IContext.GetFunctionType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.GetFunctionType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_GetFunctionType_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  name: GetFunctionType
+  nameWithType: IContext.GetFunctionType
+  fullName: Ubiquity.NET.Llvm.IContext.GetFunctionType
+- uid: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<ITypeRef>
+  nameWithType: IEnumerable<ITypeRef>
+  fullName: System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>
+  nameWithType.vb: IEnumerable(Of ITypeRef)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef)
+  name.vb: IEnumerable(Of ITypeRef)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.IFunctionType
+  commentId: T:Ubiquity.NET.Llvm.Types.IFunctionType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IFunctionType.html
+  name: IFunctionType
+  nameWithType: IFunctionType
+  fullName: Ubiquity.NET.Llvm.Types.IFunctionType
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  name: DIBuilder
+  nameWithType: DIBuilder
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+- uid: Ubiquity.NET.Llvm.IContext.CreateFunctionType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateFunctionType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___
+  name: CreateFunctionType
+  nameWithType: IContext.CreateFunctionType
+  fullName: Ubiquity.NET.Llvm.IContext.CreateFunctionType
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<ITypeRef, DIType>
+  nameWithType: IDebugType<ITypeRef, DIType>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>
+  nameWithType.vb: IDebugType(Of ITypeRef, DIType)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType)
+  name.vb: IDebugType(Of ITypeRef, DIType)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IDebugType<ITypeRef, DIType>>
+  nameWithType: IEnumerable<IDebugType<ITypeRef, DIType>>
+  fullName: System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>>
+  nameWithType.vb: IEnumerable(Of IDebugType(Of ITypeRef, DIType))
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType))
+  name.vb: IEnumerable(Of IDebugType(Of ITypeRef, DIType))
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: )
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.html
+  name: DebugFunctionType
+  nameWithType: DebugFunctionType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<TNative, TDebug>
+  nameWithType: IDebugType<TNative, TDebug>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<TNative, TDebug>
+  nameWithType.vb: IDebugType(Of TNative, TDebug)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of TNative, TDebug)
+  name.vb: IDebugType(Of TNative, TDebug)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Constant
+  commentId: T:Ubiquity.NET.Llvm.Values.Constant
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Constant.html
+  name: Constant
+  nameWithType: Constant
+  fullName: Ubiquity.NET.Llvm.Values.Constant
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstantStruct*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateConstantStruct
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__
+  name: CreateConstantStruct
+  nameWithType: IContext.CreateConstantStruct
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstantStruct
+- uid: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Constant}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<Constant>
+  nameWithType: IEnumerable<Constant>
+  fullName: System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Values.Constant>
+  nameWithType.vb: IEnumerable(Of Constant)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Values.Constant)
+  name.vb: IEnumerable(Of Constant)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.Constant
+    name: Constant
+    href: Ubiquity.NET.Llvm.Values.Constant.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Constant
+    name: Constant
+    href: Ubiquity.NET.Llvm.Values.Constant.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateNamedConstantStruct_Ubiquity_NET_Llvm_Types_IStructType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__
+  name: CreateNamedConstantStruct
+  nameWithType: IContext.CreateNamedConstantStruct
+  fullName: Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct
+- uid: Ubiquity.NET.Llvm.Types.IStructType
+  commentId: T:Ubiquity.NET.Llvm.Types.IStructType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IStructType.html
+  name: IStructType
+  nameWithType: IStructType
+  fullName: Ubiquity.NET.Llvm.Types.IStructType
+- uid: System.String.Empty
+  commentId: F:System.String.Empty
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string.empty
+  name: Empty
+  nameWithType: string.Empty
+  fullName: string.Empty
+  nameWithType.vb: String.Empty
+  fullName.vb: String.Empty
+- uid: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  commentId: M:Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+  parent: Ubiquity.NET.Llvm.Types.IStructType
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Types.IStructType.html#Ubiquity_NET_Llvm_Types_IStructType_SetBody_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  name: SetBody(bool, params IEnumerable<ITypeRef>)
+  nameWithType: IStructType.SetBody(bool, params IEnumerable<ITypeRef>)
+  fullName: Ubiquity.NET.Llvm.Types.IStructType.SetBody(bool, params System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Types.ITypeRef>)
+  nameWithType.vb: IStructType.SetBody(Boolean, IEnumerable(Of ITypeRef))
+  fullName.vb: Ubiquity.NET.Llvm.Types.IStructType.SetBody(Boolean, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Types.ITypeRef))
+  name.vb: SetBody(Boolean, IEnumerable(Of ITypeRef))
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+    name: SetBody
+    href: Ubiquity.NET.Llvm.Types.IStructType.html#Ubiquity_NET_Llvm_Types_IStructType_SetBody_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - name: params
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Types.IStructType.SetBody(System.Boolean,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Types.ITypeRef})
+    name: SetBody
+    href: Ubiquity.NET.Llvm.Types.IStructType.html#Ubiquity_NET_Llvm_Types_IStructType_SetBody_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  - name: )
+- uid: Ubiquity.NET.Llvm.IContext.CreateStructType*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateStructType
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateStructType_System_String_
+  name: CreateStructType
+  nameWithType: IContext.CreateStructType
+  fullName: Ubiquity.NET.Llvm.IContext.CreateStructType
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubiquity.NET.Llvm.ContextAlias
+  commentId: T:Ubiquity.NET.Llvm.ContextAlias
+  name: ContextAlias
+  nameWithType: ContextAlias
+  fullName: Ubiquity.NET.Llvm.ContextAlias
+- uid: Ubiquity.NET.Llvm.IContext.CreateMetadataString*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateMetadataString
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateMetadataString_System_String_
+  name: CreateMetadataString
+  nameWithType: IContext.CreateMetadataString
+  fullName: Ubiquity.NET.Llvm.IContext.CreateMetadataString
+- uid: Ubiquity.NET.Llvm.Metadata.MDString
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MDString
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.MDString.html
+  name: MDString
+  nameWithType: MDString
+  fullName: Ubiquity.NET.Llvm.Metadata.MDString
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MDNode
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html
+  name: MDNode
+  nameWithType: MDNode
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_Operands
+  name: Operands
+  nameWithType: MDNode.Operands
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+- uid: Ubiquity.NET.Llvm.IContext.CreateMDNode*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateMDNode
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateMDNode_System_String_
+  name: CreateMDNode
+  nameWithType: IContext.CreateMDNode
+  fullName: Ubiquity.NET.Llvm.IContext.CreateMDNode
+- uid: Ubiquity.NET.Llvm.Values.ConstantDataArray
+  commentId: T:Ubiquity.NET.Llvm.Values.ConstantDataArray
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.ConstantDataArray.html
+  name: ConstantDataArray
+  nameWithType: ConstantDataArray
+  fullName: Ubiquity.NET.Llvm.Values.ConstantDataArray
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+  parent: Ubiquity.NET.Llvm.IContext
+  isExternal: true
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateConstantString_System_String_System_Boolean_
+  name: CreateConstantString(string, bool)
+  nameWithType: IContext.CreateConstantString(string, bool)
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstantString(string, bool)
+  nameWithType.vb: IContext.CreateConstantString(String, Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.IContext.CreateConstantString(String, Boolean)
+  name.vb: CreateConstantString(String, Boolean)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+    name: CreateConstantString
+    href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateConstantString_System_String_System_Boolean_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IContext.CreateConstantString(System.String,System.Boolean)
+    name: CreateConstantString
+    href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateConstantString_System_String_System_Boolean_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstantString*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateConstantString
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateConstantString_System_String_
+  name: CreateConstantString
+  nameWithType: IContext.CreateConstantString
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstantString
+- uid: Ubiquity.NET.Llvm.Values.ConstantInt
+  commentId: T:Ubiquity.NET.Llvm.Values.ConstantInt
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.ConstantInt.html
+  name: ConstantInt
+  nameWithType: ConstantInt
+  fullName: Ubiquity.NET.Llvm.Values.ConstantInt
+- uid: Ubiquity.NET.Llvm.IContext.CreateConstant*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateConstant
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Boolean_
+  name: CreateConstant
+  nameWithType: IContext.CreateConstant
+  fullName: Ubiquity.NET.Llvm.IContext.CreateConstant
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.byte
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.SByte
+  commentId: T:System.SByte
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.sbyte
+  name: sbyte
+  nameWithType: sbyte
+  fullName: sbyte
+  nameWithType.vb: SByte
+  fullName.vb: SByte
+  name.vb: SByte
+- uid: System.Int16
+  commentId: T:System.Int16
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int16
+  name: short
+  nameWithType: short
+  fullName: short
+  nameWithType.vb: Short
+  fullName.vb: Short
+  name.vb: Short
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint16
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Ubiquity.NET.Llvm.Values.ConstantFP
+  commentId: T:Ubiquity.NET.Llvm.Values.ConstantFP
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.ConstantFP.html
+  name: ConstantFP
+  nameWithType: ConstantFP
+  fullName: Ubiquity.NET.Llvm.Values.ConstantFP
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeValue
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  name: AttributeValue
+  nameWithType: AttributeValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue
+- uid: Ubiquity.NET.Llvm.IContext.CreateAttribute*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateAttribute
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateAttribute_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: CreateAttribute
+  nameWithType: IContext.CreateAttribute
+  fullName: Ubiquity.NET.Llvm.IContext.CreateAttribute
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeKind
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  name: AttributeKind
+  nameWithType: AttributeKind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html#Ubiquity_NET_Llvm_Values_AttributeKind_Alignment
+  name: Alignment
+  nameWithType: AttributeKind.Alignment
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Alignment
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html#Ubiquity_NET_Llvm_Values_AttributeKind_StackAlignment
+  name: StackAlignment
+  nameWithType: AttributeKind.StackAlignment
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.StackAlignment
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html#Ubiquity_NET_Llvm_Values_AttributeKind_Dereferenceable
+  name: Dereferenceable
+  nameWithType: AttributeKind.Dereferenceable
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.Dereferenceable
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+  commentId: F:Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html#Ubiquity_NET_Llvm_Values_AttributeKind_DereferenceableOrNull
+  name: DereferenceableOrNull
+  nameWithType: AttributeKind.DereferenceableOrNull
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind.DereferenceableOrNull
+- uid: Ubiquity.NET.Llvm.Values.BasicBlock
+  commentId: T:Ubiquity.NET.Llvm.Values.BasicBlock
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.BasicBlock.html
+  name: BasicBlock
+  nameWithType: BasicBlock
+  fullName: Ubiquity.NET.Llvm.Values.BasicBlock
+- uid: Ubiquity.NET.Llvm.IContext.CreateBasicBlock*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateBasicBlock
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateBasicBlock_System_String_
+  name: CreateBasicBlock
+  nameWithType: IContext.CreateBasicBlock
+  fullName: Ubiquity.NET.Llvm.IContext.CreateBasicBlock
+- uid: Ubiquity.NET.Llvm.Module
+  commentId: T:Ubiquity.NET.Llvm.Module
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Ubiquity.NET.Llvm.Module
+- uid: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.CreateBitcodeModule
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_CreateBitcodeModule
+  name: CreateBitcodeModule
+  nameWithType: IContext.CreateBitcodeModule
+  fullName: Ubiquity.NET.Llvm.IContext.CreateBitcodeModule
+- uid: Ubiquity.NET.Llvm.Interop.LlvmException
+  commentId: T:Ubiquity.NET.Llvm.Interop.LlvmException
+  name: LlvmException
+  nameWithType: LlvmException
+  fullName: Ubiquity.NET.Llvm.Interop.LlvmException
+- uid: Ubiquity.NET.Llvm.IContext.ParseModule*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.ParseModule
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_ParseModule_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_
+  name: ParseModule
+  nameWithType: IContext.ParseModule
+  fullName: Ubiquity.NET.Llvm.IContext.ParseModule
+- uid: Ubiquity.NET.InteropHelpers.LazyEncodedString
+  commentId: T:Ubiquity.NET.InteropHelpers.LazyEncodedString
+  parent: Ubiquity.NET.InteropHelpers
+  name: LazyEncodedString
+  nameWithType: LazyEncodedString
+  fullName: Ubiquity.NET.InteropHelpers.LazyEncodedString
+- uid: Ubiquity.NET.InteropHelpers
+  commentId: N:Ubiquity.NET.InteropHelpers
+  name: Ubiquity.NET.InteropHelpers
+  nameWithType: Ubiquity.NET.InteropHelpers
+  fullName: Ubiquity.NET.InteropHelpers
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+- uid: Ubiquity.NET.Llvm.IContext.GetMDKindId*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.GetMDKindId
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_GetMDKindId_System_String_
+  name: GetMDKindId
+  nameWithType: IContext.GetMDKindId
+  fullName: Ubiquity.NET.Llvm.IContext.GetMDKindId
+- uid: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.html
+  name: TargetBinary
+  nameWithType: TargetBinary
+  fullName: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+- uid: System.IO.IOException
+  commentId: T:System.IO.IOException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.ioexception
+  name: IOException
+  nameWithType: IOException
+  fullName: System.IO.IOException
+- uid: Ubiquity.NET.Llvm.IContext.OpenBinary*
+  commentId: Overload:Ubiquity.NET.Llvm.IContext.OpenBinary
+  href: Ubiquity.NET.Llvm.IContext.html#Ubiquity_NET_Llvm_IContext_OpenBinary_System_String_
+  name: OpenBinary
+  nameWithType: IContext.OpenBinary
+  fullName: Ubiquity.NET.Llvm.IContext.OpenBinary
+- uid: Ubiquity.NET.Llvm.ObjectFile
+  commentId: N:Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.ObjectFile
+  nameWithType: Ubiquity.NET.Llvm.ObjectFile
+  fullName: Ubiquity.NET.Llvm.ObjectFile
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.ObjectFile
+    name: ObjectFile
+    href: Ubiquity.NET.Llvm.ObjectFile.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.ObjectFile
+    name: ObjectFile
+    href: Ubiquity.NET.Llvm.ObjectFile.html

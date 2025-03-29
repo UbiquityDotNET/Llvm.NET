@@ -1,0 +1,213 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.ComdatKind
+  commentId: T:Ubiquity.NET.Llvm.ComdatKind
+  id: ComdatKind
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.ComdatKind.Any
+  - Ubiquity.NET.Llvm.ComdatKind.ExactMatch
+  - Ubiquity.NET.Llvm.ComdatKind.Largest
+  - Ubiquity.NET.Llvm.ComdatKind.NoDuplicates
+  - Ubiquity.NET.Llvm.ComdatKind.SameSize
+  langs:
+  - csharp
+  - vb
+  name: ComdatKind
+  nameWithType: ComdatKind
+  fullName: Ubiquity.NET.Llvm.ComdatKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ComdatKind
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Comdat kind/behavior
+  example: []
+  syntax:
+    content: public enum ComdatKind
+    content.vb: Public Enum ComdatKind
+- uid: Ubiquity.NET.Llvm.ComdatKind.Any
+  commentId: F:Ubiquity.NET.Llvm.ComdatKind.Any
+  id: Any
+  parent: Ubiquity.NET.Llvm.ComdatKind
+  langs:
+  - csharp
+  - vb
+  name: Any
+  nameWithType: ComdatKind.Any
+  fullName: Ubiquity.NET.Llvm.ComdatKind.Any
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Any
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 12
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Linker may choose any COMDAT key, the choice is arbitrary
+  example: []
+  syntax:
+    content: Any = 0
+    return:
+      type: Ubiquity.NET.Llvm.ComdatKind
+- uid: Ubiquity.NET.Llvm.ComdatKind.ExactMatch
+  commentId: F:Ubiquity.NET.Llvm.ComdatKind.ExactMatch
+  id: ExactMatch
+  parent: Ubiquity.NET.Llvm.ComdatKind
+  langs:
+  - csharp
+  - vb
+  name: ExactMatch
+  nameWithType: ComdatKind.ExactMatch
+  fullName: Ubiquity.NET.Llvm.ComdatKind.ExactMatch
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ExactMatch
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Linker may choose any COMDAT key but sections must contain the same data
+  example: []
+  syntax:
+    content: ExactMatch = 1
+    return:
+      type: Ubiquity.NET.Llvm.ComdatKind
+- uid: Ubiquity.NET.Llvm.ComdatKind.Largest
+  commentId: F:Ubiquity.NET.Llvm.ComdatKind.Largest
+  id: Largest
+  parent: Ubiquity.NET.Llvm.ComdatKind
+  langs:
+  - csharp
+  - vb
+  name: Largest
+  nameWithType: ComdatKind.Largest
+  fullName: Ubiquity.NET.Llvm.ComdatKind.Largest
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Largest
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: The linker will choose the section containing the targets COMDAT key
+  example: []
+  syntax:
+    content: Largest = 2
+    return:
+      type: Ubiquity.NET.Llvm.ComdatKind
+- uid: Ubiquity.NET.Llvm.ComdatKind.NoDuplicates
+  commentId: F:Ubiquity.NET.Llvm.ComdatKind.NoDuplicates
+  id: NoDuplicates
+  parent: Ubiquity.NET.Llvm.ComdatKind
+  langs:
+  - csharp
+  - vb
+  name: NoDuplicates
+  nameWithType: ComdatKind.NoDuplicates
+  fullName: Ubiquity.NET.Llvm.ComdatKind.NoDuplicates
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoDuplicates
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: The linker requires that only one section with this COMDAT key exists
+  example: []
+  syntax:
+    content: NoDuplicates = 3
+    return:
+      type: Ubiquity.NET.Llvm.ComdatKind
+- uid: Ubiquity.NET.Llvm.ComdatKind.SameSize
+  commentId: F:Ubiquity.NET.Llvm.ComdatKind.SameSize
+  id: SameSize
+  parent: Ubiquity.NET.Llvm.ComdatKind
+  langs:
+  - csharp
+  - vb
+  name: SameSize
+  nameWithType: ComdatKind.SameSize
+  fullName: Ubiquity.NET.Llvm.ComdatKind.SameSize
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SameSize
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 24
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Linker may choose any COMDAT key but sections must contain the same amount of data
+  example: []
+  syntax:
+    content: SameSize = 4
+    return:
+      type: Ubiquity.NET.Llvm.ComdatKind
+references:
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.ComdatKind
+  commentId: T:Ubiquity.NET.Llvm.ComdatKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ComdatKind.html
+  name: ComdatKind
+  nameWithType: ComdatKind
+  fullName: Ubiquity.NET.Llvm.ComdatKind

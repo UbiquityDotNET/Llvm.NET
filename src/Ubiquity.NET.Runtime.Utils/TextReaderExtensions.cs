@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
-    /// <summary>Utility class to provide extensions for REPL Loop</summary>
+    /// <summary>Utility class to provide extensions for REPL Loop and other scenarios requiring Async processing of text input</summary>
     public static class TextReaderExtensions
     {
         /// <summary>Provides an async sequence of lines from a reader</summary>
@@ -35,11 +35,12 @@ namespace Ubiquity.NET.Runtime.Utils
             } while( line != null );
         }
 
-        /// <summary>Async operator to encapsulate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
-        /// <param name="reader">Input reader</param>
-        /// <param name="prompt">Action to provide prompts when the transform requires new data from the reader</param>
-        /// <param name="cancelToken">Cancelation token for the async operation</param>
-        /// <returns>Async sequence of complete statements ready for parsing</returns>
+        /// <inheritdoc cref="ToStatements(TextReader, Action{ReadyState}?, char, CancellationToken)"/>
+        /// <remarks>
+        /// This uses a common statement completion character of ';' if that is not desired then the
+        /// <see cref="ToStatements(TextReader, Action{ReadyState}?, char, CancellationToken)"/> overload
+        /// takes a parameter for the completion character.
+        /// </remarks>
         public static IAsyncEnumerable<string> ToStatements(
             this TextReader reader,
             Action<ReadyState>? prompt,

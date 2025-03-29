@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// to the parser. Normally this is done via the constructor of a type
         /// implementing this interface.
         /// </remarks>
-        IAstNode Parse( string txt );
+        IAstNode? Parse( string txt );
 
         /// <summary>Try parsing the given input text as full source, potentially containing multiple definitions</summary>
         /// <param name="reader">TextReader to parse</param>
@@ -31,6 +31,6 @@ namespace Ubiquity.NET.Runtime.Utils
         /// to the parser. Normally this is done via the constructor of a type
         /// implementing this interface.
         /// </remarks>
-        IAstNode Parse( TextReader reader );
+        IAstNode? Parse( TextReader reader );
     }
 }

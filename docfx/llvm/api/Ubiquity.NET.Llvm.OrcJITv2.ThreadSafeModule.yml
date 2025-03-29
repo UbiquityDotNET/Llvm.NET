@@ -1,0 +1,626 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  id: ThreadSafeModule
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  children:
+  - Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.#ctor(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module)
+  - Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+  - Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  - Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed
+  - Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation)
+  langs:
+  - csharp
+  - vb
+  name: ThreadSafeModule
+  nameWithType: ThreadSafeModule
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ThreadSafeModule
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: LLVM ORC JIT v2 Thread Safe Module
+  example: []
+  syntax:
+    content: 'public sealed class ThreadSafeModule : IDisposable'
+    content.vb: Public NotInheritable Class ThreadSafeModule Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+  id: Dispose
+  parent: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ThreadSafeModule.Dispose()
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Dispose
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  id: IsDisposed
+  parent: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  langs:
+  - csharp
+  - vb
+  name: IsDisposed
+  nameWithType: ThreadSafeModule.IsDisposed
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsDisposed
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Gets a value indicating whether this instance is disposed
+  example: []
+  syntax:
+    content: public bool IsDisposed { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDisposed As Boolean
+  overload: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed
+  id: ThrowIfIDisposed
+  parent: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  langs:
+  - csharp
+  - vb
+  name: ThrowIfIDisposed()
+  nameWithType: ThreadSafeModule.ThrowIfIDisposed()
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ThrowIfIDisposed
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Throws an <xref href="System.ObjectDisposedException" data-throw-if-not-resolved="false"></xref> if <xref href="Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed" data-throw-if-not-resolved="false"></xref> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>
+  example: []
+  syntax:
+    content: public void ThrowIfIDisposed()
+    content.vb: Public Sub ThrowIfIDisposed()
+  overload: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation)
+  id: WithPerThreadModule(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  langs:
+  - csharp
+  - vb
+  name: WithPerThreadModule(GenericModuleOperation)
+  nameWithType: ThreadSafeModule.WithPerThreadModule(ThreadSafeModule.GenericModuleOperation)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: WithPerThreadModule
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+    startLine: 35
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Performs an operation <code class="paramref">op</code> with a per thread module owned by this <xref href="Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public void WithPerThreadModule(ThreadSafeModule.GenericModuleOperation op)
+    parameters:
+    - id: op
+      type: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation
+      description: Operation to perform with the module
+    content.vb: Public Sub WithPerThreadModule(op As ThreadSafeModule.GenericModuleOperation)
+  overload: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.#ctor(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.#ctor(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module)
+  id: '#ctor(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module)'
+  parent: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  langs:
+  - csharp
+  - vb
+  name: ThreadSafeModule(ThreadSafeContext, Module)
+  nameWithType: ThreadSafeModule.ThreadSafeModule(ThreadSafeContext, Module)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThreadSafeModule(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext, Ubiquity.NET.Llvm.Module)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/ThreadSafeModule.cs
+    startLine: 56
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule" data-throw-if-not-resolved="false"></xref> class.
+  remarks: >-
+    <div class="IMPORTANT"><h5>important</h5><p>
+
+    This is a "move" constructor and takes ownership of the module. The module provided is NOT
+
+    useable after this except to dispose it (which is a NOP).
+
+    </p></div>
+  example: []
+  syntax:
+    content: public ThreadSafeModule(ThreadSafeContext context, Module module)
+    parameters:
+    - id: context
+      type: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext
+      description: Thread safe ContextAlias to place the module into
+    - id: module
+      type: Ubiquity.NET.Llvm.Module
+      description: module to make thread safe
+    content.vb: Public Sub New(context As ThreadSafeContext, [module] As [Module])
+  overload: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.#ctor*
+  nameWithType.vb: ThreadSafeModule.New(ThreadSafeContext, Module)
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.New(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext, Ubiquity.NET.Llvm.Module)
+  name.vb: New(ThreadSafeContext, Module)
+references:
+- uid: Ubiquity.NET.Llvm.OrcJITv2
+  commentId: N:Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.OrcJITv2
+  nameWithType: Ubiquity.NET.Llvm.OrcJITv2
+  fullName: Ubiquity.NET.Llvm.OrcJITv2
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_Dispose
+  name: Dispose
+  nameWithType: ThreadSafeModule.Dispose
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_IsDisposed
+  name: IsDisposed
+  nameWithType: ThreadSafeModule.IsDisposed
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.ObjectDisposedException
+  commentId: T:System.ObjectDisposedException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.objectdisposedexception
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_IsDisposed
+  name: IsDisposed
+  nameWithType: ThreadSafeModule.IsDisposed
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.IsDisposed
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_ThrowIfIDisposed
+  name: ThrowIfIDisposed
+  nameWithType: ThreadSafeModule.ThrowIfIDisposed
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThrowIfIDisposed
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html
+  name: ThreadSafeModule
+  nameWithType: ThreadSafeModule
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_WithPerThreadModule_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_GenericModuleOperation_
+  name: WithPerThreadModule
+  nameWithType: ThreadSafeModule.WithPerThreadModule
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.WithPerThreadModule
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html
+  name: ThreadSafeModule.GenericModuleOperation
+  nameWithType: ThreadSafeModule.GenericModuleOperation
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+    name: ThreadSafeModule
+    href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation
+    name: GenericModuleOperation
+    href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation.html
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+    name: ThreadSafeModule
+    href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation
+    name: GenericModuleOperation
+    href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.GenericModuleOperation.html
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.#ctor
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule__ctor_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeContext_Ubiquity_NET_Llvm_Module_
+  name: ThreadSafeModule
+  nameWithType: ThreadSafeModule.ThreadSafeModule
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.ThreadSafeModule
+  nameWithType.vb: ThreadSafeModule.New
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.New
+  name.vb: New
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext.html
+  name: ThreadSafeContext
+  nameWithType: ThreadSafeContext
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext
+- uid: Ubiquity.NET.Llvm.Module
+  commentId: T:Ubiquity.NET.Llvm.Module
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Ubiquity.NET.Llvm.Module
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html

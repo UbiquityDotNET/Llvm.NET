@@ -1,0 +1,221 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  id: GenericSymbolOption
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  children:
+  - Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Callable
+  - Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Exported
+  - Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.MaterializationSideEffectsOnly
+  - Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.None
+  - Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Weak
+  langs:
+  - csharp
+  - vb
+  name: GenericSymbolOption
+  nameWithType: GenericSymbolOption
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GenericSymbolOption
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+    startLine: 12
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Generic linkage flags for a symbol definition
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum GenericSymbolOption
+    content.vb: >-
+      <Flags>
+
+      Public Enum GenericSymbolOption
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.None
+  commentId: F:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.None
+  id: None
+  parent: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: GenericSymbolOption.None
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.None
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: None
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  syntax:
+    content: None = 0
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Exported
+  commentId: F:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Exported
+  id: Exported
+  parent: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  langs:
+  - csharp
+  - vb
+  name: Exported
+  nameWithType: GenericSymbolOption.Exported
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Exported
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Exported
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+    startLine: 17
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  syntax:
+    content: Exported = 1
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Weak
+  commentId: F:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Weak
+  id: Weak
+  parent: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  langs:
+  - csharp
+  - vb
+  name: Weak
+  nameWithType: GenericSymbolOption.Weak
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Weak
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Weak
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  syntax:
+    content: Weak = 2
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Callable
+  commentId: F:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Callable
+  id: Callable
+  parent: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  langs:
+  - csharp
+  - vb
+  name: Callable
+  nameWithType: GenericSymbolOption.Callable
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.Callable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Callable
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+    startLine: 19
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  syntax:
+    content: Callable = 4
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.MaterializationSideEffectsOnly
+  commentId: F:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.MaterializationSideEffectsOnly
+  id: MaterializationSideEffectsOnly
+  parent: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  langs:
+  - csharp
+  - vb
+  name: MaterializationSideEffectsOnly
+  nameWithType: GenericSymbolOption.MaterializationSideEffectsOnly
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.MaterializationSideEffectsOnly
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MaterializationSideEffectsOnly
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/Enumerations.cs
+    startLine: 20
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  syntax:
+    content: MaterializationSideEffectsOnly = 8
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+references:
+- uid: Ubiquity.NET.Llvm.OrcJITv2
+  commentId: N:Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.OrcJITv2
+  nameWithType: Ubiquity.NET.Llvm.OrcJITv2
+  fullName: Ubiquity.NET.Llvm.OrcJITv2
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+- uid: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption.html
+  name: GenericSymbolOption
+  nameWithType: GenericSymbolOption
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.GenericSymbolOption

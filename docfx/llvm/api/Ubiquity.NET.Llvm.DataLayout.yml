@@ -1,0 +1,2822 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DataLayout
+  commentId: T:Ubiquity.NET.Llvm.DataLayout
+  id: DataLayout
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  - Ubiquity.NET.Llvm.DataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.Dispose
+  - Ubiquity.NET.Llvm.DataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  - Ubiquity.NET.Llvm.DataLayout.Endianness
+  - Ubiquity.NET.Llvm.DataLayout.Equals(System.Object)
+  - Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.DataLayout)
+  - Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  - Ubiquity.NET.Llvm.DataLayout.GetHashCode
+  - Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  - Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  - Ubiquity.NET.Llvm.DataLayout.IsDisposed
+  - Ubiquity.NET.Llvm.DataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  - Ubiquity.NET.Llvm.DataLayout.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  - Ubiquity.NET.Llvm.DataLayout.PointerSize
+  - Ubiquity.NET.Llvm.DataLayout.PointerSize(System.UInt32)
+  - Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  - Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString
+  - Ubiquity.NET.Llvm.DataLayout.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  langs:
+  - csharp
+  - vb
+  name: DataLayout
+  nameWithType: DataLayout
+  fullName: Ubiquity.NET.Llvm.DataLayout
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DataLayout
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Owning implementation of <xref href="Ubiquity.NET.Llvm.IDataLayout" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public sealed class DataLayout : IDataLayout, IDisposable, IEquatable<DataLayout>, IEquatable<IDataLayout>, IUtf8SpanParsable<DataLayout>'
+    content.vb: Public NotInheritable Class DataLayout Implements IDataLayout, IDisposable, IEquatable(Of DataLayout), IEquatable(Of IDataLayout), IUtf8SpanParsable(Of DataLayout)
+  inheritance:
+  - System.Object
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout
+  - System.IDisposable
+  - System.IEquatable{Ubiquity.NET.Llvm.DataLayout}
+  - System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}
+  - System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  id: Equals(Ubiquity.NET.Llvm.IDataLayout)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: Equals(IDataLayout?)
+  nameWithType: DataLayout.Equals(IDataLayout?)
+  fullName: Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.IDataLayout?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equals
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Indicates whether the current object is equal to another object of the same type.
+  example: []
+  syntax:
+    content: public bool Equals(IDataLayout? other)
+    parameters:
+    - id: other
+      type: Ubiquity.NET.Llvm.IDataLayout
+      description: An object to compare with this object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Function Equals(other As IDataLayout) As Boolean
+  overload: Ubiquity.NET.Llvm.DataLayout.Equals*
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  nameWithType.vb: DataLayout.Equals(IDataLayout)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  name.vb: Equals(IDataLayout)
+- uid: Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.DataLayout)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.DataLayout)
+  id: Equals(Ubiquity.NET.Llvm.DataLayout)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: Equals(DataLayout?)
+  nameWithType: DataLayout.Equals(DataLayout?)
+  fullName: Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.DataLayout?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equals
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 27
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Indicates whether the current object is equal to another object of the same type.
+  example: []
+  syntax:
+    content: public bool Equals(DataLayout? other)
+    parameters:
+    - id: other
+      type: Ubiquity.NET.Llvm.DataLayout
+      description: An object to compare with this object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Function Equals(other As DataLayout) As Boolean
+  overload: Ubiquity.NET.Llvm.DataLayout.Equals*
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.DataLayout}.Equals(Ubiquity.NET.Llvm.DataLayout)
+  nameWithType.vb: DataLayout.Equals(DataLayout)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.Equals(Ubiquity.NET.Llvm.DataLayout)
+  name.vb: Equals(DataLayout)
+- uid: Ubiquity.NET.Llvm.DataLayout.Equals(System.Object)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: Equals(object?)
+  nameWithType: DataLayout.Equals(object?)
+  fullName: Ubiquity.NET.Llvm.DataLayout.Equals(object?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equals
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 32
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object? obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: Ubiquity.NET.Llvm.DataLayout.Equals*
+  nameWithType.vb: DataLayout.Equals(Object)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Ubiquity.NET.Llvm.DataLayout.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.GetHashCode
+  id: GetHashCode
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: DataLayout.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.DataLayout.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetHashCode
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: Ubiquity.NET.Llvm.DataLayout.GetHashCode*
+- uid: Ubiquity.NET.Llvm.DataLayout.PointerSize
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.PointerSize
+  id: PointerSize
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: PointerSize()
+  nameWithType: DataLayout.PointerSize()
+  fullName: Ubiquity.NET.Llvm.DataLayout.PointerSize()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PointerSize
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the size of a pointer for the default address space of the target
+  example: []
+  syntax:
+    content: public uint PointerSize()
+    return:
+      type: System.UInt32
+      description: Size of a pointer to the default address space
+    content.vb: Public Function PointerSize() As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.PointerSize*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.PointerSize
+- uid: Ubiquity.NET.Llvm.DataLayout.PointerSize(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.PointerSize(System.UInt32)
+  id: PointerSize(System.UInt32)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: PointerSize(uint)
+  nameWithType: DataLayout.PointerSize(uint)
+  fullName: Ubiquity.NET.Llvm.DataLayout.PointerSize(uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PointerSize
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the size of a pointer for a given address space of the target
+  example: []
+  syntax:
+    content: public uint PointerSize(uint addressSpace)
+    parameters:
+    - id: addressSpace
+      type: System.UInt32
+      description: Address space for the pointer
+    return:
+      type: System.UInt32
+      description: Size of a pointer
+    content.vb: Public Function PointerSize(addressSpace As UInteger) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.PointerSize*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.PointerSize(System.UInt32)
+  nameWithType.vb: DataLayout.PointerSize(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.PointerSize(UInteger)
+  name.vb: PointerSize(UInteger)
+- uid: Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  id: IntPtrType(Ubiquity.NET.Llvm.IContext)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: IntPtrType(IContext)
+  nameWithType: DataLayout.IntPtrType(IContext)
+  fullName: Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IntPtrType
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves an LLVM integer type with the same bit width as a pointer for the default address space of the target
+  example: []
+  syntax:
+    content: public ITypeRef IntPtrType(IContext context)
+    parameters:
+    - id: context
+      type: Ubiquity.NET.Llvm.IContext
+      description: LLVM <xref href="Ubiquity.NET.Llvm.IContext" data-throw-if-not-resolved="false"></xref> that owns the definition of the pointer type to retrieve
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Integer type matching the bit width of a native pointer in the target's default address space
+    content.vb: Public Function IntPtrType(context As IContext) As ITypeRef
+  overload: Ubiquity.NET.Llvm.DataLayout.IntPtrType*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+- uid: Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  id: IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: IntPtrType(IContext, uint)
+  nameWithType: DataLayout.IntPtrType(IContext, uint)
+  fullName: Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext, uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IntPtrType
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: >-
+    Retrieves an LLVM integer type with the same bit width as
+        a pointer for the given address space of the target
+  example: []
+  syntax:
+    content: public ITypeRef IntPtrType(IContext context, uint addressSpace)
+    parameters:
+    - id: context
+      type: Ubiquity.NET.Llvm.IContext
+      description: LLVM <xref href="Ubiquity.NET.Llvm.IContext" data-throw-if-not-resolved="false"></xref> that owns the definition of the pointer type to retrieve
+    - id: addressSpace
+      type: System.UInt32
+      description: Address space for the pointer
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Integer type matching the bit width of a native pointer in the target's address space
+    content.vb: Public Function IntPtrType(context As IContext, addressSpace As UInteger) As ITypeRef
+  overload: Ubiquity.NET.Llvm.DataLayout.IntPtrType*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  nameWithType.vb: DataLayout.IntPtrType(IContext, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext, UInteger)
+  name.vb: IntPtrType(IContext, UInteger)
+- uid: Ubiquity.NET.Llvm.DataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: BitSizeOf(ITypeRef)
+  nameWithType: DataLayout.BitSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BitSizeOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Returns the number of bits necessary to hold the specified type.
+  remarks: >-
+    <p>This method determines the bit size of a type (e.g. the minimum number of
+
+    bits required to represent any value of the given type.) This is distinct from the storage
+
+    and stack size due to various target alignment requirements.</p>
+  example: []
+  syntax:
+    content: public ulong BitSizeOf(ITypeRef typeRef)
+    parameters:
+    - id: typeRef
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to retrieve the size of
+    return:
+      type: System.UInt64
+      description: Size of the type in bits
+    content.vb: Public Function BitSizeOf(typeRef As ITypeRef) As ULong
+  overload: Ubiquity.NET.Llvm.DataLayout.BitSizeOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: StoreSizeOf(ITypeRef)
+  nameWithType: DataLayout.StoreSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StoreSizeOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the number of bits required to store a value of the given type
+  remarks: >-
+    This method retrieves the storage size in bits of a given type. The storage size
+        includes any trailing padding bits that may be needed if the target requires reading a wider
+        word size. (e.g. most systems can't write a single bit value for an LLVM i1, thus the
+        storage size is whatever the minimum number of bits that the target requires to store a value
+        of the given type)
+  example: []
+  syntax:
+    content: public ulong StoreSizeOf(ITypeRef typeRef)
+    parameters:
+    - id: typeRef
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to retrieve the storage size of
+    return:
+      type: System.UInt64
+      description: Number of bits required to store a value of the given type in the target
+    content.vb: Public Function StoreSizeOf(typeRef As ITypeRef) As ULong
+  overload: Ubiquity.NET.Llvm.DataLayout.StoreSizeOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: AbiSizeOf(ITypeRef)
+  nameWithType: DataLayout.AbiSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AbiSizeOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 61
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the ABI specified size of the given type
+  remarks: >-
+    Returns the offset in bytes between successive objects of the
+
+    specified type, including alignment padding
+  example: []
+  syntax:
+    content: public ulong AbiSizeOf(ITypeRef typeRef)
+    parameters:
+    - id: typeRef
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to get the size from
+    return:
+      type: System.UInt64
+      description: Size of the type
+    content.vb: Public Function AbiSizeOf(typeRef As ITypeRef) As ULong
+  overload: Ubiquity.NET.Llvm.DataLayout.AbiSizeOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: AbiAlignmentOf(ITypeRef)
+  nameWithType: DataLayout.AbiAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AbiAlignmentOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 64
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the ABI specified alignment, in bytes, for a specified type
+  example: []
+  syntax:
+    content: public uint AbiAlignmentOf(ITypeRef typeRef)
+    parameters:
+    - id: typeRef
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to get the alignment for
+    return:
+      type: System.UInt32
+      description: ABI specified alignment
+    content.vb: Public Function AbiAlignmentOf(typeRef As ITypeRef) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: CallFrameAlignmentOf(ITypeRef)
+  nameWithType: DataLayout.CallFrameAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CallFrameAlignmentOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 67
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the call frame alignment for a given type
+  example: []
+  syntax:
+    content: public uint CallFrameAlignmentOf(ITypeRef typeRef)
+    parameters:
+    - id: typeRef
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: type to get the alignment of
+    return:
+      type: System.UInt32
+      description: Alignment for the type
+    content.vb: Public Function CallFrameAlignmentOf(typeRef As ITypeRef) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: PreferredAlignmentOf(ITypeRef)
+  nameWithType: DataLayout.PreferredAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PreferredAlignmentOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 70
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the preferred alignment for an LLVM type
+  example: []
+  syntax:
+    content: public uint PreferredAlignmentOf(ITypeRef typeRef)
+    parameters:
+    - id: typeRef
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to get the alignment of
+    return:
+      type: System.UInt32
+      description: Preferred alignment
+    content.vb: Public Function PreferredAlignmentOf(typeRef As ITypeRef) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  id: PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: PreferredAlignmentOf(Value)
+  nameWithType: DataLayout.PreferredAlignmentOf(Value)
+  fullName: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PreferredAlignmentOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 73
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the preferred alignment for a <xref href="Ubiquity.NET.Llvm.Values.Value" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public uint PreferredAlignmentOf(Value value)
+    parameters:
+    - id: value
+      type: Ubiquity.NET.Llvm.Values.Value
+      description: Value to get the alignment of
+    return:
+      type: System.UInt32
+      description: Preferred alignment
+    content.vb: Public Function PreferredAlignmentOf(value As Value) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+- uid: Ubiquity.NET.Llvm.DataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  id: ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: ElementAtOffset(IStructType, ulong)
+  nameWithType: DataLayout.ElementAtOffset(IStructType, ulong)
+  fullName: Ubiquity.NET.Llvm.DataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType, ulong)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ElementAtOffset
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 76
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the element index for a specific offset in a given structure
+  example: []
+  syntax:
+    content: public uint ElementAtOffset(IStructType structType, ulong offset)
+    parameters:
+    - id: structType
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: Type of the structure
+    - id: offset
+      type: System.UInt64
+      description: Offset to determine the index of
+    return:
+      type: System.UInt32
+      description: Index of the element
+    content.vb: Public Function ElementAtOffset(structType As IStructType, offset As ULong) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.ElementAtOffset*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  nameWithType.vb: DataLayout.ElementAtOffset(IStructType, ULong)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType, ULong)
+  name.vb: ElementAtOffset(IStructType, ULong)
+- uid: Ubiquity.NET.Llvm.DataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  id: OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: OffsetOfElement(IStructType, uint)
+  nameWithType: DataLayout.OffsetOfElement(IStructType, uint)
+  fullName: Ubiquity.NET.Llvm.DataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OffsetOfElement
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 79
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the offset of an element in a structure
+  example: []
+  syntax:
+    content: public ulong OffsetOfElement(IStructType structType, uint element)
+    parameters:
+    - id: structType
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: Type of the structure
+    - id: element
+      type: System.UInt32
+      description: index of the element in the structure
+    return:
+      type: System.UInt64
+      description: Offset of the element from the beginning of the structure
+    content.vb: Public Function OffsetOfElement(structType As IStructType, element As UInteger) As ULong
+  overload: Ubiquity.NET.Llvm.DataLayout.OffsetOfElement*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  nameWithType.vb: DataLayout.OffsetOfElement(IStructType, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, UInteger)
+  name.vb: OffsetOfElement(IStructType, UInteger)
+- uid: Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString
+  id: ToLazyEncodedString
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: ToLazyEncodedString()
+  nameWithType: DataLayout.ToLazyEncodedString()
+  fullName: Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ToLazyEncodedString
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 82
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the string representation of this data layout as a <xref href="Ubiquity.NET.InteropHelpers.LazyEncodedString" data-throw-if-not-resolved="false"></xref>
+  remarks: >-
+    The returned <xref href="Ubiquity.NET.InteropHelpers.LazyEncodedString" data-throw-if-not-resolved="false"></xref> retains a copy of the native code form of the string.
+
+    This value is ONLY marshalled to a managed string when needed (and only once, it is cached). This
+
+    behavior allows for lower overhead re-use of this string in additional APIs as NO marshalling
+
+    needs to occur. This does have the overhead of making a copy of the strings contents as the
+
+    lifetime of the underlying native string is generally unknown and thus not reliable.
+  example: []
+  syntax:
+    content: public LazyEncodedString ToLazyEncodedString()
+    return:
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+      description: Representation of the data layout
+    content.vb: Public Function ToLazyEncodedString() As LazyEncodedString
+  overload: Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString
+- uid: Ubiquity.NET.Llvm.DataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: ByteSizeOf(ITypeRef)
+  nameWithType: DataLayout.ByteSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ByteSizeOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 85
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the byte size of a type
+  example: []
+  syntax:
+    content: public ulong ByteSizeOf(ITypeRef llvmType)
+    parameters:
+    - id: llvmType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to determine the size of
+    return:
+      type: System.UInt64
+      description: Size of the type in bytes
+    content.vb: Public Function ByteSizeOf(llvmType As ITypeRef) As ULong
+  overload: Ubiquity.NET.Llvm.DataLayout.ByteSizeOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: PreferredBitAlignmentOf(ITypeRef)
+  nameWithType: DataLayout.PreferredBitAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PreferredBitAlignmentOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 88
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the preferred alignment of the type in bits
+  example: []
+  syntax:
+    content: public uint PreferredBitAlignmentOf(ITypeRef llvmType)
+    parameters:
+    - id: llvmType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to get the alignment of
+    return:
+      type: System.UInt32
+      description: Alignment of the type
+    content.vb: Public Function PreferredBitAlignmentOf(llvmType As ITypeRef) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  id: AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: AbiBitAlignmentOf(ITypeRef)
+  nameWithType: DataLayout.AbiBitAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AbiBitAlignmentOf
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 91
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the ABI alignment of the type in bits
+  example: []
+  syntax:
+    content: public uint AbiBitAlignmentOf(ITypeRef llvmType)
+    parameters:
+    - id: llvmType
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+      description: Type to get the alignment of
+    return:
+      type: System.UInt32
+      description: Alignment of the type
+    content.vb: Public Function AbiBitAlignmentOf(llvmType As ITypeRef) As UInteger
+  overload: Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  id: BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: BitOffsetOfElement(IStructType, uint)
+  nameWithType: DataLayout.BitOffsetOfElement(IStructType, uint)
+  fullName: Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BitOffsetOfElement
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 94
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the offset of a structure element in bits
+  example: []
+  syntax:
+    content: public ulong BitOffsetOfElement(IStructType llvmType, uint element)
+    parameters:
+    - id: llvmType
+      type: Ubiquity.NET.Llvm.Types.IStructType
+      description: Structure type to get the element offset of
+    - id: element
+      type: System.UInt32
+      description: Index of the element in the structure
+    return:
+      type: System.UInt64
+      description: Offset of the element in bits
+    content.vb: Public Function BitOffsetOfElement(llvmType As IStructType, element As UInteger) As ULong
+  overload: Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  nameWithType.vb: DataLayout.BitOffsetOfElement(IStructType, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, UInteger)
+  name.vb: BitOffsetOfElement(IStructType, UInteger)
+- uid: Ubiquity.NET.Llvm.DataLayout.Endianness
+  commentId: P:Ubiquity.NET.Llvm.DataLayout.Endianness
+  id: Endianness
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: Endianness
+  nameWithType: DataLayout.Endianness
+  fullName: Ubiquity.NET.Llvm.DataLayout.Endianness
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Endianness
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 97
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the byte ordering for this target
+  example: []
+  syntax:
+    content: public ByteOrdering Endianness { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.ByteOrdering
+    content.vb: Public ReadOnly Property Endianness As ByteOrdering
+  overload: Ubiquity.NET.Llvm.DataLayout.Endianness*
+  implements:
+  - Ubiquity.NET.Llvm.IDataLayout.Endianness
+- uid: Ubiquity.NET.Llvm.DataLayout.IsDisposed
+  commentId: P:Ubiquity.NET.Llvm.DataLayout.IsDisposed
+  id: IsDisposed
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: IsDisposed
+  nameWithType: DataLayout.IsDisposed
+  fullName: Ubiquity.NET.Llvm.DataLayout.IsDisposed
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsDisposed
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 101
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets a value indicating whether this instance is already disposed
+  example: []
+  syntax:
+    content: public bool IsDisposed { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDisposed As Boolean
+  overload: Ubiquity.NET.Llvm.DataLayout.IsDisposed*
+- uid: Ubiquity.NET.Llvm.DataLayout.Dispose
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.Dispose
+  id: Dispose
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: DataLayout.Dispose()
+  fullName: Ubiquity.NET.Llvm.DataLayout.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Dispose
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 104
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Ubiquity.NET.Llvm.DataLayout.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: Ubiquity.NET.Llvm.DataLayout.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  id: Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: Parse(ReadOnlySpan<byte>, IFormatProvider?)
+  nameWithType: DataLayout.Parse(ReadOnlySpan<byte>, IFormatProvider?)
+  fullName: Ubiquity.NET.Llvm.DataLayout.Parse(System.ReadOnlySpan<byte>, System.IFormatProvider?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Parse
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 110
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Parses a span of UTF-8 characters into a value.
+  example: []
+  syntax:
+    content: public static DataLayout Parse(ReadOnlySpan<byte> utf8Text, IFormatProvider? provider)
+    parameters:
+    - id: utf8Text
+      type: System.ReadOnlySpan{System.Byte}
+      description: The span of UTF-8 characters to parse.
+    - id: provider
+      type: System.IFormatProvider
+      description: An object that provides culture-specific formatting information about <code class="paramref">utf8Text</code>.
+    return:
+      type: Ubiquity.NET.Llvm.DataLayout
+      description: The result of parsing <code class="paramref">utf8Text</code>.
+    content.vb: Public Shared Function Parse(utf8Text As ReadOnlySpan(Of Byte), provider As IFormatProvider) As DataLayout
+  overload: Ubiquity.NET.Llvm.DataLayout.Parse*
+  exceptions:
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: <code class="paramref">utf8Text</code> is not in the correct format.
+  - type: System.OverflowException
+    commentId: T:System.OverflowException
+    description: <code class="paramref">utf8Text</code> is not representable by <xref href="Ubiquity.NET.Llvm.DataLayout" data-throw-if-not-resolved="false"></xref>.
+  implements:
+  - System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  nameWithType.vb: DataLayout.Parse(ReadOnlySpan(Of Byte), IFormatProvider)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.Parse(System.ReadOnlySpan(Of Byte), System.IFormatProvider)
+  name.vb: Parse(ReadOnlySpan(Of Byte), IFormatProvider)
+- uid: Ubiquity.NET.Llvm.DataLayout.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  commentId: M:Ubiquity.NET.Llvm.DataLayout.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  id: TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  parent: Ubiquity.NET.Llvm.DataLayout
+  langs:
+  - csharp
+  - vb
+  name: TryParse(ReadOnlySpan<byte>, IFormatProvider?, out DataLayout)
+  nameWithType: DataLayout.TryParse(ReadOnlySpan<byte>, IFormatProvider?, out DataLayout)
+  fullName: Ubiquity.NET.Llvm.DataLayout.TryParse(System.ReadOnlySpan<byte>, System.IFormatProvider?, out Ubiquity.NET.Llvm.DataLayout)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DataLayout.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TryParse
+    path: ../src/Ubiquity.NET.Llvm/DataLayout.cs
+    startLine: 125
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Tries to parse a span of UTF-8 characters into a value.
+  example: []
+  syntax:
+    content: public static bool TryParse(ReadOnlySpan<byte> utf8Text, IFormatProvider? provider, out DataLayout result)
+    parameters:
+    - id: utf8Text
+      type: System.ReadOnlySpan{System.Byte}
+      description: The span of UTF-8 characters to parse.
+    - id: provider
+      type: System.IFormatProvider
+      description: An object that provides culture-specific formatting information about <code class="paramref">utf8Text</code>.
+    - id: result
+      type: Ubiquity.NET.Llvm.DataLayout
+      description: On return, contains the result of successfully parsing <code class="paramref">utf8Text</code> or an undefined value on failure.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">utf8Text</code> was successfully parsed; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Shared Function TryParse(utf8Text As ReadOnlySpan(Of Byte), provider As IFormatProvider, result As DataLayout) As Boolean
+  overload: Ubiquity.NET.Llvm.DataLayout.TryParse*
+  implements:
+  - System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  nameWithType.vb: DataLayout.TryParse(ReadOnlySpan(Of Byte), IFormatProvider, DataLayout)
+  fullName.vb: Ubiquity.NET.Llvm.DataLayout.TryParse(System.ReadOnlySpan(Of Byte), System.IFormatProvider, Ubiquity.NET.Llvm.DataLayout)
+  name.vb: TryParse(ReadOnlySpan(Of Byte), IFormatProvider, DataLayout)
+references:
+- uid: Ubiquity.NET.Llvm.IDataLayout
+  commentId: T:Ubiquity.NET.Llvm.IDataLayout
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IDataLayout.html
+  name: IDataLayout
+  nameWithType: IDataLayout
+  fullName: Ubiquity.NET.Llvm.IDataLayout
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.IEquatable{Ubiquity.NET.Llvm.DataLayout}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.DataLayout}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<DataLayout>
+  nameWithType: IEquatable<DataLayout>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.DataLayout>
+  nameWithType.vb: IEquatable(Of DataLayout)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.DataLayout)
+  name.vb: IEquatable(Of DataLayout)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: )
+- uid: System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<IDataLayout>
+  nameWithType: IEquatable<IDataLayout>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.IDataLayout>
+  nameWithType.vb: IEquatable(Of IDataLayout)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.IDataLayout)
+  name.vb: IEquatable(Of IDataLayout)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.IDataLayout
+    name: IDataLayout
+    href: Ubiquity.NET.Llvm.IDataLayout.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.IDataLayout
+    name: IDataLayout
+    href: Ubiquity.NET.Llvm.IDataLayout.html
+  - name: )
+- uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}
+  commentId: T:System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}
+  parent: System
+  definition: System.IUtf8SpanParsable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1
+  name: IUtf8SpanParsable<DataLayout>
+  nameWithType: IUtf8SpanParsable<DataLayout>
+  fullName: System.IUtf8SpanParsable<Ubiquity.NET.Llvm.DataLayout>
+  nameWithType.vb: IUtf8SpanParsable(Of DataLayout)
+  fullName.vb: System.IUtf8SpanParsable(Of Ubiquity.NET.Llvm.DataLayout)
+  name.vb: IUtf8SpanParsable(Of DataLayout)
+  spec.csharp:
+  - uid: System.IUtf8SpanParsable`1
+    name: IUtf8SpanParsable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IUtf8SpanParsable`1
+    name: IUtf8SpanParsable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.IUtf8SpanParsable`1
+  commentId: T:System.IUtf8SpanParsable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1
+  name: IUtf8SpanParsable<TSelf>
+  nameWithType: IUtf8SpanParsable<TSelf>
+  fullName: System.IUtf8SpanParsable<TSelf>
+  nameWithType.vb: IUtf8SpanParsable(Of TSelf)
+  fullName.vb: System.IUtf8SpanParsable(Of TSelf)
+  name.vb: IUtf8SpanParsable(Of TSelf)
+  spec.csharp:
+  - uid: System.IUtf8SpanParsable`1
+    name: IUtf8SpanParsable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1
+  - name: <
+  - name: TSelf
+  - name: '>'
+  spec.vb:
+  - uid: System.IUtf8SpanParsable`1
+    name: IUtf8SpanParsable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TSelf
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.Equals*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.Equals
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_Equals_Ubiquity_NET_Llvm_IDataLayout_
+  name: Equals
+  nameWithType: DataLayout.Equals
+  fullName: Ubiquity.NET.Llvm.DataLayout.Equals
+- uid: System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  commentId: M:System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  parent: System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(IDataLayout)
+  nameWithType: IEquatable<IDataLayout>.Equals(IDataLayout)
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.IDataLayout>.Equals(Ubiquity.NET.Llvm.IDataLayout)
+  nameWithType.vb: IEquatable(Of IDataLayout).Equals(IDataLayout)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.IDataLayout).Equals(Ubiquity.NET.Llvm.IDataLayout)
+  spec.csharp:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}.Equals(Ubiquity.NET.Llvm.IDataLayout)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.IDataLayout
+    name: IDataLayout
+    href: Ubiquity.NET.Llvm.IDataLayout.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.IDataLayout}.Equals(Ubiquity.NET.Llvm.IDataLayout)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.IDataLayout
+    name: IDataLayout
+    href: Ubiquity.NET.Llvm.IDataLayout.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.IEquatable{Ubiquity.NET.Llvm.DataLayout}.Equals(Ubiquity.NET.Llvm.DataLayout)
+  commentId: M:System.IEquatable{Ubiquity.NET.Llvm.DataLayout}.Equals(Ubiquity.NET.Llvm.DataLayout)
+  parent: System.IEquatable{Ubiquity.NET.Llvm.DataLayout}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(DataLayout)
+  nameWithType: IEquatable<DataLayout>.Equals(DataLayout)
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.DataLayout>.Equals(Ubiquity.NET.Llvm.DataLayout)
+  nameWithType.vb: IEquatable(Of DataLayout).Equals(DataLayout)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.DataLayout).Equals(Ubiquity.NET.Llvm.DataLayout)
+  spec.csharp:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.DataLayout}.Equals(Ubiquity.NET.Llvm.DataLayout)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.DataLayout}.Equals(Ubiquity.NET.Llvm.DataLayout)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout
+  commentId: T:Ubiquity.NET.Llvm.DataLayout
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.DataLayout.html
+  name: DataLayout
+  nameWithType: DataLayout
+  fullName: Ubiquity.NET.Llvm.DataLayout
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.GetHashCode*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.GetHashCode
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_GetHashCode
+  name: GetHashCode
+  nameWithType: DataLayout.GetHashCode
+  fullName: Ubiquity.NET.Llvm.DataLayout.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubiquity.NET.Llvm.DataLayout.PointerSize*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.PointerSize
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_PointerSize
+  name: PointerSize
+  nameWithType: DataLayout.PointerSize
+  fullName: Ubiquity.NET.Llvm.DataLayout.PointerSize
+- uid: Ubiquity.NET.Llvm.IDataLayout.PointerSize
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.PointerSize
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize
+  name: PointerSize()
+  nameWithType: IDataLayout.PointerSize()
+  fullName: Ubiquity.NET.Llvm.IDataLayout.PointerSize()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PointerSize
+    name: PointerSize
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PointerSize
+    name: PointerSize
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize
+  - name: (
+  - name: )
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Ubiquity.NET.Llvm.IDataLayout.PointerSize(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.PointerSize(System.UInt32)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  isExternal: true
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize_System_UInt32_
+  name: PointerSize(uint)
+  nameWithType: IDataLayout.PointerSize(uint)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.PointerSize(uint)
+  nameWithType.vb: IDataLayout.PointerSize(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.IDataLayout.PointerSize(UInteger)
+  name.vb: PointerSize(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PointerSize(System.UInt32)
+    name: PointerSize
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PointerSize(System.UInt32)
+    name: PointerSize
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.IContext
+  commentId: T:Ubiquity.NET.Llvm.IContext
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IContext.html
+  name: IContext
+  nameWithType: IContext
+  fullName: Ubiquity.NET.Llvm.IContext
+- uid: Ubiquity.NET.Llvm.DataLayout.IntPtrType*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.IntPtrType
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_
+  name: IntPtrType
+  nameWithType: DataLayout.IntPtrType
+  fullName: Ubiquity.NET.Llvm.DataLayout.IntPtrType
+- uid: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_
+  name: IntPtrType(IContext)
+  nameWithType: IDataLayout.IntPtrType(IContext)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+    name: IntPtrType
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.IContext
+    name: IContext
+    href: Ubiquity.NET.Llvm.IContext.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext)
+    name: IntPtrType
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.IContext
+    name: IContext
+    href: Ubiquity.NET.Llvm.IContext.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef
+  commentId: T:Ubiquity.NET.Llvm.Types.ITypeRef
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  name: ITypeRef
+  nameWithType: ITypeRef
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  isExternal: true
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_System_UInt32_
+  name: IntPtrType(IContext, uint)
+  nameWithType: IDataLayout.IntPtrType(IContext, uint)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext, uint)
+  nameWithType.vb: IDataLayout.IntPtrType(IContext, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext, UInteger)
+  name.vb: IntPtrType(IContext, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+    name: IntPtrType
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.IContext
+    name: IContext
+    href: Ubiquity.NET.Llvm.IContext.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.IntPtrType(Ubiquity.NET.Llvm.IContext,System.UInt32)
+    name: IntPtrType
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.IContext
+    name: IContext
+    href: Ubiquity.NET.Llvm.IContext.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.BitSizeOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.BitSizeOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_BitSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: BitSizeOf
+  nameWithType: DataLayout.BitSizeOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.BitSizeOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_BitSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: BitSizeOf(ITypeRef)
+  nameWithType: IDataLayout.BitSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: BitSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_BitSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.BitSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: BitSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_BitSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Ubiquity.NET.Llvm.DataLayout.StoreSizeOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.StoreSizeOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_StoreSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: StoreSizeOf
+  nameWithType: DataLayout.StoreSizeOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.StoreSizeOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_StoreSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: StoreSizeOf(ITypeRef)
+  nameWithType: IDataLayout.StoreSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: StoreSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_StoreSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: StoreSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_StoreSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.AbiSizeOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.AbiSizeOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AbiSizeOf
+  nameWithType: DataLayout.AbiSizeOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.AbiSizeOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AbiSizeOf(ITypeRef)
+  nameWithType: IDataLayout.AbiSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AbiSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AbiSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_AbiAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AbiAlignmentOf
+  nameWithType: DataLayout.AbiAlignmentOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AbiAlignmentOf(ITypeRef)
+  nameWithType: IDataLayout.AbiAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AbiAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AbiAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: CallFrameAlignmentOf
+  nameWithType: DataLayout.CallFrameAlignmentOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: CallFrameAlignmentOf(ITypeRef)
+  nameWithType: IDataLayout.CallFrameAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: CallFrameAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: CallFrameAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: PreferredAlignmentOf
+  nameWithType: DataLayout.PreferredAlignmentOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: PreferredAlignmentOf(ITypeRef)
+  nameWithType: IDataLayout.PreferredAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: PreferredAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: PreferredAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Value
+  commentId: T:Ubiquity.NET.Llvm.Values.Value
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Value.html
+  name: Value
+  nameWithType: Value
+  fullName: Ubiquity.NET.Llvm.Values.Value
+- uid: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Values_Value_
+  name: PreferredAlignmentOf(Value)
+  nameWithType: IDataLayout.PreferredAlignmentOf(Value)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+    name: PreferredAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Values_Value_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf(Ubiquity.NET.Llvm.Values.Value)
+    name: PreferredAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Values_Value_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.DataLayout.ElementAtOffset*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.ElementAtOffset
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_ElementAtOffset_Ubiquity_NET_Llvm_Types_IStructType_System_UInt64_
+  name: ElementAtOffset
+  nameWithType: DataLayout.ElementAtOffset
+  fullName: Ubiquity.NET.Llvm.DataLayout.ElementAtOffset
+- uid: Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  isExternal: true
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ElementAtOffset_Ubiquity_NET_Llvm_Types_IStructType_System_UInt64_
+  name: ElementAtOffset(IStructType, ulong)
+  nameWithType: IDataLayout.ElementAtOffset(IStructType, ulong)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType, ulong)
+  nameWithType.vb: IDataLayout.ElementAtOffset(IStructType, ULong)
+  fullName.vb: Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType, ULong)
+  name.vb: ElementAtOffset(IStructType, ULong)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+    name: ElementAtOffset
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ElementAtOffset_Ubiquity_NET_Llvm_Types_IStructType_System_UInt64_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.IStructType
+    name: IStructType
+    href: Ubiquity.NET.Llvm.Types.IStructType.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint64
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset(Ubiquity.NET.Llvm.Types.IStructType,System.UInt64)
+    name: ElementAtOffset
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ElementAtOffset_Ubiquity_NET_Llvm_Types_IStructType_System_UInt64_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.IStructType
+    name: IStructType
+    href: Ubiquity.NET.Llvm.Types.IStructType.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint64
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.IStructType
+  commentId: T:Ubiquity.NET.Llvm.Types.IStructType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IStructType.html
+  name: IStructType
+  nameWithType: IStructType
+  fullName: Ubiquity.NET.Llvm.Types.IStructType
+- uid: Ubiquity.NET.Llvm.DataLayout.OffsetOfElement*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.OffsetOfElement
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_OffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  name: OffsetOfElement
+  nameWithType: DataLayout.OffsetOfElement
+  fullName: Ubiquity.NET.Llvm.DataLayout.OffsetOfElement
+- uid: Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  isExternal: true
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_OffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  name: OffsetOfElement(IStructType, uint)
+  nameWithType: IDataLayout.OffsetOfElement(IStructType, uint)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, uint)
+  nameWithType.vb: IDataLayout.OffsetOfElement(IStructType, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, UInteger)
+  name.vb: OffsetOfElement(IStructType, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+    name: OffsetOfElement
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_OffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.IStructType
+    name: IStructType
+    href: Ubiquity.NET.Llvm.Types.IStructType.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+    name: OffsetOfElement
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_OffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.IStructType
+    name: IStructType
+    href: Ubiquity.NET.Llvm.Types.IStructType.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.InteropHelpers.LazyEncodedString
+  commentId: T:Ubiquity.NET.InteropHelpers.LazyEncodedString
+  parent: Ubiquity.NET.InteropHelpers
+  name: LazyEncodedString
+  nameWithType: LazyEncodedString
+  fullName: Ubiquity.NET.InteropHelpers.LazyEncodedString
+- uid: Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_ToLazyEncodedString
+  name: ToLazyEncodedString
+  nameWithType: DataLayout.ToLazyEncodedString
+  fullName: Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString
+- uid: Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ToLazyEncodedString
+  name: ToLazyEncodedString()
+  nameWithType: IDataLayout.ToLazyEncodedString()
+  fullName: Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString
+    name: ToLazyEncodedString
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ToLazyEncodedString
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString
+    name: ToLazyEncodedString
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ToLazyEncodedString
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.InteropHelpers
+  commentId: N:Ubiquity.NET.InteropHelpers
+  name: Ubiquity.NET.InteropHelpers
+  nameWithType: Ubiquity.NET.InteropHelpers
+  fullName: Ubiquity.NET.InteropHelpers
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+- uid: Ubiquity.NET.Llvm.DataLayout.ByteSizeOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.ByteSizeOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_ByteSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: ByteSizeOf
+  nameWithType: DataLayout.ByteSizeOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.ByteSizeOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ByteSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: ByteSizeOf(ITypeRef)
+  nameWithType: IDataLayout.ByteSizeOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: ByteSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ByteSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: ByteSizeOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_ByteSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_PreferredBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: PreferredBitAlignmentOf
+  nameWithType: DataLayout.PreferredBitAlignmentOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: PreferredBitAlignmentOf(ITypeRef)
+  nameWithType: IDataLayout.PreferredBitAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: PreferredBitAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: PreferredBitAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_PreferredBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_AbiBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AbiBitAlignmentOf
+  nameWithType: DataLayout.AbiBitAlignmentOf
+  fullName: Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf
+- uid: Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AbiBitAlignmentOf(ITypeRef)
+  nameWithType: IDataLayout.AbiBitAlignmentOf(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AbiBitAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AbiBitAlignmentOf
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_AbiBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_BitOffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  name: BitOffsetOfElement
+  nameWithType: DataLayout.BitOffsetOfElement
+  fullName: Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement
+- uid: Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  isExternal: true
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_BitOffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  name: BitOffsetOfElement(IStructType, uint)
+  nameWithType: IDataLayout.BitOffsetOfElement(IStructType, uint)
+  fullName: Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, uint)
+  nameWithType.vb: IDataLayout.BitOffsetOfElement(IStructType, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType, UInteger)
+  name.vb: BitOffsetOfElement(IStructType, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+    name: BitOffsetOfElement
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_BitOffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.IStructType
+    name: IStructType
+    href: Ubiquity.NET.Llvm.Types.IStructType.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement(Ubiquity.NET.Llvm.Types.IStructType,System.UInt32)
+    name: BitOffsetOfElement
+    href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_BitOffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.IStructType
+    name: IStructType
+    href: Ubiquity.NET.Llvm.Types.IStructType.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.Endianness*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.Endianness
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_Endianness
+  name: Endianness
+  nameWithType: DataLayout.Endianness
+  fullName: Ubiquity.NET.Llvm.DataLayout.Endianness
+- uid: Ubiquity.NET.Llvm.IDataLayout.Endianness
+  commentId: P:Ubiquity.NET.Llvm.IDataLayout.Endianness
+  parent: Ubiquity.NET.Llvm.IDataLayout
+  href: Ubiquity.NET.Llvm.IDataLayout.html#Ubiquity_NET_Llvm_IDataLayout_Endianness
+  name: Endianness
+  nameWithType: IDataLayout.Endianness
+  fullName: Ubiquity.NET.Llvm.IDataLayout.Endianness
+- uid: Ubiquity.NET.Llvm.ByteOrdering
+  commentId: T:Ubiquity.NET.Llvm.ByteOrdering
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ByteOrdering.html
+  name: ByteOrdering
+  nameWithType: ByteOrdering
+  fullName: Ubiquity.NET.Llvm.ByteOrdering
+- uid: Ubiquity.NET.Llvm.DataLayout.IsDisposed*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.IsDisposed
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_IsDisposed
+  name: IsDisposed
+  nameWithType: DataLayout.IsDisposed
+  fullName: Ubiquity.NET.Llvm.DataLayout.IsDisposed
+- uid: Ubiquity.NET.Llvm.DataLayout.Dispose*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.Dispose
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_Dispose
+  name: Dispose
+  nameWithType: DataLayout.Dispose
+  fullName: Ubiquity.NET.Llvm.DataLayout.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: System.FormatException
+  commentId: T:System.FormatException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.formatexception
+  name: FormatException
+  nameWithType: FormatException
+  fullName: System.FormatException
+- uid: System.OverflowException
+  commentId: T:System.OverflowException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.overflowexception
+  name: OverflowException
+  nameWithType: OverflowException
+  fullName: System.OverflowException
+- uid: Ubiquity.NET.Llvm.DataLayout.Parse*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.Parse
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_Parse_System_ReadOnlySpan_System_Byte__System_IFormatProvider_
+  name: Parse
+  nameWithType: DataLayout.Parse
+  fullName: Ubiquity.NET.Llvm.DataLayout.Parse
+- uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  commentId: M:System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  parent: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}
+  definition: System.IUtf8SpanParsable`1.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.parse
+  name: Parse(ReadOnlySpan<byte>, IFormatProvider)
+  nameWithType: IUtf8SpanParsable<DataLayout>.Parse(ReadOnlySpan<byte>, IFormatProvider)
+  fullName: System.IUtf8SpanParsable<Ubiquity.NET.Llvm.DataLayout>.Parse(System.ReadOnlySpan<byte>, System.IFormatProvider)
+  nameWithType.vb: IUtf8SpanParsable(Of DataLayout).Parse(ReadOnlySpan(Of Byte), IFormatProvider)
+  fullName.vb: System.IUtf8SpanParsable(Of Ubiquity.NET.Llvm.DataLayout).Parse(System.ReadOnlySpan(Of Byte), System.IFormatProvider)
+  name.vb: Parse(ReadOnlySpan(Of Byte), IFormatProvider)
+  spec.csharp:
+  - uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+    name: Parse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.parse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: )
+  spec.vb:
+  - uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+    name: Parse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.parse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: )
+- uid: System.ReadOnlySpan{System.Byte}
+  commentId: T:System.ReadOnlySpan{System.Byte}
+  parent: System
+  definition: System.ReadOnlySpan`1
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<byte>
+  nameWithType: ReadOnlySpan<byte>
+  fullName: System.ReadOnlySpan<byte>
+  nameWithType.vb: ReadOnlySpan(Of Byte)
+  fullName.vb: System.ReadOnlySpan(Of Byte)
+  name.vb: ReadOnlySpan(Of Byte)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+- uid: System.IFormatProvider
+  commentId: T:System.IFormatProvider
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  name: IFormatProvider
+  nameWithType: IFormatProvider
+  fullName: System.IFormatProvider
+- uid: System.IUtf8SpanParsable`1.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  commentId: M:System.IUtf8SpanParsable`1.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.parse
+  name: Parse(ReadOnlySpan<byte>, IFormatProvider)
+  nameWithType: IUtf8SpanParsable<TSelf>.Parse(ReadOnlySpan<byte>, IFormatProvider)
+  fullName: System.IUtf8SpanParsable<TSelf>.Parse(System.ReadOnlySpan<byte>, System.IFormatProvider)
+  nameWithType.vb: IUtf8SpanParsable(Of TSelf).Parse(ReadOnlySpan(Of Byte), IFormatProvider)
+  fullName.vb: System.IUtf8SpanParsable(Of TSelf).Parse(System.ReadOnlySpan(Of Byte), System.IFormatProvider)
+  name.vb: Parse(ReadOnlySpan(Of Byte), IFormatProvider)
+  spec.csharp:
+  - uid: System.IUtf8SpanParsable`1.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+    name: Parse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.parse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: )
+  spec.vb:
+  - uid: System.IUtf8SpanParsable`1.Parse(System.ReadOnlySpan{System.Byte},System.IFormatProvider)
+    name: Parse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.parse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: )
+- uid: System.ReadOnlySpan`1
+  commentId: T:System.ReadOnlySpan`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<T>
+  nameWithType: ReadOnlySpan<T>
+  fullName: System.ReadOnlySpan<T>
+  nameWithType.vb: ReadOnlySpan(Of T)
+  fullName.vb: System.ReadOnlySpan(Of T)
+  name.vb: ReadOnlySpan(Of T)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.DataLayout.TryParse*
+  commentId: Overload:Ubiquity.NET.Llvm.DataLayout.TryParse
+  href: Ubiquity.NET.Llvm.DataLayout.html#Ubiquity_NET_Llvm_DataLayout_TryParse_System_ReadOnlySpan_System_Byte__System_IFormatProvider_Ubiquity_NET_Llvm_DataLayout__
+  name: TryParse
+  nameWithType: DataLayout.TryParse
+  fullName: Ubiquity.NET.Llvm.DataLayout.TryParse
+- uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  commentId: M:System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+  parent: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}
+  definition: System.IUtf8SpanParsable`1.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,`0@)
+  href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.tryparse
+  name: TryParse(ReadOnlySpan<byte>, IFormatProvider, out DataLayout)
+  nameWithType: IUtf8SpanParsable<DataLayout>.TryParse(ReadOnlySpan<byte>, IFormatProvider, out DataLayout)
+  fullName: System.IUtf8SpanParsable<Ubiquity.NET.Llvm.DataLayout>.TryParse(System.ReadOnlySpan<byte>, System.IFormatProvider, out Ubiquity.NET.Llvm.DataLayout)
+  nameWithType.vb: IUtf8SpanParsable(Of DataLayout).TryParse(ReadOnlySpan(Of Byte), IFormatProvider, DataLayout)
+  fullName.vb: System.IUtf8SpanParsable(Of Ubiquity.NET.Llvm.DataLayout).TryParse(System.ReadOnlySpan(Of Byte), System.IFormatProvider, Ubiquity.NET.Llvm.DataLayout)
+  name.vb: TryParse(ReadOnlySpan(Of Byte), IFormatProvider, DataLayout)
+  spec.csharp:
+  - uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+    name: TryParse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.tryparse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: )
+  spec.vb:
+  - uid: System.IUtf8SpanParsable{Ubiquity.NET.Llvm.DataLayout}.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,Ubiquity.NET.Llvm.DataLayout@)
+    name: TryParse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.tryparse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DataLayout
+    name: DataLayout
+    href: Ubiquity.NET.Llvm.DataLayout.html
+  - name: )
+- uid: System.IUtf8SpanParsable`1.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,`0@)
+  commentId: M:System.IUtf8SpanParsable`1.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,`0@)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.tryparse
+  name: TryParse(ReadOnlySpan<byte>, IFormatProvider, out TSelf)
+  nameWithType: IUtf8SpanParsable<TSelf>.TryParse(ReadOnlySpan<byte>, IFormatProvider, out TSelf)
+  fullName: System.IUtf8SpanParsable<TSelf>.TryParse(System.ReadOnlySpan<byte>, System.IFormatProvider, out TSelf)
+  nameWithType.vb: IUtf8SpanParsable(Of TSelf).TryParse(ReadOnlySpan(Of Byte), IFormatProvider, TSelf)
+  fullName.vb: System.IUtf8SpanParsable(Of TSelf).TryParse(System.ReadOnlySpan(Of Byte), System.IFormatProvider, TSelf)
+  name.vb: TryParse(ReadOnlySpan(Of Byte), IFormatProvider, TSelf)
+  spec.csharp:
+  - uid: System.IUtf8SpanParsable`1.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,`0@)
+    name: TryParse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.tryparse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: TSelf
+  - name: )
+  spec.vb:
+  - uid: System.IUtf8SpanParsable`1.TryParse(System.ReadOnlySpan{System.Byte},System.IFormatProvider,`0@)
+    name: TryParse
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iutf8spanparsable-1.tryparse
+  - name: (
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.IFormatProvider
+    name: IFormatProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iformatprovider
+  - name: ','
+  - name: " "
+  - name: TSelf
+  - name: )

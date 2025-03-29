@@ -1,0 +1,93 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.ObjectFile
+  commentId: N:Ubiquity.NET.Llvm.ObjectFile
+  id: Ubiquity.NET.Llvm.ObjectFile
+  children:
+  - Ubiquity.NET.Llvm.ObjectFile.BinaryKind
+  - Ubiquity.NET.Llvm.ObjectFile.Relocation
+  - Ubiquity.NET.Llvm.ObjectFile.Section
+  - Ubiquity.NET.Llvm.ObjectFile.Symbol
+  - Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  langs:
+  - csharp
+  - vb
+  name: Ubiquity.NET.Llvm.ObjectFile
+  nameWithType: Ubiquity.NET.Llvm.ObjectFile
+  fullName: Ubiquity.NET.Llvm.ObjectFile
+  type: Namespace
+  assemblies:
+  - Ubiquity.NET.Llvm
+references:
+- uid: Ubiquity.NET.Llvm.ObjectFile.Relocation
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.Relocation
+  href: Ubiquity.NET.Llvm.ObjectFile.Relocation.html
+  name: Relocation
+  nameWithType: Relocation
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Relocation
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.Section
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html
+  name: Section
+  nameWithType: Section
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section
+- uid: Ubiquity.NET.Llvm.ObjectFile.Symbol
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.Symbol
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.Symbol.html
+  name: Symbol
+  nameWithType: Symbol
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Symbol
+- uid: Ubiquity.NET.Llvm.ObjectFile.BinaryKind
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.BinaryKind
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.BinaryKind.html
+  name: BinaryKind
+  nameWithType: BinaryKind
+  fullName: Ubiquity.NET.Llvm.ObjectFile.BinaryKind
+- uid: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.html
+  name: TargetBinary
+  nameWithType: TargetBinary
+  fullName: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+- uid: Ubiquity.NET.Llvm.ObjectFile
+  commentId: N:Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.ObjectFile
+  nameWithType: Ubiquity.NET.Llvm.ObjectFile
+  fullName: Ubiquity.NET.Llvm.ObjectFile
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.ObjectFile
+    name: ObjectFile
+    href: Ubiquity.NET.Llvm.ObjectFile.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.ObjectFile
+    name: ObjectFile
+    href: Ubiquity.NET.Llvm.ObjectFile.html
