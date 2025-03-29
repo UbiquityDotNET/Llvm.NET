@@ -1,9 +1,13 @@
-<Project Sdk="Microsoft.Build.NoTargets">
+﻿<Project Sdk="Microsoft.Build.NoTargets">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" />
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Build-docs.ps1"/>
+  </ItemGroup>
 
   <Target Name="SetInRestore" BeforeTargets="Restore">
     <PropertyGroup>

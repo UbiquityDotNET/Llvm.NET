@@ -1,6 +1,6 @@
 ###############
 #  temp file  #
 ###############
-api-*/**.yml
-api-*/.manifest
+**/api/**.yml
+**/api/.manifest
 !**-xref.yml

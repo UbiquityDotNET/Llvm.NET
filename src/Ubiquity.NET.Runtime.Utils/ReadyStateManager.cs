@@ -11,7 +11,18 @@ namespace Ubiquity.NET.Runtime.Utils
     /// <summary>Defines state for the UI for REPL parsing to show a prompt to the user</summary>
     public enum ReadyState
     {
+        /// <summary>Start of an expression</summary>
+        /// <remarks>
+        /// Usually this state provides a "Ready" or other similar prompt that indicates ready to accept
+        /// any valid language expression.
+        /// </remarks>
         StartExpression,
+
+        /// <summary>In the middle of an expression continuation</summary>
+        /// <remarks>
+        /// Usually this state provides a simpler short prompt to indicate the continuation
+        /// of an expression from the previous line.
+        /// </remarks>
         ContinueExpression
     }
 

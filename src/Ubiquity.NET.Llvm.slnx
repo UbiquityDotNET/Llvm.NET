@@ -1,18 +1,4 @@
 <Solution>
-  <Folder Name="/docfx/">
-    <File Path="../docfx/docfx.json" />
-    <File Path="../docfx/favicon.ico" />
-    <File Path="../docfx/index.md" />
-    <File Path="../docfx/ReadMe.md" />
-    <File Path="../docfx/toc.yml" />
-  </Folder>
-  <Folder Name="/docfx/templates/" Id="eef35622-62dd-2a40-123a-d83bcdab80dc" />
-  <Folder Name="/docfx/templates/Ubiquity/" Id="b8eaee67-dc52-b23c-7108-3aefa393c2b3">
-    <File Path="../docfx/templates/Ubiquity/ReadMe.md" />
-  </Folder>
-  <Folder Name="/docfx/templates/Ubiquity/public/" Id="81034b7b-be40-2963-eaef-7d2d787c8dbc">
-    <File Path="../docfx/templates/Ubiquity/public/main.js" />
-  </Folder>
   <Folder Name="/Interop/">
     <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
@@ -66,6 +52,8 @@
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope.Runtime.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
   </Folder>
+  <Project Path="../BuildVersion.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="Ubiquity.NET.ANTLR.Utils/Ubiquity.NET.ANTLR.Utils.csproj" />
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
   <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />

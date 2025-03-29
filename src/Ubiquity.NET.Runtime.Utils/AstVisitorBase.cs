@@ -48,6 +48,7 @@ namespace Ubiquity.NET.Runtime.Utils
 
     /// <summary>Common base implementation of visitor for <see cref="IAstNode"/></summary>
     /// <typeparam name="TResult">Result of the visit</typeparam>
+    /// <typeparam name="TArg">Type of the argument to pass to visit methods</typeparam>
     /// <remarks>
     /// <para>DSL languages will typically define the language specific node types to test for a
     /// language specific implementation of this interface in their <see cref="IAstNode.Accept{TResult}(IAstVisitor{TResult})"/>

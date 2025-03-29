@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <!--
+  This projects serves as a convenient placeholder to refernce the doc files. It uses project releative include
+  and exclude pattersn to simplify referencing ALL files but skiping over the generated API files.
+  (Getting docfx to generate files into a folder outside of the build tree (IntermediateOutputPath) but then
+  reference content from that is an excercise in frustration - problem unsolved. So this is used instead.)
+  -->
+
+  <ItemGroup>
+    <!--Every FILE in this folder except this project file itself-->
+    <None Include="*.*" Exclude="$(MSBuildThisFile)" />
+    <None Include="templates/**"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--Everything in the LLVM subfolders except the API folder as that contains generated files -->
+    <None Include="llvm/**" Exclude="llvm/api/**" />
+    <!-- Explicitly call out the non-generated files in the API folder-->
+    <None Include="llvm/api/index.md" />
+    <None Include="llvm/api/*.png" />
+    <None Include="llvm/api/llvm-xref.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--Everything in the runtime-utils subfolders except the API folder as that contains generated files -->
+    <None Include="runtime-utils/**" Exclude="runtime-utils/api/**" />
+    <!-- Explicitly call out the non-generated files in the API folder-->
+    <None Include="runtime-utils/api/index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--Everything in the extensions subfolders except the API folder as that contains generated files -->
+    <None Include="extensions/**" Exclude="extensions/api/**" />
+    <!-- Explicitly call out the non-generated files in the API folder-->
+    <None Include="extensions/api/index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--Everything in the antlr-utils subfolders except the API folder as that contains generated files -->
+    <None Include="antlr-utils/**" Exclude="antlr-utils/api/**" />
+    <!-- Explicitly call out the non-generated files in the API folder-->
+    <None Include="antlr-utils/api/index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--Everything in the interop-helpers subfolders except the API folder as that contains generated files -->
+    <None Include="interop-helpers/**" Exclude="interop-helpers/api/**" />
+    <!-- Explicitly call out the non-generated files in the API folder-->
+    <None Include="interop-helpers/api/index.md" />
+  </ItemGroup>
+
+  <Target Name="AlwaysRun" BeforeTargets="AfterBuild">
+    <Message Importance="High" Text="Building this target does NOTHING, docs are built using the docfx tool. This project is a simply a convenient placeholder for organizing/editing files"/>
+  </Target>
+</Project>

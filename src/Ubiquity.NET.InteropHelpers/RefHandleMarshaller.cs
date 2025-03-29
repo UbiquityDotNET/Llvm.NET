@@ -13,15 +13,17 @@ namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Performs custom marshalling of handle arrays as in parameters</summary>
     /// <remarks>
-    /// Sadly, the built-in support for safe handles doesn't include arrays of the elements
+    /// <para>Sadly, the built-in support for safe handles doesn't include arrays of the elements
     /// as `in` parameters while still retaining ownership (That is, `ref` semantics). Worse,
     /// the documentation for source generator custom marshallers (especially for arrays)
-    /// is so poor that it wasn't plausible to implement this support as a custom marshaller.
-    /// Instead these APIs are declared to simplify and control the marshalling as safely
-    /// as possible. Callers must use one of the overloads to <see cref="O:WithNativePointer"/>
-    /// to allocate, build, call an operation delegate, and then release the native array.
-    /// That is, the hard and tedious work of allocating, copying the managed array and pinning
-    /// the array for native consumption is ALL handled in the methods provided by this class.
+    /// is so poor that it wasn't plausible to implement this support as a custom marshaller.</para>
+    /// <para>Instead these APIs are declared to simplify and control the marshalling as safely
+    /// as possible. Callers must use either <see cref="WithNativePointer{THandle}(THandle[], RefHandleMarshaller.VoidOp)"/>
+    /// or <see cref="WithNativePointer{THandle, TRetVal}(THandle[], RefHandleMarshaller.ReturningOp{TRetVal})"/>
+    /// to allocate, build, call an operation delegate, and then release the native array
+    /// [optionally returning a result]. That is, the hard and tedious work of allocating,
+    /// copying the managed array and pinning the array for native consumption is ALL handled
+    /// in the methods provided by this class.</para>
     /// </remarks>
     public static class RefHandleMarshaller
     {
@@ -69,7 +71,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="managedArray">Managed array of handles to marshal (by reference)</param>
         /// <param name="op">Operation to perform with the native array.</param>
         /// <inheritdoc cref="WithNativePointer{THandle, TRetVal}(THandle[], ReturningOp{TRetVal})" path="/remarks"/>
-        public static void WithManagedArrayAsNativePointer<THandle>(this THandle[] managedArray, VoidOp op)
+        public static void WithNativePointer<THandle>(this THandle[] managedArray, VoidOp op)
             where THandle : SafeHandle
         {
             ArgumentNullException.ThrowIfNull(managedArray);

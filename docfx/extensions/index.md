@@ -1,7 +1,7 @@
 # About
 Ubiquity.NET.Extensions contains general extensions for .NET. This is
-a bit of a "grab bag" of functionality used by but not actually part of
-multiple other Ubiquity.NET projects.
+a bit of a [grab bag](https://www.merriam-webster.com/dictionary/grab%20bag) of functionality used by
+but not actually part of multiple other Ubiquity.NET projects.
 
 ## Key support
 * Computing a hash code for a ReadOnlySpan of bytes using
@@ -30,3 +30,4 @@ multiple other Ubiquity.NET projects.
       overhead of a copy.
     - Since this is an array and not a dictionary there is no overhead for allocating, initializing or copying
       any hash mapping for the keys.
+

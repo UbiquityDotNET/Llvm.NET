@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Extensions
     /// <remarks>
     /// <para>
     /// For unknown reasons <see cref="ImmutableDictionary{TKey, TValue}"/> does not have an equivalent
-    /// to <see cref="CollectionBuilderAttribute"/> (Perhaps because there is none for a dictionary?)
+    /// to <see cref="System.Runtime.CompilerServices.CollectionBuilderAttribute"/> (Perhaps because there is none for a dictionary?)
     /// the normal behavior of initializing a mutable dictionary and then converting it to immutable
     /// has sub-par performance as it needs to allocate the mutable form, add the members, then allocate
     /// the immutable form and COPY all the members. This includes the overhead of building and maintaining
