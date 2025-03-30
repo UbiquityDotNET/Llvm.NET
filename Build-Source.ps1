@@ -40,8 +40,8 @@ try
     .\Build-Native.ps1 -Configuration $Configuration -AllowVsPreReleases:$AllowVsPreReleases
 
     # build the Managed code support
-    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
-    Invoke-DotNet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
+    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
+    Invoke-DotNet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
 
     # Create a ZIP file of all the nuget packages if asked
     if($ZipNuget)
