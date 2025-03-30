@@ -2,6 +2,15 @@
 uid: Kaleidoscope-ch7.1
 ---
 
+>[!WARNING]
+> There is a fatal flaw in the current design of this support. It does NOT
+> allow for re-defining a function. Once it is defined, you cannot define
+> it again or an exception/application crash will occur. Hopefully a future
+> variant of this sample will address tracking and removing that.
+>
+> [It turns out be a rather complex problem involving thread synchronization
+> as the module for the AST is lazily generated asychronously]
+
 # 7. Kaleidoscope: Extreme Lazy JIT
 In the previous chapters the code generation took an AST, converted it to LLVM IR, handed the IR to the
 JIT, which then generated the native code. For a top level anonymous expression that is pretty much all

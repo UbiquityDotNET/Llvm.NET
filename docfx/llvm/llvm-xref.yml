@@ -22,4 +22,4 @@ references:
     href: https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html
   - uid: llvm_kaleidoscope_tutorial
     name: LLVM Kaledoscope Tutorial
-    href: https://releases.llvm.org/20.1.0/docs/tutorial/MyFirstLanguageFrontend/index.html
+    href: https://releases.llvm.org/20.1.0/docs/tutorial/index.html

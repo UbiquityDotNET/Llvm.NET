@@ -1,16 +1,22 @@
-﻿# Define ':' for sequencing: as a low-precedence operator that ignores operands
-# and just returns the RHS. (NOTE: assignment is at precedence 2 so this is even
-# lower precedence than assignment)
-def binary: 1 (x y) y;
-
-# Recursive fib, we could do this as of Chapter 5.
+﻿# Recursive fib, we could do this as of Chapter 5.
+# But, like any recursive algorithm runs the risk of
+# a stack overflow from recursion beyond the limits
+# of the stack.
 def fib(x)
   if (x < 3) then
     1
   else
     fib(x-1)+fib(x-2);
 
+fib(10);
+
+# Define ':' for sequencing: as a low-precedence operator that ignores operands
+# and just returns the RHS. (NOTE: assignment is at precedence 2 so this is even
+# lower precedence than assignment)
+def binary: 1 (x y) y;
+
 # Iterative form of fib - new possibility for Chapter 7
+# uses mutable variables to avoid the need for recursion
 def fibi(x)
   var a = 1, b = 1, c in
   (for i = 3, i < x in
