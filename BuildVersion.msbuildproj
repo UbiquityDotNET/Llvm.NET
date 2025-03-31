@@ -16,17 +16,17 @@
   </Target>
 
   <Target Condition="'$(__InRestore)'!='true'" Name="AlwaysRun" BeforeTargets="AfterBuild">
-    <Message Importance="High" Text="        BuildTime: $(BuildTime)"/>
-    <Message Importance="High" Text="  FullBuildNumber: $(FullBuildNumber)"/>
-    <Message Importance="High" Text="       BuildMajor: $(BuildMajor)"/>
-    <Message Importance="High" Text="       BuildMinor: $(BuildMinor)"/>
-    <Message Importance="High" Text="       BuildPatch: $(BuildPatch)"/>
-    <Message Importance="High" Text="   PreReleaseName: $(PreReleaseName)"/>
-    <Message Importance="High" Text=" PreReleaseNumber: $(PreReleaseNumber)"/>
-    <Message Importance="High" Text="    PreReleaseFix: $(PreReleaseFix)"/>
-    <Message Importance="High" Text="        BuildMeta: $(BuildMeta)"/>
-    <Message Importance="High" Text="      CiBuildName: $(CiBuildName)"/>
-    <Message Importance="High" Text="     CiBuildIndex: $(CiBuildIndex)"/>
+    <Message Importance="normal" Text="        BuildTime: $(BuildTime)"/>
+    <Message Importance="normal" Text="  FullBuildNumber: $(FullBuildNumber)"/>
+    <Message Importance="normal" Text="       BuildMajor: $(BuildMajor)"/>
+    <Message Importance="normal" Text="       BuildMinor: $(BuildMinor)"/>
+    <Message Importance="normal" Text="       BuildPatch: $(BuildPatch)"/>
+    <Message Importance="normal" Text="   PreReleaseName: $(PreReleaseName)"/>
+    <Message Importance="normal" Text=" PreReleaseNumber: $(PreReleaseNumber)"/>
+    <Message Importance="normal" Text="    PreReleaseFix: $(PreReleaseFix)"/>
+    <Message Importance="normal" Text="        BuildMeta: $(BuildMeta)"/>
+    <Message Importance="normal" Text="      CiBuildName: $(CiBuildName)"/>
+    <Message Importance="normal" Text="     CiBuildIndex: $(CiBuildIndex)"/>
     <ItemGroup>
         <__Line Include="{"/>
         <__Line Include="    &quot;FullBuildNumber&quot; : &quot;$(FullBuildNumber)&quot;," />

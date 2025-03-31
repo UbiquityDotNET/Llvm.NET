@@ -27,3 +27,11 @@ def fibi(x)
 
 # Call it.
 fibi(10);
+
+#Result is: 4.234436995083681E+231
+#See also: https://www.inchcalculator.com/fibonacci-sequence-calculator/?uc_index=1110
+fibi(1110);
+
+# DO NOT ATTEMPT To call recursive form...
+# will take a REALLY LONG time and probably crash from a Stack Overflow.
+#fib(1110);

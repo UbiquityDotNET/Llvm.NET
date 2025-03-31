@@ -19,9 +19,8 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+LLVM_C_EXTERN_C_BEGIN
+
     typedef enum LibLLVMAttrKind {
         // IR-Level Attributes
         None,                  ///< No attributes have been set
@@ -36,8 +35,6 @@ extern "C" {
     char const* LibLLVMAttributeToString( LLVMAttributeRef attribute );
     char const* LibLLVMGetAttributeKindName(LibLLVMAttrKind attrKind);
     char const* LibLLVMGetEnumAttributeKindName(LLVMAttributeRef attribute);
-#ifdef __cplusplus
-}
-#endif
 
+LLVM_C_EXTERN_C_END
 #endif

@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         private static LLVMOrcMaterializationUnitRef MakeHandle(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols)
         {
             // make a native useable version of the array
-            using IMemoryOwner<LLVMOrcCSymbolMapPair> nativeArrayOwner = InitializeNativeCopy( absoluteSymbols );
+            using IMemoryOwner<LLVMOrcCSymbolMapPair> nativeArrayOwner = absoluteSymbols.InitializeNativeCopy( );
 
             // pin the memory and call the native API
             using var nativeMemHandle = nativeArrayOwner.Memory.Pin();

@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull(stubsMgr);
 
             // make a native useable version of the input list, pin it and call the native API
-            using var nativeArrayOwner = InitializeNativeCopy( symbols );
+            using var nativeArrayOwner = symbols.InitializeNativeCopy( );
             using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
             unsafe
             {

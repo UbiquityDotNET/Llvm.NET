@@ -29,8 +29,6 @@ namespace Kaleidoscope.Chapter3
             {
                 e.Cancel = true;
                 cts.Cancel();
-                Console.WriteLine();
-                Console.WriteLine("good bye!");
             };
 
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {repl.LanguageFeatureLevel}";
@@ -40,6 +38,9 @@ namespace Kaleidoscope.Chapter3
             using var libLlvm = InitializeLLVM( );
             libLlvm.RegisterTarget( CodeGenTarget.Native );
             await repl.Run( Console.In, cts.Token );
+
+            Console.WriteLine();
+            Console.WriteLine("good bye!");
         }
         #endregion
     }

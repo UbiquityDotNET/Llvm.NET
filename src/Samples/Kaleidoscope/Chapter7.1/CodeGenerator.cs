@@ -506,6 +506,8 @@ namespace Kaleidoscope.Chapter71
         private void AddLazyMaterializer(FunctionDefinition definition)
         {
             FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+            var dyLib = KlsJIT.MainLib;
             using var mangledName = KlsJIT.MangleAndIntern(definition.Name);
             using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
             var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
@@ -514,21 +516,15 @@ namespace Kaleidoscope.Chapter71
                 [mangledBodyName] = commonSymbolFlags,
             }.ToImmutable();
 
-            // NOTE: ownership of this MU is passed to LLVM in the JITDyLib.Define() call.
-            // The Dispose is NORMALLY a NOP, but in case of an exception BEFORE transfer
-            // to native completes this will destroy the MU so it is covered either way.
             using var materializer = new CustomMaterializationUnit($"{definition.Name}MU", Materialize, symbols);
-            KlsJIT.MainLib.Define(materializer);
+            dyLib.Define(materializer);
 
             var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>{
                 [mangledName] = new(mangledBodyName, commonSymbolFlags)
             }.ToImmutable();
 
-            // NOTE: ownership of this MU is passed to LLVM in the JITDyLib.Define() call
-            // the Dispose is NORMALLY a NOP, but in case of an exception BEFORE transfer
-            // to native completes this will destroy the MU so it is covered either way.
-            using var lazyReExports = new LazyReExportsMaterializationUnit(JitLCTM, JitISM, KlsJIT.MainLib, reexports);
-            KlsJIT.MainLib.Define(lazyReExports);
+            using var lazyReExports = new LazyReExportsMaterializationUnit(JitLCTM, JitISM, dyLib, reexports);
+            dyLib.Define(lazyReExports);
             return;
 
             // Local function to materialize the IR for the AST in implDefinition.

@@ -89,7 +89,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             using var materializer = new CustomMaterializer(materializeAction, discardAction);
             unsafe
             {
-                using var nativeSyms = InitializeNativeCopy(symbols);
+                using var nativeSyms = symbols.InitializeNativeCopy();
                 using var pinnedSyms = nativeSyms.Memory.Pin();
 
                 // Bump ref count for the native code to "own", it does NOT do this on it's

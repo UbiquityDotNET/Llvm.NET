@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.OrcJITv2Bindings;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
@@ -148,6 +149,36 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             }
         }
 
+        /// <summary>Gets or creates a <see cref="JITDyLib"/> in this session by name</summary>
+        /// <param name="name">name of the library</param>
+        /// <returns>The library from this session</returns>
+        /// <remarks>
+        /// <para>If the library is created, this will add symbols for any attached platforms.
+        /// If there are no attached platforms then this is the same as calling <see cref="GetOrCreateBareDyLib"/>.</para>
+        /// <para><paramref name="name"/> is a LazyEncodedString to allow for the possibility of retrieval of the name from
+        /// native code and then providing it back again without going through any sort of marshal/unmarshal sequence. This
+        /// allows for the most efficient use of data that is likely to come from the underlying native code.
+        /// </para>
+        /// </remarks>
+        public JITDyLib GetOrCreateDyLib(LazyEncodedString name)
+        {
+            ArgumentNullException.ThrowIfNull(name);
+
+            // check if already present and use that as the out value...
+            if (TryGetDyLib(name, out JITDyLib lib))
+            {
+                return lib;
+            }
+
+            unsafe
+            {
+                using MemoryHandle nativeMem = name.Pin();
+                using LLVMErrorRef err = LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, (byte*)nativeMem.Pointer);
+                err.ThrowIfFailed();
+                return new(libHandle);
+            }
+        }
+
         /// <summary>Tries to get or create a <see cref="JITDyLib"/> in this session by name</summary>
         /// <param name="name">name of the library</param>
         /// <param name="lib">Library or <see langword="null"/> if not found</param>
@@ -189,6 +220,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
                 return errInfo.Success;
             }
+        }
+
+        /// <summary>Removes a <see cref="JITDyLib"/> from this session by name</summary>
+        /// <param name="name">Name of the lib</param>
+        /// <returns><see langword="true"/> if the library is found; <see langword="false"/> if not</returns>
+        /// <exception cref="LlvmException">Error from the native interop LLVM API</exception>
+        public bool RemoveDyLib( LazyEncodedString name )
+        {
+            if(TryGetDyLib(name, out JITDyLib lib))
+            {
+                using LLVMErrorRef err = LibLLVMExecutionSessionRemoveDyLib(Handle, lib.Handle);
+                err.ThrowIfFailed();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>Tries to get a named library from this session</summary>
