@@ -21,44 +21,6 @@ Set-StrictMode -version 3.0
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
-function Install-LlvmLibs($buildInfo)
-{
-<#
-.SYNOPSIS
-    Installs the LLVM libs, downloading them if not already present
-
-.PARAMETER buildInfo
-    Build information Hashtable containing the various build properties and directories.
-    This should come from a call to Get-BuildInformation to ensure all the required
-    directory path properties are set up correctly.
-#>
-    $destPath = $buildInfo['LlvmLibsRoot']
-    $packageReleaseName = $buildInfo['LlvmLibsPackageReleaseName']
-    if(!(Test-Path -PathType Container $destPath))
-    {
-        if(!(Test-Path -PathType Container $buildInfo['DownloadsPath']))
-        {
-            New-Item -ItemType Directory $buildInfo['DownloadsPath'] | Out-Null
-        }
-
-        $localLlvmLibs7zPath = Join-Path $buildInfo['DownloadsPath'] "llvm-libs-$packageReleaseName.7z"
-        if( !( test-path -PathType Leaf $localLlvmLibs7zPath ) )
-        {
-            $release = Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$packageReleaseName"
-            if($release)
-            {
-                $asset = (Get-GitHubTaggedRelease UbiquityDotNet 'Llvm.Libs' "v$packageReleaseName").assets[0]
-                Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile $localLlvmLibs7zPath
-            }
-            else
-            {
-                throw "LLVM library package release 'v$packageReleaseName' not found!"
-            }
-        }
-
-        Expand-7zArchive $localLlvmLibs7zPath $destPath
-    }
-}
 
 function Initialize-BuildEnvironment
 {
@@ -100,6 +62,7 @@ function Initialize-BuildEnvironment
 
     | Name                       | Description                                                                                            |
     |----------------------------|--------------------------------------------------------------------------------------------------------|
+    | OfficialGitRemoteUrl       | GIT Remote URL for this repository                                                                     |
     | LlvmLibsRoot               | Root of the LLVM libraries (where they are extracted to after download)                                |
     | LlvmVersion                | LLVM version the build is targeting                                                                    |
     | LlvmLibsPackageReleaseName | Release name of the LLVM libs package to download                                                      |
@@ -114,8 +77,9 @@ function Initialize-BuildEnvironment
     $buildInfo = Initialize-CommonBuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
     $buildInfo['OfficialGitRemoteUrl'] = 'https://github.com/UbiquityDotNET/Llvm.NET.git'
     $buildInfo['LlvmLibsRoot'] = Join-Path $PSScriptRoot 'llvm'
-    $buildInfo['LlvmVersion'] = "20.1.0"
-    $buildInfo['LlvmLibsPackageReleaseName'] = "$($buildInfo['LlvmVersion'])-msvc-17.12"
+    $buildInfo['LlvmVersion'] = "20.1.1"
+    # Temp hardcode to local build name - this needs update for automated builds etc...
+    $buildInfo['LlvmLibsPackageReleaseName'] = "LibLLVmNuget.20.1.1-alpha.0.0.ci-ZZZ.604990737"
 
     if($FullInit)
     {

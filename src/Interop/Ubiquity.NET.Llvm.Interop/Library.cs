@@ -5,12 +5,23 @@
 using System.Reflection;
 using Ubiquity.NET.Extensions;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistration;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Provides support for various LLVM static state initialization and manipulation</summary>
     public sealed partial class Library
         : ILibLlvm
     {
+        public void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All)
+        {
+            // NOTE: All logic for handling the targets is in native code
+            //       If an invalid target is provided for the library loaded
+            //       in InitializeLLVM() below then the native code generates
+            //       an error which is transformed to an exception here.
+            LibLLVMRegisterTarget(target, registrations).ThrowIfFailed();
+        }
+
         /// <summary>Initializes the native LLVM library support</summary>
         /// <param name="target">Target to use in resolving the proper library that implements the LLVM native code. [Default: CodeGenTarget.Native]</param>
         /// <returns><see cref="ILibLlvm"/> implementation for the library</returns>
@@ -39,10 +50,10 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <exception cref="ArgumentOutOfRangeException">The target provided is undefined or <see cref="CodeGenTarget.All"/></exception>
         public static ILibLlvm InitializeLLVM(CodeGenTarget target = CodeGenTarget.Native)
         {
-            // NOTHING in this "zone" may use P/Invoke to the native LLVM interop (LibLLVM)
-            // This sets up the resolver AND the values it requires - interop calls may not
-            // occur until that is complete.
-            #region NO P/INVOKE ZONE
+// NOTHING in this "zone" may use P/Invoke to the native LLVM interop (LibLLVM)
+// This sets up the resolver AND the values it requires - interop calls may not
+// occur until that is complete.
+#region NO P/INVOKE ZONE
             target.ThrowIfNotDefined();
             if(target == CodeGenTarget.All)
             {
@@ -66,7 +77,7 @@ namespace Ubiquity.NET.Llvm.Interop
                 ResolverTarget = target == CodeGenTarget.Native ? GetNativeTarget() : target;
                 NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), NativeLibResolver);
             }
-            #endregion
+#endregion
 
             if (ResolverTarget != target)
             {
@@ -147,13 +158,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
                 // Native binary is in a RID specific runtime folder, build that path as relative
                 // to this assembly and load the library from there.
-                // TODO: Incorporate the CodeGenTarget into the relativePath. For native, just pick one.
-                //       The idea is that a multitude of DLLs created as a Matrix of the native
-                //       runtime AND one additional target. This will hopefully reduce the size
-                //       and time constraints on building the native library and allow automated
-                //       builds of the native code library. For now All targets are plausible and
-                //       resolve to the same library name.
-                string relativePath = @$"runtimes/{RuntimeInformation.RuntimeIdentifier}/native/{libraryName}";
+                string relativePath = @$"runtimes/{RuntimeInformation.RuntimeIdentifier}/native/{libraryName}-{GetNativeTarget()}-{ResolverTarget}";
                 NativeLibHandle = NativeLibraryHandle.Load(relativePath, assembly, DllImportSearchPath.AssemblyDirectory);
 
                 // setup the error handler callback.

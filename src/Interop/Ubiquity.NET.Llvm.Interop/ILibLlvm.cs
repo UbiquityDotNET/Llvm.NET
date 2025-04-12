@@ -63,6 +63,9 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>WebAssembly target</summary>
         WebAssembly,
 
+        /// <summary>VE target</summary>
+        VE,
+
         /// <summary>X86 target</summary>
         X86,
 

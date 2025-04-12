@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <AssemblyVersion>20.1.0.0</AssemblyVersion>
     <TargetFramework>net9.0</TargetFramework>

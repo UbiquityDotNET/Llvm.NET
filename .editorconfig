@@ -5,10 +5,13 @@ root = true
 indent_style = space
 indent_size = 4
 insert_final_newline = true
+tab_width = 4
+end_of_line = crlf
 
 # match VS generated formatting for MSBuild project files
 [*.*proj,*.props,*.targets]
 indent_size = 2
+tab_width = 2
 
 # match ISO standard requirement for C/C++
 [*.c,*.h,*.cpp]
@@ -1574,8 +1577,6 @@ dotnet_style_prefer_conditional_expression_over_assignment = true:warning
 dotnet_style_prefer_conditional_expression_over_return = true:warning
 dotnet_style_explicit_tuple_names = true:warning
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
-tab_width = 4
-end_of_line = crlf
 dotnet_style_prefer_inferred_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:error

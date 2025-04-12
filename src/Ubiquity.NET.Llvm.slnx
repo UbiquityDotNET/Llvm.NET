@@ -1,6 +1,5 @@
 <Solution>
   <Folder Name="/Interop/">
-    <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
     <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
   </Folder>
@@ -17,13 +16,13 @@
     <File Path="../CODE_OF_CONDUCT.md" />
     <File Path="../Directory.Build.props" />
     <File Path="../Directory.Build.targets" />
+    <File Path="../Directory.Packages.props" />
     <File Path="../docfx/current/ReleaseNotes.md" />
     <File Path="../global.json" />
     <File Path="../GOVERNANCE.md" />
     <File Path="../Invoke-UnitTests.ps1" />
     <File Path="../LICENSE.md" />
     <File Path="../NuGet.Config" />
-    <File Path="../Packages.props" />
     <File Path="../Push-Docs.ps1" />
     <File Path="../README.md" />
     <File Path="../repo-buildutils.ps1" />

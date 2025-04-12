@@ -47,7 +47,7 @@
         <BuildTime Condition="'$(BuildTime)'=='' AND '$(APPVEYOR_REPO_COMMIT_TIMESTAMP)'!=''">$(APPVEYOR_REPO_COMMIT_TIMESTAMP)</BuildTime>
         <LlvmVersionMajor Condition="'$(LlvmVersionMajor)'==''">20</LlvmVersionMajor>
         <LlvmVersionMinor Condition="'$(LlvmVersionMinor)'==''">1</LlvmVersionMinor>
-        <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">0</LlvmVersionPatch>
+        <LlvmVersionPatch Condition="'$(LlvmVersionPatch)'==''">1</LlvmVersionPatch>
         <LlvmVersion>$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
         <LlvmVersionNext Condition="'$(LlvmVersionNext)'=='21.0.0'"></LlvmVersionNext>
         <ProjectPackageVersionRange>[$(LlvmVersion), 21.0.0)</ProjectPackageVersionRange>
@@ -61,16 +61,17 @@
                 <Determenistic>true</Determenistic>
                 <IsTestProject>$(MSBuildProjectName.Contains('UT'))</IsTestProject>
                 <Nullable>enable</Nullable>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
                 <!--
                 DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't
-                support it. Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.
+                support it or uses a different version. Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.
                 -->
                 <ImplicitUsings>disable</ImplicitUsings>
                 <!-- NOTE: Top-Level statements blocked as an error in .editorconfig and ImplicitUsings 'feature' VERIFIED in the targets file -->
             </PropertyGroup>
-            <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
+            <!--<ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
-            </ItemGroup>
+            </ItemGroup>-->
         </When>
         <When Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
             <!-- vcxproj uses a different pattern for output paths -->

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
@@ -27,30 +26,9 @@
     <!-- This is an internal undocumented package ignore the analysis that complains about a missing ReadMe -->
     <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
-
   <ItemGroup>
-    <!-- NOTE: The Ubiquity.NET.LibLLVM.dll currently only comes in a release form, which is really RelWithDebInfo in LLVM Cmake terms -->
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\Release\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
-        <PackagePath>runtimes\win-x64\native</PackagePath>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\Release\x64\Ubiquity.NET.LibLLVM.pdb" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.pdb">
-        <PackagePath>runtimes\win-x64\native</PackagePath>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <!--TODO: Lather, rinse, repeat for each platform supported. -->
-    <!--
-    The biggest problem with the native DLL is the MASSIVE size of the static libraries needed to build the final
-    shared library (At least on Windows as a DLL anyway). Currently this is not plausible on ANY OSS build infrastructure
-    due to either time or size limitations.
-
-    To simplify the problem of building on a public OSS system like GitHub Actions this might need to limit the DLLs to ONLY
-    the native target AND one additional target. That could then enable the selection of the correct binary based on the
-    desired target, but would not allow for multiple target support beyond those two at any given time. (It would also mean
-    that the native library handle is completely released when the ILibLLvm is Disposed. [That is the implementation of that
-    library OWNS the native handle. In such a case the interface would need to include new properties to determine what target
-    was supported, beyond the default "native" and to limit initializing to only those two. (Or perhaps just always init them)]
-    -->
+    <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
+    <PackageReference Include="LibLLVmNuget-win-x64" VersionOverride="20.1.*-*" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -65,6 +43,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
     <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />

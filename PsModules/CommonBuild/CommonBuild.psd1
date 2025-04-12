@@ -3,7 +3,7 @@
 RootModule = 'CommonBuild.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.0'
+ModuleVersion = '2.0.0'
 
 # ID used to uniquely identify this module
 GUID = '6da1bba8-442f-4bc3-9991-9c8783df06a4'
@@ -61,30 +61,28 @@ CompatiblePSEditions = @('Core')
 
 # Functions to export from this module
 FunctionsToExport = @(
+    'Get-FunctionsToExport'
+    'Assert-CmakeInfo',
+    'Assert-CMakeList',
+    'Assert-OfficialGitRemote',
+    'Get-BuildVersionTag',
+    'New-CMakeConfig',
+    'Invoke-GenerateCMakeConfig',
+    'Build-CmakeConfig',
     'ConvertTo-NormalizedPath',
     'ConvertTo-PropertyList',
-    'Expand-7zArchive',
     'Expand-ArchiveStream',
     'Expand-StreamFromUri',
-    'Find-7Zip',
-    'Find-MSBuild',
     'Find-OnPath',
-    'Find-VSInstance',
-    'Get-CurrentBuildKind'
+    'Get-CurrentBuildKind',
     'Get-GitHubReleases',
     'Get-GitHubTaggedRelease',
-    'Invoke-TimedBlock',
-    'Invoke-MSBuild',
-    'Invoke-NuGet',
-    'Update-Submodules',
-    'Invoke-DotNetTest',
     'Initialize-CommonBuildEnvironment',
-    'Show-FullBuildInfo',
-    'Invoke-Git',
-    'Get-BuildVersionTag',
-    'Invoke-DotNet'
+    'Invoke-External',
+    'Invoke-TimedBlock',
+    'New-CmakeSettings',
+    'Show-FullBuildInfo'
 )
-
 # Cmdlets to export from this module
 CmdletsToExport = '*'
 
