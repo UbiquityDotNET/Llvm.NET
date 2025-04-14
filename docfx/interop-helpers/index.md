@@ -7,7 +7,7 @@ any code base providing interop support.
 # Key Features
 * String handling
     * A lot of interop deals with strings in some form or another and handling them
-      is a major mount of effort for most interop libraries. The support provided here
+      is a major amount of effort for most interop libraries. The support provided here
       enables lazy evaluation/marshalling and encoding of native strings and managed strings.
       These allow a simple `byte[]` to store a native string and ONLY marshals to a UTF16
       managed string once when needed. This allows storing and passing strings in their

@@ -1,7 +1,8 @@
 ﻿# YAML Configuration file format
 >[!WARNING]
 > The API marshalling documented here is obsoleted in V20+. This document needs cleanup to clarify newer
-> more limited scope/functionality.
+> more limited scope/functionality. It also needs to move to the LibLLVM repository as the bindings app
+> now exists there.
 
 ## FunctionBindings
 The functionBindings contains all the information for properly marshaling the native C APIs especially disambiguation of

@@ -14,17 +14,18 @@ an Abstract Syntax Tree (AST). The generator then uses the AST to generate the r
 Auto generation of the interop layer saves time and errors by moving tedious and error prone
 hand coding into a tool that is run as part of the regular automated builds. However, the
 job of auto generating for LLVM is not without some challenges. The original support for the
-interop in Ubiquity.NET.Llvm was done using a different tool that generated code, which then needed
-significant hand editing thereby defeating much of the value of the automated generation. In
-the process several challenges for the LLVM library were defined:
+interop in Ubiquity.NET.Llvm was done using a different tool that generated code, which then
+needed significant hand editing thereby defeating much of the value of the automated generation.
+In the process several challenges for the LLVM library were defined:
 
  1. There are several different ways that strings are provided as either out parameters or
 return value.
-    1. As a raw const char*, this basically is just an alias that the managed code must then copy
-       into a managed System.String.
+    1. As a raw const char*, this basically is just an alias that the managed code must then
+       copy into a managed System.String and leave the native pointer alone (no dispose).
     2. As an allocated buffer that the managed application will need to release through some
        sort of Dispose type API.
-        1. There are actually several such dispose APIs so the caller has to know which one to use
+        1. There are actually several such dispose APIs so the caller has to know which one to
+           use for each case.
  1. LLVM-C uses a typedef LLVMBool as a return value for many functions, however the semantics
     of the return value depend on the function used. In some cases it is literally a boolean
     success(non-zero)/failure(zero) indication. While other functions use it as a status where
@@ -38,14 +39,14 @@ return value.
     1. There are cases where the length required is retrieved from a function and other cases
        where it is an out parameter.
  1. Some flags type enumerations use a typedef to an unsigned value, since C limits the range
-    of an enumerated value to an integer. Thus, what should be an enum with an underlying unsigned
-    value ends up as a typedef to an unsigned.
- 1. In many cases function pointer declarations (i.e. call back delegates) and function declarations
-    in the LLVM-C headers don't include names for the parameters.
- 1. In array vs out scalar semantics are not expressible in C (e.g. void foo(int* baz) could declare
-    a function with a single integer as an out parameter, or it could mean a function that accepts an
-    array of integers, with a fixed known size or possibly some sort of tag value to indicate the end,
-    etc...)
+    of an enumerated value to an integer. Thus, what should be an enum with an underlying
+    unsigned value ends up as a typedef to an unsigned.
+ 1. In many cases function pointer declarations (i.e. call back delegates) and function
+    declarations in the LLVM-C headers don't include names for the parameters.
+ 1. In array vs out scalar semantics are not expressible in C (e.g. void foo(int* baz) could
+    declare a function with a single integer as an out parameter, or it could mean a function
+    that accepts an array of integers, with a fixed known size or possibly some sort of tag
+    value to indicate the end, etc...)
 
 ## Configuration
 LlvmBindings takes care of all of the challenges by using various custom passes on the AST to
