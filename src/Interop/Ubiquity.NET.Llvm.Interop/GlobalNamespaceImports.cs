@@ -15,16 +15,20 @@ For an explanation of the benefits of the language feature see: https://www.hans
 */
 
 global using System;
+global using System.Collections.Immutable;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;
+global using System.Reflection;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
 global using System.Runtime.InteropServices.Marshalling;
 global using System.Threading;
 
+global using Ubiquity.NET.Extensions;
 global using Ubiquity.NET.InteropHelpers;
 global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
+global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 global using Ubiquity.NET.Llvm.Interop.Properties;
 
 // Extended C API

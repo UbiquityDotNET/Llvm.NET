@@ -4,110 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>Code gen target to register/initialize</summary>
-    public enum CodeGenTarget
-    {
-        /// <summary>Native target of the host system, generally used for JIT execution</summary>
-        Native,
-
-        /// <summary>ARM AArch64 target</summary>
-        AArch64,
-
-        /// <summary>AMD GPU target</summary>
-        AMDGPU,
-
-        /// <summary>ARM 32 bit targets</summary>
-        ARM,
-
-        /// <summary>AVR target</summary>
-        AVR,
-
-        /// <summary>BPF target</summary>
-        BPF,
-
-        /// <summary>Hexagon target</summary>
-        Hexagon,
-
-        /// <summary>Lanai target</summary>
-        Lanai,
-
-        /// <summary>LoongArch target</summary>
-        LoongArch,
-
-        /// <summary>MIPS target</summary>
-        MIPS,
-
-        /// <summary>MSP430 target</summary>
-        MSP430,
-
-        /// <summary>NVIDIA PTX target</summary>
-        NvidiaPTX,
-
-        /// <summary>PowerPV target</summary>
-        PowerPC,
-
-        /// <summary>RISC-V target</summary>
-        RISCV,
-
-        /// <summary>Sparc target</summary>
-        Sparc,
-
-        /// <summary>SPIR-V target</summary>
-        SpirV,
-
-        /// <summary>SystemZ target</summary>
-        SystemZ,
-
-        /// <summary>WebAssembly target</summary>
-        WebAssembly,
-
-        /// <summary>VE target</summary>
-        VE,
-
-        /// <summary>X86 target</summary>
-        X86,
-
-        /// <summary>XCore target</summary>
-        XCore,
-
-        /// <summary>All available targets</summary>
-        All = int.MaxValue
-    }
-
-    /// <summary>ResolverTarget tools to register/enable</summary>
-    [Flags]
-    public enum TargetRegistration
-    {
-        /// <summary>Register nothing</summary>
-        None = 0x00,
-
-        /// <summary>Register the ResolverTarget class</summary>
-        Target = 0x01,
-
-        /// <summary>Register the ResolverTarget info for the target</summary>
-        TargetInfo = 0x02,
-
-        /// <summary>Register the target machine(s) for a target</summary>
-        TargetMachine = 0x04,
-
-        /// <summary>Registers the assembly source code generator for a target</summary>
-        AsmPrinter = 0x08,
-
-        /// <summary>Registers the Disassembler for a target</summary>
-        Disassembler = 0x10,
-
-        /// <summary>Registers the assembly source parser for a target</summary>
-        AsmParser = 0x20,
-
-        /// <summary>Registers all the code generation components</summary>
-        CodeGen = Target | TargetInfo | TargetMachine,
-
-        /// <summary>Registers all components</summary>
-        All = CodeGen | AsmPrinter | Disassembler | AsmParser
-    }
-
     /// <summary>Interface to the core LLVM library itself</summary>
     /// <remarks>
     /// When this instance is disposed the LLVM libraries are no longer usable in the process
@@ -124,6 +24,8 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="target">ResolverTarget architecture to register/initialize</param>
         /// <param name="registrations">Flags indicating which components for the target to register/enable</param>
         /// <
-        void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
+        void RegisterTarget(LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations = LibLLVMTargetRegistrationKind.TargetRegistration_CodeGen);
+
+        ImmutableArray<LibLLVMCodeGenTarget> Targets {get;}
     }
 }
