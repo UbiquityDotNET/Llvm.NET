@@ -56,11 +56,10 @@ namespace Ubiquity.NET.Llvm.Interop
             IsOwned = ownsHandle;
 
 #if DEBUG
-
             // In a debug build capture the stack for creation of this instance
             // that way it is still available if there is an access violation
             // in the dispose. Usually such a thing indicates the source did NOT
-            // properly apply a using. So it is VERY helpful in debugging odf finalizer
+            // properly apply a using. So it is VERY helpful in debugging of finalizer
             // failures to locate the source.
             CaptureStack();
 #endif

@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             // NOTE: The AOT compiler will know what type T is here AND it can validate it implements
             //       the static method of the interface, therefore NO BOXING occurs and this is all
-            //       a likely candidate for inlining.
+            //       a likely candidate for inlining. (Generated IL uses a constrained prefix instruction)
             return T.FromABI( abiValue );
         }
 

@@ -34,11 +34,6 @@ namespace Ubiquity.NET.InteropHelpers
         /// <see cref="System.Text.Encoding.UTF8"/> even on Windows. So that is the assumed encoding used here.
         /// </note>
         /// </remarks>
-        /// <ImplementationNotes>
-        /// This is the one place that deals with the encoding for ALL of the interop library. Nothing in the code base should
-        /// use any other form of string marshalling, conversion or encoding. This doesn't matter much for most string consts,
-        /// but matters a LOT for symbol names etc... that a user might want to set.
-        /// </ImplementationNotes>
         public static Encoding Encoding { get; set; } = Encoding.UTF8;
 
         /// <summary>Creates a ReadOnlySpan from a null terminated native string</summary>

@@ -58,7 +58,7 @@ namespace Ubiquity.NET.Runtime.Utils
     /// does nothing of it's own beyond visiting each child. While that can be made to work in a language specific form
     /// it requires such a visitor to implement a "type" switch on the node and then call the correct Visit method for
     /// that type. This is tedious, error prone and performance overhead that is avoided if each node type contains a
-    /// redirecting implementations of the Accept methods.</para>
+    /// redirecting implementation of the Accept methods.</para>
     /// <para>An alternative is that each language specific node already contains a "kind" property (perhaps to make binary
     /// serialization more efficient.) Then no re-directing to a custom interface is needed as a switch on the "kind" can
     /// provide all the information needed to adjust the visit behavior. A number of possibilities exist for customization,
@@ -105,7 +105,7 @@ namespace Ubiquity.NET.Runtime.Utils
     ///     TResult? Visit( MyLangNode node, ref readonly TArg arg )
     ///     {
     ///         // Do something interesting with specific MyLangNode type for `node`
-    ///         // and input arg (if passing it to another function ise `in`). Then
+    ///         // and input arg (if passing it to another function use `in`). Then
     ///         // return the result...
     ///         return default;
     ///     }

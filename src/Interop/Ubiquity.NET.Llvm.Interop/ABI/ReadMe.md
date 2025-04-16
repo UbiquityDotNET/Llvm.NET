@@ -86,7 +86,7 @@ such things.
 
 #### Special support for SafeHandle arrays
 The built-in marshalling does NOT support arrays of SafeHandles as in parameters
-(retaining ownwerhsip [By conts ref semantics]) so that is provided as extensions in the
+(retaining ownwerhsip [By const ref semantics]) so that is provided as extensions in the
 `Ubiquity.NET.InteropHelpers.RefHandleMarshaller` class. 
 
 ## Explicit types

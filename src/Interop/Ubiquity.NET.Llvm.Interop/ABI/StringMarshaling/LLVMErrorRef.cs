@@ -17,7 +17,8 @@ namespace Ubiquity.NET.Llvm.Interop
     /// </remarks>
     /// <ImplementationNote>
     /// While this is a "handle" it is NOT a generated one as the behavior is VERY specialized. Thus, it lives in this
-    /// library so it can leverage the <see cref="ErrorMessageString"/> for release of any error messages materialized.
+    /// library so it can leverage the <see cref="ErrorMessageString"/> for well defined release pattern of any error
+    /// messages materialized. (<see cref="IDisposable"/>)
     /// </ImplementationNote>
     [SecurityCritical]
     public class LLVMErrorRef

@@ -30,6 +30,7 @@
     <PackageVersion Include="Antlr4.Runtime" Version="4.6.6" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
+
     <!-- Tests all use the same framework versions -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="MSTest.TestAdapter" Version="3.8.3" />

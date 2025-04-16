@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Extensions
     /// has sub-par performance as it needs to allocate the mutable form, add the members, then allocate
     /// the immutable form and COPY all the members. This includes the overhead of building and maintaining
     /// the hash codes for all the keys - just to copy it and destroy it... MUCH better performance is achieved
-    /// by building the immutable array directly then converting it into the final immutable form.
+    /// by building the dictionary directly then converting it into the final immutable form.
     /// </para>
     /// <para>This implementation is based on a post on StackOverflow by Ian Griffiths (updated for latest language
     /// and runtime version functionality). It provides collection initialization support for
@@ -61,6 +61,7 @@ namespace Ubiquity.NET.Extensions
         }
 
         /// <inheritdoc/>
+        /// <exception cref="NotImplementedException">Always; Do not use this method. It exists only to allow compile time initializer syntax.</exception>
         public IEnumerator GetEnumerator()
         {
             // Only implementing IEnumerable because collection initializer

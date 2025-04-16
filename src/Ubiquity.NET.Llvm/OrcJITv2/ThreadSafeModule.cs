@@ -77,9 +77,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull(context);
             ArgumentNullException.ThrowIfNull(module);
 
-            using var moduleRef = module.GetOwnedHandle();
-            LLVMOrcThreadSafeModuleRef retVal = LLVMOrcCreateNewThreadSafeModule(moduleRef, context.Handle);
-            moduleRef.SetHandleAsInvalid(); // ownership transferred to native; mark it as unusable
+            LLVMOrcThreadSafeModuleRef retVal = LLVMOrcCreateNewThreadSafeModule(module.GetOwnedHandle(), context.Handle);
+            module.InvalidateFromMove();
             return retVal;
         }
 

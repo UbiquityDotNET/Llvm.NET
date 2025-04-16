@@ -4,10 +4,11 @@
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>maps to LLVMBool in LLVM-C for methods that return 0 on success.</summary>
+    /// <summary>Maps to LLVMBool in LLVM-C for methods that return 0 on success.</summary>
     /// <remarks>
     /// This was hand added to help clarify use when a return value is not really
-    /// a bool but a status where (0==SUCCESS)
+    /// a bool but a status where (0==SUCCESS). Sadly, the LLVM API makes a lot of use
+    /// of this anti-pattern and it requires reading the docs/code to know which is which.
     /// </remarks>
     public readonly record struct LLVMStatus
     {

@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Runtime.Utils
     {
         /// <summary>Gets the complete collection of errors for this node and children</summary>
         /// <param name="node">Node to traverse for errors</param>
-        /// <remarks>Traverses the node hierarchy to find all error node at any depth</remarks>
+        /// <remarks>Traverses the node hierarchy to find all error nodes at any depth</remarks>
         /// <returns>Collection of errors found</returns>
         public static ImmutableArray<ErrorNode> CollectErrors( this IAstNode node )
         {

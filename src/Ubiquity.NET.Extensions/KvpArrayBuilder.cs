@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Extensions
     /// the hash codes for the keys, if they are not used. (As may be the case if the list is provided to
     /// native interop). The normal behavior of building an <see cref="ImmutableDictionary{TKey, TValue}"/> would
     /// at a minimum incur the cost of allocation and computation of the hash code for each key.
-    /// MUCH better performance is achieved by building the immutable array directly then converting it into the
+    /// MUCH better performance is achieved by building the array via a builder then converting it into the
     /// final immutable form.
     /// </para>
     /// <para>This implementation is based on a post on StackOverflow by Ian Griffiths (updated for latest language
@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Extensions
     /// </remarks>
     /// <seealso href="https://stackoverflow.com/questions/24033629/how-can-i-create-a-new-instance-of-immutabledictionary"/>
     [SuppressMessage( "Design", "CA1010:Generic interface should also be implemented", Justification = "IEnumerable is unused but must exist to support collection initializers" )]
-    [SuppressMessage( "Naming", "CA1710:Identifiers should have correct suffix", Justification = "It is the correct suffix" )]
+    [SuppressMessage( "Naming", "CA1710:Identifiers should have correct suffix", Justification = "It is the correct suffix; This is NOT a collection it's a builder" )]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Equality not relevant for a builder" )]
     public readonly struct KvpArrayBuilder<TKey, TValue>()
         : IEnumerable
@@ -54,7 +54,7 @@ namespace Ubiquity.NET.Extensions
         /// (In some scenarios this may be desirable, but in mist it is not.) The important point on this is
         /// that it is ***NOT*** checked here.
         /// </note></remarks>
-        [SuppressMessage( "Design", "CA1044:Properties should not be write only", Justification = "This type is ONLY for building immutable dictionaries" )]
+        [SuppressMessage( "Design", "CA1044:Properties should not be write only", Justification = "This type is ONLY for building immutable arrays" )]
         public TValue this[TKey key]
         {
             set => Add( key, value );
@@ -68,6 +68,7 @@ namespace Ubiquity.NET.Extensions
         }
 
         /// <inheritdoc/>
+        /// <exception cref="NotImplementedException">Always; Do not use this method. It exists only to allow compile time initializer syntax.</exception>
         public IEnumerator GetEnumerator()
         {
             // Only implementing IEnumerable because collection initializer

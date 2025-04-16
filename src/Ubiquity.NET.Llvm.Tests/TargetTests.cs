@@ -41,7 +41,6 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsTrue( target.HasTargetMachine );
         }
 
-#if TEST_AVAILABLE_TARGETS
         // This test is broken as it assumes ALL targets are available. But reality is the API
         // ONLY takes into account the registered targets, which is based on the native library
         // used. Thus, the list changes based on what is registered. And once it is loaded, it
@@ -57,6 +56,7 @@ namespace Ubiquity.NET.Llvm.UT
             GenerateExpectedTargets( );
 
             Assert.IsNotNull( Target.AvailableTargets );
+#if TEST_AVAILABLE_TARGETS
             int foundTargets = 0;
             foreach( var target in Target.AvailableTargets )
             {
@@ -71,8 +71,8 @@ namespace Ubiquity.NET.Llvm.UT
             }
 
             Assert.AreEqual( TargetInfo.ExpectedTargets.Count, foundTargets );
-        }
 #endif
+        }
 
         internal static TargetMachine GetTargetMachine( )
         {

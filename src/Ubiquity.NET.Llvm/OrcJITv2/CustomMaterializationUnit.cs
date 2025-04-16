@@ -29,8 +29,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// <remarks>
     /// This is used for the bulk of "Lazy" JIT support. However, it is important to
     /// note that this class does not (and cannot) retain any instance data. All
-    /// data used by the actual materialization is owned by the provided delegates or the
-    /// <see cref="IDisposable"/> implementation.
+    /// data used by the actual materialization is owned by the provided delegates.
     /// </remarks>
     public sealed class CustomMaterializationUnit
         : MaterializationUnit
