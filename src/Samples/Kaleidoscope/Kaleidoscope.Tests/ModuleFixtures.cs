@@ -7,7 +7,7 @@ using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm;
 
 namespace Kaleidosocope.Tests
 {
