@@ -206,7 +206,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="lhs">left hand side operand</param>
         /// <param name="rhs">right hand side operand</param>
         /// <returns><see cref="Value"/> for the instruction</returns>
-        public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildUDiv, lhs, rhs );
+        public Value SDiv( Value lhs, Value rhs ) => BuildBinOp( LLVMBuildSDiv, lhs, rhs );
 
         /// <summary>Creates an integer unsigned remainder operator</summary>
         /// <param name="lhs">left hand side operand</param>
