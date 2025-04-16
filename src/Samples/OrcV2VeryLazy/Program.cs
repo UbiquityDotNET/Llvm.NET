@@ -105,13 +105,16 @@ internal class Program
                 return;
             }
 
-            // apply the data Layout
-            module.WithPerThreadModule(ApplyDataLayout);
+            using(module)
+            {
+                // apply the data Layout
+                module.WithPerThreadModule(ApplyDataLayout);
 
-            // Finally emit the module to the JIT.
-            // This transfers ownership of both the responsibility AND the module
-            // to the native LLVM JIT.
-            jit.TransformLayer.Emit(r, module);
+                // Finally emit the module to the JIT.
+                // This transfers ownership of both the responsibility AND the module
+                // to the native LLVM JIT.
+                jit.TransformLayer.Emit(r, module);
+            }
 
             ErrorInfo ApplyDataLayout(IModule module)
             {
@@ -131,7 +134,8 @@ internal class Program
     {
         using var threadSafeContext = new ThreadSafeContext();
         var ctx = threadSafeContext.PerThreadContext;
-        return new ThreadSafeModule( threadSafeContext, ctx.ParseModule( src, name ) );
+        using var module = ctx.ParseModule( src, name );
+        return new ThreadSafeModule( threadSafeContext, module);
     }
 
     const string FooBodySymbolName = "foo_body";
