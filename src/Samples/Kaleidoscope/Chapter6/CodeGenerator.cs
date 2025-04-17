@@ -145,9 +145,9 @@ namespace Kaleidoscope.Chapter6
             case BuiltInOperatorKind.Less:
             {
                 var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
-                                                        , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                        , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                        ).RegisterName( "cmptmp" );
+                                                    , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                                    , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                                    ).RegisterName( "cmptmp" );
                 return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
                                          .RegisterName( "booltmp" );
             }

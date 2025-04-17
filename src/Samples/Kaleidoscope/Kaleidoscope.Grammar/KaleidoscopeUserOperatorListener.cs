@@ -7,7 +7,7 @@ using Kaleidoscope.Grammar.ANTLR;
 
 namespace Kaleidoscope.Grammar
 {
-    // Parse listener to handle updating runtime state on successfully parsing a user defined
+    // Parse listener to handle updating runtime state upon successfully parsing a user defined
     // operator definition.
     internal class KaleidoscopeUserOperatorListener
         : KaleidoscopeBaseListener
