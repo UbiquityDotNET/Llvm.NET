@@ -7,6 +7,7 @@
 using System.Runtime.InteropServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
 
@@ -15,10 +16,10 @@ namespace Ubiquity.NET.Llvm.Interop.UT
     [TestClass]
     public class DataLayoutTests
     {
-        [TestMethod]
+        [DistinctProcessTestMethod]
         public void TestParseKnownBad( )
         {
-            using var library = Library.InitializeLLVM();
+            using var library = Library.InitializeLLVM(LibLLVMCodeGenTarget.CodeGenTarget_ARM);
             var utf8Span = "badlayout"u8;
             unsafe
             {

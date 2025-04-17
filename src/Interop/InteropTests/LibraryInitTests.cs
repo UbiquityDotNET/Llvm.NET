@@ -7,23 +7,24 @@
 using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
     [TestClass]
     public class LibraryInitTests
     {
-        [TestMethod]
+        [DistinctProcessTestMethod]
         public void TestLibraryInit( )
         {
-            using var lib = Library.InitializeLLVM(CodeGenTarget.Native);
+            using var lib = Library.InitializeLLVM(LibLLVMCodeGenTarget.CodeGenTarget_Native);
             Assert.IsNotNull(lib);
         }
 
-        [TestMethod]
+        [DistinctProcessTestMethod]
         public void TestLibraryReInit( )
         {
-            using(var lib = Library.InitializeLLVM(CodeGenTarget.Native))
+            using(var lib = Library.InitializeLLVM(LibLLVMCodeGenTarget.CodeGenTarget_Native))
             {
                 Assert.IsNotNull(lib);
             }
@@ -37,16 +38,16 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 // the library with a different one, or even unload and then
                 // reload again as it might land the methods at a different
                 // address.
-                using var lib = Library.InitializeLLVM( CodeGenTarget.ARM );
+                using var lib = Library.InitializeLLVM( LibLLVMCodeGenTarget.CodeGenTarget_ARM );
             } );
         }
 
-        [TestMethod]
+        [DistinctProcessTestMethod]
         public void TestLibraryInitWithAllFails( )
         {
             _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(()=>
             {
-                using var lib = Library.InitializeLLVM( CodeGenTarget.All );
+                using var lib = Library.InitializeLLVM( LibLLVMCodeGenTarget.CodeGenTarget_All );
             } );
         }
     }
