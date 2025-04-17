@@ -89,19 +89,9 @@ namespace Kaleidoscope.Grammar
             {
                 var errCollector = new ParseErrorCollector();
 
-                var lexer = new KaleidoscopeLexer( input, GlobalState.LanguageLevel, errCollector );
+                (KaleidoscopeParser antlrParser, IParseTree parseTree) = CoreParse( input, mode, errCollector );
 
-                var tokenStream = new CommonTokenStream( lexer );
-
-                var antlrParser = new KaleidoscopeParser( tokenStream
-                                                        , GlobalState
-                                                        , errCollector
-                                                        , Diagnostics.HasFlag( DiagnosticRepresentations.DebugTraceParser )
-                                                        );
-
-                var parseTree = mode == ParseMode.ReplLoop ? ( IParseTree )antlrParser.repl( ) : antlrParser.fullsrc( );
-
-                if( Diagnostics.HasFlag( DiagnosticRepresentations.Xml ) )
+                if(Diagnostics.HasFlag( DiagnosticRepresentations.Xml ))
                 {
                     var docListener = new XDocumentListener( antlrParser );
                     ParseTreeWalker.Default.Walk( docListener, parseTree );
@@ -109,7 +99,7 @@ namespace Kaleidoscope.Grammar
                 }
 
                 IAstNode retVal;
-                if( errCollector.ErrorNodes.Length > 0 )
+                if(errCollector.ErrorNodes.Length > 0)
                 {
                     retVal = new RootNode( default, errCollector.ErrorNodes );
                 }
@@ -119,18 +109,18 @@ namespace Kaleidoscope.Grammar
                     retVal = astBuilder.Visit( parseTree );
                 }
 
-                if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
+                if(Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ))
                 {
                     // both forms share the same initial DirectedGraph model as the formats are pretty similar
                     var dgmlGenerator = new DgmlGenerator( antlrParser );
                     ParseTreeWalker.Default.Walk( dgmlGenerator, parseTree );
 
-                    if( Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) )
+                    if(Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ))
                     {
                         dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
                     }
 
-                    if( Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ) )
+                    if(Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ))
                     {
                         dgmlGenerator.Graph.WriteAsBlockDiag( "ParseTree.diag" );
                     }
@@ -142,6 +132,23 @@ namespace Kaleidoscope.Grammar
             {
                 return new RootNode( default, new ErrorNode( default, "Parse canceled" ) );
             }
+        }
+
+        private (KaleidoscopeParser, IParseTree) CoreParse( char[] input, ParseMode mode, ParseErrorCollector errCollector)
+        {
+            var lexer = new KaleidoscopeLexer( input, GlobalState.LanguageLevel, errCollector );
+
+            var tokenStream = new CommonTokenStream( lexer );
+
+            var antlrParser = new KaleidoscopeParser( tokenStream
+                                                    , GlobalState
+                                                    , errCollector
+                                                    , Diagnostics.HasFlag( DiagnosticRepresentations.DebugTraceParser )
+                                                    );
+
+            var parseTree = mode == ParseMode.ReplLoop ? (IParseTree)antlrParser.repl() : antlrParser.fullsrc();
+
+            return (antlrParser, parseTree);
         }
     }
 }
