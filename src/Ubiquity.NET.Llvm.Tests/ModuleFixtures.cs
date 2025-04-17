@@ -24,6 +24,9 @@ namespace Ubiquity.NET.Llvm.UT
             // Native is assumed, Tests also use Cortex-M3; so load that variant of
             // the interop APIs.
             LibLLVM = Library.InitializeLLVM( CodeGenTarget.ARM );
+            Assert.AreEqual(2, LibLLVM.Targets.Length);
+            Assert.AreEqual(Library.NativeTarget, LibLLVM.Targets[0]);
+            Assert.AreEqual(CodeGenTarget.ARM, LibLLVM.Targets[1]);
             LibLLVM.RegisterTarget( CodeGenTarget.All );
         }
 

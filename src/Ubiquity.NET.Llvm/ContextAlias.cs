@@ -105,12 +105,7 @@ namespace Ubiquity.NET.Llvm
             };
         }
 
-        public IFunctionType GetFunctionType(ITypeRef returnType, params ITypeRef[] args)
-        {
-            return GetFunctionType( isVarArgs: false, returnType: returnType, args: args );
-        }
-
-        public IFunctionType GetFunctionType(ITypeRef returnType, IEnumerable<ITypeRef> args)
+        public IFunctionType GetFunctionType(ITypeRef returnType, params IEnumerable<ITypeRef> args)
         {
             return GetFunctionType( isVarArgs: false, returnType, args );
         }
@@ -169,13 +164,13 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentNullException( nameof( retType ), Resources.Return_type_does_not_have_debug_information );
             }
 
-            var nativeArgTypes = new List<ITypeRef>( );
-            var debugArgTypes = new List<DIType?>( );
+            // Validate enumerable elements to ensure they are all valid and won't crash.
             var msg = new StringBuilder( Resources.One_or_more_parameter_types_are_not_valid );
             bool hasParamErrors = false;
 
             foreach(var indexedPair in argTypes.Select( (t, i) => new { Type = t, Index = i } ))
             {
+                // If any element of the parameter types enumerable is null, that's an error
                 if(indexedPair.Type == null)
                 {
                     msg.AppendFormat( CultureInfo.CurrentCulture, Resources.Argument_0_is_null, indexedPair.Index );
@@ -183,30 +178,24 @@ namespace Ubiquity.NET.Llvm
                 }
                 else
                 {
-                    nativeArgTypes.Add( indexedPair.Type.NativeType );
-                    debugArgTypes.Add( indexedPair.Type.DebugInfoType );
-                    if(indexedPair.Type.HasDebugInfo())
+                    // if any element is missing debug information - that's an error
+                    if(!indexedPair.Type.HasDebugInfo())
                     {
-                        continue;
+                        msg.AppendFormat( CultureInfo.CurrentCulture, Resources.Argument_0_does_not_contain_debug_type_information, indexedPair.Index );
+                        hasParamErrors = true;
                     }
-
-                    msg.AppendFormat( CultureInfo.CurrentCulture, Resources.Argument_0_does_not_contain_debug_type_information, indexedPair.Index );
-                    hasParamErrors = true;
                 }
             }
 
-            // if any parameters have errors, then provide a hopefully helpful message indicating which one(s)
+            // if any parameters have errors, then provide a, hopefully, helpful message indicating which one(s)
             if(hasParamErrors)
             {
                 throw new ArgumentException( msg.ToString(), nameof( argTypes ) );
             }
 
-            var llvmType = GetFunctionType( isVarArg , retType.NativeType, nativeArgTypes);
-
-            var diType = diBuilder.CreateSubroutineType( 0, retType.DebugInfoType, debugArgTypes );
-            Debug.Assert( !diType.IsTemporary, Resources.Assert_Should_have_a_valid_non_temp_type_by_now );
-
-            return new DebugFunctionType( llvmType, diType );
+            // Input validation complete, now do the actual work...
+            var llvmType = GetFunctionType( isVarArg , retType, argTypes);
+            return new DebugFunctionType(llvmType, in diBuilder, DebugInfoFlags.None, retType, argTypes);
         }
 
         public Constant CreateConstantStruct(bool packed, params IEnumerable<Constant> values)
@@ -382,7 +371,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentNullException.ThrowIfNull( intType );
 
-            if(intType.Context != this)
+            if(!intType.Context.Equals(this))
             {
                 throw new ArgumentException( Resources.Cannot_mix_types_from_different_contexts, nameof( intType ) );
             }

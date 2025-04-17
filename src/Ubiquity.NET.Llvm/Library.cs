@@ -10,6 +10,8 @@ of this library from direct dependencies on the interop library. If a consumer h
 the low level interop (Test code sometimes does) it must explicitly reference it.
 */
 
+using System.Collections.Immutable;
+
 using InteropCodeGenTarget = Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.LibLLVMCodeGenTarget;
 using InteropItf = Ubiquity.NET.Llvm.Interop.ILibLlvm;
 using InteropLib = Ubiquity.NET.Llvm.Interop.Library;
@@ -26,6 +28,9 @@ namespace Ubiquity.NET.Llvm
         {
             ItfImpl.Dispose();
         }
+
+        /// <inheritdoc/>
+        public ImmutableArray<CodeGenTarget> Targets => [ .. ItfImpl.Targets.Cast<CodeGenTarget>() ];
 
         /// <inheritdoc/>
         public void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All)
@@ -58,6 +63,9 @@ namespace Ubiquity.NET.Llvm
         {
             return new Library(InteropLib.InitializeLLVM((InteropCodeGenTarget)target));
         }
+
+        /// <summary>Gets the native target for the current runtime</summary>
+        public static CodeGenTarget NativeTarget => (CodeGenTarget)RuntimeInformation.ProcessArchitecture.GetLibLLVMTarget();
 
         // "MOVE" construction, this instance takes over responsibility
         // of calling dispose.

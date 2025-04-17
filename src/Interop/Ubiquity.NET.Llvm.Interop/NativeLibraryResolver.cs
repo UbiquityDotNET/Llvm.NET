@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // to allow resolving to the correct library (Native is always an option)
             if(target == LibLLVMCodeGenTarget.CodeGenTarget_Native)
             {
-                target = GetNativeTarget();
+                target = RuntimeInformation.ProcessArchitecture.GetLibLLVMTarget();
             }
 
             // Only setup an import resolver once per process. Multiple attempts would result in an exception.
@@ -136,23 +136,6 @@ namespace Ubiquity.NET.Llvm.Interop
                 // No finalizers will occur after this, it's a HARD termination of the app.
                 Environment.FailFast( $"Unhandled exception in {nameof( FatalErrorHandler )}.", ex );
             }
-        }
-
-        private static LibLLVMCodeGenTarget GetNativeTarget( )
-        {
-            return RuntimeInformation.ProcessArchitecture switch
-            {
-                Architecture.X86 or
-                Architecture.X64 => LibLLVMCodeGenTarget.CodeGenTarget_X86, // 64 vs 32 bit distinction is a CPU/feature of the target
-                Architecture.Arm or
-                Architecture.Armv6 => LibLLVMCodeGenTarget.CodeGenTarget_ARM, // Distinction is a CPU/Feature of the target
-                Architecture.Arm64 => LibLLVMCodeGenTarget.CodeGenTarget_AArch64,
-                Architecture.Wasm => LibLLVMCodeGenTarget.CodeGenTarget_WebAssembly,
-                Architecture.LoongArch64 => LibLLVMCodeGenTarget.CodeGenTarget_LoongArch,
-                Architecture.Ppc64le => LibLLVMCodeGenTarget.CodeGenTarget_PowerPC,
-                Architecture.RiscV64 => LibLLVMCodeGenTarget.CodeGenTarget_RISCV, // 64 vs 32 bit distinction is a CPU/Feature of the target
-                _ => throw new NotSupportedException( "Native code gen target is unknown" )
-            };
         }
     }
 }

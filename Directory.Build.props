@@ -59,9 +59,8 @@
             <PropertyGroup>
                 <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
                 <Determenistic>true</Determenistic>
-                <IsTestProject>$(MSBuildProjectName.Contains('UT'))</IsTestProject>
                 <Nullable>enable</Nullable>
-		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+                <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
                 <!--
                 DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't
                 support it or uses a different version. Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.

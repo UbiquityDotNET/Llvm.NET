@@ -25,18 +25,6 @@ namespace Ubiquity.NET.Llvm.Types
         /// with the type. This, at least, will provide it if available.
         /// </remarks>
         ITypeRef? ElementType { get; init; }
-
-        /// <summary>Gets a value indicating whether this pointer is opaque</summary>
-        /// <remarks>
-        /// An opaque pointer is one where the <see cref="IPointerType.ElementType"/> is <see langword="null"/>.
-        /// This is normal for LLVM now. However, it makes for more complicated code generation. Thus, the
-        /// types in this wrapper try to keep track of the type of data a pointer is pointing to. This isn't
-        /// always plausible so it might be opaque. This is normally true for anything retrieved from LLVM IR
-        /// but is not normal for anything that creates or clones the IR. Since the pointer type creation is
-        /// done as a method of the thing being pointed to this information is "attached" to the pointer so
-        /// that the <see cref="IPointerType.ElementType"/> is not <see langword="null"/>.
-        /// </remarks>
-        bool IsOpaque => ElementType is null;
     }
 
     /// <summary>Utility class to provide extensions for <see cref="IPointerType"/></summary>
@@ -58,11 +46,17 @@ namespace Ubiquity.NET.Llvm.Types
         /// but is not normal for anything that creates or clones the IR. Since the pointer type creation is
         /// done as a method of the thing being pointed to this information is "attached" to the pointer so
         /// that the <see cref="IPointerType.ElementType"/> is not <see langword="null"/>.
+        /// <note Type="note">
+        /// until C# 14 [.Net 10] is supported this is an extension method. Once C#14 is available
+        /// then this can become a property. Default methods on the interface have too many restrictions
+        /// (mostly egregious is the need to "box"/cast to the explicit interface for the lookup to find
+        /// the method).
+        /// </note>
         /// </remarks>
-        public static bool IsOpaquePtr(this IPointerType ptr)
+        public static bool IsOpaque(this IPointerType ptr)
         {
             ArgumentNullException.ThrowIfNull(ptr);
-            return ptr.IsOpaque;
+            return ptr.ElementType is null;
         }
     }
 }

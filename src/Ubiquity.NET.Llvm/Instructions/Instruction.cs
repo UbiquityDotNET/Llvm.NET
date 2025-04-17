@@ -502,6 +502,20 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets a, potentially empty, collection of successor blocks for this instruction</summary>
         public IOperandCollection<BasicBlock> Successors { get; }
 
+        /// <summary>Gets an enumeration of all the debug records associated with this instruction</summary>
+        public IEnumerable<DebugRecord> DebugRecords
+        {
+            get
+            {
+                DebugRecord record = new(LLVMGetFirstDbgRecord(Handle));
+                while(!record.IsNull)
+                {
+                    yield return record;
+                    record = record.NextRecord;
+                }
+            }
+        }
+
         internal Instruction( LLVMValueRef valueRef )
             : base( valueRef )
         {

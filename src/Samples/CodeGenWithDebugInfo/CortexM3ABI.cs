@@ -6,8 +6,10 @@
 
 using System;
 using System.Collections.Immutable;
+using System.Diagnostics;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
@@ -18,14 +20,15 @@ namespace CodeGenWithDebugInfo
     {
         public CortexM3ABI( )
         {
-            LLvmLib = Library.InitializeLLVM(CodeGenTarget.ARM);
+            LlvmLib = Library.InitializeLLVM(CodeGenTarget.ARM);
+            LlvmLib.RegisterTarget(CodeGenTarget.All);
         }
 
         public string ShortName => "M3";
 
         public void Dispose()
         {
-            LLvmLib.Dispose();
+            LlvmLib.Dispose();
         }
 
         public TargetMachine CreateTargetMachine()
@@ -40,8 +43,13 @@ namespace CodeGenWithDebugInfo
                                            );
         }
 
-        public void AddAttributesForByValueStructure( Function function, int paramIndex )
+        public void AddAttributesForByValueStructure( Function function, DebugFunctionType debugSig, int paramIndex )
         {
+            ArgumentNullException.ThrowIfNull(function);
+            ArgumentNullException.ThrowIfNull(debugSig);
+            ArgumentOutOfRangeException.ThrowIfNotEqual(debugSig.ParameterTypes.Count, function.Parameters.Count);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(paramIndex, function.Parameters.Count);
+
             // ByVal pointers indicate by value semantics. The actual LLVM semantics are along the lines of
             // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
             // (src: https://github.com/ldc-developers/ldc/issues/937 ) [e.g. caller copies byval args]
@@ -54,9 +62,13 @@ namespace CodeGenWithDebugInfo
             // into the front-end. Sadly, the ABI calling convention details are left to the source generator so each one
             // needs to know ALL the gory details of the ABI. [There is some work to generalize what Clang does and pull
             // that down to LLVM proper, but that hasn't materialized yet...]
-            if( function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct )
+            DebugPointerType? ptrType = debugSig.ParameterTypes[ paramIndex ] is DebugType<DebugPointerType, DIDerivedType> debugType
+                                        ? debugType.NativeType
+                                        : null;
+
+            if(ptrType is null || ptrType.IsOpaque() || !ptrType.ElementType!.IsStruct )
             {
-                throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure that is NOT opaque" );
+                throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }
 
             var layout = function.ParentModule.Layout;
@@ -92,7 +104,7 @@ namespace CodeGenWithDebugInfo
                 ctx.CreateAttribute( "use-soft-float", "false" )
             ];
 
-        private readonly ILibLlvm LLvmLib;
+        private readonly ILibLlvm LlvmLib;
 
         private const string Cpu = "cortex-m3";
         private const string Features = "+hwdiv,+strict-align,+thumb-mode";

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Immutable;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Values;
 
 namespace CodeGenWithDebugInfo
@@ -30,7 +31,13 @@ namespace CodeGenWithDebugInfo
 
         ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx );
 
-        void AddAttributesForByValueStructure( Function function, int paramIndex );
+        // NOTE: The debug form of the signature is needed to know the type of the pointer in the native sig
+        // Since the native sign rebuilds the types from information provided by the native LLVM code
+        // the element type of any pointers is lost (It's ALWAYS OPAQUE now..). While it is theoretically
+        // plausible to rebuild the debug information if available that's a lot of work not implemented
+        // in the LLVM libraries (especially when it is more useful to keep track of such things in the
+        // generating app)
+        void AddAttributesForByValueStructure( Function function, DebugFunctionType debugSig, int paramIndex );
 
         void AddModuleFlags( Module module );
 

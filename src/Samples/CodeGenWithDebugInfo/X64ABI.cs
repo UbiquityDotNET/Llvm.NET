@@ -8,6 +8,7 @@ using System;
 using System.Collections.Immutable;
 
 using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
@@ -19,6 +20,7 @@ namespace CodeGenWithDebugInfo
         public X64ABI( )
         {
             LlvmLib = Library.InitializeLLVM( CodeGenTarget.X86 );
+            LlvmLib.RegisterTarget(CodeGenTarget.All);
         }
 
         public string ShortName => "x86";
@@ -40,9 +42,17 @@ namespace CodeGenWithDebugInfo
                                            );
         }
 
-        public void AddAttributesForByValueStructure( Function function, int paramIndex )
+        public void AddAttributesForByValueStructure( Function function, DebugFunctionType debugSig, int paramIndex )
         {
-            if(function.Parameters[ paramIndex ].NativeType is not IPointerType ptrType || ptrType.IsOpaque || !ptrType.ElementType!.IsStruct)
+            ArgumentNullException.ThrowIfNull(function);
+            ArgumentNullException.ThrowIfNull(debugSig);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(paramIndex, function.Parameters.Count);
+
+            DebugPointerType? ptrType = debugSig.ParameterTypes[ paramIndex ] is DebugType<DebugPointerType, DIDerivedType> debugType
+                                        ? debugType.NativeType
+                                        : null;
+
+            if(ptrType is null || ptrType.IsOpaque() || !ptrType.ElementType!.IsStruct )
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }

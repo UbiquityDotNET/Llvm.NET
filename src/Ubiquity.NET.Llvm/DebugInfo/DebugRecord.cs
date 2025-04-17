@@ -18,14 +18,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public override string? ToString()
         {
-            return LLVMPrintDbgRecordToString(Handle);
+            return IsNull ? null : LLVMPrintDbgRecordToString(Handle);
         }
 
         /// <summary>Gets the next record in a sequence or a default constructed instance (<see cref="DebugRecord.IsNull"/> is <see langword="true"/>)</summary>
-        public DebugRecord NextRecord => Handle.IsNull ? default : new(LLVMGetNextDbgRecord(Handle));
+        public DebugRecord NextRecord => IsNull ? default : new(LLVMGetNextDbgRecord(Handle));
 
         /// <summary>Gets the previous record in a sequence or a default constructed instance (<see cref="DebugRecord.IsNull"/> is <see langword="true"/>)</summary>
-        public DebugRecord PreviousRecord => Handle.IsNull ? default : new(LLVMGetPreviousDbgRecord(Handle));
+        public DebugRecord PreviousRecord => IsNull ? default : new(LLVMGetPreviousDbgRecord(Handle));
 
         // TODO account for sub types - at least DbgLabelRecord and DbgVariableRecord are known...
         internal DebugRecord(LLVMDbgRecordRef handle)

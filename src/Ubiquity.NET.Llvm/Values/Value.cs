@@ -92,20 +92,6 @@ namespace Ubiquity.NET.Llvm.Values
             LLVMReplaceAllUsesWith( Handle, other.Handle );
         }
 
-        /// <summary>Gets an enumeration of all the debug records associated with this value</summary>
-        public IEnumerable<DebugRecord> DebugRecords
-        {
-            get
-            {
-                DebugRecord record = new(LLVMGetFirstDbgRecord(Handle));
-                while(!record.IsNull)
-                {
-                    yield return record;
-                    record = record.NextRecord;
-                }
-            }
-        }
-
         internal Value( LLVMValueRef valueRef )
         {
             if( valueRef == default )

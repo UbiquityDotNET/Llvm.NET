@@ -5,54 +5,43 @@
 .PARAMETER Configuration
     This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
 
-.PARAMETER AllowVsPreReleases
-    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
-    useful when adding support for new versions during the pre-release stages.
-
 .PARAMETER FullInit
     Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
     as well as writes details of the initialization to the information and verbose streams.
 #>
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
     [switch]$FullInit
 )
 
 try
 {
     . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
 
-    $testsFailed = $false
-
-    Write-Information 'Running Interop tests...'
-    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Interop\InteropTests\InteropTests.csproj')
-
-    Write-Information 'Running Core library tests...'
-    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.Tests\Ubiquity.NET.Llvm.Tests.csproj')
-
-    Write-Information 'Running JIT library tests...'
-    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'src\Ubiquity.NET.Llvm.JIT.Tests\Ubiquity.NET.Llvm.JIT.Tests.csproj')
-
-    Write-Information 'Running tests for Kaleidoscope Samples...'
-    $testsFailed = $testsFailed -or (Invoke-DotNetTest $buildInfo 'Samples\Kaleidoscope\Kaleidoscope.Tests\Kaleidoscope.Tests.csproj')
-
-    Write-Information 'Running sample app for .NET Core'
-    Push-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\CodeGenWithDebugInfo\Release\net9.0')
+    Push-Location $BuildInfo["SrcRootPath"]
     try
     {
-        dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $buildInfo['TestResultsPath']
-        $testsFailed = $testsFailed -or ($LASTEXITCODE -ne 0)
+        Invoke-External dotnet test Ubiquity.NET.Llvm.slnx '-tl:off' '--logger:trx' '--no-build' '-s' '.\x64.runsettings'
     }
     finally
     {
         Pop-Location
     }
 
-    if($testsFailed)
+    # ensure the samples run - output not validated but they need to compile and run without crashing
+    Write-Information 'Running sample apps for .NET Core'
+    Push-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\CodeGenWithDebugInfo\Release\net9.0')
+    try
     {
-        throw "One or more tests failed - Build should fail"
+        Invoke-External dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $buildInfo['TestResultsPath']
+
+        Set-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\OrcV2VeryLazy\Release\net9.0')
+        Invoke-External dotnet OrcV2VeryLazy.dll
+    }
+    finally
+    {
+        Pop-Location
     }
 }
 catch

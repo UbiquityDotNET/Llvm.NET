@@ -42,10 +42,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="retType">Return type for the function</param>
         /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
         public DebugFunctionType( IFunctionType llvmType
-                                ,  ref readonly DIBuilder diBuilder
+                                , ref readonly DIBuilder diBuilder
                                 , DebugInfoFlags debugFlags
                                 , IDebugType<ITypeRef, DIType> retType
-                                , params IDebugType<ITypeRef, DIType>[ ] argTypes
+                                , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                 )
             : base( llvmType.ThrowIfNull()
                   , diBuilder.CreateSubroutineType( debugFlags
@@ -54,24 +54,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                   )
                   )
         {
+            ReturnType = retType;
+            ParameterTypes = argTypes.ToList().AsReadOnly();
         }
 
         /// <inheritdoc/>
         public bool IsVarArg => NativeType.IsVarArg;
 
         /// <inheritdoc/>
-        public ITypeRef ReturnType => NativeType.ReturnType;
+        public ITypeRef ReturnType { get; }
 
         /// <inheritdoc/>
-        public IReadOnlyList<ITypeRef> ParameterTypes => NativeType.ParameterTypes;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DebugFunctionType"/> class from an LLVM type and <see cref="DISubroutineType"/></summary>
-        /// <param name="rawType">Raw native type</param>
-        /// <param name="sub">Debug information to bind with the native type</param>
-        internal DebugFunctionType( IFunctionType rawType, DISubroutineType sub )
-            : base( rawType, sub )
-        {
-        }
+        public IReadOnlyList<ITypeRef> ParameterTypes { get; }
     }
 }

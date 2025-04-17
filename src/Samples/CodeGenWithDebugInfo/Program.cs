@@ -246,8 +246,8 @@ namespace CodeGenWithDebugInfo
                                                  .AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoUnwind, AttributeKind.NoInline, AttributeKind.OptimizeNone )
                                                  .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
 
-            Debug.Assert( !fooPtr.IsOpaquePtr(), "Expected the debug info for a pointer was created with a valid ElementType");
-            abi.AddAttributesForByValueStructure( copyFunc, 0 );
+            Debug.Assert( !fooPtr.IsOpaque(), "Expected the debug info for a pointer was created with a valid ElementType");
+            abi.AddAttributesForByValueStructure( copyFunc, copySig, 0 );
             return copyFunc;
         }
         #endregion

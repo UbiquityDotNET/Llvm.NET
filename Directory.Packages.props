@@ -19,7 +19,7 @@
   </ItemGroup>
   <!--
     Package versions made consistent across all packages referenced in this repository
-    -->
+   -->
   <ItemGroup>
     <PackageVersion Include="Polyfill" Version="7.26.0" />
     <PackageVersion Include="System.IO.Hashing" Version="9.0.3" />
@@ -30,10 +30,10 @@
     <PackageVersion Include="Antlr4.Runtime" Version="4.6.6" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
-
     <!-- Tests all use the same framework versions -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="MSTest.TestAdapter" Version="3.8.3" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.8.3" />
+    <PackageVersion Include="Tmds.ExecFunction" Version="0.8.0" />
   </ItemGroup>
 </Project>

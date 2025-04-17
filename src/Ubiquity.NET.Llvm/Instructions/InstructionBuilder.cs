@@ -1384,7 +1384,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Integer_type_expected, nameof( len ) );
             }
 
-            if( Context != module.Context )
+            if( !Context.Equals(module.Context) )
             {
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }

@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Interop/">
+    <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
     <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
   </Folder>
@@ -10,7 +11,6 @@
     <File Path="../.gitignore" />
     <File Path="../Build-All.ps1" />
     <File Path="../Build-Docs.ps1" />
-    <File Path="../Build-Native.ps1" />
     <File Path="../Build-Source.ps1" />
     <File Path="../BuildVersion.xml" />
     <File Path="../CODE_OF_CONDUCT.md" />
@@ -53,6 +53,7 @@
   </Folder>
   <Project Path="../BuildVersion.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
   <Project Path="Ubiquity.NET.ANTLR.Utils/Ubiquity.NET.ANTLR.Utils.csproj" />
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
   <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />

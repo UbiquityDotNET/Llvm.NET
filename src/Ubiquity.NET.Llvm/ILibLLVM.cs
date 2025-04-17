@@ -5,6 +5,8 @@
 // -----------------------------------------------------------------------
 
 // This is cribbed from the interop library to prevent the need for applications to take a direct dependency on the interop library
+using System.Collections.Immutable;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Code gen target to register/initialize</summary>
@@ -126,5 +128,8 @@ namespace Ubiquity.NET.Llvm
         /// <param name="target">Target architecture to register/initialize</param>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
         void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
+
+        /// <summary>Gets the supported targets</summary>
+        ImmutableArray<CodeGenTarget> Targets {get;}
     }
 }
