@@ -8,7 +8,7 @@ using System;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
-    /// <summary>Enumeration to define the kinds of diagnostic intermediate data to generate for each function definition</summary>
+    /// <summary>Enumeration to define the kinds of diagnostic intermediate data to generate from a runtime/language AST</summary>
     [Flags]
     public enum DiagnosticRepresentations
     {
