@@ -56,4 +56,7 @@
     <Folder Include="Public\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\PowerShell Tools for Visual Studio\PowerShellTools.targets" Condition="Exists('$(MSBuildExtensionsPath)\PowerShell Tools for Visual Studio\PowerShellTools.targets')" />
+  <Target Name="VSTest" Condition="'$(IsTestProject)'!='true'">
+      <Message Importance="normal" Text="$(MSBuildProjectName) is not a test project; skipping test"/>
+  </Target>
 </Project>

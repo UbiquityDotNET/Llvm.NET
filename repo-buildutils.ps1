@@ -63,23 +63,17 @@ function Initialize-BuildEnvironment
     | Name                       | Description                                                                                            |
     |----------------------------|--------------------------------------------------------------------------------------------------------|
     | OfficialGitRemoteUrl       | GIT Remote URL for this repository                                                                     |
-    | LlvmLibsRoot               | Root of the LLVM libraries (where they are extracted to after download)                                |
-    | LlvmVersion                | LLVM version the build is targeting                                                                    |
-    | LlvmLibsPackageReleaseName | Release name of the LLVM libs package to download                                                      |
 #>
     # support common parameters
     [cmdletbinding()]
-    Param([switch]$FullInit,
-          [switch]$AllowVsPreReleases
-         )
+    Param(
+    $repoRoot = $PSScriptRoot,
+    [switch]$FullInit
+    )
 
     # use common repo-neutral function to perform most of the initialization
-    $buildInfo = Initialize-CommonBuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-CommonBuildEnvironment $repoRoot -FullInit:$FullInit
     $buildInfo['OfficialGitRemoteUrl'] = 'https://github.com/UbiquityDotNET/Llvm.NET.git'
-    $buildInfo['LlvmLibsRoot'] = Join-Path $PSScriptRoot 'llvm'
-    $buildInfo['LlvmVersion'] = "20.1.1"
-    # Temp hardcode to local build name - this needs update for automated builds etc...
-    $buildInfo['LlvmLibsPackageReleaseName'] = "LibLLVmNuget.20.1.1-alpha.0.0.ci-ZZZ.604990737"
 
     if($FullInit)
     {

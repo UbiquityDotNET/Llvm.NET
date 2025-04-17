@@ -22,7 +22,6 @@ Param(
     [string]$Configuration="Release",
     [switch]$AllowVsPreReleases,
     [switch]$FullInit,
-    [switch]$ZipNuget
 )
 
 Push-Location $PSScriptRoot
@@ -35,20 +34,9 @@ try
     . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
 
-    # build the native code layer first using the script to manage the complexities of SDK project dependencies
-    # between C# and C++ projects.
-    .\Build-Native.ps1 -Configuration $Configuration -AllowVsPreReleases:$AllowVsPreReleases
-
     # build the Managed code support
     Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
     Invoke-DotNet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
-
-    # Create a ZIP file of all the nuget packages if asked
-    if($ZipNuget)
-    {
-        Set-Location $buildInfo['NuGetOutputPath']
-        Compress-Archive -Force -Path *.* -DestinationPath (join-path $buildInfo['BuildOutputPath'] Nuget.Packages.zip)
-    }
 }
 catch
 {
