@@ -37,6 +37,5 @@ global using Ubiquity.NET.Llvm.Interop.Properties;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Blake3Constants;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
 
 global using static Ubiquity.NET.Llvm.Interop.NativeMethods;

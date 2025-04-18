@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace Ubiquity.NET.Runtime.Utils

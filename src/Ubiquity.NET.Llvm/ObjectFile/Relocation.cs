@@ -8,10 +8,10 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ObjectFileBindings;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
-    // TODO FIX/Rework this. BAD LLVM API
+    // TODO: FIX/Rework this. BAD LLVM API
     // LLVMRelocationIteratorRef is literally an iterator, however the elements it iterates
     // are not referenceable, so ALL "properties" of the element are instead exposed
-    // as LLVM-C API calls If this is disposed, then the entire iteration is Disposed
+    // as LLVM-C API calls. If this is disposed, then the entire iteration is Disposed
     // not just a reference to the element.
     // CONSIDER: perhaps figure out how to make this a ref struct like Comdat...
 
@@ -24,10 +24,6 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
         /// <summary>Gets the symbol associated with this relocation</summary>
         public Symbol Symbol => new( Section.ContainingBinary, LLVMGetRelocationSymbol( IteratorRef ) );
-
-        // TODO: Remove DisposeMessageString as a return type. Pretty much all are just converting to a string
-        //       and the IDisposable makes that a real PITA, let the marshalling do it.
-        // CONSIDER: Remove DisposeMessageString as out param as well...
 
         /// <summary>Gets the kind of relocation as a string for display purposes</summary>
         public string Description => LLVMGetRelocationTypeName( IteratorRef );

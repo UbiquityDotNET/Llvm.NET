@@ -8,6 +8,8 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ObjectFileBindings;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
+    // TODO: FIX/Rework this. BAD LLVM API
+
     /// <summary>Section in an <see cref="TargetBinary"/></summary>
     [DebuggerDisplay( "{Name,nq}" )]
     public readonly record struct Section

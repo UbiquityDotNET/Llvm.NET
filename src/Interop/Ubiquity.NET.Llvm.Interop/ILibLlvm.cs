@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interface to the core LLVM library itself</summary>

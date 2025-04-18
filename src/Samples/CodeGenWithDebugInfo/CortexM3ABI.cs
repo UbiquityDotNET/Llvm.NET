@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Immutable;
-using System.Diagnostics;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
