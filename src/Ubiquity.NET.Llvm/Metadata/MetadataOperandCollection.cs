@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>
-        public bool Contains( IrMetadata? item ) => this.Any( n => n == item );
+        public bool Contains( IrMetadata? item ) => this.Any( n => EqualityComparer<IrMetadata>.Default.Equals(n, item) );
 
         /// <summary>Specialized indexer to get the element as a specific derived type</summary>
         /// <typeparam name="TItem">Type of the element (must be derived from <see cref="IrMetadata"/></typeparam>

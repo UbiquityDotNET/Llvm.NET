@@ -29,7 +29,6 @@ namespace Ubiquity.NET.Llvm
     public sealed class Context
         : IContext
         , IGlobalHandleOwner<LLVMContextRef>
-        , IEquatable<IContext>
         , IEquatable<Context>
     {
         #region IEquatable<T>

@@ -15,7 +15,6 @@ namespace Ubiquity.NET.Llvm
         : IContext
         , IHandleWrapper<LLVMContextRefAlias>
         , IEquatable<ContextAlias>
-        , IEquatable<IContext>
     {
         #region IEquatable<T>
 

@@ -1015,7 +1015,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            if( valueRef.NativeType == targetType )
+            if( valueRef.NativeType.Equals( targetType ) )
             {
                 return valueRef;
             }
@@ -1034,7 +1034,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            if( valueRef.NativeType == targetType )
+            if( valueRef.NativeType.Equals( targetType ) )
             {
                 return valueRef;
             }
@@ -1053,7 +1053,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            if( valueRef.NativeType == targetType )
+            if( valueRef.NativeType.Equals( targetType ) )
             {
                 return valueRef;
             }
@@ -1102,7 +1102,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( targetType );
 
             // short circuit cast to same type as it won't be a Constant or a BitCast
-            if( valueRef.NativeType == targetType )
+            if( valueRef.NativeType.Equals( targetType ) )
             {
                 return valueRef;
             }
@@ -1259,7 +1259,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
             else
             {
-                if( elseValue.NativeType != thenValue.NativeType )
+                if( !elseValue.NativeType.Equals( thenValue.NativeType ) )
                 {
                     throw new ArgumentException( Resources.Selected_values_must_have_the_same_type );
                 }
@@ -1364,7 +1364,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( len );
             var module = GetModuleOrThrow( );
 
-            if( destination == source )
+            if( destination.Equals( source ) )
             {
                 throw new InvalidOperationException( Resources.Source_and_destination_arguments_are_the_same_value );
             }
@@ -1419,7 +1419,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( len );
             var module = GetModuleOrThrow( );
 
-            if( destination == source )
+            if( destination.Equals( source ) )
             {
                 throw new InvalidOperationException( Resources.Source_and_destination_arguments_are_the_same_value );
             }
@@ -1439,7 +1439,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Integer_type_expected, nameof( len ) );
             }
 
-            if( Context != module.Context )
+            if( !Context.Equals(module.Context) )
             {
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }
@@ -1484,7 +1484,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Integer_type_expected, nameof( len ) );
             }
 
-            if( Context != module.Context )
+            if( !Context.Equals( module.Context ) )
             {
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }

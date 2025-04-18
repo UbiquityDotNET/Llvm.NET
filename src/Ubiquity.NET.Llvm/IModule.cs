@@ -25,6 +25,7 @@ namespace Ubiquity.NET.Llvm
     /// caller owns. Others are references to a module owned by the container)
     /// </remarks>
     public interface IModule
+        : IEquatable<IModule>
     {
         /// <summary>Gets or sets the name of the source file generating this module</summary>
         public string SourceFileName { get; set; }

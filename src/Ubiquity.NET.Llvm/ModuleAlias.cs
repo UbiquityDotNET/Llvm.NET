@@ -9,7 +9,6 @@ namespace Ubiquity.NET.Llvm
     internal sealed class ModuleAlias
         : IModule
         , IHandleWrapper<LLVMModuleRefAlias>
-        , IEquatable<IModule>
         , IEquatable<ModuleAlias>
     {
         #region IEquatable<>

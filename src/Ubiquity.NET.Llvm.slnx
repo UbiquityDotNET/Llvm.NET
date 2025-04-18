@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Analyzer/" Id="02ea681e-c7d8-13c7-8484-4ac65e1b71e8">
+    <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier.Test/ReferenceEqualityVerifier.Test.csproj" Id="e64d8c77-a653-4235-9608-c68e9e3ca8b5" />
+    <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier/ReferenceEqualityVerifier.csproj" Id="e8f42c47-8cd5-4987-8402-0dcd97ac8b60" />
+  </Folder>
   <Folder Name="/Interop/">
     <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />

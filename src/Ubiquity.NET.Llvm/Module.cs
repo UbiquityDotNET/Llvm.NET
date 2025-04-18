@@ -44,7 +44,6 @@ namespace Ubiquity.NET.Llvm
         : IModule
         , IGlobalHandleOwner<LLVMModuleRef>
         , IDisposable
-        , IEquatable<IModule>
         , IEquatable<Module>
     {
         #region IEquatable<>

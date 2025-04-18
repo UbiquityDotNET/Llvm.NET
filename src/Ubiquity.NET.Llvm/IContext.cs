@@ -17,6 +17,7 @@ namespace Ubiquity.NET.Llvm
     /// is not.
     /// </remarks>
     public interface IContext
+        : IEquatable<IContext>
     {
         /// <summary>Gets the LLVM void type for this context</summary>
         public ITypeRef VoidType { get; }
