@@ -499,4 +499,7 @@ Types are:
   <data name="APInt_exceeds_size_of_UInt64" xml:space="preserve">
     <value>Arbitrary precision integer exceeds size of System.UInt64 integer</value>
   </data>
+  <data name="Expected_a_valid_UWTable_kind" xml:space="preserve">
+    <value>Expected a valid UWTable kind value [async, sync]</value>
+  </data>
 </root>

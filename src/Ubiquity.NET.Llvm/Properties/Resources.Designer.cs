@@ -477,6 +477,15 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected a valid UWTable kind value [async, sync].
+        /// </summary>
+        internal static string Expected_a_valid_UWTable_kind {
+            get {
+                return ResourceManager.GetString("Expected_a_valid_UWTable_kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected ConstantAsMetadata for first operand.
         /// </summary>
         internal static string Expected_ConstantAsMetadata_for_first_operand {
