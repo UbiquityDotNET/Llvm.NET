@@ -37,7 +37,7 @@ namespace Kaleidoscope.Runtime
             OptimizationPasses = optimizationPasses;
             SymbolFlags symFlags = new(SymbolGenericOption.Callable);
 
-            // AddWithTracking a materializer for the well-known symbols for the managed code implementations
+            // Add a materializer for the well-known symbols for the managed code implementations
             unsafe
             {
                 using var putchardName = MangleAndIntern("putchard");

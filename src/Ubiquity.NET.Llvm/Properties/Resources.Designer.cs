@@ -387,7 +387,7 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ContextAlias for the handle provided doesn&apos;t match the context for this cache.
+        ///   Looks up a localized string similar to Context for the handle provided doesn&apos;t match the context for this cache.
         /// </summary>
         internal static string Context_for_the_handle_provided_doesn_t_match_the_context_for_this_cache {
             get {
@@ -396,7 +396,7 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ContextAlias mismatch - cannot cache modules from multiple contexts.
+        ///   Looks up a localized string similar to Context mismatch - cannot cache modules from multiple contexts.
         /// </summary>
         internal static string Context_mismatch_cannot_cache_modules_from_multiple_contexts {
             get {

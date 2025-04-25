@@ -114,7 +114,7 @@ namespace Ubiquity.NET.Runtime.Utils
     /// // [ ... ]
     ///
     /// public sealed class MyLangNode
-    ///     : IAstNode
+    ///     : AstNode
     /// {
     ///     // ...
     ///

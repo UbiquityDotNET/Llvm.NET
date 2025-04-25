@@ -47,13 +47,15 @@ namespace Ubiquity.NET.Extensions
         /// <param name="key">Key value to set</param>
         /// <value>Value to set for the <paramref name="key"/></value>
         /// <returns>Value type [Ignored for set only support]</returns>
-        /// <remarks><note type="important">
-        /// Since this builder does NOT store or compute has codes the indexer is a syntactical convenience
+        /// <remarks>
+        /// <note type="important">
+        /// Since this builder does NOT store or compute hash codes the indexer is a syntactical convenience
         /// wrapper around the <see cref="Add"/> method. It does NOT prevent duplicate entries. If you use
         /// the same <paramref name="key"/> with a different value, then you get TWO entries with that key.
-        /// (In some scenarios this may be desirable, but in mist it is not.) The important point on this is
+        /// (In some scenarios this may be desirable, but in most it is not.) The important point on this is
         /// that it is ***NOT*** checked here.
-        /// </note></remarks>
+        /// </note>
+        /// </remarks>
         [SuppressMessage( "Design", "CA1044:Properties should not be write only", Justification = "This type is ONLY for building immutable arrays" )]
         public TValue this[TKey key]
         {

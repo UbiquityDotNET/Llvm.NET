@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm;
 
-namespace Kaleidosocope.Tests
+namespace Kaleidoscope.Tests
 {
     // Provides common location for one time initialization for all tests in this assembly
     [TestClass]
