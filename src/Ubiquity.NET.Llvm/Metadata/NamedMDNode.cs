@@ -65,7 +65,7 @@ namespace Ubiquity.NET.Llvm.Metadata
             {
                 for( int i = 0; i < Count; ++i )
                 {
-                    if( this[ i ] == item )
+                    if( this[ i ].Equals( item ) )
                     {
                         return i;
                     }
@@ -85,7 +85,7 @@ namespace Ubiquity.NET.Llvm.Metadata
                 LibLLVMNamedMDNodeClearOperands( OwningNode.NativeHandle );
             }
 
-            public bool Contains( MDNode item ) => this.Any( n => n == item );
+            public bool Contains( MDNode item ) => this.Any( n => n.Equals( item ) );
 
             public void CopyTo( MDNode[ ] array, int arrayIndex )
             {

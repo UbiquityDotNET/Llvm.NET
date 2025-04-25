@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         private UInt32 Element;
     }
 
-    [InlineArray( LLVM_BLAKE3_BLOCK_LEN )]
+    [InlineArray( Blake3Constants.LLVM_BLAKE3_BLOCK_LEN )]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray" )]
     public struct llvm_blake3_chunk_state_buf_t
     {
@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         private UInt32 Element;
     }
 
-    [InlineArray( (LLVM_BLAKE3_MAX_DEPTH + 1) * LLVM_BLAKE3_OUT_LEN )]
+    [InlineArray( (Blake3Constants.LLVM_BLAKE3_MAX_DEPTH + 1) * Blake3Constants.LLVM_BLAKE3_OUT_LEN )]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "InlineArray" )]
     public struct llvm_blake3_hasher_cv_stack_t
     {

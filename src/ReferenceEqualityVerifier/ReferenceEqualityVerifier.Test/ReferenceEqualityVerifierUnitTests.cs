@@ -53,11 +53,26 @@ namespace ReferenceEqualityVerifier.Test
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
                     new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(15, 16),
+                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(20, 16)
                 ]
             );
 
             await analyzerTest.RunAsync();
         }
+
+        [TestMethod]
+        public async Task CommonBaseEquatableReportsDiagnostic( )
+        {
+            var analyzerTest = CreateTestRunner(CommonBaseEquatable);
+            analyzerTest.ExpectedDiagnostics.AddRange(
+                [
+                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(14, 16),
+                ]
+            );
+
+            await analyzerTest.RunAsync();
+        }
+
         [TestMethod]
         public async Task NullCheckDoesNotReportDiagnostics( )
         {
@@ -148,6 +163,11 @@ namespace ReferenceEqualityVerifier.Test
             {
                 return this == x; // OOPS = Reference equality!
             }
+
+            bool Bazs(IBaz x)
+            {
+                return x == this; // OOPS = Reference equality!
+            }
         }
         """;
 
@@ -169,6 +189,26 @@ namespace ReferenceEqualityVerifier.Test
                 return x == null; // Reference equality is OK here
             }
         }
+        """;
+
+        const string CommonBaseEquatable = """
+        using System;
+        
+        public class BaseClass
+            : IEquatable<BaseClass>
+        {
+            public bool Equals( BaseClass? other ) => false;
+        }
+
+        public class DerivedClass
+            : BaseClass
+        {
+            bool SomeFunc(DerivedClass other)
+            {
+                return other == this; // OOPS, ref equality!
+            }
+        }
+
         """;
     }
 }

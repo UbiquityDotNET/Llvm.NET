@@ -6,7 +6,7 @@
 
 using System.Security;
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
 {
     /// <summary>Global LLVM object handle for an error</summary>
     /// <remarks>

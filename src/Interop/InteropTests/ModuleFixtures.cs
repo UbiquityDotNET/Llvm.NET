@@ -8,7 +8,9 @@ using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Ubiquity.NET.Llvm.UT
+using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
+
+namespace Ubiquity.NET.Llvm.Interop.UT
 {
     // Provides common location for one time initialization for all tests in this assembly
     [TestClass]
@@ -26,8 +28,8 @@ namespace Ubiquity.NET.Llvm.UT
             // the interop APIs.
             // NOTE: Target tests may need to register all, but that's OK as it includes
             //       these.
-            LibLLVM.RegisterTarget( CodeGenTarget.Native );
-            LibLLVM.RegisterTarget( CodeGenTarget.ARM );
+            LibLLVM.RegisterTarget( LibLLVMCodeGenTarget.CodeGenTarget_Native );
+            LibLLVM.RegisterTarget( LibLLVMCodeGenTarget.CodeGenTarget_ARM );
         }
 
         [AssemblyCleanup]

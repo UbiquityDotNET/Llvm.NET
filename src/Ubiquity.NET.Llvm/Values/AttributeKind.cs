@@ -144,4 +144,12 @@ namespace Ubiquity.NET.Llvm.Values
 #pragma warning restore SA1602 // Enumeration items should be documented
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
+
+    enum UWTableKind
+        : UInt64
+    {
+        None,
+        Sync,
+        Async
+    }
 }

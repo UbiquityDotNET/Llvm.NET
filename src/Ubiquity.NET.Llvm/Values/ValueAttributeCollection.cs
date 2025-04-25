@@ -37,17 +37,12 @@ namespace Ubiquity.NET.Llvm.Values
             return this.Any( a => a == item );
         }
 
-        public void CopyTo( AttributeValue[ ] array, int arrayIndex )
+        public void CopyTo( AttributeValue[ ]? array, int arrayIndex )
         {
-            /* ReSharper disable ConditionIsAlwaysTrueOrFalse */
-            /* ReSharper disable HeuristicUnreachableCode */
             if( array == null )
             {
                 return;
             }
-
-            /* ReSharper enable HeuristicUnreachableCode */
-            /* ReSharper enable ConditionIsAlwaysTrueOrFalse */
 
             foreach( AttributeValue attribute in this )
             {

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
 {
     // Internal handle type for an LLVM Error message
     // See: LLVMErrorRef for more details of the oddities

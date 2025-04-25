@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Instructions
     public enum Predicate
     {
         /// <summary>No comparison, always returns floating point false</summary>
-        False = LLVMRealPredicate.LLVMRealPredicateFalse,
+        AlwaysFalse = LLVMRealPredicate.LLVMRealPredicateFalse,
 
         /// <summary>Ordered and equal floating point comparison</summary>
         OrderedAndEqual = LLVMRealPredicate.LLVMRealOEQ,
@@ -60,13 +60,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         UnorderedOrNotEqual = LLVMRealPredicate.LLVMRealUNE,
 
         /// <summary>No comparison, always returns true </summary>
-        True = LLVMRealPredicate.LLVMRealPredicateTrue,
+        AlwaysTrue = LLVMRealPredicate.LLVMRealPredicateTrue,
 
         /// <summary>Tag for the first floating point compare predicate, all floating point predicates are greater than or equal to this value</summary>
-        FirstFcmpPredicate = False,
+        FirstFcmpPredicate = AlwaysFalse,
 
         /// <summary>Tag for the last floating point compare predicate, all floating point predicates are less than or equal to this value</summary>
-        LastFcmpPredicate = True,
+        LastFcmpPredicate = AlwaysTrue,
 
         /// <summary>Any value greater than or equal to this is not valid for Fcmp operations</summary>
         BadFcmpPredicate = LastFcmpPredicate + 1,

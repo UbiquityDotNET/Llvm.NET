@@ -37,7 +37,7 @@ The general pattern is that the interop APIs now ALL use the built-in interop so
 generator via the `LibraryImportAttribute` this generates all the marshalling code at
 compile time so the result is AOT compatible. This is leveraged by the types generated
 for each LLVM handle type. Specifically, the default marshalling of handles ensures
-ensure handle types are marshalled safely with `LibraryImportAttribute`. For the global
+handle types are marshalled safely with `LibraryImportAttribute`. For the global
 handles that is the built-in support for `SafeHandle` derived type handling. For the
 context handles that is coverd by the `ContextHandleMarshaller<T>` custom marshalling type.
 The generated types for all context handles marks the type marshalling with the
@@ -65,7 +65,7 @@ in by the native code use the following pattern:
 void LLVMSomeApiThatFillsArray(LLVMHandleOfSomeSort h, [Out] UInt32[] elements, int numElements);
 ```
 
-Arrays where the caller is expected to provide a pointer to valid (allocatted, but likely
+Arrays where the caller is expected to provide a pointer to valid (allocated, but likely
 uninitialized) data that is filled in by native code use the following pattern:
 ``` C#
 void LLVMSomeApiThatFillsArray(LLVMHandleOfSomeSort h, out UInt32[] elements, int numElements);
@@ -118,35 +118,39 @@ All of the P/Invoke APIs use an explicit `[UnmanagedCallConv(CallConvs=[typeof(C
 to identify that the APIs use the standard "C" ABI calling convention.
 
 ### Future optimization
-Some might at some point in the future add the ability to suppress GC transitions as an
-optimization. Application of that requires great care and understanding of the GC and
-native implementation to ensure it is safe to do. This is a strictly performance optimization
+At some point in the future it might be worth adding the ability to suppress GC transitions
+as an optimization. Application of that requires great care and understanding of the GC and
+native implementation to ensure it is safe to do. This is strictly a performance optimization
 that has NO impact on callers so is left for future enhancement.
 
 ## Special handling of strings
 Since the handle types all have AOT marshalling support (built-in or generated) the APIs ALL
 use them directly. Leaving the only "tricky part" of strings. LLVM has come a long way and
 unified most string use to one of three forms.
-1) Raw pointer aliases as a native string (UTF8 encoding is assumed)
+>[!NOTE]
+> All native strings are assumed encoded as UTF8. This is the most common/compatible assumption
+> to make. Sadly, LLVM itself is silent on the point.
+
+1) Raw pointer aliases as a native string
     - These are owned by the implementation and assumed invalid after the container producing
       them is destroyed.
 2) Pointers to strings that require a correspoinding call to `LLVMDisposeMessage()`
 3) Error message strings that require a corresponding call to `LLVMDisposeErrorMessage()`
 
-#1 is handled in one of two ways (eventually everything should converge on the simpler
-LazyEncodedString but this API isn't there yet.)
-1) by marking the `LibraryImportAttribute`
-`StringMarshallingCustomType = typeof( ConstUtf8StringMarshaller )` and a parameter or return
- signature of `string`.
-     - Or, more often with a return attribute specifying the `ConstUtf8StringMarshaller` as
-       the marshaller for the return type.
-     - These are ALWAYS converted to/from native form directly at point of use. Thus any use
-       of them will incur a performance hit as the memory is allocated/pinned and copied as
-       needed to marshal the string between managed and native forms. This does, however mean
-       that there is no ambiguity about the validity or lifetime of an otherwise alias
-       pointer. The built-in/BCL marshalling assumes that ALL native strings are allocated
-       via `CoTaskMemAlloc()` and therefore require a release. But that is ***NEVER*** the
-       case with LLVM and usually not true of interop with arbitrary C/C++ code.
+#1 is handled by marking the `LibraryImportAttribute` with 
+`StringMarshallingCustomType = typeof( ConstStringMarshaller )` and a parameter or return
+signature of `string`. These are ALWAYS converted to/from native form directly at point
+of use. Thus any use of them will incur a performance hit as the memory is allocated/pinned,
+copied, and re-encoded as UTF16 as needed to marshal the string between managed and native
+forms. This does, however mean that there is no ambiguity about the validity or lifetime of
+an otherwise alias pointer. The built-in/BCL marshalling assumes that ALL native strings are
+allocated via `CoTaskMemAlloc()` and therefore require a release. But that is ***NEVER*** the case
+with LLVM and usually not true of interop with arbitrary C/C++ code.
+
+>[!NOTE]
+> It is plausible, but not yet implemented to use LazyEncodedString to hold the native form
+> of the string. This will still encur the cost of copying the string contents, but does NOT
+> occur the cost of allocating and producing a managed string unless needed.
 
 #2 is handled by the `DisposeMessageString` type which is really just a SafeHandle. The
 built-in generator supports marshalling handle types so it is really just associating
@@ -160,16 +164,17 @@ the `ErrorMessage` string to prevent any construction of the string in the nativ
 until needed. Thus, all of the complexity is handled within the `LLVMErrorRef` type so that
 it is fairly easy and unsurprising to use from upper layers of managed code.
 
+>[!IMPORTANT]
 > It is worth stressing the point here that there is NO WAY to know which string type to use
- based on only the header files and API signatures they contain. One ***MUST*** read the
- documentation for the API to know (and occasionally dig into the source code as it isn't
- documented what the requirements are!). This is the greatest problem with any form of
- automated interop code generator. It can only scan the headers and knows nothing about the
- documentation or intended semantics. This is why, previously this was all done in a custom
- YAML file. But as this library and LLVM grew that became unmaintainable and downright silly
- as it was basically just describing the marshalling behavior in a foreign language. At best
- the tool could generate anything where there is no potential for ambiguity and leave the
- rest marked in a way a developer could find it. (The implementation in this repo has chosen
- to ignore signatures for generation entirely so it is all maintained "by hand" now)
+> based on only the header files and API signatures they contain. One ***MUST*** read the
+> documentation for the API to know (and occasionally dig into the source code as it isn't
+> documented what the requirements are!). This is the greatest problem with any form of
+> automated interop code generator. It can only scan the headers and knows nothing about the
+> documentation or intended semantics. This is why, previously this was all done in a custom
+> YAML file. But as this library and LLVM grew that became unmaintainable and downright silly
+> as it was basically just describing the marshalling behavior in a foreign language. At best
+> the tool could generate anything where there is no potential for ambiguity and leave the
+> rest marked in a way a developer could find it. (The implementation in this repo has chosen
+> to ignore signatures for generation entirely so it is all maintained "by hand" now)
 
 

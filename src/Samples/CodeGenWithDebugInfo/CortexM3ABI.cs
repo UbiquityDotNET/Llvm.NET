@@ -19,8 +19,8 @@ namespace CodeGenWithDebugInfo
     {
         public CortexM3ABI( )
         {
-            LlvmLib = Library.InitializeLLVM(CodeGenTarget.ARM);
-            LlvmLib.RegisterTarget(CodeGenTarget.All);
+            LlvmLib = Library.InitializeLLVM();
+            LlvmLib.RegisterTarget(CodeGenTarget.ARM);
         }
 
         public string ShortName => "M3";

@@ -324,7 +324,7 @@ namespace Ubiquity.NET.Llvm.Values
         public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
         {
             ArgumentNullException.ThrowIfNull( insertBefore );
-            if( insertBefore.ContainingFunction != null && insertBefore.ContainingFunction != this )
+            if( insertBefore.ContainingFunction != null && !EqualityComparer<Function>.Default.Equals(insertBefore.ContainingFunction, this ) )
             {
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }

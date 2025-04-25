@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Runtime.InteropServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,11 +17,10 @@ namespace Ubiquity.NET.Llvm.Interop.UT
     [TestClass]
     public class DataLayoutTests
     {
-        [DistinctProcessTestMethod]
+        [TestMethod]
         public void TestParseKnownBad( )
         {
-            using var library = Library.InitializeLLVM(LibLLVMCodeGenTarget.CodeGenTarget_ARM);
-            var utf8Span = "badlayout"u8;
+            ReadOnlySpan<byte> utf8Span = "badlayout"u8;
             unsafe
             {
                 fixed(byte* p = &MemoryMarshal.GetReference(utf8Span))

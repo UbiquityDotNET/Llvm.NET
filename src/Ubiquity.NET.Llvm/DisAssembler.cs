@@ -15,11 +15,12 @@ namespace Ubiquity.NET.Llvm
     /// <summary>Interface for disassembler callbacks</summary>
     /// <remarks>
     /// Exact use and purpose of this interface is not well documented in LLVM and it's use
-    /// is therefore classified as "experimental". Key is the parameter and return types.
-    /// LLVM headers use byte* and it isn't clear if it is a "blob", string or what? Nor,
-    /// does it say anything about lifetime or ownership of the data they point to... (This
-    /// is mostly in regards to the parameters and return of <see cref="SymbolLookup(ulong, ref ulong, ulong, out string?)"/>
-    /// but also applies to the <see cref="nint"/> `TagBuf` parameter of <see cref="OpInfo(ulong, ulong, ulong, ulong, int, nint)"/>
+    /// is therefore classified as "experimental". Key to the ambiguity is the parameter and
+    /// return types of the methods. LLVM headers use byte* and it isn't clear if it is a "blob",
+    /// string or what? Nor, does it say anything about lifetime or ownership of the data they
+    /// point to... (This is mostly in regards to the parameters and return of
+    /// <see cref="SymbolLookup(ulong, ref ulong, ulong, out string?)"/> but also applies to the
+    /// <see cref="nint"/> `TagBuf` parameter of <see cref="OpInfo(ulong, ulong, ulong, ulong, int, nint)"/>
     /// </remarks>
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related only used here" )]
     [Experimental("LLVM002")]

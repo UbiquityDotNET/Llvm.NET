@@ -321,15 +321,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="value">Value for the attribute</param>
         /// <remarks>
         /// <para>Not all attributes support a value and those that do don't all support
-        /// a full 64bit value. The following table provides the kinds of attributes
-        /// accepting a value and the allowed size of the values.</para>
-        /// <list type="table">
-        /// <listheader><term><see cref="AttributeKind"/></term><term>Bit Length</term></listheader>
-        /// <item><term><see cref="AttributeKind.Alignment"/></term><term>32</term></item>
-        /// <item><term><see cref="AttributeKind.StackAlignment"/></term><term>32</term></item>
-        /// <item><term><see cref="AttributeKind.Dereferenceable"/></term><term>64</term></item>
-        /// <item><term><see cref="AttributeKind.DereferenceableOrNull"/></term><term>64</term></item>
-        /// </list>
+        /// a full 64bit value. Se the LLVM docs for details.</para>
         /// </remarks>
         /// <returns><see cref="AttributeValue"/> with the specified kind and value</returns>
         public AttributeValue CreateAttribute(AttributeKind kind, UInt64 value);

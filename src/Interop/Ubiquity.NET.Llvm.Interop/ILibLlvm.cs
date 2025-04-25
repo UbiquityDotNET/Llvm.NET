@@ -24,6 +24,6 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <
         void RegisterTarget(LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations = LibLLVMTargetRegistrationKind.TargetRegistration_CodeGen);
 
-        ImmutableArray<LibLLVMCodeGenTarget> Targets {get;}
+        ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets {get;}
     }
 }

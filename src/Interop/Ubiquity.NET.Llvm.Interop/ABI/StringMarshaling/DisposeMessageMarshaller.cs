@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.Llvm.Interop
+namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
 {
     /// <summary>Represents a marshaller for LLVM strings that require a call to LLVMDisposeMessage to release the native representation.</summary>
     [CLSCompliant(false)]

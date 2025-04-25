@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
@@ -43,6 +44,10 @@ namespace CodeGenWithDebugInfo
             }
 
             string outputPath = args.Length == 3 ? args[2] : Environment.CurrentDirectory;
+            if(!Directory.Exists(outputPath))
+            {
+                Directory.CreateDirectory(outputPath);
+            }
 
             string srcPath = args[ 1 ];
             if( !File.Exists( srcPath ) )
@@ -105,10 +110,10 @@ namespace CodeGenWithDebugInfo
             // add global variables and constants
             var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
             var barValue = module.Context.CreateNamedConstantStruct( fooType
-                                                                    , module.Context.CreateConstant( 1 )
-                                                                    , module.Context.CreateConstant( 2.0f )
-                                                                    , constArray
-                                                                    );
+                                                                   , module.Context.CreateConstant( 1 )
+                                                                   , module.Context.CreateConstant( 2.0f )
+                                                                   , constArray
+                                                                   );
 
             var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
             bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
@@ -158,7 +163,7 @@ namespace CodeGenWithDebugInfo
                 File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
                 targetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileKind.ObjectFile );
                 targetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileKind.AssemblySource );
-                Console.WriteLine( "Generated test.bc, test.ll, test.o, and test.s" );
+                Console.WriteLine( $"Generated test.bc, test.ll, test.o, and test.s to {outputPath}" );
             }
         }
 
@@ -296,7 +301,12 @@ namespace CodeGenWithDebugInfo
                                      .RegisterName( "pDst.addr" )
                                      .SetAlignment( ptrAlign );
 
-            bool param0ByVal = copyFunc.Attributes[ FunctionAttributeIndex.Parameter0 ].Contains( AttributeKind.ByVal );
+            bool param0ByVal = ( from attr in copyFunc.Attributes
+                                 where attr.Key == FunctionAttributeIndex.Parameter0
+                                 where attr.Value.Contains(AttributeKind.ByVal)
+                                 select attr
+                               ).Any();
+
             if( param0ByVal )
             {
                 diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
@@ -309,7 +319,7 @@ namespace CodeGenWithDebugInfo
             instBuilder.Store( copyFunc.Parameters[ 1 ], dstAddr )
                        .SetAlignment( ptrAlign );
 
-            // insert declare pseudo instruction to attach debug info to the local declarations
+            // insert attach debug record to the local declarations
             diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
 
             if( !param0ByVal )
@@ -359,7 +369,11 @@ namespace CodeGenWithDebugInfo
             // create instruction builder to build the body
             using var instBuilder = new InstructionBuilder( blk );
 
-            bool param0ByVal = copyFunc.Attributes[ FunctionAttributeIndex.Parameter0 ].Contains( AttributeKind.ByVal );
+            bool param0ByVal = ( from attr in copyFunc.Attributes
+                                 where attr.Key == FunctionAttributeIndex.Parameter0
+                                 where attr.Value.Contains(AttributeKind.ByVal)
+                                 select attr
+                               ).Any();
             if( !param0ByVal )
             {
                 // create a temp local copy of the global structure

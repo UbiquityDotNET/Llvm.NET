@@ -129,7 +129,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="registrations">Flags indicating which components to register/enable</param>
         void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
 
-        /// <summary>Gets the supported targets</summary>
-        ImmutableArray<CodeGenTarget> Targets {get;}
+        /// <summary>Gets the supported targets for this library</summary>
+        ImmutableArray<CodeGenTarget> SupportedTargets {get;}
     }
 }

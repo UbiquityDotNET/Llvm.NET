@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interop methods for the Ubiquity.NET LibLLVM library</summary>
-    public static class NativeMethods
+    internal static class NativeMethods
     {
         /// <summary>Name of the native interop library</summary>
         /// <remarks>

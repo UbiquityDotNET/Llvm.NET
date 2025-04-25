@@ -393,14 +393,15 @@ namespace Ubiquity.NET.Llvm
         public AttributeValue CreateAttribute(AttributeKind kind)
         {
             kind.ThrowIfNotDefined();
-            if(kind.IsIntKind())
+            UInt64? defaultValue = kind.DefaultValue();
+            if(kind.IsIntKind() && !defaultValue.HasValue)
             {
                 throw new ArgumentException( string.Format( CultureInfo.CurrentCulture, Resources.Attribute_0_requires_a_value, kind ), nameof( kind ) );
             }
 
             var handle = LLVMCreateEnumAttribute( NativeHandle
                                                 , (uint)kind
-                                                , 0ul
+                                                , defaultValue ?? 0L
                                                 );
             return new AttributeValue( handle );
         }

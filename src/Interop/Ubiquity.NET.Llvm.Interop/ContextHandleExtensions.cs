@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Interop
             where THandle : struct, IContextHandle<THandle>
         {
             return handle.DangerousGetHandle() == nint.Zero
-                ? throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message} " )
+                ? throw new UnexpectedNullHandleException( $"[{memberName}] - {sourceFilePath}@{sourceLineNumber} {message}" )
                 : handle;
         }
     }

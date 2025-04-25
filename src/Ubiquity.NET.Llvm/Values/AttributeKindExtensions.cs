@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.ComponentModel;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -50,6 +52,43 @@ namespace Ubiquity.NET.Llvm.Values
         public static bool IsIntKind(this AttributeKind kind)
         {
             return kind >= AttributeKind.FirstIntAttr && kind <= AttributeKind.LastIntAttr;
+        }
+
+        /// <summary>Gets a value indicating whether the attribute has a default integral value</summary>
+        /// <param name="kind">Kind of attribute</param>
+        /// <returns><see langword="true"/> if the attribute supports an integral value with a default</returns>
+        public static bool HasDefaultValue(this AttributeKind kind)
+        {
+            return DefaultValue(kind).HasValue;
+        }
+
+        /// <summary>Gets the default value (if any) for this kind</summary>
+        /// <param name="kind">Attribute kind</param>
+        /// <returns>Default value of the attribute if one exists (or is known)</returns>
+        /// <exception cref="InvalidEnumArgumentException"><paramref name="kind"/> is not valid</exception>
+        [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Simpler as-is; Also makes future updates easier" )]
+        public static UInt64? DefaultValue(this AttributeKind kind)
+        {
+            if(!kind.IsIntKind())
+            {
+                return null;
+            }
+
+            return kind switch
+            {
+                AttributeKind.UWTable => (UInt64)UWTableKind.Async,
+                AttributeKind.Alignment or
+                AttributeKind.AllocKind or
+                AttributeKind.AllocSize or
+                AttributeKind.Captures or
+                AttributeKind.Dereferenceable or
+                AttributeKind.DereferenceableOrNull or
+                AttributeKind.Memory or
+                AttributeKind.NoFPClass or
+                AttributeKind.StackAlignment or
+                AttributeKind.VScaleRange or
+                _ => throw new InvalidEnumArgumentException(nameof(kind))
+            };
         }
 
         /// <summary>Gets a value indicating whether the attribute requires a type parameter value</summary>

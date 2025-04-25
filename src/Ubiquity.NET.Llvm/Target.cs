@@ -145,7 +145,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets an enumerable collection of the available targets built into this library</summary>
-        public static IEnumerable<Target> AvailableTargets
+        public static IEnumerable<Target> RegisteredTargets
         {
             get
             {

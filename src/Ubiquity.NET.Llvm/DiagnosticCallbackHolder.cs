@@ -10,10 +10,12 @@ namespace Ubiquity.NET.Llvm
     /// <param name="info">Diagnostic information to process</param>
     /// <example>
     /// <code><![CDATA[
-    /// if( info.Severity <= DiagnosticSeverity.Warning)
+    /// void MyDiagnosticCallback(DiagnosticInfo info)
     /// {
-    ///     using var msg = info.Description
-    ///     Debug.WriteLine( "{0}: {1}", level, msg );
+    ///     if( info.Severity <= DiagnosticSeverity.Warning)
+    ///     {
+    ///         Debug.WriteLine( "{0}: {1}", level, info.Description );
+    ///     }
     /// }
     /// ]]></code>
     /// </example>
@@ -56,6 +58,7 @@ namespace Ubiquity.NET.Llvm
             }
             catch
             {
+                // stop in debugger as this is a detected app error.
                 Debugger.Break();
             }
         }

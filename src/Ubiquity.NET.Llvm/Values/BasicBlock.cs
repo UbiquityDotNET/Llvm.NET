@@ -89,7 +89,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( instruction );
 
-            if( instruction.ContainingBlock != this )
+            if( !instruction.ContainingBlock.Equals( this ) )
             {
                 throw new ArgumentException( Resources.Instruction_is_from_a_different_block, nameof( instruction ) );
             }

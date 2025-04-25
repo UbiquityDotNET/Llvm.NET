@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Ubiquity.NET.Llvm.Interop
+﻿namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Internal static 'utility' class to handle resolving the correct binary library to use</summary>
     /// <remarks>
@@ -16,41 +14,28 @@ namespace Ubiquity.NET.Llvm.Interop
     internal static class NativeLibraryResolver
     {
         private static NativeLibraryHandle NativeLibHandle = new();
-        private static string? ResolverTarget = null;
+        private static bool ResolverApplied = false;
 
         // !!NOTHING in this method may use P/Invoke to the native LLVM library (LibLLVM)!!
         //
         // This sets up the resolver AND the values it requires - interop calls may not
         // occur until that is complete. [They are guaranteed to fail (App Crash)!]
-        internal static void Apply(LibLLVMCodeGenTarget target)
+        // Returns if the resolver was applied in this call or false if already applied
+        internal static bool Apply()
         {
-            target.ThrowIfNotDefined();
-            // NOTE: While it is allowed to register for all targets it is NOT allowed for loading as
-            //       the additional target is part of the name of the library to load.
-            if(target == LibLLVMCodeGenTarget.CodeGenTarget_All)
-            {
-                throw new ArgumentOutOfRangeException( nameof( target ), "Cannot load library for ALL available targets; ONLY one is allowed" );
-            }
-
-            // if target is requested for native, adjust it to the the explicit target
-            // to allow resolving to the correct library (Native is always an option)
-            if(target == LibLLVMCodeGenTarget.CodeGenTarget_Native)
-            {
-                target = RuntimeInformation.ProcessArchitecture.GetLibLLVMTarget();
-            }
-
             // Only setup an import resolver once per process. Multiple attempts would result in an exception.
-            // Once a library is loaded it cannot be unloaded and reloaded. The runtime will ONLY call the
-            // resolver once per imported API. After it has the module and the address of the symbol it replaces
-            // the P/Invoke in the same way that native code replaces the thunk for a dllimport. That is, once
-            // the address of the symbol is known, no further resolution is used.
-            string? oldTarget = Interlocked.CompareExchange(ref ResolverTarget, GetNameFor(target), null);
-            if(!string.IsNullOrWhiteSpace(oldTarget))
+            // This translates such a case into a return of 'false'. Once a library is loaded it cannot be
+            // unloaded and reloaded. The runtime will ONLY call the resolver once per imported API. After it
+            // has the module and the address of the symbol it replaces the P/Invoke in the same way that
+            // native code replaces the thunk for a dllimport. That is, once the address of the exported symbol
+            // is known, no further resolution is used.
+            if(Interlocked.CompareExchange(ref ResolverApplied, true, false))
             {
-                throw new InvalidOperationException( "Cannot re-initialize to a different target" );
+                return false;
             }
 
             NativeLibrary.SetDllImportResolver( Assembly.GetExecutingAssembly(), NativeLibResolver );
+            return true;
         }
 
         // NOTE: This needs to be VERY fast as it is called for EVERY P/Invoke encountered.
@@ -73,69 +58,15 @@ namespace Ubiquity.NET.Llvm.Interop
             if(NativeLibHandle.IsInvalid)
             {
                 // Debug verify the requirements for resolution...
-                Debug.Assert( !string.IsNullOrWhiteSpace(ResolverTarget), "Internal error: ResolverTarget should be set by now!" );
+                Debug.Assert( ResolverApplied, "Internal error: ResolverTarget should be set by now!" );
 
                 // Native binary is in a RID specific runtime folder, build that path as relative
                 // to this assembly and load the library from there.
-                string relativePath = @$"runtimes/{RuntimeInformation.RuntimeIdentifier}/native/{libraryName}-{ResolverTarget}";
+                string relativePath = @$"runtimes/{RuntimeInformation.RuntimeIdentifier}/native/{libraryName}";
                 NativeLibHandle = NativeLibraryHandle.Load( relativePath, assembly, DllImportSearchPath.AssemblyDirectory );
-
-                // setup the error handler callback.
-                // Note: This will land in a recursive call to this method to resolve the library for this
-                // P/Invoke call but NativeLibHandle is now set, so it is NOT an infinite recursion and
-                // only happens once.
-                unsafe
-                {
-                    LLVMInstallFatalErrorHandler( &FatalErrorHandler );
-                }
             }
 
             return NativeLibHandle.DangerousGetHandle();
-        }
-
-        private static string GetNameFor( LibLLVMCodeGenTarget target )
-        {
-            return target switch
-            {
-                LibLLVMCodeGenTarget.CodeGenTarget_AArch64 => "AArch64",
-                LibLLVMCodeGenTarget.CodeGenTarget_AMDGPU => "AMDGPU",
-                LibLLVMCodeGenTarget.CodeGenTarget_ARM => "ARM",
-                LibLLVMCodeGenTarget.CodeGenTarget_AVR => "AVR",
-                LibLLVMCodeGenTarget.CodeGenTarget_BPF => "BPF",
-                LibLLVMCodeGenTarget.CodeGenTarget_Hexagon => "Hexagon",
-                LibLLVMCodeGenTarget.CodeGenTarget_Lanai => "Lana",
-                LibLLVMCodeGenTarget.CodeGenTarget_LoongArch => "LoongArch",
-                LibLLVMCodeGenTarget.CodeGenTarget_MIPS => "MIPS",
-                LibLLVMCodeGenTarget.CodeGenTarget_MSP430 => "MSP430",
-                LibLLVMCodeGenTarget.CodeGenTarget_NVPTX => "NVPTX",
-                LibLLVMCodeGenTarget.CodeGenTarget_PowerPC => "PowerPC",
-                LibLLVMCodeGenTarget.CodeGenTarget_RISCV => "RISCV",
-                LibLLVMCodeGenTarget.CodeGenTarget_Sparc => "Sparc",
-                LibLLVMCodeGenTarget.CodeGenTarget_SPIRV => "SPIRV",
-                LibLLVMCodeGenTarget.CodeGenTarget_SystemZ => "SystemZ",
-                LibLLVMCodeGenTarget.CodeGenTarget_VE => "VE",
-                LibLLVMCodeGenTarget.CodeGenTarget_WebAssembly => "WebAssembly",
-                LibLLVMCodeGenTarget.CodeGenTarget_X86 => "X86",
-                LibLLVMCodeGenTarget.CodeGenTarget_XCore => "XCore",
-                // NOTE: None, Native and All, land in an exception as they are not viable as REAL targets.
-                _ => throw new InvalidEnumArgumentException(nameof(target), (int)target, typeof(LibLLVMCodeGenTarget))
-            };
-        }
-
-        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe void FatalErrorHandler( byte* reason )
-        {
-            try
-            {
-                // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
-                Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", ExecutionEncodingStringMarshaller.ConvertToManaged( reason ) );
-            }
-            catch(Exception ex)
-            {
-                // No finalizers will occur after this, it's a HARD termination of the app.
-                Environment.FailFast( $"Unhandled exception in {nameof( FatalErrorHandler )}.", ex );
-            }
         }
     }
 }

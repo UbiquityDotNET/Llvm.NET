@@ -19,8 +19,8 @@ namespace CodeGenWithDebugInfo
     {
         public X64ABI( )
         {
-            LlvmLib = Library.InitializeLLVM( CodeGenTarget.X86 );
-            LlvmLib.RegisterTarget(CodeGenTarget.All);
+            LlvmLib = Library.InitializeLLVM( );
+            LlvmLib.RegisterTarget(CodeGenTarget.X86);
         }
 
         public string ShortName => "x86";

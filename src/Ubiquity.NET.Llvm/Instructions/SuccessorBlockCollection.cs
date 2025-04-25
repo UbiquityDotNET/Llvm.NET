@@ -49,7 +49,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>
-        public bool Contains( BasicBlock item ) => this.Any( n => n == item );
+        public bool Contains( BasicBlock item ) => this.Any( n => n.Equals( item ) );
 
         internal SuccessorBlockCollection( Instruction container )
         {

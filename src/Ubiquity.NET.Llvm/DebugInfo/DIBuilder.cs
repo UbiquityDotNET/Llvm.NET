@@ -30,10 +30,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
     /// <summary>DIBuilder is a factory class for creating DebugInformation for an LLVM <see cref="Module"/></summary>
     /// <remarks>
-    /// Many Debug information metadata nodes are created with unresolved references to additional
+    /// <para>Many Debug information metadata nodes are created with unresolved references to additional
     /// metadata. To ensure such metadata is resolved applications should call the <see cref="Finish()"/>
     /// method to resolve and finalize the metadata. After this point only fully resolved nodes may
-    /// be added to ensure that the data remains valid.
+    /// be added to ensure that the data remains valid.</para>
+    /// <para>This type is a 'byref like type' to prevent storing it as a member anywhere. It is NOT
+    /// a member of <see cref="Module"/> but has one associated with it. Generally, at most one <see cref="DICompileUnit"/>
+    /// is associated with a <see cref="DIBuilder"/>. If creating a function
+    /// (via <see cref="CreateFunction(DIScope?, string, string, DIFile?, uint, DISubroutineType?, bool, bool, uint, DebugInfoFlags, bool, Function)"/>),
+    /// then the creation of a <see cref="DICompileUnit"/> is required.</para>
     /// </remarks>
     /// <seealso href="xref:llvm_sourceleveldebugging">LLVM Source Level Debugging</seealso>
     public ref struct DIBuilder
@@ -434,8 +439,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                            , DIFile? file
                                                            , uint line
                                                            , DIType? type
-                                                           , bool alwaysPreserve
-                                                           , DebugInfoFlags debugFlags
+                                                           , bool alwaysPreserve = false
+                                                           , DebugInfoFlags debugFlags = DebugInfoFlags.None
                                                            , uint alignInBits = 0
                                                            )
         {
@@ -1087,6 +1092,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
 #if HAVE_PER_CONTEXT_ENUMERABLE_METADA
             // TODO: Figure out API to enumerate the metadata owned by a context if it isn't "cached"
+            // This was detecting any unresolved nodes and reporting details of them before calling
+            // the native API that will simply crash if there are unresolved nodes...
             var bldr = new StringBuilder( );
 
             var unresolvedTemps = from node in OwningModule.Context.Metadata.OfType<MDNode>( )
@@ -1112,7 +1119,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             LLVMDIBuilderFinalize( Handle.ThrowIfInvalid( ) );
         }
 
-        /// <summary>Inserts an llvm.dbg.declare instruction before the given instruction</summary>
+        /// <summary>Inserts an declare debug record for the given instruction</summary>
         /// <param name="storage">Value the declaration is bound to</param>
         /// <param name="varInfo"><see cref="DILocalVariable"/> for <paramref name="storage"/></param>
         /// <param name="location"><see cref="DILocation"/>for the variable</param>
@@ -1253,10 +1260,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <seealso href="xref:llvm_sourcelevel_debugging#lvm-dbg-value">LLVM: llvm.dbg.value</seealso>
         /// <seealso href="xref:llvm_sourcelevel_debugging#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</seealso>
         public readonly DebugRecord InsertValue( Value value
-                                      , DILocalVariable varInfo
-                                      , DILocation location
-                                      , Instruction insertBefore
-                                      )
+                                               , DILocalVariable varInfo
+                                               , DILocation location
+                                               , Instruction insertBefore
+                                               )
         {
             return InsertValue( value, varInfo, null, location, insertBefore );
         }
@@ -1384,15 +1391,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
         /// <param name="operations">Operation sequence for the expression</param>
         /// <returns><see cref="DIExpression"/></returns>
-        public readonly DIExpression CreateExpression( params ExpressionOp[ ] operations )
-        {
-            return CreateExpression( ( IEnumerable<ExpressionOp> )operations );
-        }
-
-        /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
-        /// <param name="operations">Operation sequence for the expression</param>
-        /// <returns><see cref="DIExpression"/></returns>
-        public readonly DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
+        public readonly DIExpression CreateExpression( params IEnumerable<ExpressionOp> operations )
         {
             UInt64[ ] args = [ .. operations.Cast<UInt64>( ) ];
             var handle = LLVMDIBuilderCreateExpression( Handle.ThrowIfInvalid(), args, args.LongLength );

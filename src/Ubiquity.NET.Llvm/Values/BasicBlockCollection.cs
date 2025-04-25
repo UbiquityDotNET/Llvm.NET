@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Values
                 LibLLVMFunctionAppendBasicBlock( ContainingFunction.Handle, item.BlockHandle );
             }
 
-            if( item.ContainingFunction != ContainingFunction )
+            if( !EqualityComparer<Function>.Default.Equals(item.ContainingFunction, ContainingFunction ) )
             {
                 throw new ArgumentException( Resources.Cannot_add_a_block_belonging_to_a_different_function, nameof( item ) );
             }
@@ -62,7 +62,7 @@ namespace Ubiquity.NET.Llvm.Values
         public bool Contains( BasicBlock item )
         {
             ArgumentNullException.ThrowIfNull( item );
-            return item.ContainingFunction == ContainingFunction;
+            return EqualityComparer<Function>.Default.Equals(item.ContainingFunction, ContainingFunction );
         }
 
         public void CopyTo( BasicBlock[ ] array, int arrayIndex )
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.Values
         public bool Remove( BasicBlock item )
         {
             ArgumentNullException.ThrowIfNull( item );
-            if( item.ContainingFunction != ContainingFunction )
+            if( !EqualityComparer<Function>.Default.Equals( item.ContainingFunction, ContainingFunction ) )
             {
                 return false;
             }

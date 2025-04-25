@@ -41,24 +41,22 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsTrue( target.HasTargetMachine );
         }
 
-        // This test is broken as it assumes ALL targets are available. But reality is the API
-        // ONLY takes into account the registered targets, which is based on the native library
-        // used. Thus, the list changes based on what is registered. And once it is loaded, it
-        // cannot be changed so testing the x-plat variants is EXTREMELY difficult.
-        // see: https://stackoverflow.com/questions/8189657/can-i-force-mstest-to-use-a-new-process-for-each-test-run
-        // Additionally the set of targets depends on the registered CodeGenTarget and is NOT
-        // strictly 1:1, so there needs to be an additional means of mapping the target info
-        // to a code gen target.
         [TestMethod]
-        public void AvailableTargetsTest( )
+        public void RegisteredTargetsTest( )
         {
-            // for debug builds show the full list to aid in updating test code
+            Assert.IsNotNull(ModuleFixtures.LibLLVM);
+
+            // Register ALL targets so this test can look at what all of them are
+            ModuleFixtures.LibLLVM.RegisterTarget(CodeGenTarget.All);
+
+            // For debug builds show the full list to aid in updating test code
+            // Obviously this needs review/verification but simplifies the creation
+            // of the table.
             GenerateExpectedTargets( );
 
-            Assert.IsNotNull( Target.AvailableTargets );
-#if TEST_AVAILABLE_TARGETS
+            Assert.IsNotNull( Target.RegisteredTargets );
             int foundTargets = 0;
-            foreach( var target in Target.AvailableTargets )
+            foreach( var target in Target.RegisteredTargets )
             {
                 Assert.IsNotNull( target );
                 TargetInfo info = TargetInfo.ExpectedTargets[ target.Name ];
@@ -71,7 +69,6 @@ namespace Ubiquity.NET.Llvm.UT
             }
 
             Assert.AreEqual( TargetInfo.ExpectedTargets.Count, foundTargets );
-#endif
         }
 
         internal static TargetMachine GetTargetMachine( )
@@ -121,6 +118,7 @@ namespace Ubiquity.NET.Llvm.UT
             public bool HasTargetMachine { get; }
 
             internal static readonly TargetInfoCollection ExpectedTargets = [
+                //   Name, description, HasAsmBackend, HasJIT, HasTargetMachine
                 new( "xcore", "XCore", false, false, true ),
                 new( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),
                 new( "x86", "32-bit X86: Pentium-Pro and above", true, true, true ),
@@ -172,14 +170,15 @@ namespace Ubiquity.NET.Llvm.UT
         // This is useful for generating the list of expected targets
         // Obviously, since it uses the API being tested, the results require verification
         // before updating the list of ExpectedTargets above, but it helps eliminate tedious
-        // typing
+        // typing by generating the needed source directly.
         [SuppressMessage( "Globalization", "CA1308:Normalize strings to uppercase", Justification = "Uppercase is WRONG for this" )]
         [Conditional( "DEBUG" )]
         internal static void GenerateExpectedTargets( )
         {
             var bldr = new System.Text.StringBuilder( "internal static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
             bldr.AppendLine( );
-            var targets = System.Linq.Enumerable.ToList( Target.AvailableTargets );
+            var targets = System.Linq.Enumerable.ToList( Target.RegisteredTargets );
+            bldr.AppendLine("    //   Name, description, HasAsmBackend, HasJIT, HasTargetMachine");
             for( int i = 0; i < targets.Count; ++i )
             {
                 var target = targets[ i ];
@@ -187,9 +186,9 @@ namespace Ubiquity.NET.Llvm.UT
                                  , "    new TargetInfo( \"{0}\", \"{1}\", {2}, {3}, {4} )"
                                  , target.Name
                                  , target.Description
-                                 , target.HasAsmBackEnd.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant( )
-                                 , target.HasJIT.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant( )
-                                 , target.HasTargetMachine.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant( )
+                                 , target.HasAsmBackEnd.ToCSName()
+                                 , target.HasJIT.ToCSName()
+                                 , target.HasTargetMachine.ToCSName()
                                  );
 
                 bldr.AppendLine( i == targets.Count - 1 ? string.Empty : "," );

@@ -64,7 +64,11 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Newly constructed <see cref="ErrorInfo"/> with the provided message</returns>
         public static ErrorInfo Create(string msg)
         {
-            return ErrorInfo.Create(msg);
+            // ownership of the handle is moved into the return
+            // so dispose is a NOP, UNLESS there is an exception
+            // BEFORE ownership transfer completes.
+            using var handle = LLVMErrorRef.Create(msg);
+            return new(handle);
         }
 
         /// <summary>Factory function to create a new <see cref="ErrorInfo"/> from an exception</summary>

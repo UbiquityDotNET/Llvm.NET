@@ -179,5 +179,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial byte* LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C, out size_t Length);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LibLLVMHasDbgRecords(LLVMValueRef C);
+
     }
 }

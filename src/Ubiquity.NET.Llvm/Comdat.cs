@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Linker may choose any COMDAT key but sections must contain the same data</summary>
         ExactMatch = LLVMComdatSelectionKind.LLVMExactMatchComdatSelectionKind,
 
-        /// <summary>The linker will choose the section containing the targets COMDAT key</summary>
+        /// <summary>The linker will choose the largest section containing the targets COMDAT key</summary>
         Largest = LLVMComdatSelectionKind.LLVMLargestComdatSelectionKind,
 
         /// <summary>The linker requires that only one section with this COMDAT key exists</summary>

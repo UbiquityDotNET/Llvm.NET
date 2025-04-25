@@ -11,63 +11,38 @@ namespace Ubiquity.NET.Llvm.Interop
         : ILibLlvm
     {
         /// <inheritdoc/>
-        public ImmutableArray<LibLLVMCodeGenTarget> Targets => LazyTargets.Value;
+        public ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets => LazyTargets.Value;
 
         /// <inheritdoc/>
         public void RegisterTarget( LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations = LibLLVMTargetRegistrationKind.TargetRegistration_All )
         {
             // NOTE: All logic for registering the targets is in native code.
-            //       If an invalid target is provided for the library loaded
-            //       in InitializeLLVM() below then the native code generates
-            //       an error which is transformed to an exception here.
-            //       Native and All are always allowed as they are generic
-            //       terms that are understood by the native code.
             LibLLVMRegisterTarget( target, registrations ).ThrowIfFailed();
         }
 
         /// <inheritdoc/>
         public void Dispose( )
         {
+            LLVMResetFatalErrorHandler();
             LLVMShutdown();
         }
 
         /// <summary>Initializes the native LLVM library support</summary>
-        /// <param name="target">Target to use in resolving the proper library that implements the LLVM native code. [Default: CodeGenTarget.Native]</param>
         /// <returns><see cref="ILibLlvm"/> implementation for the library</returns>
-        /// <remarks>
-        /// <para>This can be called multiple times per application BUT all such calls MUST use the same value for
-        /// <paramref name="target"/> in order to load the underlying native LLVM library.</para>
-        /// <para><see cref="Dispose()"/> will release any resources allocated by the library but NOT the library itself.
-        /// That is loaded once the first time this is called. The .NET runtime does *NOT* support re-load of a P/Invoke
-        /// library within the same process. Thus, this is best used at the top level of the application and released at
-        /// or near process exit. An access violation crash is likely to occur if any attempts to use the library's functions
-        /// occurs before it is loaded or after it is unloaded as there is no way to invalidate the results of resolving the
-        /// method + library into an address.</para>
-        /// <para>While any variant of the native library will support <see cref="LibLLVMCodeGenTarget.CodeGenTarget_Native"/>
-        /// they can support up to one other target. Thus if the consumer is ever going to support/ cross-platform scenarios,
-        /// then it MUST specify the target the first time this is called. This restriction is a tradeoff from the cost of
-        /// building the native interop library. Building all possible processor targets into a single library for every possible
-        /// runtime is just not feasible in the automated builds for most projects let alone a no budget OSS project like this
-        /// one.</para>
-        /// </remarks>
-        /// <ImplementationNote>
-        /// The constraint on native+one target is a limitation of the build requirements of a Free (as in beer) OSS project. It is
-        /// still theoretical at best. (Needs  testing of native library generation in automated builds) Currently this library ONLY
-        /// supports Win-x64 as the native target/runtime BUT any target supported by LLVM is theoretically OK. (But for future compat
-        /// the restriction on initialization is retained, callers cannot re-init to a different target)
-        /// </ImplementationNote>
-        /// <exception cref="InvalidOperationException">Native Interop library already loaded for a different target</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The target provided is undefined or <see cref="LibLLVMCodeGenTarget.CodeGenTarget_All"/></exception>
-        public static ILibLlvm InitializeLLVM( LibLLVMCodeGenTarget target )
+        public static ILibLlvm InitializeLLVM()
         {
-            NativeLibraryResolver.Apply(target);
+            // If this is the first call and the library resolver is applied, then validate
+            // the version from the library for sanity.
+            if(!NativeLibraryResolver.Apply())
+            {
+                throw new InvalidOperationException("LLVM library was previously initialized. Re-init is not supported in the native library");
+            }
 
-            // Verify the version of LLVM in LibLLVM, this will trigger the resolver to load
-            // the DLL and set the Native Library handle in NativeLibHandle if not already resolved
+            // Verify the version of LLVM in LibLLVM.
             LLVMGetVersion( out uint actualMajor, out uint actualMinor, out uint actualPatch );
             if(actualMajor != SupportedVersionMajor
             || actualMinor != SupportedVersionMinor
-            || actualPatch < SupportedVersionPatch
+            || actualPatch < SupportedVersionPatch // allow later patches...
             )
             {
                 string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
@@ -86,12 +61,20 @@ namespace Ubiquity.NET.Llvm.Interop
             return new Library();
         }
 
+        private Library()
+        {
+            unsafe
+            {
+                LLVMInstallFatalErrorHandler( &FatalErrorHandler );
+            }
+        }
+
         private readonly Lazy<ImmutableArray<LibLLVMCodeGenTarget>> LazyTargets = new(GetSupportedTargets);
 
         // Expected version info for verification of matched LibLLVM
         private const int SupportedVersionMajor = 20;
         private const int SupportedVersionMinor = 1;
-        private const int SupportedVersionPatch = 0;
+        private const int SupportedVersionPatch = 3;
 
         // Singleton initializer for the supported targets array
         private static ImmutableArray<LibLLVMCodeGenTarget> GetSupportedTargets( )
@@ -100,6 +83,25 @@ namespace Ubiquity.NET.Llvm.Interop
             LibLLVMGetRuntimeTargets( resultArray, resultArray.Length ).ThrowIfFailed();
             // Create a new immutable array without copy (Wraps the input array)
             return ImmutableCollectionsMarshal.AsImmutableArray( resultArray );
+        }
+
+        // Native call back for fatal error handling.
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
+        private static unsafe void FatalErrorHandler( byte* reason )
+        {
+            try
+            {
+                // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
+                Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", ExecutionEncodingStringMarshaller.ConvertToManaged( reason ) );
+            }
+            catch(Exception ex)
+            {
+                // No finalizers will occur after this, it's a HARD termination of the app.
+                // LLVM will do that on return but this can at least indicate a different problem
+                // from the original LLVM was reporting.
+                Environment.FailFast( $"Unhandled exception in {nameof( FatalErrorHandler )}.", ex );
+            }
         }
     }
 }
