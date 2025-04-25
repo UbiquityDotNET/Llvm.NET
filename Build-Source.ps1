@@ -20,8 +20,7 @@
 #>
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
-    [switch]$FullInit,
+    [switch]$FullInit
 )
 
 Push-Location $PSScriptRoot
@@ -32,11 +31,11 @@ try
     # based on the switch parameter. Normally FullInit is done in Build-All, which calls this
     # script. But for a local "inner loop" development this might be the only script used.
     . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
 
     # build the Managed code support
-    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
-    Invoke-DotNet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
+    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration"
+    Invoke-External dotnet build --tl:off 'src\Ubiquity.NET.Llvm.slnx' '-c' $Configuration
 }
 catch
 {

@@ -59,4 +59,13 @@
   <Target Name="VSTest" Condition="'$(IsTestProject)'!='true'">
       <Message Importance="normal" Text="$(MSBuildProjectName) is not a test project; skipping test"/>
   </Target>
+  <!-- prevents NU1503 -->
+  <Target Name="_IsProjectRestoreSupported"
+          Returns="@(_ValidProjectsForRestore)">
+    <ItemGroup>
+      <_ValidProjectsForRestore Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="Restore"/>
+  <Target Name="Build"/>
 </Project>

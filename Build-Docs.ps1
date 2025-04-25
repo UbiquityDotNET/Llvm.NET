@@ -27,7 +27,6 @@
 #>
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
     [switch]$FullInit,
     [switch]$NoClone,
     [switch]$ShowDocs,
@@ -73,7 +72,7 @@ try
 {
     . ./repo-buildutils.ps1
 
-    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
     $msBuildPropertyList = ConvertTo-PropertyList @{
         Configuration = $Configuration
     }

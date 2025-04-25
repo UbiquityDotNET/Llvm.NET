@@ -34,7 +34,13 @@ try
     Push-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\CodeGenWithDebugInfo\Release\net9.0')
     try
     {
-        Invoke-External dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $buildInfo['TestResultsPath']
+        $testGenOutputPath = Join-Path $buildInfo['TestResultsPath'] 'M3'
+        Write-Information "CodeGenWithDebugInfo M3 'Support Files\test.c' $testGenOutputPath"
+        Invoke-External dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $testGenOutputPath
+
+        $testGenOutputPath = Join-Path $buildInfo['TestResultsPath'] 'X64'
+        Write-Information "CodeGenWithDebugInfo X64 'Support Files\test.c' $testGenOutputPath"
+        Invoke-External dotnet CodeGenWithDebugInfo.dll X64 'Support Files\test.c' $testGenOutputPath
 
         Set-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\OrcV2VeryLazy\Release\net9.0')
         Invoke-External dotnet OrcV2VeryLazy.dll

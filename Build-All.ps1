@@ -34,7 +34,6 @@
 [cmdletbinding()]
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
     [switch]$ForceClean,
     [ValidateSet('All','Source','Docs')]
     [System.String]$BuildMode = 'All'
@@ -47,7 +46,7 @@ try
     # Pull in the repo specific support and force a full initialization of all the environment
     # as this is a top level build command.
     . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit
     $BuildSource = $false
     $BuildDocs = $false;
 
@@ -68,12 +67,12 @@ try
 
     if($BuildSource)
     {
-        .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        .\Build-Source.ps1
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        .\Build-Docs.ps1
     }
 }
 catch

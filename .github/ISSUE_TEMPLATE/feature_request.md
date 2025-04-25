@@ -10,7 +10,7 @@ assignees: ''
 **Is your feature request related to a problem? Please describe.**
 > NOTE: 
 > Feature requests are intended to request a new feature or a change in the intended/designed
-> functionality (a.k.a. DCR). They should not be used to report bugs, which are incorrect
+> functionality (a.k.a. "Design Change Request" [DCR]). They should not be used to report bugs, which are incorrect
 > implementations of the designed functionality.
 
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
