@@ -171,27 +171,18 @@ namespace Ubiquity.NET.Llvm.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Attribute {0} does not support a value.
         /// </summary>
-        internal static string Attribute_0_does_not_support_a_value {
+        internal static string Attribute_0_does_not_support_an_integer_value {
             get {
-                return ResourceManager.GetString("Attribute_0_does_not_support_a_value", resourceCulture);
+                return ResourceManager.GetString("Attribute_0_does_not_support_an_integer_value", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attribute &apos;{0}&apos; does not support an argument.
+        ///   Looks up a localized string similar to Attribute &apos;{0}&apos; requires a value of `{1}`.
         /// </summary>
-        internal static string Attribute_0_does_not_support_an_argument {
+        internal static string Attribute_0_requires_a_value_of_1 {
             get {
-                return ResourceManager.GetString("Attribute_0_does_not_support_an_argument", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Attribute {0} requires a value.
-        /// </summary>
-        internal static string Attribute_0_requires_a_value {
-            get {
-                return ResourceManager.GetString("Attribute_0_requires_a_value", resourceCulture);
+                return ResourceManager.GetString("Attribute_0_requires_a_value_of_1", resourceCulture);
             }
         }
         

@@ -495,19 +495,18 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMAttributeRef LLVMCreateConstantRangeAttribute(LLVMContextRefAlias C, uint KindID, uint NumBits, [In] UInt64[] LowerWords, [In] UInt64[] UpperWords);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMAttributeRef LLVMCreateStringAttribute(LLVMContextRefAlias C, string K, uint KLength, string V, uint VLength);
+        public static unsafe partial LLVMAttributeRef LLVMCreateStringAttribute(LLVMContextRefAlias C, byte* K, uint KLength, byte* V, uint VLength);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMGetStringAttributeKind(LLVMAttributeRef A, out uint Length);
+        public static unsafe partial byte* LLVMGetStringAttributeKind(LLVMAttributeRef A, out uint Length);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMGetStringAttributeValue(LLVMAttributeRef A, out uint Length);
+        public static unsafe partial byte* LLVMGetStringAttributeValue(LLVMAttributeRef A, out uint Length);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2206,17 +2205,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMAttributeRef LLVMGetEnumAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMAttributeRef LLVMGetStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, string K, uint KLen);
+        public static unsafe partial LLVMAttributeRef LLVMGetStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, byte* K, uint KLen);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMRemoveEnumAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMRemoveStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, string K, uint KLen);
+        public static unsafe partial void LLVMRemoveStringAttributeAtIndex(LLVMValueRef F, LLVMAttributeIndex Idx, byte* K, uint KLen);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2580,7 +2579,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         // hold the correct amount.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMGetCallSiteAttributes(LLVMValueRef C, LLVMAttributeIndex Idx, [In][Out] LLVMAttributeRef[] Attrs);
+        public static unsafe partial void LLVMGetCallSiteAttributes(
+            LLVMValueRef C,
+            LLVMAttributeIndex Idx,
+            /*LLVMAttributeRef[LLVMGetCallSiteAttributeCount(C, Idx)]*/LLVMAttributeRef* Attrs
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -2592,11 +2595,15 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMAttributeRef LLVMGetCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, byte* K, uint KLen);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMRemoveCallSiteEnumAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, uint KindID);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMRemoveCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, string K, uint KLen);
+        public static unsafe partial void LLVMRemoveCallSiteStringAttribute(LLVMValueRef C, LLVMAttributeIndex Idx, byte* K, uint KLen);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

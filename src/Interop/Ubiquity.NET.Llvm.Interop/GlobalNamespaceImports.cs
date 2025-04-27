@@ -30,10 +30,6 @@ global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 global using Ubiquity.NET.Llvm.Interop.Properties;
 global using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
 
-// Extended C API
-
-// Official LLVM-C API
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;
-
+// global using for the NativeNethods to allow simpler access to the
+// string const for the library name.
 global using static Ubiquity.NET.Llvm.Interop.NativeMethods;

@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
-    public static partial class Error
+    public static partial class ErrorHandling
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

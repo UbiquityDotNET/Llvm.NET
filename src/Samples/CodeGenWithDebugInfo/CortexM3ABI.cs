@@ -72,8 +72,8 @@ namespace CodeGenWithDebugInfo
 
             var layout = function.ParentModule.Layout;
             function.AddAttributes( FunctionAttributeIndex.Parameter0 + paramIndex
-                                  , function.Context.CreateAttribute( AttributeKind.ByVal )
-                                  , function.Context.CreateAttribute( AttributeKind.Alignment, layout.AbiAlignmentOf( ptrType.ElementType! ) )
+                                  , function.Context.CreateAttribute( "byval", ptrType.ElementType)
+                                  , function.Context.CreateAttribute( "align", layout.AbiAlignmentOf( ptrType.ElementType! ) )
                                   );
         }
 

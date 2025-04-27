@@ -19,5 +19,16 @@ namespace ReferenceEqualityVerifier
             description: new LocalizableResourceString(nameof(Resources.REFQ001_Description), Resources.ResourceManager, typeof(Resources)),
             WellKnownDiagnosticTags.Compiler
             );
+
+        internal static readonly DiagnosticDescriptor RefEqualityInternalError = new DiagnosticDescriptor(
+            id: "REFQ000",
+            title: new LocalizableResourceString(nameof(Resources.REFQ000_Title), Resources.ResourceManager, typeof(Resources)),
+            messageFormat: new LocalizableResourceString(nameof(Resources.REFQ000_MessageFormat), Resources.ResourceManager, typeof(Resources)),
+            category: "Internal",
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(Resources.REFQ000_Description), Resources.ResourceManager, typeof(Resources)),
+            WellKnownDiagnosticTags.AnalyzerException
+            );
     }
 }

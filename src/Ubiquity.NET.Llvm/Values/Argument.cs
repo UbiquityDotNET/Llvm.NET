@@ -4,13 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>An LLVM Value representing an Argument to a function</summary>
     public class Argument
         : Value
+        , IAttributeContainer
     {
         /// <summary>Gets the function this argument belongs to</summary>
         public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( Handle ).ThrowIfInvalid( ) )!;
@@ -24,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Values
         public Argument SetAlignment( uint value )
         {
             ContainingFunction.AddAttributeAtIndex( FunctionAttributeIndex.Parameter0 + ( int )Index
-                                                  , Context.CreateAttribute( AttributeKind.Alignment, value )
+                                                  , Context.CreateAttribute( "align", value )
                                                   );
             return this;
         }
@@ -32,79 +31,6 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets the attributes for this argument</summary>
         public ICollection<AttributeValue> Attributes
             => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + ( int )Index );
-
-        /// <summary>Adds attributes to an <see cref="Argument"/></summary>
-        /// <param name="values"><see cref="AttributeKind"/>s to add</param>
-        /// <returns>This Argument for Fluent use</returns>
-        public Argument AddAttributes( params AttributeKind[ ] values )
-        {
-            if( values != null )
-            {
-                foreach( var kind in values )
-                {
-                    AttributeValue attrib = Context.CreateAttribute( kind );
-                    Attributes.Add( attrib );
-                }
-            }
-
-            return this;
-        }
-
-        /// <summary>Adds an attribute to an <see cref="Argument"/></summary>
-        /// <param name="kind"><see cref="AttributeKind"/> to add</param>
-        /// <returns>
-        /// This Argument for Fluent access
-        /// </returns>
-        public Argument AddAttribute( AttributeKind kind )
-        {
-            kind.ThrowIfNotDefined();
-
-            Attributes.Add( Context.CreateAttribute( kind ) );
-
-            return this;
-        }
-
-        /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="Argument"/></summary>
-        /// <param name="attributes"><see cref="AttributeValue"/>s to add</param>
-        /// <returns>This Argument for fluent usage</returns>
-        public Argument AddAttributes( params AttributeValue[ ] attributes )
-        {
-            return AddAttributes( ( IEnumerable<AttributeValue> )attributes );
-        }
-
-        /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="Argument"/></summary>
-        /// <param name="attributes"><see cref="AttributeValue"/>s to add</param>
-        /// <returns>This Argument for fluent usage</returns>
-        public Argument AddAttributes( IEnumerable<AttributeValue> attributes )
-        {
-            if( attributes != null )
-            {
-                foreach( var attrib in attributes )
-                {
-                    Attributes.Add( attrib );
-                }
-            }
-
-            return this;
-        }
-
-        /// <summary>Removes an <see cref="AttributeKind"/> from an <see cref="Argument"/></summary>
-        /// <param name="kind"><see cref="AttributeKind"/> to remove</param>
-        /// <returns>This Argument for fluent usage</returns>
-        public Argument RemoveAttribute( AttributeKind kind )
-        {
-            kind.ThrowIfNotDefined();
-            return kind == AttributeKind.None ? ( this ) : RemoveAttribute( kind.GetAttributeName( ) );
-        }
-
-        /// <summary>Removes a named attribute from an <see cref="Argument"/></summary>
-        /// <param name="name">Name of the attribute to remove</param>
-        /// <returns>This Argument for fluent usage</returns>
-        public Argument RemoveAttribute( string name )
-        {
-            Attributes.Remove( name );
-            return this;
-        }
 
         internal Argument( LLVMValueRef valueRef )
             : base( valueRef )

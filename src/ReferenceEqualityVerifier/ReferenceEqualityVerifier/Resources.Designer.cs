@@ -61,6 +61,33 @@ namespace ReferenceEqualityVerifier {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An internal analyzer exception occured.
+        /// </summary>
+        internal static string REFQ000_Description {
+            get {
+                return ResourceManager.GetString("REFQ000_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exception message is: &apos;{0}&apos;.
+        /// </summary>
+        internal static string REFQ000_MessageFormat {
+            get {
+                return ResourceManager.GetString("REFQ000_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal Error.
+        /// </summary>
+        internal static string REFQ000_Title {
+            get {
+                return ResourceManager.GetString("REFQ000_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reference equality used when value equality is present, this usually indicates an error of intent. If reference equality is really intended, use the ReferenceEquality method instead..
         /// </summary>
         internal static string REFQ001_Description {

@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Llvm.Values
     internal class ValueAttributeCollection
         : ICollection<AttributeValue>
     {
-        public ValueAttributeCollection( IAttributeAccessor container, FunctionAttributeIndex index )
+        public ValueAttributeCollection( IFunctionAttributeAccessor container, FunctionAttributeIndex index )
         {
             Container = container;
             Index = index;
@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        private readonly IAttributeAccessor Container;
+        private readonly IFunctionAttributeAccessor Container;
         private readonly FunctionAttributeIndex Index;
     }
 }

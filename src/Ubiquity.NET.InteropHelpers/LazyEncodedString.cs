@@ -8,12 +8,15 @@ using System;
 using System.Buffers;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
 namespace Ubiquity.NET.InteropHelpers
 {
+    // TODO: Add marshaller for LazyEncodedString so it is easy to use in signatures instead of string
+
     /// <summary>Lazily encoded string with implicit casting to a read only span of bytes or a normal managed string</summary>
     /// <remarks>
     /// <para>This class handles capturing a managed string or a span of bytes for a native one. It supports a lazily
@@ -68,14 +71,14 @@ namespace Ubiquity.NET.InteropHelpers
             ManagedString = new(ConvertString, LazyThreadSafetyMode.ExecutionAndPublication);
 
             // drop the terminator for conversion to managed so it won't appear in the string
-            string ConvertString() => Encoding.GetString(NativeBytes.Value[..^1]);
+            string ConvertString() => NativeBytes.Value.Length > 0 ? Encoding.GetString(NativeBytes.Value[..^1]) : string.Empty;
 
             // This incurs the cost of a copy but the lifetime of the span is not known or
             // guaranteed beyond this call.
             static byte[] GetNativeArrayWithTerminator(ReadOnlySpan<byte> span)
             {
                 // If it already has a terminator just use it
-                if(span[^1] == 0)
+                if(span.IsEmpty || span[^1] == 0)
                 {
                     return span.ToArray();
                 }
@@ -140,14 +143,21 @@ namespace Ubiquity.NET.InteropHelpers
         /// <inheritdoc/>
         public override bool Equals(object? obj) => obj is LazyEncodedString s && Equals(s);
 
+        // TODO: These should be size_t for max compatibility
         /// <summary>Gets the native size (in bytes, including the terminator) of the memory for this string</summary>
-        public int NativeSize => NativeBytes.Value.Length;
+        public int NativeLength => NativeBytes.Value.Length;
+
+        /// <summary>Gets the native length (in bytes, NOT including the terminator) of the native form of the string</summary>
+        public int NativeStrLen => NativeLength - 1;
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
             return ManagedString.Value.GetHashCode(StringComparison.Ordinal);
         }
+
+        /// <summary>Gets a <see cref="LazyEncodedString"/> representation of an empty string</summary>
+        public static LazyEncodedString Empty {get; } = new(string.Empty);
 
         /// <summary>Implicit cast to a string via <see cref="ToString"/></summary>
         /// <param name="self">instance to cast</param>
@@ -172,10 +182,34 @@ namespace Ubiquity.NET.InteropHelpers
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It's a convenience wrapper around an existing constructor" )]
         public static implicit operator LazyEncodedString(string managed) => new(managed);
 
+
         private readonly Encoding Encoding;
         private readonly Lazy<string> ManagedString;
 
         // The native array MUST include the terminator so it is useable as a fixed pointer in native code
         private readonly Lazy<byte[]> NativeBytes;
+    }
+
+    /// <summary>Utility extensions to validate a <see cref="LazyEncodedString"/></summary>
+    /// <remarks>
+    /// These are extension methods to allow use of the <see cref="CallerArgumentExpressionAttribute"/>
+    /// on the <see cref="LazyEncodedString"/> instance. Otherwise there is no way to get the name/expression
+    /// that is tested.
+    /// </remarks>
+    public static class LazyEncodedStringValidators
+    {
+        /// <summary>Throws an exception if the string is null or empty</summary>
+        /// <param name="self">String to test</param>
+        /// <param name="exp">Argument expression that is calling this test [Normally supplied by compiler]</param>
+        /// <exception cref="ArgumentException">The provided string is empty</exception>
+        /// <exception cref="ArgumentNullException">The provided string is null</exception>
+        public static void ThrowIfNullOrEmpty(this LazyEncodedString? self, [CallerArgumentExpression(nameof(self))] string? exp = null)
+        {
+            ArgumentNullException.ThrowIfNull(self, exp);
+            if(self.IsEmpty)
+            {
+                throw new ArgumentException("String is empty", exp);
+            }
+        }
     }
 }

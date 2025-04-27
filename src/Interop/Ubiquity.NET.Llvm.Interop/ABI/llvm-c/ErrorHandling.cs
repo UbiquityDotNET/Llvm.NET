@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     using unsafe LLVMFatalErrorHandler = delegate* unmanaged[Cdecl]<byte* /*Reason*/, void /*retVal*/>;
 #pragma warning restore IDE0065, SA1200
 
-    public static partial class Error
+    public static partial class ErrorHandling
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

@@ -68,7 +68,8 @@ namespace Ubiquity.NET.Llvm
         public bool OdrUniqueDebugTypes { get; set; }
 
         /// <summary>Gets or sets a value indicating whether this context is configured to discard value names</summary>
-        public bool DiscardValueName { get; set; }
+        public bool DiscardValueNames { get; set; }
+
 
 #if HAVE_API_TO_ENUMERATE_METADATA
         /*
@@ -84,6 +85,60 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets an enumerable collection of all the metadata created in this context</summary>
         public IEnumerable<LlvmMetadata> Metadata => MetadataCache;
 #endif
+
+        /// <summary>Creates a simple attribute without arguments</summary>
+        /// <param name="name">name of the attribute</param>
+        /// <returns><see cref="AttributeValue"/> of the attribute</returns>
+        public AttributeValue CreateAttribute(LazyEncodedString name);
+
+        /// <summary>Creates an attribute with an integer value parameter</summary>
+        /// <param name="name">name of the attribute</param>
+        /// <param name="value">Value for the attribute</param>
+        /// <remarks>
+        /// <para>Not all attributes support a value and those that do don't all support
+        /// a full 64bit value. Se the LLVM docs for details.</para>
+        /// </remarks>
+        /// <returns><see cref="AttributeValue"/> with the specified kind and value</returns>
+        public AttributeValue CreateAttribute(LazyEncodedString name, UInt64 value);
+
+        /// <summary>Create an attribute that accepts a type value</summary>
+        /// <param name="name">name of the attribute</param>
+        /// <param name="value">Type value to create the attribute with</param>
+        /// <returns>Attribute value</returns>
+        /// <exception cref="ArgumentException">The <paramref name="name"/> attribute does not accept a type argument</exception>
+        public AttributeValue CreateAttribute(LazyEncodedString name, ITypeRef value);
+
+        // TODO: Implement support for APInt with customized BigInteger.
+        //       BigInteger mostly fits the bill except it doesn't constrain the max value by a specified number of bits
+        //       Additionally, it favors representation as an array using the least number of elements possible, which
+        //       is NOT the same as how LLVM treats an APInt...
+        //
+        //       Such a type should have implicit casting to/from integral types if the size matches (signed extending
+        //       as appropriate but never a downcast without error...)
+        //
+        //       Then Creation of a Const Range attribute becomes simpler.
+
+        /// <summary>Create an attribute that accepts a constant range value</summary>
+        /// <param name="name">name of the attribute</param>
+        /// <param name="numBits">Number of valid bits in the range values</param>
+        /// <param name="lowWords">Array of bits composing the low end value of the range</param>
+        /// <param name="upperWords">Array of bits composing the upper end value of the range</param>
+        /// <returns>Attribute value</returns>
+        /// <remarks>
+        /// A constant range, as the name implies, contains a range of constant values that are a lower bound
+        /// and upper bound for a range. The values of each end are an arbitrary precision integer (APInt)
+        /// and thus <paramref name="numBits"/> indicates the total bit width of the values in the range.
+        /// </remarks>
+        /// <exception cref="ArgumentException">The <paramref name="name"/> does not accept a constant range value</exception>
+        public AttributeValue CreateAttribute(LazyEncodedString name, UInt32 numBits, UInt64[] lowWords, UInt64[] upperWords);
+
+        // TODO: Figure out how to create a constant range list attribute as LLVM-C API doesn't provide any means to do that.
+
+        /// <summary>Creates a string attribute with a value</summary>
+        /// <param name="name">Attribute name</param>
+        /// <param name="value">Value of the property</param>
+        /// <returns><see cref="AttributeValue"/> with the specified name</returns>
+        public AttributeValue CreateAttribute(LazyEncodedString name, LazyEncodedString value);
 
         /// <summary>Set a custom diagnostic handler</summary>
         /// <param name="handler">handler</param>
@@ -310,32 +365,6 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
         public ConstantFP CreateConstant(double constValue);
-
-        /// <summary>Creates a simple boolean attribute</summary>
-        /// <param name="kind">Id of attribute</param>
-        /// <returns><see cref="AttributeValue"/> with the specified Id set</returns>
-        public AttributeValue CreateAttribute(AttributeKind kind);
-
-        /// <summary>Creates an attribute with an integer value parameter</summary>
-        /// <param name="kind">The kind of attribute</param>
-        /// <param name="value">Value for the attribute</param>
-        /// <remarks>
-        /// <para>Not all attributes support a value and those that do don't all support
-        /// a full 64bit value. Se the LLVM docs for details.</para>
-        /// </remarks>
-        /// <returns><see cref="AttributeValue"/> with the specified kind and value</returns>
-        public AttributeValue CreateAttribute(AttributeKind kind, UInt64 value);
-
-        /// <summary>Adds a valueless named attribute</summary>
-        /// <param name="name">Attribute name</param>
-        /// <returns><see cref="AttributeValue"/> with the specified name</returns>
-        public AttributeValue CreateAttribute(string name);
-
-        /// <summary>Adds a Target specific named attribute with value</summary>
-        /// <param name="name">Name of the attribute</param>
-        /// <param name="value">Value of the attribute</param>
-        /// <returns><see cref="AttributeValue"/> with the specified name and value</returns>
-        public AttributeValue CreateAttribute(string name, string value);
 
         /// <summary>Create a named <see cref="BasicBlock"/> without inserting it into a function</summary>
         /// <param name="name">Name of the block to create</param>

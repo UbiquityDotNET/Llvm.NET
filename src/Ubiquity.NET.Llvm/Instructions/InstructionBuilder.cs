@@ -7,6 +7,14 @@
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>
+    /// <remarks>
+    /// <note type="important">
+    /// Unlike the underlying LLVM APIs these methods do NOT accept a name parameter. Instead,
+    /// the name is added only when needed via the <see cref="ValueExtensions.RegisterName{T}(T, string)"/>
+    /// extension method. That method supports a Fluent style pattern to allow mutating additional
+    /// properties and handles the possibility of a Constant folded value, which does NOT have a register
+    /// name.</note>
+    /// </remarks>
     public sealed class InstructionBuilder
         : IDisposable
     {
@@ -560,27 +568,6 @@ namespace Ubiquity.NET.Llvm.Instructions
                                                );
 
             return Value.FromHandle<AtomicCmpXchg>( handle.ThrowIfInvalid( ) )!;
-        }
-
-        /// <summary>Creates a <see cref="Value"/> that accesses an element (field) of a structure</summary>
-        /// <param name="pointer">pointer to the structure to get an element from</param>
-        /// <param name="index">element index</param>
-        /// <returns>
-        /// <para><see cref="Value"/> for the member access. This is a <see cref="Value"/>
-        /// as LLVM may optimize the expression to a <see cref="ConstantExpression"/> if it
-        /// can so the actual type of the result may be <see cref="ConstantExpression"/>
-        /// or <see cref="Instructions.GetElementPtr"/>.</para>
-        /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
-        /// or an exception is thrown.</para>
-        /// </returns>
-        [Obsolete( "Use the overload that takes a type and opaque pointer" )]
-        public Value GetStructElementPointer( Value pointer, uint index )
-        {
-            ValidateStructGepArgs( pointer, index );
-
-            // TODO: verify pointer isn't an opaque pointer
-            var handle = LLVMBuildStructGEP2( Handle, pointer.NativeType.GetTypeRef( ), pointer.Handle, index, string.Empty );
-            return Value.FromHandle( handle.ThrowIfInvalid( ) )!;
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element (field) of a structure</summary>
@@ -1389,6 +1376,8 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }
 
+            // TODO: Replace with call to LLVMBuildMemCpy
+
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memcpy.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
@@ -1444,6 +1433,8 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }
 
+            // TODO: Replace with call to LLVMBuildMemMove
+
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memmove.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
@@ -1489,6 +1480,8 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Module_and_instruction_builder_must_come_from_the_same_context );
             }
 
+            // TODO: Replace with call to LLVMBuildMemSet
+
             // find the appropriate overloaded form of the function
             var func = module.GetIntrinsicDeclaration( "llvm.memset.p.i", dstPtrType, value.NativeType );
 
@@ -1500,6 +1493,17 @@ namespace Ubiquity.NET.Llvm.Instructions
                                 );
 
             return Value.FromHandle( call.ThrowIfInvalid( ) )!;
+        }
+
+        /// <summary>Inserts a call to malloc</summary>
+        /// <param name="itemType">Type to allocate space for</param>
+        /// <returns>Value (virtual register) for the result of a call to malloc</returns>
+        /// <exception cref="ArgumentException"><paramref name="itemType"/> is not sized</exception>
+        public Value Malloc(ITypeRef itemType )
+        {
+            return itemType.IsSized
+                ? Value.FromHandle(LLVMBuildMalloc(Handle, itemType.GetTypeRef(), string.Empty)).ThrowIfNull()
+                : throw new ArgumentException( Resources.Type_must_be_sized_to_get_target_size_information );
         }
 
         /// <summary>Builds an <see cref="Ubiquity.NET.Llvm.Instructions.InsertValue"/> instruction </summary>

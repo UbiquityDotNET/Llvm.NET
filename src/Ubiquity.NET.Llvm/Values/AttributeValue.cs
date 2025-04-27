@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.ComponentModel;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -23,22 +25,52 @@ namespace Ubiquity.NET.Llvm.Values
         /// Applications **MUST NOT*** assume these values have any consistency beyond the current run and should NOT persist them. Additionally,
         /// string attributes have NO id.
         /// </remarks>
-        public AttributeKind Id => LLVMIsStringAttribute( NativeAttribute )
-                                 ? AttributeKind.None
-                                 : (AttributeKind)LLVMGetEnumAttributeKind( NativeAttribute );
+        public UInt32 Id => LLVMIsStringAttribute( NativeAttribute ) ? 0 : LLVMGetEnumAttributeKind( NativeAttribute );
 
         /// <summary>Gets the Name of the attribute</summary>
-        public string Name
-            => IsString
-                ? LLVMGetStringAttributeKind( NativeAttribute, out uint _ ) ?? string.Empty
-                : GetEnumAttributeName();
+        public LazyEncodedString Name
+        {
+            get
+            {
+                unsafe
+                {
+                    if (IsString)
+                    {
+                        byte* pName = LLVMGetStringAttributeKind( NativeAttribute, out uint len );
+                        return new(new ReadOnlySpan<byte>(pName, checked((int)len)));
+                    }
+                    else
+                    {
+                        byte* pName = LibLLVMGetAttributeNameFromID(Id, out uint len);
+                        return pName is null || len == 0
+                             ? new(string.Empty)
+                             : new(new ReadOnlySpan<byte>(pName, checked((int)len)));
+                    }
+                }
+            }
+        }
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
-        public string? StringValue => IsString ? LLVMGetStringAttributeValue( NativeAttribute, out uint _ ) : null;
+        public LazyEncodedString? StringValue
+        {
+            get
+            {
+                if (!IsString)
+                {
+                    return null;
+                }
+
+                unsafe
+                {
+                    byte* pValue = LLVMGetStringAttributeValue( NativeAttribute, out uint len );
+                    return new(new ReadOnlySpan<byte>(pValue, checked((int)len)));
+                }
+            }
+        }
 
         /// <summary>Gets the Integer value of the attribute or 0 if the attribute doesn't have a value</summary>
-        public UInt64 IntegerValue => IsEnum ? LLVMGetEnumAttributeValue( NativeAttribute ) : 0;
+        public UInt64 IntegerValue => IsInt ? LLVMGetEnumAttributeValue( NativeAttribute ) : 0;
 
         /// <summary>Gets the Type value of this attribute, if any</summary>
         public ITypeRef? TypeValue => IsType ? LLVMGetTypeAttributeValue( NativeAttribute ).CreateType() : null;
@@ -46,53 +78,26 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets a value indicating whether this attribute is a target specific string value</summary>
         public bool IsString => LLVMIsStringAttribute( NativeAttribute );
 
-        /// <summary>Gets a value indicating whether this attribute is a simple enumeration value</summary>
-        public bool IsEnum => LLVMIsEnumAttribute( NativeAttribute );
+        /// <summary>Gets a value indicating whether this attribute is a simple enumeration value [No arg value]</summary>
+        public bool IsEnum => AttributeInfo.ArgKind == AttributeArgKind.None;
 
-        /// <summary>Gets a value indicating whether this attribute has a type value</summary>
+        /// <summary>Gets a value indicating whether this attribute has an integral ID AND requires an integer arg value</summary>
+        public bool IsInt => AttributeInfo.ArgKind == AttributeArgKind.Int;
+
+        /// <summary>Gets a value indicating whether this attribute has an integral ID AND requires an Type arg value</summary>
         public bool IsType => LLVMIsTypeAttribute( NativeAttribute );
 
-        /// <summary>Verifies the attribute is valid for a <see cref="Value"/> on a given <see cref="FunctionAttributeIndex"/></summary>
-        /// <param name="index">Index to verify</param>
-        /// <param name="value">Value to check this attribute on</param>
-        /// <exception cref="ArgumentException">The attribute is not valid on <paramref name="value"/> for the <paramref name="index"/></exception>
-        public void VerifyValidOn( FunctionAttributeIndex index, Value value )
-        {
-            ArgumentNullException.ThrowIfNull( value );
-
-            // TODO: Attributes on globals??
-            if(!(value.IsCallSite || value.IsFunction))
-            {
-                throw new ArgumentException( "Attributes only allowed on functions and call sites" );
-            }
-
-            // for now all string attributes are valid everywhere as they are target dependent
-            // (e.g. no way to verify the validity of an arbitrary attribute without knowing the target)
-            if(IsString || IsType)
-            {
-                return;
-            }
-
-            Id.VerifyAttributeUsage( index, value );
-        }
+        /// <summary>Gets the <see cref="AttributeInfo"/> for this value</summary>
+        public AttributeInfo AttributeInfo => AttributeInfo.From(Name);
 
         /// <summary>Gets a string representation of the attribute</summary>
         /// <returns>Attribute as a string</returns>
-        public override string? ToString( )
-        {
-            return LibLLVMAttributeToString( NativeAttribute );
-        }
-
+        public override string? ToString( ) => LibLLVMAttributeToString( NativeAttribute );
         internal AttributeValue( LLVMAttributeRef nativeValue )
         {
             NativeAttribute = nativeValue;
         }
 
         internal LLVMAttributeRef NativeAttribute { get; }
-
-        private string GetEnumAttributeName( )
-        {
-            return LibLLVMGetEnumAttributeKindName( NativeAttribute );
-        }
     }
 }

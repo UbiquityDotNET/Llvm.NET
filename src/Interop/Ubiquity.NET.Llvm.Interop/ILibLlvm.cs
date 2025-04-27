@@ -21,9 +21,14 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Registers components for the specified targets</summary>
         /// <param name="target">ResolverTarget architecture to register/initialize</param>
         /// <param name="registrations">Flags indicating which components for the target to register/enable</param>
-        /// <
         void RegisterTarget(LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations = LibLLVMTargetRegistrationKind.TargetRegistration_CodeGen);
 
+        /// <summary>Gets the full list of all targets supported by this instance of the native library</summary>
+        /// <remarks>
+        /// This is a simple set of enumerated values for the known targets supported by the library. It
+        /// is distinct from the registered targets. Registration of each top level enumerated target may indeed
+        /// register support for more targets (e.g., ARM includes thumb big and little endian targets).
+        /// </remarks>
         ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets {get;}
     }
 }

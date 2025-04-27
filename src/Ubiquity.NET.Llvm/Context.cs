@@ -61,10 +61,11 @@ namespace Ubiquity.NET.Llvm
         /// that an element is finalized **BEFORE** the container that owns it. Thus if the finalizer
         /// destroys the container and then attempts to destroy the element - BOOM access violation
         /// and app crash occur. The location of such a crash is well after the problem occurred.
-        /// This is a VERY difficult situation to debug. (Though in a debug build the call stack of
-        /// the creator of any owned handle is captured to make it easier to find the cause of such
-        /// things.) <see cref="Ubiquity.NET.Llvm.Interop.GlobalHandleBase"/>
+        /// This is a VERY difficult situation to debug. (Though, in a debug build of this library,
+        /// the call stack of the creator of any owned handle is captured to make it easier to find
+        /// the cause of such things.)
         /// </remarks>
+        /// <seealso cref="Ubiquity.NET.Llvm.Interop.GlobalHandleBase"/>
         public Context()
             : this(LLVMContextCreate())
         {
@@ -163,16 +164,20 @@ namespace Ubiquity.NET.Llvm
         public ConstantFP CreateConstant( double constValue ) => Impl.CreateConstant( constValue );
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute( AttributeKind kind ) => Impl.CreateAttribute( kind );
+        public AttributeValue CreateAttribute(LazyEncodedString name) => Impl.CreateAttribute(name);
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute( AttributeKind kind, ulong value ) => Impl.CreateAttribute( kind, value );
+        public AttributeValue CreateAttribute(LazyEncodedString name, UInt64 value) => Impl.CreateAttribute(name, value);
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute( string name ) => Impl.CreateAttribute( name );
+        public AttributeValue CreateAttribute(LazyEncodedString name, ITypeRef value) => Impl.CreateAttribute(name, value);
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute( string name, string value ) => Impl.CreateAttribute( name, value );
+        public AttributeValue CreateAttribute(LazyEncodedString name, UInt32 numBits, UInt64[] lowWords, UInt64[] upperWords)
+            => Impl.CreateAttribute(name, numBits, lowWords, upperWords);
+
+        /// <inheritdoc/>
+        public AttributeValue CreateAttribute(LazyEncodedString name, LazyEncodedString value) => Impl.CreateAttribute(name, value);
 
         /// <inheritdoc/>
         public BasicBlock CreateBasicBlock( string name ) => Impl.CreateBasicBlock( name );
@@ -245,10 +250,10 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public bool DiscardValueName
+        public bool DiscardValueNames
         {
-            get => Impl.DiscardValueName;
-            set => Impl.DiscardValueName = value;
+            get => Impl.DiscardValueNames;
+            set => Impl.DiscardValueNames = value;
         }
         #endregion
 

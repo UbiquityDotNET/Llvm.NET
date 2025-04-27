@@ -130,6 +130,19 @@ namespace Ubiquity.NET.Llvm
         void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
 
         /// <summary>Gets the supported targets for this library</summary>
+        /// <remarks>
+        /// This is a simple set of enumerated values for the known targets supported by the library. It
+        /// is distinct from the registered targets. Registration of each top level enumerated target may indeed
+        /// register support for more targets (e.g., ARM includes thumb big and little endian targets).
+        /// </remarks>
         ImmutableArray<CodeGenTarget> SupportedTargets {get;}
+
+        /// <summary>Map of all known attributes to this build</summary>
+        /// <remarks>
+        /// This map includes all enumerated attributes AND all well-known string attributes. Additional
+        /// string attributes are always valid as various passes and target machines may use custom
+        /// attributes not yet known to, or considered stable by, the LLVM core native code.
+        /// </remarks>
+        ImmutableDictionary<LazyEncodedString, AttributeInfo> AttributeMap {get;}
     }
 }

@@ -32,7 +32,7 @@
         ReadWrite = Read | Write,
     }
 
-    /// <summary>Value argument for <see cref="AttributeKind.Memory"/></summary>
+    /// <summary>Value argument for a "memory" attribute</summary>
     /// <remarks>
     /// The value is an integer that consists of a bitfield for variations. This,
     /// struct handles the processing of the bit fields.

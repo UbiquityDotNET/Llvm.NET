@@ -25,34 +25,48 @@ namespace ReferenceEqualityVerifier
 
         private void BinaryOpAction( OperationAnalysisContext context )
         {
-            var op = (IBinaryOperation)context.Operation;
-            if(op.OperatorKind == BinaryOperatorKind.Equals || op.OperatorKind == BinaryOperatorKind.NotEquals)
+            try
             {
-                // comparisons to null literal are OK, intent is clear and explicit...
-                if (IsNullLiteral(op.LeftOperand) || IsNullLiteral(op.RightOperand))
+                if(!(context.Operation is IBinaryOperation op))
                 {
-                    return;
+                    Debug.Assert(false, "Unknown case; non-binary operation...");
+                    return; // Should never be null; safety/sanity
                 }
 
-                var lht = op.SemanticModel?.GetTypeInfo(op.LeftOperand.Syntax).Type;
-                var rht = op.SemanticModel?.GetTypeInfo(op.RightOperand.Syntax).Type;
-                if(lht is null || rht is null)
+                if(op.OperatorKind == BinaryOperatorKind.Equals || op.OperatorKind == BinaryOperatorKind.NotEquals)
                 {
-                    Debug.Assert(false, "Unknown case types not available");
-                    return;
-                }
+                    // comparisons to null literal are OK, intent is clear and explicit...
+                    if (IsNullLiteral(op.LeftOperand) || IsNullLiteral(op.RightOperand))
+                    {
+                        return;
+                    }
 
-                // if comparing value types, or strings then it's fine; no diagnostic needed
-                if( lht.IsValueType || (IsString(lht, context.Compilation) && IsString(rht, context.Compilation)))
-                {
-                    return;
-                }
+                    var lht = op.SemanticModel?.GetTypeInfo(op.LeftOperand.Syntax).Type;
+                    var rht = op.SemanticModel?.GetTypeInfo(op.RightOperand.Syntax).Type;
+                    if(lht is null || rht is null)
+                    {
+                        // Incomplete syntax is handled as OK for this analyzer.
+                        // Other parts of the compilation/Analyzers can complain as needed
+                        // but it should not break this analyzer!
+                        return;
+                    }
 
-                // if the types of the operands are Equatable then a diagnostic is reported.
-                if(AreEquatable(lht, rht))
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(Diagnostics.RefEqualityWhenEquatable, op.Syntax.GetLocation(), op.LeftOperand.Syntax, op.RightOperand.Syntax));
+                    // if comparing value types, or strings then it's fine; no diagnostic needed
+                    if( lht.IsValueType || (IsString(lht, context.Compilation) && IsString(rht, context.Compilation)))
+                    {
+                        return;
+                    }
+
+                    // if the types of the operands are Equatable then a diagnostic is reported.
+                    if(AreEquatable(lht, rht))
+                    {
+                        context.ReportDiagnostic(Diagnostic.Create(Diagnostics.RefEqualityWhenEquatable, op.Syntax.GetLocation(), op.LeftOperand.Syntax, op.RightOperand.Syntax));
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(Diagnostics.RefEqualityInternalError, context.Operation.Syntax.GetLocation(), ex.Message));
             }
         }
 
@@ -80,17 +94,8 @@ namespace ReferenceEqualityVerifier
         // from the type argument to IEquality<T>.
         private static bool AreEquivalent( ITypeSymbol typeSymbol, ITypeSymbol lht, ITypeSymbol rht )
         {
-            if (IsImplicitlyCastableTo(lht, typeSymbol))
-            {
-                return true;
-            }
-
-            if (IsImplicitlyCastableTo(rht, typeSymbol))
-            {
-                return true;
-            }
-
-            return false;
+            return IsImplicitlyCastableTo(lht, typeSymbol)
+                || IsImplicitlyCastableTo(rht, typeSymbol);
         }
 
         private static bool IsImplicitlyCastableTo( ITypeSymbol derivedType, ITypeSymbol testBaseType )

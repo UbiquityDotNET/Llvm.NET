@@ -56,6 +56,8 @@ namespace CodeGenWithDebugInfo
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }
+
+            // nothing to do for this ABI, validation is still useful though!
         }
 
         public void AddModuleFlags( Module module )
@@ -75,7 +77,7 @@ namespace CodeGenWithDebugInfo
                 ctx.CreateAttribute( "target-features", Features ),
                 ctx.CreateAttribute( "unsafe-fp-math", "false" ),
                 ctx.CreateAttribute( "use-soft-float", "false" ),
-                ctx.CreateAttribute( AttributeKind.UWTable )
+                ctx.CreateAttribute( "uwtable", (ulong)UWTableKind.Async)
             ];
 
         private readonly ILibLlvm LlvmLib;

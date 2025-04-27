@@ -52,12 +52,12 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromInt32(int size) => new( checked((nuint)(Int64)size) );
+        public static size_t FromInt32(int size) => new( (nuint)(Int64)size );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int64"/></summary>
         /// <param name="size">value to convert</param>
         /// <returns><paramref name="size"/> as a size_t</returns>
-        public static size_t FromInt64(Int64 size) => new( checked((nuint)size) );
+        public static size_t FromInt64(Int64 size) => new( (nuint)size );
 
         /// <summary>Create a <see cref="size_t"/> from an <see cref="System.Int32"/></summary>
         /// <param name="size">value to convert</param>

@@ -22,26 +22,28 @@ namespace Ubiquity.NET.Llvm.UT
         public void AttributeValueTestEnum( )
         {
             using var ctx = new Context( );
-            var value = ctx.CreateAttribute( AttributeKind.AlwaysInline );
-            Assert.IsFalse( value.Id.IsIntKind() );
+            var attribInfo = AttributeInfo.From("alwaysinline");
+            var value = ctx.CreateAttribute( "alwaysinline");
+            Assert.AreEqual( AttributeArgKind.None, value.AttributeInfo.ArgKind);
             Assert.IsFalse( value.IsString );
-            Assert.AreEqual( "alwaysinline", value.Name );
+            Assert.AreEqual( "alwaysinline", value.Name.ToString() );
             Assert.IsNull( value.StringValue );
             Assert.IsTrue( value.IsEnum );
-            Assert.AreEqual( AttributeKind.AlwaysInline, value.Id );
+            Assert.AreEqual( attribInfo.ID, value.Id );
         }
 
         [TestMethod]
         public void AttributeValueEnumInt( )
         {
             using var ctx = new Context( );
-            var value = ctx.CreateAttribute( AttributeKind.DereferenceableOrNull, 1234ul );
-            Assert.IsTrue( value.Id.IsIntKind() );
+            var attribInfo = AttributeInfo.From("dereferenceable_or_null");
+            var value = ctx.CreateAttribute( "dereferenceable_or_null", 1234ul );
+            Assert.AreEqual( AttributeArgKind.Int, value.AttributeInfo.ArgKind);
             Assert.IsFalse( value.IsString );
-            Assert.AreEqual( "dereferenceable_or_null", value.Name );
+            Assert.AreEqual( "dereferenceable_or_null", value.Name.ToString() );
             Assert.IsNull( value.StringValue );
-            Assert.IsTrue( value.IsEnum );
-            Assert.AreEqual( AttributeKind.DereferenceableOrNull, value.Id);
+            Assert.IsTrue( value.IsInt );
+            Assert.AreEqual( attribInfo.ID, value.Id);
             Assert.AreEqual( 1234ul, value.IntegerValue);
         }
 
@@ -50,27 +52,31 @@ namespace Ubiquity.NET.Llvm.UT
         {
             using var ctx = new Context( );
             var value = ctx.CreateAttribute( TestTargetDependentAttributeName );
-            Assert.IsFalse( value.Id.IsIntKind() );
-            Assert.IsFalse( value.Id.IsEnumKind() );
-            Assert.IsFalse( value.Id.IsTypeKind() );
-            Assert.IsTrue( value.IsString );
-            Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
-            Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
             Assert.IsFalse( value.IsEnum );
-            Assert.AreEqual( AttributeKind.None, value.Id );
+            Assert.IsFalse( value.IsType );
+            Assert.IsTrue( value.IsString );
+
+            Assert.AreEqual( AttributeArgKind.String, value.AttributeInfo.ArgKind );
+            Assert.AreEqual( TestTargetDependentAttributeName, value.Name.ToString() );
+            Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue?.ToString() ) );
+            Assert.IsFalse( value.IsEnum );
+            Assert.AreEqual(0u, value.Id );
         }
 
         [TestMethod]
         public void ImplicitCastAttributeKindToAttributeValueTest( )
         {
             using var ctx = new Context( );
-            AttributeValue value = ctx.CreateAttribute( AttributeKind.NoInline );
-            Assert.IsFalse( value.Id.IsIntKind() );
+            var attribInfo = AttributeInfo.From("noinline");
+            AttributeValue value = ctx.CreateAttribute( "noinline" );
+            Assert.IsTrue( value.IsEnum );
+            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.IsType );
             Assert.IsFalse( value.IsString );
-            Assert.AreEqual( "noinline", value.Name );
+            Assert.AreEqual( "noinline", value.Name.ToString() );
             Assert.IsNull( value.StringValue );
             Assert.IsTrue( value.IsEnum );
-            Assert.AreEqual( AttributeKind.NoInline, value.Id );
+            Assert.AreEqual( attribInfo.ID, value.Id );
         }
 
         [TestMethod]
@@ -78,12 +84,13 @@ namespace Ubiquity.NET.Llvm.UT
         {
             using var ctx = new Context( );
             AttributeValue value = ctx.CreateAttribute( TestTargetDependentAttributeName );
-            Assert.IsFalse( value.Id.IsIntKind() );
+            Assert.IsFalse( value.IsInt );
+            Assert.IsFalse( value.IsType );
             Assert.IsTrue( value.IsString );
-            Assert.AreEqual( TestTargetDependentAttributeName, value.Name );
-            Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue ) );
+            Assert.AreEqual( TestTargetDependentAttributeName, value.Name.ToString() );
+            Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue?.ToString() ) );
             Assert.IsFalse( value.IsEnum );
-            Assert.AreEqual( AttributeKind.None, value.Id );
+            Assert.AreEqual( 0u, value.Id );
         }
 
         // test all attributes for an index are available and reflect attributes set
@@ -93,13 +100,17 @@ namespace Ubiquity.NET.Llvm.UT
         {
             using var ctx = new Context( );
             using var module = ctx.CreateBitcodeModule( );
+            var nestAttrib = ctx.CreateAttribute("nest");
+            var byValInt32Attrib = ctx.CreateAttribute("byval", ctx.Int32Type);
+
             var signature = ctx.GetFunctionType( ctx.Int32Type , ctx.DoubleType, ctx.Int8Type.CreatePointerType( ));
             var function = module.CreateFunction( "test", signature );
-            function.Parameters[ 0 ].AddAttributes( AttributeKind.Nest, AttributeKind.ByVal );
+
+            function.Parameters[ 0 ].AddAttributes( nestAttrib, byValInt32Attrib );
             var attributes = function.GetAttributesAtIndex( FunctionAttributeIndex.Parameter0 ).ToArray( );
             Assert.AreEqual( 2, attributes.Length );
-            Assert.IsTrue( attributes.Contains( AttributeKind.Nest ) );
-            Assert.IsTrue( attributes.Contains( AttributeKind.ByVal ) );
+            Assert.IsTrue( attributes.Contains( nestAttrib ) );
+            Assert.IsTrue( attributes.Contains( byValInt32Attrib ) );
         }
     }
 }

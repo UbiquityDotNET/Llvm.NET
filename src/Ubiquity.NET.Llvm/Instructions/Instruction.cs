@@ -502,11 +502,19 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets a, potentially empty, collection of successor blocks for this instruction</summary>
         public IOperandCollection<BasicBlock> Successors { get; }
 
+        /// <summary>Gets a value indicating whether this instruction has debug records attached.</summary>
+        public bool HasDebugRecords => LibLLVMHasDbgRecords(Handle);
+
         /// <summary>Gets an enumeration of all the debug records associated with this instruction</summary>
         public IEnumerable<DebugRecord> DebugRecords
         {
             get
             {
+                if(!HasDebugRecords)
+                {
+                    yield break;
+                }
+
                 DebugRecord record = new(LLVMGetFirstDbgRecord(Handle));
                 while(!record.IsNull)
                 {

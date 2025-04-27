@@ -5,6 +5,7 @@
       <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
     <ProjectReference Include="..\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj">
         <Name>Ubiquity.NET.Llvm.Interop</Name>
         <Private>true</Private>

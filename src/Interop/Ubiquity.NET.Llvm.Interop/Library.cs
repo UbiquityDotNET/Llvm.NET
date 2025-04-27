@@ -3,6 +3,8 @@
 // </copyright>
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistration;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ErrorHandling;
 
 namespace Ubiquity.NET.Llvm.Interop
 {

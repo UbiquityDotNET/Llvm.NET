@@ -81,6 +81,18 @@ namespace ReferenceEqualityVerifier.Test
             await analyzerTest.RunAsync();
         }
 
+        [TestMethod]
+        public async Task IncompleteSyntaxDoesNotReportDiagnostics( )
+        {
+            var analyzerTest = CreateTestRunner(IncompleteSyntax);
+            analyzerTest.ExpectedDiagnostics.AddRange(
+                [
+                    new DiagnosticResult("CS1525", DiagnosticSeverity.Error).WithLocation(14,25),
+                ]
+            );
+            await analyzerTest.RunAsync();
+        }
+
         private static AnalyzerTest<DefaultVerifier> CreateTestRunner(string source)
         {
             return new CSharpAnalyzerTest<ReferenceEqualityAnalyzer, DefaultVerifier>{
@@ -193,7 +205,7 @@ namespace ReferenceEqualityVerifier.Test
 
         const string CommonBaseEquatable = """
         using System;
-        
+
         public class BaseClass
             : IEquatable<BaseClass>
         {
@@ -206,6 +218,26 @@ namespace ReferenceEqualityVerifier.Test
             bool SomeFunc(DerivedClass other)
             {
                 return other == this; // OOPS, ref equality!
+            }
+        }
+
+        """;
+
+        const string IncompleteSyntax = """
+        using System;
+
+        public class BaseClass
+            : IEquatable<BaseClass>
+        {
+            public bool Equals( BaseClass? other ) => false;
+        }
+
+        public class DerivedClass
+            : BaseClass
+        {
+            bool SomeFunc(DerivedClass other)
+            {
+                return other == ; // OOPS, not complete syntax...
             }
         }
 

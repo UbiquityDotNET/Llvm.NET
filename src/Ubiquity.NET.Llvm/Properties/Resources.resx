@@ -193,10 +193,10 @@
   <data name="Integer_type_required" xml:space="preserve">
     <value>Integer type required</value>
   </data>
-  <data name="Attribute_0_requires_a_value" xml:space="preserve">
-    <value>Attribute {0} requires a value</value>
+  <data name="Attribute_0_requires_a_value_of_1" xml:space="preserve">
+    <value>Attribute '{0}' requires a value of `{1}`</value>
   </data>
-  <data name="Attribute_0_does_not_support_a_value" xml:space="preserve">
+  <data name="Attribute_0_does_not_support_an_integer_value" xml:space="preserve">
     <value>Attribute {0} does not support a value</value>
   </data>
   <data name="Incorrect_context_for_module" xml:space="preserve">
@@ -444,9 +444,6 @@ Types are:
   </data>
   <data name="Stack_alignment_value_must_be_a_power_of_2" xml:space="preserve">
     <value>Stack alignment value must be a power of 2</value>
-  </data>
-  <data name="Attribute_0_does_not_support_an_argument" xml:space="preserve">
-    <value>Attribute '{0}' does not support an argument</value>
   </data>
   <data name="Instruction_is_from_a_different_block" xml:space="preserve">
     <value>Instruction is from a different block</value>

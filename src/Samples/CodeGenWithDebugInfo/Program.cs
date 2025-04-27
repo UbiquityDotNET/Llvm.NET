@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
@@ -84,7 +83,8 @@ namespace CodeGenWithDebugInfo
             var abiAttributes = targetABI.BuildTargetDependentFunctionAttributes( context );
             #endregion
 
-            var diFile = diBuilder.CreateFile( srcPath );
+            Debug.Assert(compilationUnit.File is not null, "File was set in creation, should NOT be null");
+            DIFile diFile = compilationUnit.File;
 
             #region CreatingBasicTypesWithDebugInfo
             // Create basic types used in this compilation
@@ -205,7 +205,7 @@ namespace CodeGenWithDebugInfo
                                                   , scopeLine: 24
                                                   , debugFlags: DebugInfoFlags.None
                                                   , isOptimized: false
-                                                  ).AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoInline, AttributeKind.NoUnwind, AttributeKind.OptimizeNone )
+                                                  ).AddAttributes( FunctionAttributeIndex.Function, "noinline", "nounwind", "optimizenone")
                                                    .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
             return doCopyFunc;
         }
@@ -248,7 +248,7 @@ namespace CodeGenWithDebugInfo
                                                 , debugFlags: DebugInfoFlags.Prototyped
                                                 , isOptimized: false
                                                 ).Linkage( Linkage.Internal ) // static function
-                                                 .AddAttributes( FunctionAttributeIndex.Function, AttributeKind.NoUnwind, AttributeKind.NoInline, AttributeKind.OptimizeNone )
+                                                 .AddAttributes( FunctionAttributeIndex.Function, "nounwind", "noinline", "optimizenone" )
                                                  .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
 
             Debug.Assert( !fooPtr.IsOpaque(), "Expected the debug info for a pointer was created with a valid ElementType");
@@ -301,13 +301,8 @@ namespace CodeGenWithDebugInfo
                                      .RegisterName( "pDst.addr" )
                                      .SetAlignment( ptrAlign );
 
-            bool param0ByVal = ( from attr in copyFunc.Attributes
-                                 where attr.Key == FunctionAttributeIndex.Parameter0
-                                 where attr.Value.Contains(AttributeKind.ByVal)
-                                 select attr
-                               ).Any();
-
-            if( param0ByVal )
+            bool hasParam0ByVal = copyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval") is not null;
+            if( hasParam0ByVal )
             {
                 diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
                                        , paramSrc
@@ -322,7 +317,7 @@ namespace CodeGenWithDebugInfo
             // insert attach debug record to the local declarations
             diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
 
-            if( !param0ByVal )
+            if( !hasParam0ByVal )
             {
                 // since the function's LLVM signature uses a pointer, which is copied locally
                 // inform the debugger to treat it as the value by dereferencing the pointer
@@ -368,13 +363,8 @@ namespace CodeGenWithDebugInfo
 
             // create instruction builder to build the body
             using var instBuilder = new InstructionBuilder( blk );
-
-            bool param0ByVal = ( from attr in copyFunc.Attributes
-                                 where attr.Key == FunctionAttributeIndex.Parameter0
-                                 where attr.Value.Contains(AttributeKind.ByVal)
-                                 select attr
-                               ).Any();
-            if( !param0ByVal )
+            bool hasParam0ByVal = doCopyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval") is not null;
+            if( !hasParam0ByVal )
             {
                 // create a temp local copy of the global structure
                 var dstAddr = instBuilder.Alloca( foo )
