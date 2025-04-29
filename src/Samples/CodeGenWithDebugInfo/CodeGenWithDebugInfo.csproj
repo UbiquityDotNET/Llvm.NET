@@ -6,6 +6,7 @@
     <OutputType>exe</OutputType>
     <OutputTypeEx>exe</OutputTypeEx>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PublishAot>True</PublishAot>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Support Files\ClangCompile.cmd">

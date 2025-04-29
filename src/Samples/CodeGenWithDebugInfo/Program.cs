@@ -169,7 +169,7 @@ namespace CodeGenWithDebugInfo
 
         private static void ShowUsage( )
         {
-            Console.Error.WriteLine( "Usage: {0} [X64|M3] <source file path>", Path.GetFileName( System.Reflection.Assembly.GetExecutingAssembly( ).Location ) );
+            Console.Error.WriteLine( "Usage: CodeGenWithDebugInfo [X64|M3] <source file path>" );
         }
 
         private static ITargetABI? AbiFactory(string arg)

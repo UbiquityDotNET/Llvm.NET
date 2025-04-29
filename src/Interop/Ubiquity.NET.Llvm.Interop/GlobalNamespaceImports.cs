@@ -19,17 +19,19 @@ global using System.Collections.Immutable;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;
+global using System.IO;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
 global using System.Runtime.InteropServices.Marshalling;
 global using System.Threading;
+
 global using Ubiquity.NET.InteropHelpers;
 global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
 global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 global using Ubiquity.NET.Llvm.Interop.Properties;
 global using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
 
-// global using for the NativeNethods to allow simpler access to the
+// global using for the NativeMethods type to allow simpler access to the
 // string const for the library name.
 global using static Ubiquity.NET.Llvm.Interop.NativeMethods;

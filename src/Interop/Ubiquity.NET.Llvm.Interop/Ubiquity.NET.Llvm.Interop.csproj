@@ -28,7 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
-    <PackageReference Include="LibLLVM-win-x64" VersionOverride="20.1.3-*" />
+    <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.3-*" />
     <PackageReference Include="Ubiquity.NET.Llvm.Interop.Handles" VersionOverride="20.1.3-*"/>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -27,6 +28,36 @@ namespace Ubiquity.NET.InteropHelpers
         {
             return new(NativeLibrary.Load(libraryName, assembly, searchPath));
         }
+
+        /// <inheritdoc cref="NativeLibrary.TryLoad(string, out nint)"/>
+        /// <param name="lib">Native library handle.</param>
+#pragma warning disable CS1573 // Parameter has no matching param tag in the XML comment (but other parameters do)
+        public static bool TryLoad(string libraryPath, [MaybeNullWhen(false)] out NativeLibraryHandle lib)
+        {
+            if(NativeLibrary.TryLoad(libraryPath, out nint handle))
+            {
+                lib = new NativeLibraryHandle( handle );
+                return true;
+            }
+
+            lib = null;
+            return false;
+        }
+
+        /// <inheritdoc cref="NativeLibrary.TryLoad(string, Assembly, DllImportSearchPath?, out nint)"/>
+        /// <param name="lib">Native library Handle</param>
+        public static bool TryLoad(string libraryName, Assembly assembly, DllImportSearchPath? searchPath, [MaybeNullWhen(false)] out NativeLibraryHandle lib)
+        {
+            if(NativeLibrary.TryLoad(libraryName, assembly, searchPath, out nint handle))
+            {
+                lib = new NativeLibraryHandle( handle );
+                return true;
+            }
+
+            lib = null;
+            return false;
+        }
+#pragma warning restore CS1573 // Parameter has no matching param tag in the XML comment (but other parameters do)
 
         /// <inheritdoc/>
         protected override bool ReleaseHandle( )

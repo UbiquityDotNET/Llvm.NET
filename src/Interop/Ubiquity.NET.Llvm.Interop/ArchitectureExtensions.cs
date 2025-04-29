@@ -1,4 +1,8 @@
-﻿namespace Ubiquity.NET.Llvm.Interop
+﻿// <copyright file="ArchitectureExtensions.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+
+namespace Ubiquity.NET.Llvm.Interop
 {
     public static class ArchitectureExtensions
     {

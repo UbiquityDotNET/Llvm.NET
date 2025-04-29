@@ -1,4 +1,8 @@
-﻿namespace Ubiquity.NET.Llvm.Interop
+﻿// <copyright file="NativeLibraryResolver.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+
+namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Internal static 'utility' class to handle resolving the correct binary library to use</summary>
     /// <remarks>
@@ -62,8 +66,22 @@
 
                 // Native binary is in a RID specific runtime folder, build that path as relative
                 // to this assembly and load the library from there.
-                string relativePath = @$"runtimes/{RuntimeInformation.RuntimeIdentifier}/native/{libraryName}";
-                NativeLibHandle = NativeLibraryHandle.Load( relativePath, assembly, DllImportSearchPath.AssemblyDirectory );
+                string relativePath = Path.Combine("runtimes", RuntimeInformation.RuntimeIdentifier, "native", libraryName);
+#pragma warning disable IDISP003 // Dispose previous before re-assigning
+#pragma warning disable CS8601 // Possible null reference assignment.
+                // Should NOT dispose previous as it already is tested for invalid (Known null here)
+                // NOT a null reference as the result of the "try" pattern is tested.
+                if (!NativeLibraryHandle.TryLoad(relativePath, assembly, DllImportSearchPath.AssemblyDirectory, out NativeLibHandle))
+                {
+                    // Not found using the normal JIT location, BUT AOT will place it in the same
+                    // location as the exe, so test for that..
+                    if(!NativeLibraryHandle.TryLoad(libraryName, assembly, DllImportSearchPath.AssemblyDirectory, out NativeLibHandle))
+                    {
+                        throw new InvalidOperationException("Required LibLLVM native library does not exist!");
+                    }
+                }
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore IDISP003 // Dispose previous before re-assigning
             }
 
             return NativeLibHandle.DangerousGetHandle();
