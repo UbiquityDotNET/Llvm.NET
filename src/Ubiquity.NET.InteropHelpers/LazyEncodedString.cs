@@ -182,7 +182,6 @@ namespace Ubiquity.NET.InteropHelpers
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It's a convenience wrapper around an existing constructor" )]
         public static implicit operator LazyEncodedString(string managed) => new(managed);
 
-
         private readonly Encoding Encoding;
         private readonly Lazy<string> ManagedString;
 

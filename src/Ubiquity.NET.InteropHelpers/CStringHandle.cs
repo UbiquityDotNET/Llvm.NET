@@ -38,7 +38,7 @@ namespace Ubiquity.NET.InteropHelpers
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+                ObjectDisposedException.ThrowIf(IsClosed, this);
                 unsafe
                 {
                     return new((void*)handle, LazyStrLen.Value);
@@ -54,7 +54,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// </remarks>
         public override string? ToString()
         {
-            ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+            ObjectDisposedException.ThrowIf(IsClosed, this);
             return ManagedString.Value;
         }
 
@@ -68,7 +68,7 @@ namespace Ubiquity.NET.InteropHelpers
         [SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API")]
         public override int GetHashCode()
         {
-            ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+            ObjectDisposedException.ThrowIf(IsClosed, this);
             return ToString()?.GetHashCode() ?? 0;
         }
 
@@ -77,7 +77,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <returns>A 32-bit signed integer hash code.</returns>
         public int GetHashCode(StringComparison comparisonType)
         {
-            ObjectDisposedException.ThrowIf(IsClosed || IsInvalid, this);
+            ObjectDisposedException.ThrowIf(IsClosed, this);
             return ToString()?.GetHashCode(comparisonType) ?? 0;
         }
 

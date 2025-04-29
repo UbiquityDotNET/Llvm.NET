@@ -90,6 +90,8 @@ dotnet_diagnostic.SA0001.severity = none
 # Code files
 [*.{cs,vb}]
 
+# IDE0059: Unnecessary assignment of a value
+dotnet_diagnostic.IDE0059.severity = none
 
 # CA1420: Property, type, or attribute requires runtime marshalling
 dotnet_diagnostic.CA1420.severity = error
