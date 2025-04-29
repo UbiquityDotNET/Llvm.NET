@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.IO;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -26,7 +27,8 @@ namespace Ubiquity.NET.ANTLR.Utils
         }
 
         /// <inheritdoc/>
-        public void SyntaxError( [NotNull] IRecognizer recognizer
+        public void SyntaxError( TextWriter output // ignored
+                               , [NotNull] IRecognizer recognizer
                                , [Nullable] int offendingSymbol
                                , int line
                                , int charPositionInLine
@@ -46,7 +48,8 @@ namespace Ubiquity.NET.ANTLR.Utils
         }
 
         /// <inheritdoc/>
-        public void SyntaxError( [NotNull] IRecognizer recognizer
+        public void SyntaxError( TextWriter output // ignored
+                               , [NotNull] IRecognizer recognizer
                                , [Nullable] IToken offendingSymbol
                                , int line
                                , int charPositionInLine

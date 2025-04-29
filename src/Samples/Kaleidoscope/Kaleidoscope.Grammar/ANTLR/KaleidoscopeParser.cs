@@ -61,16 +61,16 @@ namespace Kaleidoscope.Grammar.ANTLR
 
         private bool IsFeatureEnabled( LanguageLevel feature ) => LanguageLevel >= feature;
 
-        private bool IsPrefixOp( ) => GlobalState.IsPrefixOp( _input.Lt( 1 ).Type );
+        private bool IsPrefixOp( ) => GlobalState.IsPrefixOp( InputStream.LA( 1 ) );
 
         private int GetPrecedence( )
         {
-            return GlobalState.GetPrecedence( _input.Lt( 1 ).Type );
+            return GlobalState.GetPrecedence( InputStream.LA( 1 ) );
         }
 
         private int GetNextPrecedence( )
         {
-            return GlobalState.GetNextPrecedence( _input.Lt( -1 ).Type );
+            return GlobalState.GetNextPrecedence( InputStream.LA( -1 ) );
         }
     }
 }

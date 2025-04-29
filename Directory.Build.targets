@@ -127,4 +127,65 @@
             </_ProjectReferencesWithVersions>
         </ItemGroup>
     </Target>
+
+    <!--Antlr4BuildTasks specific support -->
+    <!--
+    Sadly the Antlr4BuildTasks package creates an ItemDefinitionGroup for Antlr4, in the "targets" file...
+    (Should go in the props file so a project can override it!). Fortunately, **this** targets file is processed
+    AFTER any NUGET targets, allowing overrides here.
+    -->
+    <ItemDefinitionGroup>
+        <Antlr4>
+            <JavaDownloadDirectory>$(BaseBuildOutputPath)packages\Java</JavaDownloadDirectory>
+            <AntlrToolJarDownloadDir>$(BaseBuildOutputPath)packages\antlr4</AntlrToolJarDownloadDir>
+        </Antlr4>
+    </ItemDefinitionGroup>
+
+    <!-- Gist of this inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild -->
+    <UsingTask
+        TaskName="ReplaceFileText"
+        TaskFactory="RoslynCodeTaskFactory"
+        AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <InputFilename ParameterType="System.String" Required="true" />
+            <OutputFilename ParameterType="System.String" Required="true" />
+            <MatchExpression ParameterType="System.String" Required="true" />
+            <ReplacementText ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System" />
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.Text.RegularExpressions" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+            File.WriteAllText(
+                OutputFilename,
+                Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, ReplacementText)
+                );
+          ]]>
+            </Code>
+        </Task>
+    </UsingTask>
+
+    <!--
+    Sadly, the Antlr4 C# generator is hard coded to use "public" access for the generated code files.
+    So, this target will use text replacement on the generated source files to set internal access.
+    -->
+    <Target Name="MakeAntlrGeneratedCodeInternal"
+        AfterTargets="Antlr4Compile"
+        Condition="'$(ForceAntlr4GeneratedCodeInternal)'=='true'">
+
+        <!-- Use Antlr4BuildTasks target to get an item list of all the generated files-->
+        <CallTarget Targets="Antlr4CompileReadGeneratedFileList">
+            <Output TaskParameter="TargetOutputs" ItemName="Antlr4GeneratedCodeFiles"/>
+        </CallTarget>
+
+        <!-- use text replacement on each file to convert the public partial classes and interfaces to internal -->
+        <ReplaceFileText
+              Condition="'%(Antlr4GeneratedCodeFiles.FullPath)'!=''"
+              InputFileName="%(Antlr4GeneratedCodeFiles.FullPath)"
+              OutputFileName="%(Antlr4GeneratedCodeFiles.FullPath)"
+              MatchExpression="public (partial class|interface)"
+              ReplacementText="internal $1" />
+    </Target>
 </Project>

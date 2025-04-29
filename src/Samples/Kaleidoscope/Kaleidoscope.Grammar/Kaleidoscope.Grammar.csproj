@@ -2,11 +2,21 @@
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <ForceAntlr4GeneratedCodeInternal>true</ForceAntlr4GeneratedCodeInternal>
         <IsAotCompatible>True</IsAotCompatible>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="ANTLR\Kaleidoscope.g4" />
+    </ItemGroup>
+    <ItemGroup>
+      <Antlr4 Include="ANTLR\Kaleidoscope.g4">
+        <Package>Kaleidoscope.Grammar.ANTLR</Package>
+      </Antlr4>
+    </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Antlr4" />
+        <PackageReference Include="Antlr4BuildTasks" PrivateAssets="all" IncludeAssets="build" />
+        <PackageReference Include="Antlr4.Runtime.Standard" />
         <PackageReference Include="OpenSoftware.DgmlBuilder" />
     </ItemGroup>
 
@@ -15,36 +25,4 @@
       <ProjectReference Include="..\..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
       <ProjectReference Include="..\..\..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
     </ItemGroup>
-
-    <!-- TODO: Move this to directory level props as it is generally re-usable -->
-    <!-- inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild -->
-    <UsingTask TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-        <ParameterGroup>
-            <InputFilename ParameterType="System.String" Required="true" />
-            <OutputFilename ParameterType="System.String" Required="true" />
-            <MatchExpression ParameterType="System.String" Required="true" />
-            <ReplacementText ParameterType="System.String" Required="true" />
-        </ParameterGroup>
-        <Task>
-            <Using Namespace="System" />
-            <Using Namespace="System.IO" />
-            <Using Namespace="System.Text.RegularExpressions" />
-            <Code Type="Fragment" Language="cs">
-                <![CDATA[
-            File.WriteAllText(
-                OutputFilename,
-                Regex.Replace(File.ReadAllText(InputFilename), MatchExpression, ReplacementText)
-                );
-          ]]>
-            </Code>
-        </Task>
-    </UsingTask>
-
-    <Target Name="ForceAntlrGeneratedCodeToInternal" AfterTargets="Antlr4Compile;Antlr4DesignTimeGrammarCompilation">
-        <ReplaceFileText Condition="'%(Antlr4GeneratedCodeFiles.FullPath)'!=''"
-            InputFileName="%(Antlr4GeneratedCodeFiles.FullPath)"
-            OutputFileName="%(Antlr4GeneratedCodeFiles.FullPath)"
-            MatchExpression="public (partial class|interface)"
-            ReplacementText="internal $1" />
-    </Target>
 </Project>

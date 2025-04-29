@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4" />
+    <PackageReference Include="Antlr4.Runtime.Standard" />
   </ItemGroup>
 
   <ItemGroup>

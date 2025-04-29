@@ -199,13 +199,14 @@ namespace Kaleidoscope.Grammar.AST
             return new RootNode( context.GetSourceLocation( ), children );
         }
 
-        public override IAstNode VisitRepl( ReplContext context )
-        {
-            var children = from child in context.children
-                           select child.Accept( this );
-
-            return new RootNode( context.GetSourceLocation( ), children );
-        }
+        // sub rules are named and therefore this is never generated/seen now...
+        //public override IAstNode VisitRepl( ReplContext context )
+        //{
+        //    var children = from child in context.children
+        //                   select child.Accept( this );
+        //
+        //    return new RootNode( context.GetSourceLocation( ), children );
+        //}
 
         public override IAstNode VisitConditionalExpression( ConditionalExpressionContext context )
         {
@@ -292,10 +293,11 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
-        public override IAstNode VisitPrototype( PrototypeContext context )
-        {
-            return BuildPrototype( context, context.Name );
-        }
+        // sub rules are named and therefore this is never generated/seen now...
+        //public override IAstNode VisitPrototype( PrototypeContext context )
+        //{
+        //    return BuildPrototype( context, context.Name );
+        //}
 
         public override IAstNode VisitFunctionPrototype( FunctionPrototypeContext context )
         {

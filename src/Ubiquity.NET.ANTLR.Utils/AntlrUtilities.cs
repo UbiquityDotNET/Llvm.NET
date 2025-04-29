@@ -29,7 +29,7 @@ namespace Ubiquity.NET.ANTLR.Utils
             ArgumentNullException.ThrowIfNull( ruleContext );
 
             // if this is an EOF return an invalid interval
-            if( ruleContext.start.Type == Recognizer<IToken, Antlr4.Runtime.Atn.ParserATNSimulator>.Eof )
+            if( ruleContext.Start.Type == Recognizer<IToken, Antlr4.Runtime.Atn.ParserATNSimulator>.Eof )
             {
                 return Interval.Invalid;
             }

@@ -27,14 +27,14 @@ namespace Ubiquity.NET.ANTLR.Utils
         public virtual void EnterEveryRule( ParserRuleContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
-            Trace.TraceInformation( $"enter[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
+            Trace.TraceInformation( $"enter[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).LT( 1 ).Text}'" );
         }
 
         /// <inheritdoc/>
         public virtual void ExitEveryRule( ParserRuleContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
-            Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).Lt( 1 ).Text}'" );
+            Trace.TraceInformation( $"exit[{ctx.SourceInterval}] {Parser.RuleNames[ ctx.RuleIndex ]} [{ctx.GetType( ).Name}] Lt(1)='{( ( ITokenStream )Parser.InputStream ).LT( 1 ).Text}'" );
         }
 
         /// <inheritdoc/>
