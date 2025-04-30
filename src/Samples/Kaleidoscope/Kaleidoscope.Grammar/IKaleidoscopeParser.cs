@@ -39,8 +39,5 @@ namespace Kaleidoscope.Grammar
         /// operators.
         /// </remarks>
         DynamicRuntimeState GlobalState { get; }
-
-        /// <summary>Gets the additional diagnostics for this parser stack</summary>
-        DiagnosticRepresentations Diagnostics { get; }
     }
 }

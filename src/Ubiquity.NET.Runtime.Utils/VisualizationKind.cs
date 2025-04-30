@@ -10,9 +10,9 @@ namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Enumeration to define the kinds of diagnostic intermediate data to generate from a runtime/language AST</summary>
     [Flags]
-    public enum DiagnosticRepresentations
+    public enum VisualizationKind
     {
-        /// <summary>No diagnostics</summary>
+        /// <summary>No Visualizations</summary>
         None,
 
         /// <summary>Generate an XML representation of the parse tree</summary>
@@ -25,6 +25,10 @@ namespace Ubiquity.NET.Runtime.Utils
         BlockDiag,
 
         /// <summary>Emits debug tracing during the parse to an attached debugger</summary>
-        DebugTraceParser
+        /// <remarsk>This is a NOP if no debugger is attached</remarsk>
+        DebugTraceParser,
+
+        /// <summary>Emit all visualizations</summary>
+        All = Xml | Dgml | BlockDiag | DebugTraceParser
     }
 }

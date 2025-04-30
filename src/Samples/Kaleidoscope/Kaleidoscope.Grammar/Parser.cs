@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using System.IO;
 
 using Antlr4.Runtime;
@@ -30,25 +31,23 @@ namespace Kaleidoscope.Grammar
         /// <summary>Initializes a new instance of the <see cref="Parser"/> class.</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
         /// <param name="diagnostics">Diagnostic representations to generate when parsing</param>
-        public Parser( LanguageLevel level, DiagnosticRepresentations diagnostics = DiagnosticRepresentations.None )
-            : this( new DynamicRuntimeState( level ), diagnostics )
+        public Parser( LanguageLevel level, IVisualizer? visualizer = null )
+            : this( new DynamicRuntimeState( level ), visualizer )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="Parser"/> class.</summary>
         /// <param name="globalState"><see cref="DynamicRuntimeState"/> for the parse</param>
-        /// <param name="diagnostics">Diagnostic representations to generate when parsing</param>
+        /// <param name="visualizers">Diagnostic representations to generate when parsing</param>
         public Parser( DynamicRuntimeState globalState
-                     , DiagnosticRepresentations diagnostics
+                     , IVisualizer? visualizers = null
                      )
         {
             ArgumentNullException.ThrowIfNull( globalState );
 
             GlobalState = globalState;
-            Diagnostics = diagnostics;
+            Visualizer = visualizers;
         }
-
-        public DiagnosticRepresentations Diagnostics { get; set; }
 
         /// <summary>Gets or sets the language level for this parser</summary>
         public LanguageLevel LanguageLevel
@@ -91,11 +90,11 @@ namespace Kaleidoscope.Grammar
 
                 (KaleidoscopeParser antlrParser, IParseTree parseTree) = CoreParse( input, mode, errCollector );
 
-                if(Diagnostics.HasFlag( DiagnosticRepresentations.Xml ))
+                if(Visualizer is not null && Visualizer.VisualizationKind.HasFlag( VisualizationKind.Xml ))
                 {
                     var docListener = new XDocumentListener( antlrParser );
                     ParseTreeWalker.Default.Walk( docListener, parseTree );
-                    docListener.Document.Save( "ParseTree.xml" );
+                    Visualizer.VisualizeParseTree(docListener.Document);
                 }
 
                 IAstNode retVal;
@@ -109,20 +108,24 @@ namespace Kaleidoscope.Grammar
                     retVal = astBuilder.Visit( parseTree );
                 }
 
-                if(Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ) || Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ))
+                if(Visualizer is not null && (Visualizer.VisualizationKind.HasFlag( VisualizationKind.Dgml ) || Visualizer.VisualizationKind.HasFlag( VisualizationKind.BlockDiag )))
                 {
                     // both forms share the same initial DirectedGraph model as the formats are pretty similar
+                    // blockDiag doesn't need the DGML (XML) form so that is only produced if needed.
                     var dgmlGenerator = new DgmlGenerator( antlrParser );
                     ParseTreeWalker.Default.Walk( dgmlGenerator, parseTree );
 
-                    if(Diagnostics.HasFlag( DiagnosticRepresentations.Dgml ))
+                    if(Visualizer.VisualizationKind.HasFlag( VisualizationKind.Dgml ))
                     {
-                        dgmlGenerator.WriteDgmlGraph( "ParseTree.dgml" );
+                        using var writer = new StringWriter(CultureInfo.CurrentCulture);
+                        Visualizer.VisualizeAstDgml(dgmlGenerator.Graph.ToXml());
                     }
 
-                    if(Diagnostics.HasFlag( DiagnosticRepresentations.BlockDiag ))
+                    if(Visualizer.VisualizationKind.HasFlag( VisualizationKind.BlockDiag ))
                     {
-                        dgmlGenerator.Graph.WriteAsBlockDiag( "ParseTree.diag" );
+                        using var writer = new StringWriter(CultureInfo.CurrentCulture);
+                        dgmlGenerator.Graph.WriteAsBlockDiag( writer );
+                        Visualizer.VisualizeBlockDiag(writer.ToString());
                     }
                 }
 
@@ -143,12 +146,14 @@ namespace Kaleidoscope.Grammar
             var antlrParser = new KaleidoscopeParser( tokenStream
                                                     , GlobalState
                                                     , errCollector
-                                                    , Diagnostics.HasFlag( DiagnosticRepresentations.DebugTraceParser )
+                                                    , Visualizer?.VisualizationKind.HasFlag( VisualizationKind.DebugTraceParser ) ?? false
                                                     );
 
             var parseTree = mode == ParseMode.ReplLoop ? (IParseTree)antlrParser.repl() : antlrParser.fullsrc();
 
             return (antlrParser, parseTree);
         }
+
+        private readonly IVisualizer? Visualizer;
     }
 }

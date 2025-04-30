@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -114,11 +115,6 @@ namespace Kaleidoscope.Grammar
             }
 
             Pop( );
-        }
-
-        public void WriteDgmlGraph( string path )
-        {
-            Graph.WriteToFile( path );
         }
 
         internal DirectedGraph Graph { get; } = new DirectedGraph( );

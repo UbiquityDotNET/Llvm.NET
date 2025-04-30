@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kaleidoscope.Tests
 {
+    // Used as a target to output text of the runs to the test context
     internal class TestContextTextWriter
         : TextWriter
     {

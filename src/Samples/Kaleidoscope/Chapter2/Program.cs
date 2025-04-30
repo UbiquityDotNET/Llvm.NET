@@ -32,8 +32,7 @@ namespace Kaleidoscope.Chapter2
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Parse evaluator - {repl.LanguageFeatureLevel}";
             Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
             Console.WriteLine( helloMsg );
-
-            await repl.Run( Console.In, DiagnosticRepresentations.Dgml, cts.Token );
+            await repl.Run( Console.In, new Visualizer(VisualizationKind.All), cts.Token );
 
             Console.WriteLine();
             Console.WriteLine("good bye!");

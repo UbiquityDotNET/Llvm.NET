@@ -30,8 +30,6 @@ namespace Kaleidoscope.Chapter2
         public override void ShowResults( IAstNode resultValue )
         {
             Console.WriteLine( "PARSED: {0}", resultValue );
-            var graph = resultValue.CreateGraph( );
-            // use graph in a debugger, possibly save select graphs to disk for evaluation...
         }
     }
 }

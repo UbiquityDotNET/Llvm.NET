@@ -27,47 +27,46 @@ namespace Kaleidoscope.Grammar
     /// <seealso href="http://blockdiag.com"/>
     public static class BlockDiagGenerator
     {
-        public static void WriteAsBlockDiag( this DirectedGraph graph, string file )
+        public static void WriteAsBlockDiag( this DirectedGraph graph, TextWriter writer )
         {
             ArgumentNullException.ThrowIfNull( graph );
-            ArgumentException.ThrowIfNullOrWhiteSpace(file);
+            ArgumentNullException.ThrowIfNull(writer);
 
-            using var strmWriter = new StreamWriter( File.Open( file, FileMode.Create, FileAccess.ReadWrite, FileShare.None ) );
-            using var writer = new IndentedTextWriter( strmWriter, "    " );
+            using var indentedWriter = new IndentedTextWriter( writer, "    " );
 
-            writer.WriteLine( "blockdiag" );
-            writer.WriteLine( '{' );
-            ++writer.Indent;
-            writer.WriteLine( "default_shape = roundedbox" );
-            writer.WriteLine( "orientation = portrait" );
+            indentedWriter.WriteLine( "blockdiag" );
+            indentedWriter.WriteLine( '{' );
+            ++indentedWriter.Indent;
+            indentedWriter.WriteLine( "default_shape = roundedbox" );
+            indentedWriter.WriteLine( "orientation = portrait" );
 
-            writer.WriteLineNoTabs( string.Empty );
-            writer.WriteLine( "// Nodes" );
+            indentedWriter.WriteLineNoTabs( string.Empty );
+            indentedWriter.WriteLine( "// Nodes" );
             foreach( var node in graph.Nodes )
             {
-                writer.Write( "N{0} [label= \"{1}\"", node.Id, node.Label );
+                indentedWriter.Write( "N{0} [label= \"{1}\"", node.Id, node.Label );
                 if( node.Properties.TryGetValue( "Precedence", out object? precedence ) )
                 {
-                    writer.Write( ", numbered = {0}", precedence );
+                    indentedWriter.Write( ", numbered = {0}", precedence );
                 }
 
                 if( node.Category == "Terminal" )
                 {
-                    writer.Write( ", shape = circle" );
+                    indentedWriter.Write( ", shape = circle" );
                 }
 
-                writer.WriteLine( "];" );
+                indentedWriter.WriteLine( "];" );
             }
 
-            writer.WriteLineNoTabs( string.Empty );
-            writer.WriteLine( "// Edges" );
+            indentedWriter.WriteLineNoTabs( string.Empty );
+            indentedWriter.WriteLine( "// Edges" );
             foreach( var link in graph.Links )
             {
-                writer.WriteLine( "N{0} -> N{1}", link.Source, link.Target );
+                indentedWriter.WriteLine( "N{0} -> N{1}", link.Source, link.Target );
             }
 
-            --writer.Indent;
-            writer.WriteLine( '}' );
+            --indentedWriter.Indent;
+            indentedWriter.WriteLine( '}' );
         }
     }
 }
