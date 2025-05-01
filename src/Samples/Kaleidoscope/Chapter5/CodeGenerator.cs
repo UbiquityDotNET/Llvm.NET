@@ -97,19 +97,21 @@ namespace Kaleidoscope.Chapter5
                 // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
                 // up. The object support is more for existing object files than for generated IR.
                 using ResourceTracker resourceTracker = KlsJIT.AddWithTracking(ThreadSafeContext, Module);
-                Value retVal;
 
                 // Invoking the function via a function pointer is an "unsafe" operation.
                 // Also note that .NET has no mechanism to catch native exceptions like
                 // access violations or stack overflows from infinite recursion. They will
                 // crash the app.
+                double nativeRetVal;
                 unsafe
                 {
                     var pFunc = (delegate* unmanaged[Cdecl]<double>)KlsJIT.Lookup(definition.Name);
-                    retVal = ctx.CreateConstant( pFunc() );
-                    resourceTracker.RemoveAll();
-                    return retVal;
+                    nativeRetVal = pFunc();
                 }
+
+                Value retVal = ctx.CreateConstant( nativeRetVal );
+                resourceTracker.RemoveAll();
+                return retVal;
             }
             else
             {
