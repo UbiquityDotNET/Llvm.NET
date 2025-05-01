@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
@@ -10,39 +11,57 @@ using Microsoft.CodeAnalysis.Operations;
 
 namespace ReferenceEqualityVerifier
 {
+    /// <summary>Analyzer to perform the checks for use of reference equality when <see cref="IEquatable{T}"/> should be used</summary>
+    /// <remarks>
+    /// This analyzer helps in reducing pain in transition from the legacy "cached/interned" managed wrappers approach to
+    /// dealing with LLVM handles. That approach proved problematic for a number of reasons and is no longer used. This,
+    /// analyzer helps to identify places where reference equality is used but value equality should be used. Reference
+    /// equality is rarely ever the correct intended use.
+    /// </remarks>
     [DiagnosticAnalyzer( LanguageNames.CSharp )]
     public class ReferenceEqualityAnalyzer
         : DiagnosticAnalyzer
     {
+        private const string RelevantNamespaceName = "Ubiquity.NET.Llvm";
+
+        /// <summary>Diagnostics supported by this analyzer</summary>
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => Diagnostics.AllDiagnostics;
 
+        /// <summary>Initializes the analyzer to detect potentially incorrect use</summary>
+        /// <param name="context">Compiler provided context for initialization</param>
         public override void Initialize( AnalysisContext context )
         {
             context.ConfigureGeneratedCodeAnalysis( GeneratedCodeAnalysisFlags.None );
             context.EnableConcurrentExecution();
-            context.RegisterOperationAction(BinaryOpAction, OperationKind.Binary);
+            context.RegisterOperationAction( BinaryOpAction, OperationKind.Binary );
         }
 
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification="No loss of information, exception is converted to a diagnostic")]
         private void BinaryOpAction( OperationAnalysisContext context )
         {
             try
             {
                 if(!(context.Operation is IBinaryOperation op))
                 {
-                    Debug.Assert(false, "Unknown case; non-binary operation...");
-                    return; // Should never be null; safety/sanity
+                    throw new InvalidOperationException( "Unknown case; non-binary operation..." );
                 }
 
                 if(op.OperatorKind == BinaryOperatorKind.Equals || op.OperatorKind == BinaryOperatorKind.NotEquals)
                 {
                     // comparisons to null literal are OK, intent is clear and explicit...
-                    if (IsNullLiteral(op.LeftOperand) || IsNullLiteral(op.RightOperand))
+                    if(IsNullLiteral( op.LeftOperand ) || IsNullLiteral( op.RightOperand ))
                     {
                         return;
                     }
 
-                    var lht = op.SemanticModel?.GetTypeInfo(op.LeftOperand.Syntax).Type;
-                    var rht = op.SemanticModel?.GetTypeInfo(op.RightOperand.Syntax).Type;
+                    if(op.SemanticModel is null)
+                    {
+                        // no semantic model - nothing to do here...
+                        return;
+                    }
+
+                    var lht = op.SemanticModel.GetTypeInfo(op.LeftOperand.Syntax).Type;
+                    var rht = op.SemanticModel.GetTypeInfo(op.RightOperand.Syntax).Type;
                     if(lht is null || rht is null)
                     {
                         // Incomplete syntax is handled as OK for this analyzer.
@@ -51,23 +70,39 @@ namespace ReferenceEqualityVerifier
                         return;
                     }
 
-                    // if comparing value types, or strings then it's fine; no diagnostic needed
-                    if( lht.IsValueType || (IsString(lht, context.Compilation) && IsString(rht, context.Compilation)))
+                    if(!IsOneTypeOfInterest( lht, rht ))
                     {
                         return;
                     }
 
                     // if the types of the operands are Equatable then a diagnostic is reported.
-                    if(AreEquatable(lht, rht))
+                    if(AreEquatable( lht, rht ))
                     {
-                        context.ReportDiagnostic(Diagnostic.Create(Diagnostics.RefEqualityWhenEquatable, op.Syntax.GetLocation(), op.LeftOperand.Syntax, op.RightOperand.Syntax));
+                        context.ReportDiagnostic( Diagnostic.Create( Diagnostics.RefEqualityWhenEquatable, op.Syntax.GetLocation(), op.LeftOperand.Syntax, op.RightOperand.Syntax ) );
                     }
                 }
             }
             catch(Exception ex)
             {
-                context.ReportDiagnostic(Diagnostic.Create(Diagnostics.RefEqualityInternalError, context.Operation.Syntax.GetLocation(), ex.Message));
+                context.ReportDiagnostic( Diagnostic.Create( Diagnostics.RefEqualityInternalError, context.Operation.Syntax.GetLocation(), ex.Message ) );
             }
+        }
+
+        // tests if at least one of the types is in the namespace of interest
+        // This analyzer is intentionally NOT general purpose. It is ONLY focused
+        // on the LLVM Wrapper types and their use - nothing else.
+        private static bool IsOneTypeOfInterest( ITypeSymbol lht, ITypeSymbol rht )
+        {
+            return GetNamespaceNames( lht ).Contains( RelevantNamespaceName )
+                || GetNamespaceNames( rht ).Contains( RelevantNamespaceName );
+        }
+
+        static IEnumerable<string> GetNamespaceNames( ITypeSymbol sym )
+        {
+            return from part in sym.ContainingNamespace.ToDisplayParts()
+                   where part.Kind != SymbolDisplayPartKind.Punctuation
+                      && part.Symbol != null
+                   select part.Symbol!.ToString();
         }
 
         // Determines if two type symbols are equatable
@@ -94,15 +129,15 @@ namespace ReferenceEqualityVerifier
         // from the type argument to IEquality<T>.
         private static bool AreEquivalent( ITypeSymbol typeSymbol, ITypeSymbol lht, ITypeSymbol rht )
         {
-            return IsImplicitlyCastableTo(lht, typeSymbol)
-                || IsImplicitlyCastableTo(rht, typeSymbol);
+            return IsImplicitlyCastableTo( lht, typeSymbol )
+                || IsImplicitlyCastableTo( rht, typeSymbol );
         }
 
         private static bool IsImplicitlyCastableTo( ITypeSymbol derivedType, ITypeSymbol testBaseType )
         {
             for(ITypeSymbol? baseType = derivedType; baseType != null; baseType = baseType.BaseType)
             {
-                if(SymbolEqualityComparer.Default.Equals(baseType, testBaseType))
+                if(SymbolEqualityComparer.Default.Equals( baseType, testBaseType ))
                 {
                     return true;
                 }
@@ -112,12 +147,12 @@ namespace ReferenceEqualityVerifier
 
         // NOTE: Nullability of the types is NOT relevant in this context so all comparisons are done without
         //       consideration for the nullable annotation. (That is, `string` and `string?` are the same)
-        private static bool IsString(ITypeSymbol t, Compilation compilation)
+        private static bool IsString( ITypeSymbol t, SemanticModel model )
         {
-            return SymbolEqualityComparer.Default.Equals(t, compilation.GetSpecialType(SpecialType.System_String));
+            return SymbolEqualityComparer.Default.Equals( t, model.Compilation.GetSpecialType( SpecialType.System_String ) );
         }
 
-        private static bool IsNullLiteral(IOperation op)
+        private static bool IsNullLiteral( IOperation op )
         {
             return op.ConstantValue.HasValue && op.ConstantValue.Value is null;
         }

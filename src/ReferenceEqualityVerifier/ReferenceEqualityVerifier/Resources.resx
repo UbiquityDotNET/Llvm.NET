@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="REFQ001_Description" xml:space="preserve">
+  <data name="UNL001_Description" xml:space="preserve">
     <value>Reference equality used when value equality is present, this usually indicates an error of intent. If reference equality is really intended, use the ReferenceEquality method instead.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="REFQ001_Title" xml:space="preserve">
+  <data name="UNL001_Title" xml:space="preserve">
     <value>Reference equality used when value equality is present</value>
     <comment>The title of the diagnostic.</comment>
   </data>
-  <data name="REFQ001_MessageFormat" xml:space="preserve">
+  <data name="UNL001_MessageFormat" xml:space="preserve">
     <value>'{0}' is value equatable with '{1}' via IEquatable&lt;T&gt; but reference equality is used</value>
     <comment>The title of the diagnostic.</comment>
   </data>
-  <data name="REFQ000_Description" xml:space="preserve">
+  <data name="UNL000_Description" xml:space="preserve">
     <value>An internal analyzer exception occurred.</value>
   </data>
-  <data name="REFQ000_MessageFormat" xml:space="preserve">
+  <data name="UNL000_MessageFormat" xml:space="preserve">
     <value>Exception message is: '{0}'</value>
   </data>
-  <data name="REFQ000_Title" xml:space="preserve">
+  <data name="UNL000_Title" xml:space="preserve">
     <value>Internal Error</value>
   </data>
 </root>

@@ -25,8 +25,8 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(CommonDirectSource);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(10, 16),
-                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(18, 16),
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(12, 16),
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(20, 16),
                 ]
             );
 
@@ -39,7 +39,7 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(AdvancedItfSource);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(15, 16),
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(17, 16),
                 ]
             );
 
@@ -52,8 +52,8 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(EquatableToItfSource);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(15, 16),
-                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(20, 16)
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(17, 16),
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(22, 16)
                 ]
             );
 
@@ -66,7 +66,7 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(CommonBaseEquatable);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("REFQ001", DiagnosticSeverity.Error).WithLocation(14, 16),
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(16, 16),
                 ]
             );
 
@@ -82,12 +82,22 @@ namespace ReferenceEqualityVerifier.Test
         }
 
         [TestMethod]
+        public async Task NoNamespaceDoesNotReportDiagnostics( )
+        {
+            // Without namespace checking this would trigger an error;
+            // Analyzer should be constrained to ONLY the namespace of interest
+            var analyzerTest = CreateTestRunner(NoNamespaceEquatable);
+            // no diagnostics expected
+            await analyzerTest.RunAsync();
+        }
+
+        [TestMethod]
         public async Task IncompleteSyntaxDoesNotReportDiagnostics( )
         {
             var analyzerTest = CreateTestRunner(IncompleteSyntax);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("CS1525", DiagnosticSeverity.Error).WithLocation(14,25),
+                    new DiagnosticResult("CS1525", DiagnosticSeverity.Error).WithLocation(16,25),
                 ]
             );
             await analyzerTest.RunAsync();
@@ -105,6 +115,8 @@ namespace ReferenceEqualityVerifier.Test
 
         const string CommonDirectSource = """
         using System;
+
+        namespace Ubiquity.NET.Llvm;
 
         public class Class1
             : IEquatable<Class1>
@@ -141,6 +153,8 @@ namespace ReferenceEqualityVerifier.Test
         const string AdvancedItfSource = """
         using System;
 
+        namespace Ubiquity.NET.Llvm;
+
         public interface IBaz
             : IEquatable<IBaz>
         {
@@ -160,6 +174,8 @@ namespace ReferenceEqualityVerifier.Test
 
         const string EquatableToItfSource = """
         using System;
+
+        namespace Ubiquity.NET.Llvm;
 
         public interface IBaz
         {
@@ -186,6 +202,8 @@ namespace ReferenceEqualityVerifier.Test
         const string CompareWithNull = """
         using System;
 
+        namespace Ubiquity.NET.Llvm;
+
         public interface IBaz
             : IEquatable<IBaz>
         {
@@ -205,6 +223,8 @@ namespace ReferenceEqualityVerifier.Test
 
         const string CommonBaseEquatable = """
         using System;
+
+        namespace Ubiquity.NET.Llvm;
 
         public class BaseClass
             : IEquatable<BaseClass>
@@ -226,6 +246,8 @@ namespace ReferenceEqualityVerifier.Test
         const string IncompleteSyntax = """
         using System;
 
+        namespace Ubiquity.NET.Llvm;
+
         public class BaseClass
             : IEquatable<BaseClass>
         {
@@ -238,6 +260,26 @@ namespace ReferenceEqualityVerifier.Test
             bool SomeFunc(DerivedClass other)
             {
                 return other == ; // OOPS, not complete syntax...
+            }
+        }
+
+        """;
+
+       const string NoNamespaceEquatable = """
+        using System;
+
+        public class BaseClass
+            : IEquatable<BaseClass>
+        {
+            public bool Equals( BaseClass? other ) => false;
+        }
+
+        public class DerivedClass
+            : BaseClass
+        {
+            bool SomeFunc(DerivedClass other)
+            {
+                return other == this; // OOPS, ref equality!
             }
         }
 

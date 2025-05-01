@@ -61,56 +61,56 @@ namespace ReferenceEqualityVerifier {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An internal analyzer exception occured.
+        ///   Looks up a localized string similar to An internal analyzer exception occurred..
         /// </summary>
-        internal static string REFQ000_Description {
+        internal static string UNL000_Description {
             get {
-                return ResourceManager.GetString("REFQ000_Description", resourceCulture);
+                return ResourceManager.GetString("UNL000_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Exception message is: &apos;{0}&apos;.
         /// </summary>
-        internal static string REFQ000_MessageFormat {
+        internal static string UNL000_MessageFormat {
             get {
-                return ResourceManager.GetString("REFQ000_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("UNL000_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Internal Error.
         /// </summary>
-        internal static string REFQ000_Title {
+        internal static string UNL000_Title {
             get {
-                return ResourceManager.GetString("REFQ000_Title", resourceCulture);
+                return ResourceManager.GetString("UNL000_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Reference equality used when value equality is present, this usually indicates an error of intent. If reference equality is really intended, use the ReferenceEquality method instead..
         /// </summary>
-        internal static string REFQ001_Description {
+        internal static string UNL001_Description {
             get {
-                return ResourceManager.GetString("REFQ001_Description", resourceCulture);
+                return ResourceManager.GetString("UNL001_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is value equatable with &apos;{1}&apos; via IEquatable&lt;T&gt; but reference equality is used.
         /// </summary>
-        internal static string REFQ001_MessageFormat {
+        internal static string UNL001_MessageFormat {
             get {
-                return ResourceManager.GetString("REFQ001_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("UNL001_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Reference equality used when value equality is present.
         /// </summary>
-        internal static string REFQ001_Title {
+        internal static string UNL001_Title {
             get {
-                return ResourceManager.GetString("REFQ001_Title", resourceCulture);
+                return ResourceManager.GetString("UNL001_Title", resourceCulture);
             }
         }
     }

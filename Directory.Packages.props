@@ -5,7 +5,6 @@
     -->
   <ItemGroup>
     <GlobalPackageReference Include="CSemVer.Build.Tasks" Version="2.0.5" />
-    <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" Condition="'$(NoCommonAnalyzers)' !=' true'" />
     <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
     <GlobalPackageReference Include="MustUseRetVal" Version="0.0.2" />
     <!--
