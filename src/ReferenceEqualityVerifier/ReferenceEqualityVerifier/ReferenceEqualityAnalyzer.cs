@@ -46,40 +46,44 @@ namespace ReferenceEqualityVerifier
                     throw new InvalidOperationException( "Unknown case; non-binary operation..." );
                 }
 
-                if(op.OperatorKind == BinaryOperatorKind.Equals || op.OperatorKind == BinaryOperatorKind.NotEquals)
+                if(op.SemanticModel is null)
                 {
-                    // comparisons to null literal are OK, intent is clear and explicit...
-                    if(IsNullLiteral( op.LeftOperand ) || IsNullLiteral( op.RightOperand ))
-                    {
-                        return;
-                    }
+                    // no semantic model - nothing to do here...
+                    return;
+                }
 
-                    if(op.SemanticModel is null)
-                    {
-                        // no semantic model - nothing to do here...
-                        return;
-                    }
+                // operation of interest?
+                if(op.OperatorKind != BinaryOperatorKind.Equals && op.OperatorKind != BinaryOperatorKind.NotEquals)
+                {
+                    return;
+                }
 
-                    var lht = op.SemanticModel.GetTypeInfo(op.LeftOperand.Syntax).Type;
-                    var rht = op.SemanticModel.GetTypeInfo(op.RightOperand.Syntax).Type;
-                    if(lht is null || rht is null)
-                    {
-                        // Incomplete syntax is handled as OK for this analyzer.
-                        // Other parts of the compilation/Analyzers can complain as needed
-                        // but it should not break this analyzer!
-                        return;
-                    }
+                // comparisons to null literal are OK, intent is clear and explicit...
+                if(IsNullLiteral( op.LeftOperand ) || IsNullLiteral( op.RightOperand ))
+                {
+                    return;
+                }
 
-                    if(!IsOneTypeOfInterest( lht, rht ))
-                    {
-                        return;
-                    }
+                var lht = op.SemanticModel.GetTypeInfo(op.LeftOperand.Syntax).Type;
+                var rht = op.SemanticModel.GetTypeInfo(op.RightOperand.Syntax).Type;
+                if(lht is null || rht is null)
+                {
+                    // Incomplete syntax is handled as OK for this analyzer.
+                    // Other parts of the compilation/Analyzers can complain as needed
+                    // but it should not break this analyzer!
+                    return;
+                }
 
-                    // if the types of the operands are Equatable then a diagnostic is reported.
-                    if(AreEquatable( lht, rht ))
-                    {
-                        context.ReportDiagnostic( Diagnostic.Create( Diagnostics.RefEqualityWhenEquatable, op.Syntax.GetLocation(), op.LeftOperand.Syntax, op.RightOperand.Syntax ) );
-                    }
+                // is at least one of the types declared in the namespace of interest for this analyzer?
+                if(!IsDeclaredInNamespace( lht, RelevantNamespaceName) && !IsDeclaredInNamespace(rht, RelevantNamespaceName))
+                {
+                    return;
+                }
+
+                // if the types of the operands are Equatable then a diagnostic is reported.
+                if(AreEquatable( lht, rht ))
+                {
+                    context.ReportDiagnostic( Diagnostic.Create( Diagnostics.RefEqualityWhenEquatable, op.Syntax.GetLocation(), op.LeftOperand.Syntax, op.RightOperand.Syntax ) );
                 }
             }
             catch(Exception ex)
@@ -88,15 +92,16 @@ namespace ReferenceEqualityVerifier
             }
         }
 
-        // tests if at least one of the types is in the namespace of interest
-        // This analyzer is intentionally NOT general purpose. It is ONLY focused
-        // on the LLVM Wrapper types and their use - nothing else.
-        private static bool IsOneTypeOfInterest( ITypeSymbol lht, ITypeSymbol rht )
+        private static bool IsDeclaredInNamespace( ITypeSymbol typeSym, string namespaceName)
         {
-            return GetNamespaceNames( lht ).Contains( RelevantNamespaceName )
-                || GetNamespaceNames( rht ).Contains( RelevantNamespaceName );
+            return GetNamespaceNames( typeSym ).Contains( namespaceName );
         }
 
+        // Get the namespace names as a sequence starting with the root.
+        // The names are a full form of each "stage of the namespace.
+        // EX: `a.b.c` becomes the sequence:
+        //    'a', 'a.b`, 'a.b.c'
+        // This allows for easy namespace Hierarchy checks.
         static IEnumerable<string> GetNamespaceNames( ITypeSymbol sym )
         {
             return from part in sym.ContainingNamespace.ToDisplayParts()
@@ -122,18 +127,15 @@ namespace ReferenceEqualityVerifier
         }
 
         // NOTE: Nullability of the source types is NOT relevant in this context so all comparisons are done without
-        //       consideration for the nullable annotation. (That is, `Thing` and `Thing?` are the same)
-        //
-        // In particular this currently looks ONLY for explicit IEquatable<T> where T is explicitly rht or lht. That is,
-        // it currently does not consider implicit casting and equivalences where one side implements or is derived
-        // from the type argument to IEquality<T>.
+        //       consideration for the nullable annotation. (That is, `Thing` and `Thing?` are considered the same)
         private static bool AreEquivalent( ITypeSymbol typeSymbol, ITypeSymbol lht, ITypeSymbol rht )
         {
-            return IsImplicitlyCastableTo( lht, typeSymbol )
-                || IsImplicitlyCastableTo( rht, typeSymbol );
+            return IsDerivedFrom( lht, typeSymbol )
+                || IsDerivedFrom( rht, typeSymbol );
         }
 
-        private static bool IsImplicitlyCastableTo( ITypeSymbol derivedType, ITypeSymbol testBaseType )
+
+        private static bool IsDerivedFrom( ITypeSymbol derivedType, ITypeSymbol testBaseType )
         {
             for(ITypeSymbol? baseType = derivedType; baseType != null; baseType = baseType.BaseType)
             {
@@ -142,14 +144,8 @@ namespace ReferenceEqualityVerifier
                     return true;
                 }
             }
-            return false;
-        }
 
-        // NOTE: Nullability of the types is NOT relevant in this context so all comparisons are done without
-        //       consideration for the nullable annotation. (That is, `string` and `string?` are the same)
-        private static bool IsString( ITypeSymbol t, SemanticModel model )
-        {
-            return SymbolEqualityComparer.Default.Equals( t, model.Compilation.GetSpecialType( SpecialType.System_String ) );
+            return false;
         }
 
         private static bool IsNullLiteral( IOperation op )
