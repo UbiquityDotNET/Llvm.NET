@@ -14,5 +14,5 @@ that is ONLY allowed on the stack as it is intended for short term use. It can (
 [DICompileUnit](xref:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit) and it can reference the module it was
 created from. Since it is a `ref struct` it is not allowed to store instances of a DIBuilder in the heap in
 any way. ([Kaleidoscope Chapter 9](xref:Kaleidoscope-ch9) provides a sample of use in a visitor pattern where the
-instance is provided as an `in` parameter to `ref readonly` functions. This ability was aded to the visitor
+instance is provided as an `in` parameter to `ref readonly` functions. This ability was added to the visitor
 pattern specifically for this case.)

@@ -41,12 +41,12 @@ are important factors to consider in the new library:
 1) Ownership
     - The previous variants of the library did NOT generally consider ownership carefully. It
       routinely provided types that under some circumstances require disposal, and others did
-      not (Alias). This caused problems for the internning of projected types as the behavior
+      not (Alias). This caused problems for the interning of projected types as the behavior
       of the first instance interned was used. (Usually leading to leaks or strange crashes at
-      pbscure unrelated times that made testing extremely difficult [Worst case scenario, it
+      obscure unrelated times that made testing extremely difficult [Worst case scenario, it
       works fine in all in-house testing but breaks in the field!).
-3) No Internning of projected types
-    - Projected types are no longer internned, this dramatically increases performance and
+3) No Interning of projected types
+    - Projected types are no longer interned, this dramatically increases performance and
       reduces the complexity of maintenance of this library. Generally it should have little
       impact as anything that produces an alias where the type might in other cases require
       the owner to dispose it should now produce an interface that is not disposable. Anything
@@ -88,7 +88,7 @@ jit.MainLib.Define(fooMu);
 ```
 
 ### Unowned references (alias)
-For an unowned referenve to an underlying resource an interface is defined such as [IModule](xref:Ubiquity.NET.Llvm.IModule).
+For an unowned reference to an underlying resource an interface is defined such as [IModule](xref:Ubiquity.NET.Llvm.IModule).
 When a property returns an interface only it is not Disposable and ownership remains with the source.
 Care is required on the part of a consumer to not store that instance anywhere and treat it as if it was a
 `ref struct` (That is, only held on the stack). While the GC is free to clean up such an instance at any time
@@ -97,8 +97,8 @@ this prevents attempts to use the interface after the containing object is destr
 ### Equality
 In prior releases of this library a complex scheme of interning projection wrappers was used to support
 reference equality. When you had an instance of class 'foo' you could just compare it to any other using reference
-equality. For any two that refered to the same native instance they'd be the same object. While this had convenience
-for the user it had a multitude of hidden flaws. The biggest is the concept of owership. [See discussion above]. If
+equality. For any two that referred to the same native instance they'd be the same object. While this had convenience
+for the user it had a multitude of hidden flaws. The biggest is the concept of ownership. [See discussion above]. If
 objects are interned then you would end up with whatever instance was first created, ignoring the ownership completely.
 If the first instance was an unowned alias, then it would leak as nothing owns it... If it was NOT an alias, then,
 when retrieved from interning when an alias is needed to be the result, you could end up with premature disposal...
