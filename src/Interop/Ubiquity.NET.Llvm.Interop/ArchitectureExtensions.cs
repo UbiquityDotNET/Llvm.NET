@@ -4,9 +4,14 @@
 
 namespace Ubiquity.NET.Llvm.Interop
 {
+    /// <summary>Utility class to implement extensions of <see cref="Architecture"/></summary>
     public static class ArchitectureExtensions
     {
-        public static LibLLVMCodeGenTarget GetLibLLVMTarget( this Architecture arch)
+        /// <summary>Converts a <see cref="Architecture"/> to a <see cref="LibLLVMCodeGenTarget"/></summary>
+        /// <param name="arch">Value to convert</param>
+        /// <returns>LLVM code generation target</returns>
+        /// <exception cref="NotSupportedException">Native LLVM form of target is unknown</exception>
+        public static LibLLVMCodeGenTarget AsLLVMTarget( this Architecture arch)
         {
             return arch switch
             {
