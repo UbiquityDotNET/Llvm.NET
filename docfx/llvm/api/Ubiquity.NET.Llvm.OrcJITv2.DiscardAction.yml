@@ -1,0 +1,128 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.DiscardAction
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.DiscardAction
+  id: DiscardAction
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: DiscardAction
+  nameWithType: DiscardAction
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.DiscardAction
+  type: Delegate
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/CustomMaterializationUnit.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DiscardAction
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/CustomMaterializationUnit.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Delegate to perform action on discard
+  remarks: >-
+    This must be a "custom" delegate as the <xref href="Ubiquity.NET.Llvm.OrcJITv2.JITDyLib" data-throw-if-not-resolved="false"></xref> is a
+
+    ref type that is NOT allowed as a type parameter for <xref href="System.Action%602" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public delegate void DiscardAction(JITDyLib jitLib, SymbolStringPoolEntry symbol)
+    parameters:
+    - id: jitLib
+      type: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+      description: Library the symbols is discarded from
+    - id: symbol
+      type: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+      description: Symbol being discarded
+    content.vb: Public Delegate Sub DiscardAction(jitLib As JITDyLib, symbol As SymbolStringPoolEntry)
+references:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib.html
+  name: JITDyLib
+  nameWithType: JITDyLib
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-2
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Ubiquity.NET.Llvm.OrcJITv2
+  commentId: N:Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.OrcJITv2
+  nameWithType: Ubiquity.NET.Llvm.OrcJITv2
+  fullName: Ubiquity.NET.Llvm.OrcJITv2
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html
+  name: SymbolStringPoolEntry
+  nameWithType: SymbolStringPoolEntry
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry

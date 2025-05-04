@@ -1,0 +1,2342 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.Tag
+  id: Tag
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children:
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.AccessDeclaration
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.AppleProperty
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ArrayType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.AtomicType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.BaseType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiDynamicString
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiSet
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiString
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiVariant
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandProperty
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CallSite
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CallSiteParameter
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CatchBlock
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ClassTemplate
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ClassType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CoArrayType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CommonBlock
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CommonInclusion
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.CompileUnit
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Condition
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ConstType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Constant
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.DwarfProcedure
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.DynamicType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.EntryPoint
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.EnumerationType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Enumerator
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.FileType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.FormalParameter
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.FormatLabel
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Friend
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.FunctionTemplate
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSite
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSiteParameter
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.GNUFormalParameterPack
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameter
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameterPack
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.GenericSubrange
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ImmutableType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedDeclaration
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedModule
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedUnit
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Inheritance
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.InlinedSubroutine
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.InterfaceType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.LexicalBlock
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.MIPSLoop
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Member
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Module
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.NameList
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.NameListItem
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Namespace
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.None
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.PackedType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.PartialUnit
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.PointerToMemberType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.PointerType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.RValueReferenceType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ReferenceType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.RestrictType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.SetType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.SharedType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.SkeletonUnit
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.StringType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.StructureType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.SubProgram
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.SubrangeType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.SubroutineType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TagLabel
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateAlias
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateTypeParameter
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateValueParameter
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.ThrownType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TryBlock
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TypeDef
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.TypeUnit
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.UnionType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedParameters
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Variable
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.Variant
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.VariantPart
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.VolatileType
+  - Ubiquity.NET.Llvm.DebugInfo.Tag.WithStatement
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: Tag
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Tag
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 92
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: 'public enum Tag : ushort'
+    content.vb: Public Enum Tag As UShort
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.None
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.None
+  id: None
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: Tag.None
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.None
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: None
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 95
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: None = 0
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ArrayType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ArrayType
+  id: ArrayType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ArrayType
+  nameWithType: Tag.ArrayType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ArrayType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ArrayType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 96
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ArrayType = 1
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ClassType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ClassType
+  id: ClassType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ClassType
+  nameWithType: Tag.ClassType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ClassType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ClassType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 97
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ClassType = 2
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.EntryPoint
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.EntryPoint
+  id: EntryPoint
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: EntryPoint
+  nameWithType: Tag.EntryPoint
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.EntryPoint
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EntryPoint
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 98
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: EntryPoint = 3
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.EnumerationType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.EnumerationType
+  id: EnumerationType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: EnumerationType
+  nameWithType: Tag.EnumerationType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.EnumerationType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EnumerationType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 99
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: EnumerationType = 4
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.FormalParameter
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.FormalParameter
+  id: FormalParameter
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: FormalParameter
+  nameWithType: Tag.FormalParameter
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.FormalParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FormalParameter
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 100
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: FormalParameter = 5
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedDeclaration
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedDeclaration
+  id: ImportedDeclaration
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ImportedDeclaration
+  nameWithType: Tag.ImportedDeclaration
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedDeclaration
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImportedDeclaration
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 101
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ImportedDeclaration = 8
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TagLabel
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TagLabel
+  id: TagLabel
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TagLabel
+  nameWithType: Tag.TagLabel
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TagLabel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TagLabel
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 102
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TagLabel = 10
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.LexicalBlock
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.LexicalBlock
+  id: LexicalBlock
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: LexicalBlock
+  nameWithType: Tag.LexicalBlock
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.LexicalBlock
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LexicalBlock
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 103
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: LexicalBlock = 11
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Member
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Member
+  id: Member
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Member
+  nameWithType: Tag.Member
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Member
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Member
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 104
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Member = 13
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.PointerType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.PointerType
+  id: PointerType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: PointerType
+  nameWithType: Tag.PointerType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.PointerType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PointerType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 105
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: PointerType = 15
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ReferenceType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ReferenceType
+  id: ReferenceType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ReferenceType
+  nameWithType: Tag.ReferenceType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ReferenceType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ReferenceType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 106
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ReferenceType = 16
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CompileUnit
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CompileUnit
+  id: CompileUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CompileUnit
+  nameWithType: Tag.CompileUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CompileUnit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CompileUnit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 107
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CompileUnit = 17
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.StringType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.StringType
+  id: StringType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: StringType
+  nameWithType: Tag.StringType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.StringType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StringType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 108
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: StringType = 18
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.StructureType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.StructureType
+  id: StructureType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: StructureType
+  nameWithType: Tag.StructureType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.StructureType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StructureType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 109
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: StructureType = 19
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.SubroutineType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.SubroutineType
+  id: SubroutineType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: SubroutineType
+  nameWithType: Tag.SubroutineType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.SubroutineType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SubroutineType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 110
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SubroutineType = 21
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TypeDef
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TypeDef
+  id: TypeDef
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TypeDef
+  nameWithType: Tag.TypeDef
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TypeDef
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TypeDef
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 111
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TypeDef = 22
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.UnionType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.UnionType
+  id: UnionType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: UnionType
+  nameWithType: Tag.UnionType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.UnionType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnionType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 112
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UnionType = 23
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedParameters
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedParameters
+  id: UnspecifiedParameters
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: UnspecifiedParameters
+  nameWithType: Tag.UnspecifiedParameters
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedParameters
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnspecifiedParameters
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 113
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UnspecifiedParameters = 24
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Variant
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Variant
+  id: Variant
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Variant
+  nameWithType: Tag.Variant
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Variant
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Variant
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 114
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Variant = 25
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CommonBlock
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CommonBlock
+  id: CommonBlock
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CommonBlock
+  nameWithType: Tag.CommonBlock
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CommonBlock
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CommonBlock
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 115
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CommonBlock = 26
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CommonInclusion
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CommonInclusion
+  id: CommonInclusion
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CommonInclusion
+  nameWithType: Tag.CommonInclusion
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CommonInclusion
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CommonInclusion
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 116
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CommonInclusion = 27
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Inheritance
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Inheritance
+  id: Inheritance
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Inheritance
+  nameWithType: Tag.Inheritance
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Inheritance
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Inheritance
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 117
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Inheritance = 28
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.InlinedSubroutine
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.InlinedSubroutine
+  id: InlinedSubroutine
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: InlinedSubroutine
+  nameWithType: Tag.InlinedSubroutine
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.InlinedSubroutine
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InlinedSubroutine
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 118
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: InlinedSubroutine = 29
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Module
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Module
+  id: Module
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Module
+  nameWithType: Tag.Module
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Module
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Module
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 119
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Module = 30
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.PointerToMemberType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.PointerToMemberType
+  id: PointerToMemberType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: PointerToMemberType
+  nameWithType: Tag.PointerToMemberType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.PointerToMemberType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PointerToMemberType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 120
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: PointerToMemberType = 31
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.SetType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.SetType
+  id: SetType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: SetType
+  nameWithType: Tag.SetType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.SetType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SetType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 121
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SetType = 32
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.SubrangeType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.SubrangeType
+  id: SubrangeType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: SubrangeType
+  nameWithType: Tag.SubrangeType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.SubrangeType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SubrangeType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 122
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SubrangeType = 33
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.WithStatement
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.WithStatement
+  id: WithStatement
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: WithStatement
+  nameWithType: Tag.WithStatement
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.WithStatement
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: WithStatement
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 123
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: WithStatement = 34
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.AccessDeclaration
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.AccessDeclaration
+  id: AccessDeclaration
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: AccessDeclaration
+  nameWithType: Tag.AccessDeclaration
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.AccessDeclaration
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AccessDeclaration
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 124
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: AccessDeclaration = 35
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.BaseType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.BaseType
+  id: BaseType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: BaseType
+  nameWithType: Tag.BaseType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.BaseType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BaseType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 125
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BaseType = 36
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CatchBlock
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CatchBlock
+  id: CatchBlock
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CatchBlock
+  nameWithType: Tag.CatchBlock
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CatchBlock
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CatchBlock
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 126
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CatchBlock = 37
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ConstType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ConstType
+  id: ConstType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ConstType
+  nameWithType: Tag.ConstType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ConstType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ConstType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 127
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ConstType = 38
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Constant
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Constant
+  id: Constant
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Constant
+  nameWithType: Tag.Constant
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Constant
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Constant
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 128
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Constant = 39
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Enumerator
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Enumerator
+  id: Enumerator
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Enumerator
+  nameWithType: Tag.Enumerator
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Enumerator
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Enumerator
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 129
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Enumerator = 40
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.FileType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.FileType
+  id: FileType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: FileType
+  nameWithType: Tag.FileType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.FileType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FileType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 130
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: FileType = 41
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Friend
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Friend
+  id: Friend
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Friend
+  nameWithType: Tag.Friend
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Friend
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Friend
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 131
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Friend = 42
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.NameList
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.NameList
+  id: NameList
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: NameList
+  nameWithType: Tag.NameList
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.NameList
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NameList
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 132
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: NameList = 43
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.NameListItem
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.NameListItem
+  id: NameListItem
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: NameListItem
+  nameWithType: Tag.NameListItem
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.NameListItem
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NameListItem
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 133
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: NameListItem = 44
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.PackedType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.PackedType
+  id: PackedType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: PackedType
+  nameWithType: Tag.PackedType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.PackedType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PackedType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 134
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: PackedType = 45
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.SubProgram
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.SubProgram
+  id: SubProgram
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: SubProgram
+  nameWithType: Tag.SubProgram
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.SubProgram
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SubProgram
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 135
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SubProgram = 46
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateTypeParameter
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateTypeParameter
+  id: TemplateTypeParameter
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TemplateTypeParameter
+  nameWithType: Tag.TemplateTypeParameter
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateTypeParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TemplateTypeParameter
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 136
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TemplateTypeParameter = 47
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateValueParameter
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateValueParameter
+  id: TemplateValueParameter
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TemplateValueParameter
+  nameWithType: Tag.TemplateValueParameter
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateValueParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TemplateValueParameter
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 137
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TemplateValueParameter = 48
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ThrownType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ThrownType
+  id: ThrownType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ThrownType
+  nameWithType: Tag.ThrownType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ThrownType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ThrownType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 138
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ThrownType = 49
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TryBlock
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TryBlock
+  id: TryBlock
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TryBlock
+  nameWithType: Tag.TryBlock
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TryBlock
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TryBlock
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 139
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TryBlock = 50
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.VariantPart
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.VariantPart
+  id: VariantPart
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: VariantPart
+  nameWithType: Tag.VariantPart
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.VariantPart
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VariantPart
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 140
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: VariantPart = 51
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Variable
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Variable
+  id: Variable
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Variable
+  nameWithType: Tag.Variable
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Variable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Variable
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 141
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Variable = 52
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.VolatileType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.VolatileType
+  id: VolatileType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: VolatileType
+  nameWithType: Tag.VolatileType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.VolatileType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VolatileType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 142
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: VolatileType = 53
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.DwarfProcedure
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.DwarfProcedure
+  id: DwarfProcedure
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: DwarfProcedure
+  nameWithType: Tag.DwarfProcedure
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.DwarfProcedure
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DwarfProcedure
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 143
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: DwarfProcedure = 54
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.RestrictType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.RestrictType
+  id: RestrictType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: RestrictType
+  nameWithType: Tag.RestrictType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.RestrictType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RestrictType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 144
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: RestrictType = 55
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.InterfaceType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.InterfaceType
+  id: InterfaceType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: InterfaceType
+  nameWithType: Tag.InterfaceType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.InterfaceType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InterfaceType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 145
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: InterfaceType = 56
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Namespace
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Namespace
+  id: Namespace
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Namespace
+  nameWithType: Tag.Namespace
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Namespace
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Namespace
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 146
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Namespace = 57
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedModule
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedModule
+  id: ImportedModule
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ImportedModule
+  nameWithType: Tag.ImportedModule
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedModule
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImportedModule
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 147
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ImportedModule = 58
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedType
+  id: UnspecifiedType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: UnspecifiedType
+  nameWithType: Tag.UnspecifiedType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.UnspecifiedType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnspecifiedType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 148
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: UnspecifiedType = 59
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.PartialUnit
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.PartialUnit
+  id: PartialUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: PartialUnit
+  nameWithType: Tag.PartialUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.PartialUnit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PartialUnit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 149
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: PartialUnit = 60
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedUnit
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedUnit
+  id: ImportedUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ImportedUnit
+  nameWithType: Tag.ImportedUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ImportedUnit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImportedUnit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 150
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ImportedUnit = 61
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.Condition
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.Condition
+  id: Condition
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: Condition
+  nameWithType: Tag.Condition
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.Condition
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Condition
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 151
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Condition = 63
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.SharedType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.SharedType
+  id: SharedType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: SharedType
+  nameWithType: Tag.SharedType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.SharedType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SharedType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 152
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SharedType = 64
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TypeUnit
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TypeUnit
+  id: TypeUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TypeUnit
+  nameWithType: Tag.TypeUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TypeUnit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TypeUnit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 153
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TypeUnit = 65
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.RValueReferenceType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.RValueReferenceType
+  id: RValueReferenceType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: RValueReferenceType
+  nameWithType: Tag.RValueReferenceType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.RValueReferenceType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RValueReferenceType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 154
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: RValueReferenceType = 66
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateAlias
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateAlias
+  id: TemplateAlias
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: TemplateAlias
+  nameWithType: Tag.TemplateAlias
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.TemplateAlias
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TemplateAlias
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 155
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TemplateAlias = 67
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CoArrayType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CoArrayType
+  id: CoArrayType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CoArrayType
+  nameWithType: Tag.CoArrayType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CoArrayType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CoArrayType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 156
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CoArrayType = 68
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.GenericSubrange
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.GenericSubrange
+  id: GenericSubrange
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: GenericSubrange
+  nameWithType: Tag.GenericSubrange
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.GenericSubrange
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GenericSubrange
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 157
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: GenericSubrange = 69
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.DynamicType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.DynamicType
+  id: DynamicType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: DynamicType
+  nameWithType: Tag.DynamicType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.DynamicType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DynamicType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 158
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: DynamicType = 70
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.AtomicType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.AtomicType
+  id: AtomicType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: AtomicType
+  nameWithType: Tag.AtomicType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.AtomicType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AtomicType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 159
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: AtomicType = 71
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CallSite
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CallSite
+  id: CallSite
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CallSite
+  nameWithType: Tag.CallSite
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CallSite
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CallSite
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 160
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CallSite = 72
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.CallSiteParameter
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.CallSiteParameter
+  id: CallSiteParameter
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: CallSiteParameter
+  nameWithType: Tag.CallSiteParameter
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.CallSiteParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CallSiteParameter
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 161
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: CallSiteParameter = 73
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.SkeletonUnit
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.SkeletonUnit
+  id: SkeletonUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: SkeletonUnit
+  nameWithType: Tag.SkeletonUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.SkeletonUnit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SkeletonUnit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 162
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SkeletonUnit = 74
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ImmutableType
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ImmutableType
+  id: ImmutableType
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ImmutableType
+  nameWithType: Tag.ImmutableType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ImmutableType
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ImmutableType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 163
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ImmutableType = 75
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.MIPSLoop
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.MIPSLoop
+  id: MIPSLoop
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: MIPSLoop
+  nameWithType: Tag.MIPSLoop
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.MIPSLoop
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MIPSLoop
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 164
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: MIPSLoop = 16513
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.FormatLabel
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.FormatLabel
+  id: FormatLabel
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: FormatLabel
+  nameWithType: Tag.FormatLabel
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.FormatLabel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FormatLabel
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 165
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: FormatLabel = 16641
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.FunctionTemplate
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.FunctionTemplate
+  id: FunctionTemplate
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: FunctionTemplate
+  nameWithType: Tag.FunctionTemplate
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.FunctionTemplate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FunctionTemplate
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 166
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: FunctionTemplate = 16642
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.ClassTemplate
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.ClassTemplate
+  id: ClassTemplate
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: ClassTemplate
+  nameWithType: Tag.ClassTemplate
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.ClassTemplate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ClassTemplate
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 167
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ClassTemplate = 16643
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameter
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameter
+  id: GNUTemplateParameter
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: GNUTemplateParameter
+  nameWithType: Tag.GNUTemplateParameter
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUTemplateParameter
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 168
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: GNUTemplateParameter = 16646
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameterPack
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameterPack
+  id: GNUTemplateParameterPack
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: GNUTemplateParameterPack
+  nameWithType: Tag.GNUTemplateParameterPack
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUTemplateParameterPack
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUTemplateParameterPack
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 169
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: GNUTemplateParameterPack = 16647
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUFormalParameterPack
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.GNUFormalParameterPack
+  id: GNUFormalParameterPack
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: GNUFormalParameterPack
+  nameWithType: Tag.GNUFormalParameterPack
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUFormalParameterPack
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUFormalParameterPack
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 170
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: GNUFormalParameterPack = 16648
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSite
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSite
+  id: GNUCallSite
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: GNUCallSite
+  nameWithType: Tag.GNUCallSite
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSite
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUCallSite
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 171
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: GNUCallSite = 16649
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSiteParameter
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSiteParameter
+  id: GNUCallSiteParameter
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: GNUCallSiteParameter
+  nameWithType: Tag.GNUCallSiteParameter
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.GNUCallSiteParameter
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUCallSiteParameter
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 172
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: GNUCallSiteParameter = 16650
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.AppleProperty
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.AppleProperty
+  id: AppleProperty
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: AppleProperty
+  nameWithType: Tag.AppleProperty
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.AppleProperty
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AppleProperty
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 173
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: AppleProperty = 16896
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandProperty
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandProperty
+  id: BorlandProperty
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: BorlandProperty
+  nameWithType: Tag.BorlandProperty
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandProperty
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BorlandProperty
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 174
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BorlandProperty = 45056
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiString
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiString
+  id: BorlandDelphiString
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: BorlandDelphiString
+  nameWithType: Tag.BorlandDelphiString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiString
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BorlandDelphiString
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 175
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BorlandDelphiString = 45057
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiDynamicString
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiDynamicString
+  id: BorlandDelphiDynamicString
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: BorlandDelphiDynamicString
+  nameWithType: Tag.BorlandDelphiDynamicString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiDynamicString
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BorlandDelphiDynamicString
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 176
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BorlandDelphiDynamicString = 45058
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiSet
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiSet
+  id: BorlandDelphiSet
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: BorlandDelphiSet
+  nameWithType: Tag.BorlandDelphiSet
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiSet
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BorlandDelphiSet
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 177
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BorlandDelphiSet = 45059
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiVariant
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiVariant
+  id: BorlandDelphiVariant
+  parent: Ubiquity.NET.Llvm.DebugInfo.Tag
+  langs:
+  - csharp
+  - vb
+  name: BorlandDelphiVariant
+  nameWithType: Tag.BorlandDelphiVariant
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag.BorlandDelphiVariant
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BorlandDelphiVariant
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 178
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BorlandDelphiVariant = 45060
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.Tag
+references:
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: Ubiquity.NET.Llvm.DebugInfo.Tag
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.Tag
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.Tag.html
+  name: Tag
+  nameWithType: Tag
+  fullName: Ubiquity.NET.Llvm.DebugInfo.Tag

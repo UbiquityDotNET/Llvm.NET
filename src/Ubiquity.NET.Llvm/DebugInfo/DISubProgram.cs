@@ -4,20 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a SubProgram</summary>
     /// <seealso href="xref:llvm_langref#disubprogram"/>
     [SuppressMessage( "Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", Justification = "It is already correct 8^)" )]
-    public class DISubProgram
+    public sealed class DISubProgram
         : DILocalScope
     {
         /* TODO: Non-operand properties - need interop API to access these
@@ -31,7 +23,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the source line associated with this <see cref="DISubProgram"/></summary>
-        public uint Line => LLVMDISubprogramGetLine( MetadataHandle );
+        public uint Line => LLVMDISubprogramGetLine( Handle );
 
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
         public override string Name => GetOperandString( 2 );
@@ -63,12 +55,16 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         // Does the list include exceptions thrown by the complete call graph? or only those explicitly thrown by this function?
         public DITypeArray? ThrownTypes => Operands.Count < 11 ? null : new DITypeArray( GetOperand<MDTuple>( 10 ) );
 
-        /// <summary>Determines if this instance describes a given <see cref="IrFunction"/></summary>
-        /// <param name="function"><see cref="IrFunction"/> to test</param>
+        // TODO: Annotations (11) [Metadata? name suggests an array but likely not a type array...]
+        // TODO: Target FuncName (12) [MDString]
+
+        /// <summary>Determines if this instance describes a given <see cref="Function"/></summary>
+        /// <param name="function"><see cref="Function"/> to test</param>
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
-        [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public bool Describes( IrFunction function )
-            => LibLLVMSubProgramDescribes( MetadataHandle, function.ValidateNotNull( nameof( function ) ).ValueHandle );
+        public bool Describes( Function function )
+        {
+            return function.DISubProgram is not null && function.DISubProgram.Equals(this);
+        }
 
         internal DISubProgram( LLVMMetadataRef handle )
             : base( handle )

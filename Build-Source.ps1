@@ -12,10 +12,14 @@
 .PARAMETER FullInit
     Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
     as well as writes details of the initialization to the information and verbose streams.
+
+.PARAMETER ZipNuget
+    Zips all of the nuget packages into a single zip. This is NOT ordinarily needed and consumes a significant abount of time
+    so it is provided as a flag. Publishing of NUGET packages is now part of the GitHub actions for automated builds and does
+    not need this.
 #>
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
     [switch]$FullInit
 )
 
@@ -27,23 +31,15 @@ try
     # based on the switch parameter. Normally FullInit is done in Build-All, which calls this
     # script. But for a local "inner loop" development this might be the only script used.
     . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
 
-    # build the interop layer first using the script to manage the complexities of generated marshaling Interop
-    # and dependencies between C# and C++ projects.
-    .\Build-Interop.ps1 -AllowVsPreReleases:$AllowVsPreReleases
-
-    # build the Managed code OO Wrapper layer
-    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:`"LlvmVersion=$($buildInfo['LlvmVersion'])`""
-    dotnet build 'src\Ubiquity.NET.Llvm.sln' -c $Configuration -p:"LlvmVersion=$($buildInfo['LlvmVersion'])"
-
-    # Create a ZIP file of all the nuget packages
-    pushd $buildInfo['NuGetOutputPath']
-    Compress-Archive -Force -Path *.* -DestinationPath (join-path $buildInfo['BuildOutputPath'] Nuget.Packages.zip)
+    # build the Managed code support
+    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration"
+    Invoke-External dotnet build --tl:off 'src\Ubiquity.NET.Llvm.slnx' '-c' $Configuration
 }
 catch
 {
-    # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+    # Everything from the official docs to the various articles in the blog-sphere say this isn't needed
     # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
     # information is retained and the error reported will include the correct source file and line number
     # data for the error. Without this, only the error message is retained and the location information is

@@ -1,0 +1,1904 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  id: DebugArrayType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children:
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.UInt32)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32,System.UInt32)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  - Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary(Ubiquity.NET.Llvm.IDataLayout,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@)
+  langs:
+  - csharp
+  - vb
+  name: DebugArrayType
+  nameWithType: DebugArrayType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DebugArrayType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 10
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Provides debug information binding between an <xref href="Ubiquity.NET.Llvm.Types.IArrayType" data-throw-if-not-resolved="false"></xref> and a <xref href="Ubiquity.NET.Llvm.DebugInfo.DICompositeType" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public class DebugArrayType : DebugType<IArrayType, DICompositeType>, IDebugType<IArrayType, DICompositeType>, IEquatable<ITypeHandleOwner>, IArrayType, ISequenceType, ITypeRef, IEquatable<ITypeRef>'
+    content.vb: Public Class DebugArrayType Inherits DebugType(Of IArrayType, DICompositeType) Implements IDebugType(Of IArrayType, DICompositeType), IEquatable(Of ITypeHandleOwner), IArrayType, ISequenceType, ITypeRef, IEquatable(Of ITypeRef)
+  seealso:
+  - linkType: HRef
+    linkId: xref:llvm_langref#dicompositetype
+    altText: DICompositeType
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  implements:
+  - Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  - System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeHandleOwner}
+  - Ubiquity.NET.Llvm.Types.IArrayType
+  - Ubiquity.NET.Llvm.Types.ISequenceType
+  - Ubiquity.NET.Llvm.Types.ITypeRef
+  - System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.DebugInfoType
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.NativeType
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsSized
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.Kind
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.Context
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IntegerBitWidth
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsInteger
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsFloat
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsDouble
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsVoid
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsStruct
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsPointer
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsSequence
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsFloatingPoint
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.GetNullValue
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(System.UInt32)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(System.UInt32)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}.Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32,System.UInt32)
+  id: '#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32,System.UInt32)'
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: DebugArrayType(IArrayType, IDebugType<ITypeRef, DIType>, ref readonly DIBuilder, uint, uint, uint)
+  nameWithType: DebugArrayType.DebugArrayType(IArrayType, IDebugType<ITypeRef, DIType>, ref readonly DIBuilder, uint, uint, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugArrayType(Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>, ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, uint, uint, uint)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType" data-throw-if-not-resolved="false"></xref> class
+  example: []
+  syntax:
+    content: public DebugArrayType(IArrayType llvmType, IDebugType<ITypeRef, DIType> elementType, ref readonly DIBuilder diBuilder, uint count, uint lowerBound = 0, uint alignment = 0)
+    parameters:
+    - id: llvmType
+      type: Ubiquity.NET.Llvm.Types.IArrayType
+      description: Underlying LLVM array type to bind debug info to
+    - id: elementType
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+      description: Array element type with debug information
+    - id: diBuilder
+      type: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+      description: Debug Information builder to use to build the information for this type
+    - id: count
+      type: System.UInt32
+      description: Number of elements in the array
+    - id: lowerBound
+      type: System.UInt32
+      description: Lower bound of the array [default = 0]
+    - id: alignment
+      type: System.UInt32
+      description: Alignment for the type
+    content.vb: Public Sub New(llvmType As IArrayType, elementType As IDebugType(Of ITypeRef, DIType), diBuilder As DIBuilder, count As UInteger, lowerBound As UInteger = 0, alignment As UInteger = 0)
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*
+  nameWithType.vb: DebugArrayType.New(IArrayType, IDebugType(Of ITypeRef, DIType), DIBuilder, UInteger, UInteger, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.New(Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), Ubiquity.NET.Llvm.DebugInfo.DIBuilder, UInteger, UInteger, UInteger)
+  name.vb: New(IArrayType, IDebugType(Of ITypeRef, DIType), DIBuilder, UInteger, UInteger, UInteger)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  id: '#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)'
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: DebugArrayType(IDebugType<ITypeRef, DIType>, ref readonly DIBuilder, uint, uint)
+  nameWithType: DebugArrayType.DebugArrayType(IDebugType<ITypeRef, DIType>, ref readonly DIBuilder, uint, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugArrayType(Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>, ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, uint, uint)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 41
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public DebugArrayType(IDebugType<ITypeRef, DIType> elementType, ref readonly DIBuilder diBuilder, uint count, uint lowerBound = 0)
+    parameters:
+    - id: elementType
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+      description: Type of elements in the array
+    - id: diBuilder
+      type: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+      description: Debug Information builder to use to build the information for this type
+    - id: count
+      type: System.UInt32
+      description: Number of elements in the array
+    - id: lowerBound
+      type: System.UInt32
+      description: '<xref href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound" data-throw-if-not-resolved="false"></xref> value for the array indices [Default: 0]'
+    content.vb: Public Sub New(elementType As IDebugType(Of ITypeRef, DIType), diBuilder As DIBuilder, count As UInteger, lowerBound As UInteger = 0)
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*
+  nameWithType.vb: DebugArrayType.New(IDebugType(Of ITypeRef, DIType), DIBuilder, UInteger, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.New(Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType), Ubiquity.NET.Llvm.DebugInfo.DIBuilder, UInteger, UInteger)
+  name.vb: New(IDebugType(Of ITypeRef, DIType), DIBuilder, UInteger, UInteger)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.UInt32)
+  id: '#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.UInt32)'
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: DebugArrayType(IArrayType, ref readonly DIBuilder, DIType, uint, uint)
+  nameWithType: DebugArrayType.DebugArrayType(IArrayType, ref readonly DIBuilder, DIType, uint, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugArrayType(Ubiquity.NET.Llvm.Types.IArrayType, ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, Ubiquity.NET.Llvm.DebugInfo.DIType, uint, uint)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 57
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public DebugArrayType(IArrayType llvmType, ref readonly DIBuilder diBuilder, DIType elementType, uint count, uint lowerBound = 0)
+    parameters:
+    - id: llvmType
+      type: Ubiquity.NET.Llvm.Types.IArrayType
+      description: Native LLVM type for the elements
+    - id: diBuilder
+      type: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+      description: Debug Information builder to use to build the information for this type
+    - id: elementType
+      type: Ubiquity.NET.Llvm.DebugInfo.DIType
+      description: Debug type of the array elements
+    - id: count
+      type: System.UInt32
+      description: Number of elements in the array
+    - id: lowerBound
+      type: System.UInt32
+      description: '<xref href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound" data-throw-if-not-resolved="false"></xref> value for the array indices [Default: 0]'
+    content.vb: Public Sub New(llvmType As IArrayType, diBuilder As DIBuilder, elementType As DIType, count As UInteger, lowerBound As UInteger = 0)
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*
+  nameWithType.vb: DebugArrayType.New(IArrayType, DIBuilder, DIType, UInteger, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.New(Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DIBuilder, Ubiquity.NET.Llvm.DebugInfo.DIType, UInteger, UInteger)
+  name.vb: New(IArrayType, DIBuilder, DIType, UInteger, UInteger)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType
+  id: DebugElementType
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: DebugElementType
+  nameWithType: DebugArrayType.DebugElementType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DebugElementType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 63
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the full <xref href="Ubiquity.NET.Llvm.DebugInfo.IDebugType%602" data-throw-if-not-resolved="false"></xref> type for the elements
+  example: []
+  syntax:
+    content: public IDebugType<ITypeRef, DIType> DebugElementType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+    content.vb: Public ReadOnly Property DebugElementType As IDebugType(Of ITypeRef, DIType)
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType
+  id: ElementType
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: ElementType
+  nameWithType: DebugArrayType.ElementType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ElementType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 66
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the types of the elements in the sequence
+  example: []
+  syntax:
+    content: public ITypeRef ElementType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: Public ReadOnly Property ElementType As ITypeRef
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType*
+  implements:
+  - Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length
+  id: Length
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: Length
+  nameWithType: DebugArrayType.Length
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Length
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 69
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the length of the array
+  example: []
+  syntax:
+    content: public uint Length { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public ReadOnly Property Length As UInteger
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length*
+  implements:
+  - Ubiquity.NET.Llvm.Types.IArrayType.Length
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  id: LowerBound
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: LowerBound
+  nameWithType: DebugArrayType.LowerBound
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LowerBound
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 72
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the lower bound of the array - usually, but not always, zero
+  example: []
+  syntax:
+    content: public uint LowerBound { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public ReadOnly Property LowerBound As UInteger
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary(Ubiquity.NET.Llvm.IDataLayout,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary(Ubiquity.NET.Llvm.IDataLayout,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@)
+  id: ResolveTemporary(Ubiquity.NET.Llvm.IDataLayout,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  langs:
+  - csharp
+  - vb
+  name: ResolveTemporary(IDataLayout, ref readonly DIBuilder)
+  nameWithType: DebugArrayType.ResolveTemporary(IDataLayout, ref readonly DIBuilder)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary(Ubiquity.NET.Llvm.IDataLayout, ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ResolveTemporary
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs
+    startLine: 77
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Resolves a temporary metadata node for the array if full size information wasn't available at creation time
+  example: []
+  syntax:
+    content: public void ResolveTemporary(IDataLayout layout, ref readonly DIBuilder diBuilder)
+    parameters:
+    - id: layout
+      type: Ubiquity.NET.Llvm.IDataLayout
+      description: Type layout information
+    - id: diBuilder
+      type: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+      description: Debug information builder for creating the new debug information
+    content.vb: Public Sub ResolveTemporary(layout As IDataLayout, diBuilder As DIBuilder)
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary*
+  nameWithType.vb: DebugArrayType.ResolveTemporary(IDataLayout, DIBuilder)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary(Ubiquity.NET.Llvm.IDataLayout, Ubiquity.NET.Llvm.DebugInfo.DIBuilder)
+  name.vb: ResolveTemporary(IDataLayout, DIBuilder)
+references:
+- uid: Ubiquity.NET.Llvm.Types.IArrayType
+  commentId: T:Ubiquity.NET.Llvm.Types.IArrayType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  name: IArrayType
+  nameWithType: IArrayType
+  fullName: Ubiquity.NET.Llvm.Types.IArrayType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DICompositeType.html
+  name: DICompositeType
+  nameWithType: DICompositeType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html
+  name: DebugType<IArrayType, DICompositeType>
+  nameWithType: DebugType<IArrayType, DICompositeType>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType)
+  name.vb: DebugType(Of IArrayType, DICompositeType)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+    name: DebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.IArrayType
+    name: IArrayType
+    href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+    name: DICompositeType
+    href: Ubiquity.NET.Llvm.DebugInfo.DICompositeType.html
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+    name: DebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.IArrayType
+    name: IArrayType
+    href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+    name: DICompositeType
+    href: Ubiquity.NET.Llvm.DebugInfo.DICompositeType.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<IArrayType, DICompositeType>
+  nameWithType: IDebugType<IArrayType, DICompositeType>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>
+  nameWithType.vb: IDebugType(Of IArrayType, DICompositeType)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType)
+  name.vb: IDebugType(Of IArrayType, DICompositeType)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.IArrayType
+    name: IArrayType
+    href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+    name: DICompositeType
+    href: Ubiquity.NET.Llvm.DebugInfo.DICompositeType.html
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.IArrayType
+    name: IArrayType
+    href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DICompositeType
+    name: DICompositeType
+    href: Ubiquity.NET.Llvm.DebugInfo.DICompositeType.html
+  - name: )
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeHandleOwner}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeHandleOwner}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ITypeHandleOwner>
+  nameWithType: IEquatable<ITypeHandleOwner>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Types.ITypeHandleOwner>
+  nameWithType.vb: IEquatable(Of ITypeHandleOwner)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Types.ITypeHandleOwner)
+  name.vb: IEquatable(Of ITypeHandleOwner)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeHandleOwner
+    name: ITypeHandleOwner
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeHandleOwner
+    name: ITypeHandleOwner
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.ISequenceType
+  commentId: T:Ubiquity.NET.Llvm.Types.ISequenceType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.ISequenceType.html
+  name: ISequenceType
+  nameWithType: ISequenceType
+  fullName: Ubiquity.NET.Llvm.Types.ISequenceType
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef
+  commentId: T:Ubiquity.NET.Llvm.Types.ITypeRef
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  name: ITypeRef
+  nameWithType: ITypeRef
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ITypeRef>
+  nameWithType: IEquatable<ITypeRef>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Types.ITypeRef>
+  nameWithType.vb: IEquatable(Of ITypeRef)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Types.ITypeRef)
+  name.vb: IEquatable(Of ITypeRef)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.DebugInfoType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.DebugInfoType
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.DebugInfoType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_DebugInfoType
+  name: DebugInfoType
+  nameWithType: DebugType<IArrayType, DICompositeType>.DebugInfoType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.DebugInfoType
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).DebugInfoType
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).DebugInfoType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.NativeType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.NativeType
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.NativeType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_NativeType
+  name: NativeType
+  nameWithType: DebugType<IArrayType, DICompositeType>.NativeType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.NativeType
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).NativeType
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).NativeType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsSized
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsSized
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsSized
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsSized
+  name: IsSized
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsSized
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsSized
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsSized
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsSized
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.Kind
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.Kind
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.Kind
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_Kind
+  name: Kind
+  nameWithType: DebugType<IArrayType, DICompositeType>.Kind
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.Kind
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).Kind
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).Kind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.Context
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.Context
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.Context
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_Context
+  name: Context
+  nameWithType: DebugType<IArrayType, DICompositeType>.Context
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.Context
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).Context
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).Context
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IntegerBitWidth
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IntegerBitWidth
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IntegerBitWidth
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IntegerBitWidth
+  name: IntegerBitWidth
+  nameWithType: DebugType<IArrayType, DICompositeType>.IntegerBitWidth
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IntegerBitWidth
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IntegerBitWidth
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IntegerBitWidth
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsInteger
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsInteger
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsInteger
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsInteger
+  name: IsInteger
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsInteger
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsInteger
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsInteger
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsInteger
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsFloat
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsFloat
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsFloat
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsFloat
+  name: IsFloat
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsFloat
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsFloat
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsFloat
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsFloat
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsDouble
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsDouble
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsDouble
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsDouble
+  name: IsDouble
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsDouble
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsDouble
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsDouble
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsDouble
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsVoid
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsVoid
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsVoid
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsVoid
+  name: IsVoid
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsVoid
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsVoid
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsVoid
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsVoid
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsStruct
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsStruct
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsStruct
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsStruct
+  name: IsStruct
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsStruct
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsStruct
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsStruct
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsStruct
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsPointer
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsPointer
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsPointer
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsPointer
+  name: IsPointer
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsPointer
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsPointer
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsPointer
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsPointer
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsSequence
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsSequence
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsSequence
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsSequence
+  name: IsSequence
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsSequence
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsSequence
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsSequence
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsSequence
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsFloatingPoint
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.IsFloatingPoint
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsFloatingPoint
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsFloatingPoint
+  name: IsFloatingPoint
+  nameWithType: DebugType<IArrayType, DICompositeType>.IsFloatingPoint
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.IsFloatingPoint
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).IsFloatingPoint
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).IsFloatingPoint
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.GetNullValue
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.GetNullValue
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.GetNullValue
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue
+  name: GetNullValue()
+  nameWithType: DebugType<IArrayType, DICompositeType>.GetNullValue()
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.GetNullValue()
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).GetNullValue()
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).GetNullValue()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.GetNullValue
+    name: GetNullValue
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.GetNullValue
+    name: GetNullValue
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
+  name: CreateArrayType(uint)
+  nameWithType: DebugType<IArrayType, DICompositeType>.CreateArrayType(uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.CreateArrayType(uint)
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).CreateArrayType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).CreateArrayType(UInteger)
+  name.vb: CreateArrayType(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType
+  name: CreatePointerType()
+  nameWithType: DebugType<IArrayType, DICompositeType>.CreatePointerType()
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.CreatePointerType()
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).CreatePointerType()
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).CreatePointerType()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
+  name: CreatePointerType(uint)
+  nameWithType: DebugType<IArrayType, DICompositeType>.CreatePointerType(uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.CreatePointerType(uint)
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).CreatePointerType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).CreatePointerType(UInteger)
+  name.vb: CreatePointerType(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_
+  name: CreatePointerType(ref readonly DIBuilder, uint)
+  nameWithType: DebugType<IArrayType, DICompositeType>.CreatePointerType(ref readonly DIBuilder, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.CreatePointerType(ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, uint)
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).CreatePointerType(DIBuilder, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder, UInteger)
+  name.vb: CreatePointerType(DIBuilder, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_
+  - name: (
+  - name: ref
+  - name: " "
+  - name: readonly
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_
+  name: CreateArrayType(ref readonly DIBuilder, uint, uint)
+  nameWithType: DebugType<IArrayType, DICompositeType>.CreateArrayType(ref readonly DIBuilder, uint, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType>.CreateArrayType(ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, uint, uint)
+  nameWithType.vb: DebugType(Of IArrayType, DICompositeType).CreateArrayType(DIBuilder, UInteger, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of Ubiquity.NET.Llvm.Types.IArrayType, Ubiquity.NET.Llvm.DebugInfo.DICompositeType).CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder, UInteger, UInteger)
+  name.vb: CreateArrayType(DIBuilder, UInteger, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_
+  - name: (
+  - name: ref
+  - name: " "
+  - name: readonly
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType{Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DICompositeType}.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}.Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  definition: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  name: HasDebugInfo(IDebugType<ITypeRef, DIType>)
+  nameWithType: DebugType.HasDebugInfo(IDebugType<ITypeRef, DIType>)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>)
+  nameWithType.vb: DebugType.HasDebugInfo(IDebugType(Of ITypeRef, DIType))
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType))
+  name.vb: HasDebugInfo(IDebugType(Of ITypeRef, DIType))
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+    name: HasDebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+    name: HasDebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: )
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html
+  name: DebugType<TNative, TDebug>
+  nameWithType: DebugType<TNative, TDebug>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>
+  nameWithType.vb: DebugType(Of TNative, TDebug)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug)
+  name.vb: DebugType(Of TNative, TDebug)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+    name: DebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html
+  - name: <
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2
+    name: DebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<TNative, TDebug>
+  nameWithType: IDebugType<TNative, TDebug>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<TNative, TDebug>
+  nameWithType.vb: IDebugType(Of TNative, TDebug)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of TNative, TDebug)
+  name.vb: IDebugType(Of TNative, TDebug)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.DebugInfoType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.DebugInfoType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_DebugInfoType
+  name: DebugInfoType
+  nameWithType: DebugType<TNative, TDebug>.DebugInfoType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.DebugInfoType
+  nameWithType.vb: DebugType(Of TNative, TDebug).DebugInfoType
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).DebugInfoType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.NativeType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.NativeType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_NativeType
+  name: NativeType
+  nameWithType: DebugType<TNative, TDebug>.NativeType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.NativeType
+  nameWithType.vb: DebugType(Of TNative, TDebug).NativeType
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).NativeType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsSized
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsSized
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsSized
+  name: IsSized
+  nameWithType: DebugType<TNative, TDebug>.IsSized
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsSized
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsSized
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsSized
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.Kind
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.Kind
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_Kind
+  name: Kind
+  nameWithType: DebugType<TNative, TDebug>.Kind
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.Kind
+  nameWithType.vb: DebugType(Of TNative, TDebug).Kind
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).Kind
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.Context
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.Context
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_Context
+  name: Context
+  nameWithType: DebugType<TNative, TDebug>.Context
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.Context
+  nameWithType.vb: DebugType(Of TNative, TDebug).Context
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).Context
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IntegerBitWidth
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IntegerBitWidth
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IntegerBitWidth
+  name: IntegerBitWidth
+  nameWithType: DebugType<TNative, TDebug>.IntegerBitWidth
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IntegerBitWidth
+  nameWithType.vb: DebugType(Of TNative, TDebug).IntegerBitWidth
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IntegerBitWidth
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsInteger
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsInteger
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsInteger
+  name: IsInteger
+  nameWithType: DebugType<TNative, TDebug>.IsInteger
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsInteger
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsInteger
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsInteger
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsFloat
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsFloat
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsFloat
+  name: IsFloat
+  nameWithType: DebugType<TNative, TDebug>.IsFloat
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsFloat
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsFloat
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsFloat
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsDouble
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsDouble
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsDouble
+  name: IsDouble
+  nameWithType: DebugType<TNative, TDebug>.IsDouble
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsDouble
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsDouble
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsDouble
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsVoid
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsVoid
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsVoid
+  name: IsVoid
+  nameWithType: DebugType<TNative, TDebug>.IsVoid
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsVoid
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsVoid
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsVoid
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsStruct
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsStruct
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsStruct
+  name: IsStruct
+  nameWithType: DebugType<TNative, TDebug>.IsStruct
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsStruct
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsStruct
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsStruct
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsPointer
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsPointer
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsPointer
+  name: IsPointer
+  nameWithType: DebugType<TNative, TDebug>.IsPointer
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsPointer
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsPointer
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsPointer
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsSequence
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsSequence
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsSequence
+  name: IsSequence
+  nameWithType: DebugType<TNative, TDebug>.IsSequence
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsSequence
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsSequence
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsSequence
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsFloatingPoint
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.IsFloatingPoint
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsFloatingPoint
+  name: IsFloatingPoint
+  nameWithType: DebugType<TNative, TDebug>.IsFloatingPoint
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.IsFloatingPoint
+  nameWithType.vb: DebugType(Of TNative, TDebug).IsFloatingPoint
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).IsFloatingPoint
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.GetNullValue
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.GetNullValue
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue
+  name: GetNullValue()
+  nameWithType: DebugType<TNative, TDebug>.GetNullValue()
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.GetNullValue()
+  nameWithType.vb: DebugType(Of TNative, TDebug).GetNullValue()
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).GetNullValue()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.GetNullValue
+    name: GetNullValue
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.GetNullValue
+    name: GetNullValue
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
+  name: CreateArrayType(uint)
+  nameWithType: DebugType<TNative, TDebug>.CreateArrayType(uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.CreateArrayType(uint)
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreateArrayType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).CreateArrayType(UInteger)
+  name.vb: CreateArrayType(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType
+  name: CreatePointerType()
+  nameWithType: DebugType<TNative, TDebug>.CreatePointerType()
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.CreatePointerType()
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreatePointerType()
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).CreatePointerType()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
+  name: CreatePointerType(uint)
+  nameWithType: DebugType<TNative, TDebug>.CreatePointerType(uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.CreatePointerType(uint)
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreatePointerType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).CreatePointerType(UInteger)
+  name.vb: CreatePointerType(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_
+  name: CreatePointerType(ref readonly DIBuilder, uint)
+  nameWithType: DebugType<TNative, TDebug>.CreatePointerType(ref readonly DIBuilder, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.CreatePointerType(ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, uint)
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreatePointerType(DIBuilder, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder, UInteger)
+  name.vb: CreatePointerType(DIBuilder, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_
+  - name: (
+  - name: ref
+  - name: " "
+  - name: readonly
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreatePointerType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_
+  name: CreateArrayType(ref readonly DIBuilder, uint, uint)
+  nameWithType: DebugType<TNative, TDebug>.CreateArrayType(ref readonly DIBuilder, uint, uint)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType<TNative, TDebug>.CreateArrayType(ref readonly Ubiquity.NET.Llvm.DebugInfo.DIBuilder, uint, uint)
+  nameWithType.vb: DebugType(Of TNative, TDebug).CreateArrayType(DIBuilder, UInteger, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType(Of TNative, TDebug).CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder, UInteger, UInteger)
+  name.vb: CreateArrayType(DIBuilder, UInteger, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_
+  - name: (
+  - name: ref
+  - name: " "
+  - name: readonly
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType`2.CreateArrayType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+    name: DIBuilder
+    href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  name: HasDebugInfo(IDebugType<ITypeRef, DIType>)
+  nameWithType: DebugType.HasDebugInfo(IDebugType<ITypeRef, DIType>)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>)
+  nameWithType.vb: DebugType.HasDebugInfo(IDebugType(Of ITypeRef, DIType))
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType))
+  name.vb: HasDebugInfo(IDebugType(Of ITypeRef, DIType))
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+    name: HasDebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+    name: HasDebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  - name: (
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: )
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html
+  name: DebugType
+  nameWithType: DebugType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html
+  name: DebugArrayType
+  nameWithType: DebugArrayType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_Types_IArrayType_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_System_UInt32_
+  name: DebugArrayType
+  nameWithType: DebugArrayType.DebugArrayType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugArrayType
+  nameWithType.vb: DebugArrayType.New
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.New
+  name.vb: New
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<ITypeRef, DIType>
+  nameWithType: IDebugType<ITypeRef, DIType>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>
+  nameWithType.vb: IDebugType(Of ITypeRef, DIType)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType)
+  name.vb: IDebugType(Of ITypeRef, DIType)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  name: DIBuilder
+  nameWithType: DIBuilder
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType_LowerBound
+  name: LowerBound
+  nameWithType: DebugArrayType.LowerBound
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  name: DIType
+  nameWithType: DIType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType_DebugElementType
+  name: DebugElementType
+  nameWithType: DebugArrayType.DebugElementType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.DebugElementType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType_ElementType
+  name: ElementType
+  nameWithType: DebugArrayType.ElementType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ElementType
+- uid: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  commentId: P:Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  parent: Ubiquity.NET.Llvm.Types.ISequenceType
+  href: Ubiquity.NET.Llvm.Types.ISequenceType.html#Ubiquity_NET_Llvm_Types_ISequenceType_ElementType
+  name: ElementType
+  nameWithType: ISequenceType.ElementType
+  fullName: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType_Length
+  name: Length
+  nameWithType: DebugArrayType.Length
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.Length
+- uid: Ubiquity.NET.Llvm.Types.IArrayType.Length
+  commentId: P:Ubiquity.NET.Llvm.Types.IArrayType.Length
+  parent: Ubiquity.NET.Llvm.Types.IArrayType
+  href: Ubiquity.NET.Llvm.Types.IArrayType.html#Ubiquity_NET_Llvm_Types_IArrayType_Length
+  name: Length
+  nameWithType: IArrayType.Length
+  fullName: Ubiquity.NET.Llvm.Types.IArrayType.Length
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType_LowerBound
+  name: LowerBound
+  nameWithType: DebugArrayType.LowerBound
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.LowerBound
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugArrayType_ResolveTemporary_Ubiquity_NET_Llvm_IDataLayout_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__
+  name: ResolveTemporary
+  nameWithType: DebugArrayType.ResolveTemporary
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.ResolveTemporary
+- uid: Ubiquity.NET.Llvm.IDataLayout
+  commentId: T:Ubiquity.NET.Llvm.IDataLayout
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IDataLayout.html
+  name: IDataLayout
+  nameWithType: IDataLayout
+  fullName: Ubiquity.NET.Llvm.IDataLayout
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html

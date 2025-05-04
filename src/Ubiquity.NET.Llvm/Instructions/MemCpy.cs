@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction for the LLVM intrinsic llvm.memcpy instruction</summary>
-    public class MemCpy
+    public sealed class MemCpy
         : MemIntrinsic
     {
         internal MemCpy( LLVMValueRef handle )

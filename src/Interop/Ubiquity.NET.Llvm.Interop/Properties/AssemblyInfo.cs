@@ -2,9 +2,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
-using System;
 using System.Resources;
-using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant( false )]
 
@@ -12,3 +10,6 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible( false )]
 
 [assembly: NeutralResourcesLanguage( "en" )]
+
+// FULLY AOT compatible, NO runtime marshaling support enabled
+[assembly: DisableRuntimeMarshalling]

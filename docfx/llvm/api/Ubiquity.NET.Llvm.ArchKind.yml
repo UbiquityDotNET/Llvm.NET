@@ -1,0 +1,1808 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.ArchKind
+  commentId: T:Ubiquity.NET.Llvm.ArchKind
+  id: ArchKind
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.ArchKind.AMDGCN
+  - Ubiquity.NET.Llvm.ArchKind.Aarch64
+  - Ubiquity.NET.Llvm.ArchKind.Aarch64BE
+  - Ubiquity.NET.Llvm.ArchKind.Aarch64_32
+  - Ubiquity.NET.Llvm.ArchKind.Amd64
+  - Ubiquity.NET.Llvm.ArchKind.Amdil
+  - Ubiquity.NET.Llvm.ArchKind.Amdil64
+  - Ubiquity.NET.Llvm.ArchKind.Arc
+  - Ubiquity.NET.Llvm.ArchKind.Arm
+  - Ubiquity.NET.Llvm.ArchKind.Armeb
+  - Ubiquity.NET.Llvm.ArchKind.Avr
+  - Ubiquity.NET.Llvm.ArchKind.BPFeb
+  - Ubiquity.NET.Llvm.ArchKind.BPFel
+  - Ubiquity.NET.Llvm.ArchKind.Csky
+  - Ubiquity.NET.Llvm.ArchKind.DXil
+  - Ubiquity.NET.Llvm.ArchKind.Hexagon
+  - Ubiquity.NET.Llvm.ArchKind.Hsail
+  - Ubiquity.NET.Llvm.ArchKind.Hsail64
+  - Ubiquity.NET.Llvm.ArchKind.Kalimba
+  - Ubiquity.NET.Llvm.ArchKind.Lanai
+  - Ubiquity.NET.Llvm.ArchKind.LoongArch32
+  - Ubiquity.NET.Llvm.ArchKind.LoongArch64
+  - Ubiquity.NET.Llvm.ArchKind.M68k
+  - Ubiquity.NET.Llvm.ArchKind.MIPS
+  - Ubiquity.NET.Llvm.ArchKind.MIPS64
+  - Ubiquity.NET.Llvm.ArchKind.MIPS64el
+  - Ubiquity.NET.Llvm.ArchKind.MIPSel
+  - Ubiquity.NET.Llvm.ArchKind.MSP430
+  - Ubiquity.NET.Llvm.ArchKind.Nvptx
+  - Ubiquity.NET.Llvm.ArchKind.Nvptx64
+  - Ubiquity.NET.Llvm.ArchKind.PPC
+  - Ubiquity.NET.Llvm.ArchKind.PPC64
+  - Ubiquity.NET.Llvm.ArchKind.PPC64le
+  - Ubiquity.NET.Llvm.ArchKind.PPCle
+  - Ubiquity.NET.Llvm.ArchKind.R600
+  - Ubiquity.NET.Llvm.ArchKind.RenderScript32
+  - Ubiquity.NET.Llvm.ArchKind.RenderScript64
+  - Ubiquity.NET.Llvm.ArchKind.RiscV32
+  - Ubiquity.NET.Llvm.ArchKind.RiscV64
+  - Ubiquity.NET.Llvm.ArchKind.Shave
+  - Ubiquity.NET.Llvm.ArchKind.Sparc
+  - Ubiquity.NET.Llvm.ArchKind.Sparcel
+  - Ubiquity.NET.Llvm.ArchKind.Sparcv9
+  - Ubiquity.NET.Llvm.ArchKind.Spir
+  - Ubiquity.NET.Llvm.ArchKind.Spir64
+  - Ubiquity.NET.Llvm.ArchKind.SpirV
+  - Ubiquity.NET.Llvm.ArchKind.SpirV32
+  - Ubiquity.NET.Llvm.ArchKind.SpirV64
+  - Ubiquity.NET.Llvm.ArchKind.SystemZ
+  - Ubiquity.NET.Llvm.ArchKind.TCE
+  - Ubiquity.NET.Llvm.ArchKind.TCEle
+  - Ubiquity.NET.Llvm.ArchKind.Thumb
+  - Ubiquity.NET.Llvm.ArchKind.Thumbeb
+  - Ubiquity.NET.Llvm.ArchKind.UnknownArch
+  - Ubiquity.NET.Llvm.ArchKind.Ve
+  - Ubiquity.NET.Llvm.ArchKind.Wasm32
+  - Ubiquity.NET.Llvm.ArchKind.Wasm64
+  - Ubiquity.NET.Llvm.ArchKind.X86
+  - Ubiquity.NET.Llvm.ArchKind.Xcore
+  - Ubiquity.NET.Llvm.ArchKind.Xtensa
+  langs:
+  - csharp
+  - vb
+  name: ArchKind
+  nameWithType: ArchKind
+  fullName: Ubiquity.NET.Llvm.ArchKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ArchKind
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Enumeration for the Architecture portion of a target triple
+  example: []
+  syntax:
+    content: public enum ArchKind
+    content.vb: Public Enum ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.UnknownArch
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.UnknownArch
+  id: UnknownArch
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: UnknownArch
+  nameWithType: ArchKind.UnknownArch
+  fullName: Ubiquity.NET.Llvm.ArchKind.UnknownArch
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnknownArch
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Invalid or unknown architecture
+  example: []
+  syntax:
+    content: UnknownArch = 0
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Arm
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Arm
+  id: Arm
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Arm
+  nameWithType: ArchKind.Arm
+  fullName: Ubiquity.NET.Llvm.ArchKind.Arm
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Arm
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'ARM (little endian): arm, armv.*, xscale'
+  example: []
+  syntax:
+    content: Arm = 1
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Armeb
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Armeb
+  id: Armeb
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Armeb
+  nameWithType: ArchKind.Armeb
+  fullName: Ubiquity.NET.Llvm.ArchKind.Armeb
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Armeb
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'ARM (big endian): armeb'
+  example: []
+  syntax:
+    content: Armeb = 2
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Aarch64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Aarch64
+  id: Aarch64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Aarch64
+  nameWithType: ArchKind.Aarch64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Aarch64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Aarch64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 24
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'AArch64 (little endian): aarch64'
+  example: []
+  syntax:
+    content: Aarch64 = 3
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Aarch64BE
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Aarch64BE
+  id: Aarch64BE
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Aarch64BE
+  nameWithType: ArchKind.Aarch64BE
+  fullName: Ubiquity.NET.Llvm.ArchKind.Aarch64BE
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Aarch64BE
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 27
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'AArch64 (big endian): aarch64_be'
+  example: []
+  syntax:
+    content: Aarch64BE = 4
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Aarch64_32
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Aarch64_32
+  id: Aarch64_32
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Aarch64_32
+  nameWithType: ArchKind.Aarch64_32
+  fullName: Ubiquity.NET.Llvm.ArchKind.Aarch64_32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Aarch64_32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 30
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'AArch64 32 bit (Little endian) ILP32: aarch64_32'
+  example: []
+  syntax:
+    content: Aarch64_32 = 5
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Arc
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Arc
+  id: Arc
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Arc
+  nameWithType: ArchKind.Arc
+  fullName: Ubiquity.NET.Llvm.ArchKind.Arc
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Arc
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 33
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Synopsis ARC
+  example: []
+  syntax:
+    content: Arc = 6
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Avr
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Avr
+  id: Avr
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Avr
+  nameWithType: ArchKind.Avr
+  fullName: Ubiquity.NET.Llvm.ArchKind.Avr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Avr
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 36
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'AVR: Atmel AVR micro-controller'
+  example: []
+  syntax:
+    content: Avr = 7
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.BPFel
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.BPFel
+  id: BPFel
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: BPFel
+  nameWithType: ArchKind.BPFel
+  fullName: Ubiquity.NET.Llvm.ArchKind.BPFel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BPFel
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 39
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: eBPF or extended BPF or 64-bit BPF (little endian)
+  example: []
+  syntax:
+    content: BPFel = 8
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.BPFeb
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.BPFeb
+  id: BPFeb
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: BPFeb
+  nameWithType: ArchKind.BPFeb
+  fullName: Ubiquity.NET.Llvm.ArchKind.BPFeb
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BPFeb
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 42
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: eBPF or extended BPF or 64-bit BPF (big endian)
+  example: []
+  syntax:
+    content: BPFeb = 9
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Csky
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Csky
+  id: Csky
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Csky
+  nameWithType: ArchKind.Csky
+  fullName: Ubiquity.NET.Llvm.ArchKind.Csky
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Csky
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 45
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: csky
+  example: []
+  syntax:
+    content: Csky = 10
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.DXil
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.DXil
+  id: DXil
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: DXil
+  nameWithType: ArchKind.DXil
+  fullName: Ubiquity.NET.Llvm.ArchKind.DXil
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DXil
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 48
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 32-bit DirectX bytecode
+  example: []
+  syntax:
+    content: DXil = 11
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Hexagon
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Hexagon
+  id: Hexagon
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Hexagon
+  nameWithType: ArchKind.Hexagon
+  fullName: Ubiquity.NET.Llvm.ArchKind.Hexagon
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Hexagon
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 51
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Hexagon processor
+  example: []
+  syntax:
+    content: Hexagon = 12
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.LoongArch32
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.LoongArch32
+  id: LoongArch32
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: LoongArch32
+  nameWithType: ArchKind.LoongArch32
+  fullName: Ubiquity.NET.Llvm.ArchKind.LoongArch32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LoongArch32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 54
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: LoongArch (32-bit)
+  example: []
+  syntax:
+    content: LoongArch32 = 13
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.LoongArch64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.LoongArch64
+  id: LoongArch64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: LoongArch64
+  nameWithType: ArchKind.LoongArch64
+  fullName: Ubiquity.NET.Llvm.ArchKind.LoongArch64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LoongArch64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 57
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: LoongArch (64-bit)
+  example: []
+  syntax:
+    content: LoongArch64 = 14
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.M68k
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.M68k
+  id: M68k
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: M68k
+  nameWithType: ArchKind.M68k
+  fullName: Ubiquity.NET.Llvm.ArchKind.M68k
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: M68k
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 60
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Motorola 680x0 family
+  example: []
+  syntax:
+    content: M68k = 15
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.MIPS
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.MIPS
+  id: MIPS
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: MIPS
+  nameWithType: ArchKind.MIPS
+  fullName: Ubiquity.NET.Llvm.ArchKind.MIPS
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MIPS
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 63
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'MIPS: mips, mipsallegrex'
+  example: []
+  syntax:
+    content: MIPS = 16
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.MIPSel
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.MIPSel
+  id: MIPSel
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: MIPSel
+  nameWithType: ArchKind.MIPSel
+  fullName: Ubiquity.NET.Llvm.ArchKind.MIPSel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MIPSel
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 66
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'MIPSEL: mipsel, mipsallegrexel'
+  example: []
+  syntax:
+    content: MIPSel = 17
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.MIPS64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.MIPS64
+  id: MIPS64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: MIPS64
+  nameWithType: ArchKind.MIPS64
+  fullName: Ubiquity.NET.Llvm.ArchKind.MIPS64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MIPS64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 69
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: MIPS 64 bit
+  example: []
+  syntax:
+    content: MIPS64 = 18
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.MIPS64el
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.MIPS64el
+  id: MIPS64el
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: MIPS64el
+  nameWithType: ArchKind.MIPS64el
+  fullName: Ubiquity.NET.Llvm.ArchKind.MIPS64el
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MIPS64el
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 72
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: MIPS 64-bit little endian
+  example: []
+  syntax:
+    content: MIPS64el = 19
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.MSP430
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.MSP430
+  id: MSP430
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: MSP430
+  nameWithType: ArchKind.MSP430
+  fullName: Ubiquity.NET.Llvm.ArchKind.MSP430
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MSP430
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 75
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: MSP430
+  example: []
+  syntax:
+    content: MSP430 = 20
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.PPC
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.PPC
+  id: PPC
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: PPC
+  nameWithType: ArchKind.PPC
+  fullName: Ubiquity.NET.Llvm.ArchKind.PPC
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PPC
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 78
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: PowerPC
+  example: []
+  syntax:
+    content: PPC = 21
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.PPCle
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.PPCle
+  id: PPCle
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: PPCle
+  nameWithType: ArchKind.PPCle
+  fullName: Ubiquity.NET.Llvm.ArchKind.PPCle
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PPCle
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 81
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: powerpc (little endian)
+  example: []
+  syntax:
+    content: PPCle = 22
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.PPC64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.PPC64
+  id: PPC64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: PPC64
+  nameWithType: ArchKind.PPC64
+  fullName: Ubiquity.NET.Llvm.ArchKind.PPC64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PPC64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 84
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: PowerPC 64-bit
+  example: []
+  syntax:
+    content: PPC64 = 23
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.PPC64le
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.PPC64le
+  id: PPC64le
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: PPC64le
+  nameWithType: ArchKind.PPC64le
+  fullName: Ubiquity.NET.Llvm.ArchKind.PPC64le
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PPC64le
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 87
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: PowerPC 64-bit little endian
+  example: []
+  syntax:
+    content: PPC64le = 24
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.R600
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.R600
+  id: R600
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: R600
+  nameWithType: ArchKind.R600
+  fullName: Ubiquity.NET.Llvm.ArchKind.R600
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: R600
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 90
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: R600 AMD GPUS HD2XXX-HD6XXX
+  example: []
+  syntax:
+    content: R600 = 25
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.AMDGCN
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.AMDGCN
+  id: AMDGCN
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: AMDGCN
+  nameWithType: ArchKind.AMDGCN
+  fullName: Ubiquity.NET.Llvm.ArchKind.AMDGCN
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AMDGCN
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 93
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: AMD GCN GPUs
+  example: []
+  syntax:
+    content: AMDGCN = 26
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.RiscV32
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.RiscV32
+  id: RiscV32
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: RiscV32
+  nameWithType: ArchKind.RiscV32
+  fullName: Ubiquity.NET.Llvm.ArchKind.RiscV32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RiscV32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 96
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: RISC-V (32-bit)
+  example: []
+  syntax:
+    content: RiscV32 = 27
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.RiscV64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.RiscV64
+  id: RiscV64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: RiscV64
+  nameWithType: ArchKind.RiscV64
+  fullName: Ubiquity.NET.Llvm.ArchKind.RiscV64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RiscV64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 99
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: RISC-V (64-bit)
+  example: []
+  syntax:
+    content: RiscV64 = 28
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Sparc
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Sparc
+  id: Sparc
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Sparc
+  nameWithType: ArchKind.Sparc
+  fullName: Ubiquity.NET.Llvm.ArchKind.Sparc
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Sparc
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 102
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Sparc
+  example: []
+  syntax:
+    content: Sparc = 29
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Sparcv9
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Sparcv9
+  id: Sparcv9
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Sparcv9
+  nameWithType: ArchKind.Sparcv9
+  fullName: Ubiquity.NET.Llvm.ArchKind.Sparcv9
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Sparcv9
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 105
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: SPARC V9
+  example: []
+  syntax:
+    content: Sparcv9 = 30
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Sparcel
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Sparcel
+  id: Sparcel
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Sparcel
+  nameWithType: ArchKind.Sparcel
+  fullName: Ubiquity.NET.Llvm.ArchKind.Sparcel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Sparcel
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 108
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: SPARC Little-Endian
+  example: []
+  syntax:
+    content: Sparcel = 31
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.SystemZ
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.SystemZ
+  id: SystemZ
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: SystemZ
+  nameWithType: ArchKind.SystemZ
+  fullName: Ubiquity.NET.Llvm.ArchKind.SystemZ
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SystemZ
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 111
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: SystemZ - s390x
+  example: []
+  syntax:
+    content: SystemZ = 32
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.TCE
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.TCE
+  id: TCE
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: TCE
+  nameWithType: ArchKind.TCE
+  fullName: Ubiquity.NET.Llvm.ArchKind.TCE
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TCE
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 114
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: TCE
+  example: []
+  syntax:
+    content: TCE = 33
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.TCEle
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.TCEle
+  id: TCEle
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: TCEle
+  nameWithType: ArchKind.TCEle
+  fullName: Ubiquity.NET.Llvm.ArchKind.TCEle
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TCEle
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 117
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: TCE Little-Endian
+  example: []
+  syntax:
+    content: TCEle = 34
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Thumb
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Thumb
+  id: Thumb
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Thumb
+  nameWithType: ArchKind.Thumb
+  fullName: Ubiquity.NET.Llvm.ArchKind.Thumb
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Thumb
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 120
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Thumb (little-endian)
+  example: []
+  syntax:
+    content: Thumb = 35
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Thumbeb
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Thumbeb
+  id: Thumbeb
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Thumbeb
+  nameWithType: ArchKind.Thumbeb
+  fullName: Ubiquity.NET.Llvm.ArchKind.Thumbeb
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Thumbeb
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 123
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Thumb (big-endian)
+  example: []
+  syntax:
+    content: Thumbeb = 36
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.X86
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.X86
+  id: X86
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: X86
+  nameWithType: ArchKind.X86
+  fullName: Ubiquity.NET.Llvm.ArchKind.X86
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: X86
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 126
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: x86 i[3-9]86
+  example: []
+  syntax:
+    content: X86 = 37
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Amd64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Amd64
+  id: Amd64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Amd64
+  nameWithType: ArchKind.Amd64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Amd64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Amd64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 129
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: X86 64-bit (amd64)
+  example: []
+  syntax:
+    content: Amd64 = 38
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Xcore
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Xcore
+  id: Xcore
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Xcore
+  nameWithType: ArchKind.Xcore
+  fullName: Ubiquity.NET.Llvm.ArchKind.Xcore
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Xcore
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 132
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: XCore
+  example: []
+  syntax:
+    content: Xcore = 39
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Xtensa
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Xtensa
+  id: Xtensa
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Xtensa
+  nameWithType: ArchKind.Xtensa
+  fullName: Ubiquity.NET.Llvm.ArchKind.Xtensa
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Xtensa
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 135
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: 'Tensilica: Xtensa'
+  example: []
+  syntax:
+    content: Xtensa = 40
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Nvptx
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Nvptx
+  id: Nvptx
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Nvptx
+  nameWithType: ArchKind.Nvptx
+  fullName: Ubiquity.NET.Llvm.ArchKind.Nvptx
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Nvptx
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 138
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: NVidia PTX 32-bit
+  example: []
+  syntax:
+    content: Nvptx = 41
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Nvptx64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Nvptx64
+  id: Nvptx64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Nvptx64
+  nameWithType: ArchKind.Nvptx64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Nvptx64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Nvptx64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 141
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: NVidia PTX 64-bit
+  example: []
+  syntax:
+    content: Nvptx64 = 42
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Amdil
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Amdil
+  id: Amdil
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Amdil
+  nameWithType: ArchKind.Amdil
+  fullName: Ubiquity.NET.Llvm.ArchKind.Amdil
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Amdil
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 144
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: AMD IL
+  example: []
+  syntax:
+    content: Amdil = 43
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Amdil64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Amdil64
+  id: Amdil64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Amdil64
+  nameWithType: ArchKind.Amdil64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Amdil64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Amdil64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 147
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: AMD IL 64-bit pointers
+  example: []
+  syntax:
+    content: Amdil64 = 44
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Hsail
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Hsail
+  id: Hsail
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Hsail
+  nameWithType: ArchKind.Hsail
+  fullName: Ubiquity.NET.Llvm.ArchKind.Hsail
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Hsail
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 150
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: AMD HSAIL
+  example: []
+  syntax:
+    content: Hsail = 45
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Hsail64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Hsail64
+  id: Hsail64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Hsail64
+  nameWithType: ArchKind.Hsail64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Hsail64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Hsail64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 153
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: AMD HSAIL with 64-bit pointers
+  example: []
+  syntax:
+    content: Hsail64 = 46
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Spir
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Spir
+  id: Spir
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Spir
+  nameWithType: ArchKind.Spir
+  fullName: Ubiquity.NET.Llvm.ArchKind.Spir
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Spir
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 156
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Standard Portable IR for OpenCL 32-bit version
+  example: []
+  syntax:
+    content: Spir = 47
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Spir64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Spir64
+  id: Spir64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Spir64
+  nameWithType: ArchKind.Spir64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Spir64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Spir64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 159
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Standard Portable IR for OpenCL 64-bit version
+  example: []
+  syntax:
+    content: Spir64 = 48
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.SpirV
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.SpirV
+  id: SpirV
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: SpirV
+  nameWithType: ArchKind.SpirV
+  fullName: Ubiquity.NET.Llvm.ArchKind.SpirV
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SpirV
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 162
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: SPIR-V with logical memory layout.
+  example: []
+  syntax:
+    content: SpirV = 49
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.SpirV32
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.SpirV32
+  id: SpirV32
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: SpirV32
+  nameWithType: ArchKind.SpirV32
+  fullName: Ubiquity.NET.Llvm.ArchKind.SpirV32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SpirV32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 165
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: SPIR-V with 32-bit pointers
+  example: []
+  syntax:
+    content: SpirV32 = 50
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.SpirV64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.SpirV64
+  id: SpirV64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: SpirV64
+  nameWithType: ArchKind.SpirV64
+  fullName: Ubiquity.NET.Llvm.ArchKind.SpirV64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SpirV64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 168
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: SPIR-V with 64-bit pointers
+  example: []
+  syntax:
+    content: SpirV64 = 51
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Kalimba
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Kalimba
+  id: Kalimba
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Kalimba
+  nameWithType: ArchKind.Kalimba
+  fullName: Ubiquity.NET.Llvm.ArchKind.Kalimba
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Kalimba
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 171
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Generic Kalimba
+  example: []
+  syntax:
+    content: Kalimba = 52
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Shave
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Shave
+  id: Shave
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Shave
+  nameWithType: ArchKind.Shave
+  fullName: Ubiquity.NET.Llvm.ArchKind.Shave
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Shave
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 174
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Movidius vector VLIW processors
+  example: []
+  syntax:
+    content: Shave = 53
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Lanai
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Lanai
+  id: Lanai
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Lanai
+  nameWithType: ArchKind.Lanai
+  fullName: Ubiquity.NET.Llvm.ArchKind.Lanai
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Lanai
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 177
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Lanai 32-bit
+  example: []
+  syntax:
+    content: Lanai = 54
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Wasm32
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Wasm32
+  id: Wasm32
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Wasm32
+  nameWithType: ArchKind.Wasm32
+  fullName: Ubiquity.NET.Llvm.ArchKind.Wasm32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Wasm32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 180
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: WebAssembly with 32-bit pointers
+  example: []
+  syntax:
+    content: Wasm32 = 55
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Wasm64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Wasm64
+  id: Wasm64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Wasm64
+  nameWithType: ArchKind.Wasm64
+  fullName: Ubiquity.NET.Llvm.ArchKind.Wasm64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Wasm64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 183
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: WebAssembly with 64-bit pointers
+  example: []
+  syntax:
+    content: Wasm64 = 56
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.RenderScript32
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.RenderScript32
+  id: RenderScript32
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: RenderScript32
+  nameWithType: ArchKind.RenderScript32
+  fullName: Ubiquity.NET.Llvm.ArchKind.RenderScript32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RenderScript32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 186
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Renderscript 32-bit
+  example: []
+  syntax:
+    content: RenderScript32 = 57
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.RenderScript64
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.RenderScript64
+  id: RenderScript64
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: RenderScript64
+  nameWithType: ArchKind.RenderScript64
+  fullName: Ubiquity.NET.Llvm.ArchKind.RenderScript64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RenderScript64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 189
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Renderscript 64-bit
+  example: []
+  syntax:
+    content: RenderScript64 = 58
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.ArchKind.Ve
+  commentId: F:Ubiquity.NET.Llvm.ArchKind.Ve
+  id: Ve
+  parent: Ubiquity.NET.Llvm.ArchKind
+  langs:
+  - csharp
+  - vb
+  name: Ve
+  nameWithType: ArchKind.Ve
+  fullName: Ubiquity.NET.Llvm.ArchKind.Ve
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Ve
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 192
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: NEC SX Aurora Vector Engine
+  example: []
+  syntax:
+    content: Ve = 59
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+references:
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.ArchKind
+  commentId: T:Ubiquity.NET.Llvm.ArchKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ArchKind.html
+  name: ArchKind
+  nameWithType: ArchKind
+  fullName: Ubiquity.NET.Llvm.ArchKind

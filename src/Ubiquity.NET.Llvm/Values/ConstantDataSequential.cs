@@ -4,13 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Text;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -28,10 +22,10 @@ namespace Ubiquity.NET.Llvm.Values
         : ConstantData
     {
         /// <summary>Gets a value indicating whether this constant is a string</summary>
-        public bool IsString => LibLLVMIsConstantCString( ValueHandle );
+        public bool IsString => LibLLVMIsConstantCString( Handle );
 
         /// <summary>Gets a value indicating whether this constant is a sequence of 8bit integral values</summary>
-        public bool IsI8Sequence => LLVMIsConstantString( ValueHandle );
+        public bool IsI8Sequence => LLVMIsConstantString( Handle );
 
         /// <summary>Extract a string value from the constant (Assumes encoding ASCII)</summary>
         /// <returns>Extracted string</returns>
@@ -46,14 +40,14 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>string</returns>
         public string ExtractAsString(Encoding encoding)
         {
-            encoding.ValidateNotNull( nameof( encoding ) );
+            ArgumentNullException.ThrowIfNull( encoding );
 
             // ignore terminating \0 for C strings
             var rawData = IsString ? RawData[0..^1] : RawData;
             return IsI8Sequence ? encoding.GetString( rawData ) : throw new InvalidOperationException( "Value is not a string" );
         }
 
-        /// <summary>Gets the raw Data for the data sequential as a <see cref="Span{T}"/> of <see cref="byte"/></summary>
+        /// <summary>Gets the raw Data for the data sequential as a <see cref="ReadOnlySpan{T}"/> of <see cref="byte"/></summary>
         /// <remarks>
         /// This retrieves the underlying data, which may be empty, independent of the actual element type. Thus,
         /// issues of endian mismatch can occur between host assumptions and target. Thus, caution is warranted
@@ -65,14 +59,13 @@ namespace Ubiquity.NET.Llvm.Values
             {
                 unsafe
                 {
-                    sbyte* ptr = LibLLVMGetConstantDataSequentialRawData( ValueHandle, out size_t len );
-                    return new ReadOnlySpan<byte>( ptr, len );
+                    return new( LibLLVMGetConstantDataSequentialRawData( Handle, out size_t len ), len );
                 }
             }
         }
 
         /// <summary>Gets the count of elements in this <see cref="ConstantDataSequential"/></summary>
-        public uint Count => LibLLVMGetConstantDataSequentialElementCount( ValueHandle );
+        public uint Count => LibLLVMGetConstantDataSequentialElementCount( Handle );
 
         internal ConstantDataSequential( LLVMValueRef valueRef )
             : base( valueRef )

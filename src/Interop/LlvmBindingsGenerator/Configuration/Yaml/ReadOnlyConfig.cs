@@ -5,6 +5,8 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 using LlvmBindingsGenerator.Templates;
 
@@ -18,17 +20,12 @@ namespace LlvmBindingsGenerator.Configuration.Yaml
             YamlConfig = config;
         }
 
-        public IReadOnlyDictionary<string, YamlFunctionBinding> FunctionBindings
-            => YamlConfig.FunctionBindings;
-
-        public IReadOnlyCollection<IncludeRef> IgnoredHeaders
-            => YamlConfig.IgnoredHeaders;
+        public ImmutableArray<IncludeRef> IgnoredHeaders
+            => [ .. YamlConfig.IgnoredHeaders ];
 
         public IEnumerable<IHandleInfo> HandleMap => YamlConfig.HandleMap;
 
-        public IReadOnlyDictionary<string, string> AnonymousEnums => YamlConfig.AnonymousEnums;
-
-        public HandleTemplateMap BuildTemplateMap( ) => YamlConfig.BuildTemplateMap( );
+        public ILookup<string, IHandleCodeTemplate> BuildTemplateMap( ) => YamlConfig.BuildTemplateMap( );
 
         private readonly YamlConfiguration YamlConfig;
     }

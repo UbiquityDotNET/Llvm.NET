@@ -4,14 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Support class to provide read only list semantics to the parameters of a method</summary>
@@ -27,7 +19,7 @@ namespace Ubiquity.NET.Llvm.Values
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
-                LLVMValueRef valueRef = LLVMGetParam( OwningFunction.ValueHandle, ( uint )index );
+                LLVMValueRef valueRef = LLVMGetParam( OwningFunction.Handle, ( uint )index );
                 return Value.FromHandle<Argument>( valueRef.ThrowIfInvalid( ) )!;
             }
         }
@@ -36,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                uint count = LLVMCountParams( OwningFunction.ValueHandle );
+                uint count = LLVMCountParams( OwningFunction.Handle );
                 return ( int )Math.Min( count, int.MaxValue );
             }
         }
@@ -45,18 +37,18 @@ namespace Ubiquity.NET.Llvm.Values
         {
             for( uint i = 0; i < Count; ++i )
             {
-                LLVMValueRef val = LLVMGetParam( OwningFunction.ValueHandle, i );
+                LLVMValueRef val = LLVMGetParam( OwningFunction.Handle, i );
                 yield return Value.FromHandle<Argument>( val.ThrowIfInvalid( ) )!;
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        internal FunctionParameterList( IrFunction owningFunction )
+        internal FunctionParameterList( Function owningFunction )
         {
             OwningFunction = owningFunction;
         }
 
-        private readonly IrFunction OwningFunction;
+        private readonly Function OwningFunction;
     }
 }

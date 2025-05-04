@@ -1,0 +1,1036 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  id: LlJIT
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  children:
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose(System.Boolean)
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
+  - Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
+  langs:
+  - csharp
+  - vb
+  name: LlJIT
+  nameWithType: LlJIT
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LlJIT
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: ORC v2 LLJIT instance
+  example: []
+  syntax:
+    content: 'public class LlJIT : DisposableObject, IDisposable'
+    content.vb: Public Class LlJIT Inherits DisposableObject Implements IDisposable
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.DisposableObject
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.DisposableObject.Dispose
+  - Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
+  id: '#ctor'
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: LlJIT()
+  nameWithType: LlJIT.LlJIT()
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.LlJIT()
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 19
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.OrcJITv2.LlJIT" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public LlJIT()
+    content.vb: Public Sub New()
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor*
+  nameWithType.vb: LlJIT.New()
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.New()
+  name.vb: New()
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
+  id: MainLib
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: MainLib
+  nameWithType: LlJIT.MainLib
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MainLib
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 26
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Gets the main library for this JIT instance
+  example: []
+  syntax:
+    content: public JITDyLib MainLib { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+    content.vb: Public ReadOnly Property MainLib As JITDyLib
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
+  id: DataLayoutString
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: DataLayoutString
+  nameWithType: LlJIT.DataLayoutString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DataLayoutString
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 29
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Gets the data layout string for this JIT
+  example: []
+  syntax:
+    content: public LazyEncodedString DataLayoutString { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+    content.vb: Public ReadOnly Property DataLayoutString As LazyEncodedString
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
+  id: TripleString
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: TripleString
+  nameWithType: LlJIT.TripleString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TripleString
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 47
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Gets a string representation of the target triple for this JIT
+  example: []
+  syntax:
+    content: public LazyEncodedString TripleString { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+    content.vb: Public ReadOnly Property TripleString As LazyEncodedString
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  id: Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: Lookup(LazyEncodedString)
+  nameWithType: LlJIT.Lookup(LazyEncodedString)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Lookup
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 62
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Looks up the native address of a symbol
+  example: []
+  syntax:
+    content: public ulong Lookup(LazyEncodedString name)
+    parameters:
+    - id: name
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+      description: NameField of the symbol to find the address of
+    return:
+      type: System.UInt64
+      description: Address of the symbol
+    content.vb: Public Function Lookup(name As LazyEncodedString) As ULong
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup*
+  exceptions:
+  - type: Ubiquity.NET.Llvm.Interop.LlvmException
+    commentId: T:Ubiquity.NET.Llvm.Interop.LlvmException
+    description: Error occurred with lookup [Most likely the symbol is not found]
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  id: AddModule(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: AddModule(JITDyLib, ThreadSafeModule)
+  nameWithType: LlJIT.AddModule(JITDyLib, ThreadSafeModule)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib, Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddModule
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 89
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Adds a module to the JIT
+  remarks: >-
+    This function has "move" semantics in that the JIT takes ownership of the
+
+    input module and it is no longer useable (Generates <xref href="System.ObjectDisposedException" data-throw-if-not-resolved="false"></xref>)
+
+    for any use other than Dispose(). This allows normal clean up in the event of an exception
+
+    to occur.
+
+    <div class="IMPORTANT"><h5>important</h5><p>
+
+    Transfer of ownership does NOT occur in the face of an error (exception)! However the
+
+    <xref href="Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose" data-throw-if-not-resolved="false"></xref> method is idempotent and will NOT throw an exception
+
+    if disposed so it is safe to declare instances with a "using".
+
+    </p></div>
+  example: []
+  syntax:
+    content: public void AddModule(JITDyLib lib, ThreadSafeModule module)
+    parameters:
+    - id: lib
+      type: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+      description: Library to add the module to in this JIT
+    - id: module
+      type: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+      description: Module to add
+    content.vb: Public Sub AddModule([lib] As JITDyLib, [module] As ThreadSafeModule)
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  id: AddModule(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: AddModule(ResourceTracker, ThreadSafeModule)
+  nameWithType: LlJIT.AddModule(ResourceTracker, ThreadSafeModule)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker, Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddModule
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 112
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Adds a module to the JIT
+  remarks: >-
+    This function has "move" semantics in that the JIT takes ownership of the
+
+    input module and it is no longer useable (Generates <xref href="System.ObjectDisposedException" data-throw-if-not-resolved="false"></xref>)
+
+    for any use other than Dispose(). This allows normal clean up in the event of an exception
+
+    to occur.
+
+    <div class="IMPORTANT"><h5>important</h5><p>
+
+    Transfer of ownership does NOT occur in the face of an error (exception)! However the
+
+    <xref href="Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose" data-throw-if-not-resolved="false"></xref> method is idempotent and will NOT throw an exception
+
+    if disposed so it is safe to declare instances with a "using".
+
+    </p></div>
+  example: []
+  syntax:
+    content: public void AddModule(ResourceTracker tracker, ThreadSafeModule module)
+    parameters:
+    - id: tracker
+      type: Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker
+      description: Resource tracker to manage the module
+    - id: module
+      type: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+      description: Module to add
+    content.vb: Public Sub AddModule(tracker As ResourceTracker, [module] As ThreadSafeModule)
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  id: MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: MangleAndIntern(LazyEncodedString)
+  nameWithType: LlJIT.MangleAndIntern(LazyEncodedString)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MangleAndIntern
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 125
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Mangles and interns a symbol in the JIT's symbol pool
+  example: []
+  syntax:
+    content: public SymbolStringPoolEntry MangleAndIntern(LazyEncodedString name)
+    parameters:
+    - id: name
+      type: Ubiquity.NET.InteropHelpers.LazyEncodedString
+      description: Symbol name to add
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+      description: Entry to the string pool for the symbol
+    content.vb: Public Function MangleAndIntern(name As LazyEncodedString) As SymbolStringPoolEntry
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
+  id: TransformLayer
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: TransformLayer
+  nameWithType: LlJIT.TransformLayer
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TransformLayer
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 137
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Gets the IR transform layer for this JIT
+  example: []
+  syntax:
+    content: public IrTransformLayer TransformLayer { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.IrTransformLayer
+    content.vb: Public ReadOnly Property TransformLayer As IrTransformLayer
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
+  id: Session
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: Session
+  nameWithType: LlJIT.Session
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Session
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 140
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Gets the Execution session for this JIT
+  example: []
+  syntax:
+    content: public ExecutionSession Session { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.OrcJITv2.ExecutionSession
+    content.vb: Public ReadOnly Property Session As ExecutionSession
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session*
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose(System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  langs:
+  - csharp
+  - vb
+  name: Dispose(bool)
+  nameWithType: LlJIT.Dispose(bool)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Dispose
+    path: ../src/Ubiquity.NET.Llvm/OrcJITv2/LlJIT.cs
+    startLine: 143
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.OrcJITv2
+  summary: Abstract method that is implemented by derived types to perform the dispose operation
+  remarks: >-
+    This is guaranteed to only be called if <xref href="Ubiquity.NET.Llvm.DisposableObject.IsDisposed" data-throw-if-not-resolved="false"></xref> returns <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>
+
+    so the implementation should only be concerned with the actual release of resources. If <code class="paramref">disposing</code>
+
+    is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> then the implementation should release managed and unmanaged resources, otherwise it should
+
+    only release the unmanaged resources
+  example: []
+  syntax:
+    content: protected override void Dispose(bool disposing)
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: Indicates if this is a dispose or finalize operation
+    content.vb: Protected Overrides Sub Dispose(disposing As Boolean)
+  overridden: Ubiquity.NET.Llvm.DisposableObject.Dispose(System.Boolean)
+  overload: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose*
+  nameWithType.vb: LlJIT.Dispose(Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose(Boolean)
+  name.vb: Dispose(Boolean)
+references:
+- uid: Ubiquity.NET.Llvm.OrcJITv2
+  commentId: N:Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.OrcJITv2
+  nameWithType: Ubiquity.NET.Llvm.OrcJITv2
+  fullName: Ubiquity.NET.Llvm.OrcJITv2
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.OrcJITv2
+    name: OrcJITv2
+    href: Ubiquity.NET.Llvm.OrcJITv2.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.DisposableObject
+  commentId: T:Ubiquity.NET.Llvm.DisposableObject
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.DisposableObject.html
+  name: DisposableObject
+  nameWithType: DisposableObject
+  fullName: Ubiquity.NET.Llvm.DisposableObject
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: Ubiquity.NET.Llvm.DisposableObject.Dispose
+  commentId: M:Ubiquity.NET.Llvm.DisposableObject.Dispose
+  parent: Ubiquity.NET.Llvm.DisposableObject
+  href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose
+  name: Dispose()
+  nameWithType: DisposableObject.Dispose()
+  fullName: Ubiquity.NET.Llvm.DisposableObject.Dispose()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DisposableObject.Dispose
+    name: Dispose
+    href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DisposableObject.Dispose
+    name: Dispose
+    href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+  commentId: P:Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+  parent: Ubiquity.NET.Llvm.DisposableObject
+  href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_IsDisposed
+  name: IsDisposed
+  nameWithType: DisposableObject.IsDisposed
+  fullName: Ubiquity.NET.Llvm.DisposableObject.IsDisposed
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html
+  name: LlJIT
+  nameWithType: LlJIT
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT__ctor
+  name: LlJIT
+  nameWithType: LlJIT.LlJIT
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.LlJIT
+  nameWithType.vb: LlJIT.New
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.New
+  name.vb: New
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_MainLib
+  name: MainLib
+  nameWithType: LlJIT.MainLib
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
+- uid: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib.html
+  name: JITDyLib
+  nameWithType: JITDyLib
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_DataLayoutString
+  name: DataLayoutString
+  nameWithType: LlJIT.DataLayoutString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
+- uid: Ubiquity.NET.InteropHelpers.LazyEncodedString
+  commentId: T:Ubiquity.NET.InteropHelpers.LazyEncodedString
+  parent: Ubiquity.NET.InteropHelpers
+  name: LazyEncodedString
+  nameWithType: LazyEncodedString
+  fullName: Ubiquity.NET.InteropHelpers.LazyEncodedString
+- uid: Ubiquity.NET.InteropHelpers
+  commentId: N:Ubiquity.NET.InteropHelpers
+  name: Ubiquity.NET.InteropHelpers
+  nameWithType: Ubiquity.NET.InteropHelpers
+  fullName: Ubiquity.NET.InteropHelpers
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+  - name: .
+  - uid: Ubiquity.NET.InteropHelpers
+    name: InteropHelpers
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_TripleString
+  name: TripleString
+  nameWithType: LlJIT.TripleString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
+- uid: Ubiquity.NET.Llvm.Interop.LlvmException
+  commentId: T:Ubiquity.NET.Llvm.Interop.LlvmException
+  name: LlvmException
+  nameWithType: LlvmException
+  fullName: Ubiquity.NET.Llvm.Interop.LlvmException
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Lookup_Ubiquity_NET_InteropHelpers_LazyEncodedString_
+  name: Lookup
+  nameWithType: LlJIT.Lookup
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: System.ObjectDisposedException
+  commentId: T:System.ObjectDisposedException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.objectdisposedexception
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_Dispose
+  name: Dispose()
+  nameWithType: ThreadSafeModule.Dispose()
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+    name: Dispose
+    href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.Dispose
+    name: Dispose
+    href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html#Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_Dispose
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_AddModule_Ubiquity_NET_Llvm_OrcJITv2_JITDyLib_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_
+  name: AddModule
+  nameWithType: LlJIT.AddModule
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddModule
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html
+  name: ThreadSafeModule
+  nameWithType: ThreadSafeModule
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker.html
+  name: ResourceTracker
+  nameWithType: ResourceTracker
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_MangleAndIntern_Ubiquity_NET_InteropHelpers_LazyEncodedString_
+  name: MangleAndIntern
+  nameWithType: LlJIT.MangleAndIntern
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html
+  name: SymbolStringPoolEntry
+  nameWithType: SymbolStringPoolEntry
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_TransformLayer
+  name: TransformLayer
+  nameWithType: LlJIT.TransformLayer
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
+- uid: Ubiquity.NET.Llvm.OrcJITv2.IrTransformLayer
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.IrTransformLayer
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.IrTransformLayer.html
+  name: IrTransformLayer
+  nameWithType: IrTransformLayer
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.IrTransformLayer
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Session
+  name: Session
+  nameWithType: LlJIT.Session
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
+- uid: Ubiquity.NET.Llvm.OrcJITv2.ExecutionSession
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.ExecutionSession
+  parent: Ubiquity.NET.Llvm.OrcJITv2
+  href: Ubiquity.NET.Llvm.OrcJITv2.ExecutionSession.html
+  name: ExecutionSession
+  nameWithType: ExecutionSession
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.ExecutionSession
+- uid: Ubiquity.NET.Llvm.DisposableObject.Dispose(System.Boolean)
+  commentId: M:Ubiquity.NET.Llvm.DisposableObject.Dispose(System.Boolean)
+  parent: Ubiquity.NET.Llvm.DisposableObject
+  isExternal: true
+  href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose_System_Boolean_
+  name: Dispose(bool)
+  nameWithType: DisposableObject.Dispose(bool)
+  fullName: Ubiquity.NET.Llvm.DisposableObject.Dispose(bool)
+  nameWithType.vb: DisposableObject.Dispose(Boolean)
+  fullName.vb: Ubiquity.NET.Llvm.DisposableObject.Dispose(Boolean)
+  name.vb: Dispose(Boolean)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DisposableObject.Dispose(System.Boolean)
+    name: Dispose
+    href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DisposableObject.Dispose(System.Boolean)
+    name: Dispose
+    href: Ubiquity.NET.Llvm.DisposableObject.html#Ubiquity_NET_Llvm_DisposableObject_Dispose_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose*
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose
+  href: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Dispose_System_Boolean_
+  name: Dispose
+  nameWithType: LlJIT.Dispose
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

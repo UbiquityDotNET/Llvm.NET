@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Integer truncate instruction</summary>
-    public class Trunc
+    public sealed class Trunc
         : Cast
     {
         internal Trunc( LLVMValueRef valueRef )

@@ -4,15 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Properties;
-using Ubiquity.NET.Llvm.Types;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a structure type</summary>
@@ -22,7 +13,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         , IStructType
     {
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
-        /// <param name="module">Module to contain the debug meta data</param>
+        /// <param name="diBuilder">To construct the debug information for this instance</param>
         /// <param name="nativeName">Name of the type in LLVM IR (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="scope">Debug scope for the structure</param>
         /// <param name="sourceName">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
@@ -34,7 +25,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="packed">Indicates if this type is packed or not</param>
         /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
-        public DebugStructType( BitcodeModule module
+        public DebugStructType( ref readonly DIBuilder diBuilder
                               , string nativeName
                               , DIScope? scope
                               , string sourceName
@@ -47,39 +38,43 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , uint? bitSize = null
                               , uint bitAlignment = 0
                               )
-            : base( module.ValidateNotNull( nameof( module ) )
-                          .Context.CreateStructType( nativeName, packed, members.Select( e => e.DebugType ).ToArray( ) )
-                  , module.DIBuilder.CreateReplaceableCompositeType( Tag.StructureType
-                                                                   , sourceName
-                                                                   , scope
-                                                                   , file
-                                                                   , line
-                                                                   )
+            : base( diBuilder.OwningModule.ThrowIfNull().Context.CreateStructType( nativeName, packed, [ .. members.Select( e => e.DebugType ) ] )
+                  , diBuilder.CreateReplaceableCompositeType( Tag.StructureType
+                                                            , sourceName
+                                                            , scope
+                                                            , file
+                                                            , line
+                                                            )
             )
         {
-            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( members as IList<DebugMemberInfo> ?? members.ToList( ) );
+            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( members as IList<DebugMemberInfo> ?? [ .. members ] );
 
-            var memberTypes = from memberInfo in DebugMembers
-                              select CreateMemberType( module, memberInfo );
+            // roll out the construction of elements as a builder is a ref struct and therefore
+            // not allowed in a LINQ expression
+            var memberTypes = new DINode[DebugMembers.Count];
+            for(int i = 0; i < DebugMembers.Count; ++i)
+            {
+                memberTypes[i] = CreateMemberType( in diBuilder, DebugMembers[i] );
+            }
 
-            var concreteType = module.DIBuilder.CreateStructType( scope: scope
-                                                                , name: sourceName
-                                                                , file: file
-                                                                , line: line
-                                                                , bitSize: bitSize ?? module.Layout.BitSizeOf( NativeType )
-                                                                , bitAlign: bitAlignment
-                                                                , debugFlags: debugFlags
-                                                                , derivedFrom: derivedFrom
-                                                                , elements: memberTypes
-                                                                );
+            var concreteType = diBuilder.CreateStructType( scope: scope
+                                                         , name: sourceName
+                                                         , file: file
+                                                         , line: line
+                                                         , bitSize: bitSize ?? diBuilder.OwningModule.Layout.BitSizeOf( NativeType )
+                                                         , bitAlign: bitAlignment
+                                                         , debugFlags: debugFlags
+                                                         , derivedFrom: derivedFrom
+                                                         , elements: memberTypes
+                                                         );
 
             // assignment performs RAUW
-            DIType = concreteType;
+            DebugInfoType = concreteType;
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
         /// <param name="llvmType">LLVM native type to build debug information for</param>
-        /// <param name="module">Module to contain the debug meta data</param>
+        /// <param name="diBuilder">To construct the debug information for this instance</param>
         /// <param name="scope">Debug scope for the structure</param>
         /// <param name="name">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the definition of this type</param>
@@ -89,7 +84,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="derivedFrom">Base type, if any for this type</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public DebugStructType( IStructType llvmType
-                              , BitcodeModule module
+                              , ref readonly DIBuilder diBuilder
                               , DIScope? scope
                               , string name
                               , DIFile? file
@@ -100,24 +95,23 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , uint bitAlignment = 0
                               )
             : base( llvmType
-                  , module.ValidateNotNull( nameof( module ) )
-                          .DIBuilder.CreateStructType( scope
-                                                     , name
-                                                     , file
-                                                     , line
-                                                     , module.Layout.BitSizeOf( llvmType )
-                                                     , bitAlignment
-                                                     , debugFlags
-                                                     , derivedFrom
-                                                     , elements
-                                                     )
+                  , diBuilder.CreateStructType( scope
+                                              , name
+                                              , file
+                                              , line
+                                              , diBuilder.OwningModule.Layout.BitSizeOf( llvmType )
+                                              , bitAlignment
+                                              , debugFlags
+                                              , derivedFrom
+                                              , elements
+                                              )
                   )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
         /// <param name="llvmType">LLVM native type to build debug information for</param>
-        /// <param name="module">Module to contain the debug meta data</param>
+        /// <param name="diBuilder">To construct the debug information for this instance</param>
         /// <param name="scope">Debug scope for the structure</param>
         /// <param name="name">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
         /// <param name="file">File containing the definition of this type</param>
@@ -127,27 +121,25 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// definition of the type
         /// </remarks>
         public DebugStructType( IStructType llvmType
-                              , BitcodeModule module
+                              , ref readonly DIBuilder diBuilder
                               , DIScope? scope
                               , string name
                               , DIFile? file
                               , uint line
                               )
             : base( llvmType
-                  , module.ValidateNotNull( nameof( module ) )
-                          .DIBuilder
-                          .CreateReplaceableCompositeType( Tag.StructureType
-                                                         , name
-                                                         , scope
-                                                         , file
-                                                         , line
-                                                         )
+                  , diBuilder.CreateReplaceableCompositeType( Tag.StructureType
+                                                            , name
+                                                            , scope
+                                                            , file
+                                                            , line
+                                                            )
                   )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugStructType"/> class.</summary>
-        /// <param name="module">Module to contain the debug meta data</param>
+        /// <param name="diBuilder">To construct the debug information for this instance</param>
         /// <param name="nativeName">Name of the type in LLVM IR</param>
         /// <param name="scope">Debug scope for the structure</param>
         /// <param name="name">Source/debug name of the struct (use <see cref="string.Empty"/> for anonymous types)</param>
@@ -157,15 +149,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// This constructor creates a replaceable type that is replaced later with a full
         /// definition of the type
         /// </remarks>
-        public DebugStructType( BitcodeModule module
+        public DebugStructType( ref readonly DIBuilder diBuilder
                               , string nativeName
                               , DIScope? scope
                               , string name
                               , DIFile? file = null
                               , uint line = 0
                               )
-            : this( module.ValidateNotNull( nameof( module ) ).Context.CreateStructType( nativeName )
-                  , module
+            : this( diBuilder.OwningModule.Context.CreateStructType( nativeName )
+                  , in diBuilder
                   , scope
                   , name
                   , file
@@ -187,45 +179,39 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public string Name => NativeType.Name ?? string.Empty;
 
         /// <summary>Gets the Source/Debug name</summary>
-        public string SourceName => DIType?.Name ?? string.Empty;
+        public string SourceName => DebugInfoType?.Name ?? string.Empty;
 
         /// <inheritdoc/>
-        public void SetBody( bool packed, params ITypeRef[ ] elements )
-        {
-            NativeType.SetBody( packed, elements );
-        }
-
-        /// <inheritdoc/>
-        public void SetBody( bool packed, IEnumerable<ITypeRef> elements)
+        public void SetBody( bool packed, params IEnumerable<ITypeRef> elements)
         {
             NativeType.SetBody( packed, elements );
         }
 
         /// <summary>Set the body of a type</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
-        /// <param name="module">Module to contain the debug metadata for the type</param>
+        /// <param name="diBuilder">To construct the debug information for this instance</param>
         /// <param name="scope">Scope containing this type</param>
         /// <param name="file">File containing the type</param>
         /// <param name="line">Line in <paramref name="file"/> for this type</param>
         /// <param name="debugFlags">Debug flags for this type</param>
         /// <param name="debugElements">Descriptors for all the elements in the type</param>
         public void SetBody( bool packed
-                           , BitcodeModule module
+                           , ref readonly DIBuilder diBuilder
                            , DIScope? scope
                            , DIFile? file
                            , uint line
                            , DebugInfoFlags debugFlags
-                           , IEnumerable<DebugMemberInfo> debugElements
+                           , params IEnumerable<DebugMemberInfo> debugElements
                            )
         {
-            var debugMembersArray = debugElements as IList<DebugMemberInfo> ?? debugElements.ToList();
+            var debugMembersArray = debugElements as IList<DebugMemberInfo> ?? [ .. debugElements ];
             var nativeElements = debugMembersArray.Select( e => e.DebugType.NativeType );
-            SetBody( packed, module, scope, file, line, debugFlags, nativeElements, debugMembersArray );
+            SetBody( packed, in diBuilder, scope, file, line, debugFlags, nativeElements, debugMembersArray );
         }
 
         /// <summary>Set the body of a type</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
-        /// <param name="module">Module to contain the debug metadata for the type</param>
+        /// <param name="diBuilder">Debug information builder to use for generating debug information</param>
         /// <param name="scope">Scope containing this type</param>
         /// <param name="file">File containing the type</param>
         /// <param name="line">Line in <paramref name="file"/> for this type</param>
@@ -236,7 +222,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public void SetBody( bool packed
-                           , BitcodeModule module
+                           , ref readonly DIBuilder diBuilder
                            , DIScope? scope
                            , DIFile? file
                            , uint line
@@ -248,31 +234,37 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                            , uint bitAlignment = 0
                            )
         {
-            module.ValidateNotNull( nameof( module ) );
-            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? debugElements.ToList( ) );
-            SetBody( packed, nativeElements.ToArray( ) );
-            var memberTypes = from memberInfo in DebugMembers
-                              select CreateMemberType( module, memberInfo );
+            ArgumentNullException.ThrowIfNull( nativeElements );
+            ArgumentNullException.ThrowIfNull( debugElements );
 
-            var concreteType = module.DIBuilder.CreateStructType( scope: scope
-                                                                , name: DIType?.Name ?? string.Empty
-                                                                , file: file
-                                                                , line: line
-                                                                , bitSize: bitSize ?? module.Layout.BitSizeOf( NativeType )
-                                                                , bitAlign: bitAlignment
-                                                                , debugFlags: debugFlags
-                                                                , derivedFrom: derivedFrom
-                                                                , elements: memberTypes
-                                                                );
-            DIType = concreteType;
+            DebugMembers = new ReadOnlyCollection<DebugMemberInfo>( debugElements as IList<DebugMemberInfo> ?? [ .. debugElements ] );
+            SetBody( packed, [ .. nativeElements ] );
+
+            var memberTypes = new DINode[DebugMembers.Count];
+            for(int i = 0; i < DebugMembers.Count; ++i)
+            {
+                memberTypes[i] = CreateMemberType( in diBuilder, DebugMembers[i]);
+            }
+
+            var concreteType = diBuilder.CreateStructType( scope: scope
+                                                         , name: DebugInfoType?.Name ?? string.Empty
+                                                         , file: file
+                                                         , line: line
+                                                         , bitSize: bitSize ?? diBuilder.OwningModule.Layout.BitSizeOf( NativeType )
+                                                         , bitAlign: bitAlignment
+                                                         , debugFlags: debugFlags
+                                                         , derivedFrom: derivedFrom
+                                                         , elements: memberTypes
+                                                         );
+            DebugInfoType = concreteType;
         }
 
         /// <summary>Gets a list of descriptors for each members</summary>
         public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>( ).AsReadOnly( );
 
-        private DIDerivedType CreateMemberType( BitcodeModule module, DebugMemberInfo memberInfo )
+        private DIDerivedType CreateMemberType( ref readonly DIBuilder diBuilder, DebugMemberInfo memberInfo )
         {
-            if( DIType == null )
+            if( DebugInfoType == null )
             {
                 throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member );
             }
@@ -291,21 +283,21 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
             else
             {
-                bitSize = module.Layout.BitSizeOf( memberInfo.DebugType.NativeType );
+                bitSize = diBuilder.OwningModule.Layout.BitSizeOf( memberInfo.DebugType.NativeType );
                 bitAlign = 0;
-                bitOffset = module.Layout.BitOffsetOfElement( NativeType, memberInfo.Index );
+                bitOffset = diBuilder.OwningModule.Layout.BitOffsetOfElement( NativeType, memberInfo.Index );
             }
 
-            return module.DIBuilder.CreateMemberType( scope: DIType
-                                                    , name: memberInfo.Name
-                                                    , file: memberInfo.File
-                                                    , line: memberInfo.Line
-                                                    , bitSize: bitSize
-                                                    , bitAlign: bitAlign
-                                                    , bitOffset: bitOffset
-                                                    , debugFlags: memberInfo.DebugInfoFlags
-                                                    , type: memberInfo.DebugType.DIType
-                                                    );
+            return diBuilder.CreateMemberType( scope: DebugInfoType
+                                             , name: memberInfo.Name
+                                             , file: memberInfo.File
+                                             , line: memberInfo.Line
+                                             , bitSize: bitSize
+                                             , bitAlign: bitAlign
+                                             , bitOffset: bitOffset
+                                             , debugFlags: memberInfo.DebugInfoFlags
+                                             , type: memberInfo.DebugType.DebugInfoType
+                                             );
         }
     }
 }

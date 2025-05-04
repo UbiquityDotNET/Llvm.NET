@@ -1,0 +1,134 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.AsmDialect
+  commentId: T:Ubiquity.NET.Llvm.Values.AsmDialect
+  id: AsmDialect
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.AsmDialect.ATT
+  - Ubiquity.NET.Llvm.Values.AsmDialect.Intel
+  langs:
+  - csharp
+  - vb
+  name: AsmDialect
+  nameWithType: AsmDialect
+  fullName: Ubiquity.NET.Llvm.Values.AsmDialect
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/InlineAsm.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AsmDialect
+    path: ../src/Ubiquity.NET.Llvm/Values/InlineAsm.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Assembly language output dialect
+  example: []
+  syntax:
+    content: public enum AsmDialect
+    content.vb: Public Enum AsmDialect
+- uid: Ubiquity.NET.Llvm.Values.AsmDialect.ATT
+  commentId: F:Ubiquity.NET.Llvm.Values.AsmDialect.ATT
+  id: ATT
+  parent: Ubiquity.NET.Llvm.Values.AsmDialect
+  langs:
+  - csharp
+  - vb
+  name: ATT
+  nameWithType: AsmDialect.ATT
+  fullName: Ubiquity.NET.Llvm.Values.AsmDialect.ATT
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/InlineAsm.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ATT
+    path: ../src/Ubiquity.NET.Llvm/Values/InlineAsm.cs
+    startLine: 12
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: AT&amp;T Style
+  example: []
+  syntax:
+    content: ATT = 0
+    return:
+      type: Ubiquity.NET.Llvm.Values.AsmDialect
+- uid: Ubiquity.NET.Llvm.Values.AsmDialect.Intel
+  commentId: F:Ubiquity.NET.Llvm.Values.AsmDialect.Intel
+  id: Intel
+  parent: Ubiquity.NET.Llvm.Values.AsmDialect
+  langs:
+  - csharp
+  - vb
+  name: Intel
+  nameWithType: AsmDialect.Intel
+  fullName: Ubiquity.NET.Llvm.Values.AsmDialect.Intel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/InlineAsm.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Intel
+    path: ../src/Ubiquity.NET.Llvm/Values/InlineAsm.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Intel Style
+  example: []
+  syntax:
+    content: Intel = 1
+    return:
+      type: Ubiquity.NET.Llvm.Values.AsmDialect
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.Values.AsmDialect
+  commentId: T:Ubiquity.NET.Llvm.Values.AsmDialect
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AsmDialect.html
+  name: AsmDialect
+  nameWithType: AsmDialect
+  fullName: Ubiquity.NET.Llvm.Values.AsmDialect

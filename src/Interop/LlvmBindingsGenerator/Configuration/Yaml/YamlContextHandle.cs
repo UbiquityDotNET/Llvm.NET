@@ -18,7 +18,7 @@ namespace LlvmBindingsGenerator.Configuration
         : IYamlNodeLocation
         , IHandleInfo
     {
-        public string HandleName { get; set; }
+        public string HandleName { get; set; } = string.Empty;
 
         [YamlIgnore]
         public Mark Start { get; set; }

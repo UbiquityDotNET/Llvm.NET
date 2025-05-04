@@ -1,0 +1,789 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.IAttributeDictionary
+  commentId: T:Ubiquity.NET.Llvm.Values.IAttributeDictionary
+  id: IAttributeDictionary
+  parent: Ubiquity.NET.Llvm.Values
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: IAttributeDictionary
+  nameWithType: IAttributeDictionary
+  fullName: Ubiquity.NET.Llvm.Values.IAttributeDictionary
+  type: Interface
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeCollectionExtensions.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IAttributeDictionary
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeCollectionExtensions.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Interface to an Attribute Dictionary
+  remarks: >-
+    <p>This interface provides a full collection of all the
+
+    attributes keyed by the <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref>
+
+    </p>
+
+    <div class="NOTE"><h5>note</h5><p>This conceptually corresponds to the functionality of the
+
+    LLVM AttributeSet class for Versions prior to 5. In LLVM 5 the
+
+    equivalent type is currently AttributeList. In v5 AttributeSet
+
+    has no index and is therefore more properly a set than in the
+
+    past. To help remove confusion and satisfy .NET naming rules this
+
+    is called a Dictionary as that reflects the use here and fits
+
+    the direction of LLVM</p></div>
+  example: []
+  syntax:
+    content: 'public interface IAttributeDictionary : IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>, IReadOnlyCollection<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>, IEnumerable<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>, IEnumerable'
+    content.vb: Public Interface IAttributeDictionary Inherits IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue)), IReadOnlyCollection(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue))), IEnumerable(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue))), IEnumerable
+  inheritedMembers:
+  - System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  - System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}@)
+  - System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Item(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  - System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Keys
+  - System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Values
+  - System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.Count
+  - System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.GetEnumerator
+  - System.Collections.IEnumerable.GetEnumerator
+references:
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  commentId: T:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  name: FunctionAttributeIndex
+  nameWithType: FunctionAttributeIndex
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  commentId: M:System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  parent: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  definition: System.Collections.Generic.IReadOnlyDictionary`2.ContainsKey(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.containskey
+  name: ContainsKey(FunctionAttributeIndex)
+  nameWithType: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>.ContainsKey(FunctionAttributeIndex)
+  fullName: System.Collections.Generic.IReadOnlyDictionary<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>.ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  nameWithType.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue)).ContainsKey(FunctionAttributeIndex)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)).ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+    name: ContainsKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.containskey
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.ContainsKey(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+    name: ContainsKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.containskey
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}@)
+  commentId: M:System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}@)
+  parent: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  definition: System.Collections.Generic.IReadOnlyDictionary`2.TryGetValue(`0,`1@)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.trygetvalue
+  name: TryGetValue(FunctionAttributeIndex, out ICollection<AttributeValue>)
+  nameWithType: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>.TryGetValue(FunctionAttributeIndex, out ICollection<AttributeValue>)
+  fullName: System.Collections.Generic.IReadOnlyDictionary<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>.TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, out System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>)
+  nameWithType.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue)).TryGetValue(FunctionAttributeIndex, ICollection(Of AttributeValue))
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)).TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue))
+  name.vb: TryGetValue(FunctionAttributeIndex, ICollection(Of AttributeValue))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}@)
+    name: TryGetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.trygetvalue
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.TryGetValue(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}@)
+    name: TryGetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.trygetvalue
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Item(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  commentId: P:System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Item(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  parent: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  definition: System.Collections.Generic.IReadOnlyDictionary`2.Item(`0)
+  href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  name: this[FunctionAttributeIndex]
+  nameWithType: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>.this[FunctionAttributeIndex]
+  fullName: System.Collections.Generic.IReadOnlyDictionary<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>.this[Ubiquity.NET.Llvm.Values.FunctionAttributeIndex]
+  nameWithType.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue)).this[](FunctionAttributeIndex)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)).this[](Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+  name.vb: this[](FunctionAttributeIndex)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ']'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Item(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex)
+    name: this[]
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.item
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Keys
+  commentId: P:System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Keys
+  parent: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  definition: System.Collections.Generic.IReadOnlyDictionary`2.Keys
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.keys
+  name: Keys
+  nameWithType: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>.Keys
+  fullName: System.Collections.Generic.IReadOnlyDictionary<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>.Keys
+  nameWithType.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue)).Keys
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)).Keys
+- uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Values
+  commentId: P:System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}.Values
+  parent: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  definition: System.Collections.Generic.IReadOnlyDictionary`2.Values
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.values
+  name: Values
+  nameWithType: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>.Values
+  fullName: System.Collections.Generic.IReadOnlyDictionary<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>.Values
+  nameWithType.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue)).Values
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)).Values
+- uid: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.Count
+  commentId: P:System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.Count
+  parent: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}
+  definition: System.Collections.Generic.IReadOnlyCollection`1.Count
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1.count
+  name: Count
+  nameWithType: IReadOnlyCollection<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>.Count
+  fullName: System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>>.Count
+  nameWithType.vb: IReadOnlyCollection(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue))).Count
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue))).Count
+- uid: System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}
+  definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue))).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue))).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.IEnumerable.GetEnumerator
+  commentId: M:System.Collections.IEnumerable.GetEnumerator
+  parent: System.Collections.IEnumerable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable.GetEnumerator()
+  fullName: System.Collections.IEnumerable.GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.IEnumerable.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.IEnumerable.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2.ContainsKey(`0)
+  commentId: M:System.Collections.Generic.IReadOnlyDictionary`2.ContainsKey(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.containskey
+  name: ContainsKey(TKey)
+  nameWithType: IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue).ContainsKey(TKey)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue).ContainsKey(TKey)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2.ContainsKey(`0)
+    name: ContainsKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.containskey
+  - name: (
+  - name: TKey
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2.ContainsKey(`0)
+    name: ContainsKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.containskey
+  - name: (
+  - name: TKey
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>
+  nameWithType: IReadOnlyDictionary<FunctionAttributeIndex, ICollection<AttributeValue>>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>
+  nameWithType.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue))
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue))
+  name.vb: IReadOnlyDictionary(Of FunctionAttributeIndex, ICollection(Of AttributeValue))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2.TryGetValue(`0,`1@)
+  commentId: M:System.Collections.Generic.IReadOnlyDictionary`2.TryGetValue(`0,`1@)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.trygetvalue
+  name: TryGetValue(TKey, out TValue)
+  nameWithType: IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue).TryGetValue(TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue).TryGetValue(TKey, TValue)
+  name.vb: TryGetValue(TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2.TryGetValue(`0,`1@)
+    name: TryGetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.trygetvalue
+  - name: (
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: TValue
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2.TryGetValue(`0,`1@)
+    name: TryGetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.trygetvalue
+  - name: (
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2.Item(`0)
+  commentId: P:System.Collections.Generic.IReadOnlyDictionary`2.Item(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.item
+  name: this[TKey]
+  nameWithType: IReadOnlyDictionary<TKey, TValue>.this[TKey]
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.this[TKey]
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue).this[](TKey)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue).this[](TKey)
+  name.vb: this[](TKey)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - name: TKey
+  - name: ']'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2.Item(`0)
+    name: this[]
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.item
+  - name: (
+  - name: TKey
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2.Keys
+  commentId: P:System.Collections.Generic.IReadOnlyDictionary`2.Keys
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.keys
+  name: Keys
+  nameWithType: IReadOnlyDictionary<TKey, TValue>.Keys
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Keys
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue).Keys
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue).Keys
+- uid: System.Collections.Generic.IReadOnlyDictionary`2.Values
+  commentId: P:System.Collections.Generic.IReadOnlyDictionary`2.Values
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2.values
+  name: Values
+  nameWithType: IReadOnlyDictionary<TKey, TValue>.Values
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Values
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue).Values
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue).Values
+- uid: System.Collections.Generic.IReadOnlyCollection`1.Count
+  commentId: P:System.Collections.Generic.IReadOnlyCollection`1.Count
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1.count
+  name: Count
+  nameWithType: IReadOnlyCollection<T>.Count
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>.Count
+  nameWithType.vb: IReadOnlyCollection(Of T).Count
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T).Count
+- uid: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>
+  nameWithType: IReadOnlyCollection<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>
+  fullName: System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>>
+  nameWithType.vb: IReadOnlyCollection(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue)))
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)))
+  name.vb: IReadOnlyCollection(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue)))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: System.Collections.Generic.KeyValuePair`2
+    name: KeyValuePair
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.KeyValuePair`2
+    name: KeyValuePair
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable`1.GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<T>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of T).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}
+  commentId: T:System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>
+  nameWithType: IEnumerable<KeyValuePair<FunctionAttributeIndex, ICollection<AttributeValue>>>
+  fullName: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>>>
+  nameWithType.vb: IEnumerable(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue)))
+  fullName.vb: System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)))
+  name.vb: IEnumerable(Of KeyValuePair(Of FunctionAttributeIndex, ICollection(Of AttributeValue)))
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.Collections.Generic.KeyValuePair`2
+    name: KeyValuePair
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.KeyValuePair`2
+    name: KeyValuePair
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+    name: FunctionAttributeIndex
+    href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+  - name: )
+  - name: )
+- uid: System.Collections.IEnumerable
+  commentId: T:System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections

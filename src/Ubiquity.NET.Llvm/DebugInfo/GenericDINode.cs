@@ -4,11 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
-    /// <summary>Generic tagged DWARF-like Metadata node</summary>
+    /// <summary>Generic tagged DWARF-like IrMetadata node</summary>
     public class GenericDINode
         : DINode
     {

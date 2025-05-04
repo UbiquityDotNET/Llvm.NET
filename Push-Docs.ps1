@@ -32,11 +32,11 @@ if(!$canPush)
 # Docs must only be updated from a build with the official repository as the default remote.
 # This ensures that the links to source in the generated docs will have the correct URLs
 # (e.g. docs pushed to the official repository MUST not have links to source in some private fork)
-$remoteUrl = git ls-remote --get-url
+$remoteUrl = Invoke-Git ls-remote --get-url
 
 Write-Information "Remote URL: $remoteUrl"
 
-if(!($remoteUrl -like "https://github.com/UbiquityDotNET/Llvm.NET*"))
+if($remoteUrl -ne $buildInfo['OfficialGitRemoteUrl'])
 {
     throw "Pushing docs is only allowed when the origin remote is the official source - current remote is '$remoteUrl'"
 }
@@ -56,38 +56,37 @@ if(!$env:docspush_username)
     Write-Error "Missing docspush_username" -ErrorAction Stop
 }
 
-pushd .\BuildOutput\docs -ErrorAction Stop
+Push-Location .\BuildOutput\docs -ErrorAction Stop
 try
 {
     if($env:docspush_access_token)
     {
-        git config --local credential.helper store
+        Invoke-Git config --local credential.helper store
         Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:docspush_access_token):x-oauth-basic@github.com`n"
     }
 
-    git config --local user.email "$env:docspush_email"
-    git config --local user.name "$env:docspush_username"
+    Invoke-Git config --local user.email "$env:docspush_email"
+    Invoke-Git config --local user.name "$env:docspush_username"
+
+    # This repo uses docfx to generate the site content, not Jekyll the site MUST include
+    # a '.nojekyll' file. This is apparently true for EVERY push, but isn't entirely clear
+    # as there is almost no documentation of the existence of such a thing, let alone how
+    # to use it. This makes it a VERY annoying and poorly documented 'feature'. (Disabling
+    # Jekyll should be a repo setting done once for a repo or organization.)
+    [DateTime]::UtcNow.ToString('o') | Out-File .nojekyll
 
     Write-Information 'Adding files to git'
-    git add -A
-    git ls-files -o --exclude-standard | %{ git add $_}
-    if(!$?)
-    {
-        throw "git add failed"
-    }
+    Invoke-Git add -A
+    Invoke-Git ls-files -o --exclude-standard | %{ git add $_}
 
     $msg = "CI Docs Update $(Get-BuildVersionTag $buildInfo)"
     Write-Information "Committing changes to git [$msg]"
-    git commit -m"$msg"
-    if(!$?)
-    {
-        throw "git commit failed"
-    }
+    Invoke-Git commit -m"$msg"
 
     if(!$SkipPush)
     {
         Write-Information 'Pushing changes to git'
-        git push
+        Invoke-Git push
     }
 }
 catch
@@ -102,5 +101,5 @@ catch
 
 finally
 {
-    popd
+    Pop-Location
 }

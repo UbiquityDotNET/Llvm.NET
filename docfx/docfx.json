@@ -1,0 +1,213 @@
+{
+    "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+    "metadata": [
+        {
+            // LLVM OO Wrappers library
+            "src": [
+                {
+                    "files": [
+                        "**.csproj"
+                    ],
+                    "src": "../src/Ubiquity.NET.Llvm"
+                }
+            ],
+            "dest": "llvm/api"
+        },
+        {
+            // Runtime utilities library
+            "src": [
+                {
+                    "files": [
+                        "**.csproj"
+                    ],
+                    "src": "../src/Ubiquity.NET.Runtime.Utils"
+                }
+            ],
+            "dest": "runtime-utils/api"
+        },
+        {
+            // Extensions library
+            "src": [
+                {
+                    "files": [
+                        "**.csproj"
+                    ],
+                    "src": "../src/Ubiquity.NET.Extensions"
+                }
+            ],
+            "dest": "extensions/api"
+        },
+        {
+            // ANTLR Utilities library
+            "src": [
+                {
+                    "files": [
+                        "**.csproj"
+                    ],
+                    "src": "../src/Ubiquity.NET.ANTLR.Utils"
+                }
+            ],
+            "dest": "antlr-utils/api"
+        },
+        {
+            // Interop helpers library
+            "src": [
+                {
+                    "files": [
+                        "**.csproj"
+                    ],
+                    "src": "../src/Ubiquity.NET.InteropHelpers"
+                }
+            ],
+            "dest": "interop-helpers/api"
+        }
+    ],
+    "build": {
+        // xref YAML files that contain mappings from an XREF ID to the actual URL for the content in an external source
+        "xref": [
+            "llvm/api/llvm-xref.yml",
+            "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json"
+        ],
+        "content": [
+            {
+                // Root of the site; only uses the index and TOC explicitly named (NO GLOBS to confuse things!)
+                // NOTE: File paths are relative to the location of this docfx.json file
+                "files": [
+                    "index.md",
+                    "toc.yml"
+                ]
+            },
+            {
+                // LLVM project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "llvm/**.{md,yml}"
+                ],
+                "dest": "llvm",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // Pull in the LLVM samples as content. The LLVM core project is more complex in the docfx.json as it
+                // includes the samples but they are NOT participating in metadata generation. They only contribute
+                // additional MD file content. That content is located in the source WITH the sample. This eases the
+                // maintenance and editing of such files but makes referencing them in the final generated docs more
+                // complex as a distinct content node (this node) is needed to identify them.
+                //
+                // NOTE: DOCFX does NOT support use of ".." as the leading portion of a path in the "files" property
+                // instead it is ONLY allowed in the "src" property.
+                // Thus, file paths are relative to the samples directory
+                "files": [
+                    "**.{md,yml}"
+                ],
+                "src": "../src/Samples",
+                "dest": "llvm/articles/Samples",
+                "exclude": [
+                    "**/ReadMe.md"
+                ]
+            },
+            {
+                // ANTLR Utils project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "antlr-utils/**.{md,yml}"
+                ],
+                "dest": "antlr-utils",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // extensions project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "extensions/**.{md,yml}"
+                ],
+                "dest": "extensions",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // InteropHelpers project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "interop-helpers/**.{md,yml}"
+                ],
+                "dest": "interop-helpers",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // Runtime Utils project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "runtime-utils/**.{md,yml}"
+                ],
+                "dest": "runtime-utils",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            }
+        ],
+        "resource": [
+            {
+                // General site resources
+                "files": [
+                    "favicon.ico",
+                    "**.png",
+                    "**.svg"
+                ]
+            },
+            {
+                // LVM library samples specific resources
+                // TODO: Move the samples folder so this is included above
+                "files": [
+                    "**.png",
+                    "**.svg"
+                ],
+                "src": "../src/Samples",
+                "dest": "llvm/articles/Samples"
+            }
+        ],
+        "overwrite": [
+            {
+                "files": [
+                    "**/apidocs/**.md",
+                    "**/namespaces/**.md"
+                ]
+            }
+        ],
+        "template": [
+            "default",
+            "modern",
+            "templates/Ubiquity"
+        ],
+        "globalMetadataFiles": [],
+        "fileMetadataFiles": [],
+        "postProcessors": [],
+        "globalMetadata": {
+            "_appTitle": "Ubiquity.NET",
+            "_appFooter": "Copyright (C) 2017-2025, Ubiquity.NET Contributors",
+            "_appLogoPath": "DragonSharp48x48.png", // TODO: change this to something more generic...
+            "_disableBreadcrumb": true,
+            "_gitContribute": {
+                "repo": "https://github.com/UbiquityDotNET/Llvm.NET",
+                "branch": "develop"
+            },
+            "_gitUrlPattern": "github"
+        }
+    }
+}

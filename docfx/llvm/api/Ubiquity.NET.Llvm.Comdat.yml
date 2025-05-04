@@ -1,0 +1,654 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Comdat
+  commentId: T:Ubiquity.NET.Llvm.Comdat
+  id: Comdat
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.Comdat.Equals(Ubiquity.NET.Llvm.Comdat)
+  - Ubiquity.NET.Llvm.Comdat.GetHashCode
+  - Ubiquity.NET.Llvm.Comdat.IsNull
+  - Ubiquity.NET.Llvm.Comdat.Kind
+  - Ubiquity.NET.Llvm.Comdat.Name
+  langs:
+  - csharp
+  - vb
+  name: Comdat
+  nameWithType: Comdat
+  fullName: Ubiquity.NET.Llvm.Comdat
+  type: Struct
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Comdat
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 34
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Comdat entry for a module
+  remarks: >-
+    A COMDAT is a named kind pair to ensure that, within a given module there are no two named COMDATs
+
+    with different kinds. Ultimately, Comdat is 'owned' by the module, if the module is disposed the
+
+    Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
+
+    an effective NOP.
+  example: []
+  syntax:
+    content: 'public readonly ref struct Comdat : IEquatable<Comdat>'
+    content.vb: Public Structure Comdat Implements IEquatable(Of Comdat)
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Comdat}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.Comdat.Name
+  commentId: P:Ubiquity.NET.Llvm.Comdat.Name
+  id: Name
+  parent: Ubiquity.NET.Llvm.Comdat
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Comdat.Name
+  fullName: Ubiquity.NET.Llvm.Comdat.Name
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Name
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 39
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the name of the <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Ubiquity.NET.Llvm.Comdat.Name*
+- uid: Ubiquity.NET.Llvm.Comdat.Equals(Ubiquity.NET.Llvm.Comdat)
+  commentId: M:Ubiquity.NET.Llvm.Comdat.Equals(Ubiquity.NET.Llvm.Comdat)
+  id: Equals(Ubiquity.NET.Llvm.Comdat)
+  parent: Ubiquity.NET.Llvm.Comdat
+  langs:
+  - csharp
+  - vb
+  name: Equals(Comdat)
+  nameWithType: Comdat.Equals(Comdat)
+  fullName: Ubiquity.NET.Llvm.Comdat.Equals(Ubiquity.NET.Llvm.Comdat)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equals
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 44
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Indicates whether the current object is equal to another object of the same type.
+  example: []
+  syntax:
+    content: public bool Equals(Comdat other)
+    parameters:
+    - id: other
+      type: Ubiquity.NET.Llvm.Comdat
+      description: An object to compare with this object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Function Equals(other As Comdat) As Boolean
+  overload: Ubiquity.NET.Llvm.Comdat.Equals*
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Comdat}.Equals(Ubiquity.NET.Llvm.Comdat)
+- uid: Ubiquity.NET.Llvm.Comdat.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.Comdat.GetHashCode
+  id: GetHashCode
+  parent: Ubiquity.NET.Llvm.Comdat
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: Comdat.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.Comdat.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetHashCode
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 47
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Returns the hash code for this instance.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A 32-bit signed integer that is the hash code for this instance.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Ubiquity.NET.Llvm.Comdat.GetHashCode*
+- uid: Ubiquity.NET.Llvm.Comdat.IsNull
+  commentId: P:Ubiquity.NET.Llvm.Comdat.IsNull
+  id: IsNull
+  parent: Ubiquity.NET.Llvm.Comdat
+  langs:
+  - csharp
+  - vb
+  name: IsNull
+  nameWithType: Comdat.IsNull
+  fullName: Ubiquity.NET.Llvm.Comdat.IsNull
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsNull
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 51
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets a value indicating whether this instance represents a NULL/Invalid <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public bool IsNull { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsNull As Boolean
+  overload: Ubiquity.NET.Llvm.Comdat.IsNull*
+- uid: Ubiquity.NET.Llvm.Comdat.Kind
+  commentId: P:Ubiquity.NET.Llvm.Comdat.Kind
+  id: Kind
+  parent: Ubiquity.NET.Llvm.Comdat
+  langs:
+  - csharp
+  - vb
+  name: Kind
+  nameWithType: Comdat.Kind
+  fullName: Ubiquity.NET.Llvm.Comdat.Kind
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Comdat.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Kind
+    path: ../src/Ubiquity.NET.Llvm/Comdat.cs
+    startLine: 54
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets or sets the <xref href="Ubiquity.NET.Llvm.ComdatKind" data-throw-if-not-resolved="false"></xref> for this <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public ComdatKind Kind { get; set; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.ComdatKind
+    content.vb: Public Property Kind As ComdatKind
+  overload: Ubiquity.NET.Llvm.Comdat.Kind*
+references:
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Comdat}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Comdat}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<Comdat>
+  nameWithType: IEquatable<Comdat>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Comdat>
+  nameWithType.vb: IEquatable(Of Comdat)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Comdat)
+  name.vb: IEquatable(Of Comdat)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Comdat
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Comdat.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Comdat
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Comdat.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Comdat
+  commentId: T:Ubiquity.NET.Llvm.Comdat
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Comdat.html
+  name: Comdat
+  nameWithType: Comdat
+  fullName: Ubiquity.NET.Llvm.Comdat
+- uid: Ubiquity.NET.Llvm.Comdat.Name*
+  commentId: Overload:Ubiquity.NET.Llvm.Comdat.Name
+  href: Ubiquity.NET.Llvm.Comdat.html#Ubiquity_NET_Llvm_Comdat_Name
+  name: Name
+  nameWithType: Comdat.Name
+  fullName: Ubiquity.NET.Llvm.Comdat.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubiquity.NET.Llvm.Comdat.Equals*
+  commentId: Overload:Ubiquity.NET.Llvm.Comdat.Equals
+  href: Ubiquity.NET.Llvm.Comdat.html#Ubiquity_NET_Llvm_Comdat_Equals_Ubiquity_NET_Llvm_Comdat_
+  name: Equals
+  nameWithType: Comdat.Equals
+  fullName: Ubiquity.NET.Llvm.Comdat.Equals
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Comdat}.Equals(Ubiquity.NET.Llvm.Comdat)
+  commentId: M:System.IEquatable{Ubiquity.NET.Llvm.Comdat}.Equals(Ubiquity.NET.Llvm.Comdat)
+  parent: System.IEquatable{Ubiquity.NET.Llvm.Comdat}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(Comdat)
+  nameWithType: IEquatable<Comdat>.Equals(Comdat)
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Comdat>.Equals(Ubiquity.NET.Llvm.Comdat)
+  nameWithType.vb: IEquatable(Of Comdat).Equals(Comdat)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Comdat).Equals(Ubiquity.NET.Llvm.Comdat)
+  spec.csharp:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Comdat}.Equals(Ubiquity.NET.Llvm.Comdat)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Comdat
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Comdat.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Comdat}.Equals(Ubiquity.NET.Llvm.Comdat)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Comdat
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Comdat.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Comdat.GetHashCode*
+  commentId: Overload:Ubiquity.NET.Llvm.Comdat.GetHashCode
+  href: Ubiquity.NET.Llvm.Comdat.html#Ubiquity_NET_Llvm_Comdat_GetHashCode
+  name: GetHashCode
+  nameWithType: Comdat.GetHashCode
+  fullName: Ubiquity.NET.Llvm.Comdat.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubiquity.NET.Llvm.Comdat.IsNull*
+  commentId: Overload:Ubiquity.NET.Llvm.Comdat.IsNull
+  href: Ubiquity.NET.Llvm.Comdat.html#Ubiquity_NET_Llvm_Comdat_IsNull
+  name: IsNull
+  nameWithType: Comdat.IsNull
+  fullName: Ubiquity.NET.Llvm.Comdat.IsNull
+- uid: Ubiquity.NET.Llvm.ComdatKind
+  commentId: T:Ubiquity.NET.Llvm.ComdatKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ComdatKind.html
+  name: ComdatKind
+  nameWithType: ComdatKind
+  fullName: Ubiquity.NET.Llvm.ComdatKind
+- uid: Ubiquity.NET.Llvm.Comdat.Kind*
+  commentId: Overload:Ubiquity.NET.Llvm.Comdat.Kind
+  href: Ubiquity.NET.Llvm.Comdat.html#Ubiquity_NET_Llvm_Comdat_Kind
+  name: Kind
+  nameWithType: Comdat.Kind
+  fullName: Ubiquity.NET.Llvm.Comdat.Kind

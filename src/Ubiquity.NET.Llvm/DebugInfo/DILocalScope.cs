@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Legal scope for lexical blocks, local variables, and debug info locations</summary>

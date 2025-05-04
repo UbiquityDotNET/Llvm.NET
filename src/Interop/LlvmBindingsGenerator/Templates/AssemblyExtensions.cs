@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Reflection;
 
 namespace LlvmBindingsGenerator.Templates
@@ -12,8 +13,8 @@ namespace LlvmBindingsGenerator.Templates
     {
         public static string GetAssemblyInformationalVersion( this Assembly asm )
         {
-            var attr = asm.GetCustomAttribute< AssemblyInformationalVersionAttribute>();
-            return attr.InformationalVersion;
+            var attr = asm.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            return attr?.InformationalVersion ?? throw new InvalidOperationException("Assembly does not have in information version");
         }
     }
 }

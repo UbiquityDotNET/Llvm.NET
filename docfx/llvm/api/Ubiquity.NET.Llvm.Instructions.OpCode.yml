@@ -1,0 +1,2892 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode
+  commentId: T:Ubiquity.NET.Llvm.Instructions.OpCode
+  id: OpCode
+  parent: Ubiquity.NET.Llvm.Instructions
+  children:
+  - Ubiquity.NET.Llvm.Instructions.OpCode.AShr
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Add
+  - Ubiquity.NET.Llvm.Instructions.OpCode.AddrSpaceCast
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Alloca
+  - Ubiquity.NET.Llvm.Instructions.OpCode.And
+  - Ubiquity.NET.Llvm.Instructions.OpCode.AtomicCmpXchg
+  - Ubiquity.NET.Llvm.Instructions.OpCode.AtomicRMW
+  - Ubiquity.NET.Llvm.Instructions.OpCode.BitCast
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Branch
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Call
+  - Ubiquity.NET.Llvm.Instructions.OpCode.CallBr
+  - Ubiquity.NET.Llvm.Instructions.OpCode.CatchPad
+  - Ubiquity.NET.Llvm.Instructions.OpCode.CatchRet
+  - Ubiquity.NET.Llvm.Instructions.OpCode.CatchSwitch
+  - Ubiquity.NET.Llvm.Instructions.OpCode.CleanupPad
+  - Ubiquity.NET.Llvm.Instructions.OpCode.CleanupRet
+  - Ubiquity.NET.Llvm.Instructions.OpCode.ExtractElement
+  - Ubiquity.NET.Llvm.Instructions.OpCode.ExtractValue
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FAdd
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FCmp
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FDiv
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FMul
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FPExt
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FPToSI
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FPToUI
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FPTrunc
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FRem
+  - Ubiquity.NET.Llvm.Instructions.OpCode.FSub
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Fence
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Freeze
+  - Ubiquity.NET.Llvm.Instructions.OpCode.GetElementPtr
+  - Ubiquity.NET.Llvm.Instructions.OpCode.ICmp
+  - Ubiquity.NET.Llvm.Instructions.OpCode.IndirectBranch
+  - Ubiquity.NET.Llvm.Instructions.OpCode.InsertElement
+  - Ubiquity.NET.Llvm.Instructions.OpCode.InsertValue
+  - Ubiquity.NET.Llvm.Instructions.OpCode.IntToPtr
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Invalid
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Invoke
+  - Ubiquity.NET.Llvm.Instructions.OpCode.LShr
+  - Ubiquity.NET.Llvm.Instructions.OpCode.LandingPad
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Load
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Mul
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Or
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Phi
+  - Ubiquity.NET.Llvm.Instructions.OpCode.PtrToInt
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Resume
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Return
+  - Ubiquity.NET.Llvm.Instructions.OpCode.SDiv
+  - Ubiquity.NET.Llvm.Instructions.OpCode.SIToFP
+  - Ubiquity.NET.Llvm.Instructions.OpCode.SRem
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Select
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Shl
+  - Ubiquity.NET.Llvm.Instructions.OpCode.ShuffleVector
+  - Ubiquity.NET.Llvm.Instructions.OpCode.SignExtend
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Store
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Sub
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Switch
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Trunc
+  - Ubiquity.NET.Llvm.Instructions.OpCode.UDiv
+  - Ubiquity.NET.Llvm.Instructions.OpCode.UIToFP
+  - Ubiquity.NET.Llvm.Instructions.OpCode.URem
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Unreachable
+  - Ubiquity.NET.Llvm.Instructions.OpCode.UserOp1
+  - Ubiquity.NET.Llvm.Instructions.OpCode.UserOp2
+  - Ubiquity.NET.Llvm.Instructions.OpCode.VaArg
+  - Ubiquity.NET.Llvm.Instructions.OpCode.Xor
+  - Ubiquity.NET.Llvm.Instructions.OpCode.ZeroExtend
+  langs:
+  - csharp
+  - vb
+  name: OpCode
+  nameWithType: OpCode
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OpCode
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 13
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: LLVM Instruction opcodes
+  remarks: These are based on the "C" API and therefore more stable as changes in the underlying instruction ids are remapped in the C API layer
+  example: []
+  syntax:
+    content: public enum OpCode
+    content.vb: Public Enum OpCode
+  seealso:
+  - linkType: HRef
+    linkId: xref:llvm_langref#instruction-reference
+    altText: LLVM instruction Reference
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Invalid
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Invalid
+  id: Invalid
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Invalid
+  nameWithType: OpCode.Invalid
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Invalid
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Invalid
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 17
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Invalid or unknown instruction
+  example: []
+  syntax:
+    content: Invalid = 0
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Return
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Return
+  id: Return
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Return
+  nameWithType: OpCode.Return
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Return
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Return
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Return instruction
+  example: []
+  syntax:
+    content: Return = 1
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.ReturnInstruction
+    commentId: T:Ubiquity.NET.Llvm.Instructions.ReturnInstruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#ret-instruction
+    altText: LLVM ret Instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Branch
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Branch
+  id: Branch
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Branch
+  nameWithType: OpCode.Branch
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Branch
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Branch
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 31
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Branch instruction
+  example: []
+  syntax:
+    content: Branch = 2
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Branch
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Branch
+  - linkType: HRef
+    linkId: xref:llvm_langref#br-instruction
+    altText: LLVM br Instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Switch
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Switch
+  id: Switch
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Switch
+  nameWithType: OpCode.Switch
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Switch
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Switch
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Switch instruction
+  example: []
+  syntax:
+    content: Switch = 3
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Switch
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Switch
+  - linkType: HRef
+    linkId: xref:llvm_langref#switch-instruction
+    altText: LLVM switch instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.IndirectBranch
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.IndirectBranch
+  id: IndirectBranch
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: IndirectBranch
+  nameWithType: OpCode.IndirectBranch
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.IndirectBranch
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IndirectBranch
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Indirect branch instruction
+  example: []
+  syntax:
+    content: IndirectBranch = 4
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.IndirectBranch
+    commentId: T:Ubiquity.NET.Llvm.Instructions.IndirectBranch
+  - linkType: HRef
+    linkId: xref:llvm_langref#indirectbr-instruction
+    altText: LLVM indirectbr instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Invoke
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Invoke
+  id: Invoke
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Invoke
+  nameWithType: OpCode.Invoke
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Invoke
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Invoke
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Invoke instruction
+  example: []
+  syntax:
+    content: Invoke = 5
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Invoke
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Invoke
+  - linkType: HRef
+    linkId: xref:llvm_langref#invoke-instruction
+    altText: LLVM invoke instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Unreachable
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Unreachable
+  id: Unreachable
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Unreachable
+  nameWithType: OpCode.Unreachable
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Unreachable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Unreachable
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unreachable instruction
+  example: []
+  syntax:
+    content: Unreachable = 7
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Unreachable
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Unreachable
+  - linkType: HRef
+    linkId: xref:llvm_langref#unreachable-instruction
+    altText: LLVM unreachable instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Add
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Add
+  id: Add
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Add
+  nameWithType: OpCode.Add
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Add
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Add
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 63
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Add instruction
+  example: []
+  syntax:
+    content: Add = 8
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#add-instruction
+    altText: LLVM add instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FAdd
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FAdd
+  id: FAdd
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FAdd
+  nameWithType: OpCode.FAdd
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FAdd
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FAdd
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 69
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: FAdd instruction
+  example: []
+  syntax:
+    content: FAdd = 9
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#fadd-instruction
+    altText: LLVM FAdd instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Sub
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Sub
+  id: Sub
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Sub
+  nameWithType: OpCode.Sub
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Sub
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Sub
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 75
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Sub instruction
+  example: []
+  syntax:
+    content: Sub = 10
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+  - linkType: HRef
+    linkId: xref:llvm_langref#sub-instruction
+    altText: LLVM sub instruction
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FSub
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FSub
+  id: FSub
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FSub
+  nameWithType: OpCode.FSub
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FSub
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FSub
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 81
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: FSub instruction
+  example: []
+  syntax:
+    content: FSub = 11
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#fsub-instruction
+    altText: LLVM fsub instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Mul
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Mul
+  id: Mul
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Mul
+  nameWithType: OpCode.Mul
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Mul
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Mul
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 87
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Mul instruction
+  example: []
+  syntax:
+    content: Mul = 12
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#mul-instruction
+    altText: LLVM mul instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FMul
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FMul
+  id: FMul
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FMul
+  nameWithType: OpCode.FMul
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FMul
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FMul
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 93
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: FMul instruction
+  example: []
+  syntax:
+    content: FMul = 13
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#fmul-instruction
+    altText: LLVM fmul instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.UDiv
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.UDiv
+  id: UDiv
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: UDiv
+  nameWithType: OpCode.UDiv
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.UDiv
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UDiv
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 99
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: UDiv instruction
+  example: []
+  syntax:
+    content: UDiv = 14
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#udiv-instruction
+    altText: LLVM udiv instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.SDiv
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.SDiv
+  id: SDiv
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: SDiv
+  nameWithType: OpCode.SDiv
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.SDiv
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SDiv
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 105
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: SDiv instruction
+  example: []
+  syntax:
+    content: SDiv = 15
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#sdiv-instruction
+    altText: LLVM sdiv instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FDiv
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FDiv
+  id: FDiv
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FDiv
+  nameWithType: OpCode.FDiv
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FDiv
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FDiv
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 111
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: FDiv instruction
+  example: []
+  syntax:
+    content: FDiv = 16
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#fdiv-instruction
+    altText: LLVM fdiv instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.URem
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.URem
+  id: URem
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: URem
+  nameWithType: OpCode.URem
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.URem
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: URem
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 117
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: URem instruction
+  example: []
+  syntax:
+    content: URem = 17
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#urem-instruction
+    altText: LLVM urem instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.SRem
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.SRem
+  id: SRem
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: SRem
+  nameWithType: OpCode.SRem
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.SRem
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SRem
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 123
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: SRem instruction
+  example: []
+  syntax:
+    content: SRem = 18
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#srem-instruction
+    altText: LLVM srem instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FRem
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FRem
+  id: FRem
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FRem
+  nameWithType: OpCode.FRem
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FRem
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FRem
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 129
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: FRem instruction
+  example: []
+  syntax:
+    content: FRem = 19
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#frem-instruction
+    altText: LLVM frem instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#binary-operations
+    altText: LLVM Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Shl
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Shl
+  id: Shl
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Shl
+  nameWithType: OpCode.Shl
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Shl
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Shl
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 137
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Shift Left instruction
+  example: []
+  syntax:
+    content: Shl = 20
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#shl-instruction
+    altText: LLVM shl instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitwise-binary-operations
+    altText: LLVM Bitwise Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.LShr
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.LShr
+  id: LShr
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: LShr
+  nameWithType: OpCode.LShr
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.LShr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LShr
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 143
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Logical Shift Right instruction
+  example: []
+  syntax:
+    content: LShr = 21
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#lshr-instruction
+    altText: LLVM lshr instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitwise-binary-operations
+    altText: LLVM Bitwise Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.AShr
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.AShr
+  id: AShr
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: AShr
+  nameWithType: OpCode.AShr
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.AShr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AShr
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 149
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Arithmetic Shift Right instruction
+  example: []
+  syntax:
+    content: AShr = 22
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#ashr-instruction
+    altText: LLVM ashr instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitwise-binary-operations
+    altText: LLVM Bitwise Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.And
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.And
+  id: And
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: And
+  nameWithType: OpCode.And
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.And
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: And
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 155
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Bitwise And instruction
+  example: []
+  syntax:
+    content: And = 23
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#an-instruction
+    altText: LLVM and instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitwise-binary-operations
+    altText: LLVM Bitwise Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Or
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Or
+  id: Or
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Or
+  nameWithType: OpCode.Or
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Or
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Or
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 161
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Bitwise Or instruction
+  example: []
+  syntax:
+    content: Or = 24
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#or-instruction
+    altText: LLVM or instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitwise-binary-operations
+    altText: LLVM Bitwise Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Xor
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Xor
+  id: Xor
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Xor
+  nameWithType: OpCode.Xor
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Xor
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Xor
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 167
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Bitwise Xor instruction
+  example: []
+  syntax:
+    content: Xor = 25
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  - linkType: HRef
+    linkId: xref:llvm_langref#xor-instruction
+    altText: LLVM xor instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitwise-binary-operations
+    altText: LLVM Bitwise Binary Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Alloca
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Alloca
+  id: Alloca
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Alloca
+  nameWithType: OpCode.Alloca
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Alloca
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Alloca
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 175
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: xxx instruction
+  example: []
+  syntax:
+    content: Alloca = 26
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Alloca
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Alloca
+  - linkType: HRef
+    linkId: xref:llvm_langref#alloca-instruction
+    altText: LLVM alloca instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Load
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Load
+  id: Load
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Load
+  nameWithType: OpCode.Load
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Load
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Load
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 181
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Load instruction
+  example: []
+  syntax:
+    content: Load = 27
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Load
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Load
+  - linkType: HRef
+    linkId: xref:llvm_langref#load-instruction
+    altText: LLVM load instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Store
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Store
+  id: Store
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Store
+  nameWithType: OpCode.Store
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Store
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Store
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 187
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Store instruction
+  example: []
+  syntax:
+    content: Store = 28
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Store
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Store
+  - linkType: HRef
+    linkId: xref:llvm_langref#store-instruction
+    altText: LLVM store instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Fence
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Fence
+  id: Fence
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Fence
+  nameWithType: OpCode.Fence
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Fence
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Fence
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 193
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Fence instruction
+  example: []
+  syntax:
+    content: Fence = 55
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Fence
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Fence
+  - linkType: HRef
+    linkId: xref:llvm_langref#fence-instruction
+    altText: LLVM fence instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.AtomicCmpXchg
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.AtomicCmpXchg
+  id: AtomicCmpXchg
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: AtomicCmpXchg
+  nameWithType: OpCode.AtomicCmpXchg
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.AtomicCmpXchg
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AtomicCmpXchg
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 199
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: CmpXchg instruction
+  example: []
+  syntax:
+    content: AtomicCmpXchg = 56
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg
+    commentId: T:Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg
+  - linkType: HRef
+    linkId: xref:llvm_langref#cmpxchg-instruction
+    altText: LLVM cmpxchg instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.AtomicRMW
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.AtomicRMW
+  id: AtomicRMW
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: AtomicRMW
+  nameWithType: OpCode.AtomicRMW
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.AtomicRMW
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AtomicRMW
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 205
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: atomicrmw instruction
+  example: []
+  syntax:
+    content: AtomicRMW = 57
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.AtomicRMW
+    commentId: T:Ubiquity.NET.Llvm.Instructions.AtomicRMW
+  - linkType: HRef
+    linkId: xref:llvm_langref#atomicrmw-instruction
+    altText: LLVM atomicrmw instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.GetElementPtr
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.GetElementPtr
+  id: GetElementPtr
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: GetElementPtr
+  nameWithType: OpCode.GetElementPtr
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.GetElementPtr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetElementPtr
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 211
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: getelementptr instruction
+  example: []
+  syntax:
+    content: GetElementPtr = 29
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.GetElementPtr
+    commentId: T:Ubiquity.NET.Llvm.Instructions.GetElementPtr
+  - linkType: HRef
+    linkId: xref:llvm_langref#getelementptr-instruction
+    altText: LLVM getelementptr instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#memory-access-and-addressing-operations
+    altText: LLVM Memory Access and Addressing Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Trunc
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Trunc
+  id: Trunc
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Trunc
+  nameWithType: OpCode.Trunc
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Trunc
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Trunc
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 219
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: trunc .. to instruction
+  example: []
+  syntax:
+    content: Trunc = 30
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.Trunc
+    commentId: T:Ubiquity.NET.Llvm.Instructions.Trunc
+  - linkType: HRef
+    linkId: xref:llvm_langref#trunc-to-instruction
+    altText: LLVM trunc .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.ZeroExtend
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.ZeroExtend
+  id: ZeroExtend
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: ZeroExtend
+  nameWithType: OpCode.ZeroExtend
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.ZeroExtend
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ZeroExtend
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 225
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: zext .. to instruction
+  example: []
+  syntax:
+    content: ZeroExtend = 31
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.ZeroExtend
+    commentId: T:Ubiquity.NET.Llvm.Instructions.ZeroExtend
+  - linkType: HRef
+    linkId: xref:llvm_langref#zext-to-instruction
+    altText: LLVM zext .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.SignExtend
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.SignExtend
+  id: SignExtend
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: SignExtend
+  nameWithType: OpCode.SignExtend
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.SignExtend
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SignExtend
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 231
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: sext .. to instruction
+  example: []
+  syntax:
+    content: SignExtend = 32
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.SignExtend
+    commentId: T:Ubiquity.NET.Llvm.Instructions.SignExtend
+  - linkType: HRef
+    linkId: xref:llvm_langref#sext-to-instruction
+    altText: LLVM sext .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FPToUI
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FPToUI
+  id: FPToUI
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FPToUI
+  nameWithType: OpCode.FPToUI
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FPToUI
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FPToUI
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 237
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: fptoui .. to instruction
+  example: []
+  syntax:
+    content: FPToUI = 33
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.FPToUI
+    commentId: T:Ubiquity.NET.Llvm.Instructions.FPToUI
+  - linkType: HRef
+    linkId: xref:llvm_langref#fptoui-to-instruction
+    altText: LLVM fptoui .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FPToSI
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FPToSI
+  id: FPToSI
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FPToSI
+  nameWithType: OpCode.FPToSI
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FPToSI
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FPToSI
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 243
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: fptosi .. to instruction
+  example: []
+  syntax:
+    content: FPToSI = 34
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.FPToSI
+    commentId: T:Ubiquity.NET.Llvm.Instructions.FPToSI
+  - linkType: HRef
+    linkId: xref:llvm_langref#fptosi-to-instruction
+    altText: LLVM fptosi .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.UIToFP
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.UIToFP
+  id: UIToFP
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: UIToFP
+  nameWithType: OpCode.UIToFP
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.UIToFP
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UIToFP
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 249
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: uitofp .. to instruction
+  example: []
+  syntax:
+    content: UIToFP = 35
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.UIToFP
+    commentId: T:Ubiquity.NET.Llvm.Instructions.UIToFP
+  - linkType: HRef
+    linkId: xref:llvm_langref#uitofp-to-instruction
+    altText: LLVM uitofp .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.SIToFP
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.SIToFP
+  id: SIToFP
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: SIToFP
+  nameWithType: OpCode.SIToFP
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.SIToFP
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SIToFP
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 255
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: sitofp .. to instruction
+  example: []
+  syntax:
+    content: SIToFP = 36
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.SIToFP
+    commentId: T:Ubiquity.NET.Llvm.Instructions.SIToFP
+  - linkType: HRef
+    linkId: xref:llvm_langref#sitofp-to-instruction
+    altText: LLVM sitofp .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FPTrunc
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FPTrunc
+  id: FPTrunc
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FPTrunc
+  nameWithType: OpCode.FPTrunc
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FPTrunc
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FPTrunc
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 261
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: fptrunc .. to instruction
+  example: []
+  syntax:
+    content: FPTrunc = 37
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.FPTrunc
+    commentId: T:Ubiquity.NET.Llvm.Instructions.FPTrunc
+  - linkType: HRef
+    linkId: xref:llvm_langref#fptrunct-to-instruction
+    altText: LLVM fptrunc .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FPExt
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FPExt
+  id: FPExt
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FPExt
+  nameWithType: OpCode.FPExt
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FPExt
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FPExt
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 267
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: fpext .. to instruction
+  example: []
+  syntax:
+    content: FPExt = 38
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.FPExt
+    commentId: T:Ubiquity.NET.Llvm.Instructions.FPExt
+  - linkType: HRef
+    linkId: xref:llvm_langref#fpext-to-instruction
+    altText: LLVM fpext .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.PtrToInt
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.PtrToInt
+  id: PtrToInt
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: PtrToInt
+  nameWithType: OpCode.PtrToInt
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.PtrToInt
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PtrToInt
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 273
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: ptrtoint .. to instruction
+  example: []
+  syntax:
+    content: PtrToInt = 39
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.PointerToInt
+    commentId: T:Ubiquity.NET.Llvm.Instructions.PointerToInt
+  - linkType: HRef
+    linkId: xref:llvm_langref#ptrtoint-to-instruction
+    altText: LLVM ptrtoint .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.IntToPtr
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.IntToPtr
+  id: IntToPtr
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: IntToPtr
+  nameWithType: OpCode.IntToPtr
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.IntToPtr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IntToPtr
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 279
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: inttoptr .. to instruction
+  example: []
+  syntax:
+    content: IntToPtr = 40
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.IntToPointer
+    commentId: T:Ubiquity.NET.Llvm.Instructions.IntToPointer
+  - linkType: HRef
+    linkId: xref:llvm_langref#inttoptr-to-instruction
+    altText: LLVM inttoptr .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.BitCast
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.BitCast
+  id: BitCast
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: BitCast
+  nameWithType: OpCode.BitCast
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.BitCast
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BitCast
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 285
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: bitcast .. to instruction
+  example: []
+  syntax:
+    content: BitCast = 41
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.BitCast
+    commentId: T:Ubiquity.NET.Llvm.Instructions.BitCast
+  - linkType: HRef
+    linkId: xref:llvm_langref#bitcast-to-instruction
+    altText: LLVM bitcast .. to instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#conversion-operations
+    altText: LLVM Conversion Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.AddrSpaceCast
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.AddrSpaceCast
+  id: AddrSpaceCast
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: AddrSpaceCast
+  nameWithType: OpCode.AddrSpaceCast
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.AddrSpaceCast
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddrSpaceCast
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 290
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: addressspacecast .. to instruction
+  example: []
+  syntax:
+    content: AddrSpaceCast = 60
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.AddressSpaceCast
+    commentId: T:Ubiquity.NET.Llvm.Instructions.AddressSpaceCast
+  - linkType: HRef
+    linkId: xref:llvm_langref#addressspacecast-to-instruction
+    altText: LLVM addressspacecast .. to instruction
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.ICmp
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.ICmp
+  id: ICmp
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: ICmp
+  nameWithType: OpCode.ICmp
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.ICmp
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ICmp
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 298
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: icmp instruction
+  example: []
+  syntax:
+    content: ICmp = 42
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.IntCmp
+    commentId: T:Ubiquity.NET.Llvm.Instructions.IntCmp
+  - linkType: HRef
+    linkId: xref:llvm_langref#icmp-instruction
+    altText: LLVM icmp instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.FCmp
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.FCmp
+  id: FCmp
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: FCmp
+  nameWithType: OpCode.FCmp
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.FCmp
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FCmp
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 304
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: fcmp instruction
+  example: []
+  syntax:
+    content: FCmp = 43
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.FCmp
+    commentId: T:Ubiquity.NET.Llvm.Instructions.FCmp
+  - linkType: HRef
+    linkId: xref:llvm_langref#fcmp-instruction
+    altText: LLVM fcmp instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Phi
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Phi
+  id: Phi
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Phi
+  nameWithType: OpCode.Phi
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Phi
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Phi
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 310
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: phi instruction
+  example: []
+  syntax:
+    content: Phi = 44
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.PhiNode
+    commentId: T:Ubiquity.NET.Llvm.Instructions.PhiNode
+  - linkType: HRef
+    linkId: xref:llvm_langref#phi-instruction
+    altText: LLVM phi instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Call
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Call
+  id: Call
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Call
+  nameWithType: OpCode.Call
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Call
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Call
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 316
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: call instruction
+  example: []
+  syntax:
+    content: Call = 45
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.CallInstruction
+    commentId: T:Ubiquity.NET.Llvm.Instructions.CallInstruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#call-instruction
+    altText: LLVM call instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Select
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Select
+  id: Select
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Select
+  nameWithType: OpCode.Select
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Select
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Select
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 322
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: select instruction
+  example: []
+  syntax:
+    content: Select = 46
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.SelectInstruction
+    commentId: T:Ubiquity.NET.Llvm.Instructions.SelectInstruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#select-instruction
+    altText: LLVM select instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.UserOp1
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.UserOp1
+  id: UserOp1
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: UserOp1
+  nameWithType: OpCode.UserOp1
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.UserOp1
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UserOp1
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 326
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Custom user operator1 instruction
+  example: []
+  syntax:
+    content: UserOp1 = 47
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.UserOp1
+    commentId: T:Ubiquity.NET.Llvm.Instructions.UserOp1
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.UserOp2
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.UserOp2
+  id: UserOp2
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: UserOp2
+  nameWithType: OpCode.UserOp2
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.UserOp2
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UserOp2
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 330
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Custom user operator2 instruction
+  example: []
+  syntax:
+    content: UserOp2 = 48
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.UserOp2
+    commentId: T:Ubiquity.NET.Llvm.Instructions.UserOp2
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.VaArg
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.VaArg
+  id: VaArg
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: VaArg
+  nameWithType: OpCode.VaArg
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.VaArg
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VaArg
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 336
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: va_arg instruction
+  example: []
+  syntax:
+    content: VaArg = 49
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.VaArg
+    commentId: T:Ubiquity.NET.Llvm.Instructions.VaArg
+  - linkType: HRef
+    linkId: xref:llvm_langref#va-arg-instruction
+    altText: LLVM va_arg instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.ExtractElement
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.ExtractElement
+  id: ExtractElement
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: ExtractElement
+  nameWithType: OpCode.ExtractElement
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.ExtractElement
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ExtractElement
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 342
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: extractelement instruction
+  example: []
+  syntax:
+    content: ExtractElement = 50
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.ExtractElement
+    commentId: T:Ubiquity.NET.Llvm.Instructions.ExtractElement
+  - linkType: HRef
+    linkId: xref:llvm_langref#extractelement-instruction
+    altText: LLVM extractelement instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#vector-operations
+    altText: LLVM Vector Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.InsertElement
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.InsertElement
+  id: InsertElement
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: InsertElement
+  nameWithType: OpCode.InsertElement
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.InsertElement
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InsertElement
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 348
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: insert instruction
+  example: []
+  syntax:
+    content: InsertElement = 51
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.InsertElement
+    commentId: T:Ubiquity.NET.Llvm.Instructions.InsertElement
+  - linkType: HRef
+    linkId: xref:llvm_langref#insert-instruction
+    altText: LLVM insert instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#vector-operations
+    altText: LLVM Vector Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.ShuffleVector
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.ShuffleVector
+  id: ShuffleVector
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: ShuffleVector
+  nameWithType: OpCode.ShuffleVector
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.ShuffleVector
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ShuffleVector
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 354
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: shufflevector instruction
+  example: []
+  syntax:
+    content: ShuffleVector = 52
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.ShuffleVector
+    commentId: T:Ubiquity.NET.Llvm.Instructions.ShuffleVector
+  - linkType: HRef
+    linkId: xref:llvm_langref#shufflevector-instruction
+    altText: LLVM shufflevector instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#vector-operations
+    altText: LLVM Vector Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.ExtractValue
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.ExtractValue
+  id: ExtractValue
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: ExtractValue
+  nameWithType: OpCode.ExtractValue
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.ExtractValue
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ExtractValue
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 360
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: extractvalue instruction
+  example: []
+  syntax:
+    content: ExtractValue = 53
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.ExtractValue
+    commentId: T:Ubiquity.NET.Llvm.Instructions.ExtractValue
+  - linkType: HRef
+    linkId: xref:llvm_langref#extractvalue-instruction
+    altText: LLVM extractvalue instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#aggregate-operations
+    altText: LLVM Vector Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.InsertValue
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.InsertValue
+  id: InsertValue
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: InsertValue
+  nameWithType: OpCode.InsertValue
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.InsertValue
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: InsertValue
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 366
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: insertvalue instruction
+  example: []
+  syntax:
+    content: InsertValue = 54
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.InsertValue
+    commentId: T:Ubiquity.NET.Llvm.Instructions.InsertValue
+  - linkType: HRef
+    linkId: xref:llvm_langref#xxx-instruction
+    altText: LLVM insertvalue instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#aggregate-operations
+    altText: LLVM Aggregate Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Resume
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Resume
+  id: Resume
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Resume
+  nameWithType: OpCode.Resume
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Resume
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Resume
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 374
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: resume instruction
+  example: []
+  syntax:
+    content: Resume = 58
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.ResumeInstruction
+    commentId: T:Ubiquity.NET.Llvm.Instructions.ResumeInstruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#xxx-instruction
+    altText: LLVM resume instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.LandingPad
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.LandingPad
+  id: LandingPad
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: LandingPad
+  nameWithType: OpCode.LandingPad
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.LandingPad
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LandingPad
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 380
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: landingpad instruction
+  example: []
+  syntax:
+    content: LandingPad = 59
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.LandingPad
+    commentId: T:Ubiquity.NET.Llvm.Instructions.LandingPad
+  - linkType: HRef
+    linkId: xref:llvm_langref#landingpad-instruction
+    altText: LLVM landingpad instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.CleanupRet
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.CleanupRet
+  id: CleanupRet
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: CleanupRet
+  nameWithType: OpCode.CleanupRet
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.CleanupRet
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CleanupRet
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 386
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: cleanupret instruction
+  example: []
+  syntax:
+    content: CleanupRet = 61
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.CleanupReturn
+    commentId: T:Ubiquity.NET.Llvm.Instructions.CleanupReturn
+  - linkType: HRef
+    linkId: xref:llvm_langref#cleanupret-instruction
+    altText: LLVM cleanupret instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.CatchRet
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.CatchRet
+  id: CatchRet
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: CatchRet
+  nameWithType: OpCode.CatchRet
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.CatchRet
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CatchRet
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 392
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: catchret instruction
+  example: []
+  syntax:
+    content: CatchRet = 62
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.CatchReturn
+    commentId: T:Ubiquity.NET.Llvm.Instructions.CatchReturn
+  - linkType: HRef
+    linkId: xref:llvm_langref#catchret-instruction
+    altText: LLVM catchret instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.CatchPad
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.CatchPad
+  id: CatchPad
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: CatchPad
+  nameWithType: OpCode.CatchPad
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.CatchPad
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CatchPad
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 398
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: catchpad instruction
+  example: []
+  syntax:
+    content: CatchPad = 63
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.CatchPad
+    commentId: T:Ubiquity.NET.Llvm.Instructions.CatchPad
+  - linkType: HRef
+    linkId: xref:llvm_langref#catchpad-instruction
+    altText: LLVM catchpad instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.CleanupPad
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.CleanupPad
+  id: CleanupPad
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: CleanupPad
+  nameWithType: OpCode.CleanupPad
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.CleanupPad
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CleanupPad
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 404
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: cleanuppad instruction
+  example: []
+  syntax:
+    content: CleanupPad = 64
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.CleanupPad
+    commentId: T:Ubiquity.NET.Llvm.Instructions.CleanupPad
+  - linkType: HRef
+    linkId: xref:llvm_langref#cleanuppad-instruction
+    altText: LLVM cleanuppad instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#other-operations
+    altText: LLVM Other Operations
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.CatchSwitch
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.CatchSwitch
+  id: CatchSwitch
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: CatchSwitch
+  nameWithType: OpCode.CatchSwitch
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.CatchSwitch
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CatchSwitch
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 410
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: catchswitch instruction
+  example: []
+  syntax:
+    content: CatchSwitch = 65
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Instructions.CatchSwitch
+    commentId: T:Ubiquity.NET.Llvm.Instructions.CatchSwitch
+  - linkType: HRef
+    linkId: xref:llvm_langref#catchswitch-instruction
+    altText: LLVM catchswitch instruction
+  - linkType: HRef
+    linkId: xref:llvm_langref#terminator-instructions
+    altText: LLVM Terminator Instructions
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.CallBr
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.CallBr
+  id: CallBr
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: CallBr
+  nameWithType: OpCode.CallBr
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.CallBr
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CallBr
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 414
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: callbr instruction
+  example: []
+  syntax:
+    content: CallBr = 67
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkType: HRef
+    linkId: xref::llvm_langref#i-callbr
+    altText: xref::llvm_langref#i-callbr
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode.Freeze
+  commentId: F:Ubiquity.NET.Llvm.Instructions.OpCode.Freeze
+  id: Freeze
+  parent: Ubiquity.NET.Llvm.Instructions.OpCode
+  langs:
+  - csharp
+  - vb
+  name: Freeze
+  nameWithType: OpCode.Freeze
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode.Freeze
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Freeze
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Instruction.cs
+    startLine: 418
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Freeze instruction
+  example: []
+  syntax:
+    content: Freeze = 68
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.OpCode
+  seealso:
+  - linkType: HRef
+    linkId: xref:llvm_langref#i-freeze
+    altText: xref:llvm_langref#i-freeze
+references:
+- uid: Ubiquity.NET.Llvm.Instructions
+  commentId: N:Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Instructions
+  nameWithType: Ubiquity.NET.Llvm.Instructions
+  fullName: Ubiquity.NET.Llvm.Instructions
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Instructions
+    name: Instructions
+    href: Ubiquity.NET.Llvm.Instructions.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Instructions
+    name: Instructions
+    href: Ubiquity.NET.Llvm.Instructions.html
+- uid: Ubiquity.NET.Llvm.Instructions.OpCode
+  commentId: T:Ubiquity.NET.Llvm.Instructions.OpCode
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.OpCode.html
+  name: OpCode
+  nameWithType: OpCode
+  fullName: Ubiquity.NET.Llvm.Instructions.OpCode
+- uid: Ubiquity.NET.Llvm.Instructions.ReturnInstruction
+  commentId: T:Ubiquity.NET.Llvm.Instructions.ReturnInstruction
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.ReturnInstruction.html
+  name: ReturnInstruction
+  nameWithType: ReturnInstruction
+  fullName: Ubiquity.NET.Llvm.Instructions.ReturnInstruction
+- uid: Ubiquity.NET.Llvm.Instructions.Branch
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Branch
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Branch.html
+  name: Branch
+  nameWithType: Branch
+  fullName: Ubiquity.NET.Llvm.Instructions.Branch
+- uid: Ubiquity.NET.Llvm.Instructions.Switch
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Switch
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Switch.html
+  name: Switch
+  nameWithType: Switch
+  fullName: Ubiquity.NET.Llvm.Instructions.Switch
+- uid: Ubiquity.NET.Llvm.Instructions.IndirectBranch
+  commentId: T:Ubiquity.NET.Llvm.Instructions.IndirectBranch
+  href: Ubiquity.NET.Llvm.Instructions.IndirectBranch.html
+  name: IndirectBranch
+  nameWithType: IndirectBranch
+  fullName: Ubiquity.NET.Llvm.Instructions.IndirectBranch
+- uid: Ubiquity.NET.Llvm.Instructions.Invoke
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Invoke
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Invoke.html
+  name: Invoke
+  nameWithType: Invoke
+  fullName: Ubiquity.NET.Llvm.Instructions.Invoke
+- uid: Ubiquity.NET.Llvm.Instructions.Unreachable
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Unreachable
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Unreachable.html
+  name: Unreachable
+  nameWithType: Unreachable
+  fullName: Ubiquity.NET.Llvm.Instructions.Unreachable
+- uid: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  commentId: T:Ubiquity.NET.Llvm.Instructions.BinaryOperator
+  href: Ubiquity.NET.Llvm.Instructions.BinaryOperator.html
+  name: BinaryOperator
+  nameWithType: BinaryOperator
+  fullName: Ubiquity.NET.Llvm.Instructions.BinaryOperator
+- uid: Ubiquity.NET.Llvm.Instructions.Alloca
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Alloca
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Alloca.html
+  name: Alloca
+  nameWithType: Alloca
+  fullName: Ubiquity.NET.Llvm.Instructions.Alloca
+- uid: Ubiquity.NET.Llvm.Instructions.Load
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Load
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Load.html
+  name: Load
+  nameWithType: Load
+  fullName: Ubiquity.NET.Llvm.Instructions.Load
+- uid: Ubiquity.NET.Llvm.Instructions.Store
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Store
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.Store.html
+  name: Store
+  nameWithType: Store
+  fullName: Ubiquity.NET.Llvm.Instructions.Store
+- uid: Ubiquity.NET.Llvm.Instructions.Fence
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Fence
+  href: Ubiquity.NET.Llvm.Instructions.Fence.html
+  name: Fence
+  nameWithType: Fence
+  fullName: Ubiquity.NET.Llvm.Instructions.Fence
+- uid: Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg
+  commentId: T:Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg.html
+  name: AtomicCmpXchg
+  nameWithType: AtomicCmpXchg
+  fullName: Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg
+- uid: Ubiquity.NET.Llvm.Instructions.AtomicRMW
+  commentId: T:Ubiquity.NET.Llvm.Instructions.AtomicRMW
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.AtomicRMW.html
+  name: AtomicRMW
+  nameWithType: AtomicRMW
+  fullName: Ubiquity.NET.Llvm.Instructions.AtomicRMW
+- uid: Ubiquity.NET.Llvm.Instructions.GetElementPtr
+  commentId: T:Ubiquity.NET.Llvm.Instructions.GetElementPtr
+  href: Ubiquity.NET.Llvm.Instructions.GetElementPtr.html
+  name: GetElementPtr
+  nameWithType: GetElementPtr
+  fullName: Ubiquity.NET.Llvm.Instructions.GetElementPtr
+- uid: Ubiquity.NET.Llvm.Instructions.Trunc
+  commentId: T:Ubiquity.NET.Llvm.Instructions.Trunc
+  href: Ubiquity.NET.Llvm.Instructions.Trunc.html
+  name: Trunc
+  nameWithType: Trunc
+  fullName: Ubiquity.NET.Llvm.Instructions.Trunc
+- uid: Ubiquity.NET.Llvm.Instructions.ZeroExtend
+  commentId: T:Ubiquity.NET.Llvm.Instructions.ZeroExtend
+  href: Ubiquity.NET.Llvm.Instructions.ZeroExtend.html
+  name: ZeroExtend
+  nameWithType: ZeroExtend
+  fullName: Ubiquity.NET.Llvm.Instructions.ZeroExtend
+- uid: Ubiquity.NET.Llvm.Instructions.SignExtend
+  commentId: T:Ubiquity.NET.Llvm.Instructions.SignExtend
+  href: Ubiquity.NET.Llvm.Instructions.SignExtend.html
+  name: SignExtend
+  nameWithType: SignExtend
+  fullName: Ubiquity.NET.Llvm.Instructions.SignExtend
+- uid: Ubiquity.NET.Llvm.Instructions.FPToUI
+  commentId: T:Ubiquity.NET.Llvm.Instructions.FPToUI
+  href: Ubiquity.NET.Llvm.Instructions.FPToUI.html
+  name: FPToUI
+  nameWithType: FPToUI
+  fullName: Ubiquity.NET.Llvm.Instructions.FPToUI
+- uid: Ubiquity.NET.Llvm.Instructions.FPToSI
+  commentId: T:Ubiquity.NET.Llvm.Instructions.FPToSI
+  href: Ubiquity.NET.Llvm.Instructions.FPToSI.html
+  name: FPToSI
+  nameWithType: FPToSI
+  fullName: Ubiquity.NET.Llvm.Instructions.FPToSI
+- uid: Ubiquity.NET.Llvm.Instructions.UIToFP
+  commentId: T:Ubiquity.NET.Llvm.Instructions.UIToFP
+  href: Ubiquity.NET.Llvm.Instructions.UIToFP.html
+  name: UIToFP
+  nameWithType: UIToFP
+  fullName: Ubiquity.NET.Llvm.Instructions.UIToFP
+- uid: Ubiquity.NET.Llvm.Instructions.SIToFP
+  commentId: T:Ubiquity.NET.Llvm.Instructions.SIToFP
+  href: Ubiquity.NET.Llvm.Instructions.SIToFP.html
+  name: SIToFP
+  nameWithType: SIToFP
+  fullName: Ubiquity.NET.Llvm.Instructions.SIToFP
+- uid: Ubiquity.NET.Llvm.Instructions.FPTrunc
+  commentId: T:Ubiquity.NET.Llvm.Instructions.FPTrunc
+  href: Ubiquity.NET.Llvm.Instructions.FPTrunc.html
+  name: FPTrunc
+  nameWithType: FPTrunc
+  fullName: Ubiquity.NET.Llvm.Instructions.FPTrunc
+- uid: Ubiquity.NET.Llvm.Instructions.FPExt
+  commentId: T:Ubiquity.NET.Llvm.Instructions.FPExt
+  href: Ubiquity.NET.Llvm.Instructions.FPExt.html
+  name: FPExt
+  nameWithType: FPExt
+  fullName: Ubiquity.NET.Llvm.Instructions.FPExt
+- uid: Ubiquity.NET.Llvm.Instructions.PointerToInt
+  commentId: T:Ubiquity.NET.Llvm.Instructions.PointerToInt
+  href: Ubiquity.NET.Llvm.Instructions.PointerToInt.html
+  name: PointerToInt
+  nameWithType: PointerToInt
+  fullName: Ubiquity.NET.Llvm.Instructions.PointerToInt
+- uid: Ubiquity.NET.Llvm.Instructions.IntToPointer
+  commentId: T:Ubiquity.NET.Llvm.Instructions.IntToPointer
+  href: Ubiquity.NET.Llvm.Instructions.IntToPointer.html
+  name: IntToPointer
+  nameWithType: IntToPointer
+  fullName: Ubiquity.NET.Llvm.Instructions.IntToPointer
+- uid: Ubiquity.NET.Llvm.Instructions.BitCast
+  commentId: T:Ubiquity.NET.Llvm.Instructions.BitCast
+  href: Ubiquity.NET.Llvm.Instructions.BitCast.html
+  name: BitCast
+  nameWithType: BitCast
+  fullName: Ubiquity.NET.Llvm.Instructions.BitCast
+- uid: Ubiquity.NET.Llvm.Instructions.AddressSpaceCast
+  commentId: T:Ubiquity.NET.Llvm.Instructions.AddressSpaceCast
+  href: Ubiquity.NET.Llvm.Instructions.AddressSpaceCast.html
+  name: AddressSpaceCast
+  nameWithType: AddressSpaceCast
+  fullName: Ubiquity.NET.Llvm.Instructions.AddressSpaceCast
+- uid: Ubiquity.NET.Llvm.Instructions.IntCmp
+  commentId: T:Ubiquity.NET.Llvm.Instructions.IntCmp
+  href: Ubiquity.NET.Llvm.Instructions.IntCmp.html
+  name: IntCmp
+  nameWithType: IntCmp
+  fullName: Ubiquity.NET.Llvm.Instructions.IntCmp
+- uid: Ubiquity.NET.Llvm.Instructions.FCmp
+  commentId: T:Ubiquity.NET.Llvm.Instructions.FCmp
+  href: Ubiquity.NET.Llvm.Instructions.FCmp.html
+  name: FCmp
+  nameWithType: FCmp
+  fullName: Ubiquity.NET.Llvm.Instructions.FCmp
+- uid: Ubiquity.NET.Llvm.Instructions.PhiNode
+  commentId: T:Ubiquity.NET.Llvm.Instructions.PhiNode
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.PhiNode.html
+  name: PhiNode
+  nameWithType: PhiNode
+  fullName: Ubiquity.NET.Llvm.Instructions.PhiNode
+- uid: Ubiquity.NET.Llvm.Instructions.CallInstruction
+  commentId: T:Ubiquity.NET.Llvm.Instructions.CallInstruction
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.CallInstruction.html
+  name: CallInstruction
+  nameWithType: CallInstruction
+  fullName: Ubiquity.NET.Llvm.Instructions.CallInstruction
+- uid: Ubiquity.NET.Llvm.Instructions.SelectInstruction
+  commentId: T:Ubiquity.NET.Llvm.Instructions.SelectInstruction
+  href: Ubiquity.NET.Llvm.Instructions.SelectInstruction.html
+  name: SelectInstruction
+  nameWithType: SelectInstruction
+  fullName: Ubiquity.NET.Llvm.Instructions.SelectInstruction
+- uid: Ubiquity.NET.Llvm.Instructions.UserOp1
+  commentId: T:Ubiquity.NET.Llvm.Instructions.UserOp1
+  href: Ubiquity.NET.Llvm.Instructions.UserOp1.html
+  name: UserOp1
+  nameWithType: UserOp1
+  fullName: Ubiquity.NET.Llvm.Instructions.UserOp1
+- uid: Ubiquity.NET.Llvm.Instructions.UserOp2
+  commentId: T:Ubiquity.NET.Llvm.Instructions.UserOp2
+  href: Ubiquity.NET.Llvm.Instructions.UserOp2.html
+  name: UserOp2
+  nameWithType: UserOp2
+  fullName: Ubiquity.NET.Llvm.Instructions.UserOp2
+- uid: Ubiquity.NET.Llvm.Instructions.VaArg
+  commentId: T:Ubiquity.NET.Llvm.Instructions.VaArg
+  href: Ubiquity.NET.Llvm.Instructions.VaArg.html
+  name: VaArg
+  nameWithType: VaArg
+  fullName: Ubiquity.NET.Llvm.Instructions.VaArg
+- uid: Ubiquity.NET.Llvm.Instructions.ExtractElement
+  commentId: T:Ubiquity.NET.Llvm.Instructions.ExtractElement
+  href: Ubiquity.NET.Llvm.Instructions.ExtractElement.html
+  name: ExtractElement
+  nameWithType: ExtractElement
+  fullName: Ubiquity.NET.Llvm.Instructions.ExtractElement
+- uid: Ubiquity.NET.Llvm.Instructions.InsertElement
+  commentId: T:Ubiquity.NET.Llvm.Instructions.InsertElement
+  href: Ubiquity.NET.Llvm.Instructions.InsertElement.html
+  name: InsertElement
+  nameWithType: InsertElement
+  fullName: Ubiquity.NET.Llvm.Instructions.InsertElement
+- uid: Ubiquity.NET.Llvm.Instructions.ShuffleVector
+  commentId: T:Ubiquity.NET.Llvm.Instructions.ShuffleVector
+  href: Ubiquity.NET.Llvm.Instructions.ShuffleVector.html
+  name: ShuffleVector
+  nameWithType: ShuffleVector
+  fullName: Ubiquity.NET.Llvm.Instructions.ShuffleVector
+- uid: Ubiquity.NET.Llvm.Instructions.ExtractValue
+  commentId: T:Ubiquity.NET.Llvm.Instructions.ExtractValue
+  href: Ubiquity.NET.Llvm.Instructions.ExtractValue.html
+  name: ExtractValue
+  nameWithType: ExtractValue
+  fullName: Ubiquity.NET.Llvm.Instructions.ExtractValue
+- uid: Ubiquity.NET.Llvm.Instructions.InsertValue
+  commentId: T:Ubiquity.NET.Llvm.Instructions.InsertValue
+  href: Ubiquity.NET.Llvm.Instructions.InsertValue.html
+  name: InsertValue
+  nameWithType: InsertValue
+  fullName: Ubiquity.NET.Llvm.Instructions.InsertValue
+- uid: Ubiquity.NET.Llvm.Instructions.ResumeInstruction
+  commentId: T:Ubiquity.NET.Llvm.Instructions.ResumeInstruction
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.ResumeInstruction.html
+  name: ResumeInstruction
+  nameWithType: ResumeInstruction
+  fullName: Ubiquity.NET.Llvm.Instructions.ResumeInstruction
+- uid: Ubiquity.NET.Llvm.Instructions.LandingPad
+  commentId: T:Ubiquity.NET.Llvm.Instructions.LandingPad
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.LandingPad.html
+  name: LandingPad
+  nameWithType: LandingPad
+  fullName: Ubiquity.NET.Llvm.Instructions.LandingPad
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupReturn
+  commentId: T:Ubiquity.NET.Llvm.Instructions.CleanupReturn
+  href: Ubiquity.NET.Llvm.Instructions.CleanupReturn.html
+  name: CleanupReturn
+  nameWithType: CleanupReturn
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupReturn
+- uid: Ubiquity.NET.Llvm.Instructions.CatchReturn
+  commentId: T:Ubiquity.NET.Llvm.Instructions.CatchReturn
+  href: Ubiquity.NET.Llvm.Instructions.CatchReturn.html
+  name: CatchReturn
+  nameWithType: CatchReturn
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchReturn
+- uid: Ubiquity.NET.Llvm.Instructions.CatchPad
+  commentId: T:Ubiquity.NET.Llvm.Instructions.CatchPad
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.CatchPad.html
+  name: CatchPad
+  nameWithType: CatchPad
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchPad
+- uid: Ubiquity.NET.Llvm.Instructions.CleanupPad
+  commentId: T:Ubiquity.NET.Llvm.Instructions.CleanupPad
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.CleanupPad.html
+  name: CleanupPad
+  nameWithType: CleanupPad
+  fullName: Ubiquity.NET.Llvm.Instructions.CleanupPad
+- uid: Ubiquity.NET.Llvm.Instructions.CatchSwitch
+  commentId: T:Ubiquity.NET.Llvm.Instructions.CatchSwitch
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.CatchSwitch.html
+  name: CatchSwitch
+  nameWithType: CatchSwitch
+  fullName: Ubiquity.NET.Llvm.Instructions.CatchSwitch

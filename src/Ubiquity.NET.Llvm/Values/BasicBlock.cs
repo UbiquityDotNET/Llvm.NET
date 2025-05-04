@@ -4,15 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Provides access to an LLVM Basic block</summary>
@@ -25,7 +16,7 @@ namespace Ubiquity.NET.Llvm.Values
         : Value
     {
         /// <summary>Gets the function containing the block</summary>
-        public IrFunction? ContainingFunction
+        public Function? ContainingFunction
         {
             get
             {
@@ -38,7 +29,7 @@ namespace Ubiquity.NET.Llvm.Values
                 // cache functions and use lookups to ensure
                 // identity/interning remains consistent with actual
                 // LLVM model of interning
-                return FromHandle<IrFunction>( parent );
+                return FromHandle<Function>( parent );
             }
         }
 
@@ -96,17 +87,14 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="ArgumentException">Thrown when <paramref cref="Instruction"/> is from a different block</exception>
         public Instruction? GetNextInstruction( Instruction instruction )
         {
-            if( instruction == null )
-            {
-                throw new ArgumentNullException( nameof( instruction ) );
-            }
+            ArgumentNullException.ThrowIfNull( instruction );
 
-            if( instruction.ContainingBlock != this )
+            if( !instruction.ContainingBlock.Equals( this ) )
             {
                 throw new ArgumentException( Resources.Instruction_is_from_a_different_block, nameof( instruction ) );
             }
 
-            var hInst = LLVMGetNextInstruction( instruction.ValueHandle );
+            var hInst = LLVMGetNextInstruction( instruction.Handle );
             return hInst == default ? null : FromHandle<Instruction>( hInst );
         }
 
@@ -115,7 +103,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
         }
 
-        internal LLVMBasicBlockRef BlockHandle => LLVMValueAsBasicBlock( ValueHandle );
+        internal LLVMBasicBlockRef BlockHandle => LLVMValueAsBasicBlock( Handle );
 
         internal static BasicBlock? FromHandle( LLVMBasicBlockRef basicBlockRef )
         {

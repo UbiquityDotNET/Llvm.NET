@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Interface for a fixed shape collection of operands</summary>

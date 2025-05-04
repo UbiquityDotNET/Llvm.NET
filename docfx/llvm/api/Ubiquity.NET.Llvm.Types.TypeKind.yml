@@ -1,0 +1,780 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Types.TypeKind
+  commentId: T:Ubiquity.NET.Llvm.Types.TypeKind
+  id: TypeKind
+  parent: Ubiquity.NET.Llvm.Types
+  children:
+  - Ubiquity.NET.Llvm.Types.TypeKind.Array
+  - Ubiquity.NET.Llvm.Types.TypeKind.BFloat
+  - Ubiquity.NET.Llvm.Types.TypeKind.Float128
+  - Ubiquity.NET.Llvm.Types.TypeKind.Float128m112
+  - Ubiquity.NET.Llvm.Types.TypeKind.Float16
+  - Ubiquity.NET.Llvm.Types.TypeKind.Float32
+  - Ubiquity.NET.Llvm.Types.TypeKind.Float64
+  - Ubiquity.NET.Llvm.Types.TypeKind.Function
+  - Ubiquity.NET.Llvm.Types.TypeKind.Integer
+  - Ubiquity.NET.Llvm.Types.TypeKind.Label
+  - Ubiquity.NET.Llvm.Types.TypeKind.Metadata
+  - Ubiquity.NET.Llvm.Types.TypeKind.Pointer
+  - Ubiquity.NET.Llvm.Types.TypeKind.ScalableVector
+  - Ubiquity.NET.Llvm.Types.TypeKind.Struct
+  - Ubiquity.NET.Llvm.Types.TypeKind.TargetSpecific
+  - Ubiquity.NET.Llvm.Types.TypeKind.Token
+  - Ubiquity.NET.Llvm.Types.TypeKind.Vector
+  - Ubiquity.NET.Llvm.Types.TypeKind.Void
+  - Ubiquity.NET.Llvm.Types.TypeKind.X86AMX
+  - Ubiquity.NET.Llvm.Types.TypeKind.X86Float80
+  langs:
+  - csharp
+  - vb
+  name: TypeKind
+  nameWithType: TypeKind
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TypeKind
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 12
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Basic kind of a type
+  example: []
+  syntax:
+    content: public enum TypeKind
+    content.vb: Public Enum TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Void
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Void
+  id: Void
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Void
+  nameWithType: TypeKind.Void
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Void
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Void
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Type with no size
+  example: []
+  syntax:
+    content: Void = 0
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Float16
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Float16
+  id: Float16
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Float16
+  nameWithType: TypeKind.Float16
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Float16
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float16
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 19
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: 16 bit floating point type
+  example: []
+  syntax:
+    content: Float16 = 1
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Float32
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Float32
+  id: Float32
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Float32
+  nameWithType: TypeKind.Float32
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Float32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float32
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: 32 bit floating point type
+  example: []
+  syntax:
+    content: Float32 = 2
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Float64
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Float64
+  id: Float64
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Float64
+  nameWithType: TypeKind.Float64
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Float64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float64
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: 64 bit floating point type
+  example: []
+  syntax:
+    content: Float64 = 3
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.X86Float80
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.X86Float80
+  id: X86Float80
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: X86Float80
+  nameWithType: TypeKind.X86Float80
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.X86Float80
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: X86Float80
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 28
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: 80 bit floating point type (X87)
+  example: []
+  syntax:
+    content: X86Float80 = 4
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Float128m112
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Float128m112
+  id: Float128m112
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Float128m112
+  nameWithType: TypeKind.Float128m112
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Float128m112
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float128m112
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 31
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: 128 bit floating point type (112-bit mantissa)
+  example: []
+  syntax:
+    content: Float128m112 = 5
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Float128
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Float128
+  id: Float128
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Float128
+  nameWithType: TypeKind.Float128
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Float128
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Float128
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 34
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: 128 bit floating point type (two 64-bits)
+  example: []
+  syntax:
+    content: Float128 = 6
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Label
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Label
+  id: Label
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Label
+  nameWithType: TypeKind.Label
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Label
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Label
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: <xref href="Ubiquity.NET.Llvm.Values.BasicBlock" data-throw-if-not-resolved="false"></xref> instruction label
+  example: []
+  syntax:
+    content: Label = 7
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Integer
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Integer
+  id: Integer
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Integer
+  nameWithType: TypeKind.Integer
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Integer
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Integer
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 40
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Arbitrary bit width integers
+  example: []
+  syntax:
+    content: Integer = 8
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Function
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Function
+  id: Function
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Function
+  nameWithType: TypeKind.Function
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Function
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Function
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: <xref href="Ubiquity.NET.Llvm.Types.IFunctionType" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: Function = 9
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Struct
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Struct
+  id: Struct
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Struct
+  nameWithType: TypeKind.Struct
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Struct
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Struct
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: <xref href="Ubiquity.NET.Llvm.Types.IStructType" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: Struct = 10
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Array
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Array
+  id: Array
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Array
+  nameWithType: TypeKind.Array
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Array
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Array
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: <xref href="Ubiquity.NET.Llvm.Types.IArrayType" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: Array = 11
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Pointer
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Pointer
+  id: Pointer
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Pointer
+  nameWithType: TypeKind.Pointer
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Pointer
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Pointer
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: <xref href="Ubiquity.NET.Llvm.Types.IPointerType" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: Pointer = 12
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Vector
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Vector
+  id: Vector
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Vector
+  nameWithType: TypeKind.Vector
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Vector
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Vector
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: SIMD 'packed' format, or other <xref href="Ubiquity.NET.Llvm.Types.IVectorType" data-throw-if-not-resolved="false"></xref> implementation
+  example: []
+  syntax:
+    content: Vector = 13
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Metadata
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Metadata
+  id: Metadata
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: TypeKind.Metadata
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Metadata
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Metadata
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: <xref href="Ubiquity.NET.Llvm.Metadata.IrMetadata" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: Metadata = 14
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.Token
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.Token
+  id: Token
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: Token
+  nameWithType: TypeKind.Token
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.Token
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Token
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 61
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Exception handler token
+  example: []
+  syntax:
+    content: Token = 16
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.ScalableVector
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.ScalableVector
+  id: ScalableVector
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: ScalableVector
+  nameWithType: TypeKind.ScalableVector
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.ScalableVector
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ScalableVector
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 64
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Scalable vector
+  example: []
+  syntax:
+    content: ScalableVector = 17
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.BFloat
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.BFloat
+  id: BFloat
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: BFloat
+  nameWithType: TypeKind.BFloat
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.BFloat
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BFloat
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 67
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: B Float type
+  example: []
+  syntax:
+    content: BFloat = 18
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.X86AMX
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.X86AMX
+  id: X86AMX
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: X86AMX
+  nameWithType: TypeKind.X86AMX
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.X86AMX
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: X86AMX
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 70
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: x86 AMX data type
+  example: []
+  syntax:
+    content: X86AMX = 19
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind.TargetSpecific
+  commentId: F:Ubiquity.NET.Llvm.Types.TypeKind.TargetSpecific
+  id: TargetSpecific
+  parent: Ubiquity.NET.Llvm.Types.TypeKind
+  langs:
+  - csharp
+  - vb
+  name: TargetSpecific
+  nameWithType: TypeKind.TargetSpecific
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind.TargetSpecific
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TargetSpecific
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 73
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Target specific extended type
+  example: []
+  syntax:
+    content: TargetSpecific = 20
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+references:
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: Ubiquity.NET.Llvm.Types.TypeKind
+  commentId: T:Ubiquity.NET.Llvm.Types.TypeKind
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.TypeKind.html
+  name: TypeKind
+  nameWithType: TypeKind
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Values.BasicBlock
+  commentId: T:Ubiquity.NET.Llvm.Values.BasicBlock
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.BasicBlock.html
+  name: BasicBlock
+  nameWithType: BasicBlock
+  fullName: Ubiquity.NET.Llvm.Values.BasicBlock
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.Types.IFunctionType
+  commentId: T:Ubiquity.NET.Llvm.Types.IFunctionType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IFunctionType.html
+  name: IFunctionType
+  nameWithType: IFunctionType
+  fullName: Ubiquity.NET.Llvm.Types.IFunctionType
+- uid: Ubiquity.NET.Llvm.Types.IStructType
+  commentId: T:Ubiquity.NET.Llvm.Types.IStructType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IStructType.html
+  name: IStructType
+  nameWithType: IStructType
+  fullName: Ubiquity.NET.Llvm.Types.IStructType
+- uid: Ubiquity.NET.Llvm.Types.IArrayType
+  commentId: T:Ubiquity.NET.Llvm.Types.IArrayType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  name: IArrayType
+  nameWithType: IArrayType
+  fullName: Ubiquity.NET.Llvm.Types.IArrayType
+- uid: Ubiquity.NET.Llvm.Types.IPointerType
+  commentId: T:Ubiquity.NET.Llvm.Types.IPointerType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IPointerType.html
+  name: IPointerType
+  nameWithType: IPointerType
+  fullName: Ubiquity.NET.Llvm.Types.IPointerType
+- uid: Ubiquity.NET.Llvm.Types.IVectorType
+  commentId: T:Ubiquity.NET.Llvm.Types.IVectorType
+  href: Ubiquity.NET.Llvm.Types.IVectorType.html
+  name: IVectorType
+  nameWithType: IVectorType
+  fullName: Ubiquity.NET.Llvm.Types.IVectorType
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  commentId: T:Ubiquity.NET.Llvm.Metadata.IrMetadata
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  name: IrMetadata
+  nameWithType: IrMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html

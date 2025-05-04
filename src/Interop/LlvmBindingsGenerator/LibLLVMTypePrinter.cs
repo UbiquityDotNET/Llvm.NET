@@ -56,17 +56,19 @@ namespace LlvmBindingsGenerator
             {
                 TypedefType tdt when tdt.Declaration.Name == "LLVMBool" => "bool",
                 PointerType pt when pt.Pointee is BuiltinType => $"{base.ToString( pt.Pointee )}*", // shouldn't see this... Should be caught as an error...
-                TypedefType tdt when tdt.Declaration.Name == "intptr_t" => "global::System.IntPtr",
-                TypedefType tdt when tdt.Declaration.Name == "uintptr_t" => "global::System.UIntPtr",
-                TypedefType tdt when tdt.Declaration.Name == "uint8_t" => "global::System.Byte",
-                TypedefType tdt when( ShouldBeUInt32(tdt) ) => "global::System.UInt32",
-                TypedefType tdt when( ShouldBeUInt64(tdt) ) => "global::System.UInt64",
-                TypedefType tdt when tdt.Declaration.Name == "int8_t" => "global::System.SByte",
-                TypedefType tdt when tdt.Declaration.Name == "int32_t" => "global::System.Int32",
-                TypedefType tdt when tdt.Declaration.Name == "int64_t" => "global::System.Int64",
+                TypedefType tdt when tdt.Declaration.Name == "intptr_t" => "nint",
+                TypedefType tdt when tdt.Declaration.Name == "uintptr_t" => "nuint",
+                TypedefType tdt when tdt.Declaration.Name == "uint8_t" => "byte",
+                TypedefType tdt when( ShouldBeUInt32(tdt) ) => "UInt32",
+                TypedefType tdt when( ShouldBeUInt64(tdt) ) => "UInt64",
+                TypedefType tdt when tdt.Declaration.Name == "int8_t" => "sbyte",
+                TypedefType tdt when tdt.Declaration.Name == "uint16_t" => "UInt16",
+                TypedefType tdt when tdt.Declaration.Name == "int16_t" => "Int16",
+                TypedefType tdt when tdt.Declaration.Name == "int32_t" => "Int32",
+                TypedefType tdt when tdt.Declaration.Name == "int64_t" => "Int64",
                 TypedefType tdt => tdt.Declaration.Name,
-                BuiltinType bit when bit.Type == PrimitiveType.IntPtr => "global::System.IntPtr",
-                CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl decl ) => decl.Name,
+                BuiltinType bit when bit.Type == PrimitiveType.IntPtr => "nint",
+                CppSharp.AST.Type t when t.TryGetHandleDecl( out TypedefNameDecl? decl ) => decl!.Name,
                 ArrayType at => $"{GetName( at.Type, kind )}[]",
                 _ => base.ToString( type ),
             };
@@ -83,7 +85,9 @@ namespace LlvmBindingsGenerator
         {
             return tdt.Declaration.Name == "uint64_t"
                 || tdt.Declaration.Name == "LLVMOrcModuleHandle" // TODO: This should be mapped as a record struct
-                || tdt.Declaration.Name == "LLVMOrcTargetAddress"; // TODO: This should be mapped as a record struct
+                || tdt.Declaration.Name == "LLVMOrcTargetAddress" // TODO: This should be mapped as a record struct
+                || tdt.Declaration.Name == "LLVMOrcJITTargetAddress" // TODO: This should be mapped as a record struct
+                || tdt.Declaration.Name == "LLVMOrcExecutorAddress"; // TODO: This should be mapped as a record struct
         }
 
         private readonly NativeTypePrinter NativePrinter = new();

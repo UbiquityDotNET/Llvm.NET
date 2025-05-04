@@ -1,0 +1,39 @@
+[*]
+# VSSPELL: All files in this folder
+vsspell_section_id = 1566b770c5af48b08aa5b43b10ffef28
+vsspell_ignored_words_1566b770c5af48b08aa5b43b10ffef28 = File:IgnoredWords.dic|def
+
+[*.kls]
+# VSSPELL: DIsable everything for the sample languages
+vsspell_section_id = 257c51e4a39d462090397bebd5922176
+vsspell_spell_check_as_you_type = false
+vsspell_include_in_project_spell_check = false
+vsspell_code_analyzers_enabled = false
+vsspell_detect_doubled_words = false
+vsspell_ignore_words_with_digits = true
+vsspell_ignore_words_in_all_uppercase = true
+vsspell_ignore_words_in_mixed_case = true
+vsspell_ignore_format_specifiers = true
+vsspell_ignore_filenames_and_email_addresses = true
+vsspell_ignore_xml_elements_in_text = true
+vsspell_treat_underscore_as_separator = false
+vsspell_ignore_mnemonics = true
+vsspell_code_analyzer_ignore_identifier_if_private = true
+vsspell_code_analyzer_ignore_identifier_if_internal = true
+vsspell_code_analyzer_ignore_identifier_if_all_uppercase = true
+vsspell_code_analyzer_ignore_identifiers_within_member_bodies = true
+vsspell_code_analyzer_ignore_type_parameters = true
+vsspell_code_analyzer_ignore_if_compiler_generated = true
+vsspell_code_analyzer_ignore_xml_doc_comments = true
+vsspell_code_analyzer_ignore_delimited_comments = true
+vsspell_code_analyzer_ignore_standard_single_line_comments = true
+vsspell_code_analyzer_ignore_quadruple_slash_comments = true
+vsspell_code_analyzer_ignore_normal_strings = true
+vsspell_code_analyzer_ignore_verbatim_strings = true
+vsspell_code_analyzer_ignore_interpolated_strings = true
+vsspell_code_analyzer_ignore_raw_strings = true
+vsspell_code_analyzer_apply_to_all_c_style_languages = true
+vsspell_exclusion_expressions_257c51e4a39d462090397bebd5922176 = clear_inherited(?@@PND@@/Options/).*(?@@PND@@ Exclude EVERYTHING)(?@@PND@@/Options/Multiline)
+vsspell_ignored_xml_elements_257c51e4a39d462090397bebd5922176 = clear_inherited
+vsspell_spell_checked_xml_attributes_257c51e4a39d462090397bebd5922176 = clear_inherited
+

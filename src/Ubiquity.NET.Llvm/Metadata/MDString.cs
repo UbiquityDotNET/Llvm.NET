@@ -4,19 +4,29 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Stores a string in Metadata</summary>
+    /// <summary>Stores a string in IrMetadata</summary>
     public class MDString
-        : LlvmMetadata
+        : IrMetadata
     {
         /// <summary>Gets the string from the metadata node</summary>
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            return NativeMethods.LibLLVMGetMDStringText( MetadataHandle, out uint _ );
+            unsafe
+            {
+                // Return may not have a terminator so go through LazyEncodedString
+                // as a span of bytes.
+                byte* pNativeString = LibLLVMGetMDStringText( Handle, out uint len );
+                if (len == 0)
+                {
+                    return string.Empty;
+                }
+
+                var s = new LazyEncodedString(new ReadOnlySpan<byte>(pNativeString, checked((int)len)));
+                return s.ToString();
+            }
         }
 
         internal MDString( LLVMMetadataRef handle )

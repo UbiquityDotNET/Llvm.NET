@@ -1,0 +1,835 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.Section
+  id: Section
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  children:
+  - Ubiquity.NET.Llvm.ObjectFile.Section.Address
+  - Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary
+  - Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  - Ubiquity.NET.Llvm.ObjectFile.Section.Contents
+  - Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  - Ubiquity.NET.Llvm.ObjectFile.Section.Name
+  - Ubiquity.NET.Llvm.ObjectFile.Section.Relocations
+  langs:
+  - csharp
+  - vb
+  name: Section
+  nameWithType: Section
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section
+  type: Struct
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Section
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Section in an <xref href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public readonly record struct Section : IEquatable<Section>'
+    content.vb: Public Structure Section Implements IEquatable(Of Section)
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.ObjectFile.Section}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.ValueType.ToString
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Name
+  commentId: P:Ubiquity.NET.Llvm.ObjectFile.Section.Name
+  id: Name
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Section.Name
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Name
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Name
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Gets the name of the section
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.Name*
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary
+  commentId: P:Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary
+  id: ContainingBinary
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: ContainingBinary
+  nameWithType: Section.ContainingBinary
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ContainingBinary
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Gets the <xref href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary" data-throw-if-not-resolved="false"></xref> this section belongs to
+  example: []
+  syntax:
+    content: public TargetBinary ContainingBinary { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+    content.vb: Public ReadOnly Property ContainingBinary As TargetBinary
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary*
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Relocations
+  commentId: P:Ubiquity.NET.Llvm.ObjectFile.Section.Relocations
+  id: Relocations
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: Relocations
+  nameWithType: Section.Relocations
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Relocations
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Relocations
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Gets the Relocations in this <xref href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public IEnumerable<Relocation> Relocations { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.ObjectFile.Relocation}
+    content.vb: Public ReadOnly Property Relocations As IEnumerable(Of Relocation)
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.Relocations*
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Contents
+  commentId: P:Ubiquity.NET.Llvm.ObjectFile.Section.Contents
+  id: Contents
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: Contents
+  nameWithType: Section.Contents
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Contents
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Contents
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 35
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Gets the contents of the section
+  example: []
+  syntax:
+    content: public ReadOnlySpan<byte> Contents { get; }
+    parameters: []
+    return:
+      type: System.ReadOnlySpan{System.Byte}
+    content.vb: Public ReadOnly Property Contents As ReadOnlySpan(Of Byte)
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.Contents*
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  commentId: M:Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  id: ContainsSymbol(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: ContainsSymbol(Symbol)
+  nameWithType: Section.ContainsSymbol(Symbol)
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ContainsSymbol
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 50
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Tests whether the section contains a given symbol
+  example: []
+  syntax:
+    content: public bool ContainsSymbol(Symbol symbol)
+    parameters:
+    - id: symbol
+      type: Ubiquity.NET.Llvm.ObjectFile.Symbol
+      description: Symbol to test for
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the section contains <code class="paramref">symbol</code>
+    content.vb: Public Function ContainsSymbol(symbol As Symbol) As Boolean
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol*
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  commentId: M:Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  id: MoveToContainingSection(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: MoveToContainingSection(Symbol)
+  nameWithType: Section.MoveToContainingSection(Symbol)
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection(Ubiquity.NET.Llvm.ObjectFile.Symbol)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MoveToContainingSection
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 54
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Move the iterator to the section containing the provided symbol
+  example: []
+  syntax:
+    content: public void MoveToContainingSection(Symbol symbol)
+    parameters:
+    - id: symbol
+      type: Ubiquity.NET.Llvm.ObjectFile.Symbol
+      description: symbol to find the section for
+    content.vb: Public Sub MoveToContainingSection(symbol As Symbol)
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection*
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Address
+  commentId: P:Ubiquity.NET.Llvm.ObjectFile.Section.Address
+  id: Address
+  parent: Ubiquity.NET.Llvm.ObjectFile.Section
+  langs:
+  - csharp
+  - vb
+  name: Address
+  nameWithType: Section.Address
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Address
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Address
+    path: ../src/Ubiquity.NET.Llvm/ObjectFile/Section.cs
+    startLine: 60
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.ObjectFile
+  summary: Gets the address of the section
+  example: []
+  syntax:
+    content: public ulong Address { get; }
+    parameters: []
+    return:
+      type: System.UInt64
+    content.vb: Public ReadOnly Property Address As ULong
+  overload: Ubiquity.NET.Llvm.ObjectFile.Section.Address*
+references:
+- uid: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.TargetBinary.html
+  name: TargetBinary
+  nameWithType: TargetBinary
+  fullName: Ubiquity.NET.Llvm.ObjectFile.TargetBinary
+- uid: Ubiquity.NET.Llvm.ObjectFile
+  commentId: N:Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.ObjectFile
+  nameWithType: Ubiquity.NET.Llvm.ObjectFile
+  fullName: Ubiquity.NET.Llvm.ObjectFile
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.ObjectFile
+    name: ObjectFile
+    href: Ubiquity.NET.Llvm.ObjectFile.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.ObjectFile
+    name: ObjectFile
+    href: Ubiquity.NET.Llvm.ObjectFile.html
+- uid: System.IEquatable{Ubiquity.NET.Llvm.ObjectFile.Section}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.ObjectFile.Section}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<Section>
+  nameWithType: IEquatable<Section>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.ObjectFile.Section>
+  nameWithType.vb: IEquatable(Of Section)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.ObjectFile.Section)
+  name.vb: IEquatable(Of Section)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.ObjectFile.Section
+    name: Section
+    href: Ubiquity.NET.Llvm.ObjectFile.Section.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.ObjectFile.Section
+    name: Section
+    href: Ubiquity.NET.Llvm.ObjectFile.Section.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Name*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.Name
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_Name
+  name: Name
+  nameWithType: Section.Name
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_ContainingBinary
+  name: ContainingBinary
+  nameWithType: Section.ContainingBinary
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.ContainingBinary
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Relocations*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.Relocations
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_Relocations
+  name: Relocations
+  nameWithType: Section.Relocations
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Relocations
+- uid: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.ObjectFile.Relocation}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.ObjectFile.Relocation}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<Relocation>
+  nameWithType: IEnumerable<Relocation>
+  fullName: System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.ObjectFile.Relocation>
+  nameWithType.vb: IEnumerable(Of Relocation)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.ObjectFile.Relocation)
+  name.vb: IEnumerable(Of Relocation)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.ObjectFile.Relocation
+    name: Relocation
+    href: Ubiquity.NET.Llvm.ObjectFile.Relocation.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.ObjectFile.Relocation
+    name: Relocation
+    href: Ubiquity.NET.Llvm.ObjectFile.Relocation.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Contents*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.Contents
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_Contents
+  name: Contents
+  nameWithType: Section.Contents
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Contents
+- uid: System.ReadOnlySpan{System.Byte}
+  commentId: T:System.ReadOnlySpan{System.Byte}
+  parent: System
+  definition: System.ReadOnlySpan`1
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<byte>
+  nameWithType: ReadOnlySpan<byte>
+  fullName: System.ReadOnlySpan<byte>
+  nameWithType.vb: ReadOnlySpan(Of Byte)
+  fullName.vb: System.ReadOnlySpan(Of Byte)
+  name.vb: ReadOnlySpan(Of Byte)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.byte
+  - name: )
+- uid: System.ReadOnlySpan`1
+  commentId: T:System.ReadOnlySpan`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  name: ReadOnlySpan<T>
+  nameWithType: ReadOnlySpan<T>
+  fullName: System.ReadOnlySpan<T>
+  nameWithType.vb: ReadOnlySpan(Of T)
+  fullName.vb: System.ReadOnlySpan(Of T)
+  name.vb: ReadOnlySpan(Of T)
+  spec.csharp:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.ReadOnlySpan`1
+    name: ReadOnlySpan
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.readonlyspan-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_ContainsSymbol_Ubiquity_NET_Llvm_ObjectFile_Symbol_
+  name: ContainsSymbol
+  nameWithType: Section.ContainsSymbol
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.ContainsSymbol
+- uid: Ubiquity.NET.Llvm.ObjectFile.Symbol
+  commentId: T:Ubiquity.NET.Llvm.ObjectFile.Symbol
+  parent: Ubiquity.NET.Llvm.ObjectFile
+  href: Ubiquity.NET.Llvm.ObjectFile.Symbol.html
+  name: Symbol
+  nameWithType: Symbol
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Symbol
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_MoveToContainingSection_Ubiquity_NET_Llvm_ObjectFile_Symbol_
+  name: MoveToContainingSection
+  nameWithType: Section.MoveToContainingSection
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.MoveToContainingSection
+- uid: Ubiquity.NET.Llvm.ObjectFile.Section.Address*
+  commentId: Overload:Ubiquity.NET.Llvm.ObjectFile.Section.Address
+  href: Ubiquity.NET.Llvm.ObjectFile.Section.html#Ubiquity_NET_Llvm_ObjectFile_Section_Address
+  name: Address
+  nameWithType: Section.Address
+  fullName: Ubiquity.NET.Llvm.ObjectFile.Section.Address
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong

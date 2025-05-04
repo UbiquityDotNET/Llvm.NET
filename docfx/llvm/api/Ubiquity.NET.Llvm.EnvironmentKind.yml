@@ -1,0 +1,1420 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.EnvironmentKind
+  commentId: T:Ubiquity.NET.Llvm.EnvironmentKind
+  id: EnvironmentKind
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.EnvironmentKind.Amplification
+  - Ubiquity.NET.Llvm.EnvironmentKind.Android
+  - Ubiquity.NET.Llvm.EnvironmentKind.AnyHit
+  - Ubiquity.NET.Llvm.EnvironmentKind.CODE16
+  - Ubiquity.NET.Llvm.EnvironmentKind.Callable
+  - Ubiquity.NET.Llvm.EnvironmentKind.ClosestHit
+  - Ubiquity.NET.Llvm.EnvironmentKind.Compute
+  - Ubiquity.NET.Llvm.EnvironmentKind.CoreCLR
+  - Ubiquity.NET.Llvm.EnvironmentKind.Cygnus
+  - Ubiquity.NET.Llvm.EnvironmentKind.Domain
+  - Ubiquity.NET.Llvm.EnvironmentKind.EABI
+  - Ubiquity.NET.Llvm.EnvironmentKind.EABIHF
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNU
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUABI64
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUABIN32
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUEABI
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHF
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHFT64
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUF32
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUF64
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUILP32
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUSF
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUT64
+  - Ubiquity.NET.Llvm.EnvironmentKind.GNUX32
+  - Ubiquity.NET.Llvm.EnvironmentKind.Geometry
+  - Ubiquity.NET.Llvm.EnvironmentKind.Hull
+  - Ubiquity.NET.Llvm.EnvironmentKind.Intersection
+  - Ubiquity.NET.Llvm.EnvironmentKind.Itanium
+  - Ubiquity.NET.Llvm.EnvironmentKind.LLVM
+  - Ubiquity.NET.Llvm.EnvironmentKind.Library
+  - Ubiquity.NET.Llvm.EnvironmentKind.MSVC
+  - Ubiquity.NET.Llvm.EnvironmentKind.MacABI
+  - Ubiquity.NET.Llvm.EnvironmentKind.Mesh
+  - Ubiquity.NET.Llvm.EnvironmentKind.Miss
+  - Ubiquity.NET.Llvm.EnvironmentKind.Musl
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslABI64
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslABIN32
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslEABI
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslEABIHF
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslF32
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslSF
+  - Ubiquity.NET.Llvm.EnvironmentKind.MuslX32
+  - Ubiquity.NET.Llvm.EnvironmentKind.OpenCL
+  - Ubiquity.NET.Llvm.EnvironmentKind.OpenHOS
+  - Ubiquity.NET.Llvm.EnvironmentKind.PAuthTest
+  - Ubiquity.NET.Llvm.EnvironmentKind.Pixel
+  - Ubiquity.NET.Llvm.EnvironmentKind.RayGeneration
+  - Ubiquity.NET.Llvm.EnvironmentKind.Simulator
+  - Ubiquity.NET.Llvm.EnvironmentKind.Unknown
+  - Ubiquity.NET.Llvm.EnvironmentKind.Vertex
+  langs:
+  - csharp
+  - vb
+  name: EnvironmentKind
+  nameWithType: EnvironmentKind
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EnvironmentKind
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 528
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Triple EnvironmentKind type
+  example: []
+  syntax:
+    content: public enum EnvironmentKind
+    content.vb: Public Enum EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Unknown
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Unknown
+  id: Unknown
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: EnvironmentKind.Unknown
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Unknown
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Unknown
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 534
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Unknown environment
+  example: []
+  syntax:
+    content: Unknown = 0
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNU
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNU
+  id: GNU
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNU
+  nameWithType: EnvironmentKind.GNU
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNU
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNU
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 535
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNU = 1
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUT64
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUT64
+  id: GNUT64
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUT64
+  nameWithType: EnvironmentKind.GNUT64
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUT64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUT64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 536
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUT64 = 2
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUABIN32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUABIN32
+  id: GNUABIN32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUABIN32
+  nameWithType: EnvironmentKind.GNUABIN32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUABIN32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUABIN32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 537
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUABIN32 = 3
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUABI64
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUABI64
+  id: GNUABI64
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUABI64
+  nameWithType: EnvironmentKind.GNUABI64
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUABI64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUABI64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 538
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUABI64 = 4
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUEABI
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUEABI
+  id: GNUEABI
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUEABI
+  nameWithType: EnvironmentKind.GNUEABI
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUEABI
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUEABI
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 539
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUEABI = 5
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHF
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHF
+  id: GNUEABIHF
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUEABIHF
+  nameWithType: EnvironmentKind.GNUEABIHF
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHF
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUEABIHF
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 540
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUEABIHF = 7
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHFT64
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHFT64
+  id: GNUEABIHFT64
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUEABIHFT64
+  nameWithType: EnvironmentKind.GNUEABIHFT64
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUEABIHFT64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUEABIHFT64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 541
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUEABIHFT64 = 8
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUF32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUF32
+  id: GNUF32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUF32
+  nameWithType: EnvironmentKind.GNUF32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUF32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUF32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 542
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUF32 = 9
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUF64
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUF64
+  id: GNUF64
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUF64
+  nameWithType: EnvironmentKind.GNUF64
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUF64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUF64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 543
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUF64 = 9
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUSF
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUSF
+  id: GNUSF
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUSF
+  nameWithType: EnvironmentKind.GNUSF
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUSF
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUSF
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 544
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUSF = 11
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUX32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUX32
+  id: GNUX32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUX32
+  nameWithType: EnvironmentKind.GNUX32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUX32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUX32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 545
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUX32 = 12
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.GNUILP32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.GNUILP32
+  id: GNUILP32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: GNUILP32
+  nameWithType: EnvironmentKind.GNUILP32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.GNUILP32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GNUILP32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 546
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: GNUILP32 = 13
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.CODE16
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.CODE16
+  id: CODE16
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: CODE16
+  nameWithType: EnvironmentKind.CODE16
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.CODE16
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CODE16
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 547
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: CODE16 = 14
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.EABI
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.EABI
+  id: EABI
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: EABI
+  nameWithType: EnvironmentKind.EABI
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.EABI
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EABI
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 548
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: EABI = 15
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.EABIHF
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.EABIHF
+  id: EABIHF
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: EABIHF
+  nameWithType: EnvironmentKind.EABIHF
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.EABIHF
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EABIHF
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 549
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: EABIHF = 16
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Android
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Android
+  id: Android
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Android
+  nameWithType: EnvironmentKind.Android
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Android
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Android
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 550
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Android = 17
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Musl
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Musl
+  id: Musl
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Musl
+  nameWithType: EnvironmentKind.Musl
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Musl
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Musl
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 551
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Musl = 18
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslABIN32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslABIN32
+  id: MuslABIN32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslABIN32
+  nameWithType: EnvironmentKind.MuslABIN32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslABIN32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslABIN32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 552
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslABIN32 = 19
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslABI64
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslABI64
+  id: MuslABI64
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslABI64
+  nameWithType: EnvironmentKind.MuslABI64
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslABI64
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslABI64
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 553
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslABI64 = 20
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslEABI
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslEABI
+  id: MuslEABI
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslEABI
+  nameWithType: EnvironmentKind.MuslEABI
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslEABI
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslEABI
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 554
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslEABI = 21
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslEABIHF
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslEABIHF
+  id: MuslEABIHF
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslEABIHF
+  nameWithType: EnvironmentKind.MuslEABIHF
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslEABIHF
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslEABIHF
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 555
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslEABIHF = 22
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslF32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslF32
+  id: MuslF32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslF32
+  nameWithType: EnvironmentKind.MuslF32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslF32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslF32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 556
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslF32 = 23
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslSF
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslSF
+  id: MuslSF
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslSF
+  nameWithType: EnvironmentKind.MuslSF
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslSF
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslSF
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 557
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslSF = 23
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MuslX32
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MuslX32
+  id: MuslX32
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MuslX32
+  nameWithType: EnvironmentKind.MuslX32
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MuslX32
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MuslX32
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 558
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MuslX32 = 25
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.LLVM
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.LLVM
+  id: LLVM
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: LLVM
+  nameWithType: EnvironmentKind.LLVM
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.LLVM
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LLVM
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 559
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: LLVM = 26
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MSVC
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MSVC
+  id: MSVC
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MSVC
+  nameWithType: EnvironmentKind.MSVC
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MSVC
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MSVC
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 560
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MSVC = 27
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Itanium
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Itanium
+  id: Itanium
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Itanium
+  nameWithType: EnvironmentKind.Itanium
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Itanium
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Itanium
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 561
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Itanium = 28
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Cygnus
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Cygnus
+  id: Cygnus
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Cygnus
+  nameWithType: EnvironmentKind.Cygnus
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Cygnus
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Cygnus
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 562
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Cygnus = 29
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.CoreCLR
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.CoreCLR
+  id: CoreCLR
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: CoreCLR
+  nameWithType: EnvironmentKind.CoreCLR
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.CoreCLR
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CoreCLR
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 563
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: CoreCLR = 30
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Simulator
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Simulator
+  id: Simulator
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Simulator
+  nameWithType: EnvironmentKind.Simulator
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Simulator
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Simulator
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 564
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Simulator = 31
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.MacABI
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.MacABI
+  id: MacABI
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: MacABI
+  nameWithType: EnvironmentKind.MacABI
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.MacABI
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MacABI
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 565
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: MacABI = 32
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Pixel
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Pixel
+  id: Pixel
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Pixel
+  nameWithType: EnvironmentKind.Pixel
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Pixel
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Pixel
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 566
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Pixel = 33
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Vertex
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Vertex
+  id: Vertex
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Vertex
+  nameWithType: EnvironmentKind.Vertex
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Vertex
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Vertex
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 567
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Vertex = 34
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Geometry
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Geometry
+  id: Geometry
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Geometry
+  nameWithType: EnvironmentKind.Geometry
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Geometry
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Geometry
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 568
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Geometry = 35
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Hull
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Hull
+  id: Hull
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Hull
+  nameWithType: EnvironmentKind.Hull
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Hull
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Hull
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 569
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Hull = 36
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Domain
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Domain
+  id: Domain
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Domain
+  nameWithType: EnvironmentKind.Domain
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Domain
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Domain
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 570
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Domain = 37
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Compute
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Compute
+  id: Compute
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Compute
+  nameWithType: EnvironmentKind.Compute
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Compute
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Compute
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 571
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Compute = 38
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Library
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Library
+  id: Library
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Library
+  nameWithType: EnvironmentKind.Library
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Library
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Library
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 572
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Library = 39
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.RayGeneration
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.RayGeneration
+  id: RayGeneration
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: RayGeneration
+  nameWithType: EnvironmentKind.RayGeneration
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.RayGeneration
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RayGeneration
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 573
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: RayGeneration = 40
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Intersection
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Intersection
+  id: Intersection
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Intersection
+  nameWithType: EnvironmentKind.Intersection
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Intersection
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Intersection
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 574
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Intersection = 41
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.AnyHit
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.AnyHit
+  id: AnyHit
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: AnyHit
+  nameWithType: EnvironmentKind.AnyHit
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.AnyHit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AnyHit
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 575
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: AnyHit = 42
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.ClosestHit
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.ClosestHit
+  id: ClosestHit
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: ClosestHit
+  nameWithType: EnvironmentKind.ClosestHit
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.ClosestHit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ClosestHit
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 576
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: ClosestHit = 43
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Miss
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Miss
+  id: Miss
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Miss
+  nameWithType: EnvironmentKind.Miss
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Miss
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Miss
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 577
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Miss = 44
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Callable
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Callable
+  id: Callable
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Callable
+  nameWithType: EnvironmentKind.Callable
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Callable
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Callable
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 578
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Callable = 45
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Mesh
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Mesh
+  id: Mesh
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Mesh
+  nameWithType: EnvironmentKind.Mesh
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Mesh
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Mesh
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 579
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Mesh = 46
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.Amplification
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.Amplification
+  id: Amplification
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: Amplification
+  nameWithType: EnvironmentKind.Amplification
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.Amplification
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Amplification
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 580
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: Amplification = 47
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.OpenCL
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.OpenCL
+  id: OpenCL
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: OpenCL
+  nameWithType: EnvironmentKind.OpenCL
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.OpenCL
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OpenCL
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 581
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: OpenCL = 48
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.OpenHOS
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.OpenHOS
+  id: OpenHOS
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: OpenHOS
+  nameWithType: EnvironmentKind.OpenHOS
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.OpenHOS
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OpenHOS
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 582
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: OpenHOS = 49
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.EnvironmentKind.PAuthTest
+  commentId: F:Ubiquity.NET.Llvm.EnvironmentKind.PAuthTest
+  id: PAuthTest
+  parent: Ubiquity.NET.Llvm.EnvironmentKind
+  langs:
+  - csharp
+  - vb
+  name: PAuthTest
+  nameWithType: EnvironmentKind.PAuthTest
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind.PAuthTest
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PAuthTest
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 583
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  syntax:
+    content: PAuthTest = 50
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+references:
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.EnvironmentKind
+  commentId: T:Ubiquity.NET.Llvm.EnvironmentKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.EnvironmentKind.html
+  name: EnvironmentKind
+  nameWithType: EnvironmentKind
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind

@@ -4,15 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Types;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Describes a member/field of a type for creating debug information</summary>
     /// <remarks>
     /// <para>This class is used with <see cref="DebugStructType"/> to provide debug information for a type.</para>
     /// <para>In order to support explicit layout structures the members relating to layout are all nullable.
-    /// When they are null then modules <see cref="BitcodeModule.Layout"/> target specific layout information is used to determine
+    /// When they are null then modules <see cref="Module.Layout"/> target specific layout information is used to determine
     /// layout details. Setting the layout members of this class to non-null will override that behavior to define explicit
     /// layout details.</para>
     /// </remarks>
@@ -64,7 +62,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Gets the explicit layout information for this member</summary>
         /// <remarks>If this is <see langword="null"/> then <see href="xref:Ubiquity.NET.Llvm.DebugInfo.DebugStructType.SetBody*">DebugStructType.SetBody</see>
-        /// will default to using <see cref="BitcodeModule.Layout"/> to determine the size using the module's target specific layout.
+        /// will default to using <see cref="Module.Layout"/> to determine the size using the module's target specific layout.
         /// <note type="Important">
         /// If this property is provided (e.g. is not <see langword="null"/>) for any member of a type, then
         /// it must be set for *all* members. In other words explicit layout must be defined for all members

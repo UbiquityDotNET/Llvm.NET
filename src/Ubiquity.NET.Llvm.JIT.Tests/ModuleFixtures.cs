@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop;
+using Ubiquity.NET.Llvm;
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Unit Tests" )]
 
@@ -22,13 +22,13 @@ namespace Ubiquity.NET.LlvmTests
         [AssemblyInitialize]
         public static void AssemblyInitialize( TestContext ctx )
         {
-            if( ctx == null )
-            {
-                throw new ArgumentNullException( nameof( ctx ) );
-            }
 
-            LibLLVM = Library.InitializeLLVM( );
-            LibLLVM.RegisterTarget( CodeGenTarget.All );
+            LibLLVM?.Dispose();
+
+            LibLLVM = Library.InitializeLLVM();
+
+            // Testing JIT on native system, so the only target of relevance is the native machine
+            LibLLVM.RegisterTarget( CodeGenTarget.Native );
         }
 
         [AssemblyCleanup]

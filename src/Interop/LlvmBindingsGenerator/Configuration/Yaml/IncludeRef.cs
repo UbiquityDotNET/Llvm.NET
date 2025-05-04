@@ -11,7 +11,7 @@ namespace LlvmBindingsGenerator.Configuration
     internal class IncludeRef
         : IYamlNodeLocation
     {
-        public string Path { get; set; }
+        public string Path { get; set; } = string.Empty;
 
         public Mark Start { get; set; }
     }

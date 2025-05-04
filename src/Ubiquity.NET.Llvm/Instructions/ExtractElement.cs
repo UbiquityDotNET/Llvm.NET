@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to extract a single scalar element from a vector at a specified index.</summary>

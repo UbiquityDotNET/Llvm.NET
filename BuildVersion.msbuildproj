@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Build-docs.ps1"/>
+  </ItemGroup>
+
+  <Target Name="SetInRestore" BeforeTargets="Restore">
+    <PropertyGroup>
+        <__InRestore>true</__InRestore>
+    </PropertyGroup>
+  </Target>
+
+  <Target Condition="'$(__InRestore)'!='true'" Name="AlwaysRun" BeforeTargets="AfterBuild">
+    <Message Importance="normal" Text="        BuildTime: $(BuildTime)"/>
+    <Message Importance="normal" Text="  FullBuildNumber: $(FullBuildNumber)"/>
+    <Message Importance="normal" Text="       BuildMajor: $(BuildMajor)"/>
+    <Message Importance="normal" Text="       BuildMinor: $(BuildMinor)"/>
+    <Message Importance="normal" Text="       BuildPatch: $(BuildPatch)"/>
+    <Message Importance="normal" Text="   PreReleaseName: $(PreReleaseName)"/>
+    <Message Importance="normal" Text=" PreReleaseNumber: $(PreReleaseNumber)"/>
+    <Message Importance="normal" Text="    PreReleaseFix: $(PreReleaseFix)"/>
+    <Message Importance="normal" Text="        BuildMeta: $(BuildMeta)"/>
+    <Message Importance="normal" Text="      CiBuildName: $(CiBuildName)"/>
+    <Message Importance="normal" Text="     CiBuildIndex: $(CiBuildIndex)"/>
+    <ItemGroup>
+        <__Line Include="{"/>
+        <__Line Include="    &quot;FullBuildNumber&quot; : &quot;$(FullBuildNumber)&quot;," />
+        <__Line Include="    &quot;BuildMajor&quot; : $(BuildMajor)," />
+        <__Line Include="    &quot;BuildMinor&quot; : $(BuildMinor)," />
+        <__Line Include="    &quot;BuildPatch&quot; : $(BuildPatch)," />
+        <__Line Include="    &quot;PreReleaseName&quot; : &quot;$(PreReleaseName)&quot;," />
+        <__Line Include="    &quot;CiBuildName&quot; : &quot;$(CiBuildName)&quot;," />
+        <__Line Include="    &quot;CiBuildIndex&quot; : $(CiBuildIndex)," />
+        <__Line Condition="'$(PreReleaseNumber)'!=''" Include="&quot;PreReleaseNumber&quot; : $(PreReleaseNumber)," />
+        <__Line Condition="'$(PreReleaseFix)'!=''" Include="&quot;PreReleaseFix&quot; : $(PreReleaseFix)," />
+        <__Line Condition="'$(BuildMeta)'!=''" Include="&quot;BuildMeta&quot; : &quot;$(BuildMeta)&quot;," />
+        <__Line Include="}"/>
+    </ItemGroup>
+    <WriteLinesToFile File="CurrentVersionInfo.json" Lines="@(__Line)" Overwrite="true"/>
+  </Target>
+</Project>

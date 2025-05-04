@@ -1,0 +1,1041 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MDNode
+  id: MDNode
+  parent: Ubiquity.NET.Llvm.Metadata
+  children:
+  - Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  - Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+  - Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  - Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  - Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  langs:
+  - csharp
+  - vb
+  name: MDNode
+  nameWithType: MDNode
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MDNode
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 18
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: IrMetadata node for LLVM IR Bitcode modules
+  remarks: >-
+    <p>IrMetadata nodes may be uniqued, or distinct. Temporary nodes with
+
+    support for <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)" data-throw-if-not-resolved="false"></xref> may be used to
+
+    defer uniqueing until the forward references are known.</p>
+
+    <p>There is limited support for <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)" data-throw-if-not-resolved="false"></xref>
+
+    at construction. At construction, if any operand is a temporary or otherwise unresolved
+
+    uniqued node, the node itself is unresolved. As soon as all operands become resolved
+
+    the node will no longer support <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)" data-throw-if-not-resolved="false"></xref></p>
+  example: []
+  syntax:
+    content: 'public class MDNode : IrMetadata, IEquatable<IrMetadata>'
+    content.vb: Public Class MDNode Inherits IrMetadata Implements IEquatable(Of IrMetadata)
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata
+  derivedClasses:
+  - Ubiquity.NET.Llvm.DebugInfo.DIExpression
+  - Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression
+  - Ubiquity.NET.Llvm.DebugInfo.DILocation
+  - Ubiquity.NET.Llvm.DebugInfo.DIMacroNode
+  - Ubiquity.NET.Llvm.DebugInfo.DINode
+  - Ubiquity.NET.Llvm.Metadata.MDTuple
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  id: Context
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: Context
+  nameWithType: MDNode.Context
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Context
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets the <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.Context" data-throw-if-not-resolved="false"></xref> this node belongs to
+  example: []
+  syntax:
+    content: public IContext Context { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.IContext
+    content.vb: Public ReadOnly Property Context As IContext
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.Context*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  id: IsDeleted
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: IsDeleted
+  nameWithType: MDNode.IsDeleted
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsDeleted
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 32
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets a value indicating whether this node was deleted
+  example: []
+  syntax:
+    content: public bool IsDeleted { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDeleted As Boolean
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  id: IsTemporary
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: IsTemporary
+  nameWithType: MDNode.IsTemporary
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsTemporary
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 35
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets a value indicating whether this node is a temporary
+  example: []
+  syntax:
+    content: public bool IsTemporary { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsTemporary As Boolean
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  id: IsResolved
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: IsResolved
+  nameWithType: MDNode.IsResolved
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsResolved
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets a value indicating whether this node is resolved
+  remarks: >-
+    <p>If <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary" data-throw-if-not-resolved="false"></xref> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, then this always
+
+    returns <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>; if <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct" data-throw-if-not-resolved="false"></xref> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>,
+
+    this always returns <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.</p>
+
+
+    <p>If <xref href="Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued" data-throw-if-not-resolved="false"></xref> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> then this returns <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>
+
+    if this node has already dropped RAUW support (because all operands are resolved).</p>
+  example: []
+  syntax:
+    content: public bool IsResolved { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsResolved As Boolean
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  id: IsUniqued
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: IsUniqued
+  nameWithType: MDNode.IsUniqued
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsUniqued
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets a value indicating whether this node is uniqued
+  example: []
+  syntax:
+    content: public bool IsUniqued { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsUniqued As Boolean
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  id: IsDistinct
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: IsDistinct
+  nameWithType: MDNode.IsDistinct
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsDistinct
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets a value indicating whether this node is distinct
+  example: []
+  syntax:
+    content: public bool IsDistinct { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDistinct As Boolean
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  id: Operands
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: Operands
+  nameWithType: MDNode.Operands
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Operands
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets the operands for this node, if any
+  example: []
+  syntax:
+    content: public MetadataOperandCollection Operands { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Metadata.MetadataOperandCollection
+    content.vb: Public ReadOnly Property Operands As MetadataOperandCollection
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.Operands*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  id: ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: ReplaceAllUsesWith(IrMetadata)
+  nameWithType: MDNode.ReplaceAllUsesWith(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ReplaceAllUsesWith
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 59
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Replace all uses of this node with a new node
+  example: []
+  syntax:
+    content: public override void ReplaceAllUsesWith(IrMetadata other)
+    parameters:
+    - id: other
+      type: Ubiquity.NET.Llvm.Metadata.IrMetadata
+      description: Node to replace this one with
+    content.vb: Public Overrides Sub ReplaceAllUsesWith(other As IrMetadata)
+  overridden: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith*
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+  id: GetOperand``1(System.Int32)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: GetOperand<T>(int)
+  nameWithType: MDNode.GetOperand<T>(int)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand<T>(int)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetOperand
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 82
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets an operand by index as a specific type
+  example: []
+  syntax:
+    content: 'public T? GetOperand<T>(int index) where T : IrMetadata'
+    parameters:
+    - id: index
+      type: System.Int32
+      description: Index of the operand
+    typeParameters:
+    - id: T
+      description: Type of the operand
+    return:
+      type: '{T}'
+      description: Operand
+    content.vb: Public Function GetOperand(Of T As IrMetadata)(index As Integer) As T
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand*
+  exceptions:
+  - type: System.InvalidCastException
+    commentId: T:System.InvalidCastException
+    description: When the operand is not castable to <code class="typeparamref">T</code>
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: When the index is out of range for the operands of this node
+  nameWithType.vb: MDNode.GetOperand(Of T)(Integer)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand(Of T)(Integer)
+  name.vb: GetOperand(Of T)(Integer)
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+  id: GetOperandString(System.Int32)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  langs:
+  - csharp
+  - vb
+  name: GetOperandString(int)
+  nameWithType: MDNode.GetOperandString(int)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(int)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetOperandString
+    path: ../src/Ubiquity.NET.Llvm/Metadata/MDNode.cs
+    startLine: 91
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Metadata
+  summary: Gets a string operand by index
+  example: []
+  syntax:
+    content: public string GetOperandString(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+      description: Index of the operand
+    return:
+      type: System.String
+      description: String value of the operand
+    content.vb: Public Function GetOperandString(index As Integer) As String
+  overload: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString*
+  nameWithType.vb: MDNode.GetOperandString(Integer)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(Integer)
+  name.vb: GetOperandString(Integer)
+references:
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: ReplaceAllUsesWith(IrMetadata)
+  nameWithType: MDNode.ReplaceAllUsesWith(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  commentId: T:Ubiquity.NET.Llvm.Metadata.IrMetadata
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  name: IrMetadata
+  nameWithType: IrMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<IrMetadata>
+  nameWithType: IEquatable<IrMetadata>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Metadata.IrMetadata>
+  nameWithType.vb: IEquatable(Of IrMetadata)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  name.vb: IEquatable(Of IrMetadata)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  name: ToString()
+  nameWithType: IrMetadata.ToString()
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: Equals(IrMetadata)
+  nameWithType: IrMetadata.Equals(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  name: Equals(object)
+  nameWithType: IrMetadata.Equals(object)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(object)
+  nameWithType.vb: IrMetadata.Equals(Object)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  name: GetHashCode()
+  nameWithType: IrMetadata.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  commentId: P:Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Kind
+  name: Kind
+  nameWithType: IrMetadata.Kind
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+  commentId: P:Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Handle
+  name: Handle
+  nameWithType: IrMetadata.Handle
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Handle
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MDNode
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html
+  name: MDNode
+  nameWithType: MDNode
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_Context
+  name: Context
+  nameWithType: MDNode.Context
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Context*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_Context
+  name: Context
+  nameWithType: MDNode.Context
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+- uid: Ubiquity.NET.Llvm.IContext
+  commentId: T:Ubiquity.NET.Llvm.IContext
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IContext.html
+  name: IContext
+  nameWithType: IContext
+  fullName: Ubiquity.NET.Llvm.IContext
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDeleted
+  name: IsDeleted
+  nameWithType: MDNode.IsDeleted
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsTemporary
+  name: IsTemporary
+  nameWithType: MDNode.IsTemporary
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsTemporary
+  name: IsTemporary
+  nameWithType: MDNode.IsTemporary
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDistinct
+  name: IsDistinct
+  nameWithType: MDNode.IsDistinct
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsUniqued
+  name: IsUniqued
+  nameWithType: MDNode.IsUniqued
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsResolved
+  name: IsResolved
+  nameWithType: MDNode.IsResolved
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsUniqued
+  name: IsUniqued
+  nameWithType: MDNode.IsUniqued
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDistinct
+  name: IsDistinct
+  nameWithType: MDNode.IsDistinct
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Operands*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_Operands
+  name: Operands
+  nameWithType: MDNode.Operands
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+- uid: Ubiquity.NET.Llvm.Metadata.MetadataOperandCollection
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MetadataOperandCollection
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.MetadataOperandCollection.html
+  name: MetadataOperandCollection
+  nameWithType: MetadataOperandCollection
+  fullName: Ubiquity.NET.Llvm.Metadata.MetadataOperandCollection
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: ReplaceAllUsesWith(IrMetadata)
+  nameWithType: IrMetadata.ReplaceAllUsesWith(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: ReplaceAllUsesWith
+  nameWithType: MDNode.ReplaceAllUsesWith
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith
+- uid: System.InvalidCastException
+  commentId: T:System.InvalidCastException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.invalidcastexception
+  name: InvalidCastException
+  nameWithType: InvalidCastException
+  fullName: System.InvalidCastException
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperand__1_System_Int32_
+  name: GetOperand
+  nameWithType: MDNode.GetOperand
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString*
+  commentId: Overload:Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperandString_System_Int32_
+  name: GetOperandString
+  nameWithType: MDNode.GetOperandString
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

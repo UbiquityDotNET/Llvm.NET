@@ -4,13 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Catch return instruction</summary>
-    public class CatchReturn
+    public sealed class CatchReturn
         : Terminator
     {
         /// <summary>Gets the <see cref="CatchPad"/> instruction associated with this <see cref="CatchReturn"/></summary>

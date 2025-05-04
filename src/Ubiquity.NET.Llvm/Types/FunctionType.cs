@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -31,31 +24,31 @@ namespace Ubiquity.NET.Llvm.Types
     }
 
     /// <summary>Class to represent the LLVM type of a function (e.g. a signature)</summary>
-    internal class FunctionType
+    internal sealed class FunctionType
         : TypeRef
         , IFunctionType
     {
         /// <inheritdoc/>
-        public bool IsVarArg => LLVMIsFunctionVarArg( TypeRefHandle );
+        public bool IsVarArg => LLVMIsFunctionVarArg( Handle );
 
         /// <inheritdoc/>
-        public ITypeRef ReturnType => FromHandle<ITypeRef>( LLVMGetReturnType( TypeRefHandle ).ThrowIfInvalid( ) )!;
+        public ITypeRef ReturnType => LLVMGetReturnType( Handle ).CreateType();
 
         /// <inheritdoc/>
         public IReadOnlyList<ITypeRef> ParameterTypes
         {
             get
             {
-                uint paramCount = LLVMCountParamTypes( TypeRefHandle );
+                uint paramCount = LLVMCountParamTypes( Handle );
                 if( paramCount == 0 )
                 {
                     return new List<TypeRef>( ).AsReadOnly( );
                 }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
-                LLVMGetParamTypes( TypeRefHandle, paramTypes );
+                LLVMGetParamTypes( Handle, paramTypes );
                 return ( from p in paramTypes
-                         select FromHandle<TypeRef>( p.ThrowIfInvalid( ) )!
+                         select (TypeRef)p.CreateType()
                        ).ToList( )
                         .AsReadOnly( );
             }

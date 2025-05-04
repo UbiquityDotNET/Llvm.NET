@@ -6,7 +6,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Ubiquity.NET.Llvm.Tests
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]
     public class ScopeStackTests

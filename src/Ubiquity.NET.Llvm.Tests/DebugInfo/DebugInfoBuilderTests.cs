@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -11,9 +12,9 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.LlvmTests;
+using Ubiquity.NET.Llvm.Metadata;
 
-namespace Ubiquity.NET.Llvm.Tests.DebugInfo
+namespace Ubiquity.NET.Llvm.UT.DebugInfo
 {
     [TestClass]
     [SuppressMessage( "StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "Groups related test methods by category" )]
@@ -26,9 +27,12 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
-            var file = bldr.CreateFile( null );
+// testing how API handles NULL
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            var file = diBuilder.CreateFile( null );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.IsNotNull( file );
             ValidateDIFileProperties( context, file, string.Empty, string.Empty );
         }
@@ -37,11 +41,11 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory("DIBuilder.CreateFile")]
         public void CreateFile_with_empty_path_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
-            var file = bldr.CreateFile( string.Empty );
+            var file = diBuilder.CreateFile( string.Empty );
             Assert.IsNotNull( file );
             ValidateDIFileProperties( context, file, string.Empty, string.Empty );
         }
@@ -50,13 +54,13 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory("DIBuilder.CreateFile")]
         public void CreateFile_with_valid_path_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             string path = "test.foo";
 
-            var file = bldr.CreateFile( path );
+            var file = diBuilder.CreateFile( path );
             Assert.IsNotNull( file );
             ValidateDIFileProperties( context, file, string.Empty, path );
         }
@@ -65,13 +69,15 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory("DIBuilder.CreateFile")]
         public void CreateFile_with_null_directory_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             string fileName = $"{nameof(CreateFile_with_null_directory_should_succeed)}.foo";
 
-            var file = bldr.CreateFile( fileName, null );
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            var file = diBuilder.CreateFile( fileName, null );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             ValidateDIFileProperties( context, file, string.Empty, fileName );
         }
 
@@ -79,13 +85,13 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory("DIBuilder.CreateFile")]
         public void CreateFile_with_empty_directory_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             string fileName = $"{nameof(CreateFile_with_null_directory_should_succeed)}.foo";
 
-            var file = bldr.CreateFile( fileName, string.Empty );
+            var file = diBuilder.CreateFile( fileName, string.Empty );
             ValidateDIFileProperties( context, file, string.Empty, fileName );
         }
 
@@ -93,14 +99,14 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory("DIBuilder.CreateFile")]
         public void CreateFile_with_valid_directory_and_filename_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             string fileName = $"{nameof(CreateFile_with_null_directory_should_succeed)}.foo";
             string directory = nameof(DebugInfoBuilderTests);
 
-            var file = bldr.CreateFile( fileName, directory );
+            var file = diBuilder.CreateFile( fileName, directory );
             ValidateDIFileProperties( context, file, directory, fileName );
         }
         #endregion
@@ -108,38 +114,44 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         #region DIBuilder.CreateCompileUnit
         [TestMethod]
         [TestCategory( "DIBuilder.CreateCompileUnit" )]
-        [ExpectedArgumentException( "sourceFilePath" )]
         public void CreateCompileUnit_with_null_sourcefilepath_should_throw( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
-
-            _ = bldr.CreateCompileUnit( language: default
-                                      , sourceFilePath: null! // should trigger exception
-                                      , producer: null
-                                      , optimized: false
-                                      , compilationFlags: null
-                                      , runtimeVersion: 0
-                                      );
+            var ex = Assert.ThrowsExactly<ArgumentNullException>(()=>
+            {
+                using var diBuilder = new DIBuilder(testModule);
+                _ = diBuilder.CreateCompileUnit( language: default
+                                               , sourceFilePath: null! // should trigger exception
+                                               , producer: null
+                                               , optimized: false
+                                               , compilationFlags: null
+                                               , runtimeVersion: 0
+                                               );
+            });
+            Assert.AreEqual( "sourceFilePath", ex.ParamName);
         }
 
         [TestMethod]
         [TestCategory( "DIBuilder.CreateCompileUnit" )]
-        [ExpectedArgumentException( "sourceFilePath" )]
         public void CreateCompileUnit_with_empty_sourcefilepath_should_throw( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
 
-            _ = bldr.CreateCompileUnit( language: default
-                                      , sourceFilePath: string.Empty // should trigger exception
-                                      , producer: null
-                                      , optimized: false
-                                      , compilationFlags: null
-                                      , runtimeVersion: 0
-                                      );
+            var ex = Assert.ThrowsExactly<ArgumentException>(()=>
+            {
+                using var diBuilder = new DIBuilder(testModule);
+
+                _ = diBuilder.CreateCompileUnit( language: default
+                                               , sourceFilePath: string.Empty // should trigger exception
+                                               , producer: null
+                                               , optimized: false
+                                               , compilationFlags: null
+                                               , runtimeVersion: 0
+                                               );
+            });
+            Assert.AreEqual("sourceFilePath", ex.ParamName);
         }
 
         [TestMethod]
@@ -150,17 +162,17 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             string fileName = @"test.foo";
             string sourceFilePath = Path.Combine( directory, fileName );
 
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
-            var unit = bldr.CreateCompileUnit( language: default
-                                             , sourceFilePath: sourceFilePath
-                                             , producer: string.Empty
-                                             , optimized: false
-                                             , compilationFlags: null
-                                             , runtimeVersion: 0
-                                             );
+            var unit = diBuilder.CreateCompileUnit( language: default
+                                                  , sourceFilePath: sourceFilePath
+                                                  , producer: string.Empty
+                                                  , optimized: false
+                                                  , compilationFlags: null
+                                                  , runtimeVersion: 0
+                                                  );
 
             // validate unit itself, based on input
             ValidateConstructedCompileUnit( unit, context, directory, fileName );
@@ -172,16 +184,17 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         {
             string sourceFilePath = "test.foo";
 
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
-            var unit = bldr.CreateCompileUnit( language: default
-                                             , sourceFilePath: sourceFilePath
-                                             , producer: null!
-                                             , optimized: false
-                                             , compilationFlags: null
-                                             , runtimeVersion: 0
-                                             );
+            using var diBuilder = new DIBuilder(testModule);
+
+            var unit = diBuilder.CreateCompileUnit( language: default
+                                                  , sourceFilePath: sourceFilePath
+                                                  , producer: null!
+                                                  , optimized: false
+                                                  , compilationFlags: null
+                                                  , runtimeVersion: 0
+                                                  );
             ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath );
         }
 
@@ -191,16 +204,17 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         {
             string sourceFilePath = "test.foo";
 
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
-            var unit = bldr.CreateCompileUnit( language: default
-                                             , sourceFilePath: sourceFilePath
-                                             , producer: string.Empty
-                                             , optimized: false
-                                             , compilationFlags: null
-                                             , runtimeVersion: 0
-                                             );
+            using var diBuilder = new DIBuilder(testModule);
+
+            var unit = diBuilder.CreateCompileUnit( language: default
+                                                  , sourceFilePath: sourceFilePath
+                                                  , producer: string.Empty
+                                                  , optimized: false
+                                                  , compilationFlags: null
+                                                  , runtimeVersion: 0
+                                                  );
             ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath );
         }
 
@@ -210,16 +224,17 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         {
             string sourceFilePath = "test.foo";
             string producer = nameof(CreateCompileUnit_with_valid_producer_should_not_throw);
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
-            var unit = bldr.CreateCompileUnit( language: default
-                                             , sourceFilePath: sourceFilePath
-                                             , producer: producer
-                                             , optimized: false
-                                             , compilationFlags: null
-                                             , runtimeVersion: 0
-                                             );
+            using var diBuilder = new DIBuilder(testModule);
+
+            var unit = diBuilder.CreateCompileUnit( language: default
+                                                  , sourceFilePath: sourceFilePath
+                                                  , producer: producer
+                                                  , optimized: false
+                                                  , compilationFlags: null
+                                                  , runtimeVersion: 0
+                                                  );
             ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath, producer );
         }
 
@@ -229,16 +244,18 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         {
             string sourceFilePath = "test.foo";
 
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
-            var unit = bldr.CreateCompileUnit( language: default
-                                             , sourceFilePath: sourceFilePath
-                                             , producer: string.Empty
-                                             , optimized: false
-                                             , compilationFlags: string.Empty
-                                             , runtimeVersion: 0
-                                             );
+            using var diBuilder = new DIBuilder(testModule);
+
+            var unit = diBuilder.CreateCompileUnit( language: default
+                                                  , sourceFilePath: sourceFilePath
+                                                  , producer: string.Empty
+                                                  , optimized: false
+                                                  , compilationFlags: string.Empty
+                                                  , runtimeVersion: 0
+                                                  );
+
             ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath, string.Empty, string.Empty );
         }
 
@@ -250,16 +267,18 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             string compilationFlags = "Flag1, Flag2,Flag3";
             string producer = nameof(CreateCompileUnit_with_valid_compilationFlags_should_not_throw);
 
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
-            var unit = bldr.CreateCompileUnit( language: default
-                                             , sourceFilePath: sourceFilePath
-                                             , producer: producer
-                                             , optimized: false
-                                             , compilationFlags: compilationFlags
-                                             , runtimeVersion: 0
-                                             );
+            using var diBuilder = new DIBuilder(testModule);
+
+            var unit = diBuilder.CreateCompileUnit( language: default
+                                                  , sourceFilePath: sourceFilePath
+                                                  , producer: producer
+                                                  , optimized: false
+                                                  , compilationFlags: compilationFlags
+                                                  , runtimeVersion: 0
+                                                  );
+
             ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath, producer, compilationFlags );
         }
         #endregion
@@ -269,16 +288,16 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory("DIBuilder.CreateSubRange")]
         public void CreateSubRange_create_empty_subrange_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             long lowerBound = 0;
             long count = 0;
 
-            var subRange = bldr.CreateSubRange(lowerBound, count);
+            var subRange = diBuilder.CreateSubRange(lowerBound, count);
             Assert.IsNotNull( subRange );
-            Assert.AreSame( context, subRange.Context );
+            Assert.AreEqual( context, subRange.Context );
             Assert.IsNull( subRange.VariableCount );
             Assert.IsTrue( subRange.ConstantCount.HasValue );
             Assert.AreEqual( lowerBound, subRange.LowerBound );
@@ -289,16 +308,16 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory( "DIBuilder.CreateSubRange" )]
         public void CreateSubRange_create_subrange_with_nonzero_length_should_succeed( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             long lowerBound = 10;
             long count = 20;
 
-            var subRange = bldr.CreateSubRange(lowerBound, count);
+            var subRange = diBuilder.CreateSubRange(lowerBound, count);
             Assert.IsNotNull( subRange );
-            Assert.AreSame( context, subRange.Context );
+            Assert.AreEqual( context, subRange.Context );
             Assert.IsNull( subRange.VariableCount );
             Assert.IsTrue( subRange.ConstantCount.HasValue );
             Assert.AreEqual( lowerBound, subRange.LowerBound );
@@ -311,21 +330,21 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory( "DIBuilder.CreateTempMacroFile" )]
         public void CreateTempMacroFile_with_nulls_succeeds( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
             DIMacroFile? parent = null;
             uint line = 0;
             DIFile? file = null;
 
-            var result = bldr.CreateTempMacroFile( parent
-                                                 , line
-                                                 , file
-                                                 );
+            var result = diBuilder.CreateTempMacroFile( parent
+                                                      , line
+                                                      , file
+                                                      );
 
             Assert.IsNotNull( result );
-            Assert.AreSame( context, result.Context );
+            Assert.AreEqual( context, result.Context );
             Assert.AreEqual( 0, result.Elements.Count );
             Assert.IsNull( result.File );
         }
@@ -334,25 +353,25 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory( "DIBuilder.CreateTempMacroFile" )]
         public void CreateTempMacroFile_with_nonnull_parent_succeeds( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
-            DIMacroFile parent = bldr.CreateTempMacroFile( null
-                                                         , 1
-                                                         , null
-                                                         );
+            DIMacroFile parent = diBuilder.CreateTempMacroFile( null
+                                                              , 1
+                                                              , null
+                                                              );
             uint line = 0;
             DIFile? file = null;
 
-            var result = bldr.CreateTempMacroFile( parent
-                                                 , line
-                                                 , file
-                                                 );
+            var result = diBuilder.CreateTempMacroFile( parent
+                                                      , line
+                                                      , file
+                                                      );
 
             Assert.IsNotNull( result );
             Assert.AreEqual( MetadataKind.DIMacroFile, result.Kind );
-            Assert.AreSame( context, result.Context );
+            Assert.AreEqual( context, result.Context );
             Assert.AreEqual( 0, result.Elements.Count );
             Assert.IsNull( result.File );
             /* LLVM doesn't provide a way to access the parent, child relationship of a DIMacroFile (even at the C++ level) */
@@ -362,28 +381,28 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         [TestCategory( "DIBuilder.CreateTempMacroFile" )]
         public void CreateTempMacroFile_with_nonnull_parent_and_file_succeeds( )
         {
-            using var context = new Context( );
+            using var context =new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
-            var bldr = testModule.DIBuilder;
+            using var diBuilder = new DIBuilder(testModule);
 
-            DIMacroFile parent = bldr.CreateTempMacroFile( null
-                                                         , 1
-                                                         , null
-                                                         );
-            DIFile file = bldr.CreateFile( "test.inc" );
+            DIMacroFile parent = diBuilder.CreateTempMacroFile( null
+                                                              , 1
+                                                              , null
+                                                              );
+            DIFile file = diBuilder.CreateFile( "test.inc" );
 
             uint line = 123;
 
-            var result = bldr.CreateTempMacroFile( parent
-                                                 , line
-                                                 , file
-                                                 );
+            var result = diBuilder.CreateTempMacroFile( parent
+                                                      , line
+                                                      , file
+                                                      );
 
             Assert.IsNotNull( result );
-            Assert.AreSame( context, result.Context );
+            Assert.AreEqual( context, result.Context );
             Assert.AreEqual( MetadataKind.DIMacroFile, result.Kind );
             Assert.AreEqual( 0, result.Elements.Count );
-            Assert.AreSame( file, result.File );
+            Assert.AreEqual( file, result.File );
             /* LLVM doesn't provide a way to access the parent : child relationship of a DIMacroFile (even at the C++ level) */
         }
         #endregion
@@ -1299,7 +1318,7 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         }
 #endif
         private static void ValidateConstructedCompileUnit( DICompileUnit unit
-                                                          , Context context
+                                                          , IContext context
                                                           , string? directory
                                                           , string? fileName
                                                           , string? producer = null
@@ -1309,7 +1328,7 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
         {
             Assert.IsNotNull( unit );
             Assert.AreEqual( Tag.CompileUnit, unit.Tag );
-            Assert.AreSame( context, unit.Context, "Expect matching context" );
+            Assert.AreEqual( context, unit.Context, "Expect matching context" );
 
             // direct string properties that are set with 'null' should 'get' as string.Empty
             // The raw operand remains as null [see checks below].
@@ -1342,9 +1361,13 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             // 6 - GlobalVariables
             // 7 - ImportedEntities
             // 8 - Macros
-            Assert.AreEqual( 9, unit.Operands.Count, "CompileUnit should have correct number of operands" );
+            // 9 - ????
+            // 10 - ????
+            const int expectedOperandCount = 11;
+
+            Assert.AreEqual( expectedOperandCount, unit.Operands.Count, "CompileUnit should have correct number of operands" );
             var operandList = unit.Operands.ToList();
-            Assert.AreEqual( 9, operandList.Count, "Enumerating CompileUnit.Operands should have correct number of elements" );
+            Assert.AreEqual( expectedOperandCount, operandList.Count, "Enumerating CompileUnit.Operands should have correct number of elements" );
             Assert.IsNotNull( operandList[ 0 ], "Expect DIFile operand not null" );
 
             ValidateMetadataStringOperand( nameof( producer ), producer, operandList[ 1 ] );
@@ -1369,7 +1392,7 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             ValidateDIFileProperties( context, unit.File!, directory ?? string.Empty, fileName ?? string.Empty );
         }
 
-        private static void ValidateMetadataStringOperand( string operandName, string? expected, LlvmMetadata? md )
+        private static void ValidateMetadataStringOperand( string operandName, string? expected, IrMetadata? md )
         {
             // use IsNullOrEmpty here (NOT IsNullOrWhitespace or just 'is null' as LLVM is supposed
             // to transform an empty string to a null operand.
@@ -1386,7 +1409,7 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             Assert.AreEqual( expected, actual, $"Expect matching operand value for {operandName}" );
         }
 
-        private static void ValidateDIFileProperties( Context context
+        private static void ValidateDIFileProperties( IContext context
                                                     , DIFile file
                                                     , string expectedDirectory
                                                     , string expecteFileName
@@ -1401,9 +1424,9 @@ namespace Ubiquity.NET.Llvm.Tests.DebugInfo
             string sourceFilePath = Path.Combine(expectedDirectory, expecteFileName);
             Assert.AreEqual( expectedCheckSum ?? string.Empty, file.CheckSum );
             /* NOT YET AVAILABLE: Assert.AreEqual( expectedChecksumKind, file.ChecksumKind */
-            Assert.AreSame( context, file.Context );
+            Assert.AreEqual( context, file.Context );
             Assert.AreEqual( expectedDirectory, file.Directory );
-            Assert.AreSame( file, file.File );
+            Assert.AreEqual( file, file.File );
             Assert.AreEqual( expecteFileName, file.FileName );
             Assert.IsFalse( file.IsDeleted );
             Assert.IsFalse( file.IsDistinct );

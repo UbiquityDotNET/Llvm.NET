@@ -4,11 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Contains a local Value as Metadata</summary>
+    /// <summary>Contains a local Value as IrMetadata</summary>
     public class LocalAsMetadata
         : ValueAsMetadata
     {

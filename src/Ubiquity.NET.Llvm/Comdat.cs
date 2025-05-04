@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Comdat kind/behavior</summary>
@@ -20,11 +15,11 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Linker may choose any COMDAT key but sections must contain the same data</summary>
         ExactMatch = LLVMComdatSelectionKind.LLVMExactMatchComdatSelectionKind,
 
-        /// <summary>The linker will choose the section containing the targets COMDAT key</summary>
+        /// <summary>The linker will choose the largest section containing the targets COMDAT key</summary>
         Largest = LLVMComdatSelectionKind.LLVMLargestComdatSelectionKind,
 
         /// <summary>The linker requires that only one section with this COMDAT key exists</summary>
-        NoDuplicates = LLVMComdatSelectionKind.LLVMNoDuplicatesComdatSelectionKind,
+        NoDuplicates = LLVMComdatSelectionKind.LLVMNoDeduplicateComdatSelectionKind,
 
         /// <summary>Linker may choose any COMDAT key but sections must contain the same amount of data</summary>
         SameSize = LLVMComdatSelectionKind.LLVMSameSizeComdatSelectionKind
@@ -37,51 +32,48 @@ namespace Ubiquity.NET.Llvm
     /// Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
     /// an effective NOP.
     /// </remarks>
-    public class Comdat
+    [SuppressMessage( "Style", "IDE0250:Make struct 'readonly'", Justification = "NO, it can't be, the Kind setter is NOT readonly" )]
+    public readonly ref struct Comdat
+        : IEquatable<Comdat>
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
-        public string Name => Module.IsDisposed ? string.Empty : LibLLVMComdatGetName( ComdatHandle );
+        public string Name => Handle.IsNull ? string.Empty : LibLLVMComdatGetName( Handle );
+
+        #region IEquatable<Comdat>
+
+        /// <inheritdoc/>
+        public bool Equals(Comdat other) => Handle.Equals(other.Handle);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => Handle.GetHashCode();
+        #endregion
+
+        /// <summary>Gets a value indicating whether this instance represents a NULL/Invalid <see cref="Comdat"/></summary>
+        public bool IsNull => Handle.IsNull;
 
         /// <summary>Gets or sets the <see cref="ComdatKind"/> for this <see cref="Comdat"/></summary>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Setter method is 'by definition' NOT readonly! DUH!" )]
         public ComdatKind Kind
         {
-            get
-            {
-                if( Module.IsDisposed )
-                {
-                    return default;
-                }
-
-                return ( ComdatKind )LLVMGetComdatSelectionKind( ComdatHandle );
-            }
+            get => Handle.IsNull ? ComdatKind.Any : (ComdatKind)LLVMGetComdatSelectionKind( Handle );
 
             set
             {
-                if( Module.IsDisposed )
-                {
-                    return;
-                }
-
-                LLVMSetComdatSelectionKind( ComdatHandle, ( LLVMComdatSelectionKind )value );
+                Handle.ThrowIfInvalid();
+                LLVMSetComdatSelectionKind( Handle, (LLVMComdatSelectionKind)value );
             }
         }
 
-        /// <summary>Gets the module the <see cref="Comdat"/> belongs to</summary>
-        public BitcodeModule Module { get; }
-
-        /// <summary>Initializes a new instance of the <see cref="Comdat"/> class from an LLVM module and reference</summary>
-        /// <param name="module">Owning module for the comdat</param>
+        /// <summary>Initializes a new instance of the <see cref="Comdat"/> struct from an LLVM module and reference</summary>
         /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
-        internal Comdat( BitcodeModule module, LLVMComdatRef comdatRef )
+        [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1642:Constructor summary documentation should begin with standard text", Justification = "Tooling is too stupid to see 'record struct'" )]
+        internal Comdat(LLVMComdatRef comdatRef )
         {
-            module.ValidateNotNull( nameof( module ) );
-            comdatRef.ValidateNotDefault( nameof( comdatRef ) );
-
-            Module = module;
-            ComdatHandle = comdatRef;
+            comdatRef.ThrowIfInvalid();
+            Handle = comdatRef;
         }
 
         /// <summary>Gets the wrapped <see cref="LLVMComdatRef"/></summary>
-        internal LLVMComdatRef ComdatHandle { get; }
+        internal LLVMComdatRef Handle { get; }
     }
 }

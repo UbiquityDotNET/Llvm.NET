@@ -4,26 +4,19 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-
-using Ubiquity.ArgValidators;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
-    /// <summary>Generic wrapper to treat an MDTuple as an array of elements of specific type</summary>
+    /// <summary>Generic wrapper to treat an MDTuple as an array of elements of a specific type</summary>
     /// <typeparam name="T">Type of elements</typeparam>
     /// <remarks>
-    /// This implements a facade pattern that presents an <see cref="System.Collections.Generic.IReadOnlyCollection{T}"/> for the
+    /// This implements a façade pattern that presents an <see cref="System.Collections.Generic.IReadOnlyCollection{T}"/> for the
     /// operands of an <see cref="MDTuple"/>. This allows treating the tuple like an array of nodes of a
     /// particular type.
     /// </remarks>
     [SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Collection doesn't make sense for this type" )]
     public class TupleTypedArrayWrapper<T>
         : IReadOnlyList<T?>
-        where T : LlvmMetadata
+        where T : IrMetadata
     {
         /// <summary>Gets the underlying tuple for this wrapper</summary>
         public MDTuple? Tuple { get; }
@@ -38,7 +31,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             get
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
                 return Tuple!.Operands.GetOperand<T>( index );
             }
         }

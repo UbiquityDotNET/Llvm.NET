@@ -51,7 +51,7 @@ namespace LlvmBindingsGenerator
                    select td;
         }
 
-        public static bool TryGetHandleDecl( this CppSharp.AST.Type astType, out TypedefNameDecl decl )
+        public static bool TryGetHandleDecl( this CppSharp.AST.Type astType, [MaybeNullWhen(false)] out TypedefNameDecl? decl )
         {
             switch( astType )
             {
@@ -98,7 +98,8 @@ namespace LlvmBindingsGenerator
                 || ( pt.Pointee is BuiltinType bt && bt.Type == PrimitiveType.Void );
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "It's supposed to be all lowercase" )]
+        [SuppressMessage( "Globalization", "CA1308:Normalize strings to uppercase", Justification = "It's supposed to be all lowercase" )]
+        [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is needed, tooling is too stupid to see that..." )]
         public static string AsString( this CppSharp.AST.Attribute attr, bool useFullNamespace = false )
         {
             var bldr = new StringBuilder( "[" );
@@ -125,7 +126,7 @@ namespace LlvmBindingsGenerator
             return td.TryGetFunctionSignature( out _ );
         }
 
-        public static bool TryGetFunctionSignature( this TypedefNameDecl td, out FunctionType signature )
+        public static bool TryGetFunctionSignature( this TypedefNameDecl td, [MaybeNullWhen(false)] out FunctionType? signature )
         {
             signature = null;
             if( td.Type is PointerType pt && pt.Pointee is FunctionType sig )
@@ -137,7 +138,7 @@ namespace LlvmBindingsGenerator
             return false;
         }
 
-        public static FunctionType GetFunctionPointerType( this TypedefNameDecl td )
+        public static FunctionType? GetFunctionPointerType( this TypedefNameDecl td )
         {
             return ( td.Type is PointerType pt && pt.Pointee is FunctionType ft ) ? ft : null;
         }

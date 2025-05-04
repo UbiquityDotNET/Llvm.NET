@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Base class for a unary operator</summary>
-    public class UnaryOperator
+    public sealed class UnaryOperator
         : Instruction
     {
         internal UnaryOperator( LLVMValueRef valueRef )

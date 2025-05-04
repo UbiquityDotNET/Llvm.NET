@@ -23,8 +23,8 @@
 
 .DESCRIPTION
     This script is used by the automated build to perform the actual build. The Ubiquity.NET
-    family of projects all employ a PowerShell driven build that is generally divorced from the
-    automated build infrastructure used. This is done for several reasons, but the most
+    family of projects all employ a PowerShell driven build that is generally divorced from
+    the automated build infrastructure used. This is done for several reasons, but the most
     important ones are the ability to reproduce the build locally for inner development and
     for flexibility in selecting the actual back end. The back ends have changed a few times
     over the years and re-writing the entire build in terms of those back ends each time is
@@ -34,20 +34,19 @@
 [cmdletbinding()]
 Param(
     [string]$Configuration="Release",
-    [switch]$AllowVsPreReleases,
     [switch]$ForceClean,
     [ValidateSet('All','Source','Docs')]
     [System.String]$BuildMode = 'All'
 )
 
-pushd $PSScriptRoot
+Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
     # Pull in the repo specific support and force a full initialization of all the environment
     # as this is a top level build command.
     . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit -AllowVsPreReleases:$AllowVsPreReleases
+    $buildInfo = Initialize-BuildEnvironment -FullInit
     $BuildSource = $false
     $BuildDocs = $false;
 
@@ -61,19 +60,19 @@ try
     if((Test-Path -PathType Container $buildInfo['BuildOutputPath']) -and $ForceClean )
     {
         Write-Information "Cleaning output folder from previous builds"
-        rd -Recurse -Force -Path $buildInfo['BuildOutputPath']
+        remove-Item -Recurse -Force -Path $buildInfo['BuildOutputPath'] -ProgressAction SilentlyContinue
     }
 
-    md $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
+    New-Item -ItemType Directory $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
 
     if($BuildSource)
     {
-        .\Build-Source.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        .\Build-Source.ps1
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1 -AllowVsPreReleases:$AllowVsPreReleases
+        .\Build-Docs.ps1
     }
 }
 catch
@@ -87,7 +86,7 @@ catch
 }
 finally
 {
-    popd
+    Pop-Location
     $env:Path = $oldPath
 }
 

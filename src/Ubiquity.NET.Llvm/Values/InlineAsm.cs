@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Assembly language output dialect</summary>
@@ -28,8 +26,8 @@ namespace Ubiquity.NET.Llvm.Values
         {
         }
 
-        // bool HasSideEffects => NativeMethods.LLVMHasSideEffects( ValueHandle );
-        // bool IsAlignStack => LLVMNative.IsAlignStack( ValueHandle );
-        // AsmDialect Dialect => LLVMNative.GetAsmDialect( ValueHandle );
+        // bool HasSideEffects => NativeMethods.LLVMHasSideEffects( NativeHandle );
+        // bool IsAlignStack => LLVMNative.IsAlignStack( NativeHandle );
+        // AsmDialect Dialect => LLVMNative.GetAsmDialect( NativeHandle );
     }
 }

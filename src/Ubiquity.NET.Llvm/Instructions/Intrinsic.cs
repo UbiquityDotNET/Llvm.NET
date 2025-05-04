@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>base class for calls to LLVM intrinsic functions</summary>
@@ -22,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Intrinsic ID or 0 if the name does not correspond with an intrinsic function</returns>
         public static UInt32 LookupId( string name )
         {
-            name.ValidateNotNullOrWhiteSpace( nameof( name ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
             return LLVMLookupIntrinsicID( name, name.Length );
         }
 

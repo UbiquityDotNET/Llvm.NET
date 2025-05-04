@@ -13,8 +13,7 @@ Please provide the following information when submitting an issue.
 
 **.NET Framework Used:**
 
-- [ ] .NET Core 3.0.0
-- [ ] .NET Core 3.1.0
+- [ ] .NET 9.0
 - [ ] Something else
 
 **OS Environment:**

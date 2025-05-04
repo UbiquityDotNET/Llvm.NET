@@ -171,27 +171,18 @@ namespace Ubiquity.NET.Llvm.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Attribute {0} does not support a value.
         /// </summary>
-        internal static string Attribute_0_does_not_support_a_value {
+        internal static string Attribute_0_does_not_support_an_integer_value {
             get {
-                return ResourceManager.GetString("Attribute_0_does_not_support_a_value", resourceCulture);
+                return ResourceManager.GetString("Attribute_0_does_not_support_an_integer_value", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attribute &apos;{0}&apos; does not support an argument.
+        ///   Looks up a localized string similar to Attribute &apos;{0}&apos; requires a value of `{1}`.
         /// </summary>
-        internal static string Attribute_0_does_not_support_an_argument {
+        internal static string Attribute_0_requires_a_value_of_1 {
             get {
-                return ResourceManager.GetString("Attribute_0_does_not_support_an_argument", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Attribute {0} requires a value.
-        /// </summary>
-        internal static string Attribute_0_requires_a_value {
-            get {
-                return ResourceManager.GetString("Attribute_0_requires_a_value", resourceCulture);
+                return ResourceManager.GetString("Attribute_0_requires_a_value_of_1", resourceCulture);
             }
         }
         
@@ -477,6 +468,15 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected a valid UWTable kind value [async, sync].
+        /// </summary>
+        internal static string Expected_a_valid_UWTable_kind {
+            get {
+                return ResourceManager.GetString("Expected_a_valid_UWTable_kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected ConstantAsMetadata for first operand.
         /// </summary>
         internal static string Expected_ConstantAsMetadata_for_first_operand {
@@ -714,11 +714,11 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DICompileUnit already defined, LLVM only allows one DICompileUnit per module..
+        ///   Looks up a localized string similar to DICompileUnit already defined, LLVM only allows one DICompileUnit per DIBuilder..
         /// </summary>
-        internal static string LLVM_only_allows_one_DICompileUnit_per_module {
+        internal static string LLVM_only_allows_one_DICompileUnit_per_builder {
             get {
-                return ResourceManager.GetString("LLVM_only_allows_one_DICompileUnit_per_module", resourceCulture);
+                return ResourceManager.GetString("LLVM_only_allows_one_DICompileUnit_per_builder", resourceCulture);
             }
         }
         
@@ -1167,29 +1167,11 @@ namespace Ubiquity.NET.Llvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value already set.
-        /// </summary>
-        internal static string Value_already_set {
-            get {
-                return ResourceManager.GetString("Value_already_set", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Value for return must match the function signature&apos;s return type.
         /// </summary>
         internal static string Value_for_return_must_match_the_function_signature_s_return_type {
             get {
                 return ResourceManager.GetString("Value_for_return_must_match_the_function_signature_s_return_type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value not set.
-        /// </summary>
-        internal static string Value_not_set {
-            get {
-                return ResourceManager.GetString("Value_not_set", resourceCulture);
             }
         }
         

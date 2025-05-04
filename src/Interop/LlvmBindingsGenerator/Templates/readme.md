@@ -73,12 +73,12 @@ namespace Ubiquity.NET.Llvm.Native
         public static bool operator !=( LLVMxyxRef lhs, LLVMxyxRef rhs )
             => !( lhs == rhs );
 
-        internal LLVMxyxRef( IntPtr pointer )
+        internal LLVMxyxRef( nint pointer )
         {
             Handle = pointer;
         }
 
-        private readonly IntPtr Handle;
+        private readonly nint Handle;
     }
 }
 ```

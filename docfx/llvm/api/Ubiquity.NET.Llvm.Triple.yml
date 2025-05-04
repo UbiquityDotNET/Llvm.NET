@@ -1,0 +1,1365 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Triple
+  commentId: T:Ubiquity.NET.Llvm.Triple
+  id: Triple
+  parent: Ubiquity.NET.Llvm
+  children:
+  - Ubiquity.NET.Llvm.Triple.#ctor(System.String)
+  - Ubiquity.NET.Llvm.Triple.ArchitectureType
+  - Ubiquity.NET.Llvm.Triple.Dispose
+  - Ubiquity.NET.Llvm.Triple.Environment
+  - Ubiquity.NET.Llvm.Triple.EnvironmentVersion
+  - Ubiquity.NET.Llvm.Triple.Equals(System.Object)
+  - Ubiquity.NET.Llvm.Triple.Equals(Ubiquity.NET.Llvm.Triple)
+  - Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.ArchKind)
+  - Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.EnvironmentKind)
+  - Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.OSKind)
+  - Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.VendorKind)
+  - Ubiquity.NET.Llvm.Triple.GetHashCode
+  - Ubiquity.NET.Llvm.Triple.GetHostTriple
+  - Ubiquity.NET.Llvm.Triple.Normalize(System.String)
+  - Ubiquity.NET.Llvm.Triple.OS
+  - Ubiquity.NET.Llvm.Triple.ObjectFormat
+  - Ubiquity.NET.Llvm.Triple.SubArchitecture
+  - Ubiquity.NET.Llvm.Triple.ToString
+  - Ubiquity.NET.Llvm.Triple.Vendor
+  - Ubiquity.NET.Llvm.Triple.op_Implicit(Ubiquity.NET.Llvm.Triple)~System.String
+  langs:
+  - csharp
+  - vb
+  name: Triple
+  nameWithType: Triple
+  fullName: Ubiquity.NET.Llvm.Triple
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Triple
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 626
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Triple to describe a target
+  remarks: >-
+    <p>The term 'Triple' is a bit of a misnomer. At some point in the past it
+
+    actually consisted of only three parts, but that has changed over the years
+
+    without the name itself changing. The triple is normally represented as a
+
+    string of 4 components delimited by '-'. Some of the components have
+
+    sub components as part of the content. The canonical form of a triple is:
+
+    <code>{Architecture}{SubArchitecture}-{Vendor}-{OS}-{EnvironmentKind}{ObjectFormatKind}</code></p>
+
+    <p>
+
+    A few shorthand variations are allowed and converted to their full normalized form.
+
+    In particular "cygwin" is a shorthand for the OS-EnvironmentKind tuple "windows-cygnus"
+
+    and "mingw" is a shorthand form of "windows-gnu".
+
+    </p>
+
+    <p>In addition to shorthand allowances, the OS component may optionally include
+
+    a trailing version of the form Maj.Min.Micro. If any of the version number parts are
+
+    not present, then they default to 0.</p>
+
+    <p>
+
+    For the environment "androideabi" is allowed and normalized to android (including
+
+    an optional version number).
+
+    </p>
+  example: []
+  syntax:
+    content: 'public sealed class Triple : IEquatable<Triple>, IDisposable'
+    content.vb: Public NotInheritable Class Triple Implements IEquatable(Of Triple), IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Triple}
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.Triple.Dispose
+  commentId: M:Ubiquity.NET.Llvm.Triple.Dispose
+  id: Dispose
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: Triple.Dispose()
+  fullName: Ubiquity.NET.Llvm.Triple.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Dispose
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 631
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Ubiquity.NET.Llvm.Triple.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: Ubiquity.NET.Llvm.Triple.#ctor(System.String)
+  commentId: M:Ubiquity.NET.Llvm.Triple.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Triple(string)
+  nameWithType: Triple.Triple(string)
+  fullName: Ubiquity.NET.Llvm.Triple.Triple(string)
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 639
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.Triple" data-throw-if-not-resolved="false"></xref> class from a triple string
+  remarks: >-
+    The <code class="paramref">tripleTxt</code> string is normalized before parsing to allow for
+
+    common non-canonical forms of triples.
+  example: []
+  syntax:
+    content: public Triple(string tripleTxt)
+    parameters:
+    - id: tripleTxt
+      type: System.String
+      description: Triple string to parse
+    content.vb: Public Sub New(tripleTxt As String)
+  overload: Ubiquity.NET.Llvm.Triple.#ctor*
+  nameWithType.vb: Triple.New(String)
+  fullName.vb: Ubiquity.NET.Llvm.Triple.New(String)
+  name.vb: New(String)
+- uid: Ubiquity.NET.Llvm.Triple.ToString
+  commentId: M:Ubiquity.NET.Llvm.Triple.ToString
+  id: ToString
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: Triple.ToString()
+  fullName: Ubiquity.NET.Llvm.Triple.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ToString
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 646
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the final string form of the triple
+  example: []
+  syntax:
+    content: public override string? ToString()
+    return:
+      type: System.String
+      description: Normalized Triple string
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: Ubiquity.NET.Llvm.Triple.ToString*
+- uid: Ubiquity.NET.Llvm.Triple.ArchitectureType
+  commentId: P:Ubiquity.NET.Llvm.Triple.ArchitectureType
+  id: ArchitectureType
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: ArchitectureType
+  nameWithType: Triple.ArchitectureType
+  fullName: Ubiquity.NET.Llvm.Triple.ArchitectureType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ArchitectureType
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 652
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the Architecture of the triple
+  example: []
+  syntax:
+    content: public ArchKind ArchitectureType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.ArchKind
+    content.vb: Public ReadOnly Property ArchitectureType As ArchKind
+  overload: Ubiquity.NET.Llvm.Triple.ArchitectureType*
+- uid: Ubiquity.NET.Llvm.Triple.SubArchitecture
+  commentId: P:Ubiquity.NET.Llvm.Triple.SubArchitecture
+  id: SubArchitecture
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: SubArchitecture
+  nameWithType: Triple.SubArchitecture
+  fullName: Ubiquity.NET.Llvm.Triple.SubArchitecture
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SubArchitecture
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 655
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the Sub Architecture type
+  example: []
+  syntax:
+    content: public SubArchKind SubArchitecture { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.SubArchKind
+    content.vb: Public ReadOnly Property SubArchitecture As SubArchKind
+  overload: Ubiquity.NET.Llvm.Triple.SubArchitecture*
+- uid: Ubiquity.NET.Llvm.Triple.Vendor
+  commentId: P:Ubiquity.NET.Llvm.Triple.Vendor
+  id: Vendor
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Vendor
+  nameWithType: Triple.Vendor
+  fullName: Ubiquity.NET.Llvm.Triple.Vendor
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Vendor
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 658
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the Vendor component of the triple
+  example: []
+  syntax:
+    content: public VendorKind Vendor { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.VendorKind
+    content.vb: Public ReadOnly Property Vendor As VendorKind
+  overload: Ubiquity.NET.Llvm.Triple.Vendor*
+- uid: Ubiquity.NET.Llvm.Triple.OS
+  commentId: P:Ubiquity.NET.Llvm.Triple.OS
+  id: OS
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: OS
+  nameWithType: Triple.OS
+  fullName: Ubiquity.NET.Llvm.Triple.OS
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OS
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 661
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the OS Type for the triple
+  example: []
+  syntax:
+    content: public OSKind OS { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.OSKind
+    content.vb: Public ReadOnly Property OS As OSKind
+  overload: Ubiquity.NET.Llvm.Triple.OS*
+- uid: Ubiquity.NET.Llvm.Triple.Environment
+  commentId: P:Ubiquity.NET.Llvm.Triple.Environment
+  id: Environment
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Environment
+  nameWithType: Triple.Environment
+  fullName: Ubiquity.NET.Llvm.Triple.Environment
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Environment
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 664
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the environment type for the triple
+  example: []
+  syntax:
+    content: public EnvironmentKind Environment { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+    content.vb: Public ReadOnly Property Environment As EnvironmentKind
+  overload: Ubiquity.NET.Llvm.Triple.Environment*
+- uid: Ubiquity.NET.Llvm.Triple.ObjectFormat
+  commentId: P:Ubiquity.NET.Llvm.Triple.ObjectFormat
+  id: ObjectFormat
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: ObjectFormat
+  nameWithType: Triple.ObjectFormat
+  fullName: Ubiquity.NET.Llvm.Triple.ObjectFormat
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ObjectFormat
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 667
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the object format type for the triple
+  example: []
+  syntax:
+    content: public ObjectFormatKind ObjectFormat { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.ObjectFormatKind
+    content.vb: Public ReadOnly Property ObjectFormat As ObjectFormatKind
+  overload: Ubiquity.NET.Llvm.Triple.ObjectFormat*
+- uid: Ubiquity.NET.Llvm.Triple.EnvironmentVersion
+  commentId: P:Ubiquity.NET.Llvm.Triple.EnvironmentVersion
+  id: EnvironmentVersion
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: EnvironmentVersion
+  nameWithType: Triple.EnvironmentVersion
+  fullName: Ubiquity.NET.Llvm.Triple.EnvironmentVersion
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EnvironmentVersion
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 670
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets the version number of the environment
+  example: []
+  syntax:
+    content: public Version EnvironmentVersion { get; }
+    parameters: []
+    return:
+      type: System.Version
+    content.vb: Public ReadOnly Property EnvironmentVersion As Version
+  overload: Ubiquity.NET.Llvm.Triple.EnvironmentVersion*
+- uid: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.ArchKind)
+  commentId: M:Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.ArchKind)
+  id: GetCanonicalName(Ubiquity.NET.Llvm.ArchKind)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: GetCanonicalName(ArchKind)
+  nameWithType: Triple.GetCanonicalName(ArchKind)
+  fullName: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.ArchKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetCanonicalName
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 691
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the canonical name for an architecture type
+  example: []
+  syntax:
+    content: public static string GetCanonicalName(ArchKind archType)
+    parameters:
+    - id: archType
+      type: Ubiquity.NET.Llvm.ArchKind
+      description: Architecture type
+    return:
+      type: System.String
+      description: String name for the architecture
+    content.vb: Public Shared Function GetCanonicalName(archType As ArchKind) As String
+  overload: Ubiquity.NET.Llvm.Triple.GetCanonicalName*
+- uid: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.VendorKind)
+  commentId: M:Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.VendorKind)
+  id: GetCanonicalName(Ubiquity.NET.Llvm.VendorKind)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: GetCanonicalName(VendorKind)
+  nameWithType: Triple.GetCanonicalName(VendorKind)
+  fullName: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.VendorKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetCanonicalName
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 699
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the canonical name for the vendor component of a triple
+  example: []
+  syntax:
+    content: public static string GetCanonicalName(VendorKind vendorType)
+    parameters:
+    - id: vendorType
+      type: Ubiquity.NET.Llvm.VendorKind
+      description: Vendor type
+    return:
+      type: System.String
+      description: String name for the vendor
+    content.vb: Public Shared Function GetCanonicalName(vendorType As VendorKind) As String
+  overload: Ubiquity.NET.Llvm.Triple.GetCanonicalName*
+- uid: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.OSKind)
+  commentId: M:Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.OSKind)
+  id: GetCanonicalName(Ubiquity.NET.Llvm.OSKind)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: GetCanonicalName(OSKind)
+  nameWithType: Triple.GetCanonicalName(OSKind)
+  fullName: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.OSKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetCanonicalName
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 707
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the canonical name for the OS component of a triple
+  example: []
+  syntax:
+    content: public static string GetCanonicalName(OSKind osType)
+    parameters:
+    - id: osType
+      type: Ubiquity.NET.Llvm.OSKind
+      description: OS type
+    return:
+      type: System.String
+      description: String name for the OS
+    content.vb: Public Shared Function GetCanonicalName(osType As OSKind) As String
+  overload: Ubiquity.NET.Llvm.Triple.GetCanonicalName*
+- uid: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.EnvironmentKind)
+  commentId: M:Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.EnvironmentKind)
+  id: GetCanonicalName(Ubiquity.NET.Llvm.EnvironmentKind)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: GetCanonicalName(EnvironmentKind)
+  nameWithType: Triple.GetCanonicalName(EnvironmentKind)
+  fullName: Ubiquity.NET.Llvm.Triple.GetCanonicalName(Ubiquity.NET.Llvm.EnvironmentKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetCanonicalName
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 715
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Retrieves the canonical name for the environment component of a triple
+  example: []
+  syntax:
+    content: public static string GetCanonicalName(EnvironmentKind envType)
+    parameters:
+    - id: envType
+      type: Ubiquity.NET.Llvm.EnvironmentKind
+      description: Environment type
+    return:
+      type: System.String
+      description: String name for the environment component
+    content.vb: Public Shared Function GetCanonicalName(envType As EnvironmentKind) As String
+  overload: Ubiquity.NET.Llvm.Triple.GetCanonicalName*
+- uid: Ubiquity.NET.Llvm.Triple.Equals(Ubiquity.NET.Llvm.Triple)
+  commentId: M:Ubiquity.NET.Llvm.Triple.Equals(Ubiquity.NET.Llvm.Triple)
+  id: Equals(Ubiquity.NET.Llvm.Triple)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Equals(Triple?)
+  nameWithType: Triple.Equals(Triple?)
+  fullName: Ubiquity.NET.Llvm.Triple.Equals(Ubiquity.NET.Llvm.Triple?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equals
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 721
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Indicates whether the current object is equal to another object of the same type.
+  example: []
+  syntax:
+    content: public bool Equals(Triple? other)
+    parameters:
+    - id: other
+      type: Ubiquity.NET.Llvm.Triple
+      description: An object to compare with this object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Function Equals(other As Triple) As Boolean
+  overload: Ubiquity.NET.Llvm.Triple.Equals*
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Triple}.Equals(Ubiquity.NET.Llvm.Triple)
+  nameWithType.vb: Triple.Equals(Triple)
+  fullName.vb: Ubiquity.NET.Llvm.Triple.Equals(Ubiquity.NET.Llvm.Triple)
+  name.vb: Equals(Triple)
+- uid: Ubiquity.NET.Llvm.Triple.Equals(System.Object)
+  commentId: M:Ubiquity.NET.Llvm.Triple.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Equals(object?)
+  nameWithType: Triple.Equals(object?)
+  fullName: Ubiquity.NET.Llvm.Triple.Equals(object?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Equals
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 727
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object? obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: Ubiquity.NET.Llvm.Triple.Equals*
+  nameWithType.vb: Triple.Equals(Object)
+  fullName.vb: Ubiquity.NET.Llvm.Triple.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Ubiquity.NET.Llvm.Triple.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.Triple.GetHashCode
+  id: GetHashCode
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: Triple.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.Triple.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetHashCode
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 733
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: Ubiquity.NET.Llvm.Triple.GetHashCode*
+- uid: Ubiquity.NET.Llvm.Triple.Normalize(System.String)
+  commentId: M:Ubiquity.NET.Llvm.Triple.Normalize(System.String)
+  id: Normalize(System.String)
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: Normalize(string)
+  nameWithType: Triple.Normalize(string)
+  fullName: Ubiquity.NET.Llvm.Triple.Normalize(string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Normalize
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 741
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Normalizes a triple string
+  example: []
+  syntax:
+    content: public static string Normalize(string unNormalizedTriple)
+    parameters:
+    - id: unNormalizedTriple
+      type: System.String
+      description: triple to normalize
+    return:
+      type: System.String
+      description: Normalized string
+    content.vb: Public Shared Function Normalize(unNormalizedTriple As String) As String
+  overload: Ubiquity.NET.Llvm.Triple.Normalize*
+  nameWithType.vb: Triple.Normalize(String)
+  fullName.vb: Ubiquity.NET.Llvm.Triple.Normalize(String)
+  name.vb: Normalize(String)
+- uid: Ubiquity.NET.Llvm.Triple.GetHostTriple
+  commentId: M:Ubiquity.NET.Llvm.Triple.GetHostTriple
+  id: GetHostTriple
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: GetHostTriple()
+  nameWithType: Triple.GetHostTriple()
+  fullName: Ubiquity.NET.Llvm.Triple.GetHostTriple()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetHostTriple
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 750
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Gets a triple for the host LLVM is built for
+  example: []
+  syntax:
+    content: public static Triple GetHostTriple()
+    return:
+      type: Ubiquity.NET.Llvm.Triple
+      description: Host triple
+    content.vb: Public Shared Function GetHostTriple() As Triple
+  overload: Ubiquity.NET.Llvm.Triple.GetHostTriple*
+- uid: Ubiquity.NET.Llvm.Triple.op_Implicit(Ubiquity.NET.Llvm.Triple)~System.String
+  commentId: M:Ubiquity.NET.Llvm.Triple.op_Implicit(Ubiquity.NET.Llvm.Triple)~System.String
+  id: op_Implicit(Ubiquity.NET.Llvm.Triple)~System.String
+  parent: Ubiquity.NET.Llvm.Triple
+  langs:
+  - csharp
+  - vb
+  name: implicit operator string(Triple?)
+  nameWithType: Triple.implicit operator string(Triple?)
+  fullName: Ubiquity.NET.Llvm.Triple.implicit operator string(Ubiquity.NET.Llvm.Triple?)
+  type: Operator
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Triple.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: op_Implicit
+    path: ../src/Ubiquity.NET.Llvm/Triple.cs
+    startLine: 755
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm
+  summary: Implicitly converts a triple to a string
+  example: []
+  syntax:
+    content: public static implicit operator string(Triple? triple)
+    parameters:
+    - id: triple
+      type: Ubiquity.NET.Llvm.Triple
+      description: <xref href="Ubiquity.NET.Llvm.Triple" data-throw-if-not-resolved="false"></xref> to convert
+    return:
+      type: System.String
+      description: Triple as a string or <xref href="System.String.Empty" data-throw-if-not-resolved="false"></xref> if <code class="paramref">triple</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>
+    content.vb: Public Shared Widening Operator CType(triple As Triple) As String
+  overload: Ubiquity.NET.Llvm.Triple.op_Implicit*
+  nameWithType.vb: Triple.CType(Triple)
+  fullName.vb: Ubiquity.NET.Llvm.Triple.CType(Ubiquity.NET.Llvm.Triple)
+  name.vb: CType(Triple)
+references:
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Triple}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Triple}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<Triple>
+  nameWithType: IEquatable<Triple>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Triple>
+  nameWithType.vb: IEquatable(Of Triple)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Triple)
+  name.vb: IEquatable(Of Triple)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Triple
+    name: Triple
+    href: Ubiquity.NET.Llvm.Triple.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Triple
+    name: Triple
+    href: Ubiquity.NET.Llvm.Triple.html
+  - name: )
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Triple.Dispose*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.Dispose
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_Dispose
+  name: Dispose
+  nameWithType: Triple.Dispose
+  fullName: Ubiquity.NET.Llvm.Triple.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Triple
+  commentId: T:Ubiquity.NET.Llvm.Triple
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Triple.html
+  name: Triple
+  nameWithType: Triple
+  fullName: Ubiquity.NET.Llvm.Triple
+- uid: Ubiquity.NET.Llvm.Triple.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.#ctor
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple__ctor_System_String_
+  name: Triple
+  nameWithType: Triple.Triple
+  fullName: Ubiquity.NET.Llvm.Triple.Triple
+  nameWithType.vb: Triple.New
+  fullName.vb: Ubiquity.NET.Llvm.Triple.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Triple.ToString*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.ToString
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_ToString
+  name: ToString
+  nameWithType: Triple.ToString
+  fullName: Ubiquity.NET.Llvm.Triple.ToString
+- uid: Ubiquity.NET.Llvm.Triple.ArchitectureType*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.ArchitectureType
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_ArchitectureType
+  name: ArchitectureType
+  nameWithType: Triple.ArchitectureType
+  fullName: Ubiquity.NET.Llvm.Triple.ArchitectureType
+- uid: Ubiquity.NET.Llvm.ArchKind
+  commentId: T:Ubiquity.NET.Llvm.ArchKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ArchKind.html
+  name: ArchKind
+  nameWithType: ArchKind
+  fullName: Ubiquity.NET.Llvm.ArchKind
+- uid: Ubiquity.NET.Llvm.Triple.SubArchitecture*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.SubArchitecture
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_SubArchitecture
+  name: SubArchitecture
+  nameWithType: Triple.SubArchitecture
+  fullName: Ubiquity.NET.Llvm.Triple.SubArchitecture
+- uid: Ubiquity.NET.Llvm.SubArchKind
+  commentId: T:Ubiquity.NET.Llvm.SubArchKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.SubArchKind.html
+  name: SubArchKind
+  nameWithType: SubArchKind
+  fullName: Ubiquity.NET.Llvm.SubArchKind
+- uid: Ubiquity.NET.Llvm.Triple.Vendor*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.Vendor
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_Vendor
+  name: Vendor
+  nameWithType: Triple.Vendor
+  fullName: Ubiquity.NET.Llvm.Triple.Vendor
+- uid: Ubiquity.NET.Llvm.VendorKind
+  commentId: T:Ubiquity.NET.Llvm.VendorKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.VendorKind.html
+  name: VendorKind
+  nameWithType: VendorKind
+  fullName: Ubiquity.NET.Llvm.VendorKind
+- uid: Ubiquity.NET.Llvm.Triple.OS*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.OS
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_OS
+  name: OS
+  nameWithType: Triple.OS
+  fullName: Ubiquity.NET.Llvm.Triple.OS
+- uid: Ubiquity.NET.Llvm.OSKind
+  commentId: T:Ubiquity.NET.Llvm.OSKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.OSKind.html
+  name: OSKind
+  nameWithType: OSKind
+  fullName: Ubiquity.NET.Llvm.OSKind
+- uid: Ubiquity.NET.Llvm.Triple.Environment*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.Environment
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_Environment
+  name: Environment
+  nameWithType: Triple.Environment
+  fullName: Ubiquity.NET.Llvm.Triple.Environment
+- uid: Ubiquity.NET.Llvm.EnvironmentKind
+  commentId: T:Ubiquity.NET.Llvm.EnvironmentKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.EnvironmentKind.html
+  name: EnvironmentKind
+  nameWithType: EnvironmentKind
+  fullName: Ubiquity.NET.Llvm.EnvironmentKind
+- uid: Ubiquity.NET.Llvm.Triple.ObjectFormat*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.ObjectFormat
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_ObjectFormat
+  name: ObjectFormat
+  nameWithType: Triple.ObjectFormat
+  fullName: Ubiquity.NET.Llvm.Triple.ObjectFormat
+- uid: Ubiquity.NET.Llvm.ObjectFormatKind
+  commentId: T:Ubiquity.NET.Llvm.ObjectFormatKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ObjectFormatKind.html
+  name: ObjectFormatKind
+  nameWithType: ObjectFormatKind
+  fullName: Ubiquity.NET.Llvm.ObjectFormatKind
+- uid: Ubiquity.NET.Llvm.Triple.EnvironmentVersion*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.EnvironmentVersion
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_EnvironmentVersion
+  name: EnvironmentVersion
+  nameWithType: Triple.EnvironmentVersion
+  fullName: Ubiquity.NET.Llvm.Triple.EnvironmentVersion
+- uid: System.Version
+  commentId: T:System.Version
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.version
+  name: Version
+  nameWithType: Version
+  fullName: System.Version
+- uid: Ubiquity.NET.Llvm.Triple.GetCanonicalName*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.GetCanonicalName
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_GetCanonicalName_Ubiquity_NET_Llvm_ArchKind_
+  name: GetCanonicalName
+  nameWithType: Triple.GetCanonicalName
+  fullName: Ubiquity.NET.Llvm.Triple.GetCanonicalName
+- uid: Ubiquity.NET.Llvm.Triple.Equals*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.Equals
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_Equals_Ubiquity_NET_Llvm_Triple_
+  name: Equals
+  nameWithType: Triple.Equals
+  fullName: Ubiquity.NET.Llvm.Triple.Equals
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Triple}.Equals(Ubiquity.NET.Llvm.Triple)
+  commentId: M:System.IEquatable{Ubiquity.NET.Llvm.Triple}.Equals(Ubiquity.NET.Llvm.Triple)
+  parent: System.IEquatable{Ubiquity.NET.Llvm.Triple}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(Triple)
+  nameWithType: IEquatable<Triple>.Equals(Triple)
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Triple>.Equals(Ubiquity.NET.Llvm.Triple)
+  nameWithType.vb: IEquatable(Of Triple).Equals(Triple)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Triple).Equals(Ubiquity.NET.Llvm.Triple)
+  spec.csharp:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Triple}.Equals(Ubiquity.NET.Llvm.Triple)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Triple
+    name: Triple
+    href: Ubiquity.NET.Llvm.Triple.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Triple}.Equals(Ubiquity.NET.Llvm.Triple)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Triple
+    name: Triple
+    href: Ubiquity.NET.Llvm.Triple.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Triple.GetHashCode*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.GetHashCode
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_GetHashCode
+  name: GetHashCode
+  nameWithType: Triple.GetHashCode
+  fullName: Ubiquity.NET.Llvm.Triple.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Ubiquity.NET.Llvm.Triple.Normalize*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.Normalize
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_Normalize_System_String_
+  name: Normalize
+  nameWithType: Triple.Normalize
+  fullName: Ubiquity.NET.Llvm.Triple.Normalize
+- uid: Ubiquity.NET.Llvm.Triple.GetHostTriple*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.GetHostTriple
+  href: Ubiquity.NET.Llvm.Triple.html#Ubiquity_NET_Llvm_Triple_GetHostTriple
+  name: GetHostTriple
+  nameWithType: Triple.GetHostTriple
+  fullName: Ubiquity.NET.Llvm.Triple.GetHostTriple
+- uid: System.String.Empty
+  commentId: F:System.String.Empty
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string.empty
+  name: Empty
+  nameWithType: string.Empty
+  fullName: string.Empty
+  nameWithType.vb: String.Empty
+  fullName.vb: String.Empty
+- uid: Ubiquity.NET.Llvm.Triple.op_Implicit*
+  commentId: Overload:Ubiquity.NET.Llvm.Triple.op_Implicit
+  name: implicit operator
+  nameWithType: Triple.implicit operator
+  fullName: Ubiquity.NET.Llvm.Triple.implicit operator
+  nameWithType.vb: Triple.CType
+  fullName.vb: Ubiquity.NET.Llvm.Triple.CType
+  name.vb: CType
+  spec.csharp:
+  - name: implicit
+  - name: " "
+  - name: operator

@@ -1,0 +1,786 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+  id: DILocalVariableArray
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: DILocalVariableArray
+  nameWithType: DILocalVariableArray
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DILocalVariableArray.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DILocalVariableArray
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DILocalVariableArray.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Array of <xref href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable" data-throw-if-not-resolved="false"></xref> nodes for use with see <xref href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder" data-throw-if-not-resolved="false"></xref> methods
+  example: []
+  syntax:
+    content: 'public class DILocalVariableArray : TupleTypedArrayWrapper<DILocalVariable>, IReadOnlyList<DILocalVariable?>, IReadOnlyCollection<DILocalVariable?>, IEnumerable<DILocalVariable?>, IEnumerable'
+    content.vb: Public Class DILocalVariableArray Inherits TupleTypedArrayWrapper(Of DILocalVariable) Implements IReadOnlyList(Of DILocalVariable), IReadOnlyCollection(Of DILocalVariable), IEnumerable(Of DILocalVariable), IEnumerable
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  implements:
+  - System.Collections.Generic.IReadOnlyList{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  - System.Collections.Generic.IReadOnlyCollection{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  - System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  - System.Collections.IEnumerable
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Tuple
+  - Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Count
+  - Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Item(System.Int32)
+  - Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.GetEnumerator
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+references:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  name: DILocalVariable
+  nameWithType: DILocalVariable
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html
+  name: DIBuilder
+  nameWithType: DIBuilder
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIBuilder
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html
+  name: TupleTypedArrayWrapper<DILocalVariable>
+  nameWithType: TupleTypedArrayWrapper<DILocalVariable>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>
+  nameWithType.vb: TupleTypedArrayWrapper(Of DILocalVariable)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable)
+  name.vb: TupleTypedArrayWrapper(Of DILocalVariable)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+    name: TupleTypedArrayWrapper
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+    name: TupleTypedArrayWrapper
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<DILocalVariable>
+  nameWithType: IReadOnlyList<DILocalVariable>
+  fullName: System.Collections.Generic.IReadOnlyList<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>
+  nameWithType.vb: IReadOnlyList(Of DILocalVariable)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable)
+  name.vb: IReadOnlyList(Of DILocalVariable)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<DILocalVariable>
+  nameWithType: IReadOnlyCollection<DILocalVariable>
+  fullName: System.Collections.Generic.IReadOnlyCollection<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>
+  nameWithType.vb: IReadOnlyCollection(Of DILocalVariable)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable)
+  name.vb: IReadOnlyCollection(Of DILocalVariable)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<DILocalVariable>
+  nameWithType: IEnumerable<DILocalVariable>
+  fullName: System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>
+  nameWithType.vb: IEnumerable(Of DILocalVariable)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable)
+  name.vb: IEnumerable(Of DILocalVariable)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable
+    name: DILocalVariable
+    href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html
+  - name: )
+- uid: System.Collections.IEnumerable
+  commentId: T:System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Tuple
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Tuple
+  parent: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  definition: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Tuple
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_Tuple
+  name: Tuple
+  nameWithType: TupleTypedArrayWrapper<DILocalVariable>.Tuple
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>.Tuple
+  nameWithType.vb: TupleTypedArrayWrapper(Of DILocalVariable).Tuple
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable).Tuple
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Count
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Count
+  parent: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  definition: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Count
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_Count
+  name: Count
+  nameWithType: TupleTypedArrayWrapper<DILocalVariable>.Count
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>.Count
+  nameWithType.vb: TupleTypedArrayWrapper(Of DILocalVariable).Count
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable).Count
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Item(System.Int32)
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Item(System.Int32)
+  parent: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  definition: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Item(System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: TupleTypedArrayWrapper<DILocalVariable>.this[int]
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>.this[int]
+  nameWithType.vb: TupleTypedArrayWrapper(Of DILocalVariable).this[](Integer)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.Item(System.Int32)
+    name: this[]
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_Item_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.GetEnumerator
+  parent: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}
+  definition: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.GetEnumerator
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_GetEnumerator
+  name: GetEnumerator()
+  nameWithType: TupleTypedArrayWrapper<DILocalVariable>.GetEnumerator()
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<Ubiquity.NET.Llvm.DebugInfo.DILocalVariable>.GetEnumerator()
+  nameWithType.vb: TupleTypedArrayWrapper(Of DILocalVariable).GetEnumerator()
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of Ubiquity.NET.Llvm.DebugInfo.DILocalVariable).GetEnumerator()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.GetEnumerator
+    name: GetEnumerator
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_GetEnumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper{Ubiquity.NET.Llvm.DebugInfo.DILocalVariable}.GetEnumerator
+    name: GetEnumerator
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_GetEnumerator
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html
+  name: TupleTypedArrayWrapper<T>
+  nameWithType: TupleTypedArrayWrapper<T>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<T>
+  nameWithType.vb: TupleTypedArrayWrapper(Of T)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of T)
+  name.vb: TupleTypedArrayWrapper(Of T)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+    name: TupleTypedArrayWrapper
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1
+    name: TupleTypedArrayWrapper
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Tuple
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Tuple
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_Tuple
+  name: Tuple
+  nameWithType: TupleTypedArrayWrapper<T>.Tuple
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<T>.Tuple
+  nameWithType.vb: TupleTypedArrayWrapper(Of T).Tuple
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of T).Tuple
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Count
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Count
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_Count
+  name: Count
+  nameWithType: TupleTypedArrayWrapper<T>.Count
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<T>.Count
+  nameWithType.vb: TupleTypedArrayWrapper(Of T).Count
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of T).Count
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Item(System.Int32)
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Item(System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: TupleTypedArrayWrapper<T>.this[int]
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<T>.this[int]
+  nameWithType.vb: TupleTypedArrayWrapper(Of T).this[](Integer)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of T).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.Item(System.Int32)
+    name: this[]
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_Item_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.GetEnumerator
+  href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_GetEnumerator
+  name: GetEnumerator()
+  nameWithType: TupleTypedArrayWrapper<T>.GetEnumerator()
+  fullName: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper<T>.GetEnumerator()
+  nameWithType.vb: TupleTypedArrayWrapper(Of T).GetEnumerator()
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper(Of T).GetEnumerator()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.GetEnumerator
+    name: GetEnumerator
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_GetEnumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper`1.GetEnumerator
+    name: GetEnumerator
+    href: Ubiquity.NET.Llvm.DebugInfo.TupleTypedArrayWrapper-1.html#Ubiquity_NET_Llvm_DebugInfo_TupleTypedArrayWrapper_1_GetEnumerator
+  - name: (
+  - name: )

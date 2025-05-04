@@ -4,72 +4,186 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Diagnostics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.JIT;
-using Ubiquity.NET.Llvm.Values;
+using Ubiquity.NET.Extensions;
+using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Llvm.OrcJITv2;
 
 namespace Ubiquity.NET.Llvm.Tests
 {
     [TestClass]
     public class OrcJitTests
     {
+        private const string FooBodySymbolName = "foo_body";
+        private const string BarBodySymbolName = "bar_body";
+
         [TestMethod]
-        public void TestEagerIRCompilation( )
+        public void TestVeryLazyJIT( )
         {
-            using var ctx = new Context( );
-            var nativeTriple = Triple.HostTriple;
-            var target = Target.FromTriple( nativeTriple );
-            var machine = target.CreateTargetMachine( nativeTriple );
-            using var orcJit = new OrcJit( machine );
-            using( var lazyModule = CreateModule( ctx, machine, 10101010, "lazy1", "lazy1" ) )
+            using var jit = new LlJIT();
+
+            var triple = jit.TripleString;
+            using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
+
+            // Place the generated module in the JIT
+            jit.AddModule(jit.MainLib, mainMod);
+            SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
+
+            using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
+
+            var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+                [mangledFooBodySymName] = flags,
+            }.ToImmutable();
+
+            using var mangledBarBodySymName = jit.MangleAndIntern(BarBodySymbolName);
+
+            var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+                [mangledBarBodySymName] = flags,
+            }.ToImmutable();
+
+            using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
+            using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
+
+            jit.MainLib.Define(fooMu);
+            jit.MainLib.Define(barMu);
+
+            using var ism = new LocalIndirectStubsManager(triple);
+            using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
+            using var mangledFoo = jit.MangleAndIntern("foo");
+            using var mangledBar = jit.MangleAndIntern("bar");
+
+            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+                [mangledFoo] = new(mangledFooBodySymName, flags),
+                [mangledBar] = new(mangledBarBodySymName, flags),
+            }.ToImmutable();
+
+            using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
+            jit.MainLib.Define(lazyReExports);
+
+            UInt64 address = jit.Lookup("entry");
+
+            unsafe
             {
-                orcJit.AddLazyCompiledModule( lazyModule );
+                var entry = (delegate* unmanaged[Cdecl]<Int32, Int32>)address;
+                int result = entry(1); // Conditionally calls "foo" with lazy materialization
+                Assert.AreEqual(1, result);
+
+                result = entry(0); // Conditionally calls "bar" with lazy materialization
+                Assert.AreEqual(2, result);
             }
 
-            using( var lazyModule = CreateModule( ctx, machine, 20202020, "lazy2", "lazy2" ) )
+            // Local function to handle materializing the very lazy symbols
+            // This function captures "jit" and therefore the materializer instance
+            // above must remain valid until the JIT is destroyed or the materialization
+            // occurs.
+            void Materialize(MaterializationResponsibility r)
             {
-                orcJit.AddLazyCompiledModule( lazyModule );
-            }
+                // symbol strings returned are NOT owned by this function so Dispose() isn't needed (Though it is an allowed NOP)
+                using var symbols = r.GetRequestedSymbols();
+                Debug.Assert(symbols.Count == 1, "Unexpected number of symbols!");
 
-            // try several different modules with the same function name replacing the previous
-            using( var module = CreateModule( ctx, orcJit.TargetMachine, 42 ) )
-            {
-                AddAndExecuteTestModule( orcJit, module, 42 );
-            }
+                using var fooBodyName = jit.MangleAndIntern(FooBodySymbolName);
+                using var barBodyName = jit.MangleAndIntern(BarBodySymbolName);
 
-            using( var module = CreateModule( ctx, orcJit.TargetMachine, 12345678 ) )
-            {
-                AddAndExecuteTestModule( orcJit, module, 12345678 );
-            }
+                ThreadSafeModule module;
+                if(symbols[0].Equals(fooBodyName))
+                {
+                    Debug.WriteLine("Parsing module for 'Foo'");
+                    module = ParseTestModule(FooModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "foo-mod");
+                }
+                else if (symbols[0].Equals(barBodyName))
+                {
+                    Debug.WriteLine("Parsing module for 'Bar'");
+                    module = ParseTestModule(BarModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "bar-mod");
+                }
+                else
+                {
+                    Debug.WriteLine("Unknown symbol");
 
-            using( var module = CreateModule( ctx, orcJit.TargetMachine, 87654321 ) )
-            {
-                AddAndExecuteTestModule( orcJit, module, 87654321 );
+                    // Not a known symbol - fail the materialization request.
+                    r.Fail();
+                    r.Dispose();
+                    return;
+                }
+
+                // ownership of the module is transferred on success
+                // this protects it in the face of an exception
+                using(module)
+                {
+                    // apply the data Layout
+                    module.WithPerThreadModule(ApplyDataLayout);
+
+                    // Finally emit the module to the JIT.
+                    // This transfers ownership of both the responsibility AND the module
+                    // to the native LLVM JIT.
+                    jit.TransformLayer.Emit(r, module);
+                }
+
+                ErrorInfo ApplyDataLayout(IModule module)
+                {
+                    module.DataLayoutString = jit.DataLayoutString;
+
+                    // no API calls in this function provide an ErrorInfo instance, so just return
+                    // the default (success)
+                    //
+                    // Note: The invoking callback will catch any exceptions thrown from this function
+                    //       AND convert them to an ErrorInfo to return to the native code.
+                    return default;
+                }
             }
         }
 
-        private static void AddAndExecuteTestModule( OrcJit orcJit, BitcodeModule module, int magicNumber )
+        private static ThreadSafeModule ParseTestModule(LazyEncodedString src, LazyEncodedString name)
         {
-            ulong orcHandle = orcJit.AddEagerlyCompiledModule( module );
-            var main = orcJit.GetFunctionDelegate<TestMain>("main");
-            Assert.IsNotNull( main );
-            Assert.AreEqual( magicNumber, main( ) );
-            orcJit.RemoveModule( orcHandle );
+            using var threadSafeContext = new ThreadSafeContext();
+            var ctx = threadSafeContext.PerThreadContext;
+
+            // Ownership is transferred, this protects in the event of an exception
+            using var module = ctx.ParseModule(src, name);
+            return new ThreadSafeModule(threadSafeContext, module);
         }
 
-        private static BitcodeModule CreateModule( Context ctx, TargetMachine machine, int magicNumber, string modulename = "test", string functionname = "main" )
+        private const string MainModuleSource = """
+        define i32 @entry(i32 %argc)
         {
-            var module = ctx.CreateBitcodeModule(modulename);
-            module.Layout = machine.TargetData;
-            IrFunction main = module.CreateFunction( functionname, ctx.GetFunctionType( ctx.Int32Type ) );
-            BasicBlock entryBlock = main.AppendBasicBlock("entry");
-            var bldr = new InstructionBuilder(entryBlock);
-            bldr.Return( ctx.CreateConstant( magicNumber ) );
-            return module;
+        entry:
+            %tobool = icmp ne i32 %argc, 0
+            br i1 %tobool, label %if.foo, label %if.bar
+
+        if.foo:
+            %call = tail call i32 @foo()
+            br label %return
+
+        if.bar:
+            %call1 = tail call i32 @bar()
+            br label %return
+
+        return:
+            %retval.0 = phi i32 [ %call, %if.foo ], [ %call1, %if.bar ]
+            ret i32 %retval.0
         }
 
-        private delegate int TestMain( );
+        declare i32 @foo()
+        declare i32 @bar()
+        """;
+
+        private const string FooModuleSource = """
+        define i32 @foo_body() {
+          entry:
+            ret i32 1
+        }
+        """;
+
+        private const string BarModuleSource = """
+        define i32 @bar_body()
+        {
+          entry:
+            ret i32 2
+        }
+        """;
     }
 }

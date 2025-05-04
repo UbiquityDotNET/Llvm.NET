@@ -1,0 +1,559 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.Linkage
+  commentId: T:Ubiquity.NET.Llvm.Values.Linkage
+  id: Linkage
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.Linkage.Append
+  - Ubiquity.NET.Llvm.Values.Linkage.AvailableExternally
+  - Ubiquity.NET.Llvm.Values.Linkage.Common
+  - Ubiquity.NET.Llvm.Values.Linkage.DllExport
+  - Ubiquity.NET.Llvm.Values.Linkage.DllImport
+  - Ubiquity.NET.Llvm.Values.Linkage.External
+  - Ubiquity.NET.Llvm.Values.Linkage.ExternalWeak
+  - Ubiquity.NET.Llvm.Values.Linkage.Internal
+  - Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+  - Ubiquity.NET.Llvm.Values.Linkage.LinkOnceODR
+  - Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate
+  - Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivateWeak
+  - Ubiquity.NET.Llvm.Values.Linkage.Private
+  - Ubiquity.NET.Llvm.Values.Linkage.Weak
+  - Ubiquity.NET.Llvm.Values.Linkage.WeakODR
+  langs:
+  - csharp
+  - vb
+  name: Linkage
+  nameWithType: Linkage
+  fullName: Ubiquity.NET.Llvm.Values.Linkage
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Linkage
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 10
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Linkage specification for functions and globals
+  example: []
+  syntax:
+    content: public enum Linkage
+    content.vb: Public Enum Linkage
+  seealso:
+  - linkType: HRef
+    linkId: xref:llvm_langref#linkage-types
+    altText: LLVM Linkage Types
+- uid: Ubiquity.NET.Llvm.Values.Linkage.External
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.External
+  id: External
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: External
+  nameWithType: Linkage.External
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.External
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: External
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 13
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Externally visible Global
+  example: []
+  syntax:
+    content: External = 0
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.AvailableExternally
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.AvailableExternally
+  id: AvailableExternally
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: AvailableExternally
+  nameWithType: Linkage.AvailableExternally
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.AvailableExternally
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AvailableExternally
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Available Externally
+  remarks: >-
+    Globals with “available_externally” linkage are never emitted into the object file corresponding to the LLVM module.
+        From the linker’s perspective, an available_externally global is equivalent to an external declaration. They exist to allow
+        in-lining and other optimizations to take place given knowledge of the definition of the global, which is known to be somewhere
+        outside the module. Globals with available_externally linkage are allowed to be discarded at will, and allow in-lining and other
+        optimizations. This linkage type is only allowed on definitions, not declarations.
+  example: []
+  syntax:
+    content: AvailableExternally = 1
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+  id: LinkOnceAny
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: LinkOnceAny
+  nameWithType: Linkage.LinkOnceAny
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LinkOnceAny
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Keep a single copy when linking
+  example: []
+  syntax:
+    content: LinkOnceAny = 2
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.LinkOnceODR
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.LinkOnceODR
+  id: LinkOnceODR
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: LinkOnceODR
+  nameWithType: Linkage.LinkOnceODR
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.LinkOnceODR
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LinkOnceODR
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 28
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Like <xref href="Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny" data-throw-if-not-resolved="false"></xref> but can only be replaced by equivalent (One Definition Rule)
+  example: []
+  syntax:
+    content: LinkOnceODR = 3
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Weak
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Weak
+  id: Weak
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: Weak
+  nameWithType: Linkage.Weak
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Weak
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Weak
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 33
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Keep one copy when linking (weak)
+  example: []
+  syntax:
+    content: Weak = 5
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.WeakODR
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.WeakODR
+  id: WeakODR
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: WeakODR
+  nameWithType: Linkage.WeakODR
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.WeakODR
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: WeakODR
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 36
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Like <xref href="Ubiquity.NET.Llvm.Values.Linkage.Weak" data-throw-if-not-resolved="false"></xref> but only replaced by something equivalent (e.g. One Definition Rule)
+  example: []
+  syntax:
+    content: WeakODR = 6
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Append
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Append
+  id: Append
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: Append
+  nameWithType: Linkage.Append
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Append
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Append
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 40
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Special purpose, applies only to global arrays
+  example: []
+  syntax:
+    content: Append = 7
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+  seealso:
+  - linkType: HRef
+    linkId: xref:llvm_langref#linkage-types
+    altText: xref:llvm_langref#linkage-types
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Internal
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Internal
+  id: Internal
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: Internal
+  nameWithType: Linkage.Internal
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Internal
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Internal
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Rename collision when linking (i.e static function)
+  example: []
+  syntax:
+    content: Internal = 8
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Private
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Private
+  id: Private
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: Private
+  nameWithType: Linkage.Private
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Private
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Private
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Link as <xref href="Ubiquity.NET.Llvm.Values.Linkage.Internal" data-throw-if-not-resolved="false"></xref> but omit from the generated symbol table
+  example: []
+  syntax:
+    content: Private = 9
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.DllImport
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.DllImport
+  id: DllImport
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: DllImport
+  nameWithType: Linkage.DllImport
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.DllImport
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DllImport
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Global to be imported from a DLL
+  example: []
+  syntax:
+    content: DllImport = 10
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.DllExport
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.DllExport
+  id: DllExport
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: DllExport
+  nameWithType: Linkage.DllExport
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.DllExport
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DllExport
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Global to be Exported from a DLL
+  example: []
+  syntax:
+    content: DllExport = 11
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.ExternalWeak
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.ExternalWeak
+  id: ExternalWeak
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: ExternalWeak
+  nameWithType: Linkage.ExternalWeak
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.ExternalWeak
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ExternalWeak
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 59
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: External weak linkage
+  remarks: >-
+    The semantics of this linkage follow the ELF object file model: the symbol is weak until linked,
+
+    if not linked, the symbol becomes null instead of being an undefined reference.
+  example: []
+  syntax:
+    content: ExternalWeak = 12
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Common
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Common
+  id: Common
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: Common
+  nameWithType: Linkage.Common
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Common
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Common
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 64
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Tentative definitions
+  example: []
+  syntax:
+    content: Common = 14
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate
+  id: LinkerPrivate
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: LinkerPrivate
+  nameWithType: Linkage.LinkerPrivate
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LinkerPrivate
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 67
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Like <xref href="Ubiquity.NET.Llvm.Values.Linkage.Private" data-throw-if-not-resolved="false"></xref> but the linker remove this symbol
+  example: []
+  syntax:
+    content: LinkerPrivate = 15
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivateWeak
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivateWeak
+  id: LinkerPrivateWeak
+  parent: Ubiquity.NET.Llvm.Values.Linkage
+  langs:
+  - csharp
+  - vb
+  name: LinkerPrivateWeak
+  nameWithType: Linkage.LinkerPrivateWeak
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivateWeak
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LinkerPrivateWeak
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalValue.cs
+    startLine: 70
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Weak form of <xref href="Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: LinkerPrivateWeak = 16
+    return:
+      type: Ubiquity.NET.Llvm.Values.Linkage
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.Values.Linkage
+  commentId: T:Ubiquity.NET.Llvm.Values.Linkage
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Linkage.html
+  name: Linkage
+  nameWithType: Linkage
+  fullName: Ubiquity.NET.Llvm.Values.Linkage
+- uid: Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+  href: Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_LinkOnceAny
+  name: LinkOnceAny
+  nameWithType: Linkage.LinkOnceAny
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.LinkOnceAny
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Weak
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Weak
+  href: Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Weak
+  name: Weak
+  nameWithType: Linkage.Weak
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Weak
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Internal
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Internal
+  href: Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Internal
+  name: Internal
+  nameWithType: Linkage.Internal
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Internal
+- uid: Ubiquity.NET.Llvm.Values.Linkage.Private
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.Private
+  href: Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Private
+  name: Private
+  nameWithType: Linkage.Private
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.Private
+- uid: Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate
+  commentId: F:Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate
+  href: Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_LinkerPrivate
+  name: LinkerPrivate
+  nameWithType: Linkage.LinkerPrivate
+  fullName: Ubiquity.NET.Llvm.Values.Linkage.LinkerPrivate

@@ -4,18 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ObjectFileBindings;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
+    // TODO: FIX/Rework this. BAD LLVM API
+
     /// <summary>Symbol in an <see cref="TargetBinary"/></summary>
     [DebuggerDisplay( "{Name,nq}@{Address}[{Size}]" )]
-    public struct Symbol
+    public readonly struct Symbol
         : IEquatable<Symbol>
     {
         /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile.TargetBinary"/> this symbol belongs to</summary>
@@ -26,14 +23,14 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         {
             get
             {
-                LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.BinaryRef );
+                using LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( ContainingBinary.Handle );
                 LLVMMoveToContainingSection( iterator, IteratorRef );
                 return new Section( ContainingBinary, iterator, false );
             }
         }
 
         /// <summary>Gets the name of the symbol</summary>
-        public string Name => LLVMGetSymbolName( IteratorRef );
+        public string Name => LLVMGetSymbolName( IteratorRef ) ?? string.Empty;
 
         /// <summary>Gets the address of the symbol</summary>
         public ulong Address => LLVMGetSymbolAddress( IteratorRef );
@@ -74,10 +71,15 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
         internal Symbol( TargetBinary binary, LLVMSymbolIteratorRef iterator, bool clone )
         {
-            IteratorRef = clone ? LibLLVMSymbolIteratorClone( iterator ) : iterator;
+            IteratorRef = clone ? LibLLVMSymbolIteratorClone( iterator ) : iterator.Move();
             ContainingBinary = binary;
         }
 
+#pragma warning disable IDISP006 // Implement IDisposable
+
+        // Can't dispose the iterator, this is just a reference to one element
+        // the enumerator that produces these owns the native iterator.
         internal LLVMSymbolIteratorRef IteratorRef { get; }
+#pragma warning restore IDISP006 // Implement IDisposable
     }
 }

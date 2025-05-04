@@ -1,0 +1,1013 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  id: DebugInfoFlags
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children:
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AccessibilityMask
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AppleBlock
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Artificial
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BigEndian
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BitField
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.EnumClass
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Explicit
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.FixedEnum
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ForwardDeclaration
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LValueReference
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LittleEndian
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.MultipleInheritance
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NoReturn
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NonTrivial
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.None
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjcClassComplete
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjectPointer
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Private
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Protected
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Prototyped
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.PtrToMemberRep
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Public
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.RValueReference
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Reserved
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.SingleInheritance
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.StaticMember
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Thunk
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByReference
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByValue
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Vector
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Virtual
+  - Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.VirtualInheritance
+  langs:
+  - csharp
+  - vb
+  name: DebugInfoFlags
+  nameWithType: DebugInfoFlags
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DebugInfoFlags
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 220
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Debug information flags
+  remarks: >-
+    The three accessibility flags are mutually exclusive and rolled together
+
+    in the first two bits.
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum DebugInfoFlags
+    content.vb: >-
+      <Flags>
+
+      Public Enum DebugInfoFlags
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.None
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.None
+  id: None
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: DebugInfoFlags.None
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.None
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: None
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 225
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: None = 0
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Private
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Private
+  id: Private
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Private
+  nameWithType: DebugInfoFlags.Private
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Private
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Private
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 226
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Private = 1
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Protected
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Protected
+  id: Protected
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Protected
+  nameWithType: DebugInfoFlags.Protected
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Protected
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Protected
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 227
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Protected = 2
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Public
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Public
+  id: Public
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Public
+  nameWithType: DebugInfoFlags.Public
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Public
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Public
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 228
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Public = Private | Protected
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+    content.vb: Public = Private Or Protected
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ForwardDeclaration
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ForwardDeclaration
+  id: ForwardDeclaration
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: ForwardDeclaration
+  nameWithType: DebugInfoFlags.ForwardDeclaration
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ForwardDeclaration
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ForwardDeclaration
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 229
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ForwardDeclaration = 4
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AppleBlock
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AppleBlock
+  id: AppleBlock
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: AppleBlock
+  nameWithType: DebugInfoFlags.AppleBlock
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AppleBlock
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AppleBlock
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 230
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: AppleBlock = 8
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Virtual
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Virtual
+  id: Virtual
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Virtual
+  nameWithType: DebugInfoFlags.Virtual
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Virtual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Virtual
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 231
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Virtual = 32
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Artificial
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Artificial
+  id: Artificial
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Artificial
+  nameWithType: DebugInfoFlags.Artificial
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Artificial
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Artificial
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 232
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Artificial = 64
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Explicit
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Explicit
+  id: Explicit
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Explicit
+  nameWithType: DebugInfoFlags.Explicit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Explicit
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Explicit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 233
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Explicit = 128
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Prototyped
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Prototyped
+  id: Prototyped
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Prototyped
+  nameWithType: DebugInfoFlags.Prototyped
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Prototyped
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Prototyped
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 234
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Prototyped = 256
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjcClassComplete
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjcClassComplete
+  id: ObjcClassComplete
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: ObjcClassComplete
+  nameWithType: DebugInfoFlags.ObjcClassComplete
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjcClassComplete
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ObjcClassComplete
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 235
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ObjcClassComplete = 512
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjectPointer
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjectPointer
+  id: ObjectPointer
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: ObjectPointer
+  nameWithType: DebugInfoFlags.ObjectPointer
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.ObjectPointer
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ObjectPointer
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 236
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: ObjectPointer = 1024
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Vector
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Vector
+  id: Vector
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Vector
+  nameWithType: DebugInfoFlags.Vector
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Vector
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Vector
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 237
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Vector = 2048
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.StaticMember
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.StaticMember
+  id: StaticMember
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: StaticMember
+  nameWithType: DebugInfoFlags.StaticMember
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.StaticMember
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StaticMember
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 238
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: StaticMember = 4096
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LValueReference
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LValueReference
+  id: LValueReference
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: LValueReference
+  nameWithType: DebugInfoFlags.LValueReference
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LValueReference
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LValueReference
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 239
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: LValueReference = 8192
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.RValueReference
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.RValueReference
+  id: RValueReference
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: RValueReference
+  nameWithType: DebugInfoFlags.RValueReference
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.RValueReference
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RValueReference
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 240
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: RValueReference = 16384
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Reserved
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Reserved
+  id: Reserved
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Reserved
+  nameWithType: DebugInfoFlags.Reserved
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Reserved
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Reserved
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 241
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Reserved = 32768
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.SingleInheritance
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.SingleInheritance
+  id: SingleInheritance
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: SingleInheritance
+  nameWithType: DebugInfoFlags.SingleInheritance
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.SingleInheritance
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SingleInheritance
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 242
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: SingleInheritance = 65536
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.MultipleInheritance
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.MultipleInheritance
+  id: MultipleInheritance
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: MultipleInheritance
+  nameWithType: DebugInfoFlags.MultipleInheritance
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.MultipleInheritance
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: MultipleInheritance
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 243
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: MultipleInheritance = 131072
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.VirtualInheritance
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.VirtualInheritance
+  id: VirtualInheritance
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: VirtualInheritance
+  nameWithType: DebugInfoFlags.VirtualInheritance
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.VirtualInheritance
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VirtualInheritance
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 244
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: VirtualInheritance = SingleInheritance | MultipleInheritance
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+    content.vb: VirtualInheritance = SingleInheritance Or MultipleInheritance
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  id: IntroducedVirtual
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: IntroducedVirtual
+  nameWithType: DebugInfoFlags.IntroducedVirtual
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IntroducedVirtual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IntroducedVirtual
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 245
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: IntroducedVirtual = 262144
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BitField
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BitField
+  id: BitField
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: BitField
+  nameWithType: DebugInfoFlags.BitField
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BitField
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BitField
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 246
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BitField = 524288
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NoReturn
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NoReturn
+  id: NoReturn
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: NoReturn
+  nameWithType: DebugInfoFlags.NoReturn
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NoReturn
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NoReturn
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 247
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: NoReturn = 1048576
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByValue
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByValue
+  id: TypePassByValue
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: TypePassByValue
+  nameWithType: DebugInfoFlags.TypePassByValue
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByValue
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TypePassByValue
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 248
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TypePassByValue = 4194304
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByReference
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByReference
+  id: TypePassByReference
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: TypePassByReference
+  nameWithType: DebugInfoFlags.TypePassByReference
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.TypePassByReference
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TypePassByReference
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 249
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: TypePassByReference = 8388608
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.EnumClass
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.EnumClass
+  id: EnumClass
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: EnumClass
+  nameWithType: DebugInfoFlags.EnumClass
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.EnumClass
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: EnumClass
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 250
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: EnumClass = 16777216
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.FixedEnum
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.FixedEnum
+  id: FixedEnum
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: FixedEnum
+  nameWithType: DebugInfoFlags.FixedEnum
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.FixedEnum
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: FixedEnum
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 251
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: FixedEnum = 16777216
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Thunk
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Thunk
+  id: Thunk
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: Thunk
+  nameWithType: DebugInfoFlags.Thunk
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.Thunk
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Thunk
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 252
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: Thunk = 33554432
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NonTrivial
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NonTrivial
+  id: NonTrivial
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: NonTrivial
+  nameWithType: DebugInfoFlags.NonTrivial
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.NonTrivial
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: NonTrivial
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 253
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: NonTrivial = 67108864
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BigEndian
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BigEndian
+  id: BigEndian
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: BigEndian
+  nameWithType: DebugInfoFlags.BigEndian
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.BigEndian
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: BigEndian
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 254
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: BigEndian = 134217728
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LittleEndian
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LittleEndian
+  id: LittleEndian
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: LittleEndian
+  nameWithType: DebugInfoFlags.LittleEndian
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.LittleEndian
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LittleEndian
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 255
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: LittleEndian = 268435456
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  id: IndirectVirtualBase
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: IndirectVirtualBase
+  nameWithType: DebugInfoFlags.IndirectVirtualBase
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.IndirectVirtualBase
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IndirectVirtualBase
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 256
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: IndirectVirtualBase = ForwardDeclaration | Virtual
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+    content.vb: IndirectVirtualBase = ForwardDeclaration Or Virtual
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AccessibilityMask
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AccessibilityMask
+  id: AccessibilityMask
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: AccessibilityMask
+  nameWithType: DebugInfoFlags.AccessibilityMask
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.AccessibilityMask
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AccessibilityMask
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 257
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: AccessibilityMask = Private | Protected
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+    content.vb: AccessibilityMask = Private Or Protected
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.PtrToMemberRep
+  commentId: F:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.PtrToMemberRep
+  id: PtrToMemberRep
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  langs:
+  - csharp
+  - vb
+  name: PtrToMemberRep
+  nameWithType: DebugInfoFlags.PtrToMemberRep
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.PtrToMemberRep
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: PtrToMemberRep
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DwarfEnumerations.cs
+    startLine: 258
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  syntax:
+    content: PtrToMemberRep = SingleInheritance | MultipleInheritance
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+    content.vb: PtrToMemberRep = SingleInheritance Or MultipleInheritance
+references:
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.html
+  name: DebugInfoFlags
+  nameWithType: DebugInfoFlags
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags

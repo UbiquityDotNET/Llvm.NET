@@ -1,0 +1,570 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugType
+  id: DebugType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children:
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType.Create``2(``0,``1)
+  - Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  langs:
+  - csharp
+  - vb
+  name: DebugType
+  nameWithType: DebugType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DebugType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs
+    startLine: 174
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Utility class to provide mix-in type extensions and support for Debug Types
+  example: []
+  syntax:
+    content: public static class DebugType
+    content.vb: Public Module DebugType
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.Create``2(``0,``1)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType.Create``2(``0,``1)
+  id: Create``2(``0,``1)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  langs:
+  - csharp
+  - vb
+  name: Create<TNative, TDebug>(TNative, TDebug?)
+  nameWithType: DebugType.Create<TNative, TDebug>(TNative, TDebug?)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType.Create<TNative, TDebug>(TNative, TDebug?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Create
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs
+    startLine: 182
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Creates a new <xref href="Ubiquity.NET.Llvm.DebugInfo.DebugType" data-throw-if-not-resolved="false"></xref> instance inferring the generic arguments from the parameters
+  example: []
+  syntax:
+    content: 'public static IDebugType<TNative, TDebug> Create<TNative, TDebug>(TNative nativeType, TDebug? debugType) where TNative : class, ITypeRef where TDebug : DIType'
+    parameters:
+    - id: nativeType
+      type: '{TNative}'
+      description: <code class="typeparamref">TNative</code> type instance for this association
+    - id: debugType
+      type: '{TDebug}'
+      description: <code class="typeparamref">TDebug</code> type instance for this association (use <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> for void)
+    typeParameters:
+    - id: TNative
+      description: Type of the Native LLVM type for the association
+    - id: TDebug
+      description: Type of the debug information type for the association
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{{TNative},{TDebug}}
+      description: <xref href="Ubiquity.NET.Llvm.DebugInfo.IDebugType%602" data-throw-if-not-resolved="false"></xref> implementation for the specified association
+    content.vb: Public Shared Function Create(Of TNative As {Class, ITypeRef}, TDebug As DIType)(nativeType As TNative, debugType As TDebug) As IDebugType(Of TNative, TDebug)
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugType.Create*
+  nameWithType.vb: DebugType.Create(Of TNative, TDebug)(TNative, TDebug)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType.Create(Of TNative, TDebug)(TNative, TDebug)
+  name.vb: Create(Of TNative, TDebug)(TNative, TDebug)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  id: HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType})
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  langs:
+  - csharp
+  - vb
+  name: HasDebugInfo(IDebugType<ITypeRef, DIType>)
+  nameWithType: DebugType.HasDebugInfo(IDebugType<ITypeRef, DIType>)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: HasDebugInfo
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs
+    startLine: 197
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Convenience extension for determining if the <xref href="Ubiquity.NET.Llvm.DebugInfo.DIType" data-throw-if-not-resolved="false"></xref> property is valid
+  remarks: >-
+    In LLVM Debug information of <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> for a <xref href="Ubiquity.NET.Llvm.DebugInfo.DIType" data-throw-if-not-resolved="false"></xref>
+        is used to represent the void type. Thus, looking only at the <xref href="Ubiquity.NET.Llvm.DebugInfo.DIType" data-throw-if-not-resolved="false"></xref> property is
+        insufficient to distinguish between a type with no debug information and one representing the void
+        type. This extension method is used to disambiguate the two possibilities.
+  example: []
+  syntax:
+    content: public static bool HasDebugInfo(this IDebugType<ITypeRef, DIType> debugType)
+    parameters:
+    - id: debugType
+      type: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+      description: Debug type to test for valid Debug information
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the type has debug information
+    content.vb: Public Shared Function HasDebugInfo(debugType As IDebugType(Of ITypeRef, DIType)) As Boolean
+  overload: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo*
+  nameWithType.vb: DebugType.HasDebugInfo(IDebugType(Of ITypeRef, DIType))
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo(Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType))
+  name.vb: HasDebugInfo(IDebugType(Of ITypeRef, DIType))
+references:
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DebugType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html
+  name: DebugType
+  nameWithType: DebugType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<TNative, TDebug>
+  nameWithType: IDebugType<TNative, TDebug>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<TNative, TDebug>
+  nameWithType.vb: IDebugType(Of TNative, TDebug)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of TNative, TDebug)
+  name.vb: IDebugType(Of TNative, TDebug)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.Create*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugType.Create
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_Create__2___0___1_
+  name: Create
+  nameWithType: DebugType.Create
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType.Create
+- uid: '{TNative}'
+  commentId: '!:TNative'
+  definition: TNative
+  name: TNative
+  nameWithType: TNative
+  fullName: TNative
+- uid: '{TDebug}'
+  commentId: '!:TDebug'
+  definition: TDebug
+  name: TDebug
+  nameWithType: TDebug
+  fullName: TDebug
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType{{TNative},{TDebug}}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType{`0,`1}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<TNative, TDebug>
+  nameWithType: IDebugType<TNative, TDebug>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<TNative, TDebug>
+  nameWithType.vb: IDebugType(Of TNative, TDebug)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of TNative, TDebug)
+  name.vb: IDebugType(Of TNative, TDebug)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNative
+  - name: ','
+  - name: " "
+  - name: TDebug
+  - name: )
+- uid: TNative
+  name: TNative
+  nameWithType: TNative
+  fullName: TNative
+- uid: TDebug
+  name: TDebug
+  nameWithType: TDebug
+  fullName: TDebug
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  name: DIType
+  nameWithType: DIType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DebugType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__
+  name: HasDebugInfo
+  nameWithType: DebugType.HasDebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo
+- uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  definition: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+  href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  name: IDebugType<ITypeRef, DIType>
+  nameWithType: IDebugType<ITypeRef, DIType>
+  fullName: Ubiquity.NET.Llvm.DebugInfo.IDebugType<Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType>
+  nameWithType.vb: IDebugType(Of ITypeRef, DIType)
+  fullName.vb: Ubiquity.NET.Llvm.DebugInfo.IDebugType(Of Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.DebugInfo.DIType)
+  name.vb: IDebugType(Of ITypeRef, DIType)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.DebugInfo.IDebugType`2
+    name: IDebugType
+    href: Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+    name: DIType
+    href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

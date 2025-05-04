@@ -4,18 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.DebugInfo;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction opcodes</summary>
@@ -437,16 +425,16 @@ namespace Ubiquity.NET.Llvm.Instructions
     {
         /// <summary>Gets the <see cref="BasicBlock"/> that contains this instruction</summary>
         public BasicBlock ContainingBlock
-            => BasicBlock.FromHandle( LLVMGetInstructionParent( ValueHandle ).ThrowIfInvalid( ) )!;
+            => BasicBlock.FromHandle( LLVMGetInstructionParent( Handle ).ThrowIfInvalid( ) )!;
 
         /// <summary>Gets the LLVM opcode for the instruction</summary>
-        public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( ValueHandle );
+        public OpCode Opcode => ( OpCode )LLVMGetInstructionOpcode( Handle );
 
         /// <summary>Gets or sets the <see cref="DILocation"/> for this instruction</summary>
         public DILocation? Location
         {
-            get => MDNode.FromHandle<DILocation>( LLVMInstructionGetDebugLoc( ValueHandle ) );
-            set => LLVMInstructionSetDebugLoc( ValueHandle, value?.MetadataHandle ?? LLVMMetadataRef.Zero );
+            get => (DILocation?)LLVMInstructionGetDebugLoc( Handle ).CreateMetadata( );
+            set => LLVMInstructionSetDebugLoc( Handle, value?.Handle ?? LLVMMetadataRef.Zero );
         }
 
         /// <summary>Gets a value indicating whether the opcode is for a memory access (<see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/>)</summary>
@@ -462,16 +450,16 @@ namespace Ubiquity.NET.Llvm.Instructions
         }
 
         /// <summary>Gets a value indicating whether this instruction has metadata</summary>
-        public bool HasMetadata => LLVMHasMetadata( ValueHandle );
+        public bool HasMetadata => LLVMHasMetadata( Handle );
 
-        /// <summary>Gets or sets Metadata (as a value) for this instruction</summary>
-        /// <param name="kindKey">Metadata kind to get</param>
-        /// <returns>Metadata for the kind or <see langword="null"/> if not present</returns>
+        /// <summary>Gets or sets IrMetadata (as a value) for this instruction</summary>
+        /// <param name="kindKey">IrMetadata kind to get</param>
+        /// <returns>IrMetadata for the kind or <see langword="null"/> if not present</returns>
         public MetadataAsValue? this[ MetadataKind kindKey ]
         {
-            get => FromHandle<MetadataAsValue>( LLVMGetMetadata( ValueHandle, ( uint )kindKey ) );
+            get => FromHandle<MetadataAsValue>( LLVMGetMetadata( Handle, ( uint )kindKey ) );
 
-            set => LLVMSetMetadata( ValueHandle, ( uint )kindKey, value.ValidateNotNull( nameof( value ) )!.ValueHandle );
+            set => LLVMSetMetadata( Handle, ( uint )kindKey, value.ThrowIfNull()!.Handle );
         }
 
         /// <summary>Gets a snap-shot collection of the metadata for this instruction, filtering out all the debug location nodes</summary>
@@ -480,11 +468,11 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( ValueHandle, out size_t numEntries );
+                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( Handle, out size_t numEntries );
                 for( long i = 0; i < numEntries.ToInt32( ); ++i )
                 {
                     LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
-                    yield return MDNode.FromHandle<MDNode>( handle.ThrowIfInvalid( ) )!;
+                    yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
                 }
             }
         }
@@ -498,7 +486,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public uint Alignment
         {
-            get => IsMemoryAccess ? LLVMGetAlignment( ValueHandle ) : 0;
+            get => IsMemoryAccess ? LLVMGetAlignment( Handle ) : 0;
 
             set
             {
@@ -507,12 +495,34 @@ namespace Ubiquity.NET.Llvm.Instructions
                     throw new InvalidOperationException( Resources.Alignment_only_allowed_on_memory_instructions );
                 }
 
-                LLVMSetAlignment( ValueHandle, value );
+                LLVMSetAlignment( Handle, value );
             }
         }
 
         /// <summary>Gets a, potentially empty, collection of successor blocks for this instruction</summary>
         public IOperandCollection<BasicBlock> Successors { get; }
+
+        /// <summary>Gets a value indicating whether this instruction has debug records attached.</summary>
+        public bool HasDebugRecords => LibLLVMHasDbgRecords(Handle);
+
+        /// <summary>Gets an enumeration of all the debug records associated with this instruction</summary>
+        public IEnumerable<DebugRecord> DebugRecords
+        {
+            get
+            {
+                if(!HasDebugRecords)
+                {
+                    yield break;
+                }
+
+                DebugRecord record = new(LLVMGetFirstDbgRecord(Handle));
+                while(!record.IsNull)
+                {
+                    yield return record;
+                    record = record.NextRecord;
+                }
+            }
+        }
 
         internal Instruction( LLVMValueRef valueRef )
             : base( valueRef )

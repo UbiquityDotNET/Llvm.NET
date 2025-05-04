@@ -3,20 +3,18 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
-using System;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm
 {
+    // TODO: ITargetMachine and internal TargetMachineAlias
+    // While noting in the core OO model has one, the JIT is another story...
+
     /// <summary>Target specific code generation information</summary>
     public sealed class TargetMachine
+        : IDisposable
     {
+        /// <inheritdoc/>
+        public void Dispose() => Handle.Dispose();
+
         /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
         /// <param name="triple">Triple for the target machine</param>
         /// <param name="cpu">CPU options for the machine</param>
@@ -36,85 +34,85 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets the target that owns this <see cref="TargetMachine"/></summary>
-        public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( TargetMachineHandle ) );
+        public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( Handle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => LLVMGetTargetMachineTriple( TargetMachineHandle );
+        public string Triple => LLVMGetTargetMachineTriple( Handle );
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => LLVMGetTargetMachineCPU( TargetMachineHandle );
+        public string Cpu => LLVMGetTargetMachineCPU( Handle );
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => LLVMGetTargetMachineFeatureString( TargetMachineHandle );
+        public string Features => LLVMGetTargetMachineFeatureString( Handle );
 
-        /// <summary>Gets Layout information for this machine</summary>
-        public DataLayout TargetData
+        /// <summary>Creates Data Layout information for this machine</summary>
+        public DataLayout CreateTargetData()
         {
-            get
-            {
-                var handle = LLVMCreateTargetDataLayout( TargetMachineHandle );
-                return DataLayout.FromHandle( handle.ThrowIfInvalid( ) )!;
-            }
+            return new( LLVMCreateTargetDataLayout( Handle ) );
         }
 
         /// <summary>Generate code for the target machine from a module</summary>
-        /// <param name="module"><see cref="BitcodeModule"/> to generate the code from</param>
+        /// <param name="module"><see cref="Module"/> to generate the code from</param>
         /// <param name="path">Path to the output file</param>
         /// <param name="fileType">Type of file to emit</param>
-        public void EmitToFile( BitcodeModule module, string path, CodeGenFileType fileType )
+        /// <param name="skipVerify">Skips verification [Default: false; verification of module performed]</param>
+        public void EmitToFile( IModule module, string path, CodeGenFileKind fileType, bool skipVerify = false )
         {
-            module.ValidateNotNull( nameof( module ) );
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
-            fileType.ValidateDefined( nameof( path ) );
+            ArgumentNullException.ThrowIfNull( module );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
+            fileType.ThrowIfNotDefined();
+
+            if(!skipVerify && !module.Verify(out string errMessage))
+            {
+                throw new InvalidOperationException(errMessage.NormalizeLineEndings(LineEndingKind.LineFeed, StringNormalizer.SystemLineEndings));
+            }
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
-            var status = LLVMTargetMachineEmitToFile( TargetMachineHandle
-                                                    , module.ModuleHandle
+            var status = LLVMTargetMachineEmitToFile( Handle
+                                                    , module.GetUnownedHandle()
                                                     , path
                                                     , ( LLVMCodeGenFileType )fileType
                                                     , out string errTxt
                                                     );
             if( status.Failed )
             {
-                throw new InternalCodeGeneratorException( errTxt );
+                throw new InternalCodeGeneratorException( errTxt ?? "Error emitting to file, but LLVM provided no error message!");
             }
         }
 
         /// <summary>Emits the module for the target machine to a <see cref="MemoryBuffer"/></summary>
-        /// <param name="module">Module to emit to the buffer</param>
+        /// <param name="module">ModuleHandle to emit to the buffer</param>
         /// <param name="fileType">Type of file to generate into the buffer</param>
         /// <returns><see cref="MemoryBuffer"/> containing the generated code</returns>
         /// <remarks>
-        /// The <see cref="BitcodeModule.TargetTriple"/> must match the <see cref="Triple"/> for this
+        /// The <see cref="Module.TargetTriple"/> must match the <see cref="Triple"/> for this
         /// target.
         /// </remarks>
-        public MemoryBuffer EmitToBuffer( BitcodeModule module, CodeGenFileType fileType )
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer")]
+        public MemoryBuffer EmitToBuffer( IModule module, CodeGenFileKind fileType )
         {
-            module.ValidateNotNull( nameof( module ) );
-            fileType.ValidateDefined( nameof( fileType ) );
+            ArgumentNullException.ThrowIfNull( module );
+            fileType.ThrowIfNotDefined();
 
             if( module.TargetTriple != null && Triple != module.TargetTriple )
             {
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
 
-            var status = LLVMTargetMachineEmitToMemoryBuffer( TargetMachineHandle
-                                                            , module.ModuleHandle
+            var status = LLVMTargetMachineEmitToMemoryBuffer( Handle
+                                                            , module.GetUnownedHandle()
                                                             , ( LLVMCodeGenFileType )fileType
                                                             , out string errTxt
-                                                            , out LLVMMemoryBufferRef bufferHandle
+                                                            , out var bufferHandle
                                                             );
 
-            if( status.Failed )
-            {
-                throw new InternalCodeGeneratorException( errTxt );
-            }
-
-            return new MemoryBuffer( bufferHandle );
+            return status.Failed
+                    ? throw new InternalCodeGeneratorException( errTxt ?? "Error emitting to buffer, but LLVM provided no error message!" )
+                    : new MemoryBuffer( bufferHandle );
         }
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the triple and specified parameters</summary>
@@ -139,11 +137,12 @@ namespace Ubiquity.NET.Llvm
 
         internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
         {
-            targetMachineHandle.ValidateNotDefault( nameof( targetMachineHandle ) );
+            ArgumentNullException.ThrowIfNull(targetMachineHandle);
+            targetMachineHandle.ThrowIfInvalid();
 
-            TargetMachineHandle = targetMachineHandle;
+            Handle = targetMachineHandle.Move();
         }
 
-        internal LLVMTargetMachineRef TargetMachineHandle { get; }
+        internal LLVMTargetMachineRef Handle { get; }
     }
 }

@@ -1,0 +1,482 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  commentId: T:Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  id: ModulePassManager
+  parent: Ubiquity.NET.Llvm.Transforms.Legacy
+  children:
+  - Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.#ctor
+  - Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run(Ubiquity.NET.Llvm.Module)
+  langs:
+  - csharp
+  - vb
+  name: ModulePassManager
+  nameWithType: ModulePassManager
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Transforms/Legacy/ModulePassManager.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ModulePassManager
+    path: ../src/Ubiquity.NET.Llvm/Transforms/Legacy/ModulePassManager.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Transforms.Legacy
+  summary: Pass manager for running passes against an entire module
+  example: []
+  syntax:
+    content: >-
+      [Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module instead")]
+
+      public sealed class ModulePassManager : PassManager
+    content.vb: >-
+      <Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module instead")>
+
+      Public NotInheritable Class ModulePassManager Inherits PassManager
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.Transforms.Legacy.PassManager
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.AddAnalysisPasses(Ubiquity.NET.Llvm.TargetMachine)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module instead
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.#ctor
+  commentId: M:Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.#ctor
+  id: '#ctor'
+  parent: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  langs:
+  - csharp
+  - vb
+  name: ModulePassManager()
+  nameWithType: ModulePassManager.ModulePassManager()
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.ModulePassManager()
+  type: Constructor
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Transforms/Legacy/ModulePassManager.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: .ctor
+    path: ../src/Ubiquity.NET.Llvm/Transforms/Legacy/ModulePassManager.cs
+    startLine: 14
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Transforms.Legacy
+  summary: Initializes a new instance of the <xref href="Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public ModulePassManager()
+    content.vb: Public Sub New()
+  overload: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.#ctor*
+  nameWithType.vb: ModulePassManager.New()
+  fullName.vb: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.New()
+  name.vb: New()
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run(Ubiquity.NET.Llvm.Module)
+  commentId: M:Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run(Ubiquity.NET.Llvm.Module)
+  id: Run(Ubiquity.NET.Llvm.Module)
+  parent: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  langs:
+  - csharp
+  - vb
+  name: Run(Module)
+  nameWithType: ModulePassManager.Run(Module)
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run(Ubiquity.NET.Llvm.Module)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Transforms/Legacy/ModulePassManager.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Run
+    path: ../src/Ubiquity.NET.Llvm/Transforms/Legacy/ModulePassManager.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Transforms.Legacy
+  summary: Runs the passes added to this manager for the target module
+  example: []
+  syntax:
+    content: public bool Run(Module target)
+    parameters:
+    - id: target
+      type: Ubiquity.NET.Llvm.Module
+      description: Module to run the passes on
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if one of the passes modified the module
+    content.vb: Public Function Run(target As [Module]) As Boolean
+  overload: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run*
+references:
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy
+  commentId: N:Ubiquity.NET.Llvm.Transforms.Legacy
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Transforms.Legacy
+  nameWithType: Ubiquity.NET.Llvm.Transforms.Legacy
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Transforms
+    name: Transforms
+    href: Ubiquity.NET.Llvm.Transforms.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Transforms.Legacy
+    name: Legacy
+    href: Ubiquity.NET.Llvm.Transforms.Legacy.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Transforms
+    name: Transforms
+    href: Ubiquity.NET.Llvm.Transforms.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Transforms.Legacy
+    name: Legacy
+    href: Ubiquity.NET.Llvm.Transforms.Legacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager
+  commentId: T:Ubiquity.NET.Llvm.Transforms.Legacy.PassManager
+  parent: Ubiquity.NET.Llvm.Transforms.Legacy
+  href: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.html
+  name: PassManager
+  nameWithType: PassManager
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.AddAnalysisPasses(Ubiquity.NET.Llvm.TargetMachine)
+  commentId: M:Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.AddAnalysisPasses(Ubiquity.NET.Llvm.TargetMachine)
+  parent: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager
+  href: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.html#Ubiquity_NET_Llvm_Transforms_Legacy_PassManager_AddAnalysisPasses_Ubiquity_NET_Llvm_TargetMachine_
+  name: AddAnalysisPasses(TargetMachine)
+  nameWithType: PassManager.AddAnalysisPasses(TargetMachine)
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.AddAnalysisPasses(Ubiquity.NET.Llvm.TargetMachine)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.AddAnalysisPasses(Ubiquity.NET.Llvm.TargetMachine)
+    name: AddAnalysisPasses
+    href: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.html#Ubiquity_NET_Llvm_Transforms_Legacy_PassManager_AddAnalysisPasses_Ubiquity_NET_Llvm_TargetMachine_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.TargetMachine
+    name: TargetMachine
+    href: Ubiquity.NET.Llvm.TargetMachine.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.AddAnalysisPasses(Ubiquity.NET.Llvm.TargetMachine)
+    name: AddAnalysisPasses
+    href: Ubiquity.NET.Llvm.Transforms.Legacy.PassManager.html#Ubiquity_NET_Llvm_Transforms_Legacy_PassManager_AddAnalysisPasses_Ubiquity_NET_Llvm_TargetMachine_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.TargetMachine
+    name: TargetMachine
+    href: Ubiquity.NET.Llvm.TargetMachine.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  commentId: T:Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+  href: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.html
+  name: ModulePassManager
+  nameWithType: ModulePassManager
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.#ctor*
+  commentId: Overload:Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.#ctor
+  href: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.html#Ubiquity_NET_Llvm_Transforms_Legacy_ModulePassManager__ctor
+  name: ModulePassManager
+  nameWithType: ModulePassManager.ModulePassManager
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.ModulePassManager
+  nameWithType.vb: ModulePassManager.New
+  fullName.vb: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.New
+  name.vb: New
+- uid: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run*
+  commentId: Overload:Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run
+  href: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.html#Ubiquity_NET_Llvm_Transforms_Legacy_ModulePassManager_Run_Ubiquity_NET_Llvm_Module_
+  name: Run
+  nameWithType: ModulePassManager.Run
+  fullName: Ubiquity.NET.Llvm.Transforms.Legacy.ModulePassManager.Run
+- uid: Ubiquity.NET.Llvm.Module
+  commentId: T:Ubiquity.NET.Llvm.Module
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Ubiquity.NET.Llvm.Module
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html

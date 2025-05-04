@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -33,14 +26,7 @@ namespace Ubiquity.NET.Llvm.Types
         : TypeRef
         , ISequenceType
     {
-        public ITypeRef ElementType
-        {
-            get
-            {
-                var typeRef = LLVMGetElementType( this.GetTypeRef() );
-                return FromHandle( typeRef.ThrowIfInvalid( ) )!;
-            }
-        }
+        public ITypeRef ElementType => LLVMGetElementType( this.GetTypeRef() ).CreateType();
 
         internal SequenceType( LLVMTypeRef typeRef )
             : base( typeRef )

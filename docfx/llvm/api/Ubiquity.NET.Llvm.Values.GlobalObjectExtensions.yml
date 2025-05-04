@@ -1,0 +1,638 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  id: GlobalObjectExtensions
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  - Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  - Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  - Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  langs:
+  - csharp
+  - vb
+  name: GlobalObjectExtensions
+  nameWithType: GlobalObjectExtensions
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GlobalObjectExtensions
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+    startLine: 9
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Fluent style extensions for properties of <xref href="Ubiquity.NET.Llvm.Values.GlobalObject" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public static class GlobalObjectExtensions
+    content.vb: Public Module GlobalObjectExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  id: Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  langs:
+  - csharp
+  - vb
+  name: Comdat(GlobalObject, string)
+  nameWithType: GlobalObjectExtensions.Comdat(GlobalObject, string)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Comdat
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+    startLine: 20
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Sets a named <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref> for a <xref href="Ubiquity.NET.Llvm.Values.GlobalObject" data-throw-if-not-resolved="false"></xref>
+  remarks: >-
+    This finds a <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref> in the <xref href="Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule" data-throw-if-not-resolved="false"></xref>
+
+    of the object if it exists or creates a new one if it doesn't and assigns the <xref href="Ubiquity.NET.Llvm.Values.GlobalObject.Comdat" data-throw-if-not-resolved="false"></xref>
+
+    property with the <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static GlobalObject Comdat(this GlobalObject self, string name)
+    parameters:
+    - id: self
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: Global to get the Comdat for
+    - id: name
+      type: System.String
+      description: name of the ComDat
+    return:
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function Comdat(self As GlobalObject, name As String) As GlobalObject
+  overload: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat*
+  nameWithType.vb: GlobalObjectExtensions.Comdat(GlobalObject, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, String)
+  name.vb: Comdat(GlobalObject, String)
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  id: Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  langs:
+  - csharp
+  - vb
+  name: Comdat(GlobalObject, string, ComdatKind)
+  nameWithType: GlobalObjectExtensions.Comdat(GlobalObject, string, ComdatKind)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, string, Ubiquity.NET.Llvm.ComdatKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Comdat
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+    startLine: 33
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Sets a named <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref> for a <xref href="Ubiquity.NET.Llvm.Values.GlobalObject" data-throw-if-not-resolved="false"></xref>
+  remarks: >-
+    This finds a <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref> in the <xref href="Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule" data-throw-if-not-resolved="false"></xref>
+
+    of the object if it exists or creates a new one if it doesn't and assigns the <xref href="Ubiquity.NET.Llvm.Values.GlobalObject.Comdat" data-throw-if-not-resolved="false"></xref>
+
+    property with the <xref href="Ubiquity.NET.Llvm.Comdat" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static GlobalObject Comdat(this GlobalObject self, string name, ComdatKind kind)
+    parameters:
+    - id: self
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: Global to get the Comdat for
+    - id: name
+      type: System.String
+      description: name of the Comdat
+    - id: kind
+      type: Ubiquity.NET.Llvm.ComdatKind
+      description: Id of Comdat to create if it doesn't exist already
+    return:
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function Comdat(self As GlobalObject, name As String, kind As ComdatKind) As GlobalObject
+  overload: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat*
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+    commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+  nameWithType.vb: GlobalObjectExtensions.Comdat(GlobalObject, String, ComdatKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, String, Ubiquity.NET.Llvm.ComdatKind)
+  name.vb: Comdat(GlobalObject, String, ComdatKind)
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  id: SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  langs:
+  - csharp
+  - vb
+  name: SectionName(GlobalObject, string)
+  nameWithType: GlobalObjectExtensions.SectionName(GlobalObject, string)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject, string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: SectionName
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+    startLine: 45
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Sets the linker section name for a <xref href="Ubiquity.NET.Llvm.Values.GlobalObject" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public static GlobalObject SectionName(this GlobalObject self, string name)
+    parameters:
+    - id: self
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: <xref href="Ubiquity.NET.Llvm.Values.GlobalObject" data-throw-if-not-resolved="false"></xref> to set the section for
+    - id: name
+      type: System.String
+      description: Name of the section
+    return:
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function SectionName(self As GlobalObject, name As String) As GlobalObject
+  overload: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName*
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Values.GlobalObject.Section
+    commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Section
+  nameWithType.vb: GlobalObjectExtensions.SectionName(GlobalObject, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject, String)
+  name.vb: SectionName(GlobalObject, String)
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  id: Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  langs:
+  - csharp
+  - vb
+  name: Alignment(GlobalObject, uint)
+  nameWithType: GlobalObjectExtensions.Alignment(GlobalObject, uint)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject, uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Alignment
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalObjectExtensions.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Sets the alignment for a <xref href="Ubiquity.NET.Llvm.Values.GlobalObject" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public static GlobalObject Alignment(this GlobalObject self, uint value)
+    parameters:
+    - id: self
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: Object to set the alignment of
+    - id: value
+      type: System.UInt32
+      description: Alignment value to set
+    return:
+      type: Ubiquity.NET.Llvm.Values.GlobalObject
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function Alignment(self As GlobalObject, value As UInteger) As GlobalObject
+  overload: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment*
+  seealso:
+  - linkId: Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+    commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+  nameWithType.vb: GlobalObjectExtensions.Alignment(GlobalObject, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject, UInteger)
+  name.vb: Alignment(GlobalObject, UInteger)
+references:
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalObject
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  name: GlobalObject
+  nameWithType: GlobalObject
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.Comdat
+  commentId: T:Ubiquity.NET.Llvm.Comdat
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.Comdat.html
+  name: Comdat
+  nameWithType: Comdat
+  fullName: Ubiquity.NET.Llvm.Comdat
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_ParentModule
+  name: ParentModule
+  nameWithType: GlobalValue.ParentModule
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Comdat
+  name: Comdat
+  nameWithType: GlobalObject.Comdat
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  name: Comdat
+  nameWithType: GlobalObjectExtensions.Comdat
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalValue
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html
+  name: GlobalValue
+  nameWithType: GlobalValue
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue
+- uid: Ubiquity.NET.Llvm.ComdatKind
+  commentId: T:Ubiquity.NET.Llvm.ComdatKind
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.ComdatKind.html
+  name: ComdatKind
+  nameWithType: ComdatKind
+  fullName: Ubiquity.NET.Llvm.ComdatKind
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Section
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Section
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Section
+  name: Section
+  nameWithType: GlobalObject.Section
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Section
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  name: SectionName
+  nameWithType: GlobalObjectExtensions.SectionName
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Alignment
+  name: Alignment
+  nameWithType: GlobalObject.Alignment
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  name: Alignment
+  nameWithType: GlobalObjectExtensions.Alignment
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger

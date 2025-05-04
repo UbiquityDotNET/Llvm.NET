@@ -1,0 +1,939 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef
+  commentId: T:Ubiquity.NET.Llvm.Types.ITypeRef
+  id: ITypeRef
+  parent: Ubiquity.NET.Llvm.Types
+  children:
+  - Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  - Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+  - Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  - Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+  - Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  - Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  langs:
+  - csharp
+  - vb
+  name: ITypeRef
+  nameWithType: ITypeRef
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef
+  type: Interface
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ITypeRef
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 77
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Interface for a Type in LLVM
+  example: []
+  syntax:
+    content: 'public interface ITypeRef : IEquatable<ITypeRef>'
+    content.vb: Public Interface ITypeRef Inherits IEquatable(Of ITypeRef)
+  inheritedMembers:
+  - System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  id: IsSized
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsSized
+  nameWithType: ITypeRef.IsSized
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsSized
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 81
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether the type is sized
+  example: []
+  syntax:
+    content: bool IsSized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsSized As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  id: Kind
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: Kind
+  nameWithType: ITypeRef.Kind
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Kind
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 84
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets the LLVM Type kind for this type
+  example: []
+  syntax:
+    content: TypeKind Kind { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.TypeKind
+    content.vb: ReadOnly Property Kind As TypeKind
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.Kind*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  id: IsInteger
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsInteger
+  nameWithType: ITypeRef.IsInteger
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsInteger
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 87
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether this type is an integer
+  example: []
+  syntax:
+    content: bool IsInteger { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsInteger As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  id: IsFloat
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsFloat
+  nameWithType: ITypeRef.IsFloat
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsFloat
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 90
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether the type is a 32-bit IEEE floating point type
+  example: []
+  syntax:
+    content: bool IsFloat { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsFloat As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  id: IsDouble
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsDouble
+  nameWithType: ITypeRef.IsDouble
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsDouble
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 93
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether the type is a 64-bit IEEE floating point type
+  example: []
+  syntax:
+    content: bool IsDouble { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsDouble As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  id: IsVoid
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsVoid
+  nameWithType: ITypeRef.IsVoid
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsVoid
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 96
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether this type represents the void type
+  example: []
+  syntax:
+    content: bool IsVoid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsVoid As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  id: IsStruct
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsStruct
+  nameWithType: ITypeRef.IsStruct
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsStruct
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 99
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether this type is a structure type
+  example: []
+  syntax:
+    content: bool IsStruct { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsStruct As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  id: IsPointer
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsPointer
+  nameWithType: ITypeRef.IsPointer
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsPointer
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 102
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether this type is a pointer
+  example: []
+  syntax:
+    content: bool IsPointer { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsPointer As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  id: IsSequence
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsSequence
+  nameWithType: ITypeRef.IsSequence
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsSequence
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 105
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether this type is a sequence type
+  example: []
+  syntax:
+    content: bool IsSequence { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsSequence As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  id: IsFloatingPoint
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IsFloatingPoint
+  nameWithType: ITypeRef.IsFloatingPoint
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsFloatingPoint
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 108
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a value indicating whether this type is a floating point type
+  example: []
+  syntax:
+    content: bool IsFloatingPoint { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsFloatingPoint As Boolean
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  id: Context
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: Context
+  nameWithType: ITypeRef.Context
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Context
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 111
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets the ContextAlias that owns this type
+  example: []
+  syntax:
+    content: IContext Context { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.IContext
+    content.vb: ReadOnly Property Context As IContext
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.Context*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  id: IntegerBitWidth
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: IntegerBitWidth
+  nameWithType: ITypeRef.IntegerBitWidth
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IntegerBitWidth
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 114
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets the integer bit width of this type or 0 for non integer types
+  example: []
+  syntax:
+    content: uint IntegerBitWidth { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: ReadOnly Property IntegerBitWidth As UInteger
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  id: GetNullValue
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: GetNullValue()
+  nameWithType: ITypeRef.GetNullValue()
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetNullValue
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 123
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets a null value (e.g. all bits == 0 ) for the type
+  remarks: >-
+    This is a getter function instead of a property as it can throw exceptions
+
+    for types that don't support such a thing (i.e. void )
+  example: []
+  syntax:
+    content: Constant GetNullValue()
+    return:
+      type: Ubiquity.NET.Llvm.Values.Constant
+      description: <xref href="Ubiquity.NET.Llvm.Values.Constant" data-throw-if-not-resolved="false"></xref> that represents a null (0) value of this type
+    content.vb: Function GetNullValue() As Constant
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+  id: CreateArrayType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: CreateArrayType(uint)
+  nameWithType: ITypeRef.CreateArrayType(uint)
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreateArrayType
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 129
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Array type factory for an array with elements of this type
+  example: []
+  syntax:
+    content: IArrayType CreateArrayType(uint count)
+    parameters:
+    - id: count
+      type: System.UInt32
+      description: Number of elements in the array
+    return:
+      type: Ubiquity.NET.Llvm.Types.IArrayType
+      description: <xref href="Ubiquity.NET.Llvm.Types.IArrayType" data-throw-if-not-resolved="false"></xref> for the array
+    content.vb: Function CreateArrayType(count As UInteger) As IArrayType
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType*
+  nameWithType.vb: ITypeRef.CreateArrayType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(UInteger)
+  name.vb: CreateArrayType(UInteger)
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  id: CreatePointerType
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: CreatePointerType()
+  nameWithType: ITypeRef.CreatePointerType()
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreatePointerType
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 133
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Get a <xref href="Ubiquity.NET.Llvm.Types.IPointerType" data-throw-if-not-resolved="false"></xref> for a type that points to elements of this type in the default (0) address space
+  example: []
+  syntax:
+    content: IPointerType CreatePointerType()
+    return:
+      type: Ubiquity.NET.Llvm.Types.IPointerType
+      description: <xref href="Ubiquity.NET.Llvm.Types.IPointerType" data-throw-if-not-resolved="false"></xref>corresponding to the type of a pointer that refers to elements of this type
+    content.vb: Function CreatePointerType() As IPointerType
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType*
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+  id: CreatePointerType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  langs:
+  - csharp
+  - vb
+  name: CreatePointerType(uint)
+  nameWithType: ITypeRef.CreatePointerType(uint)
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(uint)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CreatePointerType
+    path: ../src/Ubiquity.NET.Llvm/Types/ITypeRef.cs
+    startLine: 138
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Get a <xref href="Ubiquity.NET.Llvm.Types.IPointerType" data-throw-if-not-resolved="false"></xref> for a type that points to elements of this type in the specified address space
+  example: []
+  syntax:
+    content: IPointerType CreatePointerType(uint addressSpace)
+    parameters:
+    - id: addressSpace
+      type: System.UInt32
+      description: Address space for the pointer
+    return:
+      type: Ubiquity.NET.Llvm.Types.IPointerType
+      description: <xref href="Ubiquity.NET.Llvm.Types.IPointerType" data-throw-if-not-resolved="false"></xref>corresponding to the type of a pointer that refers to elements of this type
+    content.vb: Function CreatePointerType(addressSpace As UInteger) As IPointerType
+  overload: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType*
+  nameWithType.vb: ITypeRef.CreatePointerType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(UInteger)
+  name.vb: CreatePointerType(UInteger)
+references:
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(ITypeRef)
+  nameWithType: IEquatable<ITypeRef>.Equals(ITypeRef)
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Types.ITypeRef>.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  nameWithType.vb: IEquatable(Of ITypeRef).Equals(ITypeRef)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Types.ITypeRef).Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ITypeRef>
+  nameWithType: IEquatable<ITypeRef>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Types.ITypeRef>
+  nameWithType.vb: IEquatable(Of ITypeRef)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Types.ITypeRef)
+  name.vb: IEquatable(Of ITypeRef)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsSized
+  name: IsSized
+  nameWithType: ITypeRef.IsSized
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.Kind*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_Kind
+  name: Kind
+  nameWithType: ITypeRef.Kind
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+- uid: Ubiquity.NET.Llvm.Types.TypeKind
+  commentId: T:Ubiquity.NET.Llvm.Types.TypeKind
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.TypeKind.html
+  name: TypeKind
+  nameWithType: TypeKind
+  fullName: Ubiquity.NET.Llvm.Types.TypeKind
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsInteger
+  name: IsInteger
+  nameWithType: ITypeRef.IsInteger
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsFloat
+  name: IsFloat
+  nameWithType: ITypeRef.IsFloat
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsDouble
+  name: IsDouble
+  nameWithType: ITypeRef.IsDouble
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsVoid
+  name: IsVoid
+  nameWithType: ITypeRef.IsVoid
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsStruct
+  name: IsStruct
+  nameWithType: ITypeRef.IsStruct
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsPointer
+  name: IsPointer
+  nameWithType: ITypeRef.IsPointer
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsSequence
+  name: IsSequence
+  nameWithType: ITypeRef.IsSequence
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsFloatingPoint
+  name: IsFloatingPoint
+  nameWithType: ITypeRef.IsFloatingPoint
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.Context*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_Context
+  name: Context
+  nameWithType: ITypeRef.Context
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.Context
+- uid: Ubiquity.NET.Llvm.IContext
+  commentId: T:Ubiquity.NET.Llvm.IContext
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IContext.html
+  name: IContext
+  nameWithType: IContext
+  fullName: Ubiquity.NET.Llvm.IContext
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IntegerBitWidth
+  name: IntegerBitWidth
+  nameWithType: ITypeRef.IntegerBitWidth
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Ubiquity.NET.Llvm.Values.Constant
+  commentId: T:Ubiquity.NET.Llvm.Values.Constant
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Constant.html
+  name: Constant
+  nameWithType: Constant
+  fullName: Ubiquity.NET.Llvm.Values.Constant
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_GetNullValue
+  name: GetNullValue
+  nameWithType: ITypeRef.GetNullValue
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: Ubiquity.NET.Llvm.Types.IArrayType
+  commentId: T:Ubiquity.NET.Llvm.Types.IArrayType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IArrayType.html
+  name: IArrayType
+  nameWithType: IArrayType
+  fullName: Ubiquity.NET.Llvm.Types.IArrayType
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreateArrayType_System_UInt32_
+  name: CreateArrayType
+  nameWithType: ITypeRef.CreateArrayType
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType
+- uid: Ubiquity.NET.Llvm.Types.IPointerType
+  commentId: T:Ubiquity.NET.Llvm.Types.IPointerType
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.IPointerType.html
+  name: IPointerType
+  nameWithType: IPointerType
+  fullName: Ubiquity.NET.Llvm.Types.IPointerType
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType
+  name: CreatePointerType
+  nameWithType: ITypeRef.CreatePointerType
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType

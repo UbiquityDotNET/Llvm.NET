@@ -4,10 +4,24 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
+    /// <summary>Defines the amount of debug information to emit</summary>
+    public enum DwarfEmissionKind
+    {
+        /// <summary>No debug information</summary>
+        None = 0,
+
+        /// <summary>Full Debug information</summary>
+        Full,
+
+        /// <summary>Emit line tables only</summary>
+        LineTablesOnly,
+
+        /// <summary>Emit Debug directives only</summary>
+        DebugDirectivesOnly,
+    }
+
     /// <summary>Debug Information Compile Unit, which acts as the containing parent for debug information in a module</summary>
     /// <seealso href="xref:llvm_langref#dicompileunit">LLVM DICompileUnit</seealso>
     public class DICompileUnit
@@ -19,6 +33,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         uint RunTimeVersion {get;}
         ?? EmissionKind { get; }
         */
+
+        /// <summary>Gets the emission kind for this compile unit</summary>
+        public DwarfEmissionKind EmissionKind => (DwarfEmissionKind)LibLLVMDiCompileUnitGetEmissionKind(Handle);
 
         /// <summary>Gets the name of the producer of this unit</summary>
         public string Producer => GetOperandString( 1 );

@@ -24,80 +24,64 @@ namespace LlvmBindingsGenerator.Configuration
     [SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "It is necessary, tooling can't agree on the point. (removing it generates a warning)" )]
     internal class YamlConfiguration
     {
-        public YamlBindingsCollection FunctionBindings { get; set; } = new YamlBindingsCollection();
-
         public List<IncludeRef> IgnoredHeaders { get; set; } = new List<IncludeRef>();
 
         public List<IHandleInfo> HandleMap { get; set; } = new List<IHandleInfo>();
-
-        public Dictionary<string, string> AnonymousEnums { get; set; }
 
         public static YamlConfiguration ParseFrom( string path )
         {
             using var input = File.OpenText( path );
             var deserializer = new DeserializerBuilder( )
-
                                   .WithNodeDeserializer( inner => new YamlLocationNodeDeserializer(inner)
                                                        , s => s.InsteadOf<ObjectNodeDeserializer>()
                                                        )
                                   .WithTypeConverter( new IncludeRefConverter())
                                   .WithNamingConvention( PascalCaseNamingConvention.Instance )
-                                  .WithTagMapping("!Status", typeof(YamlReturnStatusMarshalInfo))
-                                  .WithTagMapping("!String", typeof(YamlStringMarshalInfo))
-                                  .WithTagMapping("!Primitive", typeof(YamlPrimitiveMarshalInfo))
-                                  .WithTagMapping("!Array", typeof(YamlArrayMarshalInfo))
-                                  .WithTagMapping("!Alias", typeof(YamlAliasReturn))
-                                  .WithTagMapping("!Unsafe", typeof(YamlUnsafeReturn))
                                   .WithTagMapping("!ContextHandle", typeof(YamlContextHandle))
                                   .WithTagMapping("!GlobalHandle", typeof(YamlGlobalHandle))
                                   .Build( );
 
-            var retVal = deserializer.Deserialize<YamlConfiguration>( input );
-
-            // Force all return transforms to use Return semantics so that
-            // transform passes will generate correct attributes for the
-            // return value.
-            var returnTransforms = from x in retVal.FunctionBindings.Values
-                                   where x.ReturnTransform != null
-                                   select x.ReturnTransform;
-            foreach( YamlBindingTransform xform in returnTransforms )
-            {
-                xform.Semantics = ParamSemantics.Return;
-            }
-
-            return retVal;
+            return deserializer.Deserialize<YamlConfiguration>( input );
         }
 
-        public HandleTemplateMap BuildTemplateMap()
+        public ILookup<string, IHandleCodeTemplate> BuildTemplateMap()
         {
+            // get all the templates to use for generating the output code
             var handleTemplates = from h in HandleMap
-                                  select Transform(h);
-
-            var retVal = new HandleTemplateMap( );
-
-            foreach( var h in handleTemplates )
-            {
-                retVal.Add( h );
-            }
-
-            return retVal;
+                                  from template in Transforms( h )
+                                  select (h.HandleName, template);
+            return handleTemplates.ToLookup((p)=>p.HandleName, (p)=>p.template);
         }
 
-        private static IHandleCodeTemplate Transform( IHandleInfo h )
+        private static IEnumerable<IHandleCodeTemplate> Transforms( IHandleInfo h )
         {
-            switch( h )
+            switch(h)
             {
             case YamlGlobalHandle ygh:
-                return new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias );
+                yield return new GlobalHandleTemplate( ygh.HandleName, ygh.Disposer, ygh.Alias );
+
+                // for aliases treat them like a context handle as they are
+                // not owned by the managed code and only reference the native
+                // handle via a simple nint. Context Handle template creates
+                // a type safe wrapper around the raw 'nint' (as a value type) that
+                // does NOT implement IDisposable. (Unlike a SafeHandle)
+                if(ygh.Alias)
+                {
+                    yield return new ContextHandleTemplate( $"{ygh.HandleName}Alias" );
+                }
+
+                break;
 
             case YamlContextHandle ych:
-                return new ContextHandleTemplate( ych.HandleName );
+                yield return new ContextHandleTemplate( ych.HandleName );
+                break;
 
             default:
                 throw new InvalidOperationException( "Unknown handle info kind encountered" );
             }
         }
 
+        // special converter to ensure runtime platform normalized paths for any include paths in the file
         private class IncludeRefConverter
             : IYamlTypeConverter
         {
@@ -106,13 +90,13 @@ namespace LlvmBindingsGenerator.Configuration
                 return type == typeof( IncludeRef );
             }
 
-            public object ReadYaml( IParser parser, Type type )
+            public object ReadYaml( IParser parser, Type type, ObjectDeserializer rootDeserializer)
             {
                 var scalarEvent = parser.Consume<Scalar>();
                 return new IncludeRef() { Path = NormalizePathSep( scalarEvent.Value ), Start = scalarEvent.Start };
             }
 
-            public void WriteYaml( IEmitter emitter, object value, Type type )
+            public void WriteYaml( IEmitter emitter, object? value, Type type, ObjectSerializer serializer )
             {
                 throw new NotSupportedException();
             }

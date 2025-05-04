@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <Sdk Name="Microsoft.Build.CentralPackageVersions" />
+
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -7,21 +8,26 @@
         <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
         <PlatformTarget>x64</PlatformTarget>
-        <TargetFramework>net5.0</TargetFramework>
-        <Nullable />
         <IsPublishable>False</IsPublishable>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" />
-        <PackageReference Include="CppSharp" />
-        <PackageReference Include="System.CodeDom" />
-        <PackageReference Include="Ubiquity.ArgValidators" />
-        <PackageReference Include="YamlDotNet" />
+        <None Include="..\readme-first.md" Link="readme-first.md" />
     </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CommandLineParser" PrivateAssets="all" />
+        <PackageReference Include="CppSharp" PrivateAssets="all" />
+        <PackageReference Include="YamlDotNet" PrivateAssets="all" />
+        <PackageReference Include="System.CodeDom" PrivateAssets="all" />
+    </ItemGroup>
+
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
         <None Update="BindingsConfig.yml">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Templates\T4\ContextHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -33,27 +39,13 @@
             <LastGenOutput>ExportsTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
-        <None Update="Templates\T4\ExternalDocXmlTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>ExternalDocXmlTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
         <None Update="Templates\T4\GlobalHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
             <LastGenOutput>GlobalHandleTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
-        <None Update="Templates\T4\PerHeaderInteropTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>PerHeaderInteropTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
-        <None Update="Templates\T4\StringMarshalerTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>StringMarshalerTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
     </ItemGroup>
+
     <ItemGroup>
         <Compile Update="Templates\T4\ContextHandleTemplate.cs">
             <DesignTime>True</DesignTime>
@@ -65,29 +57,15 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>ExportsTemplate.tt</DependentUpon>
         </Compile>
-        <Compile Update="Templates\T4\ExternalDocXmlTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>ExternalDocXmlTemplate.tt</DependentUpon>
-        </Compile>
         <Compile Update="Templates\T4\GlobalHandleTemplate.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>GlobalHandleTemplate.tt</DependentUpon>
         </Compile>
-        <Compile Update="Templates\T4\PerHeaderInteropTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>PerHeaderInteropTemplate.tt</DependentUpon>
-        </Compile>
-        <Compile Update="Templates\T4\StringMarshalerTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>StringMarshalerTemplate.tt</DependentUpon>
-        </Compile>
     </ItemGroup>
+
     <ItemGroup>
-      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
 
 </Project>

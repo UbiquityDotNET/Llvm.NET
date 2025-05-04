@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction for converting a signed integer value into a floating point value</summary>
-    public class SIToFP
+    public sealed class SIToFP
         : Cast
     {
         internal SIToFP( LLVMValueRef valueRef )

@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a composite type</summary>
@@ -38,7 +36,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets the Discriminator for the composite type</summary>
         public DIDerivedType? Discriminator => GetOperand<DIDerivedType>( 8 );
 
-        /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API Metadata handle</summary>
+        // public DIVariable Location => GetOPerand<DIVariable>(9);
+        // public MDNode? /*DIVariable|DIExpression*/ Associated => GetOperand<MDNode>(10);
+        // etc...
+
+        /// <summary>Initializes a new instance of the <see cref="DICompositeType"/> class from an LLVM-C API IrMetadata handle</summary>
         /// <param name="handle">LLVM handle to wrap</param>
         internal DICompositeType( LLVMMetadataRef handle )
             : base( handle )

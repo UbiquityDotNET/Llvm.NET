@@ -1,0 +1,1837 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalVariable
+  id: GlobalVariable
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo(Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent
+  langs:
+  - csharp
+  - vb
+  name: GlobalVariable
+  nameWithType: GlobalVariable
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GlobalVariable
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 11
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: An LLVM Global Variable
+  example: []
+  syntax:
+    content: 'public class GlobalVariable : GlobalObject, IEquatable<Value>'
+    content.vb: Public Class GlobalVariable Inherits GlobalObject Implements IEquatable(Of Value)
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.Values.Value
+  - Ubiquity.NET.Llvm.Values.User
+  - Ubiquity.NET.Llvm.Values.Constant
+  - Ubiquity.NET.Llvm.Values.GlobalValue
+  - Ubiquity.NET.Llvm.Values.GlobalObject
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Values.Value}
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Section
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+  - Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(System.UInt32,Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Metadata
+  - Ubiquity.NET.Llvm.Values.GlobalValue.Visibility
+  - Ubiquity.NET.Llvm.Values.GlobalValue.Linkage
+  - Ubiquity.NET.Llvm.Values.GlobalValue.UnnamedAddress
+  - Ubiquity.NET.Llvm.Values.GlobalValue.IsDeclaration
+  - Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+  - Ubiquity.NET.Llvm.Values.GlobalValue.ValueType
+  - Ubiquity.NET.Llvm.Values.Constant.IsZeroValue
+  - Ubiquity.NET.Llvm.Values.Constant.NullValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.Values.Constant.ToMetadata
+  - Ubiquity.NET.Llvm.Values.Constant.AllOnesValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.Values.Constant.UndefinedValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.Values.Constant.ConstPointerToNullFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  - Ubiquity.NET.Llvm.Values.User.Operands
+  - Ubiquity.NET.Llvm.Values.User.Uses
+  - Ubiquity.NET.Llvm.Values.Value.Equals(Ubiquity.NET.Llvm.Values.Value)
+  - Ubiquity.NET.Llvm.Values.Value.Equals(System.Object)
+  - Ubiquity.NET.Llvm.Values.Value.GetHashCode
+  - Ubiquity.NET.Llvm.Values.Value.Name
+  - Ubiquity.NET.Llvm.Values.Value.IsUndefined
+  - Ubiquity.NET.Llvm.Values.Value.IsNull
+  - Ubiquity.NET.Llvm.Values.Value.NativeType
+  - Ubiquity.NET.Llvm.Values.Value.Context
+  - Ubiquity.NET.Llvm.Values.Value.IsInstruction
+  - Ubiquity.NET.Llvm.Values.Value.IsFunction
+  - Ubiquity.NET.Llvm.Values.Value.IsCallSite
+  - Ubiquity.NET.Llvm.Values.Value.ToString
+  - Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Values.Value)
+  - Ubiquity.NET.Llvm.Values.Value.DebugRecords
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(System.UInt32)
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(System.String)
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(System.String,Ubiquity.NET.Llvm.ComdatKind)
+  - Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(System.String)
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(Ubiquity.NET.Llvm.Values.Linkage)
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(Ubiquity.NET.Llvm.Values.Visibility)
+  - Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(System.String)
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized
+  id: IsExternallyInitialized
+  parent: Ubiquity.NET.Llvm.Values.GlobalVariable
+  langs:
+  - csharp
+  - vb
+  name: IsExternallyInitialized
+  nameWithType: GlobalVariable.IsExternallyInitialized
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsExternallyInitialized
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets or sets a value indicating whether this variable is initialized in an external module
+  example: []
+  syntax:
+    content: public bool IsExternallyInitialized { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsExternallyInitialized As Boolean
+  overload: Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized*
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant
+  id: IsConstant
+  parent: Ubiquity.NET.Llvm.Values.GlobalVariable
+  langs:
+  - csharp
+  - vb
+  name: IsConstant
+  nameWithType: GlobalVariable.IsConstant
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsConstant
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 22
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets or sets a value indicating whether this global is a Constant
+  example: []
+  syntax:
+    content: public bool IsConstant { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsConstant As Boolean
+  overload: Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant*
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal
+  id: IsThreadLocal
+  parent: Ubiquity.NET.Llvm.Values.GlobalVariable
+  langs:
+  - csharp
+  - vb
+  name: IsThreadLocal
+  nameWithType: GlobalVariable.IsThreadLocal
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsThreadLocal
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 29
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets or sets a value indicating whether this global is stored per thread
+  example: []
+  syntax:
+    content: public bool IsThreadLocal { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsThreadLocal As Boolean
+  overload: Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal*
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer
+  id: Initializer
+  parent: Ubiquity.NET.Llvm.Values.GlobalVariable
+  langs:
+  - csharp
+  - vb
+  name: Initializer
+  nameWithType: GlobalVariable.Initializer
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Initializer
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 36
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets or sets the initial value for the variable
+  example: []
+  syntax:
+    content: public Constant? Initializer { get; set; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Values.Constant
+    content.vb: Public Property Initializer As Constant
+  overload: Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer*
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo(Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo(Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
+  id: AddDebugInfo(Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
+  parent: Ubiquity.NET.Llvm.Values.GlobalVariable
+  langs:
+  - csharp
+  - vb
+  name: AddDebugInfo(DIGlobalVariableExpression)
+  nameWithType: GlobalVariable.AddDebugInfo(DIGlobalVariableExpression)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo(Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddDebugInfo
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds a <xref href="Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression" data-throw-if-not-resolved="false"></xref> for a <xref href="Ubiquity.NET.Llvm.Values.GlobalVariable" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public void AddDebugInfo(DIGlobalVariableExpression expression)
+    parameters:
+    - id: expression
+      type: Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression
+      description: Expression to add
+    content.vb: Public Sub AddDebugInfo(expression As DIGlobalVariableExpression)
+  overload: Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo*
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent
+  id: RemoveFromParent
+  parent: Ubiquity.NET.Llvm.Values.GlobalVariable
+  langs:
+  - csharp
+  - vb
+  name: RemoveFromParent()
+  nameWithType: GlobalVariable.RemoveFromParent()
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RemoveFromParent
+    path: ../src/Ubiquity.NET.Llvm/Values/GlobalVariable.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Removes the value from its parent module, but does not delete it
+  example: []
+  syntax:
+    content: public void RemoveFromParent()
+    content.vb: Public Sub RemoveFromParent()
+  overload: Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent*
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Values.Value
+  commentId: T:Ubiquity.NET.Llvm.Values.Value
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Value.html
+  name: Value
+  nameWithType: Value
+  fullName: Ubiquity.NET.Llvm.Values.Value
+- uid: Ubiquity.NET.Llvm.Values.User
+  commentId: T:Ubiquity.NET.Llvm.Values.User
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.User.html
+  name: User
+  nameWithType: User
+  fullName: Ubiquity.NET.Llvm.Values.User
+- uid: Ubiquity.NET.Llvm.Values.Constant
+  commentId: T:Ubiquity.NET.Llvm.Values.Constant
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Constant.html
+  name: Constant
+  nameWithType: Constant
+  fullName: Ubiquity.NET.Llvm.Values.Constant
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalValue
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html
+  name: GlobalValue
+  nameWithType: GlobalValue
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalObject
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  name: GlobalObject
+  nameWithType: GlobalObject
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Values.Value}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Values.Value}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<Value>
+  nameWithType: IEquatable<Value>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Values.Value>
+  nameWithType.vb: IEquatable(Of Value)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Values.Value)
+  name.vb: IEquatable(Of Value)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Alignment
+  name: Alignment
+  nameWithType: GlobalObject.Alignment
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Alignment
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Section
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Section
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Section
+  name: Section
+  nameWithType: GlobalObject.Section
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Section
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Comdat
+  name: Comdat
+  nameWithType: GlobalObject.Comdat
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Comdat
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(System.UInt32,Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(System.UInt32,Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_SetMetadata_System_UInt32_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: SetMetadata(uint, IrMetadata)
+  nameWithType: GlobalObject.SetMetadata(uint, IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(uint, Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  nameWithType.vb: GlobalObject.SetMetadata(UInteger, IrMetadata)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(UInteger, Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  name.vb: SetMetadata(UInteger, IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(System.UInt32,Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: SetMetadata
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_SetMetadata_System_UInt32_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject.SetMetadata(System.UInt32,Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: SetMetadata
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_SetMetadata_System_UInt32_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Metadata
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalObject.Metadata
+  parent: Ubiquity.NET.Llvm.Values.GlobalObject
+  href: Ubiquity.NET.Llvm.Values.GlobalObject.html#Ubiquity_NET_Llvm_Values_GlobalObject_Metadata
+  name: Metadata
+  nameWithType: GlobalObject.Metadata
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObject.Metadata
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.Visibility
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.Visibility
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_Visibility
+  name: Visibility
+  nameWithType: GlobalValue.Visibility
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.Visibility
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.Linkage
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.Linkage
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_Linkage
+  name: Linkage
+  nameWithType: GlobalValue.Linkage
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.Linkage
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.UnnamedAddress
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.UnnamedAddress
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_UnnamedAddress
+  name: UnnamedAddress
+  nameWithType: GlobalValue.UnnamedAddress
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.UnnamedAddress
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.IsDeclaration
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.IsDeclaration
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_IsDeclaration
+  name: IsDeclaration
+  nameWithType: GlobalValue.IsDeclaration
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.IsDeclaration
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_ParentModule
+  name: ParentModule
+  nameWithType: GlobalValue.ParentModule
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.ParentModule
+- uid: Ubiquity.NET.Llvm.Values.GlobalValue.ValueType
+  commentId: P:Ubiquity.NET.Llvm.Values.GlobalValue.ValueType
+  parent: Ubiquity.NET.Llvm.Values.GlobalValue
+  href: Ubiquity.NET.Llvm.Values.GlobalValue.html#Ubiquity_NET_Llvm_Values_GlobalValue_ValueType
+  name: ValueType
+  nameWithType: GlobalValue.ValueType
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValue.ValueType
+- uid: Ubiquity.NET.Llvm.Values.Constant.IsZeroValue
+  commentId: P:Ubiquity.NET.Llvm.Values.Constant.IsZeroValue
+  parent: Ubiquity.NET.Llvm.Values.Constant
+  href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_IsZeroValue
+  name: IsZeroValue
+  nameWithType: Constant.IsZeroValue
+  fullName: Ubiquity.NET.Llvm.Values.Constant.IsZeroValue
+- uid: Ubiquity.NET.Llvm.Values.Constant.NullValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.Values.Constant.NullValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.Values.Constant
+  href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_NullValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: NullValueFor(ITypeRef)
+  nameWithType: Constant.NullValueFor(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.Values.Constant.NullValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.NullValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: NullValueFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_NullValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.NullValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: NullValueFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_NullValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Constant.ToMetadata
+  commentId: M:Ubiquity.NET.Llvm.Values.Constant.ToMetadata
+  parent: Ubiquity.NET.Llvm.Values.Constant
+  href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_ToMetadata
+  name: ToMetadata()
+  nameWithType: Constant.ToMetadata()
+  fullName: Ubiquity.NET.Llvm.Values.Constant.ToMetadata()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.ToMetadata
+    name: ToMetadata
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_ToMetadata
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.ToMetadata
+    name: ToMetadata
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_ToMetadata
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Constant.AllOnesValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.Values.Constant.AllOnesValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.Values.Constant
+  href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_AllOnesValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: AllOnesValueFor(ITypeRef)
+  nameWithType: Constant.AllOnesValueFor(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.Values.Constant.AllOnesValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.AllOnesValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AllOnesValueFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_AllOnesValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.AllOnesValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: AllOnesValueFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_AllOnesValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Constant.UndefinedValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.Values.Constant.UndefinedValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.Values.Constant
+  href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_UndefinedValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: UndefinedValueFor(ITypeRef)
+  nameWithType: Constant.UndefinedValueFor(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.Values.Constant.UndefinedValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.UndefinedValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: UndefinedValueFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_UndefinedValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.UndefinedValueFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: UndefinedValueFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_UndefinedValueFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Constant.ConstPointerToNullFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:Ubiquity.NET.Llvm.Values.Constant.ConstPointerToNullFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: Ubiquity.NET.Llvm.Values.Constant
+  href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_ConstPointerToNullFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  name: ConstPointerToNullFor(ITypeRef)
+  nameWithType: Constant.ConstPointerToNullFor(ITypeRef)
+  fullName: Ubiquity.NET.Llvm.Values.Constant.ConstPointerToNullFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.ConstPointerToNullFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: ConstPointerToNullFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_ConstPointerToNullFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Constant.ConstPointerToNullFor(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: ConstPointerToNullFor
+    href: Ubiquity.NET.Llvm.Values.Constant.html#Ubiquity_NET_Llvm_Values_Constant_ConstPointerToNullFor_Ubiquity_NET_Llvm_Types_ITypeRef_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.User.Operands
+  commentId: P:Ubiquity.NET.Llvm.Values.User.Operands
+  parent: Ubiquity.NET.Llvm.Values.User
+  href: Ubiquity.NET.Llvm.Values.User.html#Ubiquity_NET_Llvm_Values_User_Operands
+  name: Operands
+  nameWithType: User.Operands
+  fullName: Ubiquity.NET.Llvm.Values.User.Operands
+- uid: Ubiquity.NET.Llvm.Values.User.Uses
+  commentId: P:Ubiquity.NET.Llvm.Values.User.Uses
+  parent: Ubiquity.NET.Llvm.Values.User
+  href: Ubiquity.NET.Llvm.Values.User.html#Ubiquity_NET_Llvm_Values_User_Uses
+  name: Uses
+  nameWithType: User.Uses
+  fullName: Ubiquity.NET.Llvm.Values.User.Uses
+- uid: Ubiquity.NET.Llvm.Values.Value.Equals(Ubiquity.NET.Llvm.Values.Value)
+  commentId: M:Ubiquity.NET.Llvm.Values.Value.Equals(Ubiquity.NET.Llvm.Values.Value)
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Equals_Ubiquity_NET_Llvm_Values_Value_
+  name: Equals(Value)
+  nameWithType: Value.Equals(Value)
+  fullName: Ubiquity.NET.Llvm.Values.Value.Equals(Ubiquity.NET.Llvm.Values.Value)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Value.Equals(Ubiquity.NET.Llvm.Values.Value)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Equals_Ubiquity_NET_Llvm_Values_Value_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Value.Equals(Ubiquity.NET.Llvm.Values.Value)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Equals_Ubiquity_NET_Llvm_Values_Value_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Value.Equals(System.Object)
+  commentId: M:Ubiquity.NET.Llvm.Values.Value.Equals(System.Object)
+  parent: Ubiquity.NET.Llvm.Values.Value
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Equals_System_Object_
+  name: Equals(object)
+  nameWithType: Value.Equals(object)
+  fullName: Ubiquity.NET.Llvm.Values.Value.Equals(object)
+  nameWithType.vb: Value.Equals(Object)
+  fullName.vb: Ubiquity.NET.Llvm.Values.Value.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Value.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Value.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Value.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.Values.Value.GetHashCode
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_GetHashCode
+  name: GetHashCode()
+  nameWithType: Value.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.Values.Value.GetHashCode()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Value.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_GetHashCode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Value.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_GetHashCode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Value.Name
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.Name
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Name
+  name: Name
+  nameWithType: Value.Name
+  fullName: Ubiquity.NET.Llvm.Values.Value.Name
+- uid: Ubiquity.NET.Llvm.Values.Value.IsUndefined
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.IsUndefined
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_IsUndefined
+  name: IsUndefined
+  nameWithType: Value.IsUndefined
+  fullName: Ubiquity.NET.Llvm.Values.Value.IsUndefined
+- uid: Ubiquity.NET.Llvm.Values.Value.IsNull
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.IsNull
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_IsNull
+  name: IsNull
+  nameWithType: Value.IsNull
+  fullName: Ubiquity.NET.Llvm.Values.Value.IsNull
+- uid: Ubiquity.NET.Llvm.Values.Value.NativeType
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.NativeType
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_NativeType
+  name: NativeType
+  nameWithType: Value.NativeType
+  fullName: Ubiquity.NET.Llvm.Values.Value.NativeType
+- uid: Ubiquity.NET.Llvm.Values.Value.Context
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.Context
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_Context
+  name: Context
+  nameWithType: Value.Context
+  fullName: Ubiquity.NET.Llvm.Values.Value.Context
+- uid: Ubiquity.NET.Llvm.Values.Value.IsInstruction
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.IsInstruction
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_IsInstruction
+  name: IsInstruction
+  nameWithType: Value.IsInstruction
+  fullName: Ubiquity.NET.Llvm.Values.Value.IsInstruction
+- uid: Ubiquity.NET.Llvm.Values.Value.IsFunction
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.IsFunction
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_IsFunction
+  name: IsFunction
+  nameWithType: Value.IsFunction
+  fullName: Ubiquity.NET.Llvm.Values.Value.IsFunction
+- uid: Ubiquity.NET.Llvm.Values.Value.IsCallSite
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.IsCallSite
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_IsCallSite
+  name: IsCallSite
+  nameWithType: Value.IsCallSite
+  fullName: Ubiquity.NET.Llvm.Values.Value.IsCallSite
+- uid: Ubiquity.NET.Llvm.Values.Value.ToString
+  commentId: M:Ubiquity.NET.Llvm.Values.Value.ToString
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_ToString
+  name: ToString()
+  nameWithType: Value.ToString()
+  fullName: Ubiquity.NET.Llvm.Values.Value.ToString()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Value.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_ToString
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Value.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_ToString
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Values.Value)
+  commentId: M:Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Values.Value)
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Values_Value_
+  name: ReplaceAllUsesWith(Value)
+  nameWithType: Value.ReplaceAllUsesWith(Value)
+  fullName: Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Values.Value)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Values.Value)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Values_Value_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Values.Value)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Values_Value_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.Value
+    name: Value
+    href: Ubiquity.NET.Llvm.Values.Value.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.Value.DebugRecords
+  commentId: P:Ubiquity.NET.Llvm.Values.Value.DebugRecords
+  parent: Ubiquity.NET.Llvm.Values.Value
+  href: Ubiquity.NET.Llvm.Values.Value.html#Ubiquity_NET_Llvm_Values_Value_DebugRecords
+  name: DebugRecords
+  nameWithType: Value.DebugRecords
+  fullName: Ubiquity.NET.Llvm.Values.Value.DebugRecords
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  name: Alignment(GlobalObject, uint)
+  nameWithType: GlobalObjectExtensions.Alignment(GlobalObject, uint)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject, uint)
+  nameWithType.vb: GlobalObjectExtensions.Alignment(GlobalObject, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject, UInteger)
+  name.vb: Alignment(GlobalObject, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+    name: Alignment
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+    name: Alignment
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  name: Comdat(GlobalObject, string)
+  nameWithType: GlobalObjectExtensions.Comdat(GlobalObject, string)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, string)
+  nameWithType.vb: GlobalObjectExtensions.Comdat(GlobalObject, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, String)
+  name.vb: Comdat(GlobalObject, String)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(System.String,Ubiquity.NET.Llvm.ComdatKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_Ubiquity_NET_Llvm_ComdatKind_
+  name: Comdat(GlobalObject, string, ComdatKind)
+  nameWithType: GlobalObjectExtensions.Comdat(GlobalObject, string, ComdatKind)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, string, Ubiquity.NET.Llvm.ComdatKind)
+  nameWithType.vb: GlobalObjectExtensions.Comdat(GlobalObject, String, ComdatKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, String, Ubiquity.NET.Llvm.ComdatKind)
+  name.vb: Comdat(GlobalObject, String, ComdatKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_Ubiquity_NET_Llvm_ComdatKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.ComdatKind
+    name: ComdatKind
+    href: Ubiquity.NET.Llvm.ComdatKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_Ubiquity_NET_Llvm_ComdatKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.ComdatKind
+    name: ComdatKind
+    href: Ubiquity.NET.Llvm.ComdatKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObject.Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  parent: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  name: SectionName(GlobalObject, string)
+  nameWithType: GlobalObjectExtensions.SectionName(GlobalObject, string)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject, string)
+  nameWithType.vb: GlobalObjectExtensions.SectionName(GlobalObject, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject, String)
+  name.vb: SectionName(GlobalObject, String)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: SectionName
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: SectionName
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(Ubiquity.NET.Llvm.Values.Linkage)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(``0,Ubiquity.NET.Llvm.Values.Linkage)
+  parent: Ubiquity.NET.Llvm.Values.GlobalValueExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(``0,Ubiquity.NET.Llvm.Values.Linkage)
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Linkage__1___0_Ubiquity_NET_Llvm_Values_Linkage_
+  name: Linkage<GlobalVariable>(GlobalVariable, Linkage)
+  nameWithType: GlobalValueExtensions.Linkage<GlobalVariable>(GlobalVariable, Linkage)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage<Ubiquity.NET.Llvm.Values.GlobalVariable>(Ubiquity.NET.Llvm.Values.GlobalVariable, Ubiquity.NET.Llvm.Values.Linkage)
+  nameWithType.vb: GlobalValueExtensions.Linkage(Of GlobalVariable)(GlobalVariable, Linkage)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage(Of Ubiquity.NET.Llvm.Values.GlobalVariable)(Ubiquity.NET.Llvm.Values.GlobalVariable, Ubiquity.NET.Llvm.Values.Linkage)
+  name.vb: Linkage(Of GlobalVariable)(GlobalVariable, Linkage)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(Ubiquity.NET.Llvm.Values.GlobalVariable,Ubiquity.NET.Llvm.Values.Linkage)
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Linkage__1___0_Ubiquity_NET_Llvm_Values_Linkage_
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: '>'
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Linkage
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.Linkage.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(Ubiquity.NET.Llvm.Values.GlobalVariable,Ubiquity.NET.Llvm.Values.Linkage)
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Linkage__1___0_Ubiquity_NET_Llvm_Values_Linkage_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: )
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Linkage
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.Linkage.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(``0,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  parent: Ubiquity.NET.Llvm.Values.GlobalValueExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(``0,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_UnnamedAddress__1___0_Ubiquity_NET_Llvm_Values_UnnamedAddressKind_
+  name: UnnamedAddress<GlobalVariable>(GlobalVariable, UnnamedAddressKind)
+  nameWithType: GlobalValueExtensions.UnnamedAddress<GlobalVariable>(GlobalVariable, UnnamedAddressKind)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress<Ubiquity.NET.Llvm.Values.GlobalVariable>(Ubiquity.NET.Llvm.Values.GlobalVariable, Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  nameWithType.vb: GlobalValueExtensions.UnnamedAddress(Of GlobalVariable)(GlobalVariable, UnnamedAddressKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress(Of Ubiquity.NET.Llvm.Values.GlobalVariable)(Ubiquity.NET.Llvm.Values.GlobalVariable, Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  name.vb: UnnamedAddress(Of GlobalVariable)(GlobalVariable, UnnamedAddressKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(Ubiquity.NET.Llvm.Values.GlobalVariable,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+    name: UnnamedAddress
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_UnnamedAddress__1___0_Ubiquity_NET_Llvm_Values_UnnamedAddressKind_
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: '>'
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.UnnamedAddressKind
+    name: UnnamedAddressKind
+    href: Ubiquity.NET.Llvm.Values.UnnamedAddressKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(Ubiquity.NET.Llvm.Values.GlobalVariable,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+    name: UnnamedAddress
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_UnnamedAddress__1___0_Ubiquity_NET_Llvm_Values_UnnamedAddressKind_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: )
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.UnnamedAddressKind
+    name: UnnamedAddressKind
+    href: Ubiquity.NET.Llvm.Values.UnnamedAddressKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(Ubiquity.NET.Llvm.Values.Visibility)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(``0,Ubiquity.NET.Llvm.Values.Visibility)
+  parent: Ubiquity.NET.Llvm.Values.GlobalValueExtensions
+  definition: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(``0,Ubiquity.NET.Llvm.Values.Visibility)
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Visibility__1___0_Ubiquity_NET_Llvm_Values_Visibility_
+  name: Visibility<GlobalVariable>(GlobalVariable, Visibility)
+  nameWithType: GlobalValueExtensions.Visibility<GlobalVariable>(GlobalVariable, Visibility)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility<Ubiquity.NET.Llvm.Values.GlobalVariable>(Ubiquity.NET.Llvm.Values.GlobalVariable, Ubiquity.NET.Llvm.Values.Visibility)
+  nameWithType.vb: GlobalValueExtensions.Visibility(Of GlobalVariable)(GlobalVariable, Visibility)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility(Of Ubiquity.NET.Llvm.Values.GlobalVariable)(Ubiquity.NET.Llvm.Values.GlobalVariable, Ubiquity.NET.Llvm.Values.Visibility)
+  name.vb: Visibility(Of GlobalVariable)(GlobalVariable, Visibility)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(Ubiquity.NET.Llvm.Values.GlobalVariable,Ubiquity.NET.Llvm.Values.Visibility)
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Visibility__1___0_Ubiquity_NET_Llvm_Values_Visibility_
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: '>'
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Visibility
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.Visibility.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(Ubiquity.NET.Llvm.Values.GlobalVariable,Ubiquity.NET.Llvm.Values.Visibility)
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Visibility__1___0_Ubiquity_NET_Llvm_Values_Visibility_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: )
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Visibility
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.Visibility.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String)
+  parent: Ubiquity.NET.Llvm.Values.ValueExtensions
+  definition: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String)
+  href: Ubiquity.NET.Llvm.Values.ValueExtensions.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_
+  name: RegisterName<GlobalVariable>(GlobalVariable, string)
+  nameWithType: ValueExtensions.RegisterName<GlobalVariable>(GlobalVariable, string)
+  fullName: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName<Ubiquity.NET.Llvm.Values.GlobalVariable>(Ubiquity.NET.Llvm.Values.GlobalVariable, string)
+  nameWithType.vb: ValueExtensions.RegisterName(Of GlobalVariable)(GlobalVariable, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName(Of Ubiquity.NET.Llvm.Values.GlobalVariable)(Ubiquity.NET.Llvm.Values.GlobalVariable, String)
+  name.vb: RegisterName(Of GlobalVariable)(GlobalVariable, String)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(Ubiquity.NET.Llvm.Values.GlobalVariable,System.String)
+    name: RegisterName
+    href: Ubiquity.NET.Llvm.Values.ValueExtensions.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: '>'
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(Ubiquity.NET.Llvm.Values.GlobalVariable,System.String)
+    name: RegisterName
+    href: Ubiquity.NET.Llvm.Values.ValueExtensions.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: )
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+    name: GlobalVariable
+    href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  name: Alignment(GlobalObject, uint)
+  nameWithType: GlobalObjectExtensions.Alignment(GlobalObject, uint)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject, uint)
+  nameWithType.vb: GlobalObjectExtensions.Alignment(GlobalObject, UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject, UInteger)
+  name.vb: Alignment(GlobalObject, UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+    name: Alignment
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Alignment(Ubiquity.NET.Llvm.Values.GlobalObject,System.UInt32)
+    name: Alignment
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Alignment_Ubiquity_NET_Llvm_Values_GlobalObject_System_UInt32_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html
+  name: GlobalObjectExtensions
+  nameWithType: GlobalObjectExtensions
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  name: Comdat(GlobalObject, string)
+  nameWithType: GlobalObjectExtensions.Comdat(GlobalObject, string)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, string)
+  nameWithType.vb: GlobalObjectExtensions.Comdat(GlobalObject, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, String)
+  name.vb: Comdat(GlobalObject, String)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_Ubiquity_NET_Llvm_ComdatKind_
+  name: Comdat(GlobalObject, string, ComdatKind)
+  nameWithType: GlobalObjectExtensions.Comdat(GlobalObject, string, ComdatKind)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, string, Ubiquity.NET.Llvm.ComdatKind)
+  nameWithType.vb: GlobalObjectExtensions.Comdat(GlobalObject, String, ComdatKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject, String, Ubiquity.NET.Llvm.ComdatKind)
+  name.vb: Comdat(GlobalObject, String, ComdatKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_Ubiquity_NET_Llvm_ComdatKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.ComdatKind
+    name: ComdatKind
+    href: Ubiquity.NET.Llvm.ComdatKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.Comdat(Ubiquity.NET.Llvm.Values.GlobalObject,System.String,Ubiquity.NET.Llvm.ComdatKind)
+    name: Comdat
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_Comdat_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_Ubiquity_NET_Llvm_ComdatKind_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.ComdatKind
+    name: ComdatKind
+    href: Ubiquity.NET.Llvm.ComdatKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  name: SectionName(GlobalObject, string)
+  nameWithType: GlobalObjectExtensions.SectionName(GlobalObject, string)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject, string)
+  nameWithType.vb: GlobalObjectExtensions.SectionName(GlobalObject, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject, String)
+  name.vb: SectionName(GlobalObject, String)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: SectionName
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.SectionName(Ubiquity.NET.Llvm.Values.GlobalObject,System.String)
+    name: SectionName
+    href: Ubiquity.NET.Llvm.Values.GlobalObjectExtensions.html#Ubiquity_NET_Llvm_Values_GlobalObjectExtensions_SectionName_Ubiquity_NET_Llvm_Values_GlobalObject_System_String_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Values.GlobalObject
+    name: GlobalObject
+    href: Ubiquity.NET.Llvm.Values.GlobalObject.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(``0,Ubiquity.NET.Llvm.Values.Linkage)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(``0,Ubiquity.NET.Llvm.Values.Linkage)
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Linkage__1___0_Ubiquity_NET_Llvm_Values_Linkage_
+  name: Linkage<T>(T, Linkage)
+  nameWithType: GlobalValueExtensions.Linkage<T>(T, Linkage)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage<T>(T, Ubiquity.NET.Llvm.Values.Linkage)
+  nameWithType.vb: GlobalValueExtensions.Linkage(Of T)(T, Linkage)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage(Of T)(T, Ubiquity.NET.Llvm.Values.Linkage)
+  name.vb: Linkage(Of T)(T, Linkage)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(``0,Ubiquity.NET.Llvm.Values.Linkage)
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Linkage__1___0_Ubiquity_NET_Llvm_Values_Linkage_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Linkage
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.Linkage.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Linkage``1(``0,Ubiquity.NET.Llvm.Values.Linkage)
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Linkage__1___0_Ubiquity_NET_Llvm_Values_Linkage_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Linkage
+    name: Linkage
+    href: Ubiquity.NET.Llvm.Values.Linkage.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalValueExtensions
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html
+  name: GlobalValueExtensions
+  nameWithType: GlobalValueExtensions
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions
+- uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(``0,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(``0,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_UnnamedAddress__1___0_Ubiquity_NET_Llvm_Values_UnnamedAddressKind_
+  name: UnnamedAddress<T>(T, UnnamedAddressKind)
+  nameWithType: GlobalValueExtensions.UnnamedAddress<T>(T, UnnamedAddressKind)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress<T>(T, Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  nameWithType.vb: GlobalValueExtensions.UnnamedAddress(Of T)(T, UnnamedAddressKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress(Of T)(T, Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+  name.vb: UnnamedAddress(Of T)(T, UnnamedAddressKind)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(``0,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+    name: UnnamedAddress
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_UnnamedAddress__1___0_Ubiquity_NET_Llvm_Values_UnnamedAddressKind_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.UnnamedAddressKind
+    name: UnnamedAddressKind
+    href: Ubiquity.NET.Llvm.Values.UnnamedAddressKind.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.UnnamedAddress``1(``0,Ubiquity.NET.Llvm.Values.UnnamedAddressKind)
+    name: UnnamedAddress
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_UnnamedAddress__1___0_Ubiquity_NET_Llvm_Values_UnnamedAddressKind_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.UnnamedAddressKind
+    name: UnnamedAddressKind
+    href: Ubiquity.NET.Llvm.Values.UnnamedAddressKind.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(``0,Ubiquity.NET.Llvm.Values.Visibility)
+  commentId: M:Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(``0,Ubiquity.NET.Llvm.Values.Visibility)
+  href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Visibility__1___0_Ubiquity_NET_Llvm_Values_Visibility_
+  name: Visibility<T>(T, Visibility)
+  nameWithType: GlobalValueExtensions.Visibility<T>(T, Visibility)
+  fullName: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility<T>(T, Ubiquity.NET.Llvm.Values.Visibility)
+  nameWithType.vb: GlobalValueExtensions.Visibility(Of T)(T, Visibility)
+  fullName.vb: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility(Of T)(T, Ubiquity.NET.Llvm.Values.Visibility)
+  name.vb: Visibility(Of T)(T, Visibility)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(``0,Ubiquity.NET.Llvm.Values.Visibility)
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Visibility__1___0_Ubiquity_NET_Llvm_Values_Visibility_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Visibility
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.Visibility.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.Visibility``1(``0,Ubiquity.NET.Llvm.Values.Visibility)
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.GlobalValueExtensions.html#Ubiquity_NET_Llvm_Values_GlobalValueExtensions_Visibility__1___0_Ubiquity_NET_Llvm_Values_Visibility_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.Visibility
+    name: Visibility
+    href: Ubiquity.NET.Llvm.Values.Visibility.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String)
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.ValueExtensions.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_
+  name: RegisterName<T>(T, string)
+  nameWithType: ValueExtensions.RegisterName<T>(T, string)
+  fullName: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName<T>(T, string)
+  nameWithType.vb: ValueExtensions.RegisterName(Of T)(T, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName(Of T)(T, String)
+  name.vb: RegisterName(Of T)(T, String)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String)
+    name: RegisterName
+    href: Ubiquity.NET.Llvm.Values.ValueExtensions.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName``1(``0,System.String)
+    name: RegisterName
+    href: Ubiquity.NET.Llvm.Values.ValueExtensions.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.ValueExtensions
+  commentId: T:Ubiquity.NET.Llvm.Values.ValueExtensions
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.ValueExtensions.html
+  name: ValueExtensions
+  nameWithType: ValueExtensions
+  fullName: Ubiquity.NET.Llvm.Values.ValueExtensions
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html#Ubiquity_NET_Llvm_Values_GlobalVariable_IsExternallyInitialized
+  name: IsExternallyInitialized
+  nameWithType: GlobalVariable.IsExternallyInitialized
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.IsExternallyInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html#Ubiquity_NET_Llvm_Values_GlobalVariable_IsConstant
+  name: IsConstant
+  nameWithType: GlobalVariable.IsConstant
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.IsConstant
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html#Ubiquity_NET_Llvm_Values_GlobalVariable_IsThreadLocal
+  name: IsThreadLocal
+  nameWithType: GlobalVariable.IsThreadLocal
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.IsThreadLocal
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html#Ubiquity_NET_Llvm_Values_GlobalVariable_Initializer
+  name: Initializer
+  nameWithType: GlobalVariable.Initializer
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.Initializer
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression.html
+  name: DIGlobalVariableExpression
+  nameWithType: DIGlobalVariableExpression
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable
+  commentId: T:Ubiquity.NET.Llvm.Values.GlobalVariable
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html
+  name: GlobalVariable
+  nameWithType: GlobalVariable
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html#Ubiquity_NET_Llvm_Values_GlobalVariable_AddDebugInfo_Ubiquity_NET_Llvm_DebugInfo_DIGlobalVariableExpression_
+  name: AddDebugInfo
+  nameWithType: GlobalVariable.AddDebugInfo
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.AddDebugInfo
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent
+  href: Ubiquity.NET.Llvm.Values.GlobalVariable.html#Ubiquity_NET_Llvm_Values_GlobalVariable_RemoveFromParent
+  name: RemoveFromParent
+  nameWithType: GlobalVariable.RemoveFromParent
+  fullName: Ubiquity.NET.Llvm.Values.GlobalVariable.RemoveFromParent

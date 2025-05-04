@@ -7,8 +7,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;
+using Ubiquity.NET.Llvm.Metadata;
 
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]
     public class MDNodeTests
@@ -17,14 +18,17 @@ namespace Ubiquity.NET.Llvm.Tests
         public void AppendingModuleFlagsTest( )
         {
             using var ctx = new Context( );
-            using var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" );
+            using var module = ctx.CreateBitcodeModule( "test.bc" );
+            using var diBuilder = new DIBuilder(module);
+            DICompileUnit cu = diBuilder.CreateCompileUnit(SourceLanguage.C99, "test.c", "unit-tests");
+
             module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", ctx.CreateMDNode( "testValue" ) );
             Assert.AreEqual( 1, module.ModuleFlags.Count );
             var flag = module.ModuleFlags[ "testMD" ];
             Assert.IsNotNull( flag );
             Assert.AreEqual( ModuleFlagBehavior.Append, flag.Behavior );
             Assert.AreEqual( "testMD", flag.Name );
-            Assert.IsInstanceOfType( flag.Metadata, typeof( MDTuple ) );
+            Assert.IsInstanceOfType<MDTuple>( flag.Metadata );
             var tuple = ( MDTuple )flag.Metadata;
             Assert.AreEqual( "testValue", tuple.GetOperandString( 0 ) );
         }
@@ -32,18 +36,33 @@ namespace Ubiquity.NET.Llvm.Tests
         [TestMethod]
         public void OperandsAreAccessibleTest( )
         {
-            const int CompositeTypeOperandCount = 9;
-            var targetMachine = TargetTests.GetTargetMachine( );
+            // NOTE: THis is the expected count of operands for a given LLVM version
+            // It can, and will, change as LLVM itself changes. Thus it is used to
+            // validate that the number of operands is reflected correctly AND to
+            // serve as a test failure should the underlying LLVM change (indicating
+            // this test needs updating for new operands)
+            const int CompositeTypeOperandCount = 15;
+
+            using var targetMachine = TargetTests.GetTargetMachine( );
             using var ctx = new Context( );
-            using var module = ctx.CreateBitcodeModule( "test.bc", SourceLanguage.C99, "test.c", "unit-tests" );
-            module.Layout = targetMachine.TargetData;
-            var intType = new DebugBasicType( module.Context.Int32Type, module, "int", DiTypeKind.Signed );
-            var arrayType = new DebugArrayType(intType, module, 3u);
+            using var module = ctx.CreateBitcodeModule( "test.bc" );
+            using var diBuilder = new DIBuilder(module);
+            DICompileUnit cu = diBuilder.CreateCompileUnit(SourceLanguage.C99, "test.c", "unit-tests");
+
+            using var layout = targetMachine.CreateTargetData();
+            module.Layout = layout;
+            var intType = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
+            var arrayType = new DebugArrayType(intType, in diBuilder, 3u);
             Assert.IsNotNull( arrayType );
 
-            DICompositeType? mdnode = arrayType.DIType;
+            DICompositeType? mdnode = arrayType.DebugInfoType;
             Assert.IsNotNull( mdnode );
-            Assert.IsNotNull( mdnode!.Operands );
+
+            // BS warning - this is here to VALIDATE the CLAIM that it is always going to be true.
+#pragma warning disable MSTEST0032 // Assertion condition is always true;
+            Assert.IsNotNull( mdnode.Operands );
+#pragma warning restore MSTEST0032 // Assertion condition is always true
+
             Assert.AreEqual( CompositeTypeOperandCount, mdnode.Operands.Count );
 
             Assert.IsNull( mdnode.File );
@@ -58,17 +77,16 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsNotNull( mdnode.BaseType );
             Assert.IsNotNull( mdnode.Operands[ 3 ] );
 
+            // BS warning - this is here to VALIDATE the claim that it is always going to be true.
+#pragma warning disable MSTEST0032 // Assertion condition is always true;
             Assert.IsNotNull( mdnode.Elements );
+#pragma warning restore MSTEST0032 // Assertion condition is always true
+
             Assert.IsNotNull( mdnode.Operands[ 4 ] );
             Assert.AreEqual( 1, mdnode.Elements.Count );
             Assert.AreEqual( 1, mdnode.Elements.Count );
             var subRange = mdnode.Elements[ 0 ] as DISubRange;
             Assert.IsNotNull( subRange );
-
-            /* TODO: Test non-operand properties when available
-            // Assert.AreEqual( 0, subRange.LowerBound );
-            // Assert.AreEqual( 3, subRange.Length );
-            */
 
             Assert.IsNull( mdnode.VTableHolder );
             Assert.IsNull( mdnode.Operands[ 5 ] );
@@ -82,7 +100,13 @@ namespace Ubiquity.NET.Llvm.Tests
             Assert.IsNull( mdnode.Discriminator );
             Assert.IsNull( mdnode.Operands[ 8 ] );
 
-            Assert.AreSame( intType.DIType, mdnode.BaseType );
+            // TODO: New operand [9] => DataLocation (IrMetadata)[DIVariable][DIExpression]
+            // TODO: New Operand [10] => Associated (IrMetadata)
+            // TODO: New Operand [11] => Allocated (IrMetadata)
+            // TODO: New Operand [12] => Rank (IrMetadata)[ConstantInt][DIExpression]
+            // TODO: New Operand [13] => Annotations (IrMetadata)[DINodeArray]
+            // TODO: New Operand [14] => Specification (IrMetadata)[DebugInfoType]
+            Assert.AreEqual( intType.DebugInfoType, mdnode.BaseType );
         }
     }
 }

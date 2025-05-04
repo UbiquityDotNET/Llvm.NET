@@ -4,16 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -21,7 +12,7 @@ namespace Ubiquity.NET.Llvm.Values
         : ICollection<BasicBlock>
     {
         /// <summary>Gets a count of the blocks in the collection</summary>
-        public int Count => checked(( int )LLVMCountBasicBlocks( ContainingFunction.ValueHandle ));
+        public int Count => checked(( int )LLVMCountBasicBlocks( ContainingFunction.Handle ));
 
         /// <summary>Add a block to the underlying function</summary>
         /// <param name="item"><see cref="BasicBlock"/> to add to the function</param>
@@ -30,14 +21,14 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public void Add( BasicBlock item )
         {
-            item.ValidateNotNull( nameof( item ) );
+            ArgumentNullException.ThrowIfNull( item );
 
             if( item.ContainingFunction == null )
             {
-                LibLLVMFunctionAppendBasicBlock( ContainingFunction.ValueHandle, item.BlockHandle );
+                LibLLVMFunctionAppendBasicBlock( ContainingFunction.Handle, item.BlockHandle );
             }
 
-            if( item.ContainingFunction != ContainingFunction )
+            if( !EqualityComparer<Function>.Default.Equals(item.ContainingFunction, ContainingFunction ) )
             {
                 throw new ArgumentException( Resources.Cannot_add_a_block_belonging_to_a_different_function, nameof( item ) );
             }
@@ -48,7 +39,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <inheritdoc/>
         public IEnumerator<BasicBlock> GetEnumerator( )
         {
-            LLVMBasicBlockRef blockRef = LLVMGetFirstBasicBlock( ContainingFunction.ValueHandle );
+            LLVMBasicBlockRef blockRef = LLVMGetFirstBasicBlock( ContainingFunction.Handle );
             while( blockRef != default )
             {
                 yield return BasicBlock.FromHandle( blockRef )!;
@@ -70,8 +61,8 @@ namespace Ubiquity.NET.Llvm.Values
 
         public bool Contains( BasicBlock item )
         {
-            item.ValidateNotNull( nameof( item ) );
-            return item.ContainingFunction == ContainingFunction;
+            ArgumentNullException.ThrowIfNull( item );
+            return EqualityComparer<Function>.Default.Equals(item.ContainingFunction, ContainingFunction );
         }
 
         public void CopyTo( BasicBlock[ ] array, int arrayIndex )
@@ -89,8 +80,8 @@ namespace Ubiquity.NET.Llvm.Values
 
         public bool Remove( BasicBlock item )
         {
-            item.ValidateNotNull( nameof( item ) );
-            if( item.ContainingFunction != ContainingFunction )
+            ArgumentNullException.ThrowIfNull( item );
+            if( !EqualityComparer<Function>.Default.Equals( item.ContainingFunction, ContainingFunction ) )
             {
                 return false;
             }
@@ -101,11 +92,11 @@ namespace Ubiquity.NET.Llvm.Values
 
         public bool IsReadOnly => false;
 
-        internal BasicBlockCollection( IrFunction function )
+        internal BasicBlockCollection( Function function )
         {
             ContainingFunction = function;
         }
 
-        private readonly IrFunction ContainingFunction;
+        private readonly Function ContainingFunction;
     }
 }

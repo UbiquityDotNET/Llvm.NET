@@ -1,0 +1,70 @@
+<Solution>
+  <Folder Name="/Analyzer/" Id="02ea681e-c7d8-13c7-8484-4ac65e1b71e8">
+    <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier.Test/ReferenceEqualityVerifier.Test.csproj" Id="e64d8c77-a653-4235-9608-c68e9e3ca8b5" />
+    <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier/ReferenceEqualityVerifier.csproj" Id="e8f42c47-8cd5-4987-8402-0dcd97ac8b60" />
+  </Folder>
+  <Folder Name="/Interop/">
+    <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
+    <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
+    <Project Path="Ubiquity.NET.InteropHelpers.UT/Ubiquity.NET.InteropHelpers.UT.csproj" />
+    <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
+  </Folder>
+  <Folder Name="/Repo Items/">
+    <File Path="../.editorconfig" />
+    <File Path="../.github/workflows/pr-build.yml" />
+    <File Path="../.github/workflows/release-build.yml" />
+    <File Path="../.gitignore" />
+    <File Path="../Build-All.ps1" />
+    <File Path="../Build-Docs.ps1" />
+    <File Path="../Build-Source.ps1" />
+    <File Path="../BuildVersion.xml" />
+    <File Path="../CODE_OF_CONDUCT.md" />
+    <File Path="../Directory.Build.props" />
+    <File Path="../Directory.Build.targets" />
+    <File Path="../Directory.Packages.props" />
+    <File Path="../global.json" />
+    <File Path="../GOVERNANCE.md" />
+    <File Path="../IgnoredWords.dic" />
+    <File Path="../Invoke-UnitTests.ps1" />
+    <File Path="../LICENSE.md" />
+    <File Path="../NuGet.Config" />
+    <File Path="../Push-Docs.ps1" />
+    <File Path="../README.md" />
+    <File Path="../repo-buildutils.ps1" />
+    <File Path="../stylecop.json" />
+    <File Path="../Ubiquity.NET.ruleset" />
+    <File Path="x64.runsettings" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="Samples/CodeGenWithDebugInfo/CodeGenWithDebugInfo.csproj" />
+    <Project Path="Samples/OrcV2VeryLazy/OrcV2VeryLazy.csproj" />
+  </Folder>
+  <Folder Name="/Samples/Kaleidoscope/" Id="e5c76233-e9f2-292d-735d-bc453529d142">
+    <File Path="Samples/Kaleidoscope/.editorconfig" />
+    <File Path="Samples/Kaleidoscope/IgnoredWords.dic" />
+    <File Path="Samples/Kaleidoscope/Kaleidoscope-Overview.md" />
+    <File Path="Samples/Kaleidoscope/mandel.kls" />
+    <Project Path="Samples/Kaleidoscope/Chapter2/Chapter2.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter3.5/Chapter3.5.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter3/Chapter3.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter4/Chapter4.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter5/Chapter5.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter6/Chapter6.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter7.1/Chapter7.1.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter7/Chapter7.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter8/Chapter8.csproj" />
+    <Project Path="Samples/Kaleidoscope/Chapter9/Chapter9.csproj" />
+    <Project Path="Samples/Kaleidoscope/Kaleidoscope.Grammar/Kaleidoscope.Grammar.csproj" />
+    <Project Path="Samples/Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope.Runtime.csproj" />
+    <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
+  </Folder>
+  <Project Path="../BuildVersion.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
+  <Project Path="Ubiquity.NET.ANTLR.Utils/Ubiquity.NET.ANTLR.Utils.csproj" />
+  <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
+  <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
+  <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
+  <Project Path="Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj" />
+  <Project Path="Ubiquity.NET.Runtime.Utils/Ubiquity.NET.Runtime.Utils.csproj" />
+</Solution>

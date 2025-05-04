@@ -1,0 +1,41 @@
+# TOC (left Nav) for the LLVM Samples
+- name: CodeGenerator With Debug Information
+  uid: code-generation-with-debug-info
+- name: OrcV2VeryLazy
+  uid: orcjitv2-very-lazy
+- name: Kaleidoscope
+  items:
+    - name: Chapter 1 - Language Introduction
+      uid: Kaleidoscope-ch1
+    - name: Chapter 2 - Implementing the parser
+      uid: Kaleidoscope-ch2
+    - name: Chapter 3 - Generating LLVM IR
+      uid: Kaleidoscope-ch3
+      items:
+        - name: Chapter 3.5 - Optimization
+          uid: Kaleidoscope-ch3.5
+    - name: Chapter 4 - JIT and Optimizer Support
+      uid: Kaleidoscope-ch4
+    - name: Chapter 5 - Control Flow
+      uid: Kaleidoscope-ch5
+    - name: Chapter 6 - User Defined Operators
+      uid: Kaleidoscope-ch6
+    - name: Chapter 7 - Mutable Variables
+      uid: Kaleidoscope-ch7
+      items:
+        - name: Chapter 7.1 - Extereme Lazy JIT
+          uid: Kaleidoscope-ch7.1
+    - name: Chapter 8 - AOT Compilation
+      uid: Kaleidoscope-ch8
+    - name: Chapter 9 - Debug Information
+      uid: Kaleidoscope-ch9
+    - name: Appendix
+      items:
+        - name: Kaleidoscope.Runtime
+          uid: Kaleidoscope-Runtime
+        - name: Kaleidoscope.AST
+          uid: Kaleidoscope-AST
+        - name: ParseTree Visitor
+          uid: Kaleidoscope-ParseTreeVisitor
+        - name: ParseTree Examples
+          uid: Kaleidoscope-Parsetree-examples

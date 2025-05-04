@@ -4,12 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Contains an LLVM User value</summary>
@@ -29,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                LLVMUseRef current = LLVMGetFirstUse( ValueHandle );
+                LLVMUseRef current = LLVMGetFirstUse( Handle );
                 while( current != default )
                 {
                     // TODO: intern the use instances?

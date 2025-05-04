@@ -4,15 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Linq;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.Instructions;
-using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.UT
 {
     [TestClass]
     public class CallTests
@@ -22,19 +19,22 @@ namespace Ubiquity.NET.Llvm.Tests
         public void Create_varargs_function_with_arbitrary_params_succeeds()
         {
             using var ctx = new Context();
-            var module = ctx.CreateBitcodeModule();
-            var varArgsSig = ctx.GetFunctionType(ctx.VoidType, Enumerable.Empty<ITypeRef>(), true);
-            var callerSig = ctx.GetFunctionType(ctx.VoidType);
+            using var module = ctx.CreateBitcodeModule();
+            var varArgsSig = ctx.GetFunctionType(true, ctx.VoidType, []);
+            var callerSig = ctx.GetFunctionType(returnType: ctx.VoidType);
 
             var function = module.CreateFunction( "VarArgFunc", varArgsSig );
             var entryBlock = function.PrependBasicBlock("entry");
-            var bldr = new InstructionBuilder(entryBlock);
-            bldr.Return( );
+            using(var bldr = new InstructionBuilder(entryBlock))
+            {
+                bldr.Return( );
+            }
 
             var caller = module.CreateFunction("CallVarArgs", callerSig);
             entryBlock = caller.PrependBasicBlock( "entry" );
-            bldr = new InstructionBuilder( entryBlock );
-            var callInstruction = bldr.Call( function, ctx.CreateConstant( 0 ), ctx.CreateConstant( 1 ), ctx.CreateConstant( 2 ) );
+
+            using var bldr2 = new InstructionBuilder( entryBlock );
+            var callInstruction = bldr2.Call( function, ctx.CreateConstant( 0 ), ctx.CreateConstant( 1 ), ctx.CreateConstant( 2 ) );
             Assert.IsNotNull( callInstruction );
 
             // operands of call are all arguments, plus the target function

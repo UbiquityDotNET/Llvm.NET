@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Sub range</summary>
@@ -19,7 +12,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DINode
     {
         /// <summary>Gets a value for the lower bound of the range</summary>
-        public Int64 LowerBound => LibLLVMDISubRangeGetLowerBounds( MetadataHandle );
+        public Int64 LowerBound => LibLLVMDISubRangeGetLowerBounds( Handle, 0 );
 
         /// <summary>Gets a, potentially null, constant value for the count of the subrange</summary>
         /// <remarks>

@@ -1,0 +1,544 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  commentId: T:Ubiquity.NET.Llvm.Instructions.RealPredicate
+  id: RealPredicate
+  parent: Ubiquity.NET.Llvm.Instructions
+  children:
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.False
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.Ordered
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThan
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThan
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndNotEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.True
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.Unordered
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedAndEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThan
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThan
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThanOrEqual
+  - Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrNotEqual
+  langs:
+  - csharp
+  - vb
+  name: RealPredicate
+  nameWithType: RealPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  type: Enum
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RealPredicate
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 213
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Predicate enumeration for floating point comparison
+  remarks: >-
+    Floating point predicates "Ordered" means that neither operand is a QNAN
+
+    while unordered means that either operand may be a QNAN.
+  example: []
+  syntax:
+    content: public enum RealPredicate
+    content.vb: Public Enum RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.False
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.False
+  id: "False"
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: "False"
+  nameWithType: RealPredicate.False
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.False
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: "False"
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 216
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: No comparison, always returns floating point false
+  example: []
+  syntax:
+    content: False = 0
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndEqual
+  id: OrderedAndEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndEqual
+  nameWithType: RealPredicate.OrderedAndEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 219
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndEqual = 1
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThan
+  id: OrderedAndGreaterThan
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndGreaterThan
+  nameWithType: RealPredicate.OrderedAndGreaterThan
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndGreaterThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 222
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and greater than floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndGreaterThan = 2
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThanOrEqual
+  id: OrderedAndGreaterThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndGreaterThanOrEqual
+  nameWithType: RealPredicate.OrderedAndGreaterThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndGreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndGreaterThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 225
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and greater than or equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndGreaterThanOrEqual = 3
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThan
+  id: OrderedAndLessThan
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndLessThan
+  nameWithType: RealPredicate.OrderedAndLessThan
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndLessThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 228
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and less than floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndLessThan = 4
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThanOrEqual
+  id: OrderedAndLessThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndLessThanOrEqual
+  nameWithType: RealPredicate.OrderedAndLessThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndLessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndLessThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 231
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and less than or equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndLessThanOrEqual = 5
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndNotEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndNotEqual
+  id: OrderedAndNotEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: OrderedAndNotEqual
+  nameWithType: RealPredicate.OrderedAndNotEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.OrderedAndNotEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: OrderedAndNotEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 234
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered and not equal floating point comparison
+  example: []
+  syntax:
+    content: OrderedAndNotEqual = 6
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.Ordered
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.Ordered
+  id: Ordered
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: Ordered
+  nameWithType: RealPredicate.Ordered
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.Ordered
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Ordered
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 237
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Ordered floating point comparison
+  example: []
+  syntax:
+    content: Ordered = 7
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.Unordered
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.Unordered
+  id: Unordered
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: Unordered
+  nameWithType: RealPredicate.Unordered
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.Unordered
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Unordered
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 240
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered floating point comparison
+  example: []
+  syntax:
+    content: Unordered = 8
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedAndEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedAndEqual
+  id: UnorderedAndEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedAndEqual
+  nameWithType: RealPredicate.UnorderedAndEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedAndEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedAndEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 243
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered and equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedAndEqual = 9
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThan
+  id: UnorderedOrGreaterThan
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrGreaterThan
+  nameWithType: RealPredicate.UnorderedOrGreaterThan
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrGreaterThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 246
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or greater than floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrGreaterThan = 10
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThanOrEqual
+  id: UnorderedOrGreaterThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrGreaterThanOrEqual
+  nameWithType: RealPredicate.UnorderedOrGreaterThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrGreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrGreaterThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 249
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or greater than or Equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrGreaterThanOrEqual = 11
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThan
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThan
+  id: UnorderedOrLessThan
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrLessThan
+  nameWithType: RealPredicate.UnorderedOrLessThan
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThan
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrLessThan
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 252
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or Less than floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrLessThan = 12
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThanOrEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThanOrEqual
+  id: UnorderedOrLessThanOrEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrLessThanOrEqual
+  nameWithType: RealPredicate.UnorderedOrLessThanOrEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrLessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrLessThanOrEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 255
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or Less than or Equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrLessThanOrEqual = 13
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrNotEqual
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrNotEqual
+  id: UnorderedOrNotEqual
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: UnorderedOrNotEqual
+  nameWithType: RealPredicate.UnorderedOrNotEqual
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.UnorderedOrNotEqual
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: UnorderedOrNotEqual
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 258
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: Unordered or not equal floating point comparison
+  example: []
+  syntax:
+    content: UnorderedOrNotEqual = 14
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate.True
+  commentId: F:Ubiquity.NET.Llvm.Instructions.RealPredicate.True
+  id: "True"
+  parent: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  langs:
+  - csharp
+  - vb
+  name: "True"
+  nameWithType: RealPredicate.True
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate.True
+  type: Field
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: "True"
+    path: ../src/Ubiquity.NET.Llvm/Instructions/Predicates.cs
+    startLine: 261
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Instructions
+  summary: No comparison, always returns true
+  example: []
+  syntax:
+    content: True = 15
+    return:
+      type: Ubiquity.NET.Llvm.Instructions.RealPredicate
+references:
+- uid: Ubiquity.NET.Llvm.Instructions
+  commentId: N:Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Instructions
+  nameWithType: Ubiquity.NET.Llvm.Instructions
+  fullName: Ubiquity.NET.Llvm.Instructions
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Instructions
+    name: Instructions
+    href: Ubiquity.NET.Llvm.Instructions.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Instructions
+    name: Instructions
+    href: Ubiquity.NET.Llvm.Instructions.html
+- uid: Ubiquity.NET.Llvm.Instructions.RealPredicate
+  commentId: T:Ubiquity.NET.Llvm.Instructions.RealPredicate
+  parent: Ubiquity.NET.Llvm.Instructions
+  href: Ubiquity.NET.Llvm.Instructions.RealPredicate.html
+  name: RealPredicate
+  nameWithType: RealPredicate
+  fullName: Ubiquity.NET.Llvm.Instructions.RealPredicate

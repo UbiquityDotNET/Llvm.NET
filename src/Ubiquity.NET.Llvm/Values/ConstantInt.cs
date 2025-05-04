@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Represents an arbitrary bit width integer constant in LLVM</summary>
@@ -28,13 +21,13 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets the value of the constant zero extended to a 64 bit value</summary>
         /// <exception cref="InvalidOperationException">If <see cref="BitWidth"/> is greater than 64 bits</exception>
         public UInt64 ZeroExtendedValue
-            => BitWidth <= 64 ? LLVMConstIntGetZExtValue( ValueHandle )
+            => BitWidth <= 64 ? LLVMConstIntGetZExtValue( Handle )
                               : throw new InvalidOperationException( Resources.APInt_exceeds_size_of_UInt64 );
 
         /// <summary>Gets the value of the constant sign extended to a 64 bit value</summary>
         /// <exception cref="InvalidOperationException">If <see cref="BitWidth"/> is greater than 64 bits</exception>
         public Int64 SignExtendedValue
-            => BitWidth <= 64 ? LLVMConstIntGetSExtValue( ValueHandle )
+            => BitWidth <= 64 ? LLVMConstIntGetSExtValue( Handle )
                               : throw new InvalidOperationException( Resources.APInt_exceeds_size_of_Int64 );
 
         internal ConstantInt( LLVMValueRef valueRef )

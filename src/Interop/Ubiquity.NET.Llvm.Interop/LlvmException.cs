@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Runtime.Serialization;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Exception thrown from LLVM Error Messages</summary>
@@ -15,13 +12,13 @@ namespace Ubiquity.NET.Llvm.Interop
         : Exception
     {
         /// <summary>Initializes a new instance of the <see cref="LlvmException"/> class.</summary>
-        public LlvmException( )
+        public LlvmException()
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="LlvmException"/> class.</summary>
         /// <param name="message">Exception Message</param>
-        public LlvmException( string message )
+        public LlvmException(string message)
             : base( message )
         {
         }
@@ -29,16 +26,8 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Initializes a new instance of the <see cref="LlvmException"/> class.</summary>
         /// <param name="message">Exception Message</param>
         /// <param name="inner">Inner Exception</param>
-        public LlvmException( string message, Exception inner )
+        public LlvmException(string message, Exception inner)
             : base( message, inner )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="LlvmException"/> class.</summary>
-        /// <param name="info">Serialization info</param>
-        /// <param name="context">Streaming context</param>
-        protected LlvmException( SerializationInfo info, StreamingContext context )
-            : base( info, context )
         {
         }
     }

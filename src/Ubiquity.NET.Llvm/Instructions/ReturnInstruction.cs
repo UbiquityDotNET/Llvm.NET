@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Return instruction</summary>
-    public class ReturnInstruction
+    public sealed class ReturnInstruction
         : Terminator
     {
         internal ReturnInstruction( LLVMValueRef valueRef )

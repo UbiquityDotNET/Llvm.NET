@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Fluent style extensions for properties of <see cref="GlobalObject"/></summary>
@@ -25,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Sets a named <see cref="Ubiquity.NET.Llvm.Comdat"/> for a <see cref="GlobalObject"/></summary>
         /// <param name="self">Global to get the Comdat for</param>
         /// <param name="name">name of the Comdat</param>
-        /// <param name="kind">Kind of Comdat to create if it doesn't exist already</param>
+        /// <param name="kind">Id of Comdat to create if it doesn't exist already</param>
         /// <returns><paramref name="self"/> for fluent use</returns>
         /// <remarks>
         /// This finds a <see cref="Ubiquity.NET.Llvm.Comdat"/> in the <see cref="GlobalValue.ParentModule"/>
@@ -35,21 +33,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso cref="GlobalObject.Comdat"/>
         public static GlobalObject Comdat( this GlobalObject self, string name, ComdatKind kind )
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
-
-            if( !self.ParentModule.Comdats.TryGetValue( name, out Comdat? comdat ) )
-            {
-                comdat = self.ParentModule.Comdats.InsertOrUpdate( name, kind );
-            }
-            else
-            {
-                comdat.Kind = kind;
-            }
-
-            self.Comdat = comdat;
+            ArgumentNullException.ThrowIfNull( self );
+            self.Comdat = new(LibLLVMModuleInsertOrUpdateComdat(self.ParentModule.GetUnownedHandle(), name, (LLVMComdatSelectionKind)kind));
             return self;
         }
 
@@ -60,10 +45,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso cref="GlobalObject.Section"/>
         public static GlobalObject SectionName( this GlobalObject self, string name )
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            ArgumentNullException.ThrowIfNull( self );
 
             self.Section = name;
             return self;
@@ -76,10 +58,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <seealso cref="GlobalObject.Alignment"/>
         public static GlobalObject Alignment( this GlobalObject self, uint value )
         {
-            if( self == null )
-            {
-                throw new ArgumentNullException( nameof( self ) );
-            }
+            ArgumentNullException.ThrowIfNull( self );
 
             self.Alignment = value;
             return self;

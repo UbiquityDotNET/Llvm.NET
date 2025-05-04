@@ -1,0 +1,445 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Types.ISequenceType
+  commentId: T:Ubiquity.NET.Llvm.Types.ISequenceType
+  id: ISequenceType
+  parent: Ubiquity.NET.Llvm.Types
+  children:
+  - Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  langs:
+  - csharp
+  - vb
+  name: ISequenceType
+  nameWithType: ISequenceType
+  fullName: Ubiquity.NET.Llvm.Types.ISequenceType
+  type: Interface
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/SequenceType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ISequenceType
+    path: ../src/Ubiquity.NET.Llvm/Types/SequenceType.cs
+    startLine: 17
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Interface for an LLVM sequence type
+  remarks: >-
+    Sequence types represent a sequence of elements of the same type
+
+    that are contiguous in memory. These include Vectors, Arrays, and
+
+    pointers.
+  example: []
+  syntax:
+    content: 'public interface ISequenceType : ITypeRef, IEquatable<ITypeRef>'
+    content.vb: Public Interface ISequenceType Inherits ITypeRef, IEquatable(Of ITypeRef)
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  - Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  - Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  - Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  - Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  - Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+  - Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  - Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+  - System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+- uid: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  commentId: P:Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  id: ElementType
+  parent: Ubiquity.NET.Llvm.Types.ISequenceType
+  langs:
+  - csharp
+  - vb
+  name: ElementType
+  nameWithType: ISequenceType.ElementType
+  fullName: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Types/SequenceType.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ElementType
+    path: ../src/Ubiquity.NET.Llvm/Types/SequenceType.cs
+    startLine: 21
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Types
+  summary: Gets the types of the elements in the sequence
+  example: []
+  syntax:
+    content: ITypeRef ElementType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: ReadOnly Property ElementType As ITypeRef
+  overload: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType*
+references:
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsSized
+  name: IsSized
+  nameWithType: ITypeRef.IsSized
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsSized
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_Kind
+  name: Kind
+  nameWithType: ITypeRef.Kind
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.Kind
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsInteger
+  name: IsInteger
+  nameWithType: ITypeRef.IsInteger
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsFloat
+  name: IsFloat
+  nameWithType: ITypeRef.IsFloat
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsDouble
+  name: IsDouble
+  nameWithType: ITypeRef.IsDouble
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsVoid
+  name: IsVoid
+  nameWithType: ITypeRef.IsVoid
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsStruct
+  name: IsStruct
+  nameWithType: ITypeRef.IsStruct
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsPointer
+  name: IsPointer
+  nameWithType: ITypeRef.IsPointer
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsSequence
+  name: IsSequence
+  nameWithType: ITypeRef.IsSequence
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsFloatingPoint
+  name: IsFloatingPoint
+  nameWithType: ITypeRef.IsFloatingPoint
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.Context
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_Context
+  name: Context
+  nameWithType: ITypeRef.Context
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.Context
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  commentId: P:Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_IntegerBitWidth
+  name: IntegerBitWidth
+  nameWithType: ITypeRef.IntegerBitWidth
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_GetNullValue
+  name: GetNullValue()
+  nameWithType: ITypeRef.GetNullValue()
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+    name: GetNullValue
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_GetNullValue
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue
+    name: GetNullValue
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_GetNullValue
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreateArrayType_System_UInt32_
+  name: CreateArrayType(uint)
+  nameWithType: ITypeRef.CreateArrayType(uint)
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(uint)
+  nameWithType.vb: ITypeRef.CreateArrayType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(UInteger)
+  name.vb: CreateArrayType(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreateArrayType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType(System.UInt32)
+    name: CreateArrayType
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreateArrayType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType
+  name: CreatePointerType()
+  nameWithType: ITypeRef.CreatePointerType()
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+  commentId: M:Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+  parent: Ubiquity.NET.Llvm.Types.ITypeRef
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType_System_UInt32_
+  name: CreatePointerType(uint)
+  nameWithType: ITypeRef.CreatePointerType(uint)
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(uint)
+  nameWithType.vb: ITypeRef.CreatePointerType(UInteger)
+  fullName.vb: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(UInteger)
+  name.vb: CreatePointerType(UInteger)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType(System.UInt32)
+    name: CreatePointerType
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType_System_UInt32_
+  - name: (
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uint32
+  - name: )
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  commentId: M:System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  parent: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(ITypeRef)
+  nameWithType: IEquatable<ITypeRef>.Equals(ITypeRef)
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Types.ITypeRef>.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  nameWithType.vb: IEquatable(Of ITypeRef).Equals(ITypeRef)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Types.ITypeRef).Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+  spec.csharp:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}.Equals(Ubiquity.NET.Llvm.Types.ITypeRef)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef
+  commentId: T:Ubiquity.NET.Llvm.Types.ITypeRef
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  name: ITypeRef
+  nameWithType: ITypeRef
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Types.ITypeRef}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ITypeRef>
+  nameWithType: IEquatable<ITypeRef>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Types.ITypeRef>
+  nameWithType.vb: IEquatable(Of ITypeRef)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Types.ITypeRef)
+  name.vb: IEquatable(Of ITypeRef)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Types.ITypeRef
+    name: ITypeRef
+    href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType*
+  commentId: Overload:Ubiquity.NET.Llvm.Types.ISequenceType.ElementType
+  href: Ubiquity.NET.Llvm.Types.ISequenceType.html#Ubiquity_NET_Llvm_Types_ISequenceType_ElementType
+  name: ElementType
+  nameWithType: ISequenceType.ElementType
+  fullName: Ubiquity.NET.Llvm.Types.ISequenceType.ElementType

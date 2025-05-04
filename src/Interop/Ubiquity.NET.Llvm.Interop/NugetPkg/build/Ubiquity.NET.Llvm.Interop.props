@@ -1,6 +1,0 @@
-﻿<Project>
-    <PropertyGroup>
-        <LibLlvmPkgRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..'))</LibLlvmPkgRoot>
-    </PropertyGroup>
-
-</Project>

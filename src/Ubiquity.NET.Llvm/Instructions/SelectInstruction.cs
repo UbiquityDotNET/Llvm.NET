@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Select instruction</summary>
-    public class SelectInstruction
+    public sealed class SelectInstruction
         : Instruction
     {
         internal SelectInstruction( LLVMValueRef valueRef )

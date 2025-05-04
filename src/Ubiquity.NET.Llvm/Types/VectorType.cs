@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -24,11 +17,11 @@ namespace Ubiquity.NET.Llvm.Types
         uint Size { get; }
     }
 
-    internal class VectorType
+    internal sealed class VectorType
         : SequenceType
         , IVectorType
     {
-        public uint Size => LLVMGetVectorSize( TypeRefHandle );
+        public uint Size => LLVMGetVectorSize( Handle );
 
         internal VectorType( LLVMTypeRef typeRef )
             : base( typeRef )

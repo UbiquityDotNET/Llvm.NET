@@ -4,32 +4,30 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>LLVM MemoryBuffer</summary>
     public sealed class MemoryBuffer
+        : IDisposable
     {
+        /// <summary>Gets a value indicating whether this instance is disposed</summary>
+        public bool IsDisposed => Handle is null || Handle.IsClosed || Handle.IsInvalid;
+
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a file</summary>
         /// <param name="path">Path of the file to load</param>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "msg is Disposed IFF it is valid to begin with" )]
         public MemoryBuffer( string path )
         {
-            path.ValidateNotNullOrWhiteSpace( nameof( path ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( path );
+
+            // Inconsistent API design - returns a status and, in case of failures, an out message instead of LLVMErrorRef
             if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out string msg ).Failed )
             {
-                throw new InternalCodeGeneratorException( msg );
+                string errMsg = msg.ToString() ?? string.Empty;
+                throw new InternalCodeGeneratorException( errMsg );
             }
 
-            BufferHandle = handle;
+            Handle = handle;
         }
 
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a byte array</summary>
@@ -41,24 +39,41 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public MemoryBuffer( byte[] data, string? name = null)
         {
-            data.ValidateNotNull( nameof( data ) );
-            BufferHandle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, data.Length, name ?? string.Empty )
+            ArgumentNullException.ThrowIfNull( data );
+
+            Handle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, data.Length, name ?? string.Empty )
                           .ThrowIfInvalid( );
         }
 
+        /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class to wrap an existing memory region</summary>
+        /// <param name="data">Data for the region [Must remain valid for the entire lifetime of this instance!]</param>
+        /// <param name="len">Length of the region</param>
+        /// <param name="name">Name of the buffer</param>
+        /// <param name="requiresNullTerminator">Indicates if the data requires a null terminator</param>
+        public unsafe MemoryBuffer(byte* data, size_t len, LazyEncodedString name, bool requiresNullTerminator)
+        {
+            ArgumentNullException.ThrowIfNull(data);
+            ArgumentOutOfRangeException.ThrowIfLessThan(len, (size_t)1);
+            ArgumentNullException.ThrowIfNull(name);
+
+            using var nativeNameHandle = name.Pin();
+            Handle = LLVMCreateMemoryBufferWithMemoryRange(data, len, (byte*)nativeNameHandle.Pointer, requiresNullTerminator)
+                           .ThrowIfInvalid();
+        }
+
+        /// <inheritdoc/>
+        public void Dispose() => Handle.Dispose();
+
         /// <summary>Gets the size of the buffer</summary>
-        public int Size => BufferHandle.IsInvalid ? 0 : ( int )LLVMGetBufferSize( BufferHandle );
+        public int Size => IsDisposed ? 0 : ( int )LLVMGetBufferSize( Handle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
         public byte[ ] ToArray( )
         {
-            if( BufferHandle.IsInvalid )
-            {
-                throw new InvalidOperationException( );
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
 
-            IntPtr bufferStart = LLVMGetBufferStart( BufferHandle );
+            IntPtr bufferStart = LLVMGetBufferStart( Handle );
             byte[ ] retVal = new byte[ Size ];
             Marshal.Copy( bufferStart, retVal, 0, Size );
             return retVal;
@@ -68,7 +83,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="buffer">Buffer to convert</param>
         /// <remarks>This is a simple wrapper around calling <see cref="Slice(int, int)"/> with default parameters</remarks>
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Named alternate exists - Slice()" )]
-        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.ValidateNotNull( nameof( buffer ) ).Slice( 0, -1 );
+        public static implicit operator ReadOnlySpan<byte>( MemoryBuffer buffer ) => buffer.ThrowIfNull().Slice( 0, -1 );
 
         /// <summary>Create a <see cref="System.ReadOnlySpan{T}"/> for a slice of the buffer</summary>
         /// <param name="start">Starting index for the slice [default = 0]</param>
@@ -77,18 +92,15 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>Creates an efficient means of accessing the raw data of a buffer</remarks>
         public ReadOnlySpan<byte> Slice( int start = 0, int length = -1 )
         {
-            if( BufferHandle.IsInvalid )
-            {
-                throw new InvalidOperationException( );
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
 
             if( length == -1 )
             {
                 length = Size - start;
             }
 
-            start.ValidateRange( 0, Size - 1, nameof( start ) );
-            length.ValidateRange( 0, Size, nameof( length ) );
+            start.ThrowIfOutOfRange( 0, Size - 1 );
+            length.ThrowIfOutOfRange( 0, Size );
 
             if( ( start + length ) > Size )
             {
@@ -97,28 +109,17 @@ namespace Ubiquity.NET.Llvm
 
             unsafe
             {
-                void* startSlice = ( LLVMGetBufferStart( BufferHandle ) + start ).ToPointer( );
+                void* startSlice = ( LLVMGetBufferStart( Handle ) + start ).ToPointer( );
                 return new ReadOnlySpan<byte>( startSlice, length );
             }
         }
 
-        /// <summary>Detaches the underlying buffer from automatic management</summary>
-        /// <remarks>
-        /// This is used when passing the memory buffer to an LLVM object (like <see cref="Ubiquity.NET.Llvm.ObjectFile.TargetBinary"/>
-        /// that takes ownership of the underlying buffer. Any use of the buffer after this point results in
-        /// an <see cref="InvalidOperationException"/>.
-        /// </remarks>
-        public void Detach( )
-        {
-            BufferHandle.SetHandleAsInvalid( );
-        }
-
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
-            bufferHandle.ValidateNotDefault( nameof( bufferHandle ) );
-            BufferHandle = bufferHandle;
+            bufferHandle.ThrowIfInvalid();
+            Handle = bufferHandle.Move();
         }
 
-        internal LLVMMemoryBufferRef BufferHandle { get; }
+        internal LLVMMemoryBufferRef Handle { get; private set; }
     }
 }

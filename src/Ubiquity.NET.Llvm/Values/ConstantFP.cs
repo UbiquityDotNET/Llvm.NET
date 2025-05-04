@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Floating point constant value in LLVM</summary>
@@ -26,7 +22,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public double GetValueWithLoss( out bool loosesInfo )
         {
-            return LLVMConstRealGetDouble( ValueHandle, out loosesInfo );
+            return LLVMConstRealGetDouble( Handle, out loosesInfo );
         }
 
         internal ConstantFP( LLVMValueRef valueRef )

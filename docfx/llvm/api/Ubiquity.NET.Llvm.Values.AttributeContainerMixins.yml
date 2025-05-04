@@ -1,0 +1,1044 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  id: AttributeContainerMixins
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue)
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue})
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind[])
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue[])
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.IAttributeDictionary)
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue},Ubiquity.NET.Llvm.Values.AttributeKind)
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.String)
+  - Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  langs:
+  - csharp
+  - vb
+  name: AttributeContainerMixins
+  nameWithType: AttributeContainerMixins
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AttributeContainerMixins
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 10
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Provides a layer of simplicity and backwards compatibility for manipulating attributes on Values
+  remarks: At some point when Default interface methods are available (proposed for C#8) these methods can leverage that
+  example: []
+  syntax:
+    content: public static class AttributeContainerMixins
+    content.vb: Public Module AttributeContainerMixins
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue},Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue},Ubiquity.NET.Llvm.Values.AttributeKind)
+  id: Contains(System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue},Ubiquity.NET.Llvm.Values.AttributeKind)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: Contains(ICollection<AttributeValue>, AttributeKind)
+  nameWithType: AttributeContainerMixins.Contains(ICollection<AttributeValue>, AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>, Ubiquity.NET.Llvm.Values.AttributeKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Contains
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Determines if a collection of <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref> contains a given <xref href="Ubiquity.NET.Llvm.Values.AttributeKind" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public static bool Contains(this ICollection<AttributeValue> self, AttributeKind kind)
+    parameters:
+    - id: self
+      type: System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}
+      description: Collection to test
+    - id: kind
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+      description: <xref href="Ubiquity.NET.Llvm.Values.AttributeKind" data-throw-if-not-resolved="false"></xref> to search for
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if found
+    content.vb: Public Shared Function Contains(self As ICollection(Of AttributeValue), kind As AttributeKind) As Boolean
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains*
+  nameWithType.vb: AttributeContainerMixins.Contains(ICollection(Of AttributeValue), AttributeKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains(System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue), Ubiquity.NET.Llvm.Values.AttributeKind)
+  name.vb: Contains(ICollection(Of AttributeValue), AttributeKind)
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind[])
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind[])
+  id: AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind[])
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: AddAttributes<T>(T, FunctionAttributeIndex, params AttributeKind[])
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, params AttributeKind[])
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, params Ubiquity.NET.Llvm.Values.AttributeKind[])
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddAttributes
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 30
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds attributes to an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T AddAttributes<T>(this T self, FunctionAttributeIndex index, params AttributeKind[] values) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to add the attributes to
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to add the attributes to
+    - id: values
+      type: Ubiquity.NET.Llvm.Values.AttributeKind[]
+      description: Attributes to add to the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function AddAttributes(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, ParamArray values As AttributeKind()) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes*
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, ParamArray AttributeKind())
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, ParamArray Ubiquity.NET.Llvm.Values.AttributeKind())
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, ParamArray AttributeKind())
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  id: AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: AddAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  nameWithType: AttributeContainerMixins.AddAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.AttributeKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddAttribute
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 60
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds a single <xref href="Ubiquity.NET.Llvm.Values.AttributeKind" data-throw-if-not-resolved="false"></xref> to an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T AddAttribute<T>(this T self, FunctionAttributeIndex index, AttributeKind kind) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to add the attribute to
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to add the attribute to
+    - id: kind
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+      description: Attribute to add to the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function AddAttribute(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, kind As AttributeKind) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute*
+  nameWithType.vb: AttributeContainerMixins.AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.AttributeKind)
+  name.vb: AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue)
+  id: AddAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: AddAttribute<T>(T, FunctionAttributeIndex, AttributeValue)
+  nameWithType: AttributeContainerMixins.AddAttribute<T>(T, FunctionAttributeIndex, AttributeValue)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.AttributeValue)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddAttribute
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 84
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds a single <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref> to an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T AddAttribute<T>(this T self, FunctionAttributeIndex index, AttributeValue attrib) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to add the attribute to
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to add the attribute to
+    - id: attrib
+      type: Ubiquity.NET.Llvm.Values.AttributeValue
+      description: Attribute to add to the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function AddAttribute(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, attrib As AttributeValue) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute*
+  nameWithType.vb: AttributeContainerMixins.AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeValue)
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.AttributeValue)
+  name.vb: AddAttribute(Of T)(T, FunctionAttributeIndex, AttributeValue)
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue[])
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue[])
+  id: AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeValue[])
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: AddAttributes<T>(T, FunctionAttributeIndex, params AttributeValue[])
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, params AttributeValue[])
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, params Ubiquity.NET.Llvm.Values.AttributeValue[])
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddAttributes
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 107
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref>s to an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T AddAttributes<T>(this T self, FunctionAttributeIndex index, params AttributeValue[] attributes) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to add the attribute to
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to add the attributes to
+    - id: attributes
+      type: Ubiquity.NET.Llvm.Values.AttributeValue[]
+      description: Attribute to add to the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function AddAttributes(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, ParamArray attributes As AttributeValue()) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes*
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, ParamArray AttributeValue())
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, ParamArray Ubiquity.NET.Llvm.Values.AttributeValue())
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, ParamArray AttributeValue())
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue})
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue})
+  id: AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue})
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, IEnumerable<AttributeValue>)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Values.AttributeValue>)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddAttributes
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 119
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds <xref href="Ubiquity.NET.Llvm.Values.AttributeValue" data-throw-if-not-resolved="false"></xref>s to an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T AddAttributes<T>(this T self, FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to add the attribute to
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to add the attributes to
+    - id: attributes
+      type: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue}
+      description: Attribute to add to the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function AddAttributes(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, attributes As IEnumerable(Of AttributeValue)) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes*
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Values.AttributeValue))
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, IEnumerable(Of AttributeValue))
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.IAttributeDictionary)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.IAttributeDictionary)
+  id: AddAttributes``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.IAttributeDictionary)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: AddAttributes<T>(T, FunctionAttributeIndex, IAttributeDictionary)
+  nameWithType: AttributeContainerMixins.AddAttributes<T>(T, FunctionAttributeIndex, IAttributeDictionary)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.IAttributeDictionary)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AddAttributes
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 148
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Adds the attributes from and <xref href="Ubiquity.NET.Llvm.Values.IAttributeDictionary" data-throw-if-not-resolved="false"></xref> to an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T AddAttributes<T>(this T self, FunctionAttributeIndex index, IAttributeDictionary attributes) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to add the attributes to
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to add the attributes to
+    - id: attributes
+      type: Ubiquity.NET.Llvm.Values.IAttributeDictionary
+      description: <xref href="Ubiquity.NET.Llvm.Values.IAttributeDictionary" data-throw-if-not-resolved="false"></xref> containing the attributes to add to the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function AddAttributes(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, attributes As IAttributeDictionary) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes*
+  nameWithType.vb: AttributeContainerMixins.AddAttributes(Of T)(T, FunctionAttributeIndex, IAttributeDictionary)
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.IAttributeDictionary)
+  name.vb: AddAttributes(Of T)(T, FunctionAttributeIndex, IAttributeDictionary)
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  id: RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.AttributeKind)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: RemoveAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  nameWithType: AttributeContainerMixins.RemoveAttribute<T>(T, FunctionAttributeIndex, AttributeKind)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.AttributeKind)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RemoveAttribute
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 163
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Removes an <xref href="Ubiquity.NET.Llvm.Values.AttributeKind" data-throw-if-not-resolved="false"></xref> from an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T RemoveAttribute<T>(this T self, FunctionAttributeIndex index, AttributeKind kind) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to remove the attribute from
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to remove the attribute from
+    - id: kind
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+      description: Attribute to remove from the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function RemoveAttribute(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, kind As AttributeKind) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute*
+  nameWithType.vb: AttributeContainerMixins.RemoveAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.AttributeKind)
+  name.vb: RemoveAttribute(Of T)(T, FunctionAttributeIndex, AttributeKind)
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.String)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.String)
+  id: RemoveAttribute``1(``0,Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,System.String)
+  isExtensionMethod: true
+  parent: Ubiquity.NET.Llvm.Values.AttributeContainerMixins
+  langs:
+  - csharp
+  - vb
+  name: RemoveAttribute<T>(T, FunctionAttributeIndex, string)
+  nameWithType: AttributeContainerMixins.RemoveAttribute<T>(T, FunctionAttributeIndex, string)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute<T>(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, string)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: RemoveAttribute
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeContainerMixins.cs
+    startLine: 196
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Removes a named attribute from an <xref href="Ubiquity.NET.Llvm.Values.IAttributeContainer" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: 'public static T RemoveAttribute<T>(this T self, FunctionAttributeIndex index, string name) where T : class, IAttributeContainer'
+    parameters:
+    - id: self
+      type: '{T}'
+      description: Container to remove the attribute from
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref> to remove the attribute from
+    - id: name
+      type: System.String
+      description: Attribute name to remove from the container
+    typeParameters:
+    - id: T
+      description: Container type
+    return:
+      type: '{T}'
+      description: <code class="paramref">self</code> for fluent use
+    content.vb: Public Shared Function RemoveAttribute(Of T As {Class, IAttributeContainer})(self As T, index As FunctionAttributeIndex, name As String) As T
+  overload: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute*
+  nameWithType.vb: AttributeContainerMixins.RemoveAttribute(Of T)(T, FunctionAttributeIndex, String)
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute(Of T)(T, Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, String)
+  name.vb: RemoveAttribute(Of T)(T, FunctionAttributeIndex, String)
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeValue
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  name: AttributeValue
+  nameWithType: AttributeValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeKind
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  name: AttributeKind
+  nameWithType: AttributeKind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains
+  href: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.html#Ubiquity_NET_Llvm_Values_AttributeContainerMixins_Contains_System_Collections_Generic_ICollection_Ubiquity_NET_Llvm_Values_AttributeValue__Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: Contains
+  nameWithType: AttributeContainerMixins.Contains
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.Contains
+- uid: System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}
+  commentId: T:System.Collections.Generic.ICollection{Ubiquity.NET.Llvm.Values.AttributeValue}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.ICollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<AttributeValue>
+  nameWithType: ICollection<AttributeValue>
+  fullName: System.Collections.Generic.ICollection<Ubiquity.NET.Llvm.Values.AttributeValue>
+  nameWithType.vb: ICollection(Of AttributeValue)
+  fullName.vb: System.Collections.Generic.ICollection(Of Ubiquity.NET.Llvm.Values.AttributeValue)
+  name.vb: ICollection(Of AttributeValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.ICollection`1
+  commentId: T:System.Collections.Generic.ICollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<T>
+  nameWithType: ICollection<T>
+  fullName: System.Collections.Generic.ICollection<T>
+  nameWithType.vb: ICollection(Of T)
+  fullName.vb: System.Collections.Generic.ICollection(Of T)
+  name.vb: ICollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Ubiquity.NET.Llvm.Values.IAttributeContainer
+  commentId: T:Ubiquity.NET.Llvm.Values.IAttributeContainer
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.IAttributeContainer.html
+  name: IAttributeContainer
+  nameWithType: IAttributeContainer
+  fullName: Ubiquity.NET.Llvm.Values.IAttributeContainer
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  commentId: T:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  name: FunctionAttributeIndex
+  nameWithType: FunctionAttributeIndex
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes
+  href: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.html#Ubiquity_NET_Llvm_Values_AttributeContainerMixins_AddAttributes__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_Llvm_Values_AttributeKind___
+  name: AddAttributes
+  nameWithType: AttributeContainerMixins.AddAttributes
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttributes
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind[]
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  name: AttributeKind[]
+  nameWithType: AttributeKind[]
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind[]
+  nameWithType.vb: AttributeKind()
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeKind()
+  name.vb: AttributeKind()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeKind
+    name: AttributeKind
+    href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  - name: (
+  - name: )
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute
+  href: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.html#Ubiquity_NET_Llvm_Values_AttributeContainerMixins_AddAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: AddAttribute
+  nameWithType: AttributeContainerMixins.AddAttribute
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.AddAttribute
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue[]
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  name: AttributeValue[]
+  nameWithType: AttributeValue[]
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue[]
+  nameWithType.vb: AttributeValue()
+  fullName.vb: Ubiquity.NET.Llvm.Values.AttributeValue()
+  name.vb: AttributeValue()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue}
+  commentId: T:System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.AttributeValue}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<AttributeValue>
+  nameWithType: IEnumerable<AttributeValue>
+  fullName: System.Collections.Generic.IEnumerable<Ubiquity.NET.Llvm.Values.AttributeValue>
+  nameWithType.vb: IEnumerable(Of AttributeValue)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Values.AttributeValue)
+  name.vb: IEnumerable(Of AttributeValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.IAttributeDictionary
+  commentId: T:Ubiquity.NET.Llvm.Values.IAttributeDictionary
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.IAttributeDictionary.html
+  name: IAttributeDictionary
+  nameWithType: IAttributeDictionary
+  fullName: Ubiquity.NET.Llvm.Values.IAttributeDictionary
+- uid: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute
+  href: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.html#Ubiquity_NET_Llvm_Values_AttributeContainerMixins_RemoveAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_Llvm_Values_AttributeKind_
+  name: RemoveAttribute
+  nameWithType: AttributeContainerMixins.RemoveAttribute
+  fullName: Ubiquity.NET.Llvm.Values.AttributeContainerMixins.RemoveAttribute
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

@@ -1,0 +1,1217 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  id: DISubProgram
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  children:
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes(Ubiquity.NET.Llvm.Values.Function)
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes
+  - Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables
+  langs:
+  - csharp
+  - vb
+  name: DISubProgram
+  nameWithType: DISubProgram
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: DISubProgram
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 10
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Debug information for a SubProgram
+  example: []
+  syntax:
+    content: 'public sealed class DISubProgram : DILocalScope, IEquatable<IrMetadata>'
+    content.vb: Public NotInheritable Class DISubProgram Inherits DILocalScope Implements IEquatable(Of IrMetadata)
+  seealso:
+  - linkType: HRef
+    linkId: xref:llvm_langref#disubprogram
+    altText: xref:llvm_langref#disubprogram
+  inheritance:
+  - System.Object
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata
+  - Ubiquity.NET.Llvm.Metadata.MDNode
+  - Ubiquity.NET.Llvm.DebugInfo.DINode
+  - Ubiquity.NET.Llvm.DebugInfo.DIScope
+  - Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  inheritedMembers:
+  - Ubiquity.NET.Llvm.DebugInfo.DILocalScope.LocalScope
+  - Ubiquity.NET.Llvm.DebugInfo.DILocalScope.SubProgram
+  - Ubiquity.NET.Llvm.DebugInfo.DILocalScope.FirstNonLexicalBlockFileScope
+  - Ubiquity.NET.Llvm.DebugInfo.DIScope.File
+  - Ubiquity.NET.Llvm.DebugInfo.DIScope.Scope
+  - Ubiquity.NET.Llvm.DebugInfo.DINode.Tag
+  - Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  - Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  - Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  - Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  - Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+  - Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  - Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line
+  id: Line
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: Line
+  nameWithType: DISubProgram.Line
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Line
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the source line associated with this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public uint Line { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public ReadOnly Property Line As UInteger
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name
+  id: Name
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: DISubProgram.Name
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Name
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 28
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the name of this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public override string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property Name As String
+  overridden: Ubiquity.NET.Llvm.DebugInfo.DIScope.Name
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName
+  id: LinkageName
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: LinkageName
+  nameWithType: DISubProgram.LinkageName
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: LinkageName
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 31
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the linkage name of this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public string LinkageName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property LinkageName As String
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature
+  id: Signature
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: Signature
+  nameWithType: DISubProgram.Signature
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Signature
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 34
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the signature of this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public DISubroutineType Signature { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DISubroutineType
+    content.vb: Public ReadOnly Property Signature As DISubroutineType
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit
+  id: CompileUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: CompileUnit
+  nameWithType: DISubProgram.CompileUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: CompileUnit
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the <xref href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit" data-throw-if-not-resolved="false"></xref> that contains this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public DICompileUnit CompileUnit { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DICompileUnit
+    content.vb: Public ReadOnly Property CompileUnit As DICompileUnit
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration
+  id: Declaration
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: Declaration
+  nameWithType: DISubProgram.Declaration
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Declaration
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 42
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref> that declares this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public DISubProgram Declaration { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+    content.vb: Public ReadOnly Property Declaration As DISubProgram
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables
+  id: Variables
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: Variables
+  nameWithType: DISubProgram.Variables
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Variables
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 45
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the variables of this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public DILocalVariableArray Variables { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+    content.vb: Public ReadOnly Property Variables As DILocalVariableArray
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType
+  id: ContainingType
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: ContainingType
+  nameWithType: DISubProgram.ContainingType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ContainingType
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 48
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the type that contains this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>, if any
+  example: []
+  syntax:
+    content: public DIType? ContainingType { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DIType
+    content.vb: Public ReadOnly Property ContainingType As DIType
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams
+  id: TemplateParams
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: TemplateParams
+  nameWithType: DISubProgram.TemplateParams
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TemplateParams
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 51
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the template parameters of this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref>, if any
+  example: []
+  syntax:
+    content: public DITemplateParameterArray? TemplateParams { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DITemplateParameterArray
+    content.vb: Public ReadOnly Property TemplateParams As DITemplateParameterArray
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes
+  id: ThrownTypes
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: ThrownTypes
+  nameWithType: DISubProgram.ThrownTypes
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ThrownTypes
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 55
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Gets the exception types this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref> can throw
+  example: []
+  syntax:
+    content: public DITypeArray? ThrownTypes { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.DebugInfo.DITypeArray
+    content.vb: Public ReadOnly Property ThrownTypes As DITypeArray
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes*
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes(Ubiquity.NET.Llvm.Values.Function)
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes(Ubiquity.NET.Llvm.Values.Function)
+  id: Describes(Ubiquity.NET.Llvm.Values.Function)
+  parent: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  langs:
+  - csharp
+  - vb
+  name: Describes(Function)
+  nameWithType: DISubProgram.Describes(Function)
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes(Ubiquity.NET.Llvm.Values.Function)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Describes
+    path: ../src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs
+    startLine: 63
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.DebugInfo
+  summary: Determines if this instance describes a given <xref href="Ubiquity.NET.Llvm.Values.Function" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public bool Describes(Function function)
+    parameters:
+    - id: function
+      type: Ubiquity.NET.Llvm.Values.Function
+      description: <xref href="Ubiquity.NET.Llvm.Values.Function" data-throw-if-not-resolved="false"></xref> to test
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if this <xref href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" data-throw-if-not-resolved="false"></xref> describes <code class="paramref">function</code>
+    content.vb: Public Function Describes([function] As [Function]) As Boolean
+  overload: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes*
+references:
+- uid: Ubiquity.NET.Llvm.DebugInfo
+  commentId: N:Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.DebugInfo
+  nameWithType: Ubiquity.NET.Llvm.DebugInfo
+  fullName: Ubiquity.NET.Llvm.DebugInfo
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.DebugInfo
+    name: DebugInfo
+    href: Ubiquity.NET.Llvm.DebugInfo.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  commentId: T:Ubiquity.NET.Llvm.Metadata.IrMetadata
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  name: IrMetadata
+  nameWithType: IrMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode
+  commentId: T:Ubiquity.NET.Llvm.Metadata.MDNode
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html
+  name: MDNode
+  nameWithType: MDNode
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode
+- uid: Ubiquity.NET.Llvm.DebugInfo.DINode
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DINode
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DINode.html
+  name: DINode
+  nameWithType: DINode
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DINode
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIScope
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIScope
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIScope.html
+  name: DIScope
+  nameWithType: DIScope
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIScope
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.html
+  name: DILocalScope
+  nameWithType: DILocalScope
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Metadata.IrMetadata}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<IrMetadata>
+  nameWithType: IEquatable<IrMetadata>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Metadata.IrMetadata>
+  nameWithType.vb: IEquatable(Of IrMetadata)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  name.vb: IEquatable(Of IrMetadata)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.LocalScope
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DILocalScope.LocalScope
+  parent: Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+  href: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.html#Ubiquity_NET_Llvm_DebugInfo_DILocalScope_LocalScope
+  name: LocalScope
+  nameWithType: DILocalScope.LocalScope
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.LocalScope
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.SubProgram
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DILocalScope.SubProgram
+  parent: Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+  href: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.html#Ubiquity_NET_Llvm_DebugInfo_DILocalScope_SubProgram
+  name: SubProgram
+  nameWithType: DILocalScope.SubProgram
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.SubProgram
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.FirstNonLexicalBlockFileScope
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DILocalScope.FirstNonLexicalBlockFileScope
+  parent: Ubiquity.NET.Llvm.DebugInfo.DILocalScope
+  href: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.html#Ubiquity_NET_Llvm_DebugInfo_DILocalScope_FirstNonLexicalBlockFileScope
+  name: FirstNonLexicalBlockFileScope
+  nameWithType: DILocalScope.FirstNonLexicalBlockFileScope
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalScope.FirstNonLexicalBlockFileScope
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIScope.File
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DIScope.File
+  parent: Ubiquity.NET.Llvm.DebugInfo.DIScope
+  href: Ubiquity.NET.Llvm.DebugInfo.DIScope.html#Ubiquity_NET_Llvm_DebugInfo_DIScope_File
+  name: File
+  nameWithType: DIScope.File
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIScope.File
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIScope.Scope
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DIScope.Scope
+  parent: Ubiquity.NET.Llvm.DebugInfo.DIScope
+  href: Ubiquity.NET.Llvm.DebugInfo.DIScope.html#Ubiquity_NET_Llvm_DebugInfo_DIScope_Scope
+  name: Scope
+  nameWithType: DIScope.Scope
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIScope.Scope
+- uid: Ubiquity.NET.Llvm.DebugInfo.DINode.Tag
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DINode.Tag
+  parent: Ubiquity.NET.Llvm.DebugInfo.DINode
+  href: Ubiquity.NET.Llvm.DebugInfo.DINode.html#Ubiquity_NET_Llvm_DebugInfo_DINode_Tag
+  name: Tag
+  nameWithType: DINode.Tag
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DINode.Tag
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.Context
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_Context
+  name: Context
+  nameWithType: MDNode.Context
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Context
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDeleted
+  name: IsDeleted
+  nameWithType: MDNode.IsDeleted
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsTemporary
+  name: IsTemporary
+  nameWithType: MDNode.IsTemporary
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsResolved
+  name: IsResolved
+  nameWithType: MDNode.IsResolved
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsUniqued
+  name: IsUniqued
+  nameWithType: MDNode.IsUniqued
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDistinct
+  name: IsDistinct
+  nameWithType: MDNode.IsDistinct
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  commentId: P:Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_Operands
+  name: Operands
+  nameWithType: MDNode.Operands
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.Operands
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: ReplaceAllUsesWith(IrMetadata)
+  nameWithType: MDNode.ReplaceAllUsesWith(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: ReplaceAllUsesWith
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperand__1_System_Int32_
+  name: GetOperand<T>(int)
+  nameWithType: MDNode.GetOperand<T>(int)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand<T>(int)
+  nameWithType.vb: MDNode.GetOperand(Of T)(Integer)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand(Of T)(Integer)
+  name.vb: GetOperand(Of T)(Integer)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+    name: GetOperand
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperand__1_System_Int32_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand``1(System.Int32)
+    name: GetOperand
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperand__1_System_Int32_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+  parent: Ubiquity.NET.Llvm.Metadata.MDNode
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperandString_System_Int32_
+  name: GetOperandString(int)
+  nameWithType: MDNode.GetOperandString(int)
+  fullName: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(int)
+  nameWithType.vb: MDNode.GetOperandString(Integer)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(Integer)
+  name.vb: GetOperandString(Integer)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+    name: GetOperandString
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperandString_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString(System.Int32)
+    name: GetOperandString
+    href: Ubiquity.NET.Llvm.Metadata.MDNode.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperandString_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  name: ToString()
+  nameWithType: IrMetadata.ToString()
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString
+    name: ToString
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  name: Equals(IrMetadata)
+  nameWithType: IrMetadata.Equals(IrMetadata)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Ubiquity.NET.Llvm.Metadata.IrMetadata)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_
+  - name: (
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+    name: IrMetadata
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  isExternal: true
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  name: Equals(object)
+  nameWithType: IrMetadata.Equals(object)
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(object)
+  nameWithType.vb: IrMetadata.Equals(Object)
+  fullName.vb: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals(System.Object)
+    name: Equals
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  commentId: M:Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  name: GetHashCode()
+  nameWithType: IrMetadata.GetHashCode()
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode()
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode
+    name: GetHashCode
+    href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  commentId: P:Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+  parent: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Kind
+  name: Kind
+  nameWithType: IrMetadata.Kind
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html
+  name: DISubProgram
+  nameWithType: DISubProgram
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Line
+  name: Line
+  nameWithType: DISubProgram.Line
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIScope.Name
+  commentId: P:Ubiquity.NET.Llvm.DebugInfo.DIScope.Name
+  parent: Ubiquity.NET.Llvm.DebugInfo.DIScope
+  href: Ubiquity.NET.Llvm.DebugInfo.DIScope.html#Ubiquity_NET_Llvm_DebugInfo_DIScope_Name
+  name: Name
+  nameWithType: DIScope.Name
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIScope.Name
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Name
+  name: Name
+  nameWithType: DISubProgram.Name
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_LinkageName
+  name: LinkageName
+  nameWithType: DISubProgram.LinkageName
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Signature
+  name: Signature
+  nameWithType: DISubProgram.Signature
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubroutineType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DISubroutineType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html
+  name: DISubroutineType
+  nameWithType: DISubroutineType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubroutineType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DICompileUnit
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DICompileUnit
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html
+  name: DICompileUnit
+  nameWithType: DICompileUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DICompileUnit
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_CompileUnit
+  name: CompileUnit
+  nameWithType: DISubProgram.CompileUnit
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Declaration
+  name: Declaration
+  nameWithType: DISubProgram.Declaration
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Variables
+  name: Variables
+  nameWithType: DISubProgram.Variables
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables
+- uid: Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray.html
+  name: DILocalVariableArray
+  nameWithType: DILocalVariableArray
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DILocalVariableArray
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_ContainingType
+  name: ContainingType
+  nameWithType: DISubProgram.ContainingType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DIType
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DIType
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DIType.html
+  name: DIType
+  nameWithType: DIType
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DIType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_TemplateParams
+  name: TemplateParams
+  nameWithType: DISubProgram.TemplateParams
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams
+- uid: Ubiquity.NET.Llvm.DebugInfo.DITemplateParameterArray
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DITemplateParameterArray
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DITemplateParameterArray.html
+  name: DITemplateParameterArray
+  nameWithType: DITemplateParameterArray
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DITemplateParameterArray
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_ThrownTypes
+  name: ThrownTypes
+  nameWithType: DISubProgram.ThrownTypes
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes
+- uid: Ubiquity.NET.Llvm.DebugInfo.DITypeArray
+  commentId: T:Ubiquity.NET.Llvm.DebugInfo.DITypeArray
+  parent: Ubiquity.NET.Llvm.DebugInfo
+  href: Ubiquity.NET.Llvm.DebugInfo.DITypeArray.html
+  name: DITypeArray
+  nameWithType: DITypeArray
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DITypeArray
+- uid: Ubiquity.NET.Llvm.Values.Function
+  commentId: T:Ubiquity.NET.Llvm.Values.Function
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Function.html
+  name: Function
+  nameWithType: Function
+  fullName: Ubiquity.NET.Llvm.Values.Function
+- uid: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes*
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes
+  href: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Describes_Ubiquity_NET_Llvm_Values_Function_
+  name: Describes
+  nameWithType: DISubProgram.Describes
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html

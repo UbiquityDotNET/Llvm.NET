@@ -1,0 +1,871 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeValue
+  id: AttributeValue
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.AttributeValue.Id
+  - Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue
+  - Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum
+  - Ubiquity.NET.Llvm.Values.AttributeValue.IsString
+  - Ubiquity.NET.Llvm.Values.AttributeValue.IsType
+  - Ubiquity.NET.Llvm.Values.AttributeValue.Name
+  - Ubiquity.NET.Llvm.Values.AttributeValue.StringValue
+  - Ubiquity.NET.Llvm.Values.AttributeValue.ToString
+  - Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue
+  - Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.Value)
+  langs:
+  - csharp
+  - vb
+  name: AttributeValue
+  nameWithType: AttributeValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue
+  type: Struct
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: AttributeValue
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 16
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Single attribute for functions, function returns and function parameters
+  remarks: >-
+    This is the equivalent to the underlying llvm::AttributeImpl class. The name was changed to
+
+    AttributeValue in .NET to prevent confusion with the standard <xref href="System.Attribute" data-throw-if-not-resolved="false"></xref> class
+
+    that is used throughout .NET libraries.
+  example: []
+  syntax:
+    content: 'public readonly record struct AttributeValue : IEquatable<AttributeValue>'
+    content.vb: Public Structure AttributeValue Implements IEquatable(Of AttributeValue)
+  implements:
+  - System.IEquatable{Ubiquity.NET.Llvm.Values.AttributeValue}
+  inheritedMembers:
+  - System.ValueType.Equals(System.Object)
+  - System.ValueType.GetHashCode
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.Id
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.Id
+  id: Id
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: AttributeValue.Id
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.Id
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Id
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 25
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the kind of the attribute
+  remarks: >-
+    The ID is unique for the current runtime but is NOT guaranteed stable across runtime or LLVM version (even minor patches really).
+
+    Applications **MUST NOT*** assume these values have any consistency beyond the current run and should NOT persist them. Additionally,
+
+    string attributes have NO id.
+  example: []
+  syntax:
+    content: public AttributeKind Id { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Values.AttributeKind
+      description: The unique ID for the named attribute
+    content.vb: Public ReadOnly Property Id As AttributeKind
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.Id*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.Name
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.Name
+  id: Name
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: AttributeValue.Name
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.Name
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Name
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 30
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the Name of the attribute
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.Name*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.StringValue
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.StringValue
+  id: StringValue
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: StringValue
+  nameWithType: AttributeValue.StringValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.StringValue
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: StringValue
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 37
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the value for named attributes with values
+  example: []
+  syntax:
+    content: public string? StringValue { get; }
+    parameters: []
+    return:
+      type: System.String
+      description: The value as a string or <see lang="null"></see> if the attribute has no value
+    content.vb: Public ReadOnly Property StringValue As String
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.StringValue*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue
+  id: IntegerValue
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: IntegerValue
+  nameWithType: AttributeValue.IntegerValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IntegerValue
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 40
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the Integer value of the attribute or 0 if the attribute doesn't have a value
+  example: []
+  syntax:
+    content: public ulong IntegerValue { get; }
+    parameters: []
+    return:
+      type: System.UInt64
+    content.vb: Public ReadOnly Property IntegerValue As ULong
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue
+  id: TypeValue
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: TypeValue
+  nameWithType: AttributeValue.TypeValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: TypeValue
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 43
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the Type value of this attribute, if any
+  example: []
+  syntax:
+    content: public ITypeRef? TypeValue { get; }
+    parameters: []
+    return:
+      type: Ubiquity.NET.Llvm.Types.ITypeRef
+    content.vb: Public ReadOnly Property TypeValue As ITypeRef
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IsString
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.IsString
+  id: IsString
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: IsString
+  nameWithType: AttributeValue.IsString
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IsString
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsString
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 46
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets a value indicating whether this attribute is a target specific string value
+  example: []
+  syntax:
+    content: public bool IsString { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsString As Boolean
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.IsString*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum
+  id: IsEnum
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: IsEnum
+  nameWithType: AttributeValue.IsEnum
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsEnum
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 49
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets a value indicating whether this attribute is a simple enumeration value
+  example: []
+  syntax:
+    content: public bool IsEnum { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsEnum As Boolean
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IsType
+  commentId: P:Ubiquity.NET.Llvm.Values.AttributeValue.IsType
+  id: IsType
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: IsType
+  nameWithType: AttributeValue.IsType
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IsType
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: IsType
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 52
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets a value indicating whether this attribute has a type value
+  example: []
+  syntax:
+    content: public bool IsType { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsType As Boolean
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.IsType*
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.Value)
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.Value)
+  id: VerifyValidOn(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex,Ubiquity.NET.Llvm.Values.Value)
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: VerifyValidOn(FunctionAttributeIndex, Value)
+  nameWithType: AttributeValue.VerifyValidOn(FunctionAttributeIndex, Value)
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn(Ubiquity.NET.Llvm.Values.FunctionAttributeIndex, Ubiquity.NET.Llvm.Values.Value)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: VerifyValidOn
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 58
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Verifies the attribute is valid for a <xref href="Ubiquity.NET.Llvm.Values.Value" data-throw-if-not-resolved="false"></xref> on a given <xref href="Ubiquity.NET.Llvm.Values.FunctionAttributeIndex" data-throw-if-not-resolved="false"></xref>
+  example: []
+  syntax:
+    content: public void VerifyValidOn(FunctionAttributeIndex index, Value value)
+    parameters:
+    - id: index
+      type: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+      description: Index to verify
+    - id: value
+      type: Ubiquity.NET.Llvm.Values.Value
+      description: Value to check this attribute on
+    content.vb: Public Sub VerifyValidOn(index As FunctionAttributeIndex, value As Value)
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The attribute is not valid on <code class="paramref">value</code> for the <code class="paramref">index</code>
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.ToString
+  commentId: M:Ubiquity.NET.Llvm.Values.AttributeValue.ToString
+  id: ToString
+  parent: Ubiquity.NET.Llvm.Values.AttributeValue
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: AttributeValue.ToString()
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ToString
+    path: ../src/Ubiquity.NET.Llvm/Values/AttributeValue.cs
+    startLine: 80
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets a string representation of the attribute
+  example: []
+  syntax:
+    content: public override string? ToString()
+    return:
+      type: System.String
+      description: Attribute as a string
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Ubiquity.NET.Llvm.Values.AttributeValue.ToString*
+references:
+- uid: System.Attribute
+  commentId: T:System.Attribute
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.attribute
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: System.IEquatable{Ubiquity.NET.Llvm.Values.AttributeValue}
+  commentId: T:System.IEquatable{Ubiquity.NET.Llvm.Values.AttributeValue}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<AttributeValue>
+  nameWithType: IEquatable<AttributeValue>
+  fullName: System.IEquatable<Ubiquity.NET.Llvm.Values.AttributeValue>
+  nameWithType.vb: IEquatable(Of AttributeValue)
+  fullName.vb: System.IEquatable(Of Ubiquity.NET.Llvm.Values.AttributeValue)
+  name.vb: IEquatable(Of AttributeValue)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Ubiquity.NET.Llvm.Values.AttributeValue
+    name: AttributeValue
+    href: Ubiquity.NET.Llvm.Values.AttributeValue.html
+  - name: )
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.equals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.Id*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.Id
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_Id
+  name: Id
+  nameWithType: AttributeValue.Id
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.Id
+- uid: Ubiquity.NET.Llvm.Values.AttributeKind
+  commentId: T:Ubiquity.NET.Llvm.Values.AttributeKind
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.AttributeKind.html
+  name: AttributeKind
+  nameWithType: AttributeKind
+  fullName: Ubiquity.NET.Llvm.Values.AttributeKind
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.Name*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.Name
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_Name
+  name: Name
+  nameWithType: AttributeValue.Name
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.StringValue*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.StringValue
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_StringValue
+  name: StringValue
+  nameWithType: AttributeValue.StringValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.StringValue
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_IntegerValue
+  name: IntegerValue
+  nameWithType: AttributeValue.IntegerValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IntegerValue
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint64
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_TypeValue
+  name: TypeValue
+  nameWithType: AttributeValue.TypeValue
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.TypeValue
+- uid: Ubiquity.NET.Llvm.Types.ITypeRef
+  commentId: T:Ubiquity.NET.Llvm.Types.ITypeRef
+  parent: Ubiquity.NET.Llvm.Types
+  href: Ubiquity.NET.Llvm.Types.ITypeRef.html
+  name: ITypeRef
+  nameWithType: ITypeRef
+  fullName: Ubiquity.NET.Llvm.Types.ITypeRef
+- uid: Ubiquity.NET.Llvm.Types
+  commentId: N:Ubiquity.NET.Llvm.Types
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Types
+  nameWithType: Ubiquity.NET.Llvm.Types
+  fullName: Ubiquity.NET.Llvm.Types
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Types
+    name: Types
+    href: Ubiquity.NET.Llvm.Types.html
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IsString*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.IsString
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_IsString
+  name: IsString
+  nameWithType: AttributeValue.IsString
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IsString
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_IsEnum
+  name: IsEnum
+  nameWithType: AttributeValue.IsEnum
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IsEnum
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.IsType*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.IsType
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_IsType
+  name: IsType
+  nameWithType: AttributeValue.IsType
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.IsType
+- uid: Ubiquity.NET.Llvm.Values.Value
+  commentId: T:Ubiquity.NET.Llvm.Values.Value
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.Value.html
+  name: Value
+  nameWithType: Value
+  fullName: Ubiquity.NET.Llvm.Values.Value
+- uid: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  commentId: T:Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+  parent: Ubiquity.NET.Llvm.Values
+  href: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex.html
+  name: FunctionAttributeIndex
+  nameWithType: FunctionAttributeIndex
+  fullName: Ubiquity.NET.Llvm.Values.FunctionAttributeIndex
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_VerifyValidOn_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_Llvm_Values_Value_
+  name: VerifyValidOn
+  nameWithType: AttributeValue.VerifyValidOn
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.VerifyValidOn
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.AttributeValue.ToString*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.AttributeValue.ToString
+  href: Ubiquity.NET.Llvm.Values.AttributeValue.html#Ubiquity_NET_Llvm_Values_AttributeValue_ToString
+  name: ToString
+  nameWithType: AttributeValue.ToString
+  fullName: Ubiquity.NET.Llvm.Values.AttributeValue.ToString

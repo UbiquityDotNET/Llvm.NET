@@ -4,11 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Tuple of Metadata nodes</summary>
+    /// <summary>Tuple of IrMetadata nodes</summary>
     /// <remarks>
     /// This acts as a container of nodes in the metadata hierarchy
     /// </remarks>

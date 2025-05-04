@@ -1,0 +1,1161 @@
+### YamlMime:ManagedReference
+items:
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  commentId: T:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  id: ValueOperandListCollection`1
+  parent: Ubiquity.NET.Llvm.Values
+  children:
+  - Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains(`0)
+  - Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  - Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  - Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand``1(System.Index)
+  - Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ValueOperandListCollection<T>
+  nameWithType: ValueOperandListCollection<T>
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>
+  type: Class
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: ValueOperandListCollection
+    path: ../src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+    startLine: 15
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Support class to provide read/update semantics to the operands of a container element
+  remarks: >-
+    This class is used to implement Operand lists of elements including sub lists based on an offset.
+
+    The latter case is useful for types that expose some fixed set of operands as properties and some
+
+    arbitrary number of additional items as operands.
+  example: []
+  syntax:
+    content: 'public sealed class ValueOperandListCollection<T> : IOperandCollection<T?>, IReadOnlyCollection<T?>, IEnumerable<T?>, IEnumerable where T : Value'
+    typeParameters:
+    - id: T
+      description: Type of elements in the collection
+    content.vb: Public NotInheritable Class ValueOperandListCollection(Of T As Value) Implements IOperandCollection(Of T), IReadOnlyCollection(Of T), IEnumerable(Of T), IEnumerable
+  inheritance:
+  - System.Object
+  implements:
+  - Ubiquity.NET.Llvm.IOperandCollection{{T}}
+  - System.Collections.Generic.IReadOnlyCollection{{T}}
+  - System.Collections.Generic.IEnumerable{{T}}
+  - System.Collections.IEnumerable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  nameWithType.vb: ValueOperandListCollection(Of T)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T)
+  name.vb: ValueOperandListCollection(Of T)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item(System.Int32)
+  commentId: P:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item(System.Int32)
+  id: Item(System.Int32)
+  parent: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  langs:
+  - csharp
+  - vb
+  name: this[int]
+  nameWithType: ValueOperandListCollection<T>.this[int]
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.this[int]
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: this[]
+    path: ../src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+    startLine: 23
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the operand at the specified index
+  example: []
+  syntax:
+    content: public T? this[int index] { get; set; }
+    parameters:
+    - id: index
+      type: System.Int32
+      description: Index of the operand to receive
+    return:
+      type: '{T}'
+      description: Item at the specified index
+    content.vb: Public Default Property this[](index As Integer) As T
+  overload: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code class="paramref">index</code> is out of range for this collection
+  implements:
+  - Ubiquity.NET.Llvm.IOperandCollection{{T}}.Item(System.Int32)
+  nameWithType.vb: ValueOperandListCollection(Of T).this[](Integer)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).this[](Integer)
+  name.vb: this[](Integer)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  commentId: P:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  id: Count
+  parent: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: ValueOperandListCollection<T>.Count
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Count
+  type: Property
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Count
+    path: ../src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+    startLine: 34
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets the count of operands in this collection
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count*
+  implements:
+  - System.Collections.Generic.IReadOnlyCollection{{T}}.Count
+  nameWithType.vb: ValueOperandListCollection(Of T).Count
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Count
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  id: GetEnumerator
+  parent: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  langs:
+  - csharp
+  - vb
+  name: GetEnumerator()
+  nameWithType: ValueOperandListCollection<T>.GetEnumerator()
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetEnumerator()
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetEnumerator
+    path: ../src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+    startLine: 38
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets an enumerator for this collection
+  example: []
+  syntax:
+    content: public IEnumerator<T?> GetEnumerator()
+    return:
+      type: System.Collections.Generic.IEnumerator{{T}}
+      description: Enumerator for the operands in this collection
+    content.vb: Public Function GetEnumerator() As IEnumerator(Of T)
+  overload: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator*
+  implements:
+  - System.Collections.Generic.IEnumerable{{T}}.GetEnumerator
+  nameWithType.vb: ValueOperandListCollection(Of T).GetEnumerator()
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetEnumerator()
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains(`0)
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains(`0)
+  id: Contains(`0)
+  parent: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  langs:
+  - csharp
+  - vb
+  name: Contains(T?)
+  nameWithType: ValueOperandListCollection<T>.Contains(T?)
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Contains(T?)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: Contains
+    path: ../src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+    startLine: 57
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Gets a value indicating whether the collection contains the specified item or not
+  example: []
+  syntax:
+    content: public bool Contains(T? item)
+    parameters:
+    - id: item
+      type: '{T}'
+      description: Item to look for
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the item is found
+    content.vb: Public Function Contains(item As T) As Boolean
+  overload: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains*
+  implements:
+  - Ubiquity.NET.Llvm.IOperandCollection{{T}}.Contains({T})
+  nameWithType.vb: ValueOperandListCollection(Of T).Contains(T)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Contains(T)
+  name.vb: Contains(T)
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand``1(System.Index)
+  commentId: M:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand``1(System.Index)
+  id: GetOperand``1(System.Index)
+  parent: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1
+  langs:
+  - csharp
+  - vb
+  name: GetOperand<TItem>(Index)
+  nameWithType: ValueOperandListCollection<T>.GetOperand<TItem>(Index)
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetOperand<TItem>(System.Index)
+  type: Method
+  source:
+    remote:
+      path: src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+      branch: LLVM20
+      repo: https://github.com/smaillet/Llvm.NET.git
+    id: GetOperand
+    path: ../src/Ubiquity.NET.Llvm/Values/ValueOperandListCollection.cs
+    startLine: 66
+  assemblies:
+  - Ubiquity.NET.Llvm
+  namespace: Ubiquity.NET.Llvm.Values
+  summary: Specialized indexer to get the element as a specific derived type
+  remarks: This provides a common (and likely internally optimized) means of getting an element as a specific type
+  example: []
+  syntax:
+    content: 'public TItem? GetOperand<TItem>(Index i) where TItem : T'
+    parameters:
+    - id: i
+      type: System.Index
+      description: index for the item
+    typeParameters:
+    - id: TItem
+      description: Type of the element (must be derived from <xref href="Ubiquity.NET.Llvm.Metadata.IrMetadata" data-throw-if-not-resolved="false"></xref>
+    return:
+      type: '{TItem}'
+      description: Item at the specified index
+    content.vb: Public Function GetOperand(Of TItem As T)(i As Index) As TItem
+  overload: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: index is out of range for the collection
+  - type: System.InvalidCastException
+    commentId: T:System.InvalidCastException
+    description: If the element at the index is not castable to <code class="typeparamref">TItem</code>
+  nameWithType.vb: ValueOperandListCollection(Of T).GetOperand(Of TItem)(Index)
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetOperand(Of TItem)(System.Index)
+  name.vb: GetOperand(Of TItem)(Index)
+references:
+- uid: Ubiquity.NET.Llvm.Values
+  commentId: N:Ubiquity.NET.Llvm.Values
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Values
+  nameWithType: Ubiquity.NET.Llvm.Values
+  fullName: Ubiquity.NET.Llvm.Values
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Values
+    name: Values
+    href: Ubiquity.NET.Llvm.Values.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Ubiquity.NET.Llvm.IOperandCollection{{T}}
+  commentId: T:Ubiquity.NET.Llvm.IOperandCollection{`0}
+  parent: Ubiquity.NET.Llvm
+  definition: Ubiquity.NET.Llvm.IOperandCollection`1
+  href: Ubiquity.NET.Llvm.IOperandCollection-1.html
+  name: IOperandCollection<T>
+  nameWithType: IOperandCollection<T>
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>
+  nameWithType.vb: IOperandCollection(Of T)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T)
+  name.vb: IOperandCollection(Of T)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1
+    name: IOperandCollection
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1
+    name: IOperandCollection
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection{{T}}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{{T}}
+  commentId: T:System.Collections.Generic.IEnumerable{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.IEnumerable
+  commentId: T:System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1
+  commentId: T:Ubiquity.NET.Llvm.IOperandCollection`1
+  parent: Ubiquity.NET.Llvm
+  href: Ubiquity.NET.Llvm.IOperandCollection-1.html
+  name: IOperandCollection<T>
+  nameWithType: IOperandCollection<T>
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>
+  nameWithType.vb: IOperandCollection(Of T)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T)
+  name.vb: IOperandCollection(Of T)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1
+    name: IOperandCollection
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1
+    name: IOperandCollection
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm
+  commentId: N:Ubiquity.NET.Llvm
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm
+  nameWithType: Ubiquity.NET.Llvm
+  fullName: Ubiquity.NET.Llvm
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Item
+  href: Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_Item_System_Int32_
+  name: this
+  nameWithType: ValueOperandListCollection<T>.this
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.this
+  nameWithType.vb: ValueOperandListCollection(Of T).this[]
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).this[]
+  name.vb: this[]
+- uid: Ubiquity.NET.Llvm.IOperandCollection{{T}}.Item(System.Int32)
+  commentId: P:Ubiquity.NET.Llvm.IOperandCollection{`0}.Item(System.Int32)
+  parent: Ubiquity.NET.Llvm.IOperandCollection{{T}}
+  definition: Ubiquity.NET.Llvm.IOperandCollection`1.Item(System.Int32)
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: IOperandCollection<T>.this[int]
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.this[int]
+  nameWithType.vb: IOperandCollection(Of T).this[](Integer)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection{`0}.Item(System.Int32)
+    name: this[]
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Item_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Item(System.Int32)
+  commentId: P:Ubiquity.NET.Llvm.IOperandCollection`1.Item(System.Int32)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: IOperandCollection<T>.this[int]
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.this[int]
+  nameWithType.vb: IOperandCollection(Of T).this[](Integer)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1.Item(System.Int32)
+    name: this[]
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Item_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Count
+  href: Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_Count
+  name: Count
+  nameWithType: ValueOperandListCollection<T>.Count
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Count
+  nameWithType.vb: ValueOperandListCollection(Of T).Count
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Count
+- uid: System.Collections.Generic.IReadOnlyCollection{{T}}.Count
+  commentId: P:System.Collections.Generic.IReadOnlyCollection{`0}.Count
+  parent: System.Collections.Generic.IReadOnlyCollection{{T}}
+  definition: System.Collections.Generic.IReadOnlyCollection`1.Count
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1.count
+  name: Count
+  nameWithType: IReadOnlyCollection<T>.Count
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>.Count
+  nameWithType.vb: IReadOnlyCollection(Of T).Count
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T).Count
+- uid: System.Collections.Generic.IReadOnlyCollection`1.Count
+  commentId: P:System.Collections.Generic.IReadOnlyCollection`1.Count
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1.count
+  name: Count
+  nameWithType: IReadOnlyCollection<T>.Count
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>.Count
+  nameWithType.vb: IReadOnlyCollection(Of T).Count
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T).Count
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetEnumerator
+  href: Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_GetEnumerator
+  name: GetEnumerator
+  nameWithType: ValueOperandListCollection<T>.GetEnumerator
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetEnumerator
+  nameWithType.vb: ValueOperandListCollection(Of T).GetEnumerator
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetEnumerator
+- uid: System.Collections.Generic.IEnumerable{{T}}.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable{`0}.GetEnumerator
+  parent: System.Collections.Generic.IEnumerable{{T}}
+  definition: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<T>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of T).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable{`0}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable{`0}.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator{{T}}
+  commentId: T:System.Collections.Generic.IEnumerator{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerator`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+  nameWithType.vb: IEnumerator(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
+  name.vb: IEnumerator(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+  commentId: M:System.Collections.Generic.IEnumerable`1.GetEnumerator
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  name: GetEnumerator()
+  nameWithType: IEnumerable<T>.GetEnumerator()
+  fullName: System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+  nameWithType.vb: IEnumerable(Of T).GetEnumerator()
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T).GetEnumerator()
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1.GetEnumerator
+    name: GetEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1.getenumerator
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerator`1
+  commentId: T:System.Collections.Generic.IEnumerator`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+  nameWithType.vb: IEnumerator(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerator(Of T)
+  name.vb: IEnumerator(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.Contains
+  href: Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_Contains__0_
+  name: Contains
+  nameWithType: ValueOperandListCollection<T>.Contains
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.Contains
+  nameWithType.vb: ValueOperandListCollection(Of T).Contains
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).Contains
+- uid: Ubiquity.NET.Llvm.IOperandCollection{{T}}.Contains({T})
+  commentId: M:Ubiquity.NET.Llvm.IOperandCollection{`0}.Contains(`0)
+  parent: Ubiquity.NET.Llvm.IOperandCollection{{T}}
+  definition: Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+  href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  name: Contains(T)
+  nameWithType: IOperandCollection<T>.Contains(T)
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Contains(T)
+  nameWithType.vb: IOperandCollection(Of T).Contains(T)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Contains(T)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection{`0}.Contains(`0)
+    name: Contains
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection{`0}.Contains(`0)
+    name: Contains
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+  commentId: M:Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+  href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  name: Contains(T)
+  nameWithType: IOperandCollection<T>.Contains(T)
+  fullName: Ubiquity.NET.Llvm.IOperandCollection<T>.Contains(T)
+  nameWithType.vb: IOperandCollection(Of T).Contains(T)
+  fullName.vb: Ubiquity.NET.Llvm.IOperandCollection(Of T).Contains(T)
+  spec.csharp:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+    name: Contains
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: Ubiquity.NET.Llvm.IOperandCollection`1.Contains(`0)
+    name: Contains
+    href: Ubiquity.NET.Llvm.IOperandCollection-1.html#Ubiquity_NET_Llvm_IOperandCollection_1_Contains__0_
+  - name: (
+  - name: T
+  - name: )
+- uid: Ubiquity.NET.Llvm.Metadata.IrMetadata
+  commentId: T:Ubiquity.NET.Llvm.Metadata.IrMetadata
+  parent: Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.NET.Llvm.Metadata.IrMetadata.html
+  name: IrMetadata
+  nameWithType: IrMetadata
+  fullName: Ubiquity.NET.Llvm.Metadata.IrMetadata
+- uid: System.InvalidCastException
+  commentId: T:System.InvalidCastException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.invalidcastexception
+  name: InvalidCastException
+  nameWithType: InvalidCastException
+  fullName: System.InvalidCastException
+- uid: Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand*
+  commentId: Overload:Ubiquity.NET.Llvm.Values.ValueOperandListCollection`1.GetOperand
+  href: Ubiquity.NET.Llvm.Values.ValueOperandListCollection-1.html#Ubiquity_NET_Llvm_Values_ValueOperandListCollection_1_GetOperand__1_System_Index_
+  name: GetOperand
+  nameWithType: ValueOperandListCollection<T>.GetOperand
+  fullName: Ubiquity.NET.Llvm.Values.ValueOperandListCollection<T>.GetOperand
+  nameWithType.vb: ValueOperandListCollection(Of T).GetOperand
+  fullName.vb: Ubiquity.NET.Llvm.Values.ValueOperandListCollection(Of T).GetOperand
+- uid: System.Index
+  commentId: T:System.Index
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.index
+  name: Index
+  nameWithType: Index
+  fullName: System.Index
+- uid: '{TItem}'
+  commentId: '!:TItem'
+  definition: TItem
+  name: TItem
+  nameWithType: TItem
+  fullName: TItem
+- uid: Ubiquity.NET.Llvm.Metadata
+  commentId: N:Ubiquity.NET.Llvm.Metadata
+  href: Ubiquity.html
+  name: Ubiquity.NET.Llvm.Metadata
+  nameWithType: Ubiquity.NET.Llvm.Metadata
+  fullName: Ubiquity.NET.Llvm.Metadata
+  spec.csharp:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+  spec.vb:
+  - uid: Ubiquity
+    name: Ubiquity
+    href: Ubiquity.html
+  - name: .
+  - uid: Ubiquity.NET
+    name: NET
+    href: Ubiquity.NET.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm
+    name: Llvm
+    href: Ubiquity.NET.Llvm.html
+  - name: .
+  - uid: Ubiquity.NET.Llvm.Metadata
+    name: Metadata
+    href: Ubiquity.NET.Llvm.Metadata.html
+- uid: TItem
+  name: TItem
+  nameWithType: TItem
+  fullName: TItem

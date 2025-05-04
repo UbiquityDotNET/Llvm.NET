@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to cast an unsigned integer to a float</summary>
-    public class UIToFP
+    public sealed class UIToFP
         : Cast
     {
         internal UIToFP( LLVMValueRef valueRef )

@@ -4,13 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to insert a value into a member field in an aggregate value</summary>
     /// <seealso href="xref:llvm_langref#insertvalue-instruction">LLVM insertvalue Instruction</seealso>
-    public class InsertValue
+    public sealed class InsertValue
         : Instruction
     {
         internal InsertValue( LLVMValueRef valueRef )
