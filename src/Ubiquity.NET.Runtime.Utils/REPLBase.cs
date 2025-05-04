@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public abstract void ShowResults( T resultValue );
 
         /// <summary>Gets the error logger to use for logging any parse errors</summary>
-        public IParseErrorLogger ErrorLogger { get; }
+        public IParseErrorReporter ErrorLogger { get; }
 
         /// <summary>Asynchronously runs the REPL loop on the input reader</summary>
         /// <param name="input">Reader to process the input for</param>
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Runtime.Utils
             // Create sequence of parsed AST RootNodes to feed the REPL loop
             var replSeq = from stmt in input.ToStatements( ShowPrompt, cancelToken: cancelToken )
                           let node = parser.Parse( stmt )
-                          where !ErrorLogger.CheckAndShowParseErrors( node )
+                          where !ErrorLogger.CheckAndReportParseErrors( node )
                           select node;
 
             await foreach( IAstNode node in replSeq.WithCancellation(cancelToken) )
@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Runtime.Utils
                 {
                     // This is an internal error that is not recoverable.
                     // Show the error and stop additional processing
-                    ErrorLogger.LogError( ex.ToString( ) );
+                    ErrorLogger.ReportError( ex.ToString( ) );
                     break;
                 }
             }
@@ -64,13 +64,13 @@ namespace Ubiquity.NET.Runtime.Utils
 
         /// <summary>Initializes a new instance of the <see cref="REPLBase{T}"/> class</summary>
         protected REPLBase( )
-            : this( new ColoredConsoleParseErrorLogger() )
+            : this( new ColoredConsoleParseErrorReporter() )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="REPLBase{T}"/> class</summary>
         /// <param name="logger">Logger to use for reporting any errors during parse</param>
-        protected REPLBase( IParseErrorLogger logger )
+        protected REPLBase( IParseErrorReporter logger )
         {
             ErrorLogger = logger;
         }
