@@ -22,9 +22,9 @@
     <File Path="../Directory.Build.props" />
     <File Path="../Directory.Build.targets" />
     <File Path="../Directory.Packages.props" />
-    <File Path="../docfx/current/ReleaseNotes.md" />
     <File Path="../global.json" />
     <File Path="../GOVERNANCE.md" />
+    <File Path="../IgnoredWords.dic" />
     <File Path="../Invoke-UnitTests.ps1" />
     <File Path="../LICENSE.md" />
     <File Path="../NuGet.Config" />
@@ -40,6 +40,8 @@
     <Project Path="Samples/OrcV2VeryLazy/OrcV2VeryLazy.csproj" />
   </Folder>
   <Folder Name="/Samples/Kaleidoscope/" Id="e5c76233-e9f2-292d-735d-bc453529d142">
+    <File Path="Samples/Kaleidoscope/.editorconfig" />
+    <File Path="Samples/Kaleidoscope/IgnoredWords.dic" />
     <File Path="Samples/Kaleidoscope/Kaleidoscope-Overview.md" />
     <File Path="Samples/Kaleidoscope/mandel.kls" />
     <Project Path="Samples/Kaleidoscope/Chapter2/Chapter2.csproj" />

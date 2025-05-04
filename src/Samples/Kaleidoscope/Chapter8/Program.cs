@@ -52,12 +52,12 @@ namespace Kaleidoscope.Chapter8
             Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
             Console.WriteLine( "Compiling {0}", sourceFilePath );
 
-            var errorLogger = new ColoredConsoleParseErrorLogger( );
+            var errorLogger = new ColoredConsoleParseErrorReporter( sourceFilePath );
 
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );
             var ast = parser.Parse( rdr );
-            if( !errorLogger.CheckAndShowParseErrors( ast ) )
+            if( !errorLogger.CheckAndReportParseErrors( ast ) )
             {
                 Module? module = generator.Generate( ast );
                 if( module is null )

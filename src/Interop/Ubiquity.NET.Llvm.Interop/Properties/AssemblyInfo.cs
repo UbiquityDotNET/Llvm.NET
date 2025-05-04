@@ -11,5 +11,5 @@ using System.Resources;
 
 [assembly: NeutralResourcesLanguage( "en" )]
 
-// FULLY AOT compatible, NO runtime marshalling support enabled
+// FULLY AOT compatible, NO runtime marshaling support enabled
 [assembly: DisableRuntimeMarshalling]

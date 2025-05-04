@@ -31,8 +31,6 @@ namespace Ubiquity.NET.Runtime.Utils
             {
                 yield return $"{NamePrefix}{anonymousIndex++}";
             }
-
-            // ReSharper disable once IteratorNeverReturns
         }
 
         /// <inheritdoc/>

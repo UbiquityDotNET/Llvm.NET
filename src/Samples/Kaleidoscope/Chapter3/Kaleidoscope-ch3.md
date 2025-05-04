@@ -4,21 +4,22 @@ uid: Kaleidoscope-ch3
 
 # 3. Kaleidoscope: Generating LLVM IR
 This chapter focuses on the basics of transforming the ANTLR parse tree into LLVM IR. The general goal is
-to parse Kaleidoscope source code to generate a [Module](xref:Ubiquity.NET.Llvm.Module) representing
-the source as LLVM IR.
+to parse Kaleidoscope source code to generate a [Module](xref:Ubiquity.NET.Llvm.Module)
+representing the source as LLVM IR.
 
 ## Basic code flow
-The Main function starts out by calling WaitForDebugger(). This is a useful utility that doesn't do
-anything in a release build, but in debug builds will check for an attached debugger and, if none is found,
-it will wait for one. This works around a missing feature of the .NET Standard C# project system that
-does not support launching mixed native+managed debugging. When you need to go all the way into debugging
-the LLVM code, you can launch the debug version of the app without debugging, then attach to it and
-select native and managed debugging. (Hopefully this feature will be restored to these projects in the
-future so this rather hacky trick isn't needed...)
+The basic flow of all of these samples is the same for the LLVM+JIT variants (Even though
+this version doesn't use the JIT it is setting the stage to get there).
 
->UPDATE:
->As of VS2019 this hack is no longer needed as it is now possible to set an SDK project to allow native
->debugging directly from the project's debugging settings page. (Yeah! :triumph:)
+1) A new `ReplEngine` is created to handle the standard REPL support with customizations.
+    1) The application uses its own implementation to handle extension points for the
+       common support.
+2) A `CancellationTokenSource` is created and hooked up to cancel the REPL when `CTRL-C is
+   pressed` to allow normal expectations of termination for a command line application.
+3) Information on the specific app is reported to the console
+4) LLVM is initialized
+    1) The native target is registered so that at least a Local JIT is workable
+5) The REPL engine is run to do the work
 
 ### Initializing Ubiquity.NET.Llvm
 The underlying LLVM library requires initialization for it's internal data, furthermore Ubiquity.NET.Llvm must load

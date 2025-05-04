@@ -274,7 +274,7 @@ namespace Kaleidoscope.Chapter71
 
             var value = LookupVariable( reference.Name );
 
-            // since the Alloca is created as a non-opaque pointer it is OK to just use the
+            // since the alloca is created as a non-opaque pointer it is OK to just use the
             // ElementType. If full opaque pointer support was used, then the Lookup map
             // would need to include the type of the value allocated.
             return InstructionBuilder.Load( value.ElementType, value )
@@ -577,7 +577,7 @@ namespace Kaleidoscope.Chapter71
                     return;
                 }
 
-                // In case of an exception clean up the created tsm instance.
+                // In case of an exception clean up the created ThreadSafeModule instance.
                 // Dispose is a NOP once transferred into Native code
                 using(tsm)
                 {

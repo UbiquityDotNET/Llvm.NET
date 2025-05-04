@@ -116,7 +116,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <returns>Span for the encoded bytes of the string</returns>
         /// <remarks>
         /// <para>This will perform conversion if the <see cref="LazyEncodedString.LazyEncodedString(string,Encoding)"/>
-        /// was used to construct this instance anf conversion has not yet occurred. Otherwise it will provide
+        /// was used to construct this instance and conversion has not yet occurred. Otherwise it will provide
         /// the span it was constructed with or a previously converted one.</para>
         /// <note type="important">
         /// The returned span ***INCLUDES*** the null terminator, thus it's length is the number of characters
@@ -185,7 +185,7 @@ namespace Ubiquity.NET.InteropHelpers
         private readonly Encoding Encoding;
         private readonly Lazy<string> ManagedString;
 
-        // The native array MUST include the terminator so it is useable as a fixed pointer in native code
+        // The native array MUST include the terminator so it is usable as a fixed pointer in native code
         private readonly Lazy<byte[]> NativeBytes;
     }
 

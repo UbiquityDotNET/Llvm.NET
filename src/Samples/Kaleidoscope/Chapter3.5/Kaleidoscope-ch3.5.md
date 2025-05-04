@@ -12,19 +12,19 @@ identify the support for profiling and how it is different from the LLVM source 
 link directly to the LLVM libraries (That is, the samples are written in C++ AND continue to use
 the C++ pass builder and management support. This level of functionality is only available as the
 legacy pass management system with VERY limited support in the LLVM-C API. [It is so legacy now that
-almost ALL remnants of it are removed from the LLVM-C API, not just dpeprecated])
+almost ALL remnants of it are removed from the LLVM-C API, not just deprecated])
 
 ## Code generation
 The Core of this sample doesn't change much from [Chapter 3](xref:Kaleidoscope-ch3). It simply adds
 module generation with optimized IR. To do that there are a few changes to make. In fact the optimizations
 provided don't do much and the resulting IR is much the same.  
 [Coming up with a more complex Kaleidoscope
-sample that actually uses the optimizations more is left as an excercise for the reader. :wink: ]
+sample that actually uses the optimizations more is left as an exercise for the reader. :wink: ]
 
 ### Initialization
 The code generation maintains state for the transformation as private members. To support optimization
 generally only requires a set of named passes and to call the method to run the passes on a function or
-module. [Technically an overlod provides the chance to set [PassBuilderOptions](xref:Ubiquity.NET.Llvm.PassBuilderOptions) but
+module. [Technically an overload provides the chance to set [PassBuilderOptions](xref:Ubiquity.NET.Llvm.PassBuilderOptions) but
 this sample just uses the overload that applies defaults.] The new pass management system
 uses the string names of passes instead of a distinct type and named methods for adding them etc...
 
@@ -47,7 +47,7 @@ at this point in the language design. Thus `GetOrDeclareFunction` will add that 
 
 ### Function Definition
 The only other major change for optimization support is to actually run the optimizations. In LLVM optimizations
-are supported at the module or individual function level. For this sample each function definition is optimised
+are supported at the module or individual function level. For this sample each function definition is optimized
 as each is returned individually. That will change in later chapters. Thus the only real change is after generating
 a new function for a given AST definition the optimization passes are run for it. This involves calling one of the
 overloads of the `TryRunPasses` function and then checking for errors.

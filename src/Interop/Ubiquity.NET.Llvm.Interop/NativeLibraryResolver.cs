@@ -5,22 +5,12 @@
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Internal static 'utility' class to handle resolving the correct binary library to use</summary>
-    /// <remarks>
-    /// Ideally, this would be much simpler. However, the needs of an OSS project and Free (as in beer) build
-    /// support collide. Even the paid builds would struggle to build all of the LLVM targets for a given runtime
-    /// into a single library. Even assuming it can, the result is so large that it isn't usable with standard
-    /// package services like NuGet.org. So, the solution is that the library is built supporting no more than
-    /// two targets. The native target for the runtime is ALWAYS supported and, optionally, one additional target
-    /// is included. Additionally, the target library is built into it's own NuGet package with a single "meta"
-    /// package for the runtime that references each of the targets. This keeps the packages small and the downloads
-    /// limited to the targeted runtime.
-    /// </remarks>
     internal static class NativeLibraryResolver
     {
         private static NativeLibraryHandle NativeLibHandle = new();
         private static bool ResolverApplied = false;
 
-        // !!NOTHING in this method may use P/Invoke to the native LLVM library (LibLLVM)!!
+        // !!NOTHING in this method may use P/Invoke to the native LLVM library (Ubiquity.NET.LibLLVM)!!
         //
         // This sets up the resolver AND the values it requires - interop calls may not
         // occur until that is complete. [They are guaranteed to fail (App Crash)!]

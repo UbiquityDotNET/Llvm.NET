@@ -3,7 +3,7 @@
 // </copyright>
 
 #if FUTURE_DEVELOPMENT_AREA
-// Lifetime management and native callbacis is a difficult issue, made more complex by AOT support.
+// Lifetime management and native callbacks is a difficult issue, made more complex by AOT support.
 // Marshal.GetFunctionPointerForDelegate MUST dynamically build a native callable thunk, that performs
 // all marshalling. Since it is a runtime function that reflection and code emission is done at runtime,
 // but that is not an option for AOT scenarios. [Sadly that API doesn't appear to be flagged as off

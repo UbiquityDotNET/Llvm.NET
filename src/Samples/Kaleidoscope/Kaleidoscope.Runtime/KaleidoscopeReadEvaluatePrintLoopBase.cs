@@ -42,11 +42,12 @@ namespace Kaleidoscope.Runtime
         }
 
         protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level )
-            : this( level, new ColoredConsoleParseErrorLogger() )
+            : base( )
         {
+            LanguageFeatureLevel = level;
         }
 
-        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorLogger logger )
+        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
             : base(logger)
         {
             LanguageFeatureLevel = level;

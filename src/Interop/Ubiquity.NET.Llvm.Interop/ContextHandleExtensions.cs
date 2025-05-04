@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>Utility class to hos extensions fo an <see cref="IContextHandle{THandle}"/></summary>
+    /// <summary>Utility class to host extensions for an <see cref="IContextHandle{THandle}"/></summary>
     public static class ContextHandleExtensions
     {
         /// <summary>Fluent null handle validation</summary>

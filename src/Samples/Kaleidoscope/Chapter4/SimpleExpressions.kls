@@ -16,7 +16,7 @@ extern cos(x);
 cos(1.234);
 
 # optimization passes should reduce the x+3 and 3+x to a single value
-# (IR builder performs constanfolding for the 1 + 2 to get a constant
+# (IR builder performs constant folding for the 1 + 2 to get a constant
 # value of 3
 def test(x) (1+2+x)*(x+(1+2));
 

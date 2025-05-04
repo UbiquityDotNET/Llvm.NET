@@ -28,7 +28,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// However, that isn't guaranteed, which makes for all sorts of "interesting" latent bugs. Even as well documented
         /// and well thought out as LLVM is, it remains silent on this point. Spelunking the build system generated for LLVM
         /// itself by CMake there is NOTHING to set either the source or execution encodings for Windows, MSVC or any other
-        /// toolset that I can see so they seem to be left at defaults.
+        /// tool-set that I can see so they seem to be left at defaults.
         /// <note type="information">
         /// For .NET Core, which includes .NET 5+, <see cref="System.Text.Encoding.Default"/> is the same as
         /// <see cref="System.Text.Encoding.UTF8"/> even on Windows. So that is the assumed encoding used here.
@@ -84,7 +84,7 @@ namespace Ubiquity.NET.InteropHelpers
         }
 
         /// <summary>Custom marshaller to marshal a managed string as an unmanaged string using the <see cref="Encoding"/> property for encoding the native string.</summary>
-        [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Standard pattern for custom marshallers" )]
+        [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Standard pattern for custom marshalers" )]
         public ref struct ManagedToUnmanagedIn
         {
             /// <summary>Gets the default buffer size for optimized marshalling.</summary>

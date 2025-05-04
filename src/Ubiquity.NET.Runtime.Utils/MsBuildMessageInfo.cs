@@ -4,6 +4,15 @@ using System.Linq;
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>MSBUILD/VS message information holder</summary>
+    /// <remarks>
+    /// <para>This record holds the information necessary for a valid message for MSBUILD/VS processing.</para>
+    /// <para>This is one of many possible formats of error messages parsed and understood by various build utilities.
+    /// It is the most common (almost a `defacto` standard) format on Windows. But recognized on other platforms as well.
+    /// Each such format may require different data and therefore is not easily generalized/abstracted. The
+    /// <see cref="RuntimeToolMessage"/> class is used to attempt to generalize this concept and allow for independence
+    /// of format. This includes the plausibility of a command line option to determine the output format. Though it is
+    /// constrained by reality and can only include support for what it knows about.</para>
+    /// </remarks>
     /// <seealso href="https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-diagnostic-format-for-tasks?view=vs-2022"/>
     public readonly record struct MsBuildMessageInfo
     {

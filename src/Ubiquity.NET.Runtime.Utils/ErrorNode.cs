@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Represents an IAstNode where an error occurred in the parse</summary>
     /// <remarks>
-    /// The error may represent an syntax or semantic error but is used to mark the node
+    /// The error may represent a syntax or semantic error but is used to mark the node
     /// where the error occurred. This allows for AST generation and consumers to "recover"
     /// from the error, but still report it as well as report multiple errors that might
     /// occur.

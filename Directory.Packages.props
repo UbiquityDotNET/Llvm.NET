@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
     Global references are included in ALL projects in this repository
-    -->
+  -->
   <ItemGroup>
     <GlobalPackageReference Include="CSemVer.Build.Tasks" Version="2.0.5" />
     <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />

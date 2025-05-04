@@ -53,7 +53,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets the native target for the current runtime</summary>
-        public static CodeGenTarget NativeTarget => (CodeGenTarget)RuntimeInformation.ProcessArchitecture.GetLibLLVMTarget();
+        public static CodeGenTarget NativeTarget => (CodeGenTarget)RuntimeInformation.ProcessArchitecture.AsLLVMTarget();
 
         // "MOVE" construction, this instance takes over responsibility
         // of calling dispose.

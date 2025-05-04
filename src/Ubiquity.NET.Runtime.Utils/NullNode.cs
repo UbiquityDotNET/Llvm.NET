@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public SourceLocation Location { get; } = default;
 
         /// <inheritdoc/>
-        public IEnumerable<IAstNode> Children { get; } = Enumerable.Empty<IAstNode>( );
+        public IEnumerable<IAstNode> Children { get; } = [];
 
         /// <inheritdoc/>
         public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )

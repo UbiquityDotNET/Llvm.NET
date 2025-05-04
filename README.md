@@ -50,11 +50,11 @@ There are a few major goals of the current release that required breaking change
         * The largest impediment is the massive resource requirements of building the native LLVM libraries
           for a given runtime. Building them runs afoul of the limitations of every available OSS not to mention
           exceeding the size of a NUGET package to host the binaries. Solving this is the major effort needed
-          for x-plat scenarios. This release goes a LONG way to changin how the ntive binaries are built and
-          distributed which heopefully makes true x-plat easier.
-3) Performace improvments
-    - There's a LOT of marshal/unmarshal (especially for strings) that goes on under the hood and this release
-      provides a lOT of optimizations for that and other scenarios to reduce the overheade needed.
+          for x-plat scenarios. This release goes a LONG way to changing how the native binaries are built and
+          distributed which hopefully makes true x-plat easier.
+3) Performance improvements
+    - There's a LOT of marshaling (especially for strings) that goes on under the hood and this release
+      provides a lOT of optimizations for that and other scenarios to reduce the overhead needed.
 
 ### Platform Support
 Currently Ubiquity.NET.Llvm supports win-x64 builds targeting .NET 9.0. Ideally, other platforms are possible

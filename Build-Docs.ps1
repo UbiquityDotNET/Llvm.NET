@@ -105,7 +105,7 @@ try
         Write-Information "Cleaning $docsOutputPath"
         Get-ChildItem -Path $docsOutputPath -Exclude '.git' | remove-item -Recurse -Force -ProgressAction SilentlyContinue
 
-        # Create a file to disable the default Github Pages use of JEKYLL as this uses docfx to generate the final
+        # Create a file to disable the default GitHub Pages use of JEKYLL as this uses docfx to generate the final
         # HTML. [It is a least theoretically plausible that JEKYLL could handle some/all of the metadata files produced
         # by DOCFX but it is not clear how much of the "build" stage would be lost if ONLY the metadata phase was used.
         # Thus, for now, this uses the docfx build phase.]

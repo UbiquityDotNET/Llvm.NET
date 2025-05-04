@@ -34,12 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
-      <Link>CustomDictionary.xml</Link>
-    </CodeAnalysisDictionary>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
     <ProjectReference Include="..\ReferenceEqualityVerifier\ReferenceEqualityVerifier\ReferenceEqualityVerifier.csproj">
         <PrivateAssets>all</PrivateAssets>

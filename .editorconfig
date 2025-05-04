@@ -7,6 +7,14 @@ indent_size = 4
 insert_final_newline = true
 tab_width = 4
 end_of_line = crlf
+# until [VSSpellChecker bug 277](https://github.com/EWSoftware/VSSpellChecker/issues/277)
+# is fixed, disable the analyzers. It's more of a PITA than a help
+# VSSPELL: Disable the analyzers until Bug 277 is fixed.
+vsspell_code_analyzers_enabled = false
+
+# VSSPELL: Spell checker settings for all files
+vsspell_section_id = 1c7003ec377c4bd9bb3c509d29770210
+vsspell_ignored_words_1c7003ec377c4bd9bb3c509d29770210 = File:.\IgnoredWords.dic|bar
 
 # match VS generated formatting for MSBuild project files
 [*.*proj,*.props,*.targets]

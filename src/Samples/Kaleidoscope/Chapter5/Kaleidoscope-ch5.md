@@ -121,7 +121,7 @@ printstar(100);
 
 In LLVM IR (unoptimized) that should look like this:
 
-```llvm
+``` llvm
 declare double @putchard(double)
 
 define double @printstar(double %n) {

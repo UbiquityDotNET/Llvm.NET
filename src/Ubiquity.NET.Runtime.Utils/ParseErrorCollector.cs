@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Runtime.Utils
     {
         /// <inheritdoc/>
         /// <remarks>
-        /// This will collect every error reported during a parse
+        /// This will collect every <see cref="SyntaxError"/> reported during a parse
         /// </remarks>
         public void SyntaxError( SyntaxError syntaxError )
         {
