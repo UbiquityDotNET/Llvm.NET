@@ -3,18 +3,20 @@ on:
   push:
     branches:
       - develop
-      - llvm_20
+      - LLVM20
 
     paths-ignore:
       - '**.md'
+      - '**.dic'
 
   pull_request:
     branches:
       - develop
-      - llvm_20
+      - LLVM20
 
     paths-ignore:
       - '**.md'
+      - '**.dic'
 
 jobs:
   build:
@@ -76,5 +78,3 @@ jobs:
         with:
             name: Build Logs
             path: .\BuildOutput\BinLogs
-
-
