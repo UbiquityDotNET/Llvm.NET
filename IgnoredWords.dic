@@ -23,6 +23,7 @@ buildbinoutput
 buildtransitive
 builtinop
 byref
+byval
 cibuild
 Cmp
 Config
@@ -61,13 +62,17 @@ llvm
 llvmversion
 LValue
 marshalling
+memcopy
 metadata
 Mips
 msbuild
 msg
 nav
+noinline
+nounwind
 nullability
 Nullable
+optimizenone
 pages
 paren
 perf
@@ -75,6 +80,7 @@ pointee
 Pre
 proj
 readonly
+refactor
 repl
 repo
 RMW

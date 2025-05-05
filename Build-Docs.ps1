@@ -111,11 +111,16 @@ try
 
         if($buildInfo["IsAutomatedBuild"])
         {
+            Write-Information "Building analyzer so it is available when building docs."
             # In automated builds the analyzer doesn't exist yet and it isn't listed in the docfx.json so that won't
             # build it either. There's nothing to document (at this point it is entirely internal). So it MUST be built
             # directly to support automated builds.
             $analyzerProjPath = Join-Path 'src' 'ReferenceEqualityVerifier' 'ReferenceEqualityVerifier' 'ReferenceEqualityVerifier.csproj'
             Invoke-External dotnet build '--tl:off' $analyzerProjPath '-c' $Configuration
+        }
+        else
+        {
+            Write-Information "Not an automated build; assuming analyzer already built"
         }
 
         $fullBuildNumber = Get-FullBuildNumber
