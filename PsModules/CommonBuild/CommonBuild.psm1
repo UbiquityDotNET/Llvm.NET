@@ -1,5 +1,6 @@
 # This script is a generalized script entry point for module support that is easily cloned for other modules
-# and is independent of the module's functionality.
+# and is independent of the module's functionality. This is invocable using the PS module name qualifier
+# syntax `<ModuleName>/Get-ExportedFunctionNames`
 
 function Get-ExportedFunctionNames
 {
@@ -26,7 +27,7 @@ function Get-ExportedFunctionNames
             }
             else
             {
-                Write-Information "found non-standard function mame '$name' in '$script'"
+                Write-Information "found non-standard function name '$name' in '$script'"
             }
         }
     }
@@ -34,7 +35,7 @@ function Get-ExportedFunctionNames
     return $retVal
 }
 
-# Exported from the module but NOT from the PSD1 list. Instead, you should use module qualifed name
+# Exported from the module but NOT from the PSD1 list. Instead, you should use module qualified name
 # to access this function. It is only useful when updating the set of public functions exported
 # to generate the required 'FunctionsToExport' property of the PSD1 file.
 function Get-FunctionsToExport
@@ -74,6 +75,13 @@ function Get-FunctionsToExport
     $bldr.Append(')') | Out-Null
     return $bldr.ToString()
 }
+
+# force preferences to what is expected
+# see: https://github.com/PowerShell/PowerShell/issues/4568
+# there is NO good solution to this beyond setting a global preference OR specifying the preference on EVERY CALL
+# '`tis a silly thing' - The whole PS preferences settings is a nightmarish mess.
+$InformationPreference = 'Continue'
+$ErrorInformationPreference = 'Stop'
 
 # get public/Private function definition files
 $Public = @( Get-ChildItem -Path (Join-path $PSScriptroot 'Public' '*.ps1') -ErrorAction SilentlyContinue )

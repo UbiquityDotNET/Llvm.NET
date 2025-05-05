@@ -5,10 +5,6 @@
 .PARAMETER Configuration
     This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
 
-.PARAMETER AllowVsPreReleases
-    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
-    useful when adding support for new versions during the pre-release stages.
-
 .PARAMETER FullInit
     Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
     as well as writes details of the initialization to the information and verbose streams.
@@ -54,7 +50,9 @@ function Get-FullBuildNumber
     # build number is used for the docs generation.
 
     # generate the CurrentVersionInfo.json file
-    Invoke-DotNet build ./BuildVersion.msbuildproj | Out-Null
+    Write-Information 'Generating CurrentVersionInfo.json'
+
+    Invoke-External dotnet build ./BuildVersion.msbuildproj | Out-Null
 
     # Read in the generated JSON for use in PS
     $versionInfo = Get-Content ./CurrentVersionInfo.json | ConvertFrom-Json -AsHashTable
@@ -73,15 +71,12 @@ try
     . ./repo-buildutils.ps1
 
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
-    $msBuildPropertyList = ConvertTo-PropertyList @{
-        Configuration = $Configuration
-    }
 
     # make sure the supported tool is installed.
-    Invoke-DotNet tool install --global docfx --version $docFXToolVersion | Out-Null
+    Invoke-External dotnet tool install --global docfx --version $docFXToolVersion | Out-Null
 
     $docsOutputPath = $buildInfo['DocsOutputPath']
-    Write-Verbose "Docs OutputPath: $docsOutputPath"
+    Write-Information "Docs OutputPath: $docsOutputPath"
 
     if(!$ServeDocs)
     {
@@ -97,7 +92,7 @@ try
             }
 
             Write-Information "Cloning Docs repository"
-            Invoke-Git clone $buildInfo['OfficialGitRemoteUrl'] -b gh-pages $docsOutputPath -q
+            Invoke-External git clone $buildInfo['OfficialGitRemoteUrl'] -b gh-pages $docsOutputPath -q
         }
 
         # Delete everything in the docs output except the git folder so the result of applying changes
@@ -106,7 +101,7 @@ try
         Get-ChildItem -Path $docsOutputPath -Exclude '.git' | remove-item -Recurse -Force -ProgressAction SilentlyContinue
 
         # Create a file to disable the default GitHub Pages use of JEKYLL as this uses docfx to generate the final
-        # HTML. [It is a least theoretically plausible that JEKYLL could handle some/all of the metadata files produced
+        # HTML. [It is at least theoretically plausible that JEKYLL could handle some/all of the metadata files produced
         # by DOCFX but it is not clear how much of the "build" stage would be lost if ONLY the metadata phase was used.
         # Thus, for now, this uses the docfx build phase.]
         "$([DateTime]::UtcNow.ToString('o'))" | Out-File -Path (Join-Path $docsOutputPath '.nojekyll')
@@ -116,7 +111,7 @@ try
         try
         {
             Write-Information "Building docs [FullBuildNumber=$fullBuildNumber]"
-            Invoke-DocFX -m _buildVersion=$fullBuildNumber -o $docsOutputPath --warningsAsErrors
+            Invoke-External docfx '-m' _buildVersion=$fullBuildNumber '-o' $docsOutputPath
         }
         finally
         {
@@ -130,7 +125,7 @@ try
 
     if($ShowDocs)
     {
-        Invoke-DocFx serve --open-browser $docsOutputPath
+        Invoke-External docfx serve '--open-browser' $docsOutputPath
     }
 }
 catch

@@ -32,7 +32,6 @@
     <File Path="../README.md" />
     <File Path="../repo-buildutils.ps1" />
     <File Path="../stylecop.json" />
-    <File Path="../Ubiquity.NET.ruleset" />
     <File Path="x64.runsettings" />
   </Folder>
   <Folder Name="/Samples/">

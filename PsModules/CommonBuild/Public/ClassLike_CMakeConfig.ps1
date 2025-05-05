@@ -64,15 +64,15 @@ function New-CMakeConfig($name, [string]$buildConfiguration, [hashtable]$buildIn
 .PARAMETER buildInfo
     Hashtable containing the standard build information.
 
-.PARAMETER cmakrSrcRoot
+.PARAMETER cmakeSrcRoot
     Root of the CMAKE source files to build
 #>
     # start with an empty hash table and build up from there...
     $self = @{}
     if($IsWindows)
     {
-        # TODO: Convert this to use NIJA for faster builds... [Maybe]
-        $self['Generator'] = 'Visual Studio 17 2022'
+        #$self['Generator'] = 'Visual Studio 17 2022'
+        $self['Generator'] = 'Ninja'
     }
     else
     {
@@ -87,27 +87,35 @@ function New-CMakeConfig($name, [string]$buildConfiguration, [hashtable]$buildIn
     $self['CMakeCommandArgs'] = [System.Collections.ArrayList]@()
     $self['BuildCommandArgs'] = [System.Collections.ArrayList]@()
     $self['InheritEnvironments'] = [System.Collections.ArrayList]@()
+    $self['CMakeBuildVariables'] = @{}
 
-    if($IsWindows)
+    # single config generator; Requires setting the configuration type
+    # as a build var during generation (Otherwise, debug is assumed...)
+    if($self['Generator'] -ieq 'Ninja')
     {
-        # running on ARM64 is not tested or supported
-        # This might not be needed now that the build is auto configuring the "VCVARS"
-        # Ninja build might also remove the need for this...
-        if ([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture -eq "X64" )
-        {
-            $self['CMakeCommandArgs'].Add('-Thost=x64') | Out-Null
-            $self['InheritEnvironments'].Add('msvc_x64_x64') | Out-Null
-        }
-        else
-        {
-            $self['InheritEnvironments'].Add('msvc_x64') | Out-Null
-        }
-
-        # pass the /m switch to MSBUILD to enable parallel builds on all available CPU cores
-        $self['BuildCommandArgs'].Add('/m') | Out-Null
+        $self['CMakeBuildVariables']['CMAKE_BUILD_TYPE']=$self['ConfigurationType']
     }
 
-    $self['CMakeBuildVariables'] = @{}
+    # Not needed with Ninja builds
+    #if($IsWindows)
+    #{
+    #    # running on ARM64 is not tested or supported
+    #    # This might not be needed now that the build is auto configuring the "VCVARS"
+    #    # Ninja build might also remove the need for this...
+    #    if ([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture -eq "X64" )
+    #    {
+    #        $self['CMakeCommandArgs'].Add('-Thost=x64') | Out-Null
+    #        $self['InheritEnvironments'].Add('msvc_x64_x64') | Out-Null
+    #    }
+    #    else
+    #    {
+    #        $self['InheritEnvironments'].Add('msvc_x64') | Out-Null
+    #    }
+    #
+    #    # pass the /m switch to MSBUILD to enable parallel builds on all available CPU cores
+    #    $self['BuildCommandArgs'].Add('/m') | Out-Null
+    #}
+
     Assert-IsCMakeConfig $self
     return $self
 }
@@ -125,7 +133,8 @@ function Invoke-GenerateCMakeConfig([hashtable]$self, [hashtable] $additionalBui
 
     # Construct full set of CMAKE args from fixed options and configuration variables
     $cmakeArgs = New-Object System.Collections.ArrayList
-    $cmakeArgs.Add("-G $($self['Generator'])" ) | Out-Null
+    $cmakeArgs.AddRange(@('-G', "$($self['Generator'])") ) | Out-Null
+    $cmakeArgs.AddRange(@('-B', "$($self['BuildRoot'])") ) | Out-Null
     foreach( $param in $self['CMakeCommandArgs'] )
     {
         $cmakeArgs.Add( $param ) | Out-Null
@@ -154,21 +163,10 @@ function Invoke-GenerateCMakeConfig([hashtable]$self, [hashtable] $additionalBui
 
     $cmakeArgs.Add( $self['SrcRoot'] ) | Out-Null
     Invoke-TimedBlock "CMAKE Generate" {
-        Push-Location $self['BuildRoot']
-        try
-        {
-            Write-Information "cmake $cmakeArgs"
-            # Splat the array of args as distinct for external invoke
-            Invoke-External cmake @cmakeArgs
-        }
-        catch
-        {
-            throw
-        }
-        finally
-        {
-            Pop-Location
-        }
+        Write-Information  "cmake $($cmakeArgs -join ' ')"
+
+        # Splat the array of args as distinct elements for external invoke
+        Invoke-External cmake @cmakeArgs
     }
 }
 
@@ -177,14 +175,25 @@ function Invoke-GenerateCMakeConfig([hashtable]$self, [hashtable] $additionalBui
 # see: https://github.com/PowerShell/PowerShell/issues/13637
 New-Alias -Name Generate-CMakeConfig -Value Invoke-GenerateCMakeConfig
 
-function Build-CmakeConfig([hashtable]$self)
+function Build-CmakeConfig([hashtable]$self, $targets)
 {
     Assert-IsCMakeConfig $self
-    Invoke-TimedBlock "CMake Building $($self['Name'])" {
-        $cmakeArgs = @('--build', "$($self['BuildRoot'])", '--config', "$($self['ConfigurationType'])", '--', "$($self['BuildCommandArgs'])")
-        Write-Information "cmake $([string]::Join(' ', $cmakeArgs))"
+    $cmakeArgs = [System.Collections.ArrayList]@('--build', "$($self['BuildRoot'])", '--config', "$($self['ConfigurationType'])")
+    if($targets)
+    {
+        $cmakeArgs.Add('-t') | Out-Null
+        $cmakeArgs.AddRange($targets)
+    }
 
-        # Splat the array of args as distinct for external invoke
+    if($self['BuildCommandArgs'].Length -gt 0)
+    {
+        $cmakeArgs.AddRange( @('--', "$($self['BuildCommandArgs'])") )
+    }
+
+    Invoke-TimedBlock "CMake Building $($self['Name'])" {
+        Write-Information "cmake $($cmakeArgs -join ' ')"
+
+        # Splat the array of args as distinct items for external invoke
         Invoke-External cmake @cmakeArgs
     }
 }

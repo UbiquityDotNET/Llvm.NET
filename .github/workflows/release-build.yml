@@ -12,10 +12,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           persist-credentials: false
-          fetch-depth: 0
 
       - name: Build Source
-        run: .\Build-All.ps1
+        run: .\Build-All.ps1 -FullInit
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v4

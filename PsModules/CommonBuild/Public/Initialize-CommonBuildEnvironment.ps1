@@ -74,7 +74,7 @@ function Initialize-CommonBuildEnvironment
     # for FullInit force a re-capture of the time stamp.
     if(!$env:BuildTime -or $FullInit)
     {
-        # for any automated builds use the ISO-8601 timetamp of the current commit
+        # for any automated builds use the ISO-8601 time stamp of the current commit
         if($currentBuildKind -ne [BuildKind]::LocalBuild)
         {
             $env:BuildTime = (git show -s --format=%cI)
@@ -85,21 +85,26 @@ function Initialize-CommonBuildEnvironment
         }
     }
 
-    # On Windows setup the equivalent of a Developer prompt and ensure
-    # that CMAKE and MSBUILD are available on the path.
+    # On Windows setup the equivalent of a Developer prompt.
     #
-    # other platform runners may have different defaulted paths etc...
+    # Other platform runners may have different defaulted paths etc...
     # to account for here.
     if ($IsWindows)
     {
-        Write-Information "Configuring VS dev tools support"
+        Write-Verbose "Configuring VS tools support"
 
         # For windows force a common VS tools prompt;
         # Sadly most of this is undocumented and found from various sites
         # spelunking the process. This isn't as bad as it might seem as the
         # installer will create persistent use of this as a Windows Terminal
         # "profile" and the actual command is exposed.
-        winget install Microsoft.VisualStudio.Locator | Out-Null
+        if($null -eq (Find-OnPath vswhere))
+        {
+            # NOTE: automated builds in Github do NOT include WinGet (for reasons unknown)
+            # However, they do contain VSWHERE so should not hit this.
+            winget install Microsoft.VisualStudio.Locator | Out-Null
+        }
+
         $vsShellModulePath = vswhere -find **\Microsoft.VisualStudio.DevShell.dll
         $vsToolsArch = Get-VsArchitecture
         if(!$vsShellModulePath)

@@ -3,18 +3,20 @@ on:
   push:
     branches:
       - develop
-      - llvm_20
+      - LLVM20
 
     paths-ignore:
       - '**.md'
+      - '**.dic'
 
   pull_request:
     branches:
       - develop
-      - llvm_20
+      - LLVM20
 
     paths-ignore:
       - '**.md'
+      - '**.dic'
 
 jobs:
   build:
@@ -24,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
            persist-credentials: false
-           fetch-depth: 0
 
       - name: Build Source
         run: .\Build-All.ps1 -ForceClean -BuildMode Source
@@ -59,10 +60,9 @@ jobs:
         uses: actions/checkout@v4
         with:
            persist-credentials: false
-           fetch-depth: 0
 
       - name: Build Docs
-        run: .\Build-All.ps1 -ForceClean -BuildMode Docs
+        run: .\Build-Docs.ps1 -FullInit -Configuration Release
 
       - name: Upload docs artifact
         uses: actions/upload-artifact@v4
@@ -76,5 +76,3 @@ jobs:
         with:
             name: Build Logs
             path: .\BuildOutput\BinLogs
-
-

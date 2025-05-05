@@ -92,6 +92,14 @@ namespace ReferenceEqualityVerifier.Test
         }
 
         [TestMethod]
+        public async Task StructEquatableIsNotReferenceEquality( )
+        {
+            var analyzerTest = CreateTestRunner(StructEquatable);
+            // no diagnostics expected
+            await analyzerTest.RunAsync();
+        }
+
+        [TestMethod]
         public async Task IncompleteSyntaxDoesNotReportDiagnostics( )
         {
             var analyzerTest = CreateTestRunner(IncompleteSyntax);
@@ -192,7 +200,7 @@ namespace ReferenceEqualityVerifier.Test
                 return this == x; // OOPS = Reference equality!
             }
 
-            bool Bazs(IBaz x)
+            bool Baz2(Class1 x)
             {
                 return x == this; // OOPS = Reference equality!
             }
@@ -284,5 +292,22 @@ namespace ReferenceEqualityVerifier.Test
         }
 
         """;
+
+        const string StructEquatable = """
+        using System;
+
+        namespace Ubiquity.NET.Llvm;
+
+        public record struct Foo(int Bar);
+
+        public class Class1
+        {
+            bool Baz(Foo y)
+            {
+                return y == default; // NOT ref equality!
+            }
+        }
+        """;
+
     }
 }

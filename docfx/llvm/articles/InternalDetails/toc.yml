@@ -3,11 +3,3 @@
   href: llvm-handles.md
 - name: Marshalling Bool
   href: marshal-LLVMBool.md
-- name: LLVMBindingsGenerator
-  href: LlvmBindingsGenerator-Overview.md
-  items:
-    - name: Configuration
-      href: LlvmBindingsGenerator-Configuration.md
-      items:
-        - name: YAML Format
-          href: LlvmBindingsGenerator-YAML-Config-format.md
