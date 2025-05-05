@@ -22,7 +22,7 @@ try
     Push-Location $BuildInfo["SrcRootPath"]
     try
     {
-        Invoke-External dotnet test Ubiquity.NET.Llvm.slnx '-tl:off' '--logger:trx' '--no-build' '-s' '.\x64.runsettings'
+        Invoke-External dotnet test Ubiquity.NET.Llvm.slnx '-c' $Configuration '-tl:off' '--logger:trx' '--no-build' '-s' '.\x64.runsettings'
     }
     finally
     {

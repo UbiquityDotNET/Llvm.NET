@@ -95,7 +95,7 @@ try
             }
 
             Write-Information "Cloning Docs repository"
-            Invoke-Git clone $buildInfo['OfficialGitRemoteUrl'] -b gh-pages $docsOutputPath -q
+            Invoke-External git clone $buildInfo['OfficialGitRemoteUrl'] -b gh-pages $docsOutputPath -q
         }
 
         # Delete everything in the docs output except the git folder so the result of applying changes
