@@ -71,10 +71,6 @@ try
     . ./repo-buildutils.ps1
 
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
-    $msBuildPropertyList = ConvertTo-PropertyList @{
-        Configuration = $Configuration
-        RunAnalyzers = 'false'
-    }
 
     # make sure the supported tool is installed.
     Invoke-External dotnet tool install --global docfx --version $docFXToolVersion | Out-Null
@@ -115,7 +111,7 @@ try
         try
         {
             Write-Information "Building docs [FullBuildNumber=$fullBuildNumber]"
-            Invoke-External docfx '-m' _buildVersion=$fullBuildNumber '-o' $docsOutputPath '--warningsAsErrors' '--property' $msBuildPropertyList
+            Invoke-External docfx '-m' _buildVersion=$fullBuildNumber '-o' $docsOutputPath
         }
         finally
         {

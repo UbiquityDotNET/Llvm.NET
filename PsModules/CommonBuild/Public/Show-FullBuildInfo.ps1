@@ -17,10 +17,10 @@ function Show-FullBuildInfo
     Write-Information 'Build Info:'
     Write-Information ($buildInfo | Format-Table | Out-String)
 
-    Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
-    Write-Information (dir env:GITHUB* | Format-Table -Property Name, value | Out-String)
     Write-Information "BuildKind: $($buildInfo['CurrentBuildKind'])"
     Write-Information "CiBuildName: $env:CiBuildName"
+    Write-Information "env: Is*"
+    Write-Information (dir env:Is* | Format-Table -Property Name, value | Out-String)
 
     # This sort of detail is really only needed when solving problems with a runner
     Write-Verbose 'PATH:'
@@ -31,4 +31,7 @@ function Show-FullBuildInfo
 
     Write-Verbose ".NET SDKs:"
     Write-Verbose (dotnet --list-sdks | Out-String)
+
+    Write-Verbose "GITHUB vars"
+    Write-Verbose (dir env:GITHUB* | Format-Table -Property Name, value | Out-String)
 }
