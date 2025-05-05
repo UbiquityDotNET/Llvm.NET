@@ -54,6 +54,6 @@
   </ItemGroup>
 
   <Target Name="AlwaysRun" BeforeTargets="AfterBuild">
-    <Message Importance="High" Text="NOTE: Building this target does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files"/>
+    <Message Importance="High" Text="NOTE: Building $(MSBuildProjectFile) does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files"/>
   </Target>
 </Project>

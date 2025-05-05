@@ -200,7 +200,7 @@ namespace ReferenceEqualityVerifier.Test
                 return this == x; // OOPS = Reference equality!
             }
 
-            bool Baz(IBaz x)
+            bool Baz2(Class1 x)
             {
                 return x == this; // OOPS = Reference equality!
             }

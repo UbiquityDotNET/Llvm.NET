@@ -145,14 +145,20 @@ namespace ReferenceEqualityVerifier
 
         private static bool IsDerivedFrom( ITypeSymbol derivedType, ITypeSymbol testBaseType )
         {
-            for(ITypeSymbol? baseType = derivedType; baseType != null; baseType = baseType.BaseType)
+            if (testBaseType.TypeKind == TypeKind.Interface)
             {
-                if(SymbolEqualityComparer.Default.Equals( baseType, testBaseType ))
+                return derivedType.AllInterfaces.Contains( testBaseType, SymbolEqualityComparer.Default );
+            }
+            else
+            {
+                for(ITypeSymbol? baseType = derivedType; baseType != null; baseType = baseType.BaseType)
                 {
-                    return true;
+                    if(SymbolEqualityComparer.Default.Equals( baseType, testBaseType ))
+                    {
+                        return true;
+                    }
                 }
             }
-
             return false;
         }
 
