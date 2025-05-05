@@ -27,7 +27,7 @@ function Get-ExportedFunctionNames
             }
             else
             {
-                Write-Information "found non-standard function mame '$name' in '$script'"
+                Write-Information "found non-standard function name '$name' in '$script'"
             }
         }
     }
@@ -35,7 +35,7 @@ function Get-ExportedFunctionNames
     return $retVal
 }
 
-# Exported from the module but NOT from the PSD1 list. Instead, you should use module qualifed name
+# Exported from the module but NOT from the PSD1 list. Instead, you should use module qualified name
 # to access this function. It is only useful when updating the set of public functions exported
 # to generate the required 'FunctionsToExport' property of the PSD1 file.
 function Get-FunctionsToExport

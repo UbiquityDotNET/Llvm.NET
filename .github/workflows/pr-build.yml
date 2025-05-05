@@ -64,7 +64,7 @@ jobs:
            fetch-depth: 0
 
       - name: Build Docs
-        run: .\Build-All.ps1 -ForceClean -BuildMode Docs -FullInit
+        run: .\Build-All.ps1 -ForceClean -BuildMode Docs
 
       - name: Upload docs artifact
         uses: actions/upload-artifact@v4
