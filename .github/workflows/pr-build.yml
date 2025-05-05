@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
            persist-credentials: false
-           fetch-depth: 0
 
       - name: Build Source
         run: .\Build-All.ps1 -ForceClean -BuildMode Source
@@ -61,7 +60,6 @@ jobs:
         uses: actions/checkout@v4
         with:
            persist-credentials: false
-           fetch-depth: 0
 
       - name: Build Docs
         run: .\Build-Docs.ps1 -FullInit -Configuration Release

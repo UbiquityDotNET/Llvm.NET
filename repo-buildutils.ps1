@@ -21,7 +21,6 @@ Set-StrictMode -version 3.0
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
-
 function Initialize-BuildEnvironment
 {
 <#

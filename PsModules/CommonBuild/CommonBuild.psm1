@@ -76,6 +76,13 @@ function Get-FunctionsToExport
     return $bldr.ToString()
 }
 
+# force preferences to what is expected
+# see: https://github.com/PowerShell/PowerShell/issues/4568
+# there is NO good solution to this beyond setting a global preference OR specifying the preference on EVERY CALL
+# '`tis a silly thing' - The whole PS preferences settings is a nightmarish mess.
+$InformationPreference = 'Continue'
+$ErrorInformationPreference = 'Stop'
+
 # get public/Private function definition files
 $Public = @( Get-ChildItem -Path (Join-path $PSScriptroot 'Public' '*.ps1') -ErrorAction SilentlyContinue )
 $Private = @( Get-ChildItem -Path (Join-path $PSScriptroot 'Private' '*.ps1') -ErrorAction SilentlyContinue )

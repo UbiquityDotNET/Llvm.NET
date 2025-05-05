@@ -73,10 +73,8 @@ try
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
     $msBuildPropertyList = ConvertTo-PropertyList @{
         Configuration = $Configuration
+        RunAnalyzers = 'false'
     }
-
-    Write-Information "Current Build information"
-    Show-FullBuildInfo $buildInfo
 
     # make sure the supported tool is installed.
     Invoke-External dotnet tool install --global docfx --version $docFXToolVersion | Out-Null
@@ -112,26 +110,12 @@ try
         # Thus, for now, this uses the docfx build phase.]
         "$([DateTime]::UtcNow.ToString('o'))" | Out-File -Path (Join-Path $docsOutputPath '.nojekyll')
 
-        if($buildInfo["IsAutomatedBuild"])
-        {
-            Write-Information "Building analyzer so it is available when building docs."
-            # In automated builds the analyzer doesn't exist yet and it isn't listed in the docfx.json so that won't
-            # build it either. There's nothing to document (at this point it is entirely internal). So it MUST be built
-            # directly to support automated builds.
-            $analyzerProjPath = Join-Path 'src' 'ReferenceEqualityVerifier' 'ReferenceEqualityVerifier' 'ReferenceEqualityVerifier.csproj'
-            Invoke-External dotnet build '--tl:off' $analyzerProjPath '-c' $Configuration
-        }
-        else
-        {
-            Write-Information "Not an automated build; assuming analyzer already built"
-        }
-
         $fullBuildNumber = Get-FullBuildNumber
         push-location './docfx'
         try
         {
             Write-Information "Building docs [FullBuildNumber=$fullBuildNumber]"
-            Invoke-External docfx '-m' _buildVersion=$fullBuildNumber '-o' $docsOutputPath '--warningsAsErrors'
+            Invoke-External docfx '-m' _buildVersion=$fullBuildNumber '-o' $docsOutputPath '--warningsAsErrors' '--property' $msBuildPropertyList
         }
         finally
         {
