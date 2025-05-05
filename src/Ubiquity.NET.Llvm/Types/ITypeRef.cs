@@ -4,18 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
 namespace Ubiquity.NET.Llvm.Types
 {
     /// <summary>Basic kind of a type</summary>
+    [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "This is NOT a flags type - tooling should get over it." )]
     public enum TypeKind
     {
         /// <summary>Type with no size</summary>
@@ -60,19 +55,28 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>SIMD 'packed' format, or other <see cref="Ubiquity.NET.Llvm.Types.IVectorType"/> implementation</summary>
         Vector = LLVMTypeKind.LLVMVectorTypeKind,
 
-        /// <summary><see cref="Ubiquity.NET.Llvm.LlvmMetadata"/></summary>
+        /// <summary><see cref="Ubiquity.NET.Llvm.Metadata.IrMetadata"/></summary>
         Metadata = LLVMTypeKind.LLVMMetadataTypeKind,
 
-        /// <summary>x86 MMX data type</summary>
-        X86MMX = LLVMTypeKind.LLVMX86_MMXTypeKind,
-
         /// <summary>Exception handler token</summary>
-        Token = LLVMTypeKind.LLVMTokenTypeKind
+        Token = LLVMTypeKind.LLVMTokenTypeKind,
+
+        /// <summary>Scalable vector</summary>
+        ScalableVector = LLVMTypeKind.LLVMScalableVectorTypeKind,
+
+        /// <summary>B Float type</summary>
+        BFloat = LLVMTypeKind.LLVMBFloatTypeKind,
+
+        /// <summary>x86 AMX data type</summary>
+        X86AMX = LLVMTypeKind.LLVMX86_AMXTypeKind,
+
+        /// <summary>Target specific extended type</summary>
+        TargetSpecific = LLVMTypeKind.LLVMTargetExtTypeKind,
     }
 
     /// <summary>Interface for a Type in LLVM</summary>
     public interface ITypeRef
-        : IExtensiblePropertyContainer
+        : IEquatable<ITypeRef>
     {
         /// <summary>Gets a value indicating whether the type is sized</summary>
         bool IsSized { get; }
@@ -104,11 +108,8 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>Gets a value indicating whether this type is a floating point type</summary>
         bool IsFloatingPoint { get; }
 
-        /// <summary>Gets a value indicating whether this type is a pointer to a pointer</summary>
-        bool IsPointerPointer { get; }
-
-        /// <summary>Gets the Context that owns this type</summary>
-        Context Context { get; }
+        /// <summary>Gets the ContextAlias that owns this type</summary>
+        IContext Context { get; }
 
         /// <summary>Gets the integer bit width of this type or 0 for non integer types</summary>
         [SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Justification = "Value is the bit width of an integer, name is appropriate" )]
@@ -141,17 +142,19 @@ namespace Ubiquity.NET.Llvm.Types
     /// <summary>Internal interface for getting access to the raw type handle internally</summary>
     /// <remarks>This is usually implemented as an explicit interface implementation so that it isn't exposed publicly</remarks>
     internal interface ITypeHandleOwner
+        : ITypeRef
+        , IEquatable<ITypeHandleOwner>
     {
         /// <summary>Gets the LibLLVM handle for the type</summary>
-        LLVMTypeRef TypeHandle { get; }
+        LLVMTypeRef Handle { get; }
     }
 
     internal static class TypeRefExtensions
     {
-        internal static LLVMTypeRef GetTypeRef( [ValidatedNotNull] this ITypeRef self )
+        internal static LLVMTypeRef GetTypeRef( this ITypeRef self )
         {
-            self.ValidateNotNull( nameof( self ) );
-            return ( ( ITypeHandleOwner )self ).TypeHandle;
+            ArgumentNullException.ThrowIfNull( self );
+            return ( ( ITypeHandleOwner )self ).Handle;
         }
     }
 }

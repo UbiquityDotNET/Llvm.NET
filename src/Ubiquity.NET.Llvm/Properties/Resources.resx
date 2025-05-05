@@ -193,10 +193,10 @@
   <data name="Integer_type_required" xml:space="preserve">
     <value>Integer type required</value>
   </data>
-  <data name="Attribute_0_requires_a_value" xml:space="preserve">
-    <value>Attribute {0} requires a value</value>
+  <data name="Attribute_0_requires_a_value_of_1" xml:space="preserve">
+    <value>Attribute '{0}' requires a value of `{1}`</value>
   </data>
-  <data name="Attribute_0_does_not_support_a_value" xml:space="preserve">
+  <data name="Attribute_0_does_not_support_an_integer_value" xml:space="preserve">
     <value>Attribute {0} does not support a value</value>
   </data>
   <data name="Incorrect_context_for_module" xml:space="preserve">
@@ -220,12 +220,6 @@
   <data name="Unsupported_Architecture" xml:space="preserve">
     <value>Unsupported Architecture</value>
   </data>
-  <data name="Value_not_set" xml:space="preserve">
-    <value>Value not set</value>
-  </data>
-  <data name="Value_already_set" xml:space="preserve">
-    <value>Value already set</value>
-  </data>
   <data name="ElementType_doesn_t_match_array_element_type" xml:space="preserve">
     <value>ElementType doesn't match array element type</value>
   </data>
@@ -235,8 +229,8 @@
   <data name="Expected_a_primitive_type" xml:space="preserve">
     <value>Expected a primitive type</value>
   </data>
-  <data name="LLVM_only_allows_one_DICompileUnit_per_module" xml:space="preserve">
-    <value>DICompileUnit already defined, LLVM only allows one DICompileUnit per module.</value>
+  <data name="LLVM_only_allows_one_DICompileUnit_per_builder" xml:space="preserve">
+    <value>DICompileUnit already defined, LLVM only allows one DICompileUnit per DIBuilder.</value>
   </data>
   <data name="Temporaries_must_be_resolved_before_finalizing_debug_information" xml:space="preserve">
     <value>Temporaries must be resolved before finalizing debug information:</value>
@@ -451,9 +445,6 @@ Types are:
   <data name="Stack_alignment_value_must_be_a_power_of_2" xml:space="preserve">
     <value>Stack alignment value must be a power of 2</value>
   </data>
-  <data name="Attribute_0_does_not_support_an_argument" xml:space="preserve">
-    <value>Attribute '{0}' does not support an argument</value>
-  </data>
   <data name="Instruction_is_from_a_different_block" xml:space="preserve">
     <value>Instruction is from a different block</value>
   </data>
@@ -504,5 +495,8 @@ Types are:
   </data>
   <data name="APInt_exceeds_size_of_UInt64" xml:space="preserve">
     <value>Arbitrary precision integer exceeds size of System.UInt64 integer</value>
+  </data>
+  <data name="Expected_a_valid_UWTable_kind" xml:space="preserve">
+    <value>Expected a valid UWTable kind value [async, sync]</value>
   </data>
 </root>

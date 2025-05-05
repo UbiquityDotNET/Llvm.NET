@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Optimization level for target code generation</summary>
@@ -84,7 +77,7 @@ namespace Ubiquity.NET.Llvm
     }
 
     /// <summary>Output file type for target code generation</summary>
-    public enum CodeGenFileType
+    public enum CodeGenFileKind
     {
         /// <summary>Generate assembly source file</summary>
         AssemblySource = LLVMCodeGenFileType.LLVMAssemblyFile,
@@ -97,10 +90,10 @@ namespace Ubiquity.NET.Llvm
     public class Target
     {
         /// <summary>Gets the name of this target</summary>
-        public string Name => LLVMGetTargetName( TargetHandle );
+        public string Name => LLVMGetTargetName( TargetHandle ) ?? string.Empty;
 
         /// <summary>Gets the description of this target</summary>
-        public string Description => LLVMGetTargetDescription( TargetHandle );
+        public string Description => LLVMGetTargetDescription( TargetHandle ) ?? string.Empty;
 
         /// <summary>Gets a value indicating whether this target has JIT support</summary>
         public bool HasJIT => LLVMTargetHasJIT( TargetHandle );
@@ -127,7 +120,7 @@ namespace Ubiquity.NET.Llvm
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
+            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
@@ -147,12 +140,12 @@ namespace Ubiquity.NET.Llvm
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
+            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
         /// <summary>Gets an enumerable collection of the available targets built into this library</summary>
-        public static IEnumerable<Target> AvailableTargets
+        public static IEnumerable<Target> RegisteredTargets
         {
             get
             {
@@ -168,23 +161,23 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="triple">Target <see cref="Triple"/> describing the target</param>
         /// <returns>Target for the given triple</returns>
-        public static Target FromTriple( Triple triple ) => FromTriple( triple.ValidateNotNull( nameof( triple ) ).ToString( ) );
+        public static Target FromTriple( Triple triple ) => FromTriple( triple.ThrowIfNull().ToString( ).ThrowIfNull() );
 
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="targetTriple">Target triple string describing the target</param>
         /// <returns>Target for the given triple</returns>
         public static Target FromTriple( string targetTriple )
         {
-            targetTriple.ValidateNotNullOrWhiteSpace( nameof( targetTriple ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( targetTriple );
 
-            return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMessag ).Failed
-                ? throw new InternalCodeGeneratorException( errorMessag )
+            return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMsg ).Failed
+                ? throw new InternalCodeGeneratorException( errorMsg ?? "Failed to get target from triple and no message provided from LLVM!" )
                 : FromHandle( targetHandle );
         }
 
         internal Target( LLVMTargetRef targetHandle )
         {
-            targetHandle.ValidateNotDefault( nameof( targetHandle ) );
+            targetHandle.ThrowIfInvalid();
 
             TargetHandle = targetHandle;
         }
@@ -193,10 +186,10 @@ namespace Ubiquity.NET.Llvm
 
         internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string? cpu, string? features, CodeGenOpt optLevel, RelocationMode relocationMode, CodeModel codeModel )
         {
-            triple.ValidateNotNullOrWhiteSpace( nameof( triple ) );
-            optLevel.ValidateDefined( nameof( optLevel ) );
-            relocationMode.ValidateDefined( nameof( relocationMode ) );
-            codeModel.ValidateDefined( nameof( codeModel ) );
+            ArgumentException.ThrowIfNullOrWhiteSpace( triple );
+            optLevel.ThrowIfNotDefined();
+            relocationMode.ThrowIfNotDefined();
+            codeModel.ThrowIfNotDefined();
 
             var targetMachineHandle = LLVMCreateTargetMachine( target.TargetHandle
                                                              , triple
@@ -211,7 +204,8 @@ namespace Ubiquity.NET.Llvm
 
         internal static Target FromHandle( LLVMTargetRef targetHandle )
         {
-            targetHandle.ValidateNotDefault( nameof( targetHandle ) );
+            targetHandle.ThrowIfInvalid();
+
             lock( TargetMap )
             {
                 if( TargetMap.TryGetValue( targetHandle, out Target? retVal ) )

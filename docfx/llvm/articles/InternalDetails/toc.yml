@@ -1,0 +1,5 @@
+# TOC (left nave) for the internal details
+- name: LLVM Handles
+  href: llvm-handles.md
+- name: Marshalling Bool
+  href: marshal-LLVMBool.md

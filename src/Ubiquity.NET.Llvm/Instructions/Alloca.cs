@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Types;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Alloca instruction for allocating stack space</summary>
@@ -15,7 +12,7 @@ namespace Ubiquity.NET.Llvm.Instructions
     /// entry block to the maximum extent possible.
     /// </remarks>
     /// <seealso href="xref:llvm_langref#alloca-instruction">LLVM alloca</seealso>
-    public class Alloca
+    public sealed class Alloca
         : UnaryInstruction
     {
         /// <summary>Gets the type of the alloca element</summary>
@@ -24,7 +21,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// is always a pointer type, this provides the ElementType (e.g. the pointee type)
         /// for the alloca.
         /// </remarks>
-        public ITypeRef ElementType => ( ( IPointerType )NativeType ).ElementType;
+        public ITypeRef ElementType => LLVMGetAllocatedType(Handle).CreateType();
 
         internal Alloca( LLVMValueRef valueRef )
             : base( valueRef )

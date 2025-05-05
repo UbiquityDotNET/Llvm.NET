@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
     /// <summary>Enumeration for kinds of binary/object files</summary>
@@ -63,12 +56,13 @@ namespace Ubiquity.NET.Llvm.ObjectFile
     }
 
     /// <summary>Object file information</summary>
-    public class TargetBinary
+    public sealed class TargetBinary
+        : IDisposable
     {
         /*
         TODO: (Needs extension C APIs)
             string FileFormatName { get; }
-            TripleArchType ArchType { get; }
+            TripleArchType ArchKind { get; }
             SubTargetFeatures Features { get; }
             UInt64 StartAddress { get; }
             Triple Triple { get; }
@@ -77,15 +71,15 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         */
 
         /// <summary>Gets the kind of binary this instance contains</summary>
-        public BinaryKind Kind => ( BinaryKind )LLVMBinaryGetType( BinaryRef );
+        public BinaryKind Kind => ( BinaryKind )LLVMBinaryGetType( Handle );
 
         /// <summary>Gets the symbols in this <see cref="TargetBinary"/></summary>
         public IEnumerable<Symbol> Symbols
         {
             get
             {
-                using LLVMSymbolIteratorRef iterator = LLVMObjectFileCopySymbolIterator(BinaryRef);
-                while( !LLVMObjectFileIsSymbolIteratorAtEnd( BinaryRef, iterator ) )
+                using LLVMSymbolIteratorRef iterator = LLVMObjectFileCopySymbolIterator(Handle);
+                while( !LLVMObjectFileIsSymbolIteratorAtEnd( Handle, iterator ) )
                 {
                     yield return new Symbol( this, iterator );
                     LLVMMoveToNextSymbol( iterator );
@@ -98,8 +92,8 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         {
             get
             {
-                using LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( BinaryRef );
-                while( !LLVMObjectFileIsSectionIteratorAtEnd( BinaryRef, iterator ) )
+                using LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( Handle );
+                while( !LLVMObjectFileIsSectionIteratorAtEnd( Handle, iterator ) )
                 {
                     yield return new Section( this, iterator );
                     LLVMMoveToNextSection( iterator );
@@ -107,21 +101,36 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             }
         }
 
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Handle.Dispose();
+            BackingBuffer.Dispose();
+        }
+
         /// <summary>Initializes a new instance of the <see cref="TargetBinary"/> class.</summary>
         /// <param name="buffer">Memory buffer containing the raw binary data of the object file</param>
-        /// <param name="context">Context for the object file</param>
-        internal TargetBinary( MemoryBuffer buffer, Context context )
+        /// <param name="context">ContextAlias for the object file</param>
+        /// <remarks>The <paramref name="buffer"/> is 'moved" into this instance. That is buffer is the
+        /// <see cref="MemoryBuffer.IsDisposed"/> property is <see langword="true"/> after this call completes
+        /// without any exceptions. If there is an exception, transfer is not complete and ownership remains
+        /// with the caller.
+        /// </remarks>
+        internal TargetBinary( MemoryBuffer buffer, IContext context )
         {
-            buffer.ValidateNotNull( nameof( buffer ) );
-            context.ValidateNotNull( nameof( context ) );
+            ArgumentNullException.ThrowIfNull( buffer );
+            ArgumentNullException.ThrowIfNull( context );
 
-            BinaryRef = LLVMCreateBinary( buffer.BufferHandle, context.ContextHandle, out string errMsg );
-            if( BinaryRef.IsInvalid )
+            BackingBuffer = new( buffer.Handle.Move() );
+            Handle = LLVMCreateBinary( BackingBuffer.Handle, context.GetUnownedHandle(), out string? errMsg );
+            if( Handle.IsInvalid )
             {
-                throw new InternalCodeGeneratorException( errMsg );
+                throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
             }
         }
 
-        internal LLVMBinaryRef BinaryRef { get; }
+        internal LLVMBinaryRef Handle { get; }
+
+        private readonly MemoryBuffer BackingBuffer;
     }
 }

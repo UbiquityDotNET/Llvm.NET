@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information namespace scope</summary>
@@ -14,7 +12,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DIScope
     {
         /* TODO: non-operand properties
-        public bool ExportSymbols => LLVMDINamespaceGetExportSymbols( MetadataHandle );
+        public bool ExportSymbols => LLVMDINamespaceGetExportSymbols( NativeHandle );
         */
 
         /// <inheritdoc/>

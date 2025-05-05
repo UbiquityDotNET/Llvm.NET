@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -28,12 +21,12 @@ namespace Ubiquity.NET.Llvm.Types
     /// <remarks>
     /// Array's in LLVM are fixed length sequences of elements
     /// </remarks>
-    internal class ArrayType
+    internal sealed class ArrayType
         : SequenceType
         , IArrayType
     {
         /// <inheritdoc/>
-        public uint Length => LLVMGetArrayLength( TypeRefHandle );
+        public uint Length => LLVMGetArrayLength( Handle );
 
         internal ArrayType( LLVMTypeRef typeRef )
             : base( typeRef )

@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Base class for compare instructions</summary>
@@ -17,12 +13,12 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Gets the predicate for the comparison</summary>
         public Predicate Predicate => Opcode switch
         {
-            OpCode.ICmp => ( Predicate )LLVMGetICmpPredicate( ValueHandle ),
-            OpCode.FCmp => ( Predicate )LLVMGetFCmpPredicate( ValueHandle ),
+            OpCode.ICmp => ( Predicate )LLVMGetICmpPredicate( Handle ),
+            OpCode.FCmp => ( Predicate )LLVMGetFCmpPredicate( Handle ),
             _ => Predicate.BadFcmpPredicate,
         };
 
-        /* TODO: Predicate {set;} */
+        /* TODO: Predicate {set;} // new LibLLVM API, based on current Get*/
 
         internal Cmp( LLVMValueRef valueRef )
             : base( valueRef )

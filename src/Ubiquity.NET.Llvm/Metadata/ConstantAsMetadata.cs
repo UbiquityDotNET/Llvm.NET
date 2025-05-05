@@ -4,10 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Constant <see cref="Value"/> as metadata</summary>
     public class ConstantAsMetadata

@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>LLVM Global Alias for a function or global value</summary>
@@ -14,10 +11,11 @@ namespace Ubiquity.NET.Llvm.Values
         : GlobalIndirectSymbol
     {
         /// <summary>Gets or sets the aliasee that this Alias refers to</summary>
+        [DisallowNull]
         public Constant Aliasee
         {
             get => IndirectSymbol!;
-            set => IndirectSymbol = value.ValidateNotNull( nameof( value ) );
+            set => IndirectSymbol = value.ThrowIfNull();
         }
 
         internal GlobalAlias( LLVMValueRef valueRef )

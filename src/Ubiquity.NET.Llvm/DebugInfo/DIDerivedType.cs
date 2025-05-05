@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Derived type</summary>
@@ -25,7 +22,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DIType BaseType => GetOperand<DIType>( 3 )!;
 
         /// <summary>Gets the extra data, if any, attached to this derived type</summary>
-        public LlvmMetadata? ExtraData => Operands[ 4 ];
+        public IrMetadata? ExtraData => Operands[ 4 ];
 
         /// <summary>Gets the Class type extra data for a pointer to member type, if any</summary>
         public DIType? ClassType => Tag != Tag.PointerToMemberType ? null : GetOperand<DIType>( 4 );
@@ -49,7 +46,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                     : null;
 
         /// <summary>Initializes a new instance of the <see cref="DIDerivedType"/> class from an <see cref="LLVMMetadataRef"/></summary>
-        /// <param name="handle">Handle to wrap</param>
+        /// <param name="handle">NativeHandle to wrap</param>
         internal DIDerivedType( LLVMMetadataRef handle )
             : base( handle )
         {

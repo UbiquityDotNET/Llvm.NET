@@ -1,41 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions" />
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
-    <LangVersion>8.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
     <SignAssembly>False</SignAssembly>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
+    <IsAotCompatible>True</IsAotCompatible>
+
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <MinClientVersion>4.0</MinClientVersion>
+    <MinClientVersion>4.9.0</MinClientVersion>
     <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM. Direct use of this low level API is discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
+    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM [$(LlvmVersion)]. Direct use of this low level API is **STRONGLY** discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
     <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
     <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+    <IncludeSymbols Condition="'$(Configuration)'=='Release'">true</IncludeSymbols>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- This is an internal undocumented package ignore the analysis that complains about a missing ReadMe -->
+    <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.dll" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.dll">
-        <PackagePath>runtimes\win-x64\native</PackagePath>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\BuildOutput\bin\LibLLVM\$(Configuration)\x64\Ubiquity.NET.LibLLVM.pdb" Link="runtimes\win-x64\native\Ubiquity.NET.LibLLVM.pdb">
-        <PackagePath>runtimes\win-x64\native</PackagePath>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NugetPkg\build\Ubiquity.NET.Llvm.Interop.props">
-        <PackagePath>build\Ubiquity.NET.Llvm.Interop.props</PackagePath>
-    </Content>
-    <Content Include="NugetPkg\buildMultiTargeting\Ubiquity.NET.Llvm.Interop.props">
-        <PackagePath>buildMultiTargeting\Ubiquity.NET.Llvm.Interop.props</PackagePath>
-    </Content>
+    <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
+    <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.3-*" />
+    <PackageReference Include="Ubiquity.NET.Llvm.Interop.Handles" VersionOverride="20.1.3-*"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -50,24 +44,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
-      <PackageReference Include="Ubiquity.ArgValidators" />
+    <ProjectReference Include="..\..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
+    <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
   </ItemGroup>
-  <!--
-    Version numbers are computed at build time after any declarative properties are evaluated
-    so this is needed to update the NuSpec properties with the dynamically generated values
-    NOTE: This can't use NuspecProperties as that is only applicable when using a NuSpec file.
-          Worse, it can cause a NullReferenceException (See: https://github.com/NuGet/Home/issues/4649 )
-    -->
-  <Target Name="_SetNuSpecPropertiesWithBuildInfo" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
-      <Description>$(Description) $(llvmVersion)</Description>
-    </PropertyGroup>
-    <Message Importance="high" Text="llvmVersion=$(llvmVersion)" />
-  </Target>
-
-  <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
-    <MakeDir Directories="$(PackageOutputPath)" />
-  </Target>
-
 </Project>

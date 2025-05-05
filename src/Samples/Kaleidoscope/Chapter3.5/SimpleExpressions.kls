@@ -1,0 +1,21 @@
+﻿# simple top level expression
+4+5;
+
+# function definitions
+def foo(a b) a*a + 2*a*b + b*b;
+
+# NOTE: Calling this function would result in a hard infinite recursion/stack overflow
+# Since this is JITTed (or AOT) code, that's NOT something that can be handled and will
+# crash!
+def bar(a) foo(a, 4.0) + bar(31337);
+
+# external declaration
+extern cos(x);
+
+# calling external function
+cos(1.234);
+
+# optimization passes should reduce the x+3 and 3+x to a single value
+# (IR builder performs constant folding for the 1 + 2 to get a constant
+# value of 3
+def test(x) 1+(1+2+x)*(x+(1+2));

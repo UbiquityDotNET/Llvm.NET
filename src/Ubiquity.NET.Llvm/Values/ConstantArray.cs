@@ -4,16 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Types;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>LLVM Constant Array</summary>
@@ -46,8 +36,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public static Constant From( ITypeRef elementType, int len, params Constant[ ] values )
         {
-            elementType.ValidateNotNull( nameof( elementType ) );
-            values.ValidateNotNull( nameof( values ) );
+            ArgumentNullException.ThrowIfNull( elementType );
+            ArgumentNullException.ThrowIfNull( values );
             var zeroFilledValues = ZeroFill( elementType, len, values ).ToList( );
             return From( elementType, zeroFilledValues );
         }
@@ -63,7 +53,7 @@ namespace Ubiquity.NET.Llvm.Values
                 throw new ArgumentException( "One or more value(s) types do not match specified array element type" );
             }
 
-            var valueHandles = values.Select( v => v.ValueHandle ).ToArray( );
+            var valueHandles = values.Select( v => v.Handle ).ToArray( );
             var handle = LLVMConstArray( elementType.GetTypeRef(), valueHandles, (uint)valueHandles.Length );
             return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
         }

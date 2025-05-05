@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Types;
-using Ubiquity.NET.Llvm.Values;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Base class for cast instructions</summary>

@@ -4,9 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Global Indirect Symbol</summary>
@@ -14,10 +11,11 @@ namespace Ubiquity.NET.Llvm.Values
         : GlobalValue
     {
         /// <summary>Gets or sets the symbol this indirectly references</summary>
+        [DisallowNull]
         public Constant IndirectSymbol
         {
             get => Operands.GetOperand<Constant>( 0 )!;
-            set => Operands[ 0 ] = value.ValidateNotNull( nameof( value ) );
+            set => Operands[ 0 ] = value.ThrowIfNull();
         }
 
         internal GlobalIndirectSymbol( LLVMValueRef handle )

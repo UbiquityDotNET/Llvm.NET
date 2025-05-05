@@ -4,18 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Values;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Wraps metadata as a <see cref="Value"/></summary>
     public class MetadataAsValue
         : Value
     {
-        /// <summary>Gets a list of the operands for the Metadata</summary>
+        /// <summary>Gets a list of the operands for the IrMetadata</summary>
         public ValueOperandListCollection<Value> Operands { get; }
 
         internal MetadataAsValue( LLVMValueRef valueRef )
@@ -32,7 +29,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /*
-        //public static implicit operator Metadata( MetadataAsValue self )
+        //public static implicit operator IrMetadata( MetadataAsValue self )
         //{
         //    // TODO: Add support to get the metadata ref from the value...
         //    // e.g. call C++ MetadataAsValue.getMetadata()

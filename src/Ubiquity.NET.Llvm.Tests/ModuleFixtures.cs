@@ -5,38 +5,37 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop;
-
-[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Unit Tests" )]
-
-namespace Ubiquity.NET.LlvmTests
+namespace Ubiquity.NET.Llvm.UT
 {
     // Provides common location for one time initialization for all tests in this assembly
     [TestClass]
     public static class ModuleFixtures
     {
         [AssemblyInitialize]
-        public static void AssemblyInitialize( TestContext ctx )
+        public static void AssemblyInitialize(TestContext ctx)
         {
-            if( ctx == null )
-            {
-                throw new ArgumentNullException( nameof( ctx ) );
-            }
+            ArgumentNullException.ThrowIfNull( ctx );
 
-            LibLLVM = Library.InitializeLLVM( );
-            LibLLVM.RegisterTarget( CodeGenTarget.All );
+            LibLLVM?.Dispose();
+
+            LibLLVM = Library.InitializeLLVM();
+            // Native is assumed, Tests also use Cortex-M3; so load that variant of
+            // the interop APIs.
+            // NOTE: Target tests may need to register all, but that's OK as it includes
+            //       these.
+            LibLLVM.RegisterTarget( CodeGenTarget.Native );
+            LibLLVM.RegisterTarget( CodeGenTarget.ARM );
         }
 
         [AssemblyCleanup]
-        public static void AssemblyCleanup( )
+        public static void AssemblyCleanup()
         {
-            LibLLVM?.Dispose( );
+            LibLLVM?.Dispose();
         }
 
-        private static ILibLlvm? LibLLVM;
+        internal static ILibLlvm? LibLLVM;
     }
 }

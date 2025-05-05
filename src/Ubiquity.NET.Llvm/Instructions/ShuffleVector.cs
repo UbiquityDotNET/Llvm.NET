@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to shuffle the elements of a vector</summary>
-    public class ShuffleVector
+    public sealed class ShuffleVector
         : Instruction
     {
         internal ShuffleVector( LLVMValueRef valueRef )

@@ -4,33 +4,24 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-using Ubiquity.NET.Llvm.Properties;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
-    /// <summary>Base class for Global objects in an LLVM Module</summary>
+    /// <summary>Base class for Global objects in an LLVM ModuleHandle</summary>
     public class GlobalObject
         : GlobalValue
     {
         /// <summary>Gets or sets the alignment requirements for this object</summary>
         public uint Alignment
         {
-            get => LLVMGetAlignment( ValueHandle );
-            set => LLVMSetAlignment( ValueHandle, value );
+            get => LLVMGetAlignment( Handle );
+            set => LLVMSetAlignment( Handle, value );
         }
 
         /// <summary>Gets or sets the linker section this object belongs to</summary>
         public string Section
         {
-            get => LLVMGetSection( ValueHandle );
-            set => LLVMSetSection( ValueHandle, value );
+            get => LLVMGetSection( Handle ) ?? string.Empty;
+            set => LLVMSetSection( Handle, value );
         }
 
         /// <summary>Gets or sets the comdat attached to this object, if any</summary>
@@ -39,32 +30,24 @@ namespace Ubiquity.NET.Llvm.Values
         /// empty string will remove any comdat setting for the
         /// global object.
         /// </remarks>
-        public Comdat? Comdat
+        public Comdat Comdat
         {
             get
             {
-                LLVMComdatRef comdatRef = LLVMGetComdat( ValueHandle );
-                return comdatRef == default ? null : new Comdat( ParentModule, comdatRef );
+                LLVMComdatRef comdatRef = LLVMGetComdat( Handle );
+                return comdatRef == default ? default : new Comdat( comdatRef );
             }
 
-            set
-            {
-                if( value != null && value.Module != ParentModule )
-                {
-                    throw new ArgumentException( Resources.Mismatched_modules_for_Comdat, nameof( value ) );
-                }
-
-                LLVMSetComdat( ValueHandle, value?.ComdatHandle ?? LLVMComdatRef.Zero );
-            }
+            set => LLVMSetComdat( Handle, value.Handle );
         }
 
         /// <summary>Sets metadata for this value</summary>
-        /// <param name="kindID">Kind id for the metadata</param>
-        /// <param name="node">Metadata wrapped as a value</param>
-        public void SetMetadata( uint kindID, LlvmMetadata node )
+        /// <param name="kindID">Id id for the metadata</param>
+        /// <param name="node">IrMetadata wrapped as a value</param>
+        public void SetMetadata( uint kindID, IrMetadata node )
         {
-            node.ValidateNotNull( nameof( node ) );
-            LLVMGlobalSetMetadata( ValueHandle, kindID, node.MetadataHandle );
+            ArgumentNullException.ThrowIfNull( node );
+            LLVMGlobalSetMetadata( Handle, kindID, node.Handle );
         }
 
         /// <summary>Gets a snap-shot collection of the metadata for this global</summary>
@@ -73,11 +56,11 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                using var entries = LLVMGlobalCopyAllMetadata( ValueHandle, out size_t numEntries );
+                using var entries = LLVMGlobalCopyAllMetadata( Handle, out size_t numEntries );
                 for( long i = 0; i < numEntries.ToInt32( ); ++i )
                 {
                     LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
-                    yield return MDNode.FromHandle<MDNode>( handle.ThrowIfInvalid( ) )!;
+                    yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
                 }
             }
         }

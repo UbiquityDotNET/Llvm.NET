@@ -4,21 +4,20 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ObjectFileBindings;
 
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
-    // FUTURE: Convert to C# record for simplification and automatic implementations
+    // TODO: FIX/Rework this. BAD LLVM API
+    // LLVMRelocationIteratorRef is literally an iterator, however the elements it iterates
+    // are not referenceable, so ALL "properties" of the element are instead exposed
+    // as LLVM-C API calls. If this is disposed, then the entire iteration is Disposed
+    // not just a reference to the element.
+    // CONSIDER: perhaps figure out how to make this a ref struct like Comdat...
 
     /// <summary>Relocation entry in an <see cref="ObjectFile"/></summary>
     [DebuggerDisplay( "{Symbol.Name,nq}({Description,nq})[{Offset}]:{Value}" )]
-    public struct Relocation
-        : IEquatable<Relocation>
+    public readonly record struct Relocation
     {
         /// <summary>Gets the offset for this relocation</summary>
         public ulong Offset => LLVMGetRelocationOffset( IteratorRef );
@@ -39,32 +38,6 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the <see cref="Ubiquity.NET.Llvm.ObjectFile.Section"/> this relocation belongs to</summary>
         public Section Section { get; }
 
-        /// <summary>Performs equality checks against an <see cref="object"/></summary>
-        /// <param name="obj">object to test for equality with this instance</param>
-        /// <returns><see langword="true"/> if <paramref name="obj"/> is equal to this instance</returns>
-        public override bool Equals( object? obj ) => ( obj is Relocation other ) && Equals( other );
-
-        /// <summary>Gets a hash code for this <see cref="Relocation"/></summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode( ) => IteratorRef.GetHashCode( );
-
-        /// <summary>Equality comparison</summary>
-        /// <param name="left">left side of comparison</param>
-        /// <param name="right">right side of comparison</param>
-        /// <returns>Result of equality test</returns>
-        public static bool operator ==( Relocation left, Relocation right ) => left.Equals( right );
-
-        /// <summary>Inequality comparison</summary>
-        /// <param name="left">left side of comparison</param>
-        /// <param name="right">right side of comparison</param>
-        /// <returns>Result of inequality test</returns>
-        public static bool operator !=( Relocation left, Relocation right ) => !( left == right );
-
-        /// <summary>Performs equality checks against another <see cref="Relocation"/></summary>
-        /// <param name="other">object to test for equality with this instance</param>
-        /// <returns><see langword="true"/> if <paramref name="other"/> is equal to this instance</returns>
-        public bool Equals( Relocation other ) => IteratorRef.Equals( other.IteratorRef );
-
         internal Relocation( Section owningSection, LLVMRelocationIteratorRef iterator )
             : this( owningSection, iterator, true )
         {
@@ -73,9 +46,14 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         internal Relocation( Section owningSection, LLVMRelocationIteratorRef iterator, bool clone )
         {
             Section = owningSection;
-            IteratorRef = clone ? LibLLVMRelocationIteratorClone( iterator ) : iterator;
+            IteratorRef = clone ? LibLLVMRelocationIteratorClone( iterator ) : iterator.Move();
         }
 
+#pragma warning disable IDISP006 // Implement IDisposable
+
+        // Can't dispose the iterator, this is just a reference to one element
+        // the enumerator that produces these owns the native iterator.
         internal LLVMRelocationIteratorRef IteratorRef { get; }
+#pragma warning restore IDISP006 // Implement IDisposable
     }
 }

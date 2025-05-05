@@ -4,15 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.ArgValidators;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Support class to provide read/update semantics to the operands of a container element</summary>
@@ -35,13 +26,13 @@ namespace Ubiquity.NET.Llvm.Values
             get => GetOperand<T>( index );
             set
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
-                LLVMSetOperand( Container.ValueHandle, ( uint )index, value?.ValueHandle ?? default );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
+                LLVMSetOperand( Container.Handle, ( uint )index, value?.Handle ?? default );
             }
         }
 
         /// <summary>Gets the count of operands in this collection</summary>
-        public int Count => LLVMGetNumOperands( Container.ValueHandle );
+        public int Count => LLVMGetNumOperands( Container.Handle );
 
         /// <summary>Gets an enumerator for this collection</summary>
         /// <returns>Enumerator for the operands in this collection</returns>
@@ -67,7 +58,7 @@ namespace Ubiquity.NET.Llvm.Values
         public bool Contains( T? item ) => this.Any( n => n == item );
 
         /// <summary>Specialized indexer to get the element as a specific derived type</summary>
-        /// <typeparam name="TItem">Type of the element (must be derived from <see cref="LlvmMetadata"/></typeparam>
+        /// <typeparam name="TItem">Type of the element (must be derived from <see cref="IrMetadata"/></typeparam>
         /// <param name="i">index for the item</param>
         /// <returns>Item at the specified index</returns>
         /// <exception cref="ArgumentOutOfRangeException">index is out of range for the collection</exception>
@@ -77,8 +68,8 @@ namespace Ubiquity.NET.Llvm.Values
             where TItem : T
         {
             uint offset = ( uint )i.GetOffset(Count);
-            offset.ValidateRange( 0u, ( uint )Count, nameof( i ) );
-            return Value.FromHandle<TItem>( LLVMGetOperand( Container.ValueHandle, offset ) );
+            offset.ThrowIfOutOfRange( 0u, ( uint )Count );
+            return Value.FromHandle<TItem>( LLVMGetOperand( Container.Handle, offset ) );
         }
 
         internal ValueOperandListCollection( Value container )

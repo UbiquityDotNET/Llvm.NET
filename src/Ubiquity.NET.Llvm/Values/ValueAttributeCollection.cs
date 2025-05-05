@@ -4,16 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Ubiquity.NET.Llvm.Values
 {
     internal class ValueAttributeCollection
         : ICollection<AttributeValue>
     {
-        public ValueAttributeCollection( IAttributeAccessor container, FunctionAttributeIndex index )
+        public ValueAttributeCollection( IFunctionAttributeAccessor container, FunctionAttributeIndex index )
         {
             Container = container;
             Index = index;
@@ -41,17 +37,12 @@ namespace Ubiquity.NET.Llvm.Values
             return this.Any( a => a == item );
         }
 
-        public void CopyTo( AttributeValue[ ] array, int arrayIndex )
+        public void CopyTo( AttributeValue[ ]? array, int arrayIndex )
         {
-            /* ReSharper disable ConditionIsAlwaysTrueOrFalse */
-            /* ReSharper disable HeuristicUnreachableCode */
             if( array == null )
             {
                 return;
             }
-
-            /* ReSharper enable HeuristicUnreachableCode */
-            /* ReSharper enable ConditionIsAlwaysTrueOrFalse */
 
             foreach( AttributeValue attribute in this )
             {
@@ -70,7 +61,7 @@ namespace Ubiquity.NET.Llvm.Values
             bool retVal = Contains( item );
             if( item.IsEnum )
             {
-                Container.RemoveAttributeAtIndex( Index, item.Kind );
+                Container.RemoveAttributeAtIndex( Index, item.Id );
             }
             else
             {
@@ -82,7 +73,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
-        private readonly IAttributeAccessor Container;
+        private readonly IFunctionAttributeAccessor Container;
         private readonly FunctionAttributeIndex Index;
     }
 }

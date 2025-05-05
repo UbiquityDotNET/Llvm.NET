@@ -1,0 +1,21 @@
+# This is the top level TOC, it describes the entries along the horizontal top menu of all pages in this site
+# NOTE: docfx is finicky and silent on the various syntax forms of links here (including whether they result
+# in a link to something that even has a left nav!)
+# href: <foldername>/ => resolves to a link to the FIRST element of the TOC file (or chain) that produces HTML [Includes left nav]
+# href: <foldername>/index.md => or any other direct content link will link to that file; This is a more explicit form of the first form
+# href: <foldername>/toc.yml => Accepted but broken; generates a link to "undefined" AND any links to the index.md from that folder have no left NAV
+# Thus, this doc set always uses the more explicit second form
+- name: Source Repository
+  href: https://github.com/UbiquityDotNET/Llvm.NET
+- name: Projects
+  items:
+    - name: Llvm
+      href: llvm/index.md
+    - name: Runtime Utils
+      href: runtime-utils/index.md
+    - name: .NET Extensions
+      href: extensions/index.md
+    - name: ANTLR Utilities
+      href: antlr-utils/index.md
+    - name: Interop Helpers
+      href: interop-helpers/index.md

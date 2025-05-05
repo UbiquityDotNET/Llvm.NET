@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug Global variable expression</summary>
@@ -19,11 +15,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Gets the <see cref="DIGlobalVariable"/> for this node</summary>
         public DIGlobalVariable Variable
-            => FromHandle<DIGlobalVariable>( LLVMDIGlobalVariableExpressionGetVariable( MetadataHandle ).ThrowIfInvalid( ) )!;
+            => (DIGlobalVariable)LLVMDIGlobalVariableExpressionGetVariable( Handle ).ThrowIfInvalid( ).CreateMetadata( )!;
 
         /// <summary>Gets the <see cref="DIExpression"/> for this node</summary>
         public DIExpression Expression
-            => FromHandle<DIExpression>( LLVMDIGlobalVariableExpressionGetExpression( MetadataHandle ).ThrowIfInvalid( ) )!;
+            => (DIExpression)LLVMDIGlobalVariableExpressionGetExpression( Handle ).ThrowIfInvalid( ).CreateMetadata( )!;
 
         internal DIGlobalVariableExpression( LLVMMetadataRef handle )
             : base( handle )

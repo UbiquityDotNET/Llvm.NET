@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a local variable</summary>
@@ -15,8 +13,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         // ReSharper disable IdentifierTypo
         /* TODO: non-operand properties
-        public DebugInfoFlags => LLVMDILocalVariableGetFlags( MetadataHandle );
-        public UInt16 ArgIndex => LLVMDILocalVariableGetArg( MetadataHandle );
+        public DebugInfoFlags => LLVMDILocalVariableGetFlags( NativeHandle );
+        public UInt16 ArgIndex => LLVMDILocalVariableGetArg( NativeHandle );
         public bool IsParameter => ArgIndex != 0;
         */
 

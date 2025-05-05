@@ -1,0 +1,21 @@
+﻿TOPIC
+    about_CommonBuild
+
+SHORT DESCRIPTION
+    A module for common (Repo-independent) functionality of the Ubiquity.NET.* family of projects.
+
+LONG DESCRIPTION
+    A module for common (Repo-independent) functionality of the Ubiquity.NET.* family of projects.
+    This module contains build support scripts that are (ideally) platform agnostic and repository
+    agnostic. (The platform agnosticism is a work in progress, there are several places where it
+    does matter and those are currently implemented to detect Windows-X64 and error out if not.
+    Eventually those should expand to support more/all runtimes)
+
+EXAMPLES
+    Examples of how to use the module or how the subject feature works in practice.
+
+KEYWORDS
+    Terms or titles on which you might expect your users to search for the information in this topic.
+
+SEE ALSO
+    Text-only references for further reading. Hyperlinks can't work in the PowerShell console.

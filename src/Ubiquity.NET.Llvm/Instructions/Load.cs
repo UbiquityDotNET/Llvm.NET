@@ -4,22 +4,18 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to read from memory</summary>
     /// <seealso href="xref:llvm_langref#load-instruction">LLVM load Instruction</seealso>
-    public class Load
+    public sealed class Load
         : UnaryInstruction
     {
         /// <summary>Gets or sets a value indicating whether this load is volatile</summary>
         public bool IsVolatile
         {
-            get => LLVMGetVolatile( ValueHandle );
-            set => LLVMSetVolatile( ValueHandle, value );
+            get => LLVMGetVolatile( Handle );
+            set => LLVMSetVolatile( Handle, value );
         }
 
         internal Load( LLVMValueRef valueRef )

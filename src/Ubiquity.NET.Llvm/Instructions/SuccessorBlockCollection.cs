@@ -4,15 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Values;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Support class to provide read/update semantics for the successor blocks of an instruction</summary>
@@ -29,19 +20,19 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
-                return BasicBlock.FromHandle(LLVMGetSuccessor( Container.ValueHandle, (uint)index ))!;
+                index.ThrowIfOutOfRange( 0, Count - 1 );
+                return BasicBlock.FromHandle(LLVMGetSuccessor( Container.Handle, (uint)index ))!;
             }
 
             set
             {
-                index.ValidateRange( 0, Count - 1, nameof( index ) );
-                LLVMSetSuccessor( Container.ValueHandle, ( uint )index, value?.BlockHandle ?? default );
+                index.ThrowIfOutOfRange( 0, Count - 1 );
+                LLVMSetSuccessor( Container.Handle, ( uint )index, value?.BlockHandle ?? default );
             }
         }
 
         /// <summary>Gets the count of elements in this collection</summary>
-        public int Count => checked((int)LLVMGetNumSuccessors( Container.ValueHandle ));
+        public int Count => checked((int)LLVMGetNumSuccessors( Container.Handle ));
 
         /// <summary>Gets an enumerator for the <see cref="BasicBlock"/>s in this collection</summary>
         /// <returns>Enumerator for the collection</returns>
@@ -49,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             for( int i = 0; i < Count; ++i )
             {
-                yield return BasicBlock.FromHandle( LLVMGetSuccessor( Container.ValueHandle, ( uint )i ) )!;
+                yield return BasicBlock.FromHandle( LLVMGetSuccessor( Container.Handle, ( uint )i ) )!;
             }
         }
 
@@ -58,7 +49,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
 
         /// <inheritdoc/>
-        public bool Contains( BasicBlock item ) => this.Any( n => n == item );
+        public bool Contains( BasicBlock item ) => this.Any( n => n.Equals( item ) );
 
         internal SuccessorBlockCollection( Instruction container )
         {

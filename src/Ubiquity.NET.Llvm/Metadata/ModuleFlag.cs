@@ -4,22 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Properties;
-using Ubiquity.NET.Llvm.Values;
-
-namespace Ubiquity.NET.Llvm
+namespace Ubiquity.NET.Llvm.Metadata
 {
-    /// <summary>Module Flags Tuple for a module</summary>
+    /// <summary>ModuleHandle Flags Tuple for a module</summary>
     public class ModuleFlag
     {
         /// <summary>Initializes a new instance of the <see cref="ModuleFlag"/> class.</summary>
         /// <param name="behavior">Behavior for the flag</param>
         /// <param name="name">Name of the flag</param>
-        /// <param name="metadata">Metadata for the flag</param>
-        public ModuleFlag( ModuleFlagBehavior behavior, string name, LlvmMetadata metadata )
+        /// <param name="metadata">IrMetadata for the flag</param>
+        public ModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata metadata )
         {
             Behavior = behavior;
             Name = name;
@@ -32,28 +26,29 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the name of flag</summary>
         public string Name { get; }
 
-        /// <summary>Gets the Metadata for this flag</summary>
-        public LlvmMetadata Metadata { get; }
+        /// <summary>Gets the IrMetadata for this flag</summary>
+        public IrMetadata Metadata { get; }
 
         internal ModuleFlag( MDNode node )
         {
-            node.ValidateNotNull( nameof( node ) );
+            ArgumentNullException.ThrowIfNull( node );
+
             if( node.Operands.Count != 3 )
             {
                 throw new ArgumentException( Resources.Expected_node_with_3_operands, nameof( node ) );
             }
 
-            if( !( node.Operands[ 0 ] is ConstantAsMetadata behavior ) )
+            if( node.Operands[ 0 ] is not ConstantAsMetadata behavior)
             {
                 throw new ArgumentException( Resources.Expected_ConstantAsMetadata_for_first_operand, nameof( node ) );
             }
 
-            if( !( behavior.Constant is ConstantInt behaviorConst ) )
+            if( behavior.Constant is not ConstantInt behaviorConst)
             {
                 throw new ArgumentException( Resources.Expected_ConstantInt_wrapped_in_first_operand, nameof( node ) );
             }
 
-            if( !( node.Operands[ 1 ] is MDString nameMd ) )
+            if( node.Operands[ 1 ] is not MDString nameMd)
             {
                 throw new ArgumentException( Resources.Expected_MDString_as_second_operand, nameof( node ) );
             }

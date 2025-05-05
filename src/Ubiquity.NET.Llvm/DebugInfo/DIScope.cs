@@ -4,10 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for all Debug information scopes</summary>
@@ -16,16 +12,19 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Gets the <see cref="DIFile"/> describing the file this scope belongs to</summary>
         /// <remarks>If this scope is a <see cref="DIFile"/> then this returns <see langword="this"/></remarks>
+        [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Multi leveled conditional operators are NOT simpler!" )]
         public DIFile? File
         {
             get
             {
-                if( MetadataHandle == default )
+                if( Handle == default )
                 {
                     return null;
                 }
 
-                return this is DIFile file ? file : FromHandle<DIFile>( LLVMDIScopeGetFile( MetadataHandle ) );
+                return this is DIFile file
+                     ? file
+                     : (DIFile?)LLVMDIScopeGetFile( Handle ).CreateMetadata( );
             }
         }
 

@@ -4,13 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
-
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 // Interface+internal type matches file name
 #pragma warning disable SA1649
 
@@ -41,32 +34,24 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>Sets the body of the structure</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
         /// <param name="elements">Types of each element (may be empty)</param>
-        void SetBody( bool packed, params ITypeRef[ ] elements );
-
-        /// <summary>Sets the body of the structure</summary>
-        /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
-        /// <param name="elements">Types of each element (may be empty)</param>
-        void SetBody( bool packed, IEnumerable<ITypeRef> elements );
+        void SetBody( bool packed, params IEnumerable<ITypeRef> elements );
     }
 
-    internal class StructType
+    internal sealed class StructType
         : TypeRef
         , IStructType
     {
-        public void SetBody( bool packed, IEnumerable<ITypeRef> elements )
+        public void SetBody( bool packed, params IEnumerable<ITypeRef> elements )
         {
-            LLVMTypeRef[ ] llvmArgs = elements.Select( e => e.GetTypeRef() ).ToArray( );
-            LLVMStructSetBody( TypeRefHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
+            LLVMTypeRef[ ] llvmArgs = [ .. elements.Select( e => e.GetTypeRef() ) ];
+            LLVMStructSetBody( Handle, llvmArgs, ( uint )llvmArgs.Length, packed );
         }
 
-        public void SetBody( bool packed, params ITypeRef[ ] elements )
-            => SetBody(packed, (IEnumerable<ITypeRef>)elements);
+        public string Name => LLVMGetStructName( Handle ) ?? string.Empty;
 
-        public string Name => LLVMGetStructName( TypeRefHandle );
+        public bool IsOpaque => LLVMIsOpaqueStruct( Handle );
 
-        public bool IsOpaque => LLVMIsOpaqueStruct( TypeRefHandle );
-
-        public bool IsPacked => LLVMIsPackedStruct( TypeRefHandle );
+        public bool IsPacked => LLVMIsPackedStruct( Handle );
 
         public IReadOnlyList<ITypeRef> Members
         {
@@ -75,13 +60,14 @@ namespace Ubiquity.NET.Llvm.Types
                 var members = new List<ITypeRef>( );
                 if( Kind == TypeKind.Struct && !IsOpaque )
                 {
-                    uint count = LLVMCountStructElementTypes( TypeRefHandle );
+                    uint count = LLVMCountStructElementTypes( Handle );
                     if( count > 0 )
                     {
                         var structElements = new LLVMTypeRef[ count ];
-                        LLVMGetStructElementTypes( TypeRefHandle, out structElements[ 0 ] );
-                        members.AddRange( from e in structElements
-                                          select FromHandle<ITypeRef>( e.ThrowIfInvalid( ) )!
+                        LLVMGetStructElementTypes( Handle, structElements );
+
+                        members.AddRange( from hRef in structElements
+                                          select hRef.CreateType()
                                         );
                     }
                 }

@@ -1,7 +1,0 @@
-references:
-  - uid: current-release
-    name: Current Release
-    href: current/index.html
-  - uid: release-8-0-1
-    name: v8.0.1
-    href: v8.0.1/index.html

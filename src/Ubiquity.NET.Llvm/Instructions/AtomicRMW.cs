@@ -4,11 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.ArgValidators;
-using Ubiquity.NET.Llvm.Interop;
-
-using static Ubiquity.NET.Llvm.Interop.NativeMethods;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Atomic Read-Modify-Write operation</summary>
@@ -56,14 +51,14 @@ namespace Ubiquity.NET.Llvm.Instructions
 
     /// <summary>Atomic Read-Modify-Write instruction</summary>
     /// <seealso href="xref:llvm_langref#atomicrmw-instruction">LLVM atomicrmw instruction</seealso>
-    public class AtomicRMW
+    public sealed class AtomicRMW
             : Instruction
     {
         /// <summary>Gets or sets the kind of atomic operation for this instruction</summary>
         public AtomicRMWBinOp Kind
         {
-            get => ( AtomicRMWBinOp )LLVMGetAtomicRMWBinOp( ValueHandle );
-            set => LLVMSetAtomicRMWBinOp( ValueHandle, ( LLVMAtomicRMWBinOp )value.ValidateDefined( nameof( value ) ) );
+            get => ( AtomicRMWBinOp )LLVMGetAtomicRMWBinOp( Handle );
+            set => LLVMSetAtomicRMWBinOp( Handle, ( LLVMAtomicRMWBinOp )value.ThrowIfNotDefined() );
         }
 
         internal AtomicRMW( LLVMValueRef valueRef )

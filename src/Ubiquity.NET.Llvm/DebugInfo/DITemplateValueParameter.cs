@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Template Value parameter</summary>
@@ -13,11 +11,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     public class DITemplateValueParameter
         : DITemplateParameter
     {
-        /// <summary>Gets the value of the parameter as Metadata</summary>
-        /// <typeparam name="T">Metadata type of the value to get</typeparam>
+        /// <summary>Gets the value of the parameter as IrMetadata</summary>
+        /// <typeparam name="T">IrMetadata type of the value to get</typeparam>
         /// <returns>Value or <see langword="null"/> if the value is not convertible to <typeparamref name="T"/></returns>
         public T GetValue<T>( )
-            where T : LlvmMetadata
+            where T : IrMetadata
         {
             return GetOperand<T>( 2 ) ?? throw new InternalCodeGeneratorException( "Could not get a valid value from LLVM interop" );
         }

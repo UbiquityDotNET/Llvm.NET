@@ -1,21 +1,15 @@
-# Attribution
+# Ubiquity DOCFX template
+This template adds support to the syntx highlighting provided by [HightlightJS](https://highlightjs.readthedocs.io/en/latest/supported-languages.html).
+The languages added are for ANTLR^1^ (Which seems bizarre it isn't already covered given the
+esoteric nature of some of the supported languages...) and of course the `Kaleidoscope`
+language, which was made up entirely for the purposes of LLVM tutorials. (No surprise that one
+isn't supported)
 
-This template is a modification of the template provided by Mathew Sachin
-see: https://github.com/MathewSachin/docfx-tmpl
-combined with modifications of the DocFX memberpage template
-
-Changes:
-* Dark color theme
-* Changed tags for many headers for items rendering really small due to use of h5/h6
-* Modified Enum template from member-pages to remove redundant table headers
-* Modified Class template from member-pages to remove redundant headers
-* Modified Collections template from default to remove redundant headers
-* Fixed bug on class namespace name rendering (Was always saying System.Dynamic.ExpandoObject)
-* Added Collapse region for Inherited Members list (Initially collapsed)
-* Added Collapse region for Inheritance chain (Initially collapsed)
-* Added Collapse region for Derived classes list (Initially collapsed)
-* Added Collapse region for Implemented interfaces (Initially collapsed)
-* Added llvm IR, and EBNF from highlightjs.org as those languages are not part of the docfx.vendor.js by default
-* Added custom ANTLR grammar syntax highlighting as that is not part of standard grammars for highlight js
-* Added custom Kaleidoscope grammar syntax highlighting as that is not part of standard grammars for highlight js
-
+^1^The support for ANTLR is not present. DOCFX officially documents that Highlight JS
+extensibility is supported by this. It even has an example. However, that example uses
+a language that is built-in to Highlight JS already. It doesn't seem to actually use
+this extention point as the Kaleidoscope highlighting never happens ([Local MarkDig
+based editor](https://github.com/MadsKristensen/MarkdownEditor2022) will render the
+ANTLR with syntax highlighting [That seems to be using PRISM for highlighting though].
+But the final docs hosted by DOCFX do not. Thus, this functionality is currently
+broken.

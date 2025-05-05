@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Ubiquity.NET.Llvm.Interop;
-
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>Instruction to indicate an unreachable location</summary>
-    public class Unreachable
+    public sealed class Unreachable
         : Terminator
     {
         internal Unreachable( LLVMValueRef valueRef )
