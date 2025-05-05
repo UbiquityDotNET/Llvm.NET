@@ -40,9 +40,6 @@ namespace ReferenceEqualityVerifier
         [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification="No loss of information, exception is converted to a diagnostic")]
         private void BinaryOpAction( OperationAnalysisContext context )
         {
-#pragma warning disable RS1035 // Do not use APIs banned for analyzers
-            File.WriteAllText(@"D:\Github\Test1.txt", "this is a test");
-#pragma warning restore RS1035 // Do not use APIs banned for analyzers
             try
             {
                 if(!(context.Operation is IBinaryOperation op))
@@ -75,6 +72,13 @@ namespace ReferenceEqualityVerifier
                     // Incomplete syntax is handled as OK for this analyzer.
                     // Other parts of the compilation/Analyzers can complain as needed
                     // but it should not break this analyzer!
+                    return;
+                }
+
+                // If either one is a value type, not a relevant comparison for this analyzer
+                // NOTE: Mixed types is a syntax error but not one reported by this analyzer.
+                if( lht.IsValueType || rht.IsValueType)
+                {
                     return;
                 }
 
