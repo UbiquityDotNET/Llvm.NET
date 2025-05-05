@@ -75,11 +75,14 @@ try
         Configuration = $Configuration
     }
 
+    Write-Information "Current Build information"
+    Show-FullBuildInfo $buildInfo
+
     # make sure the supported tool is installed.
     Invoke-External dotnet tool install --global docfx --version $docFXToolVersion | Out-Null
 
     $docsOutputPath = $buildInfo['DocsOutputPath']
-    Write-Verbose "Docs OutputPath: $docsOutputPath"
+    Write-Information "Docs OutputPath: $docsOutputPath"
 
     if(!$ServeDocs)
     {
