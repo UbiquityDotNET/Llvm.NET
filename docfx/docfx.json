@@ -1,62 +1,65 @@
 {
     "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
     "metadata": [
+        // [Sigh] - docfx tooling will process and report warnings etc.. on projects found BEFORE it
+        // deals with the exclusion list so a simple glob for all csproj files doesn't work. It creates
+        // warnings and returns a non-success value which stops the build.
         {
             // LLVM OO Wrappers library
+            "memberLayout":"separatePages",
+            "namespaceLayout":"nested",
             "src": [
                 {
-                    "files": [
-                        "**.csproj"
-                    ],
-                    "src": "../src/Ubiquity.NET.Llvm"
+                    "src": "../src/Ubiquity.NET.Llvm",
+                    "files": ["**.csproj"]
                 }
             ],
             "dest": "llvm/api"
         },
         {
             // Runtime utilities library
+            "memberLayout":"separatePages",
+            "namespaceLayout":"nested",
             "src": [
                 {
-                    "files": [
-                        "**.csproj"
-                    ],
-                    "src": "../src/Ubiquity.NET.Runtime.Utils"
+                    "src": "../src/Ubiquity.NET.Runtime.Utils",
+                    "files": ["**.csproj"]
                 }
             ],
             "dest": "runtime-utils/api"
         },
         {
             // Extensions library
+            "memberLayout":"separatePages",
+            "namespaceLayout":"nested",
             "src": [
                 {
-                    "files": [
-                        "**.csproj"
-                    ],
-                    "src": "../src/Ubiquity.NET.Extensions"
+                    "src": "../src/Ubiquity.NET.Extensions",
+                    "files": ["**.csproj"]
                 }
             ],
             "dest": "extensions/api"
         },
         {
             // ANTLR Utilities library
+            "memberLayout":"separatePages",
+            "namespaceLayout":"nested",
             "src": [
                 {
-                    "files": [
-                        "**.csproj"
-                    ],
-                    "src": "../src/Ubiquity.NET.ANTLR.Utils"
+                    "src": "../src/Ubiquity.NET.ANTLR.Utils",
+                    "files": ["**.csproj"]
                 }
             ],
             "dest": "antlr-utils/api"
         },
         {
             // Interop helpers library
+            "memberLayout":"separatePages",
+            "namespaceLayout":"nested",
             "src": [
                 {
-                    "files": [
-                        "**.csproj"
-                    ],
-                    "src": "../src/Ubiquity.NET.InteropHelpers"
+                    "src": "../src/Ubiquity.NET.InteropHelpers",
+                    "files": ["**.csproj"]
                 }
             ],
             "dest": "interop-helpers/api"
@@ -68,10 +71,10 @@
             "llvm/api/llvm-xref.yml",
             "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json"
         ],
+        // NOTE: Unless overridden by a "src" key, All File paths are relative to the location of this docfx.json file
         "content": [
             {
                 // Root of the site; only uses the index and TOC explicitly named (NO GLOBS to confuse things!)
-                // NOTE: File paths are relative to the location of this docfx.json file
                 "files": [
                     "index.md",
                     "toc.yml"
@@ -79,11 +82,9 @@
             },
             {
                 // LLVM project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
                 "files": [
                     "llvm/**.{md,yml}"
                 ],
-                "dest": "llvm",
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [
                     "**/namespaces/**.md",
@@ -110,12 +111,11 @@
                 ]
             },
             {
-                // ANTLR Utils project additional content, Includes the generated metadata API folder
+                // Runtime Utils project additional content, Includes the generated metadata API folder
                 // NOTE: File paths are relative to the location of this file
                 "files": [
-                    "antlr-utils/**.{md,yml}"
+                    "runtime-utils/**.{md,yml}"
                 ],
-                "dest": "antlr-utils",
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [
                     "**/namespaces/**.md",
@@ -124,11 +124,20 @@
             },
             {
                 // extensions project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
                 "files": [
                     "extensions/**.{md,yml}"
                 ],
-                "dest": "extensions",
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // ANTLR Utils project additional content, Includes the generated metadata API folder
+                "files": [
+                    "antlr-utils/**.{md,yml}"
+                ],
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [
                     "**/namespaces/**.md",
@@ -137,24 +146,9 @@
             },
             {
                 // InteropHelpers project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
                 "files": [
                     "interop-helpers/**.{md,yml}"
                 ],
-                "dest": "interop-helpers",
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
-                // Runtime Utils project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
-                "files": [
-                    "runtime-utils/**.{md,yml}"
-                ],
-                "dest": "runtime-utils",
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [
                     "**/namespaces/**.md",
@@ -173,7 +167,7 @@
             },
             {
                 // LVM library samples specific resources
-                // TODO: Move the samples folder so this is included above
+                // FUTURE: Move the samples folder so this is included above
                 "files": [
                     "**.png",
                     "**.svg"
@@ -201,7 +195,7 @@
         "globalMetadata": {
             "_appTitle": "Ubiquity.NET",
             "_appFooter": "Copyright (C) 2017-2025, Ubiquity.NET Contributors",
-            "_appLogoPath": "DragonSharp48x48.png", // TODO: change this to something more generic...
+            "_appLogoPath": "llvm/DragonSharp48x48.png", // TODO: change this to something more generic...
             "_disableBreadcrumb": true,
             "_gitContribute": {
                 "repo": "https://github.com/UbiquityDotNET/Llvm.NET",

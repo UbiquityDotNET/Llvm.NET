@@ -23,7 +23,7 @@ The Kaleidoscope lexer consists of several tokens and is defined in the
 [Kaleidoscope.g4](https://github.com/UbiquityDotNET/Llvm.NET/blob/master/Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4)
 grammar file.
 
-```antlr
+``` antlr
 // Lexer Rules -------
 fragment NonZeroDecimalDigit_: [1-9];
 fragment DecimalDigit_: [0-9];
@@ -140,7 +140,7 @@ operator tokens by their allowed kinds. This allows subsequent rules to simply r
 operator expected and not worry about the actual tokens involved. It also allows the parser to detect
 syntax and usage errors like trying to create a user defined '+' operator.
 
-```antlr
+``` antlr
 // built-in operator symbols
 builtinop
     : ASSIGN
@@ -228,7 +228,7 @@ The Initializers rule provides a way to handle a common sequence in the language
 contexts (sort of like a function in most programming languages, in fact, ANTLR rules are implemented
 in the generated parser as methods).
 
-```antlr
+``` antlr
 // pull the initializer out to a distinct rule so it is easier to get at
 // the list of initializers when walking the parse tree
 initializer
@@ -242,7 +242,7 @@ There are a number of primary expressions (also known as 'Atoms') that are not l
 definition. These are split out to a distinct rule to aid in the support of left recursion and the need
 for user defined operator precedence.
 
-```antlr
+``` antlr
 // Non Left recursive expressions (a.k.a. atoms)
 primaryExpression
     : LPAREN expression[0] RPAREN                                                 # ParenExpression
@@ -259,7 +259,7 @@ primaryExpression
 Let's look at each of these in turn to get a better understanding of the language.
 
 ### ParenExpression
-```antlr
+``` antlr
 LPAREN expression[0] RPAREN
 ```
 This is a simple rule for sub-expressions within parenthesis for example: `(1+2)/3` the parenthesis groups
@@ -269,7 +269,7 @@ The parse tree for that expression looks like this:
 ![Parse Tree](./parsetree-paren-expr.svg)
 
 ### FunctionCallExpression
-```antlr
+``` antlr
 Identifier LPAREN (expression[0] (COMMA expression[0])*)? RPAREN
 ```
 This rule covers a function call which can have 0 or more comma delimited arguments. The parse tree
@@ -278,7 +278,7 @@ for the call `foo(1, 2, 3);` is:
 ![Parse Tree](./parsetree-func-call.svg)
 
 ### VarInExpression
-```antlr
+``` antlr
 VAR initializer (COMMA initializer)* IN expression[0]
 ```
 The VarInExpression rule provides variable declaration, with optional initialization. The scope of the
@@ -287,7 +287,7 @@ in many ways like a declaration of an inline function. The variables declared ar
 implementation of the function. Once the function produces the return value the variables no longer exist.
 
 ### ConditionalExpression
-```antlr
+``` antlr
 IF expression[0] THEN expression[0] ELSE expression[0]
 ```
 Conditional expressions use the very common and familiar if-then-else syntax and semantics with one
@@ -298,12 +298,12 @@ sub-expression selected based on the condition. The condition value is computed 
 executed to produce the result. Thus, the actual semantics are more like the ternary operator found C and
 other languages:
 
-```C
+``` C
 condition ? thenExpression : elseExpression
 ```
 
 Example:
-```Kaleidoscope
+``` Kaleidoscope
 def fib(x)
   if x < 3 then
     1
@@ -316,7 +316,7 @@ The ForInExpression provides support for classic for loop constructs. In particu
 scope for a loop value, a condition to test when to exit the loop and an optional step value for incrementing
 the loop value (default is 1.0).
 
-```Kaleidoscope
+``` Kaleidoscope
 extern putchard(char);
 def printstar(n)
   for i = 1, i < n, 1.0 in

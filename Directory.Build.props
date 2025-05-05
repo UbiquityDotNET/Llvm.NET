@@ -54,6 +54,13 @@
         <!--<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>-->
     </PropertyGroup>
     <Choose>
+        <!-- Apply standard properties to special build projects -->
+        <When Condition="'$(MSBuildProjectExtension)'=='.msbuildproj' and '$(DisableDirProps)'!='true'">
+            <PropertyGroup>
+                <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+            </PropertyGroup>
+        </When>
+
         <!-- Apply standard properties for all C# projects -->
         <When Condition="'$(MSBuildProjectExtension)'=='.csproj' and '$(DisableDirProps)'!='true'">
             <PropertyGroup>

@@ -9,7 +9,7 @@ generating code from the parsed language. Each type of node in the tree implemen
 This interface provides the basic properties of any node in the tree for common uses. The Kaleidoscope
 language is a simple one and, therefore, has only a few kinds of nodes. The AST consist of the following
 basic categories of nodes:
- * [AST Node](#ast-node)
+ * [Root Node](#root-node)
     * [Function Declaration](#function-declaration)
     * [Function Definition](#function-definition)
     * [Variable Declaration](#variable-declaration)
@@ -25,11 +25,11 @@ basic categories of nodes:
       * [For-In](#for-in)
       * [Var-In](#var-in)
 
-## AST Node
+## Root Node
 The AstNode class forms the common base for all AST nodes, it provides the common location
 support for all nodes.
 
-[!code-csharp[IAstNode](AstNode.cs)]
+[!code-csharp[RootNode](RootNode.cs)]
 
 ## Function Definition
 FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature

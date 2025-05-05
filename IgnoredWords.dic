@@ -2,6 +2,7 @@ ABI
 Addr
 alloca
 anonymize
+antlr
 api
 app
 apps
@@ -19,15 +20,18 @@ blockdiag
 blog
 bool
 buildbinoutput
+buildtransitive
 builtinop
 byref
 cibuild
 Cmp
 Config
 const
+contentfiles
 Contributors
 crlf
 csharp
+csproj
 de
 defacto
 dllimport
@@ -45,6 +49,7 @@ func
 gh
 github
 Globalization
+Hashtable
 Identifier
 inline
 inlined
@@ -75,6 +80,7 @@ repo
 RMW
 runtimes
 RValue
+src
 struct
 structs
 Subrange
@@ -89,6 +95,7 @@ undiscoverable
 userdefinedop
 Users
 usings
+utils
 vcxproj
 versioned
 versioning

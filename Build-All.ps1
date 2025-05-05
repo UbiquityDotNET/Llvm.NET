@@ -5,10 +5,6 @@
 .PARAMETER Configuration
     This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
 
-.PARAMETER AllowVsPreReleases
-    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
-    useful when adding support for new versions during the pre-release stages.
-
 .PARAMETER ForceClean
     Forces a complete clean (Recursive delete of the build output)
 
