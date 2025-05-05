@@ -35,6 +35,9 @@ Param(
     [System.String]$BuildMode = 'All'
 )
 
+$ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
+
 Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
@@ -63,12 +66,12 @@ try
 
     if($BuildSource)
     {
-        .\Build-Source.ps1
+        .\Build-Source.ps1 -Configuration:$Configuration
     }
 
     if($BuildDocs)
     {
-        .\Build-Docs.ps1
+        .\Build-Docs.ps1 -Configuration:$Configuration
     }
 }
 catch
