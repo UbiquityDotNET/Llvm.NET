@@ -28,30 +28,30 @@ jobs:
            persist-credentials: false
 
       - name: Build Source
-        run: .\Build-All.ps1 -ForceClean -BuildMode Source
+        run: ./Build-All.ps1 -ForceClean -BuildMode Source
 
       - name: Publish build logs
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
             name: Build Logs
-            path: .\BuildOutput\BinLogs
+            path: ./BuildOutput/BinLogs
 
       - name: Publish NuGET Packages
         uses: actions/upload-artifact@v4
         with:
             name: NuGet Packages
-            path: .\BuildOutput\NuGet
+            path: ./BuildOutput/NuGet
 
       - name: Run Tests
-        run: .\Invoke-UnitTests.ps1
+        run: ./Invoke-UnitTests.ps1
 
       - name: Publish test logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
             name: Test Logs
-            path: .\BuildOutput\Test-Results
+            path: ./BuildOutput/Test-Results
 
   build-docs:
     runs-on: windows-latest
@@ -62,17 +62,19 @@ jobs:
            persist-credentials: false
 
       - name: Build Docs
-        run: .\Build-Docs.ps1 -FullInit -Configuration Release
+        run: ./Build-Docs.ps1 -FullInit -Configuration Release
 
       - name: Upload docs artifact
         uses: actions/upload-artifact@v4
         with:
             name: Docs
-            path: .\BuildOutput\docs\current
+            path: |
+              BuildOutput/docs/
+              !BuildOutput/docs/.git/**
 
       - name: Publish build logs
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
             name: Build Logs
-            path: .\BuildOutput\BinLogs
+            path: ./BuildOutput/BinLogs
