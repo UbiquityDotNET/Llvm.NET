@@ -1,5 +1,6 @@
 # This script is a generalized script entry point for module support that is easily cloned for other modules
-# and is independent of the module's functionality.
+# and is independent of the module's functionality. This is invocable using the PS module name qualifier
+# syntax `<ModuleName>/Get-ExportedFunctionNames`
 
 function Get-ExportedFunctionNames
 {

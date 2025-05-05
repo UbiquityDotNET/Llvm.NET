@@ -99,7 +99,13 @@ function Initialize-CommonBuildEnvironment
         # spelunking the process. This isn't as bad as it might seem as the
         # installer will create persistent use of this as a Windows Terminal
         # "profile" and the actual command is exposed.
-        winget install Microsoft.VisualStudio.Locator | Out-Null
+        if($null -eq (Find-OnPath vswhere))
+        {
+            # NOTE: automated builds in Github do NOT include winget (for reasons unknown)
+            # However, they do contain VSWHERE so should not hit this.
+            winget install Microsoft.VisualStudio.Locator | Out-Null
+        }
+
         $vsShellModulePath = vswhere -find **\Microsoft.VisualStudio.DevShell.dll
         $vsToolsArch = Get-VsArchitecture
         if(!$vsShellModulePath)
