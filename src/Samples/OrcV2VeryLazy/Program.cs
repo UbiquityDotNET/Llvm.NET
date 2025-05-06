@@ -34,7 +34,7 @@ internal class Program
         // occurs that prevents completion of the transfer. When transfer completes the
         // MU is marked as disposed but a call to Dispose() is a safe NOP. Thus, this handles
         // all conditions consistently
-        using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
+        using var fooMu = new CustomMaterializationUnit("FooMU"u8, Materialize, fooSym);
         jit.MainLib.Define(fooMu);
 
         using var internedBarBodyName = jit.MangleAndIntern(BarBodySymbolName);
@@ -42,14 +42,14 @@ internal class Program
             [internedBarBodyName] = flags,
         }.ToImmutable();
 
-        using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
+        using var barMu = new CustomMaterializationUnit("BarMU"u8, Materialize, barSym);
         jit.MainLib.Define(barMu);
 
         using var ism = new LocalIndirectStubsManager(triple);
         using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
 
-        using var internedFoo = jit.MangleAndIntern("foo");
-        using var internedBar = jit.MangleAndIntern("bar");
+        using var internedFoo = jit.MangleAndIntern("foo"u8);
+        using var internedBar = jit.MangleAndIntern("bar"u8);
 
         var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
             [internedFoo] = new(internedFooBodyName, flags),
@@ -59,7 +59,7 @@ internal class Program
         using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
         jit.MainLib.Define(lazyReExports);
 
-        UInt64 address = jit.Lookup("entry");
+        UInt64 address = jit.Lookup("entry"u8);
 
         unsafe
         {

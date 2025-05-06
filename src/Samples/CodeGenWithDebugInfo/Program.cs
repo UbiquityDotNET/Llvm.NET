@@ -248,7 +248,7 @@ namespace CodeGenWithDebugInfo
                                                 , debugFlags: DebugInfoFlags.Prototyped
                                                 , isOptimized: false
                                                 ).Linkage( Linkage.Internal ) // static function
-                                                 .AddAttributes( FunctionAttributeIndex.Function, "nounwind", "noinline", "optimizenone" )
+                                                 .AddAttributes( FunctionAttributeIndex.Function, "nounwind"u8, "noinline"u8, "optimizenone"u8 )
                                                  .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
 
             Debug.Assert( !fooPtr.IsOpaque(), "Expected the debug info for a pointer was created with a valid ElementType");
@@ -301,7 +301,7 @@ namespace CodeGenWithDebugInfo
                                      .RegisterName( "pDst.addr" )
                                      .SetAlignment( ptrAlign );
 
-            bool hasParam0ByVal = copyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval") is not null;
+            bool hasParam0ByVal = copyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval"u8) is not null;
             if( hasParam0ByVal )
             {
                 diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
@@ -363,7 +363,7 @@ namespace CodeGenWithDebugInfo
 
             // create instruction builder to build the body
             using var instBuilder = new InstructionBuilder( blk );
-            bool hasParam0ByVal = doCopyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval") is not null;
+            bool hasParam0ByVal = doCopyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval"u8) is not null;
             if( !hasParam0ByVal )
             {
                 // create a temp local copy of the global structure

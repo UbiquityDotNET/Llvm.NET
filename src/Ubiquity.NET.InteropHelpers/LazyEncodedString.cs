@@ -182,6 +182,11 @@ namespace Ubiquity.NET.InteropHelpers
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It's a convenience wrapper around an existing constructor" )]
         public static implicit operator LazyEncodedString(string managed) => new(managed);
 
+        /// <summary>Convenient implicit conversion of a managed string into a Lazily encoded string</summary>
+        /// <param name="utf8Data">Span of UTF8 characters to wrap with lazy encoding support</param>
+        [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It's a convenience wrapper around an existing constructor" )]
+        public static implicit operator LazyEncodedString(ReadOnlySpan<byte> utf8Data) => new(utf8Data);
+
         private readonly Encoding Encoding;
         private readonly Lazy<string> ManagedString;
 

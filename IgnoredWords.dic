@@ -1,4 +1,5 @@
 ABI
+Accessor
 Addr
 alloca
 anonymize
@@ -56,6 +57,7 @@ Identifier
 inline
 inlined
 Interop
+jit
 Lexer
 LibLLVM
 Llilum
@@ -99,10 +101,13 @@ Typedef
 uid
 unaryop
 undiscoverable
+uniqued
+uniqueing
 userdefinedop
 Users
 usings
 utils
+variadic
 vcxproj
 versioned
 versioning
