@@ -6,19 +6,9 @@ export function antlr(hljs)
 {
     // lexer rules always begin with uppercase character
     const lexerIdent_RE = '\\b[A-Z]' + hljs.UNDERSCORE_IDENT_RE + '\\b';
-    const lexerIdent = {
-        scope: 'LexerRuleName',
-        begin: lexerIdent_RE,
-        relevance: 0
-    };
 
     // grammar rules always begin with a lowercase character
     const grammarIdent_RE = '\\b[a-z]' + hljs.UNDERSCORE_IDENT_RE + '\\b';
-    const grammarIdent = {
-        scope: 'GrammarRuleName',
-        begin: grammarIdent_RE,
-        relevance: 0
-    };
 
     const semanticPredicate = {
         scope: 'SemanticPredicate',
@@ -38,6 +28,12 @@ export function antlr(hljs)
         }
     };
 
+    const lexerRuleRef = {
+        scope: 'LexerRuleRef',
+        begin: lexerIdent_RE,
+        relevance: 0
+    };
+
     const lexerRule = {
         scope: 'LexerRule',
         begin: [lexerIdent_RE, '\\s*', ':', '\\s*'],
@@ -51,7 +47,7 @@ export function antlr(hljs)
         contains: [
             semanticPredicate,
             lexerCommand,
-            lexerIdent,
+            lexerRuleRef,
             hljs.C_LINE_COMMENT_MODE,
             hljs.APOS_STRING_MODE,
             hljs.QUOTE_STRING_MODE,
@@ -70,6 +66,12 @@ export function antlr(hljs)
         ]
     };
 
+    const grammarRuleRef = {
+        scope: 'GrammarRuleRef',
+        begin: grammarIdent_RE,
+        relevance: 0
+    };
+
     const grammarRule = {
         scope: 'GrammarRule',
         begin: [grammarIdent_RE, '\\s*', ':', '\\s*'],
@@ -83,8 +85,8 @@ export function antlr(hljs)
         contains: [
             grammarAltName,
             semanticPredicate,
-            lexerIdent,
-            grammarIdent,
+            lexerRuleRef,
+            grammarRuleRef,
             hljs.C_LINE_COMMENT_MODE,
             hljs.APOS_STRING_MODE,
             hljs.QUOTE_STRING_MODE,
@@ -98,9 +100,10 @@ export function antlr(hljs)
         keywords: ['grammar', 'fragment', 'skip'],
         classNameAliases: {
             LexerRuleName: 'type',
+            LexerRuleRef: 'title.function.invoke',
             GrammarRuleName: 'type',
-            GrammarAltName: 'function',
-            // TODO: Fill these in once tagging is complete.
+            GrammarRuleRef: 'title.function.invoke',
+            GrammarAltName: 'title.function',
         },
         contains: [
             hljs.C_LINE_COMMENT_MODE,
