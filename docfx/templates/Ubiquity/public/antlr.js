@@ -99,9 +99,9 @@ export function antlr(hljs)
         aliases: ['antlr'],
         keywords: ['grammar', 'fragment', 'skip'],
         classNameAliases: {
-            LexerRuleName: 'type',
+            LexerRuleName: 'title.function',
             LexerRuleRef: 'title.function.invoke',
-            GrammarRuleName: 'type',
+            GrammarRuleName: 'title.function',
             GrammarRuleRef: 'title.function.invoke',
             GrammarAltName: 'title.function',
         },
