@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Immutable;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Types;
@@ -72,8 +73,8 @@ namespace CodeGenWithDebugInfo
 
             var layout = function.ParentModule.Layout;
             function.AddAttributes( FunctionAttributeIndex.Parameter0 + paramIndex
-                                  , function.Context.CreateAttribute( "byval", ptrType.ElementType)
-                                  , function.Context.CreateAttribute( "align", layout.AbiAlignmentOf( ptrType.ElementType! ) )
+                                  , function.Context.CreateAttribute( "byval"u8, ptrType.ElementType)
+                                  , function.Context.CreateAttribute( "align"u8, layout.AbiAlignmentOf( ptrType.ElementType! ) )
                                   );
         }
 
@@ -86,27 +87,28 @@ namespace CodeGenWithDebugInfo
 
         public ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
             => [
-                ctx.CreateAttribute( "correctly-rounded-divide-sqrt-fp-math", "false" ),
-                ctx.CreateAttribute( "disable-tail-calls", "false" ),
-                ctx.CreateAttribute( "less-precise-fpmad", "false" ),
-                ctx.CreateAttribute( "no-frame-pointer-elim", "true" ),
-                ctx.CreateAttribute( "no-frame-pointer-elim-non-leaf" ),
-                ctx.CreateAttribute( "no-infs-fp-math", "false" ),
-                ctx.CreateAttribute( "no-jump-tables", "false" ),
-                ctx.CreateAttribute( "no-nans-fp-math", "false" ),
-                ctx.CreateAttribute( "no-signed-zeros-fp-math", "false" ),
-                ctx.CreateAttribute( "no-trapping-math", "false" ),
-                ctx.CreateAttribute( "stack-protector-buffer-size", "8" ),
-                ctx.CreateAttribute( "target-cpu", Cpu ),
-                ctx.CreateAttribute( "target-features", Features ),
-                ctx.CreateAttribute( "unsafe-fp-math", "false" ),
-                ctx.CreateAttribute( "use-soft-float", "false" )
+                ctx.CreateAttribute( "correctly-rounded-divide-sqrt-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "disable-tail-calls"u8, "false"u8 ),
+                ctx.CreateAttribute( "less-precise-fpmad"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-frame-pointer-elim"u8, "true"u8 ),
+                ctx.CreateAttribute( "no-frame-pointer-elim-non-leaf"u8 ),
+                ctx.CreateAttribute( "no-infs-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-jump-tables"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-nans-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-signed-zeros-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-trapping-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "stack-protector-buffer-size"u8, "8"u8 ),
+                ctx.CreateAttribute( "target-cpu"u8, Cpu ),
+                ctx.CreateAttribute( "target-features"u8, Features ),
+                ctx.CreateAttribute( "unsafe-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "use-soft-float"u8, "false"u8 )
             ];
 
         private readonly ILibLlvm LlvmLib;
 
-        private const string Cpu = "cortex-m3";
-        private const string Features = "+hwdiv,+strict-align,+thumb-mode";
-        private const string TripleName = "thumbv7m-none--eabi";
+        // Sadly, these can't be utf8 literals, but, they can be static readonly LazyEncodedString!
+        private static readonly LazyEncodedString Cpu = "cortex-m3"u8;
+        private static readonly LazyEncodedString Features = "+hwdiv,+strict-align,+thumb-mode"u8;
+        private static readonly LazyEncodedString TripleName = "thumbv7m-none--eabi"u8;
     }
 }

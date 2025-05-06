@@ -228,7 +228,7 @@ namespace Kaleidoscope.Chapter8
 
                     if( definition.IsAnonymous )
                     {
-                        function.AddAttribute( FunctionAttributeIndex.Function, "alwaysinline")
+                        function.AddAttribute( FunctionAttributeIndex.Function, "alwaysinline"u8)
                                 .Linkage( Linkage.Private );
 
                         AnonymousFunctions.Add( function );

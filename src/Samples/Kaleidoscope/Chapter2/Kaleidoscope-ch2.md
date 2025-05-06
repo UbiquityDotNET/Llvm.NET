@@ -20,7 +20,7 @@ to implement)
 ### Lexer symbols
 
 The Kaleidoscope lexer consists of several tokens and is defined in the
-[Kaleidoscope.g4](https://github.com/UbiquityDotNET/Llvm.NET/blob/master/Samples/Kaleidoscope/Kaleidoscope.Parser/Kaleidoscope.g4)
+[Kaleidoscope.g4](https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Kaleidoscope.Grammar/ANTLR/Kaleidoscope.g4)
 grammar file.
 
 ``` antlr

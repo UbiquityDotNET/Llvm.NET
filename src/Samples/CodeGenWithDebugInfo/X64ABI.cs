@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Immutable;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Types;
@@ -67,23 +68,24 @@ namespace CodeGenWithDebugInfo
 
         public ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
             => [
-                ctx.CreateAttribute( "disable-tail-calls", "false" ),
-                ctx.CreateAttribute( "less-precise-fpmad", "false" ),
-                ctx.CreateAttribute( "no-frame-pointer-elim", "false" ),
-                ctx.CreateAttribute( "no-infs-fp-math", "false" ),
-                ctx.CreateAttribute( "no-nans-fp-math", "false" ),
-                ctx.CreateAttribute( "stack-protector-buffer-size", "8" ),
-                ctx.CreateAttribute( "target-cpu", Cpu ),
-                ctx.CreateAttribute( "target-features", Features ),
-                ctx.CreateAttribute( "unsafe-fp-math", "false" ),
-                ctx.CreateAttribute( "use-soft-float", "false" ),
-                ctx.CreateAttribute( "uwtable", (ulong)UWTableKind.Async)
+                ctx.CreateAttribute( "disable-tail-calls"u8, "false"u8 ),
+                ctx.CreateAttribute( "less-precise-fpmad"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-frame-pointer-elim"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-infs-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "no-nans-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "stack-protector-buffer-size"u8, "8"u8 ),
+                ctx.CreateAttribute( "target-cpu"u8, Cpu ),
+                ctx.CreateAttribute( "target-features"u8, Features ),
+                ctx.CreateAttribute( "unsafe-fp-math"u8, "false"u8 ),
+                ctx.CreateAttribute( "use-soft-float"u8, "false"u8 ),
+                ctx.CreateAttribute( "uwtable"u8, (ulong)UWTableKind.Async)
             ];
 
         private readonly ILibLlvm LlvmLib;
 
-        private const string Cpu = "x86-64";
-        private const string Features = "+sse,+sse2";
-        private const string TripleName = "x86_64-pc-windows-msvc18.0.0";
+        // Sadly, these can't be utf8 literals, but, they can be static readonly LazyEncodedString!
+        private static readonly LazyEncodedString Cpu = "x86-64"u8;
+        private static readonly LazyEncodedString Features = "+sse,+sse2"u8;
+        private static readonly LazyEncodedString TripleName = "x86_64-pc-windows-msvc18.0.0"u8;
     }
 }

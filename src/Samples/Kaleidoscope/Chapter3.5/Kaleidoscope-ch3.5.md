@@ -24,23 +24,24 @@ sample that actually uses the optimizations more is left as an exercise for the 
 ### Initialization
 The code generation maintains state for the transformation as private members. To support optimization
 generally only requires a set of named passes and to call the method to run the passes on a function or
-module. [Technically an overload provides the chance to set [PassBuilderOptions](xref:Ubiquity.NET.Llvm.PassBuilderOptions) but
-this sample just uses the overload that applies defaults.] The new pass management system
+module. [Technically an overload provides the chance to set [PassBuilderOptions](xref:Ubiquity.NET.Llvm.PassBuilderOptions)
+but this sample just uses the overload that applies defaults.] The new pass management system
 uses the string names of passes instead of a distinct type and named methods for adding them etc...
 
 These Options are initialized in a private static member for the passes.
 [!code-csharp[Main](CodeGenerator.cs#PrivateMembers)]
 
 ### Special attributes for parsed functions
+>[!WARNING]
 When performing optimizations with the new pass builder system the TargetLibraryInfo (Internal LLVM concept) is
-used to determine what the "built-in" functions are. Unfortunately they leave little room for manipulating or
-customizing this set (In C++, in LLVM-C there is NO support for this type at all!). Unfortunately that means that
-if any function happens to have the same name as the TargetLibraryInfo for a given Triple then it will be optimized
-AS a built-in function (even if not declared as one). This is an unfortunate state of affairs with the LLVM support
-for C++ and highly problematic for `C` based bindings/projections like this library. Fortunately there is a scapegoat
-for this. The function can include a `nobuiltin` attribute to prevent the optimizer from assuming calls to it are
-one of the well known built-in functions. This is used for ALL methods that come from the AST, which is all functions
-at this point in the language design. Thus `GetOrDeclareFunction` will add that attribute for any function creations.
+used to determine what the "built-in" functions are. Unfortunately, they leave little room for manipulating or
+customizing this set (In C++ there is some "wiggle room", in LLVM-C there is NO support for this type at all!).
+Unfortunately, that means that if any function happens to have the same name as the TargetLibraryInfo for a given
+Triple then it will be optimized AS a built-in function (even if not declared as one). This is an unfortunate state
+of affairs with the LLVM support for C++ and highly problematic for `C` based bindings/projections like this library.
+Fortunately there is a scapegoat for this. The function can include a `nobuiltin` attribute at the call site to prevent
+the optimizer from assuming calls to it are one of the well known built-in functions. This isn't used for Kaleidoscope.
+But does leave room for problems with names that match some arbitrary set of "built-in" symbols.
 
 [!code-csharp[Main](CodeGenerator.cs#GetOrDeclareFunction)]
 
