@@ -31,6 +31,7 @@
     <File Path="../Push-Docs.ps1" />
     <File Path="../README.md" />
     <File Path="../repo-buildutils.ps1" />
+    <File Path="../Show-Docs.ps1" />
     <File Path="../stylecop.json" />
     <File Path="x64.runsettings" />
   </Folder>
