@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*
 Customized Highlight JS theming
 The default theming that comes with docfx 'modern' support is rather limited. It doesn't
@@ -66,6 +67,14 @@ code.hljs {
 
 .hljs-strong {
     font-weight: 700
+}
+
+/*
+For the dark theme, set the background of SVG images to allow better
+visibility of thin lines and drop shadows etc...
+*/
+[data-bs-theme=dark] img,svg {
+    background-color: grey
 }
 
 [data-bs-theme=dark] pre code.hljs {
