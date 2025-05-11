@@ -468,10 +468,11 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( Handle, out size_t numEntries );
-                for( long i = 0; i < numEntries.ToInt32( ); ++i )
+                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( Handle, out nuint numEntries );
+                uint uintLen = checked((uint)numEntries);
+                for( uint i = 0; i < uintLen; ++i )
                 {
-                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
+                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, i );
                     yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
                 }
             }

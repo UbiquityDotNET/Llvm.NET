@@ -15,7 +15,6 @@ namespace Ubiquity.NET.Llvm
         , IDisposable
         , IEquatable<DataLayout>
         , IEquatable<IDataLayout>
-        , IUtf8SpanParsable<DataLayout>
     {
         #region IEquatable<>
 
@@ -108,12 +107,12 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public static DataLayout Parse( ReadOnlySpan<byte> utf8Text, IFormatProvider? provider )
+        public static DataLayout Parse( LazyEncodedString text, IFormatProvider? provider )
         {
             #pragma warning disable IDISP007 // Don't dispose injected
             // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
             // nativeRef is NOT injected, it's an OUT param and owned by this call site
-            using var errRef = ParseLayout(utf8Text, out LLVMTargetDataRef nativeRef);
+            using var errRef = LibLLVMParseDataLayout(text, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
             {
                 errRef.ThrowIfFailed();
@@ -123,14 +122,14 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public static bool TryParse( ReadOnlySpan<byte> utf8Text, IFormatProvider? provider, [MaybeNullWhen( false )] out DataLayout result )
+        public static bool TryParse( LazyEncodedString txt, IFormatProvider? provider, [MaybeNullWhen( false )] out DataLayout result )
         {
             result = null;
 
             #pragma warning disable IDISP007 // Don't dispose injected
             // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
             // nativeRef is NOT injected, it's an OUT param and owned by this call site
-            using var errRef = ParseLayout(utf8Text, out LLVMTargetDataRef nativeRef);
+            using var errRef = LibLLVMParseDataLayout(txt, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
             {
                 if (errRef.Failed)
@@ -153,18 +152,6 @@ namespace Ubiquity.NET.Llvm
 
             NativeHandle = targetDataHandle.Move();
             AliasImpl = new(NativeHandle);
-        }
-
-        /// <inheritdoc/>
-        internal static LLVMErrorRef ParseLayout(ReadOnlySpan<byte> utf8Text, out LLVMTargetDataRef nativeRef)
-        {
-            unsafe
-            {
-                fixed(byte* p = &MemoryMarshal.GetReference(utf8Text))
-                {
-                    return LibLLVMParseDataLayout(p, utf8Text.Length, out nativeRef );
-                }
-            }
         }
 
         [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]

@@ -15,6 +15,11 @@ using System.Text;
 namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for native strings using <see cref="Encoding"/>.</summary>
+    /// <remarks>
+    /// This will handle marshalling of <see cref="string"/>s to/from native code. This is very similar
+    /// to the default string marshalling support except that it does all conversion to/from native code via
+    /// an encoding, [defaults to UTF8] so that applications can have control of that.
+    /// </remarks>
     [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(ExecutionEncodingStringMarshaller))]
     [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedIn, typeof(ManagedToUnmanagedIn))]
     public static unsafe class ExecutionEncodingStringMarshaller

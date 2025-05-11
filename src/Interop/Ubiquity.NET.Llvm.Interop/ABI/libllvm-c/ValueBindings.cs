@@ -112,12 +112,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         InsertValueKind = 94,
         LandingPadKind = 95,
         FreezeKind = 96,
-        ConstantFirstValKind = 0,
-        ConstantLastValKind = 21,
-        ConstantDataFirstValKind = 12,
-        ConstantDataLastValKind = 21,
-        ConstantAggregateFirstValKind = 9,
-        ConstantAggregateLastValKind = 11,
+        ConstantFirstValKind = FunctionKind,
+        ConstantLastValKind = ConstantTokenNoneKind,
+        ConstantDataFirstValKind = UndefValueKind,
+        ConstantDataLastValKind = ConstantTokenNoneKind,
+        ConstantAggregateFirstValKind = ConstantArrayKind,
+        ConstantAggregateLastValKind = ConstantVectorKind,
     }
 
     public static partial class ValueBindings
@@ -176,14 +176,23 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial UInt32 LibLLVMGetConstantDataSequentialElementCount(LLVMValueRef C);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ReadOnlySpan<byte> LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C)
+        {
+            unsafe
+            {
+                byte* p = LibLLVMGetConstantDataSequentialRawData(C, out nuint len);
+                return new(p, checked((int)len));
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C, out size_t Length);
+        private static unsafe partial byte* LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C, out nuint Length);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMHasDbgRecords(LLVMValueRef C);
-
     }
 }

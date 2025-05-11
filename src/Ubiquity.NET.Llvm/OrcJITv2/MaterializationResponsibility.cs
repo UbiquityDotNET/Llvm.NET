@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             unsafe
             {
                 return new SymbolStringPoolEntryList(
-                    LLVMOrcMaterializationResponsibilityGetRequestedSymbols(Handle, out size_t numSymbols),
+                    LLVMOrcMaterializationResponsibilityGetRequestedSymbols(Handle, out nuint numSymbols),
                     numSymbols.ToUInt64()
                 );
             }
@@ -85,11 +85,19 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public ErrorInfo TryClaim(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols)
         {
             // get a native form of the input array, pin it, and then call the LLVM-C API.
-            using var nativeOwner = symbols.InitializeNativeCopy();
-            using var nativeHandle = nativeOwner.Memory.Pin();
+            // TODO: Optimize this so a copy/marshal/conversion is NOT needed and the input is pinnable
+            // To do that, the projected structures MUST be layout compatible with the native forms
+            // so a simple pin/cast is all that is needed.
+            using IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> nativeOwner = symbols.InitializeNativeCopy();
+            using MemoryHandle nativeHandle = nativeOwner.Memory.Pin();
             unsafe
             {
-                return new(LLVMOrcMaterializationResponsibilityDefineMaterializing(Handle, nativeHandle.Pointer, symbols.Count));
+                return new(LLVMOrcMaterializationResponsibilityDefineMaterializing(
+                            Handle,
+                            (LLVMOrcCSymbolFlagsMapPair*)nativeHandle.Pointer,
+                            checked((nuint)symbols.Count)
+                            )
+                          );
             }
         }
 

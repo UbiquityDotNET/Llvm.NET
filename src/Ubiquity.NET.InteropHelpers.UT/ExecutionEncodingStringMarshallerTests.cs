@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if PROBABLY_DELETE_ME_LATER_AS_LAZYENCODEDSTRING_IS_BETTER
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -109,3 +110,4 @@ namespace Ubiquity.NET.InteropHelpers.Tests
         }
     }
 }
+#endif

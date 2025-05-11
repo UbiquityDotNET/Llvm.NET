@@ -18,11 +18,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LibLLVMPassBuilderOptionsGetDebugLogging(LLVMPassBuilderOptionsRef Options);
 
-        // result is a simple alias; DO NOT dispose of it in any way.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( ConstStringMarshaller ) )]
-        public static unsafe partial string? LibLLVMPassBuilderOptionsGetAAPipeline(LLVMPassBuilderOptionsRef Options);
+        [return: MarshalUsing(typeof(DisposeMessageMarshaller))]
+        public static unsafe partial LazyEncodedString LibLLVMPassBuilderOptionsGetAAPipeline(LLVMPassBuilderOptionsRef Options);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

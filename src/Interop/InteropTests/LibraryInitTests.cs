@@ -13,13 +13,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
+using Ubiquity.NET.InteropHelpers;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
     [TestClass]
     public class LibraryInitTests
     {
-        // Since these test validates the initialize and dispose of the the native library the
+        // Since these test validates the initialize and dispose of the native library the
         // native code is no longer usable in the process that runs this test. Therefore this
         // is set to use a distinct process. (Sadly, this doesn't work in the VS test explorer
         // so it is simply marked as "skipped" there. Command line dotnet test via the scripts
@@ -66,12 +67,13 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 // NOTE: There are multiple actual targets under the one registered target
                 //       The registration is more along the lines of a "family" of targets...
                 Assert.AreEqual(4, targets.Length);
-                string?[] targetNames = [ .. targets.Select(h=>LLVMGetTargetName(h)) ];
+                LazyEncodedString?[] targetNames = [ .. targets.Select(h=>LLVMGetTargetName(h)) ];
                 // order of names/targets is not guaranteed, so just test for presence via Contains().
-                Assert.IsTrue(targetNames.Contains("thumbeb"));
-                Assert.IsTrue(targetNames.Contains("thumb"));
-                Assert.IsTrue(targetNames.Contains("armeb"));
-                Assert.IsTrue(targetNames.Contains("arm"));
+                // Also test that u8 literal is viable
+                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("thumbeb"u8));
+                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("thumb"));
+                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("armeb"));
+                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("arm"));
             }
 
             // After dispose - "that's all she wrote", LLVM native libraries

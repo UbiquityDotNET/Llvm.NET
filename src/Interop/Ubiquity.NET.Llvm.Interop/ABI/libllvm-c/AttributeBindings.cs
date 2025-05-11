@@ -39,14 +39,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         // to use with the LibLLVMGetKnownAttributeNames() API.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial size_t LibLLVMGetNumKnownAttribs();
+        public static unsafe partial nuint LibLLVMGetNumKnownAttribs();
 
         // Fills in an array of const string pointers. No deallocation is needed for each as
         // they are global static constants.
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LibLLVMGetKnownAttributeNames(size_t namesLen, /*[Out]*/ byte** names);
+        public static unsafe partial LLVMErrorRef LibLLVMGetKnownAttributeNames(
+            byte** names,
+            nuint namesLen
+        );
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -62,13 +65,32 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [return: MarshalAs(UnmanagedType.Bool)]
         public static unsafe partial bool LibLLVMIsConstantRangeListAttribute(LLVMAttributeRef attribute);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public unsafe static LLVMErrorRef LibLLVMGetAttributeInfo(LazyEncodedString attribName, LibLLVMAttributeInfo* pInfo)
+        {
+            return LibLLVMGetAttributeInfo(
+                attribName, attribName.NativeStrLen,
+                pInfo
+            );
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
 
-        public static unsafe partial LLVMErrorRef LibLLVMGetAttributeInfo(byte* attribName, size_t nameLen, /*[out, byref]*/ LibLLVMAttributeInfo* pInfo);
+        private static unsafe partial LLVMErrorRef LibLLVMGetAttributeInfo(LazyEncodedString attribName, nuint nameLen, LibLLVMAttributeInfo* pInfo);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LibLLVMGetAttributeNameFromID(UInt32 id)
+        {
+            unsafe
+            {
+                byte* p = LibLLVMGetAttributeNameFromID(id, out uint len);
+                return LazyEncodedString.FromUnmanaged(p, len);
+            }
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LibLLVMGetAttributeNameFromID(UInt32 id, out uint len);
+        private static unsafe partial byte* LibLLVMGetAttributeNameFromID(UInt32 id, out uint len);
     }
 }

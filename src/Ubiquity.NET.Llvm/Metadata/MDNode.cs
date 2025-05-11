@@ -89,8 +89,8 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <summary>Gets a string operand by index</summary>
         /// <param name="index">Index of the operand</param>
         /// <returns>String value of the operand</returns>
-        public string GetOperandString( int index )
-            => GetOperand<MDString>( index )?.ToString( ) ?? string.Empty;
+        public LazyEncodedString GetOperandString( int index )
+            => GetOperand<MDString>( index )?.ToLazyString() ?? LazyEncodedString.Empty;
 
         /* TODO: Consider adding these additional properties/methods
         public bool IsTBAAVTableAccess { get; }

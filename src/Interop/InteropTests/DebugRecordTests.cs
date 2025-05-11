@@ -63,21 +63,20 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             using LLVMDIBuilderRef diBuilder = LLVMCreateDIBuilder(module);
             LLVMMetadataRef int32DiType = LLVMDIBuilderCreateBasicType(
                 diBuilder,
-                "int32_t",
-                7,
+                "int32_t"u8,
                 32,
                 (uint)LibLLVMDwarfAttributeEncoding.DW_ATE_signed,
                 LLVMDIFlags.LLVMDIFlagPublic
             );
 
-            LLVMMetadataRef int32PtrDiType = LLVMDIBuilderCreatePointerType(diBuilder, int32DiType, 32, 0, 0, "int*", 4);
+            LLVMMetadataRef int32PtrDiType = LLVMDIBuilderCreatePointerType(diBuilder, int32DiType, 32, 0, 0, "int*"u8);
             LLVMMetadataRef emptyExpression = LLVMDIBuilderCreateExpression(diBuilder, [], 0);
             LLVMMetadataRef diFuncType = LLVMDIBuilderCreateSubroutineType(diBuilder, default, [], 0, LLVMDIFlags.LLVMDIFlagPrivate);
             LLVMMetadataRef scope = LLVMDIBuilderCreateFunction(
                 diBuilder,
                 Scope: default,
-                Name: "TestFunc", NameLen: 8,
-                LinkageName: "TestFunc", LinkageNameLen: 8,
+                Name: "TestFunc"u8,
+                LinkageName: "_TestFunc"u8,
                 File: default,
                 LineNo: 0,
                 Ty: diFuncType,

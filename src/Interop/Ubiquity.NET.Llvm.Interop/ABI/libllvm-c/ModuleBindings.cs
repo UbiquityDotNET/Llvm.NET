@@ -8,9 +8,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public static partial class ModuleBindings
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatRef LibLLVMModuleGetComdat(LLVMModuleRefAlias module, string name);
+        public static unsafe partial LLVMComdatRef LibLLVMModuleGetComdat(LLVMModuleRefAlias module, LazyEncodedString name);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -37,31 +37,33 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMDisposeComdatIterator(LibLLVMComdatIteratorRef it);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LibLLVMGetOrInsertFunction(LLVMModuleRefAlias module, string name, LLVMTypeRef functionType);
+        public static unsafe partial LLVMValueRef LibLLVMGetOrInsertFunction(LLVMModuleRefAlias module, LazyEncodedString name, LLVMTypeRef functionType);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LibLLVMGetModuleSourceFileName(LLVMModuleRefAlias module);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMSetModuleSourceFileName(LLVMModuleRefAlias module, string name);
+        public static unsafe partial LazyEncodedString? LibLLVMGetModuleSourceFileName(LLVMModuleRefAlias module);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LibLLVMGetModuleName(LLVMModuleRefAlias module);
+        public static unsafe partial void LibLLVMSetModuleSourceFileName(LLVMModuleRefAlias module, LazyEncodedString name);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LibLLVMGetGlobalAlias(LLVMModuleRefAlias module, string name);
+        public static unsafe partial LazyEncodedString? LibLLVMGetModuleName(LLVMModuleRefAlias module);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat(LLVMModuleRefAlias module, string name, LLVMComdatSelectionKind kind);
+        public static unsafe partial LLVMValueRef LibLLVMGetGlobalAlias(LLVMModuleRefAlias module, LazyEncodedString name);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMComdatRef LibLLVMModuleInsertOrUpdateComdat(
+            LLVMModuleRefAlias module,
+            LazyEncodedString name,
+            LLVMComdatSelectionKind kind
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -71,9 +73,20 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LibLLVMModuleComdatClear(LLVMModuleRefAlias module);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString LibLLVMComdatGetName(LLVMComdatRef comdatRef)
+        {
+            unsafe
+            {
+                byte* p = LibLLVMComdatGetName(comdatRef, out nuint len);
+                Debug.Assert( p is not null, "Internal error: Comdat should always have a valid name");
+                return LazyEncodedString.FromUnmanaged( p, len )!;
+            }
+        }
+
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMComdatGetName(LLVMComdatRef comdatRef);
+        private static unsafe partial byte* LibLLVMComdatGetName(LLVMComdatRef comdatRef, out nuint len);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

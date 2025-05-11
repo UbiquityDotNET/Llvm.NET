@@ -151,7 +151,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="pc">Program counter address to assume for the instruction disassembly</param>
         /// <param name="stringBufferSize">Size of string buffer to use for the disassembly (default=1024)</param>
         /// <returns>Disassembly string and count of bytes in the instruction as a tuple</returns>
-        public (string Disassembly, int InstructionByteCount) Disassemble( ReadOnlySpan<byte> instruction, ulong pc, int stringBufferSize = 1024 )
+        public (LazyEncodedString Disassembly, nuint InstructionByteCount) Disassemble( ReadOnlySpan<byte> instruction, ulong pc, int stringBufferSize = 1024 )
         {
             unsafe
             {
@@ -159,8 +159,8 @@ namespace Ubiquity.NET.Llvm
                 using var nativeMemoryPinnedHandle = nativeMemory.Memory.Pin();
                 fixed( byte* ptr = &MemoryMarshal.GetReference( instruction ) )
                 {
-                    size_t instSize = LLVMDisasmInstruction(Handle, (nint)ptr, (ulong)instruction.Length, pc, (byte*)nativeMemoryPinnedHandle.Pointer, stringBufferSize);
-                    return (new string((sbyte*)nativeMemoryPinnedHandle.Pointer), instSize);
+                    nuint instSize = LLVMDisasmInstruction(Handle, ptr, (UInt64)instruction.Length, pc, (byte*)nativeMemoryPinnedHandle.Pointer, (nuint)stringBufferSize);
+                    return (new LazyEncodedString((byte*)nativeMemoryPinnedHandle.Pointer), instSize);
                 }
             }
         }

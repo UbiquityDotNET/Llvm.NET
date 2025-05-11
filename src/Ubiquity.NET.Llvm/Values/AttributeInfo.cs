@@ -106,12 +106,11 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="LlvmException">Attribute name is not known</exception>
         public static AttributeInfo From( LazyEncodedString name )
         {
-            using var nativeName = name.Pin();
             // maps directly to native struct, so use it instead of dealing with translation overhead
             AttributeInfo retVal;
             unsafe
             {
-                using var errorRef = LibLLVMGetAttributeInfo( (byte*)nativeName.Pointer, name.NativeStrLen, (LibLLVMAttributeInfo*)&retVal );
+                using var errorRef = LibLLVMGetAttributeInfo( name, (LibLLVMAttributeInfo*)&retVal );
                 errorRef.ThrowIfFailed();
             }
             return retVal;

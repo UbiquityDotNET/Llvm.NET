@@ -14,7 +14,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     //
     // Obviously, attempting to generalize this gets complicated for the implementation AND the call sites. So simple
     // copy/paste turns out to be the simplest "generator" option for these. [Go Figure!]
-
+    //
+    // TODO: Make projected structs layout compat with native so a copy isn't needed
     internal static class KvpMapExtensions
     {
         internal static LLVMOrcCSymbolAliasMapPair ToABI(this KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry> pair)
@@ -32,6 +33,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             return new( pair.Key.ToABI(), pair.Value.ToABI() );
         }
 
+        // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolMapPair> InitializeNativeCopy(
             [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
             )
@@ -68,6 +70,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             return nativeArrayOwner;
         }
 
+        // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolAliasMapPair> InitializeNativeCopy(
             [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols
             )
@@ -104,6 +107,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             return nativeArrayOwner;
         }
 
+        // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> InitializeNativeCopy(
             [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
             )

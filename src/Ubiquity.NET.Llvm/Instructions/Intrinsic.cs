@@ -13,10 +13,10 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Looks up the LLVM intrinsic ID from it's name</summary>
         /// <param name="name">Name of the intrinsic</param>
         /// <returns>Intrinsic ID or 0 if the name does not correspond with an intrinsic function</returns>
-        public static UInt32 LookupId( string name )
+        public static UInt32 LookupId( LazyEncodedString name )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
-            return LLVMLookupIntrinsicID( name, name.Length );
+            return LLVMLookupIntrinsicID( name );
         }
 
         internal Intrinsic( LLVMValueRef valueRef )

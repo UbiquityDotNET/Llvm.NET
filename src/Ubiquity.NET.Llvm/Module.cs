@@ -64,10 +64,10 @@ namespace Ubiquity.NET.Llvm
         #endregion
 
         /// <summary>Name of the Debug Version information module flag</summary>
-        public const string DebugVersionValue = "Debug Info Version";
+        public static readonly LazyEncodedString DebugVersionValue = "Debug Info Version"u8;
 
         /// <summary>Name of the Dwarf Version module flag</summary>
-        public const string DwarfVersionValue = "Dwarf Version";
+        public static readonly LazyEncodedString DwarfVersionValue = "Dwarf Version"u8;
 
         /// <summary>Gets the current Version of the Debug information used by LLVM</summary>
         public static UInt32 DebugMetadataVersion => LLVMDebugMetadataVersion();
@@ -81,16 +81,16 @@ namespace Ubiquity.NET.Llvm
         #region IModule (via Impl)
 
         /// <inheritdoc/>
-        public void AppendInlineAsm( string asm ) => Impl.AppendInlineAsm( asm );
+        public void AppendInlineAsm( LazyEncodedString asm ) => Impl.AppendInlineAsm( asm );
 
         /// <inheritdoc/>
-        public ErrorInfo TryRunPasses( params string[] passes ) => Impl.TryRunPasses( passes );
+        public ErrorInfo TryRunPasses( params LazyEncodedString[] passes ) => Impl.TryRunPasses( passes );
 
         /// <inheritdoc/>
-        public ErrorInfo TryRunPasses( PassBuilderOptions options, params string[] passes ) => Impl.TryRunPasses( options, passes );
+        public ErrorInfo TryRunPasses( PassBuilderOptions options, params LazyEncodedString[] passes ) => Impl.TryRunPasses( options, passes );
 
         /// <inheritdoc/>
-        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params string[] passes ) => Impl.TryRunPasses( targetMachine, options, passes );
+        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes ) => Impl.TryRunPasses( targetMachine, options, passes );
 
         /// <inheritdoc/>
         public void Link( Module srcModule ) => Impl.Link( srcModule );
@@ -99,16 +99,16 @@ namespace Ubiquity.NET.Llvm
         public bool Verify( out string errorMessage ) => Impl.Verify( out errorMessage );
 
         /// <inheritdoc/>
-        public bool TryGetFunction( string name, [MaybeNullWhen( false )] out Function function ) => Impl.TryGetFunction( name, out function );
+        public bool TryGetFunction( LazyEncodedString name, [MaybeNullWhen( false )] out Function function ) => Impl.TryGetFunction( name, out function );
 
         /// <inheritdoc/>
-        public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, Function resolver ) => Impl.CreateAndAddGlobalIFunc( name, type, addressSpace, resolver );
+        public GlobalIFunc CreateAndAddGlobalIFunc( LazyEncodedString name, ITypeRef type, uint addressSpace, Function resolver ) => Impl.CreateAndAddGlobalIFunc( name, type, addressSpace, resolver );
 
         /// <inheritdoc/>
-        public bool TryGetNamedGlobalIFunc( string name, [MaybeNullWhen( false )] out GlobalIFunc function ) => Impl.TryGetNamedGlobalIFunc( name, out function );
+        public bool TryGetNamedGlobalIFunc( LazyEncodedString name, [MaybeNullWhen( false )] out GlobalIFunc function ) => Impl.TryGetNamedGlobalIFunc( name, out function );
 
         /// <inheritdoc/>
-        public Function CreateFunction( string name, IFunctionType signature ) => Impl.CreateFunction( name, signature );
+        public Function CreateFunction( LazyEncodedString name, IFunctionType signature ) => Impl.CreateFunction( name, signature );
 
         /// <inheritdoc/>
         public void WriteToFile( string path ) => Impl.WriteToFile( path );
@@ -123,58 +123,61 @@ namespace Ubiquity.NET.Llvm
         public MemoryBuffer WriteToBuffer( ) => Impl.WriteToBuffer();
 
         /// <inheritdoc/>
-        public GlobalAlias AddAlias( Value aliasee, string aliasName, uint addressSpace = 0 ) => Impl.AddAlias( aliasee, aliasName, addressSpace );
+        public GlobalAlias AddAlias( Value aliasee, LazyEncodedString aliasName, uint addressSpace = 0 ) => Impl.AddAlias( aliasee, aliasName, addressSpace );
 
         /// <inheritdoc/>
-        public GlobalAlias? GetAlias( string name ) => Impl.GetAlias( name );
+        public GlobalAlias? GetAlias( LazyEncodedString name ) => Impl.GetAlias( name );
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name ) => Impl.AddGlobalInAddressSpace( addressSpace, typeRef, name );
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, LazyEncodedString name ) => Impl.AddGlobalInAddressSpace( addressSpace, typeRef, name );
 
         /// <inheritdoc/>
         public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal ) => Impl.AddGlobalInAddressSpace( addressSpace, typeRef, isConst, linkage, constVal );
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name ) => Impl.AddGlobalInAddressSpace( addressSpace, typeRef, isConst, linkage, constVal, name );
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name ) => Impl.AddGlobalInAddressSpace( addressSpace, typeRef, isConst, linkage, constVal, name );
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobal( ITypeRef typeRef, string name ) => Impl.AddGlobal( typeRef, name );
+        public GlobalVariable AddGlobal( ITypeRef typeRef, LazyEncodedString name ) => Impl.AddGlobal( typeRef, name );
 
         /// <inheritdoc/>
         public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal ) => Impl.AddGlobal( typeRef, isConst, linkage, constVal );
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name ) => Impl.AddGlobal( typeRef, isConst, linkage, constVal, name );
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name ) => Impl.AddGlobal( typeRef, isConst, linkage, constVal, name );
 
         /// <inheritdoc/>
-        public ITypeRef? GetTypeByName( string name ) => Impl.GetTypeByName( name );
+        public ITypeRef? GetTypeByName( LazyEncodedString name ) => Impl.GetTypeByName( name );
 
         /// <inheritdoc/>
-        public GlobalVariable? GetNamedGlobal( string name ) => Impl.GetNamedGlobal( name );
+        public GlobalVariable? GetNamedGlobal( LazyEncodedString name ) => Impl.GetNamedGlobal( name );
 
         /// <inheritdoc/>
-        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, uint value ) => Impl.AddModuleFlag( behavior, name, value );
+        public void AddModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, uint value ) => Impl.AddModuleFlag( behavior, name, value );
 
         /// <inheritdoc/>
-        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata value ) => Impl.AddModuleFlag( behavior, name, value );
+        public void AddModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, IrMetadata value ) => Impl.AddModuleFlag( behavior, name, value );
 
         /// <inheritdoc/>
-        public void AddNamedMetadataOperand( string name, IrMetadata value ) => Impl.AddNamedMetadataOperand( name, value );
+        public void AddNamedMetadataOperand( LazyEncodedString name, IrMetadata value ) => Impl.AddNamedMetadataOperand( name, value );
 
         /// <inheritdoc/>
-        public void AddVersionIdentMetadata( string version ) => Impl.AddVersionIdentMetadata( version );
+        public void AddVersionIdentMetadata( LazyEncodedString version ) => Impl.AddVersionIdentMetadata( version );
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder, DIScope? scope, string name, string? linkageName, DIFile? file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized ) => Impl.CreateFunction( in diBuilder, scope, name, linkageName, file, line, signature, isLocalToUnit, isDefinition, scopeLine, debugFlags, isOptimized );
+        public Function CreateFunction( ref readonly DIBuilder diBuilder, DIScope? scope, LazyEncodedString name, LazyEncodedString? linkageName, DIFile? file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized )
+            => Impl.CreateFunction( in diBuilder, scope, name, linkageName, file, line, signature, isLocalToUnit, isDefinition, scopeLine, debugFlags, isOptimized );
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder, string name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes ) => Impl.CreateFunction( in diBuilder, name, isVarArg, returnType, argumentTypes );
+        public Function CreateFunction( ref readonly DIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes )
+            => Impl.CreateFunction( in diBuilder, name, isVarArg, returnType, argumentTypes );
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder, string name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, params IDebugType<ITypeRef, DIType>[] argumentTypes ) => Impl.CreateFunction( in diBuilder, name, isVarArg, returnType, argumentTypes );
+        public Function CreateFunction( ref readonly DIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, params IDebugType<ITypeRef, DIType>[] argumentTypes )
+            => Impl.CreateFunction( in diBuilder, name, isVarArg, returnType, argumentTypes );
 
         /// <inheritdoc/>
-        public Function GetIntrinsicDeclaration( string name, params ITypeRef[] args ) => Impl.GetIntrinsicDeclaration( name, args );
+        public Function GetIntrinsicDeclaration( LazyEncodedString name, params ITypeRef[] args ) => Impl.GetIntrinsicDeclaration( name, args );
 
         /// <inheritdoc/>
         public Function GetIntrinsicDeclaration( uint id, params ITypeRef[] args ) => Impl.GetIntrinsicDeclaration( id, args );
@@ -186,7 +189,7 @@ namespace Ubiquity.NET.Llvm
         public Module Clone( IContext targetContext ) => Impl.Clone( targetContext );
 
         /// <inheritdoc/>
-        public string SourceFileName { get => Impl.SourceFileName; set => Impl.SourceFileName = value; }
+        public LazyEncodedString SourceFileName { get => Impl.SourceFileName; set => Impl.SourceFileName = value; }
 
         /// <inheritdoc/>
         public ComdatCollection Comdats => Impl.Comdats;
@@ -195,7 +198,7 @@ namespace Ubiquity.NET.Llvm
         public IContext Context => Impl.Context;
 
         /// <inheritdoc/>
-        public IReadOnlyDictionary<string, ModuleFlag> ModuleFlags => Impl.ModuleFlags;
+        public IReadOnlyDictionary<LazyEncodedString, ModuleFlag> ModuleFlags => Impl.ModuleFlags;
 
         /// <inheritdoc/>
         public IEnumerable<DICompileUnit> CompileUnits => Impl.CompileUnits;
@@ -207,7 +210,7 @@ namespace Ubiquity.NET.Llvm
         public IDataLayout Layout { get => Impl.Layout; set => Impl.Layout = value; }
 
         /// <inheritdoc/>
-        public string TargetTriple { get => Impl.TargetTriple; set => Impl.TargetTriple = value; }
+        public LazyEncodedString TargetTriple { get => Impl.TargetTriple; set => Impl.TargetTriple = value; }
 
         /// <inheritdoc/>
         public IEnumerable<GlobalVariable> Globals => Impl.Globals;
@@ -225,17 +228,17 @@ namespace Ubiquity.NET.Llvm
         public IEnumerable<GlobalIFunc> IndirectFunctions => Impl.IndirectFunctions;
 
         /// <inheritdoc/>
-        public string Name => Impl.Name;
+        public LazyEncodedString Name => Impl.Name;
 
         /// <inheritdoc/>
-        public string ModuleInlineAsm { get => Impl.ModuleInlineAsm; set => Impl.ModuleInlineAsm = value; }
+        public LazyEncodedString ModuleInlineAsm { get => Impl.ModuleInlineAsm; set => Impl.ModuleInlineAsm = value; }
         #endregion
 
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
         /// <param name="context">Context to use for creating the module</param>
         /// <returns>Loaded <see cref="Module"/></returns>
-        public static Module LoadFrom( string path, IContext context )
+        public static Module LoadFrom( LazyEncodedString path, IContext context )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
             ArgumentNullException.ThrowIfNull( context );

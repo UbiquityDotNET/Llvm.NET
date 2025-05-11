@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /*
         TODO: Add LibLLVMxxx to make this go away, the underlying JIT HAS a Triple instance!
-              So this is building a string from that, then passed around as a string marshalled to/from
+              So this is building a string from that, then passed around as a string marshaled to/from
               the native abi and then re-parsed back to a !@#$ Triple again - WASTED overhead!
         */
 
@@ -64,13 +64,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            unsafe
-            {
-                using var nativeMem = name.Pin();
-                using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, (byte*)nativeMem.Pointer);
-                errorRef.ThrowIfFailed();
-                return retVal;
-            }
+            // Deal with bad API design, converting errors to an exception and returning the result.
+            using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, name);
+            errorRef.ThrowIfFailed();
+            return retVal;
         }
 
         /// <summary>Adds a module to the JIT</summary>
@@ -78,7 +75,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="module">Module to add</param>
         /// <remarks>
         /// This function has "move" semantics in that the JIT takes ownership of the
-        /// input module and it is no longer useable (Generates <see cref="ObjectDisposedException"/>)
+        /// input module and it is no longer usable (Generates <see cref="ObjectDisposedException"/>)
         /// for any use other than Dispose(). This allows normal clean up in the event of an exception
         /// to occur.
         /// <note type="important">
@@ -101,7 +98,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="module">Module to add</param>
         /// <remarks>
         /// This function has "move" semantics in that the JIT takes ownership of the
-        /// input module and it is no longer useable (Generates <see cref="ObjectDisposedException"/>)
+        /// input module and it is no longer usable (Generates <see cref="ObjectDisposedException"/>)
         /// for any use other than Dispose(). This allows normal clean up in the event of an exception
         /// to occur.
         /// <note type="important">
@@ -126,12 +123,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public SymbolStringPoolEntry MangleAndIntern(LazyEncodedString name)
         {
             ArgumentNullException.ThrowIfNull(name);
-
-            unsafe
-            {
-                using MemoryHandle nativeMem = name.Pin();
-                return new(LLVMOrcLLJITMangleAndIntern(Handle, (byte*)nativeMem.Pointer));
-            }
+            return new(LLVMOrcLLJITMangleAndIntern(Handle, name));
         }
 
         /// <summary>Gets the IR transform layer for this JIT</summary>

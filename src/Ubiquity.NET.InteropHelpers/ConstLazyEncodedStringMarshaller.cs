@@ -1,6 +1,5 @@
-﻿#if PROBABLY_DELETE_ME_LATER_AS_LAZYENCODEDSTRING_IS_BETTER
-// -----------------------------------------------------------------------
-// <copyright file="ConstStringMarshaller.cs" company="Ubiquity.NET Contributors">
+﻿// -----------------------------------------------------------------------
+// <copyright file="ConstLazyEncodedStringMarshaller.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -12,30 +11,27 @@ namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for `char const*` strings that are simple aliases requiring no release</summary>
     /// <remarks>
-    /// <para>This marshaller is strictly one-way, from unmanaged pointer into a managed <see cref="string"/>.
-    /// It is normally applied to return values of interop methods. For support of the other direction
-    /// use <see cref="ExecutionEncodingStringMarshaller"/>.</para>
+    /// <para>This marshaller is strictly one-way, from unmanaged pointer into a managed <see cref="LazyEncodedString"/>.
+    /// It is normally applied to return values of interop methods.</para>
     /// <para>
     /// This is distinct from <see cref="ExecutionEncodingStringMarshaller"/> in that the <see cref="Free(byte*)"/>
     /// method is explicitly a NOP. There is no release of the data for the string as the string is not any
     /// sort of copy that needs release. This is counter to how normal string marshalling works in .NET but
     /// is actually the most efficient form as it avoids the overhead of the [native allocate], [Native Copy],
-    /// [Managed Marshal], [Native Release]. The reduced form used here is [Native return `char const*`],
-    /// [Managed Marshal], done. Thus the overhead of native allocation, copy and then release is avoided.
-    /// The managed marshal needs to copy the characters to convert from the native encoding to UTF16 expected
-    /// as a string for .NET
+    /// [Managed Marshal], [Native Release] sequence. The reduced form used here is [Native return `char const*`],
+    /// [copy string], done. Thus the overhead of native allocation, and then release is avoided.
     /// </para>
     /// </remarks>
-    [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedOut, typeof(ConstStringMarshaller))]
-    public static unsafe class ConstStringMarshaller
+    [CustomMarshaller(typeof(LazyEncodedString), MarshalMode.ManagedToUnmanagedOut, typeof(ConstLazyEncodedStringMarshaller))]
+    public static unsafe class ConstLazyEncodedStringMarshaller
     {
         /// <summary>Converts an unmanaged string to a managed version.</summary>
         /// <param name="unmanaged">The unmanaged string to convert.</param>
         /// <returns>A managed string.</returns>
         /// <seealso cref="ExecutionEncodingStringMarshaller.Encoding"/>
-        public static string? ConvertToManaged(byte* unmanaged)
+        public static LazyEncodedString? ConvertToManaged(byte* unmanaged)
         {
-            return ExecutionEncodingStringMarshaller.ConvertToManaged(unmanaged);
+            return new(unmanaged);
         }
 
         /// <summary> [Intentional NOP] Frees the memory for the unmanaged string.</summary>
@@ -56,4 +52,3 @@ namespace Ubiquity.NET.InteropHelpers
         }
     }
 }
-#endif

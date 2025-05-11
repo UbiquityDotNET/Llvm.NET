@@ -97,12 +97,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 nint nativeContext = materializer.AddRefAndGetNativeContext();
                 try
                 {
-                    using MemoryHandle nativeMem = name.Pin();
                     return LLVMOrcCreateCustomMaterializationUnit(
-                        (byte*)nativeMem.Pointer,
+                        name,
                         (void*)nativeContext,
                         (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
-                        symbols.Count,
+                        checked((nuint)symbols.Count),
                         initSymbol?.Handle ?? LLVMOrcSymbolStringPoolEntryRef.Zero,
                         &NativeCallbacks.Materialize,
                         materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,

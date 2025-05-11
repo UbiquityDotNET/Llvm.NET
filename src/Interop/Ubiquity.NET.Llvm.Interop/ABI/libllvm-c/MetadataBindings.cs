@@ -214,15 +214,45 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind( LLVMMetadataRef handle);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
             LLVMDIBuilderRef D,
             LLVMMetadataRef Scope,
-            string Name,
-            size_t NameLen,
-            string LinkageName,
-            size_t LinkageNameLen,
+            LazyEncodedString Name,
+            LazyEncodedString LinkageName,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            bool isLocalToUnit,
+            bool isDefinition,
+            uint ScopeLine,
+            LLVMDIFlags Flags,
+            bool isOptimized
+            )
+        {
+            return LibLLVMDIBuilderCreateTempFunctionFwdDecl(
+                D,
+                Scope,
+                Name, Name.NativeStrLen,
+                LinkageName, LinkageName.NativeStrLen,
+                File,
+                LineNo,
+                Ty,
+                isLocalToUnit,
+                isDefinition,
+                ScopeLine,
+                Flags,
+                isOptimized
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
+            LLVMDIBuilderRef D,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LazyEncodedString LinkageName, nuint LinkageNameLen,
             LLVMMetadataRef File,
             uint LineNo,
             LLVMMetadataRef Ty,
@@ -301,14 +331,23 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LibLLVMConstantAsMetadata(LLVMValueRef Val);
 
-        // NOTE: return value MAY not be null terminated, use len to know the size!
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LibLLVMGetMDStringText(LLVMMetadataRef mdstring)
+        {
+            unsafe
+            {
+                byte* p = LibLLVMGetMDStringText(mdstring, out uint len);
+                return LazyEncodedString.FromUnmanaged(p, len);
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
+        private static unsafe partial byte* LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMAddNamedMetadataOperand2(LLVMModuleRefAlias M, string name, LLVMMetadataRef Val);
+        public static unsafe partial void LibLLVMAddNamedMetadataOperand2(LLVMModuleRefAlias M, LazyEncodedString name, LLVMMetadataRef Val);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

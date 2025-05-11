@@ -27,14 +27,16 @@ namespace Ubiquity.NET.InteropHelpers
     /// </remarks>
     public static class RefHandleMarshaller
     {
-        /// <summary>Delegate for an operation with marshalled memory</summary>
+        // TODO: Support APIs that need to accept more than one such array...
+
+        /// <summary>Delegate for an operation with marshaled memory</summary>
         /// <typeparam name="TRetVal">Return value of the operation</typeparam>
         /// <param name="nativeArrayPtr">Pointer to a pinned array of raw handles</param>
         /// <param name="size">Number of handles in the array</param>
         /// <returns>Result of the operation</returns>
         public unsafe delegate TRetVal ReturningOp<TRetVal>(nint* nativeArrayPtr, int size);
 
-        /// <summary>Delegate for an operation with marshalled memory</summary>
+        /// <summary>Delegate for an operation with marshaled memory</summary>
         /// <param name="nativeArrayPtr">Pointer to a pinned array of raw handles</param>
         /// <param name="size">Number of handles in the array</param>
         public unsafe delegate void VoidOp(nint* nativeArrayPtr, int size);

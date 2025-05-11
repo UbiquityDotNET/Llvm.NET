@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         /* The option to produce marked up assembly. */
         public const Int32 LLVMDisassembler_Option_UseMarkup = 1;
 
-        /* The option to print immediates as hex. */
+        /* The option to print immediate values as hex. */
         public const Int32 LLVMDisassembler_Option_PrintImmHex = 2;
 
         /* The option use the other assembler printer variant */
@@ -87,17 +87,38 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
     public static partial class Disassembler
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDisasmContextRef LLVMCreateDisasm(string TripleName, void* DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp);
+        public static unsafe partial LLVMDisasmContextRef LLVMCreateDisasm(
+            LazyEncodedString TripleName,
+            void* DisInfo,
+            int TagType,
+            LLVMOpInfoCallback GetOpInfo,
+            LLVMSymbolLookupCallback SymbolLookUp
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDisasmContextRef LLVMCreateDisasmCPU(string Triple, string CPU, void* DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp);
+        public static unsafe partial LLVMDisasmContextRef LLVMCreateDisasmCPU(
+            LazyEncodedString Triple,
+            LazyEncodedString CPU,
+            void* DisInfo,
+            int TagType,
+            LLVMOpInfoCallback GetOpInfo,
+            LLVMSymbolLookupCallback SymbolLookUp
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDisasmContextRef LLVMCreateDisasmCPUFeatures(string Triple, string CPU, string Features, void* DisInfo, int TagType, LLVMOpInfoCallback GetOpInfo, LLVMSymbolLookupCallback SymbolLookUp);
+        public static unsafe partial LLVMDisasmContextRef LLVMCreateDisasmCPUFeatures(
+            LazyEncodedString Triple,
+            LazyEncodedString CPU,
+            LazyEncodedString Features,
+            void* DisInfo,
+            int TagType,
+            LLVMOpInfoCallback GetOpInfo,
+            LLVMSymbolLookupCallback SymbolLookUp
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -106,6 +127,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial size_t LLVMDisasmInstruction(LLVMDisasmContextRef DC, nint Bytes, UInt64 BytesSize, UInt64 PC, byte* OutString, size_t OutStringSize);
+        public static unsafe partial nuint LLVMDisasmInstruction(
+            LLVMDisasmContextRef DC,
+            byte* Bytes,
+            UInt64 BytesSize,
+            UInt64 PC,
+            byte* OutString, nuint OutStringSize // OutString is a pre-allocated buffer, size is how big it is. (Truncated if not big enough)
+            );
     }
 }

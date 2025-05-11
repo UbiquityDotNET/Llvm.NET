@@ -127,8 +127,9 @@ namespace Ubiquity.NET.Llvm
         {
             unsafe
             {
-                byte* pStr = LibLLVMGetDataLayoutString(NativeHandle, out size_t len);
-                return new(new ReadOnlySpan<byte>(pStr, len.ToInt32()));
+                byte* pStr = LibLLVMGetDataLayoutString(NativeHandle, out nuint len);
+                Debug.Assert(pStr is not null, "Layout should always have a string representation");
+                return LazyEncodedString.FromUnmanaged(pStr, len)!;
             }
         }
 

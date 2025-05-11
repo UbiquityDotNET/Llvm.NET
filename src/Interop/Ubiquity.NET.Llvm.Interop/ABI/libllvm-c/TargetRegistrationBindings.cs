@@ -42,7 +42,7 @@
         TargetRegistration_All = TargetRegistration_CodeGen | TargetRegistration_AsmPrinter | TargetRegistration_Disassembler | TargetRegistration_AsmParser
     };
 
-    public static partial class TargetRegistration
+    public static partial class TargetRegistrationBindings
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -51,12 +51,17 @@
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial Int32 LibLLVMGetNumTargets();
 
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LibLLVMGetRuntimeTargets([In, Out] LibLLVMCodeGenTarget[] targets, Int32 lengthOfArray);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMErrorRef LibLLVMGetRuntimeTargets(LibLLVMCodeGenTarget[] targets)
+        {
+            return LibLLVMGetRuntimeTargets(targets, targets.Length);
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LibLLVMGetRuntimeTargets(/*[In, Out] CodeGenTarget[]*/ LibLLVMCodeGenTarget* targets, Int32 lengthOfArray);
+        private static unsafe partial LLVMErrorRef LibLLVMGetRuntimeTargets(
+            [Out, In]
+            LibLLVMCodeGenTarget[] targets, Int32 lengthOfArray
+        );
     }
 }

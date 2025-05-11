@@ -29,45 +29,13 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Gets the Name of the attribute</summary>
         public LazyEncodedString Name
-        {
-            get
-            {
-                unsafe
-                {
-                    if (IsString)
-                    {
-                        byte* pName = LLVMGetStringAttributeKind( NativeAttribute, out uint len );
-                        return new(new ReadOnlySpan<byte>(pName, checked((int)len)));
-                    }
-                    else
-                    {
-                        byte* pName = LibLLVMGetAttributeNameFromID(Id, out uint len);
-                        return pName is null || len == 0
-                             ? new(string.Empty)
-                             : new(new ReadOnlySpan<byte>(pName, checked((int)len)));
-                    }
-                }
-            }
-        }
+            => IsString
+             ? LLVMGetStringAttributeKind( NativeAttribute ) ?? LazyEncodedString.Empty
+             : LibLLVMGetAttributeNameFromID( Id ) ?? LazyEncodedString.Empty;
 
         /// <summary>Gets the value for named attributes with values</summary>
         /// <value>The value as a string or <see lang="null"/> if the attribute has no value</value>
-        public LazyEncodedString? StringValue
-        {
-            get
-            {
-                if (!IsString)
-                {
-                    return null;
-                }
-
-                unsafe
-                {
-                    byte* pValue = LLVMGetStringAttributeValue( NativeAttribute, out uint len );
-                    return new(new ReadOnlySpan<byte>(pValue, checked((int)len)));
-                }
-            }
-        }
+        public LazyEncodedString? StringValue => !IsString ? null : LLVMGetStringAttributeValue( NativeAttribute );
 
         /// <summary>Gets the Integer value of the attribute or 0 if the attribute doesn't have a value</summary>
         public UInt64 IntegerValue => IsInt ? LLVMGetEnumAttributeValue( NativeAttribute ) : 0;

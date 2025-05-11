@@ -2,7 +2,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistration;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ErrorHandling;
 
@@ -82,7 +82,7 @@ namespace Ubiquity.NET.Llvm.Interop
         private static ImmutableArray<LibLLVMCodeGenTarget> GetSupportedTargets( )
         {
             var resultArray = new LibLLVMCodeGenTarget[LibLLVMGetNumTargets()];
-            LibLLVMGetRuntimeTargets( resultArray, resultArray.Length ).ThrowIfFailed();
+            LibLLVMGetRuntimeTargets( resultArray ).ThrowIfFailed();
             // Create a new immutable array without copy (Wraps the input array)
             return ImmutableCollectionsMarshal.AsImmutableArray( resultArray );
         }

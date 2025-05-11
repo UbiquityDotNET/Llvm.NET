@@ -10,23 +10,24 @@ namespace Ubiquity.NET.Llvm.Metadata
     public class MDString
         : IrMetadata
     {
+        /// <summary>Gets the string from the metadata node without the overhead of any encoding</summary>
+        /// <returns>String from the metadata</returns>
+        /// <remarks>
+        /// This captures/copies the raw bytes of the native string but does NOT perform any additional
+        /// transformation/encoding to a managed string. This allows more efficient use of the string with
+        /// other native APIs. If the managed form of the string is needed it is obtainable via the <see cref="LazyEncodedString.ToString()"/>
+        /// method.
+        /// </remarks>
+        public LazyEncodedString ToLazyString()
+        {
+            return LibLLVMGetMDStringText( Handle ) ?? LazyEncodedString.Empty;
+        }
+
         /// <summary>Gets the string from the metadata node</summary>
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            unsafe
-            {
-                // Return may not have a terminator so go through LazyEncodedString
-                // as a span of bytes.
-                byte* pNativeString = LibLLVMGetMDStringText( Handle, out uint len );
-                if (len == 0)
-                {
-                    return string.Empty;
-                }
-
-                var s = new LazyEncodedString(new ReadOnlySpan<byte>(pNativeString, checked((int)len)));
-                return s.ToString();
-            }
+            return ToLazyString().ToString();
         }
 
         internal MDString( LLVMMetadataRef handle )

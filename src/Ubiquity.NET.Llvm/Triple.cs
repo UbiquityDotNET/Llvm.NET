@@ -755,13 +755,6 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Triple as a string or <see cref="string.Empty"/> if <paramref name="triple"/> is <see langword="null"/></returns>
         public static implicit operator string( Triple? triple ) => triple?.ToString( ) ?? string.Empty;
 
-        /// <summary>Initializes a new instance of the <see cref="Triple"/> class by parsing a native string form of the triple</summary>
-        /// <param name="abiString">Native string pointer</param>
-        internal unsafe Triple( byte* abiString)
-            : this( LibLLVMParseTriple( abiString ) )
-        {
-        }
-
         private Triple( LibLLVMTripleRef handle )
         {
             Handle = handle.Move();

@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull(callThruMgr);
             ArgumentNullException.ThrowIfNull(stubsMgr);
 
-            // make a native useable version of the input list, pin it and call the native API
+            // make a native usable version of the input list, pin it and call the native API
             using var nativeArrayOwner = symbols.InitializeNativeCopy( );
             using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
             unsafe
@@ -45,7 +45,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     stubsMgr.Handle,
                     srcLib.Handle,
                     (LLVMOrcCSymbolAliasMapPair*)nativeMemHandle.Pointer,
-                    symbols.Count
+                    checked((nuint)symbols.Count)
                 );
             }
         }

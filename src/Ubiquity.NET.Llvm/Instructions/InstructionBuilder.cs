@@ -1650,19 +1650,19 @@ namespace Ubiquity.NET.Llvm.Instructions
         // LLVM will automatically perform constant folding, thus the result of applying
         // a unary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
-        private Value BuildUnaryOp( Func<LLVMBuilderRef, LLVMValueRef, string, LLVMValueRef> opFactory
+        private Value BuildUnaryOp( Func<LLVMBuilderRef, LLVMValueRef, LazyEncodedString, LLVMValueRef> opFactory
                                   , Value operand
                                   )
         {
             ArgumentNullException.ThrowIfNull( operand );
-            var valueRef = opFactory( Handle, operand.Handle, string.Empty );
+            var valueRef = opFactory( Handle, operand.Handle, LazyEncodedString.Empty );
             return Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
         // LLVM will automatically perform constant folding, thus the result of applying
         // a binary operator instruction may actually be a constant value and not an instruction
         // this deals with that to produce a correct managed wrapper type
-        private Value BuildBinOp( Func<LLVMBuilderRef, LLVMValueRef, LLVMValueRef, string, LLVMValueRef> opFactory
+        private Value BuildBinOp( Func<LLVMBuilderRef, LLVMValueRef, LLVMValueRef, LazyEncodedString, LLVMValueRef> opFactory
                                 , Value lhs
                                 , Value rhs
                                 )
@@ -1675,7 +1675,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Types_of_binary_operators_must_be_identical );
             }
 
-            var valueRef = opFactory( Handle, lhs.Handle, rhs.Handle, string.Empty );
+            var valueRef = opFactory( Handle, lhs.Handle, rhs.Handle, LazyEncodedString.Empty );
             return Value.FromHandle( valueRef.ThrowIfInvalid( ) )!;
         }
 
@@ -1725,7 +1725,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             IFunctionType sig = ValidateCallArgs( func, args );
             LLVMValueRef[ ] llvmArgs = [ .. args.Select( v => v.Handle ) ];
-            return LLVMBuildCall2( Handle, sig.GetTypeRef(), func.Handle, llvmArgs, ( uint )llvmArgs.Length, string.Empty );
+            return LLVMBuildCall2( Handle, sig.GetTypeRef(), func.Handle, llvmArgs, ( uint )llvmArgs.Length, LazyEncodedString.Empty );
         }
 
         private LLVMBuilderRef Handle { get; }

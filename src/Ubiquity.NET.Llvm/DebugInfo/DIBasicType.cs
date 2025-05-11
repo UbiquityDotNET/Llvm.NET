@@ -7,7 +7,7 @@
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a basic type</summary>
-    /// <seealso cref="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateBasicType(string, ulong, DiTypeKind, DebugInfoFlags)"/>
+    /// <seealso cref="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateBasicType(LazyEncodedString, ulong, DiTypeKind, DebugInfoFlags)"/>
     /// <seealso href="xref:llvm_langref#dibasictype">LLVM DIBasicType</seealso>
     public class DIBasicType
         : DIType

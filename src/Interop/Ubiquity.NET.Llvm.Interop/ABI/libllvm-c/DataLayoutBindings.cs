@@ -8,12 +8,28 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public static partial class DataLayoutBindings
     {
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LibLLVMParseDataLayout(byte* layoutString, size_t strLen, out LLVMTargetDataRef outRetVal);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMErrorRef LibLLVMParseDataLayout(LazyEncodedString layoutString, out LLVMTargetDataRef outRetVal)
+        {
+            return LibLLVMParseDataLayout(layoutString, layoutString.NativeStrLen, out outRetVal);
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LibLLVMGetDataLayoutString(LLVMTargetDataRefAlias dataLayout, out size_t outLen);
+        private static unsafe partial LLVMErrorRef LibLLVMParseDataLayout(LazyEncodedString layoutString, nuint strLen, out LLVMTargetDataRef outRetVal);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LibLLVMGetDataLayoutString(LLVMTargetDataRefAlias dataLayout)
+        {
+            unsafe
+            {
+                byte* p = LibLLVMGetDataLayoutString(dataLayout, out nuint len);
+                return LazyEncodedString.FromUnmanaged( p, len );
+            }
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial byte* LibLLVMGetDataLayoutString(LLVMTargetDataRefAlias dataLayout, out nuint outLen);
     }
 }

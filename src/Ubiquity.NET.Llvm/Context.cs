@@ -104,25 +104,25 @@ namespace Ubiquity.NET.Llvm
         public Constant CreateNamedConstantStruct( IStructType type, params IEnumerable<Constant> values ) => Impl.CreateNamedConstantStruct( type, values );
 
         /// <inheritdoc/>
-        public IStructType CreateStructType( string name ) => Impl.CreateStructType( name );
+        public IStructType CreateStructType( LazyEncodedString name ) => Impl.CreateStructType( name );
 
         /// <inheritdoc/>
         public IStructType CreateStructType(bool packed, params IEnumerable<ITypeRef> elements) => Impl.CreateStructType(packed, elements);
 
         /// <inheritdoc/>
-        public IStructType CreateStructType( string name, bool packed, params IEnumerable<ITypeRef> elements ) => Impl.CreateStructType( name, packed, elements );
+        public IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements ) => Impl.CreateStructType( name, packed, elements );
 
         /// <inheritdoc/>
-        public MDString CreateMetadataString( string? value ) => Impl.CreateMetadataString( value );
+        public MDString CreateMetadataString( LazyEncodedString? value ) => Impl.CreateMetadataString( value );
 
         /// <inheritdoc/>
-        public MDNode CreateMDNode( string value ) => Impl.CreateMDNode( value );
+        public MDNode CreateMDNode( LazyEncodedString value ) => Impl.CreateMDNode( value );
 
         /// <inheritdoc/>
-        public ConstantDataArray CreateConstantString( string value ) => Impl.CreateConstantString( value );
+        public ConstantDataArray CreateConstantString( LazyEncodedString value ) => Impl.CreateConstantString( value );
 
         /// <inheritdoc/>
-        public ConstantDataArray CreateConstantString( string value, bool nullTerminate ) => Impl.CreateConstantString( value, nullTerminate );
+        public ConstantDataArray CreateConstantString( LazyEncodedString value, bool nullTerminate ) => Impl.CreateConstantString( value, nullTerminate );
 
         /// <inheritdoc/>
         public ConstantInt CreateConstant( bool constValue ) => Impl.CreateConstant( constValue );
@@ -180,22 +180,22 @@ namespace Ubiquity.NET.Llvm
         public AttributeValue CreateAttribute(LazyEncodedString name, LazyEncodedString value) => Impl.CreateAttribute(name, value);
 
         /// <inheritdoc/>
-        public BasicBlock CreateBasicBlock( string name ) => Impl.CreateBasicBlock( name );
+        public BasicBlock CreateBasicBlock( LazyEncodedString name ) => Impl.CreateBasicBlock( name );
 
         /// <inheritdoc/>
         public Module CreateBitcodeModule( ) => Impl.CreateBitcodeModule();
 
         /// <inheritdoc/>
-        public Module CreateBitcodeModule( string moduleId ) => Impl.CreateBitcodeModule( moduleId );
+        public Module CreateBitcodeModule( LazyEncodedString moduleId ) => Impl.CreateBitcodeModule( moduleId );
 
         /// <inheritdoc/>
         public Module ParseModule( LazyEncodedString src, LazyEncodedString name ) => Impl.ParseModule( src, name );
 
         /// <inheritdoc/>
-        public uint GetMDKindId( string name ) => Impl.GetMDKindId( name );
+        public uint GetMDKindId( LazyEncodedString name ) => Impl.GetMDKindId( name );
 
         /// <inheritdoc/>
-        public TargetBinary OpenBinary( string path ) => Impl.OpenBinary( path );
+        public TargetBinary OpenBinary( LazyEncodedString path ) => Impl.OpenBinary( path );
 
         /// <inheritdoc/>
         public ITypeRef VoidType => Impl.VoidType;

@@ -53,16 +53,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// issues of endian mismatch can occur between host assumptions and target. Thus, caution is warranted
         /// when using this property.
         /// </remarks>
-        public ReadOnlySpan<byte> RawData
-        {
-            get
-            {
-                unsafe
-                {
-                    return new( LibLLVMGetConstantDataSequentialRawData( Handle, out size_t len ), len );
-                }
-            }
-        }
+        public ReadOnlySpan<byte> RawData => LibLLVMGetConstantDataSequentialRawData( Handle );
 
         /// <summary>Gets the count of elements in this <see cref="ConstantDataSequential"/></summary>
         public uint Count => LibLLVMGetConstantDataSequentialElementCount( Handle );

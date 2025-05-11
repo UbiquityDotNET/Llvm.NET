@@ -298,17 +298,13 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
     public static partial class TripleBindings
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleRef LibLLVMGetHostTriple();
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMTripleRef LibLLVMParseTriple(string triple);
-
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMTripleRef LibLLVMParseTriple(byte* triple);
+        public static unsafe partial LibLLVMTripleRef LibLLVMParseTriple(LazyEncodedString triple);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -348,35 +344,34 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LibLLVMTripleObjectFormatType LibLLVMTripleGetObjectFormatType(LibLLVMTripleRef triple);
 
+        // This MUST use a dispose message as the 'normalize" condition might end up with
+        // a stack allocated string, which is obviously bogus upon return.
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial string LibLLVMTripleAsString(LibLLVMTripleRef triple, [MarshalAs( UnmanagedType.Bool )] bool normalize);
 
-        // TODO: PERF - change these to return a const string so there's no need to allocate, duplicate, marshal, release
-        //       Instead it should just Marshal. These are all static const strings!
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMTripleGetArchTypeName(LibLLVMTripleArchType type);
+        public static unsafe partial LazyEncodedString LibLLVMTripleGetArchTypeName(LibLLVMTripleArchType type);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMTripleGetSubArchTypeName(LibLLVMTripleSubArchType type);
+        public static unsafe partial LazyEncodedString LibLLVMTripleGetSubArchTypeName(LibLLVMTripleSubArchType type);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMTripleGetVendorTypeName(LibLLVMTripleVendorType vendor);
+        public static unsafe partial LazyEncodedString LibLLVMTripleGetVendorTypeName(LibLLVMTripleVendorType vendor);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMTripleGetOsTypeName(LibLLVMTripleOSType osType);
+        public static unsafe partial LazyEncodedString LibLLVMTripleGetOsTypeName(LibLLVMTripleOSType osType);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMTripleGetEnvironmentTypeName(LibLLVMTripleEnvironmentType environmentType);
+        public static unsafe partial LazyEncodedString LibLLVMTripleGetEnvironmentTypeName(LibLLVMTripleEnvironmentType environmentType);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMTripleGetObjectFormatTypeName(LibLLVMTripleObjectFormatType objectFormatType);
+        public static unsafe partial LazyEncodedString LibLLVMTripleGetObjectFormatTypeName(LibLLVMTripleObjectFormatType objectFormatType);
     }
 }

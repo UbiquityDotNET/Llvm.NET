@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Llvm.Metadata
     public class NamedMDNode
     {
         /// <summary>Gets the name of the node</summary>
-        public string Name => LLVMGetNamedMetadataName( NativeHandle, out size_t _ ) ?? string.Empty;
+        public LazyEncodedString Name => LLVMGetNamedMetadataName( NativeHandle ) ?? LazyEncodedString.Empty;
 
         /// <summary>Gets the operands for the node</summary>
         public IList<MDNode> Operands { get; }

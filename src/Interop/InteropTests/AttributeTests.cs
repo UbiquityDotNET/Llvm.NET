@@ -28,29 +28,17 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         public void CustomAttributeTests( )
         {
             using LLVMContextRef ctx = LLVMContextCreate();
-            LazyEncodedString name = new("custom");
-            LazyEncodedString value = new("custom value");
+            LazyEncodedString name = new("custom"u8);
+            LazyEncodedString value = new("custom value"u8);
 
-            LLVMAttributeRef attribValue;
-
-            using var memName = name.Pin();
-            using var memValue = value.Pin();
-            unsafe
-            {
-                attribValue = LLVMCreateStringAttribute(ctx, (byte*)memName.Pointer, (uint)name.NativeStrLen, (byte*)memValue.Pointer, (uint)value.NativeStrLen);
-            }
+            LLVMAttributeRef attribValue = LLVMCreateStringAttribute(ctx, name, value);
 
             Assert.IsFalse(attribValue.IsNull);
 
             // LibLLVM should support Custom attributes as well.
-            LibLLVMAttributeInfo info;
             LazyEncodedString attribName = new("custom");
-            using var mem = attribName.Pin();
-            unsafe
-            {
-                using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo((byte*)mem.Pointer, attribName.NativeStrLen, &info);
-                errorRef.ThrowIfFailed();
-            }
+            using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo(attribName, out LibLLVMAttributeInfo info);
+            errorRef.ThrowIfFailed();
 
             Assert.AreEqual(LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, info.ArgKind);
         }
@@ -58,11 +46,11 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         [TestMethod]
         public void AttributeListAttainable( )
         {
-            size_t len = LibLLVMGetNumKnownAttribs();
+            int len = checked((int)LibLLVMGetNumKnownAttribs());
             unsafe
             {
                 byte** ppData = stackalloc byte*[len];
-                using LLVMErrorRef errorRef = LibLLVMGetKnownAttributeNames(len, ppData);
+                using LLVMErrorRef errorRef = LibLLVMGetKnownAttributeNames(ppData, (nuint)len);
                 errorRef.ThrowIfFailed();
 
                 // make sure conversion is plausible.

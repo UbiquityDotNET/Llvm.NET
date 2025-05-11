@@ -329,7 +329,7 @@ namespace Ubiquity.NET.Llvm
             return Value.FromHandle<Constant>( handle.ThrowIfInvalid() )!;
         }
 
-        public IStructType CreateStructType( string name )
+        public IStructType CreateStructType( LazyEncodedString name )
         {
             ArgumentNullException.ThrowIfNull( name );
             var handle = LLVMStructCreateNamed( NativeHandle, name );
@@ -345,7 +345,7 @@ namespace Ubiquity.NET.Llvm
             return (IStructType)handle.CreateType();
         }
 
-        public IStructType CreateStructType( string name, bool packed, params IEnumerable<ITypeRef> elements )
+        public IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements )
         {
             ArgumentNullException.ThrowIfNull( name );
             ArgumentNullException.ThrowIfNull( elements );
@@ -356,13 +356,13 @@ namespace Ubiquity.NET.Llvm
             return retVal;
         }
 
-        public MDString CreateMetadataString( string? value )
+        public MDString CreateMetadataString( LazyEncodedString? value )
         {
-            var handle = LLVMMDStringInContext2( NativeHandle, value, ( uint )( value?.Length ?? 0 ) );
+            var handle = LLVMMDStringInContext2( NativeHandle, value ?? LazyEncodedString.Empty );
             return new MDString( handle );
         }
 
-        public MDNode CreateMDNode( string value )
+        public MDNode CreateMDNode( LazyEncodedString value )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( value );
             var elements = new[ ] { CreateMetadataString( value ).Handle };
@@ -370,12 +370,12 @@ namespace Ubiquity.NET.Llvm
             return (MDNode)hNode.ThrowIfInvalid().CreateMetadata()!;
         }
 
-        public ConstantDataArray CreateConstantString( string value ) => CreateConstantString( value, true );
+        public ConstantDataArray CreateConstantString( LazyEncodedString value ) => CreateConstantString( value, true );
 
-        public ConstantDataArray CreateConstantString( string value, bool nullTerminate )
+        public ConstantDataArray CreateConstantString( LazyEncodedString value, bool nullTerminate )
         {
             ArgumentNullException.ThrowIfNull( value );
-            var handle = LLVMConstStringInContext( NativeHandle, value, ( uint )value.Length, !nullTerminate );
+            var handle = LLVMConstStringInContext( NativeHandle, value, !nullTerminate );
             return Value.FromHandle<ConstantDataArray>( handle.ThrowIfInvalid() )!;
         }
 
@@ -466,17 +466,17 @@ namespace Ubiquity.NET.Llvm
         public ConstantFP CreateConstant( double constValue )
             => Value.FromHandle<ConstantFP>( LLVMConstReal( DoubleType.GetTypeRef(), constValue ).ThrowIfInvalid() )!;
 
-        public BasicBlock CreateBasicBlock( string name )
+        public BasicBlock CreateBasicBlock( LazyEncodedString name )
         {
             return BasicBlock.FromHandle( LLVMCreateBasicBlockInContext( NativeHandle, name ).ThrowIfInvalid() )!;
         }
 
         public Module CreateBitcodeModule( )
         {
-            return CreateBitcodeModule( string.Empty );
+            return CreateBitcodeModule( LazyEncodedString.Empty );
         }
 
-        public Module CreateBitcodeModule( string moduleId )
+        public Module CreateBitcodeModule( LazyEncodedString moduleId )
         {
             // empty string is OK.
             ArgumentNullException.ThrowIfNull( moduleId );
@@ -518,9 +518,9 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        public uint GetMDKindId( string name )
+        public uint GetMDKindId( LazyEncodedString? name )
         {
-            return LLVMGetMDKindIDInContext( NativeHandle, name, name == null ? 0u : (uint)name.Length );
+            return LLVMGetMDKindIDInContext( NativeHandle, name ?? LazyEncodedString.Empty );
         }
 
         public bool OdrUniqueDebugTypes
@@ -529,7 +529,7 @@ namespace Ubiquity.NET.Llvm
             set => LibLLVMContextSetIsODRUniquingDebugTypes( NativeHandle, value );
         }
 
-        public TargetBinary OpenBinary( string path )
+        public TargetBinary OpenBinary( LazyEncodedString path )
         {
             // ownership of this buffer transfers to the TargetBinary instance
             // unless an exception occurs. Dispose() is idempotent and a harmless
@@ -548,21 +548,10 @@ namespace Ubiquity.NET.Llvm
         {
             // if no value provided, use an empty string so native API doesn't crash.
             value ??= LazyEncodedString.Empty;
-            using var memName = name.Pin();
-            using var memValue = value.Pin();
-            unsafe
-            {
-                return new( LLVMCreateStringAttribute(
-                                NativeHandle,
-                                (byte*)memName.Pointer,
-                                (uint)name.NativeStrLen,
-                                (byte*)memValue.Pointer,
-                                (uint)value.NativeStrLen
-                                )
-                          );
-            }
+            return new( LLVMCreateStringAttribute( NativeHandle, name, value ) );
         }
 
+        // TODO: Move this to the extensions support it is useful on it's own in other contexts
         [DoesNotReturn]
         private static void ThrowAttributeRequiresArg(
             AttributeInfo info,
