@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
@@ -954,7 +955,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsFalse( value.IsCallSite );
             Assert.IsFalse( value.IsZeroValue );
 
-            Assert.AreSame( string.Empty, value.Name );
+            Assert.AreSame( LazyEncodedString.Empty, value.Name );
 
             var arrayType = value.NativeType as IArrayType;
             Assert.IsNotNull( arrayType );
@@ -994,7 +995,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsFalse( value.IsCallSite );
             Assert.IsFalse( value.IsZeroValue );
 
-            Assert.AreSame( string.Empty, value.Name );
+            Assert.AreSame( LazyEncodedString.Empty, value.Name );
 
             var arrayType = value.NativeType as IArrayType;
             Assert.IsNotNull( arrayType );
@@ -1002,7 +1003,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( context.Int8Type, arrayType.ElementType );
             Assert.AreEqual( ( uint )str.Length, arrayType.Length );
             string valueStr = value.ExtractAsString( );
-            Assert.IsFalse( string.IsNullOrWhiteSpace( valueStr ) );
+            Assert.IsFalse( LazyEncodedString.IsNullOrWhiteSpace( valueStr ) );
             Assert.AreEqual( str, valueStr );
 
             var span = value.RawData;

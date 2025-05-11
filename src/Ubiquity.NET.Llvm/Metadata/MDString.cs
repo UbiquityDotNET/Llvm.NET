@@ -16,9 +16,9 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// This captures/copies the raw bytes of the native string but does NOT perform any additional
         /// transformation/encoding to a managed string. This allows more efficient use of the string with
         /// other native APIs. If the managed form of the string is needed it is obtainable via the <see cref="LazyEncodedString.ToString()"/>
-        /// method.
+        /// method on the returned value or by calling <see cref="ToString"/> instead.
         /// </remarks>
-        public LazyEncodedString ToLazyString()
+        public LazyEncodedString ToLazyEncodedString()
         {
             return LibLLVMGetMDStringText( Handle ) ?? LazyEncodedString.Empty;
         }
@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <returns>String this node wraps</returns>
         public override string ToString( )
         {
-            return ToLazyString().ToString();
+            return ToLazyEncodedString().ToString();
         }
 
         internal MDString( LLVMMetadataRef handle )

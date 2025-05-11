@@ -224,11 +224,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="DIFile"/> or <see langword="null"/> if <paramref name="path"/>
         /// is <see langword="null"/> empty, or all whitespace
         /// </returns>
-        public readonly DIFile CreateFile( string path )
+        public readonly DIFile CreateFile( string? path )
         {
             return CreateFile(
-                Path.GetFileName( path ) ?? throw new ArgumentException("Valid File name not present", nameof(path)),
-                Path.GetDirectoryName( path ) ?? Environment.CurrentDirectory
+                Path.GetFileName( path ) ?? LazyEncodedString.Empty,
+                Path.GetDirectoryName( path ) ?? LazyEncodedString.Empty
                 );
         }
 
@@ -238,11 +238,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns>
         /// <see cref="DIFile"/> created
         /// </returns>
-        public readonly DIFile CreateFile( LazyEncodedString fileName, LazyEncodedString directory )
+        public readonly DIFile CreateFile( LazyEncodedString? fileName, LazyEncodedString? directory )
         {
             var handle = LLVMDIBuilderCreateFile( Handle.ThrowIfInvalid()
-                                                , fileName
-                                                , directory
+                                                , fileName ?? LazyEncodedString.Empty
+                                                , directory ?? LazyEncodedString.Empty
                                                 );
 
             return (DIFile)handle.ThrowIfInvalid( ).CreateMetadata( )!;

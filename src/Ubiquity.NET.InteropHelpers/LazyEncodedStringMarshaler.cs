@@ -26,7 +26,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <returns>Wrapped string with lazy conversion to managed form</returns>
         public static LazyEncodedString? ConvertToManaged(byte* unmanaged)
         {
-            return unmanaged is null ? null : new(unmanaged);
+            return LazyEncodedString.FromUnmanaged(unmanaged);
         }
 
         // Generally, can't support the [In] direction of [Out,In]

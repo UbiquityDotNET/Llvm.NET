@@ -50,9 +50,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
             /// This two stage conversion is used to ensure that the unmanaged pointer is freed even if there
             /// is an exception in creating the managed version.
             /// </remarks>
-            public readonly LazyEncodedString ToManaged()
+            public readonly LazyEncodedString? ToManaged()
             {
-                return new( UnmanagedPtr );
+                return LazyEncodedString.FromUnmanaged( UnmanagedPtr );
             }
 
             /// <summary>Captures the unmanaged pointer</summary>

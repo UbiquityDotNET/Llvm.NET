@@ -643,7 +643,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( ConstLazyEncodedStringMarshaller ) )]
         private static unsafe partial byte* LLVMGetSourceFileName( LLVMModuleRefAlias M, out nuint Len );
 
         [MethodImpl( MethodImplOptions.AggressiveInlining )]
@@ -658,7 +657,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( ConstLazyEncodedStringMarshaller ) )]
         public static unsafe partial LazyEncodedString? LLVMGetDataLayoutStr( LLVMModuleRefAlias M );
 
         [LibraryImport( LibraryName )]
@@ -1374,7 +1372,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( ConstLazyEncodedStringMarshaller ) )]
         public static unsafe partial LazyEncodedString? LLVMGetTargetExtTypeName( LLVMTypeRef TargetExtTy );
 
         [LibraryImport( LibraryName )]
@@ -2220,7 +2217,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( typeof( ConstLazyEncodedStringMarshaller ) )]
         public static unsafe partial LazyEncodedString? LLVMGetSection( LLVMValueRef Global );
 
         [LibraryImport( LibraryName )]

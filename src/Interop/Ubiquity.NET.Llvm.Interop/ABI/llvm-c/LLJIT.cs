@@ -57,7 +57,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
+        public static unsafe partial LazyEncodedString LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -110,6 +110,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
+        public static unsafe partial LazyEncodedString LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
     }
 }

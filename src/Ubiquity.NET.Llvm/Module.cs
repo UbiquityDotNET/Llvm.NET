@@ -204,6 +204,7 @@ namespace Ubiquity.NET.Llvm
         public IEnumerable<DICompileUnit> CompileUnits => Impl.CompileUnits;
 
         /// <inheritdoc/>
+        [DisallowNull]
         public LazyEncodedString DataLayoutString { get => Impl.DataLayoutString; set => Impl.DataLayoutString = value; }
 
         /// <inheritdoc/>

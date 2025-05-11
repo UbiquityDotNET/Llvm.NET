@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Ubiquity.NET.Extensions;
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.OrcJITv2;
 
@@ -26,13 +27,13 @@ namespace Kaleidoscope.Runtime
         /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
         /// <remarks>This creates a JIT with a default set of passes for 'O3'</remarks>
         public KaleidoscopeJIT()
-            : this("default<O3>")
+            : this("default<O3>"u8)
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
         /// <param name="optimizationPasses">Optimization passes to use for each module transform in this JIT</param>
-        public KaleidoscopeJIT( params string[] optimizationPasses )
+        public KaleidoscopeJIT( params LazyEncodedString[] optimizationPasses )
         {
             OptimizationPasses = optimizationPasses;
             SymbolFlags symFlags = new(SymbolGenericOption.Callable);
@@ -40,8 +41,8 @@ namespace Kaleidoscope.Runtime
             // Add a materializer for the well-known symbols for the managed code implementations
             unsafe
             {
-                using var putchardName = MangleAndIntern("putchard");
-                using var printdName = MangleAndIntern("printd");
+                using var putchardName = MangleAndIntern("putchard"u8);
+                using var printdName = MangleAndIntern("printd"u8);
 
                 var absoluteSymbols = new KvpArrayBuilder<SymbolStringPoolEntry, EvaluatedSymbol> {
                     [putchardName] = new(MakeRawPtr(&BuiltIns.PutChard), symFlags),
@@ -80,7 +81,7 @@ namespace Kaleidoscope.Runtime
         // Default constructor set covers the basics; more are possible and may produce
         // better results but could also end up taking more effort than just materializing
         // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged.
-        private readonly string[] OptimizationPasses;
+        private readonly LazyEncodedString[] OptimizationPasses;
 
         // call back to handle per module transforms in the JIT
         private void ModuleTransformer(ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule)

@@ -159,8 +159,10 @@ namespace Ubiquity.NET.Llvm
                 using var nativeMemoryPinnedHandle = nativeMemory.Memory.Pin();
                 fixed( byte* ptr = &MemoryMarshal.GetReference( instruction ) )
                 {
-                    nuint instSize = LLVMDisasmInstruction(Handle, ptr, (UInt64)instruction.Length, pc, (byte*)nativeMemoryPinnedHandle.Pointer, (nuint)stringBufferSize);
-                    return (new LazyEncodedString((byte*)nativeMemoryPinnedHandle.Pointer), instSize);
+                    byte* pDisasmData = (byte*)nativeMemoryPinnedHandle.Pointer;
+                    Debug.Assert(pDisasmData != null, "should never get a null pointer here");
+                    nuint instSize = LLVMDisasmInstruction(Handle, ptr, (UInt64)instruction.Length, pc, pDisasmData, (nuint)stringBufferSize);
+                    return (LazyEncodedString.FromUnmanaged(pDisasmData)!, instSize);
                 }
             }
         }

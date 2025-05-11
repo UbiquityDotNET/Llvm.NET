@@ -5,12 +5,14 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Metadata;
@@ -21,8 +23,8 @@ namespace Ubiquity.NET.Llvm.UT
     [TestClass]
     public class ModuleTests
     {
-        private const string StructTestName = "struct.Test";
-        private const string TestModuleName = "test";
+        private static readonly LazyEncodedString StructTestName = "struct.Test"u8;
+        private static readonly LazyEncodedString TestModuleName = "test"u8;
         private const string LlvmNewLine = "\n";
 
         // To validate transformation to correct newline formatting
@@ -48,13 +50,14 @@ namespace Ubiquity.NET.Llvm.UT
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( );
 
-            Assert.AreSame( string.Empty, module.Name );
-            Assert.AreSame( string.Empty, module.SourceFileName );
+            Assert.AreSame( LazyEncodedString.Empty, module.Name );
+            Assert.AreSame( LazyEncodedString.Empty, module.SourceFileName );
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
-            Assert.IsFalse( module.DataLayoutString.IsEmpty );
+            Assert.IsNotNull( module.DataLayoutString );
+            Assert.IsTrue( module.DataLayoutString.IsEmpty );
             Assert.IsNotNull( module.Layout );
-            Assert.AreSame( string.Empty, module.TargetTriple );
+            Assert.AreSame( LazyEncodedString.Empty, module.TargetTriple );
 
             // Functions collection should be valid but empty
             Assert.IsNotNull( module.Functions );
@@ -75,9 +78,9 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TestModuleName, module.SourceFileName );
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
-            Assert.IsFalse( module.DataLayoutString.IsEmpty );
+            Assert.IsTrue( module.DataLayoutString.IsEmpty );
             Assert.IsNotNull( module.Layout );
-            Assert.AreSame( string.Empty, module.TargetTriple );
+            Assert.AreSame( LazyEncodedString.Empty, module.TargetTriple );
 
             // Functions collection should be valid but empty
             Assert.IsNotNull( module.Functions );
@@ -100,9 +103,10 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TestModuleName, module.SourceFileName );
             Assert.IsNotNull( module );
             Assert.IsNotNull( module.Context );
-            Assert.IsFalse( module.DataLayoutString.IsEmpty );
+            Assert.IsNotNull( module.DataLayoutString );
+            Assert.IsTrue( module.DataLayoutString.IsEmpty );
             Assert.IsNotNull( module.Layout );
-            Assert.AreSame( string.Empty, module.TargetTriple );
+            Assert.AreSame( LazyEncodedString.Empty, module.TargetTriple );
 
             // Functions collection should be valid but empty
             Assert.IsNotNull( module.Functions );
@@ -336,7 +340,7 @@ namespace Ubiquity.NET.Llvm.UT
             var globalVar = module.Globals.First( );
             Assert.IsNotNull( globalVar );
             Assert.IsNotNull( globalVar.Initializer );
-            Assert.IsTrue( string.IsNullOrWhiteSpace( globalVar.Name ) );
+            Assert.IsTrue( LazyEncodedString.IsNullOrWhiteSpace( globalVar.Name ) );
             Assert.AreEqual( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
             Assert.AreEqual( module.Context.Int32Type, globalVar.Initializer!.NativeType );
             Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
@@ -531,7 +535,8 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );
         }
 
-        private static Module CreateSimpleModule( IContext ctx, string name )
+        [SuppressMessage( "Performance", "CA1859:Use concrete types when possible for improved performance", Justification = "Test does not assume single implementation of interface" )]
+        private static Module CreateSimpleModule( IContext ctx, LazyEncodedString name )
         {
             // ownership transferred out of this helper
             var retVal = ctx.CreateBitcodeModule( name );
@@ -539,7 +544,7 @@ namespace Ubiquity.NET.Llvm.UT
             return retVal;
         }
 
-        private static Function CreateSimpleVoidNopTestFunction( Module module, string name )
+        private static Function CreateSimpleVoidNopTestFunction( Module module, LazyEncodedString name )
         {
             var ctx = module.Context;
             Assert.IsNotNull( ctx );
@@ -554,7 +559,7 @@ namespace Ubiquity.NET.Llvm.UT
             return testFunc;
         }
 
-        private static Function CreateInvalidFunction( Module module, string name )
+        private static Function CreateInvalidFunction( Module module, LazyEncodedString name )
         {
             var ctx = module.Context;
 
@@ -565,7 +570,7 @@ namespace Ubiquity.NET.Llvm.UT
             return testFunc;
         }
 
-        private static string GetExpectedModuleText(string moduleName)
+        private static string GetExpectedModuleText(LazyEncodedString moduleName)
         {
             string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, moduleName );
             if(Environment.NewLine != LlvmNewLine)

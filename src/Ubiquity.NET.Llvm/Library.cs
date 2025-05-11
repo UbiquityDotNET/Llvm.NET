@@ -94,7 +94,8 @@ namespace Ubiquity.NET.Llvm
                 var bldr = ImmutableArray.CreateBuilder<LazyEncodedString>(len);
                 for(int i=0; i < len; ++i)
                 {
-                    bldr.Add(new(ppData[i]));
+                    // Should NEVER get a null string but just in case treat it as an empty string.
+                    bldr.Add(LazyEncodedString.FromUnmanaged(ppData[i]) ?? LazyEncodedString.Empty);
                 }
 
                 return bldr.ToImmutable();

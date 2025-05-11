@@ -44,14 +44,13 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Gets or Sets the Data layout string for this module</summary>
         /// <remarks>
-        /// <note type="note">The data layout string doesn't do what seems obvious.
+        /// <note type="important">The data layout string doesn't do what seems obvious.
         /// That is, it doesn't force the target back-end to generate code
         /// or types with a particular layout. Rather, the layout string has
         /// to match the implicit layout of the target. Thus it should only
         /// come from the actual <see cref="TargetMachine"/> the code is
         /// targeting.</note>
         /// </remarks>
-        [DisallowNull]
         public LazyEncodedString DataLayoutString { get; set; }
 
         /// <summary>Gets or sets the target data layout for this module</summary>

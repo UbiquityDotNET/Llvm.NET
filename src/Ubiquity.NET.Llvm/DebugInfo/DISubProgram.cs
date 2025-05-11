@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public uint Line => LLVMDISubprogramGetLine( Handle );
 
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
-        public override string Name => GetOperandString( 2 );
+        public override LazyEncodedString Name => GetOperandString( 2 );
 
         /// <summary>Gets the linkage name of this <see cref="DISubProgram"/></summary>
         public string LinkageName => GetOperandString( 3 );

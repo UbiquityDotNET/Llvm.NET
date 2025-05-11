@@ -35,7 +35,8 @@ namespace Ubiquity.NET.InteropHelpers
     /// </remarks>
     [NativeMarshalling(typeof(LazyEncodedStringMarshaller))]
     public sealed class LazyEncodedString
-        : IEquatable<LazyEncodedString>
+        : IEquatable<LazyEncodedString?>
+        , IEquatable<string?>
         , IEqualityOperators<LazyEncodedString, LazyEncodedString, bool>
     {
         /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from an existing managed string</summary>
@@ -92,14 +93,6 @@ namespace Ubiquity.NET.InteropHelpers
                 retVal[^1] = 0; // force terminator
                 return retVal;
             }
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from a raw native pointer</summary>
-        /// <param name="nativePtr">pointer to create this instance from</param>
-        /// <param name="encoding">Encoding to use for the string [Optional: Defaults to <see cref="Encoding.UTF8"/> if not provided]</param>
-        public unsafe LazyEncodedString(byte* nativePtr, Encoding? encoding = null)
-            : this(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(nativePtr), encoding)
-        {
         }
 
         /// <summary>Gets the encoding used for this instance</summary>
@@ -166,16 +159,26 @@ namespace Ubiquity.NET.InteropHelpers
             // both have Managed version of string so compare that...
             if (ManagedString.IsValueCreated && other.ManagedString.IsValueCreated)
             {
-                return ManagedString.Value.Equals(other.ManagedString.Value, StringComparison.Ordinal);
+                return Equals(other.ManagedString.Value);
             }
 
             // Otherwise at least one has the native form, so use that for both
             // this might incur the cost of conversion for one of them
-            return NativeBytes.Value.Equals(other.NativeBytes.Value);
+            return ToReadOnlySpan().SequenceEqual(other.ToReadOnlySpan());
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => obj is LazyEncodedString s && Equals(s);
+        public bool Equals( string? other )
+        {
+            return ManagedString.Value.Equals( other, StringComparison.Ordinal );
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals( object? obj )
+        {
+            return (obj is LazyEncodedString les && Equals( les ))
+                || (obj is string s && Equals( s ));
+        }
 
         /// <summary>Gets the native size (in bytes, including the terminator) of the memory for this string</summary>
         public nuint NativeLength => checked((nuint)NativeBytes.Value.LongLength);
@@ -184,6 +187,11 @@ namespace Ubiquity.NET.InteropHelpers
         public nuint NativeStrLen => NativeLength - 1;
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// For consistency of the computed hash code value, this will use the managed form of the
+        /// string. This might incur a one time perf hit to encode it, but that is generally assumed
+        /// needed when this is called anyway, so not a major hit.
+        /// </remarks>
         public override int GetHashCode()
         {
             return ManagedString.Value.GetHashCode(StringComparison.Ordinal);
@@ -237,13 +245,48 @@ namespace Ubiquity.NET.InteropHelpers
         /// <remarks>
         /// To preserve the potential meaning distinction between null and empty strings, this will treat a
         /// <see langword="null"/> for <paramref name="p"/> as a <see langword="null"/> return value. Empty,
-        /// strings are a non <see langword="null"/> <paramref name="p"/> but a <paramref name="len"/> of 0.
+        /// strings are a <see cref="LazyEncodedString.Empty"/>.
+        /// <note type="note">
+        /// This method handles safely converting (down casting) the length to an <see cref="int"/>  as required
+        /// by .NET runtime types. [<see cref="nuint"/> is a managed equivalent of size_t]
+        /// </note>
         /// </remarks>
         public static unsafe LazyEncodedString? FromUnmanaged(byte* p, nuint len)
         {
-            return p is null
-                   ? null
-                   : new( new ReadOnlySpan<byte>(p, checked((int)len)));
+            if (p is null)
+            {
+                return null;
+            }
+
+            // attempt to convert all empty strings to same instance to reduce
+            // pressure on GC Heap.
+            var span = new ReadOnlySpan<byte>(p, checked((int)len));
+            return span.IsEmpty ? Empty : new(span);
+        }
+
+        /// <summary>Creates a nullable <see cref="LazyEncodedString"/> from an unmanaged string pointer (terminated!)</summary>
+        /// <param name="p">pointer to first character of string</param>
+        /// <returns><see cref="LazyEncodedString"/></returns>
+        /// <remarks>
+        /// To preserve the potential meaning distinction between <see langword="null"/> and empty strings, this will treat a
+        /// <see langword="null"/> for <paramref name="p"/> as a <see langword="null"/> return value. Empty,
+        /// strings are always <see cref="LazyEncodedString.Empty"/>.
+        /// </remarks>
+        [return: NotNullIfNotNull(nameof(p))]
+        public static unsafe LazyEncodedString? FromUnmanaged( byte* p )
+        {
+            if (p == null)
+            {
+// until: https://github.com/dotnet/roslyn/issues/78550 is fixed, have to do the ugly suppression
+#pragma warning disable CS8825 // Return value must be non-null because parameter is non-null.
+                return null;
+#pragma warning restore CS8825 // Return value must be non-null because parameter is non-null.
+            }
+
+            // attempt to convert all empty strings to same instance to reduce
+            // pressure on GC Heap.
+            var span = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(p);
+            return span.IsEmpty ? Empty : new(span);
         }
 
         /// <inheritdoc cref="string.Join{T}(char, IEnumerable{T})"/>
@@ -325,15 +368,15 @@ namespace Ubiquity.NET.InteropHelpers
         /// <inheritdoc/>
         public static bool operator ==( LazyEncodedString? left, LazyEncodedString? right )
         {
-            ArgumentNullException.ThrowIfNull(left);
-            return left.Equals(right);
+            return ReferenceEquals( left, right )
+                || left is not null && left.Equals(right);
         }
 
         /// <inheritdoc/>
         public static bool operator !=( LazyEncodedString? left, LazyEncodedString? right )
         {
-            ArgumentNullException.ThrowIfNull(left);
-            return !left.Equals(right);
+            return !ReferenceEquals( left, right )
+                && (left is null || !left.Equals(right));
         }
 
         private readonly int EncodingCodePage;

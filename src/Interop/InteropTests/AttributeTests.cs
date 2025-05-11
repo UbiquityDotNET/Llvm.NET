@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         {
             using LLVMContextRef ctx = LLVMContextCreate();
             LazyEncodedString name = new("custom"u8);
-            LazyEncodedString value = new("custom value"u8);
+            LazyEncodedString value = "custom value"u8;
 
             LLVMAttributeRef attribValue = LLVMCreateStringAttribute(ctx, name, value);
 
@@ -37,8 +37,12 @@ namespace Ubiquity.NET.Llvm.Interop.UT
 
             // LibLLVM should support Custom attributes as well.
             LazyEncodedString attribName = new("custom");
-            using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo(attribName, out LibLLVMAttributeInfo info);
-            errorRef.ThrowIfFailed();
+            LibLLVMAttributeInfo info;
+            unsafe
+            {
+                using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo(attribName, &info);
+                errorRef.ThrowIfFailed();
+            }
 
             Assert.AreEqual(LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, info.ArgKind);
         }
@@ -57,7 +61,12 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 var bldr = ImmutableArray.CreateBuilder<LazyEncodedString>(len);
                 for(int i=0; i < len; ++i)
                 {
-                    bldr.Add(new(ppData[i]));
+                    // https://github.com/microsoft/testfx/issues/5543
+#pragma warning disable MSTEST0037 // Use proper 'Assert' methods
+                    Assert.IsTrue(ppData[i] is not null);
+#pragma warning restore MSTEST0037 // Use proper 'Assert' methods
+
+                    bldr.Add( LazyEncodedString.FromUnmanaged(ppData[i])!);
                 }
 
                 var names = bldr.ToImmutable();

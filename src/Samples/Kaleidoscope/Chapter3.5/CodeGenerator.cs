@@ -11,6 +11,7 @@ using System.Linq;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Values;
@@ -232,8 +233,8 @@ namespace Kaleidoscope.Chapter3_5
         private readonly Context Context;
         private readonly InstructionBuilder InstructionBuilder;
         private readonly Dictionary<string, Value> NamedValues = [];
-        private static readonly string[] PassNames = [
-            "default<O3>"
+        private static readonly LazyEncodedString[] PassNames = [
+            "default<O3>"u8
         ];
         #endregion
     }

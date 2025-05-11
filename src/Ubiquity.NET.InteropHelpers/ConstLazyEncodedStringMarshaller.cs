@@ -1,4 +1,5 @@
-﻿// -----------------------------------------------------------------------
+﻿#if PROBABLY_DELETE_ME_LATER_AS_LAZYENCODEDSTRING_IS_BETTER
+// -----------------------------------------------------------------------
 // <copyright file="ConstLazyEncodedStringMarshaller.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
@@ -31,7 +32,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <seealso cref="ExecutionEncodingStringMarshaller.Encoding"/>
         public static LazyEncodedString? ConvertToManaged(byte* unmanaged)
         {
-            return new(unmanaged);
+            return LazyEncodedString.FromUnmanaged(unmanaged);
         }
 
         /// <summary> [Intentional NOP] Frees the memory for the unmanaged string.</summary>
@@ -52,3 +53,4 @@ namespace Ubiquity.NET.InteropHelpers
         }
     }
 }
+#endif

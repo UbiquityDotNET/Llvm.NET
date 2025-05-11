@@ -27,16 +27,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public JITDyLib MainLib => new(LLVMOrcLLJITGetMainJITDylib(Handle));
 
         /// <summary>Gets the data layout string for this JIT</summary>
-        public LazyEncodedString DataLayoutString
-        {
-            get
-            {
-                unsafe
-                {
-                    return new(LLVMOrcLLJITGetDataLayoutStr(Handle));
-                }
-            }
-        }
+        public LazyEncodedString DataLayoutString => LLVMOrcLLJITGetDataLayoutStr( Handle );
 
         /*
         TODO: Add LibLLVMxxx to make this go away, the underlying JIT HAS a Triple instance!
@@ -45,16 +36,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         */
 
         /// <summary>Gets a string representation of the target triple for this JIT</summary>
-        public LazyEncodedString TripleString
-        {
-            get
-            {
-                unsafe
-                {
-                    return new(LLVMOrcLLJITGetTripleString(Handle));
-                }
-            }
-        }
+        public LazyEncodedString TripleString => LLVMOrcLLJITGetTripleString( Handle );
 
         /// <summary>Looks up the native address of a symbol</summary>
         /// <param name="name">NameField of the symbol to find the address of</param>

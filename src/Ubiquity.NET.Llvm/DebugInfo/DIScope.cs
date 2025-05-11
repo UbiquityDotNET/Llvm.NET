@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public virtual DIScope? Scope => null;
 
         /// <summary>Gets the name of the scope or an empty string if the scope doesn't have a name</summary>
-        public virtual string Name { get; } = string.Empty;
+        public virtual LazyEncodedString Name { get; } = LazyEncodedString.Empty;
 
         private protected DIScope( LLVMMetadataRef handle )
             : base( handle )
