@@ -9,6 +9,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
     /// <summary>Represents a marshaller for LLVM strings that require a call to LLVMDisposeMessage to release the native representation.</summary>
     /// <remarks>
     /// Generally used for Return/OUT semantics as there are no LLVM APIs that accept a string requiring LLVMDisposeMessage().
+    /// <note type="note">
+    /// The P/Invoke APIs generally use a <see cref="LazyEncodedString"/>, in fact that's the general rule. The primary exceptions
+    /// are "ToString" type functions and out error messages where the use of the value as a managed string is either given by
+    /// definition or extremely likely (or impossible as a new param to some other native API), in such cases the signature is
+    /// simply <see cref="string"/> to convert directly to a managed form as that is the only way it is reasonable to use.
+    /// </note>
     /// </remarks>
     [CLSCompliant(false)]
     [CustomMarshaller(typeof(string),  MarshalMode.ManagedToUnmanagedOut, typeof(DisposeMessageMarshaller))]
