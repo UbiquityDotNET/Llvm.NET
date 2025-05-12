@@ -19,13 +19,13 @@ namespace Ubiquity.NET.InteropHelpers
     /// is kept alive by a ref count that is "owned" by native code.</para>
     ///
     /// <para>This is used as a member of such a holding type so that 'AddRefAndGetNativeContext'
-    /// retrieves a marshalled GCHandle for the containing/Controlling instance that is
+    /// retrieves a marshaled GCHandle for the containing/Controlling instance that is
     /// then provided as the native "Context" parameter.</para>
     ///
     /// <para>It is assumed that instances of this type are held in a disposable type such
     /// that when the containing type is disposed, then this is disposed. Additionally,
     /// this assumes that the native code MIGHT dispose of this instance and that callers
-    /// could otherwise account for the ref count increase to hold the instance alive. That
+    /// should otherwise account for the ref count increase to hold the instance alive. That
     /// is, by holding a GCHandle to self, with an AddRef'd handle the instance would live
     /// until the app is terminated! Thus applications using this MUST understand the native
     /// code use and account for the disposable of any instances with this as a member.</para>

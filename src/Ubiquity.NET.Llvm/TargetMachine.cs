@@ -23,13 +23,13 @@ namespace Ubiquity.NET.Llvm
         /// <param name="relocationMode">Relocation mode for machine code generation</param>
         /// <param name="codeModel">Code model for machine code generation</param>
         public TargetMachine( Triple triple
-                            , string? cpu = null
-                            , string? features = null
+                            , LazyEncodedString? cpu = null
+                            , LazyEncodedString? features = null
                             , CodeGenOpt optLevel = CodeGenOpt.Default
                             , RelocationMode relocationMode = RelocationMode.Default
                             , CodeModel codeModel = CodeModel.Default
                             )
-            : this( Target.InternalCreateTargetMachine( Target.FromTriple( triple ), triple, cpu, features, optLevel, relocationMode, codeModel ) )
+            : this( Target.FromTriple( triple ).InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel ) )
         {
         }
 
@@ -37,13 +37,13 @@ namespace Ubiquity.NET.Llvm
         public Target Target => Target.FromHandle( LLVMGetTargetMachineTarget( Handle ) );
 
         /// <summary>Gets the target triple describing this machine</summary>
-        public string Triple => LLVMGetTargetMachineTriple( Handle );
+        public LazyEncodedString Triple => LLVMGetTargetMachineTriple( Handle );
 
         /// <summary>Gets the CPU Type for this machine</summary>
-        public string Cpu => LLVMGetTargetMachineCPU( Handle );
+        public LazyEncodedString Cpu => LLVMGetTargetMachineCPU( Handle );
 
         /// <summary>Gets the CPU specific features for this machine</summary>
-        public string Features => LLVMGetTargetMachineFeatureString( Handle );
+        public LazyEncodedString Features => LLVMGetTargetMachineFeatureString( Handle );
 
         /// <summary>Creates Data Layout information for this machine</summary>
         public DataLayout CreateTargetData()
@@ -92,7 +92,7 @@ namespace Ubiquity.NET.Llvm
         /// The <see cref="Module.TargetTriple"/> must match the <see cref="Triple"/> for this
         /// target.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer")]
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer")]
         public MemoryBuffer EmitToBuffer( IModule module, CodeGenFileKind fileType )
         {
             ArgumentNullException.ThrowIfNull( module );

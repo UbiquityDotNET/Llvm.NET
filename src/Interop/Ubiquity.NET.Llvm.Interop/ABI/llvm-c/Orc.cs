@@ -494,7 +494,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( DisposeMessageMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LLVMOrcJITTargetMachineBuilderGetTargetTriple( LLVMOrcJITTargetMachineBuilderRef JTMB );
+        public static unsafe partial LazyEncodedString LLVMOrcJITTargetMachineBuilderGetTargetTriple( LLVMOrcJITTargetMachineBuilderRef JTMB );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

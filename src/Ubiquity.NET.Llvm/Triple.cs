@@ -642,11 +642,18 @@ namespace Ubiquity.NET.Llvm
         {
         }
 
+        /// <summary>Gets the <see cref="LazyEncodedString"/> form of this instance</summary>
+        /// <returns>string form of this instance</returns>
+        public LazyEncodedString ToLazyEncodedString()
+        {
+            return LibLLVMTripleAsString( Handle, normalize: true );
+        }
+
         /// <summary>Retrieves the final string form of the triple</summary>
         /// <returns>Normalized Triple string</returns>
-        public override string? ToString( )
+        public override string ToString( )
         {
-            return LibLLVMTripleAsString( Handle, true );
+            return ToLazyEncodedString().ToString();
          }
 
         /// <summary>Gets the Architecture of the triple</summary>
@@ -754,6 +761,11 @@ namespace Ubiquity.NET.Llvm
         /// <param name="triple"><see cref="Triple"/> to convert</param>
         /// <returns>Triple as a string or <see cref="string.Empty"/> if <paramref name="triple"/> is <see langword="null"/></returns>
         public static implicit operator string( Triple? triple ) => triple?.ToString( ) ?? string.Empty;
+
+        /// <summary>Implicitly converts a triple to a <see cref="LazyEncodedString"/></summary>
+        /// <param name="triple"><see cref="Triple"/> to convert</param>
+        /// <returns>Triple as a string or <see cref="LazyEncodedString.Empty"/> if <paramref name="triple"/> is <see langword="null"/></returns>
+        public static implicit operator LazyEncodedString( Triple? triple ) => triple?.ToLazyEncodedString() ?? LazyEncodedString.Empty;
 
         private Triple( LibLLVMTripleRef handle )
         {

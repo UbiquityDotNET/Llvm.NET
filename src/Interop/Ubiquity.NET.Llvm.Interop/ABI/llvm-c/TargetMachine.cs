@@ -156,15 +156,15 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LLVMGetTargetMachineTriple(LLVMTargetMachineRef T);
+        public static unsafe partial LazyEncodedString LLVMGetTargetMachineTriple(LLVMTargetMachineRef T);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LLVMGetTargetMachineCPU(LLVMTargetMachineRef T);
+        public static unsafe partial LazyEncodedString LLVMGetTargetMachineCPU(LLVMTargetMachineRef T);
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LLVMGetTargetMachineFeatureString(LLVMTargetMachineRef T);
+        public static unsafe partial LazyEncodedString LLVMGetTargetMachineFeatureString(LLVMTargetMachineRef T);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
