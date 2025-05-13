@@ -51,7 +51,7 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is DiagnosticCallbackHolder self)
+                if(MarshalGCHandle.TryGet<DiagnosticCallbackHolder>(context, out DiagnosticCallbackHolder? self))
                 {
                     self.Delegate( new( abiInfo ) );
                 }
@@ -59,7 +59,12 @@ namespace Ubiquity.NET.Llvm
             catch
             {
                 // stop in debugger as this is a detected app error.
-                Debugger.Break();
+                // Test for attached debugger directly to avoid prompts, WER cruft etc...
+                // End user should NOT be prompted to attach a debugger!
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
             }
         }
 

@@ -78,7 +78,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     return;
                 }
 
-                if(ctx is not null && GCHandle.FromIntPtr((nint)ctx).Target is LookupResultHandler self)
+                if(MarshalGCHandle.TryGet<LookupResultHandler>(context, out LookupResultHandler? self))
                 {
                     // This would bleed the interop type into the caller, but is the most efficient.
                     self(new Span<LLVMOrcCSymbolMapPair>(result, numPairs));
@@ -267,7 +267,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             try
             {
-                if(context is not null && GCHandle.FromIntPtr((nint)context).Target is ErrorReporter self)
+                if(MarshalGCHandle.TryGet<ErrorReporter>(context, out ErrorReporter? self))
                 {
                     // It is Unclear, if this native handler is supposed to Dispose the provided error ref
                     // or not (it makes sense for it to do so). This will do it in one place so that if it

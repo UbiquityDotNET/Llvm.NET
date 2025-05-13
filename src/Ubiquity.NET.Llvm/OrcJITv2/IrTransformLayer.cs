@@ -95,47 +95,32 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 // Sanity check the input for safety.
                 if (resp == nint.Zero || *modInOut == nint.Zero)
                 {
-#pragma warning disable IDISP004 // Don't ignore created IDisposable
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                    // Not ignored, it's "moved" to native code
-                    return ErrorInfo.Create("Internal Error: got a callback with invalid handle value!")
-                                    .MoveToNative();
-#pragma warning restore CA2000 // Dispose objects before losing scope
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
-                }
-
-                if(context is null)
-                {
-#pragma warning disable IDISP004 // Don't ignore created IDisposable
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                    // Not ignored, it's "moved" to native code
-                    return ErrorInfo.Create("Internal Error: Invalid context provided for native callback")
-                                    .MoveToNative();
-#pragma warning restore CA2000 // Dispose objects before losing scope
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
+                    // created IDisposable is NOT ignored; it's "moved" to native code
+                    return LLVMErrorRef.CreateForNativeOut("Internal Error: got a callback with invalid handle value!"u8);
                 }
 
                 try
                 {
-                    if(GCHandle.FromIntPtr( (nint)context ).Target is TransformCallback self)
+                    if(!MarshalGCHandle.TryGet<TransformCallback>(context, out TransformCallback? self))
                     {
-                        // module and underlying LLVMModuleRef created here are aliases, no need to dispose them
-                        // disposal is wasted overhead
+                        return LLVMErrorRef.CreateForNativeOut("Internal Error: Invalid context provided for native callback"u8);
+                    }
+
 #pragma warning disable IDISP001 // Dispose created
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                        ThreadSafeModule tsm = new(*modInOut, alias: true);
-                        var responsibility = new MaterializationResponsibility(resp, alias: true);
+                    // module and underlying LLVMModuleRef created here are aliases, no need to dispose them
+                    // disposal is wasted overhead
+                    ThreadSafeModule tsm = new(*modInOut, alias: true);
+                    var responsibility = new MaterializationResponsibility(resp, alias: true);
+
+                    // if replaceMode is not null then it is moved to the native caller as an "out" param
+                    // Dispose, even if NOP, is just wasted overhead.
+                    self.TransformAction( tsm, responsibility, out ThreadSafeModule? replacedMod );
 #pragma warning restore CA2000 // Dispose objects before losing scope
 #pragma warning restore IDISP001 // Dispose created
-
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                        // if replaceMode is not null then it is moved to the native caller as an "out" param
-                        self.TransformAction( tsm, responsibility, out ThreadSafeModule? replacedMod );
-                        if(replacedMod is not null)
-                        {
-                            *modInOut = replacedMod.Handle.MoveToNative();
-                        }
-#pragma warning restore CA2000 // Dispose objects before losing scope
+                    if(replacedMod is not null)
+                    {
+                        *modInOut = replacedMod.Handle.MoveToNative();
                     }
 
                     // default LLVMErrorRef is 0 which indicates success.
@@ -143,13 +128,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 }
                 catch(Exception ex)
                 {
-#pragma warning disable IDISP004 // Don't ignore created IDisposable
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                    // resulting instance is "moved" to native return; Dispose is wasted overhead for a NOP
-                    return ErrorInfo.Create( ex )
-                                    .MoveToNative();
-#pragma warning restore CA2000 // Dispose objects before losing scope
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
+                    return LLVMErrorRef.CreateForNativeOut( ex.Message );
                 }
             }
         }

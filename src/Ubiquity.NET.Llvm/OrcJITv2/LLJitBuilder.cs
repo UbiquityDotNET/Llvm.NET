@@ -125,7 +125,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             try
             {
-                if(GCHandle.FromIntPtr((nint)context).Target is IObjectLinkingLayerFactory self)
+                if(MarshalGCHandle.TryGet<IObjectLinkingLayerFactory>(context, out IObjectLinkingLayerFactory? self))
                 {
                     using var managedTriple = new Triple(LazyEncodedString.FromUnmanaged(triple));
 

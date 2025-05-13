@@ -128,7 +128,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
@@ -158,7 +158,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
@@ -180,7 +180,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
                     {
 #pragma warning disable IDISP007 // Don't dispose injected
                         /*

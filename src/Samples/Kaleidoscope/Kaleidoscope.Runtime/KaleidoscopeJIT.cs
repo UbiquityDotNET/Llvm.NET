@@ -95,6 +95,10 @@ namespace Kaleidoscope.Runtime
         public static TextWriter OutputWriter { get; set; } = Console.Out;
 
         // call back to handle per module transforms in the JIT
+        // Each IR module is added to the JIT and only converted to native code once, when
+        // resolved to an address. Thus, this is called for EVERY module added the first time
+        // it is resolved. (Which may be when the code from another module calls the code in
+        // another one)
         private void ModuleTransformer(ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule)
         {
             // This implementation does not replace the module
@@ -103,7 +107,8 @@ namespace Kaleidoscope.Runtime
             // work on the per thread module directly
             module.WithPerThreadModule((module)=>
             {
-                // force it to use the JIT's data layout
+                // force it to use the JIT's triple and data layout
+                module.TargetTriple = TripleString;
                 module.DataLayoutString = DataLayoutString;
 
                 // perform optimizations on the whole module if there are

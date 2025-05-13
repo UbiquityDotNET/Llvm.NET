@@ -38,10 +38,21 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ThrowIfIDisposed();
 
             var opHandle = GCHandle.Alloc(op);
-            unsafe
+            try
             {
-                using LLVMErrorRef errRef = LLVMOrcThreadSafeModuleWithModuleDo(Handle, &NativePerThreadModuleCallback, GCHandle.ToIntPtr(opHandle).ToPointer());
-                errRef.ThrowIfFailed();
+                unsafe
+                {
+                    using LLVMErrorRef errRef = LLVMOrcThreadSafeModuleWithModuleDo(
+                        Handle,
+                        &NativePerThreadModuleCallback,         // Use static method for native callback
+                        GCHandle.ToIntPtr(opHandle).ToPointer() // provide allocated handle as the context for the callback
+                        );
+                    errRef.ThrowIfFailed();
+                }
+            }
+            finally
+            {
+                opHandle.Free();
             }
         }
 
@@ -51,7 +62,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <remarks>
         /// <note type="important">
         /// This is a "move" constructor and takes ownership of the module. The module provided is NOT
-        /// useable after this except to dispose it (which is a NOP).
+        /// usable after this except to dispose it (which is a NOP).
         /// </note>
         /// </remarks>
         public ThreadSafeModule(ThreadSafeContext context, Module module)
@@ -87,35 +98,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "All instances are created as an alias or 'moved' to native Dispose() not needed" )]
         private static unsafe /*LLVMErrorRef*/ nint NativePerThreadModuleCallback(void* context, LLVMModuleRefAlias moduleHandle)
         {
-#pragma warning disable IDISP004 // Don't ignore created IDisposable
-#pragma warning disable IDISP001 // Dispose created
-            // not ignored, errInfo is "moved" to native code
             try
             {
-                ErrorInfo errInfo = default;
-                if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is GenericModuleOperation self)
+                if(!MarshalGCHandle.TryGet<GenericModuleOperation>(context, out GenericModuleOperation? self))
                 {
-                    IModule mod = new ModuleAlias(moduleHandle);
-                    errInfo = mod is not null
-                        ? self(mod)
-                        : ErrorInfo.Create("Internal Error: Could not create wrapped module for native method");
-                }
-                else
-                {
-                    errInfo = ErrorInfo.Create("Internal Error: Invalid context provided for native callback");
+                    return LLVMErrorRef.CreateForNativeOut("Internal Error: Invalid context provided for native callback"u8);
                 }
 
-                // errInfo is "moved" to native return; Dispose is wasted overhead for a NOP
-                return errInfo.MoveToNative();
+                IModule mod = new ModuleAlias(moduleHandle);
+                return mod is not null
+                    ? self(mod).MoveToNative()
+                    : LLVMErrorRef.CreateForNativeOut("Internal Error: Could not create wrapped module for native method"u8);
             }
             catch(Exception ex)
             {
-                // resulting instance is "moved" to native return; Dispose is wasted overhead for a NOP
-                return ErrorInfo.Create(ex)
-                                .MoveToNative();
+                return LLVMErrorRef.CreateForNativeOut(ex.Message);
             }
-#pragma warning restore IDISP001 // Dispose created
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
         }
     }
 }

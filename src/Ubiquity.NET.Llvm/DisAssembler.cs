@@ -187,7 +187,7 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                if (GCHandle.FromIntPtr((nint)disInfo).Target is not IDisassemblerCallbacks callBacks)
+                if (!MarshalGCHandle.TryGet<IDisassemblerCallbacks>(disInfo, out IDisassemblerCallbacks? callBacks))
                 {
                     return null;
                 }
@@ -226,9 +226,9 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                return GCHandle.FromIntPtr((nint)disInfo).Target is not IDisassemblerCallbacks callBacks
-                    ? 0 // TODO: Is this a legit failure return value?
-                    : callBacks.OpInfo(pc, offset, opSize, instSize, tagType, (nint)tagBuf);
+                return MarshalGCHandle.TryGet<IDisassemblerCallbacks>(disInfo, out IDisassemblerCallbacks? callBacks)
+                    ? callBacks.OpInfo(pc, offset, opSize, instSize, tagType, (nint)tagBuf)
+                    : 0; // TODO: Is this a legit failure return value?
             }
             catch
             {
