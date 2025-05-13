@@ -3,6 +3,8 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
 
 namespace Ubiquity.NET.Llvm
 {

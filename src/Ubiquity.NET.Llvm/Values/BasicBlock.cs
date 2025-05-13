@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Provides access to an LLVM Basic block</summary>

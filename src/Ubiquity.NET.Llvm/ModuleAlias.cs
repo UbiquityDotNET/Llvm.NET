@@ -4,6 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Analysis;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitWriter;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Linker;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
+
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
+
 namespace Ubiquity.NET.Llvm
 {
     internal sealed class ModuleAlias

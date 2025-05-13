@@ -22,7 +22,7 @@ namespace Kaleidoscope.Runtime
     /// compilation of LLVM IR modules added to the JIT.
     /// </remarks>
     public sealed class KaleidoscopeJIT
-        : LlJIT
+        : IOrcJit
     {
         /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
         /// <remarks>This creates a JIT with a default set of passes for 'O3'</remarks>
@@ -35,10 +35,21 @@ namespace Kaleidoscope.Runtime
         /// <param name="optimizationPasses">Optimization passes to use for each module transform in this JIT</param>
         public KaleidoscopeJIT( params LazyEncodedString[] optimizationPasses )
         {
+            // using scope as safety in the face of exceptions
+            // normal flow is that the builder is transferred to
+            // (and disposed of by) the native code in CreateJit().
+            // After that call the Dispose call on the builder is
+            // a safe NOP.
+            using(var builder = LLJitBuilder.CreateBuilderForHost(CodeGenOpt.Aggressive, RelocationMode.Static, CodeModel.Large))
+            {
+                ComposedJIT = builder.CreateJit();
+            }
+
             OptimizationPasses = optimizationPasses;
             SymbolFlags symFlags = new(SymbolGenericOption.Callable);
 
-            // Add a materializer for the well-known symbols for the managed code implementations
+            // Add a materializer for the well-known symbols so they are available to
+            // callers via an "extern" declaration.
             unsafe
             {
                 using var putchardName = MangleAndIntern("putchard"u8);
@@ -56,32 +67,32 @@ namespace Kaleidoscope.Runtime
             TransformLayer.SetTransform(ModuleTransformer);
         }
 
-        /// <summary>Adds a module to this JIT with removal tracking</summary>
-        /// <param name="ctx">Thread safe context this module is part of</param>
-        /// <param name="module">Module to add</param>
-        /// <returns>Resource tracker for this instance</returns>
-        [MustUseReturnValue]
-        public ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module)
+        public void Dispose()
         {
-            ArgumentNullException.ThrowIfNull(ctx);
-            ArgumentNullException.ThrowIfNull(module);
-
-            ResourceTracker tracker = MainLib.CreateResourceTracker();
-
-            using ThreadSafeModule tsm = new(ctx, module);
-            AddModule(tracker, tsm);
-            return tracker;
+            ComposedJIT.Dispose();
         }
+
+        #region IIOrcJit (via ComposedJIT)
+        public JITDyLib MainLib => ComposedJIT.MainLib;
+
+        public LazyEncodedString DataLayoutString => ComposedJIT.DataLayoutString;
+
+        public LazyEncodedString TripleString => ComposedJIT.TripleString;
+
+        public IrTransformLayer TransformLayer => ComposedJIT.TransformLayer;
+
+        public ExecutionSession Session => ComposedJIT.Session;
+
+        public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default ) => ComposedJIT.AddWithTracking( ctx, module, lib );
+        public ulong Lookup( LazyEncodedString name ) => ComposedJIT.Lookup( name );
+        public void AddModule( JITDyLib lib, ThreadSafeModule module ) => ComposedJIT.AddModule( lib, module );
+        public void AddModule( ResourceTracker tracker, ThreadSafeModule module ) => ComposedJIT.AddModule( tracker, module );
+        public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name ) => ComposedJIT.MangleAndIntern( name );
+        #endregion
 
         /// <summary>Gets or sets the output writer for output from the program.</summary>
         /// <remarks>The default writer is <see cref="Console.Out"/>.</remarks>
         public static TextWriter OutputWriter { get; set; } = Console.Out;
-
-        // Optimization passes used in the transform function for materialized modules
-        // Default constructor set covers the basics; more are possible and may produce
-        // better results but could also end up taking more effort than just materializing
-        // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged.
-        private readonly LazyEncodedString[] OptimizationPasses;
 
         // call back to handle per module transforms in the JIT
         private void ModuleTransformer(ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule)
@@ -100,6 +111,14 @@ namespace Kaleidoscope.Runtime
                 return OptimizationPasses.Length == 0 ? default : module.TryRunPasses(OptimizationPasses);
             });
         }
+
+        // Optimization passes used in the transform function for materialized modules
+        // Default constructor set covers the basics; more are possible and may produce
+        // better results but could also end up taking more effort than just materializing
+        // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged
+        // for any serious production use.
+        private readonly LazyEncodedString[] OptimizationPasses;
+        private readonly LlJIT ComposedJIT;
 
         // Cleaner workaround for ugly compiler casting requirements
         // The & operator officially has no type and MUST be cast to

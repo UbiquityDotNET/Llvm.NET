@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a SubProgram</summary>

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
 
 namespace Ubiquity.NET.Llvm
 {

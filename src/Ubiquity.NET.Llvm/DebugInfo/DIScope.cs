@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Base class for all Debug information scopes</summary>

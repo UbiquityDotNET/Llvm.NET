@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Linkage specification for functions and globals</summary>

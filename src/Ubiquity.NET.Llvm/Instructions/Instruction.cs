@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
+
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction opcodes</summary>

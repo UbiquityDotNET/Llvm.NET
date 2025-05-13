@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Base class for Global objects in an LLVM ModuleHandle</summary>

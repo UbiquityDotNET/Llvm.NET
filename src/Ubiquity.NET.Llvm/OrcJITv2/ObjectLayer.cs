@@ -1,10 +1,9 @@
-﻿// -----------------------------------------------------------------------
+﻿#if SUPPORT_OBJECTLINKING_LAYER
+// -----------------------------------------------------------------------
 // <copyright file="ObjectLayer.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-#if FUTURE_DEVELOPMENT_AREA
-
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>ORC JIT v2 Object linking layer</summary>
@@ -16,7 +15,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         internal ObjectLayer( LLVMOrcObjectLayerRef h)
         {
-            Handle = h;
+            Handle = h.Move();
         }
 
         internal LLVMOrcObjectLayerRef Handle { get; init; }

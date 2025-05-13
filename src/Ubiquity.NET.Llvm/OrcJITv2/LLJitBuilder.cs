@@ -3,8 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-
-#if FUTURE_DEVELOPMENT_AREA
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
@@ -12,10 +11,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     public sealed class LLJitBuilder
         : IDisposable
     {
-        /// <summary>Initializes a new instance of the <see cref="LLJitBuilder"/> class.</summary>
-        public LLJitBuilder()
+        /// <summary>Initializes a new instance of the <see cref="LLJitBuilder"/> class</summary>
+        /// <param name="tmBldr">Target machine builder to use for this instance</param>
+        public LLJitBuilder(TargetMachineBuilder tmBldr)
             : this(LLVMOrcCreateLLJITBuilder())
         {
+            SetTargetMachineBuilder(tmBldr);
         }
 
         /// <inheritdoc/>
@@ -23,11 +24,15 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             Handle.Dispose();
 
+#if SUPPORT_OBJECTLINKING_LAYER
             // If the callback context handle exists and is allocated then free it now.
-            if (ObjectLinkingLayerContextHandle.HasValue && ObjectLinkingLayerContextHandle.Value.IsAllocated)
+            // The handle for this builder itself is already closed so LLVM should not
+            // have any callbacks for this to handle... (docs are silent on the point)
+            if ( !ObjectLinkingLayerContextHandle.IsInvalid && !ObjectLinkingLayerContextHandle.IsClosed )
             {
-                ObjectLinkingLayerContextHandle.Value.Free();
+                ObjectLinkingLayerContextHandle.Dispose();
             }
+#endif
         }
 
         /// <summary>Sets the target machine builder for this JIT builder</summary>
@@ -36,8 +41,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull(targetMachineBuilder);
             LLVMOrcLLJITBuilderSetJITTargetMachineBuilder(Handle, targetMachineBuilder.Handle);
+            // Ownership transferred to native code.
+            targetMachineBuilder.Handle.SetHandleAsInvalid();
         }
 
+#if SUPPORT_OBJECTLINKING_LAYER
         /// <summary>Sets the object linking layer factory for this builder</summary>
         /// <param name="creator">Factory to use for this builder</param>
         /// <remarks>
@@ -47,52 +55,69 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public void SetObjectLinkingLayerCreator(IObjectLinkingLayerFactory creator)
         {
             ArgumentNullException.ThrowIfNull(creator);
-            ObjectLinkingLayerContextHandle.ThrowIfHasValue();
-            ObjectLinkingLayerContextHandle.Value = GCHandle.Alloc(creator);
+            ObjectLinkingLayerContextHandle = new(creator);
 
             unsafe
             {
                 LLVMOrcLLJITBuilderSetObjectLinkingLayerCreator(
                     Handle,
                     &NativeObjectLinkingLayerCreatorCallback,
-                    (void*)GCHandle.ToIntPtr(ObjectLinkingLayerContextHandle.Value));
+                    (void*)ObjectLinkingLayerContextHandle.AddRefAndGetNativeContext()
+                    );
             }
         }
+#endif
 
         /// <summary>Creates a JIT engine</summary>
-        /// <param name="jit">The jit or <see langword="null"/></param>
         /// <returns>Status results of the operation</returns>
         /// <remarks>
-        /// This function takes ownership of this builder (even on failures). Thus, it is
-        /// not valid to use this instance after this method is called.
+        /// This function takes ownership of this builder (even on failures/exceptions).
+        /// Thus, after this method is called, it is not valid to use this instance except to
+        /// call <see cref="Dispose"/>, which is a NOP.
         /// </remarks>
-        public ErrorInfo CreateJit(out LlJIT? jit)
+        public LlJIT CreateJit()
         {
             ObjectDisposedException.ThrowIf(Handle.IsInvalid || Handle.IsClosed, this);
-            jit = null;
-
-            // This instance no longer owns the handle
-            // (The builder is gone... Yea, bad API design but that's how it goes with LLVM sometimes...)
-            Handle.SetHandleAsInvalid();
-            ErrorInfo retVal = new(LLVMOrcCreateLLJIT(out LLVMOrcLLJITRef jitHandle, Handle));
+            using LLVMErrorRef err = LLVMOrcCreateLLJIT(Handle, out LLVMOrcLLJITRef jitHandle);
+            // calls Dispose in case something goes wrong before it is moved to return
+            // NOTE: This is also a NOP if the call failed and jitHandle is NULL.
             using(jitHandle)
             {
-                if(retVal.Success)
-                {
-                    jit = new LlJIT(jitHandle.Move()); // transfer ownership of the underlying handle (Dispose not needed, but a harmless NOP)
-                }
+                Handle.SetHandleAsInvalid(); // failed or not, transfer happened...
+                err.ThrowIfFailed();
+                return new(jitHandle); // internally "moves" the handle so Dispose is a NOP
             }
-
-            return retVal;
         }
 
+        /// <summary>Creates a new <see cref="LLJitBuilder"/> pre-configured with a <see cref="TargetMachine"/> for the current host system</summary>
+        /// <param name="optLevel">Optimization level</param>
+        /// <param name="relocationMode">Relocation mode for generated code</param>
+        /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
+        /// <returns>Builder using this host as the template</returns>
+        public static LLJitBuilder CreateBuilderForHost(
+            CodeGenOpt optLevel = CodeGenOpt.Default,
+            RelocationMode relocationMode = RelocationMode.Default,
+            CodeModel codeModel = CodeModel.Default
+        )
+        {
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // ownership is transferred. "Move" semantics
+            return new( TargetMachineBuilder.FromHost( optLevel, relocationMode, codeModel ) );
+#pragma warning restore CA2000 // Dispose objects before losing scope
+        }
         private LLJitBuilder(LLVMOrcLLJITBuilderRef h)
         {
             Handle = h;
+
+#if SUPPORT_OBJECTLINKING_LAYER
+            ObjectLinkingLayerContextHandle = new(this);
+#endif
         }
 
-        private WriteOnce<GCHandle> ObjectLinkingLayerContextHandle = new();
-        private readonly LLVMOrcLLJITBuilderRef Handle;
+        internal readonly LLVMOrcLLJITBuilderRef Handle;
+
+#if SUPPORT_OBJECTLINKING_LAYER
+        private SafeGCHandle ObjectLinkingLayerContextHandle;
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
@@ -102,7 +127,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 if(GCHandle.FromIntPtr((nint)context).Target is IObjectLinkingLayerFactory self)
                 {
-                    var managedTriple = new Triple(triple);
+                    using var managedTriple = new Triple(LazyEncodedString.FromUnmanaged(triple));
 
                     // caller takes ownership of the resulting handle; Don't Dispose it
                     ObjectLayer layer = self.Create(new ExecutionSession(sessionRef), managedTriple);
@@ -118,6 +143,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 return 0; // This will probably crash in LLVM anyway - best effort.
             }
         }
+#endif
     }
 }
-#endif

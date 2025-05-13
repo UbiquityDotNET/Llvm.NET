@@ -7,8 +7,8 @@
 using Ubiquity.NET.Llvm.ObjectFile;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ContextBindings;
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
-using System.ComponentModel;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.IrReader;
 
 namespace Ubiquity.NET.Llvm
 {

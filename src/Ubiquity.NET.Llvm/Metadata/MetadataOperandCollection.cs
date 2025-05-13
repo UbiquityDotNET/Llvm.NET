@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+
 namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Support class to provide read/update semantics to the operands of a container element</summary>

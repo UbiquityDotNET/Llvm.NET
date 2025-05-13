@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>While technically a type in LLVM, ConstantExpression is primarily a static factory for Constants</summary>

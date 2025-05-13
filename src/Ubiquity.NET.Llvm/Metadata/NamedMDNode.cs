@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+
 namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Wraps an LLVM NamedMDNode</summary>

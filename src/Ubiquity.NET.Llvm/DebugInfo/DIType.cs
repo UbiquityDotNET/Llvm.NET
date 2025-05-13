@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {

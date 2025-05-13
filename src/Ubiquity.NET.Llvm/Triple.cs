@@ -6,6 +6,8 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TripleBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Enumeration for the Architecture portion of a target triple</summary>

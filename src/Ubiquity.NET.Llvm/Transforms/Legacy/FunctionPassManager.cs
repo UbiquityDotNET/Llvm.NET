@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Function = Ubiquity.NET.Llvm.Values.Function;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {

@@ -47,22 +47,3 @@ global using Ubiquity.NET.Llvm.Properties;
 global using Ubiquity.NET.Llvm.Types;
 global using Ubiquity.NET.Llvm.Values;
 
-// Extended C API
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
-
-// Official LLVM-C API
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Analysis;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitReader;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitWriter;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Disassembler;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.IrReader;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Linker;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Object;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;

@@ -47,6 +47,7 @@
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LibLLVMRegisterTarget(LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations);
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial Int32 LibLLVMGetNumTargets();

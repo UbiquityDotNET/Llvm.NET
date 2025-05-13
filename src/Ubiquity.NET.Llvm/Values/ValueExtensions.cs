@@ -3,7 +3,9 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Values
 {

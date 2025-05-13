@@ -13,6 +13,10 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AnalysisBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>LLVM Function definition</summary>

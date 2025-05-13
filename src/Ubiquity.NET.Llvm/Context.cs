@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using Ubiquity.NET.Llvm.ObjectFile;
 
 namespace Ubiquity.NET.Llvm

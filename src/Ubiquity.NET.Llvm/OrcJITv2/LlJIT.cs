@@ -13,14 +13,15 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>ORC v2 LLJIT instance</summary>
-    public class LlJIT
-        : DisposableObject
+    public sealed class LlJIT
+        : IDisposable
+        , IOrcJit
     {
         /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is held in this instance" )]
         public LlJIT()
+            : this(CreateDefaultWithoutBuilder())
         {
-            using LLVMErrorRef err = LLVMOrcCreateLLJIT(out Handle, LLVMOrcLLJITBuilderRef.Zero);
-            err.ThrowIfFailed();
         }
 
         /// <summary>Gets the main library for this JIT instance</summary>
@@ -37,6 +38,38 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <summary>Gets a string representation of the target triple for this JIT</summary>
         public LazyEncodedString TripleString => LLVMOrcLLJITGetTripleString( Handle );
+
+        /// <summary>Adds a module to this JIT with removal tracking</summary>
+        /// <param name="ctx">Thread safe context this module is part of</param>
+        /// <param name="module">Module to add</param>
+        /// <param name="lib">Library to work on</param>
+        /// <returns>Resource tracker for this instance</returns>
+        [MustUseReturnValue]
+        public ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module, JITDyLib lib = default)
+        {
+            ArgumentNullException.ThrowIfNull(ctx);
+            ArgumentNullException.ThrowIfNull(module);
+
+            // Default to using MainLib if none specified.
+            if(lib.Handle.IsNull)
+            {
+                lib = MainLib;
+            }
+
+            ResourceTracker tracker = lib.CreateResourceTracker();
+            try
+            {
+                using ThreadSafeModule tsm = new(ctx, module);
+                AddModule(tracker, tsm);
+            }
+            catch
+            {
+                tracker.Dispose();
+                throw;
+            }
+
+            return tracker;
+        }
 
         /// <summary>Looks up the native address of a symbol</summary>
         /// <param name="name">NameField of the symbol to find the address of</param>
@@ -115,14 +148,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public ExecutionSession Session => new(LLVMOrcLLJITGetExecutionSession(Handle));
 
         /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
-            if (disposing)
-            {
-                Handle.Dispose();
-            }
-
-            base.Dispose(disposing);
+            Handle.Dispose();
         }
 
         internal LlJIT(LLVMOrcLLJITRef h)
@@ -131,5 +159,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         private readonly LLVMOrcLLJITRef Handle;
+
+        private static LLVMOrcLLJITRef CreateDefaultWithoutBuilder()
+        {
+            using var errorRef = LLVMOrcCreateLLJIT(LLVMOrcLLJITBuilderRef.Zero, out LLVMOrcLLJITRef retVal);
+            errorRef.ThrowIfFailed();
+            return retVal;
+        }
     }
 }

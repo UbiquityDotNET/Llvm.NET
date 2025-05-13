@@ -7,8 +7,7 @@
 // this file declares and uses the "experimental" interface `IDisassemblerCallbacks`.
 #pragma warning disable LLVM002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
-// regions are used sparingly and help mark the NATIVE ONLY callbacks
-#pragma warning disable SA1124 // Do not use regions
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Disassembler;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -19,7 +18,7 @@ namespace Ubiquity.NET.Llvm
     /// return types of the methods. LLVM headers use byte* and it isn't clear if it is a "blob",
     /// string or what? Nor, does it say anything about lifetime or ownership of the data they
     /// point to... (This is mostly in regards to the parameters and return of
-    /// <see cref="SymbolLookup(ulong, ref ulong, ulong, out string?)"/> but also applies to the
+    /// <see cref="SymbolLookup(ulong, ref ulong, ulong, out LazyEncodedString?)"/> but also applies to the
     /// <see cref="nint"/> `TagBuf` parameter of <see cref="OpInfo(ulong, ulong, ulong, ulong, int, nint)"/>
     /// </remarks>
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related only used here" )]
@@ -43,7 +42,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="ReferenceName">Completely unknown. [Is this really an OUT string or an IN array?]</param>
         /// <returns>Unknown</returns>
         [SuppressMessage( "Design", "CA1045:Do not pass types by reference", Justification = "Matches ABI; Otherwise requires returning (and marshalling) a tuple" )]
-        string? SymbolLookup(UInt64 referenceValue, ref UInt64 referenceType, UInt64 referencePC, out string? ReferenceName);
+        LazyEncodedString? SymbolLookup(UInt64 referenceValue, ref UInt64 referenceType, UInt64 referencePC, out LazyEncodedString? ReferenceName);
     }
 
     /// <summary>Options flags for the disassembler</summary>
@@ -85,7 +84,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="callBacks">Optional callbacks [Default: <see langword="null"/>]</param>
         /// <remarks>The <paramref name="callBacks"/> parameter is experimental and recommended left as the default value</remarks>
         public Disassembler( Triple triple, int tagType, IDisassemblerCallbacks? callBacks = null)
-            : this(triple, string.Empty, string.Empty, tagType, callBacks)
+            : this(triple, LazyEncodedString.Empty, LazyEncodedString.Empty, tagType, callBacks)
         {
         }
 
@@ -96,11 +95,11 @@ namespace Ubiquity.NET.Llvm
         /// <param name="callBacks">Optional callbacks [Default: <see langword="null"/>]</param>
         /// <remarks>The <paramref name="callBacks"/> parameter is experimental and recommended left as the default value</remarks>
         public Disassembler( Triple triple
-                           , string cpu
+                           , LazyEncodedString cpu
                            , int tagType
                            , IDisassemblerCallbacks? callBacks = null
                            )
-            : this(triple, cpu, string.Empty, tagType, callBacks)
+            : this(triple, cpu, LazyEncodedString.Empty, tagType, callBacks)
         {
         }
 
@@ -112,8 +111,8 @@ namespace Ubiquity.NET.Llvm
         /// <param name="callBacks">Optional callbacks [Default: <see langword="null"/>]</param>
         /// <remarks>The <paramref name="callBacks"/> parameter is experimental and recommended left as the default value</remarks>
         public Disassembler( Triple triple
-                           , string cpu
-                           , string features
+                           , LazyEncodedString cpu
+                           , LazyEncodedString features
                            , int tagType
                            , IDisassemblerCallbacks? callBacks = null
                            )
@@ -127,7 +126,7 @@ namespace Ubiquity.NET.Llvm
                 ArgumentNullException.ThrowIfNull(triple);
                 CallBacksHandle = callBacks is null ? null : GCHandle.Alloc(callBacks);
                 Handle = LLVMCreateDisasmCPUFeatures(
-                        triple.ToString( ) ?? string.Empty,
+                        triple.ToString( ) ?? LazyEncodedString.Empty,
                         cpu,
                         features,
                         CallBacksHandle.HasValue ? GCHandle.ToIntPtr(CallBacksHandle.Value).ToPointer() : null,
@@ -151,7 +150,11 @@ namespace Ubiquity.NET.Llvm
         /// <param name="pc">Program counter address to assume for the instruction disassembly</param>
         /// <param name="stringBufferSize">Size of string buffer to use for the disassembly (default=1024)</param>
         /// <returns>Disassembly string and count of bytes in the instruction as a tuple</returns>
-        public (LazyEncodedString Disassembly, nuint InstructionByteCount) Disassemble( ReadOnlySpan<byte> instruction, ulong pc, int stringBufferSize = 1024 )
+        public (LazyEncodedString Disassembly, nuint InstructionByteCount) Disassemble(
+            ReadOnlySpan<byte> instruction,
+            ulong pc,
+            int stringBufferSize = 1024
+            )
         {
             unsafe
             {
@@ -174,7 +177,13 @@ namespace Ubiquity.NET.Llvm
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "Helps clarify type for native interop" )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe byte* NativeSymbolLookupCallback(void* disInfo, UInt64 referenceValue, UInt64* pReferenceType, UInt64 referencePC, byte** referenceName)
+        private static unsafe byte* NativeSymbolLookupCallback(
+            void* disInfo,
+            UInt64 referenceValue,
+            UInt64* pReferenceType,
+            UInt64 referencePC,
+            byte** referenceName
+            )
         {
             try
             {
@@ -183,7 +192,12 @@ namespace Ubiquity.NET.Llvm
                     return null;
                 }
 
-                string? managedRetVal = callBacks.SymbolLookup(referenceValue, ref *pReferenceType, referencePC, out string? managedRefName);
+                LazyEncodedString? managedRetVal = callBacks.SymbolLookup(
+                    referenceValue,
+                    ref *pReferenceType,
+                    referencePC,
+                    out LazyEncodedString? managedRefName
+                );
 
                 // Use of normal marshalling pattern is broken here... The lifetime of the effectively OUT byte pointer referenceName
                 // is undefined. If the marshalling allocates memory for the buffer then it is invalid as soon as this call returns

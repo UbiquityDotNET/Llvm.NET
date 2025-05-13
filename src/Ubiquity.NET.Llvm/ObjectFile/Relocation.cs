@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Object;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ObjectFileBindings;
 
 namespace Ubiquity.NET.Llvm.ObjectFile

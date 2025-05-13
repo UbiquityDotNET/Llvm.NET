@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction builder allowing managed code to generate IR instructions</summary>

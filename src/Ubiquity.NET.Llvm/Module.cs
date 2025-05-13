@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitReader;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Enumeration to indicate the behavior of module level flags metadata sharing the same name in a <see cref="Module"/></summary>

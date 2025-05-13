@@ -9,6 +9,7 @@ app
 apps
 argkind
 ascii
+atomicrmw
 attrib
 Attribs
 AttributeSet
@@ -57,6 +58,7 @@ finalizers
 foo
 fullsrc
 func
+getelementptr
 gh
 github
 Globalization
@@ -95,6 +97,7 @@ Pre
 proj
 readonly
 refactor
+refcount
 repl
 repo
 RMW
@@ -131,6 +134,8 @@ vcxproj
 versioned
 versioning
 Xchg
+Xor
 xref
+xxx
 yaml
 yyyy

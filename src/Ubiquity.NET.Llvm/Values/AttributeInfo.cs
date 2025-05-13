@@ -1,5 +1,7 @@
 ﻿using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Kind of argument (if any) for an attribute</summary>

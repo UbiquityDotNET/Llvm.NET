@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -86,9 +87,43 @@ namespace Ubiquity.NET.Llvm
         ObjectFile = LLVMCodeGenFileType.LLVMObjectFile
     }
 
+    /// <summary>Abort behavior when global instruction selection fails to lower/select and instruction</summary>
+    public enum GlobalISelAbortMode
+    {
+        /// <summary>Enabled abort mode</summary>
+        Enable = LLVMGlobalISelAbortMode.LLVMGlobalISelAbortEnable,
+
+        /// <summary>Disabled abort mode</summary>
+        Disable= LLVMGlobalISelAbortMode.LLVMGlobalISelAbortDisable,
+
+        /// <summary>Disabled abort mode with diagnostic</summary>
+        DisableWithDiag = LLVMGlobalISelAbortMode.LLVMGlobalISelAbortDisableWithDiag,
+    }
+
     /// <summary>LLVM Target Instruction Set Architecture</summary>
     public class Target
+        : IEquatable<Target>
     {
+        #region Equality
+        /// <inheritdoc/>
+        public bool Equals( Target? other ) => other is not null && Handle.Equals(other.Handle);
+
+        /// <inheritdoc/>
+        public override bool Equals( object? obj ) => obj is Target t && Equals(t);
+
+        /// <inheritdoc/>
+        public override int GetHashCode( )
+        {
+            return HashCode.Combine(
+                Name,
+                Description,
+                HasJIT,
+                HasTargetMachine,
+                HasAsmBackEnd
+            );
+        }
+        #endregion
+
         /// <summary>Gets the name of this target</summary>
         public LazyEncodedString Name => LLVMGetTargetName( Handle ) ?? LazyEncodedString.Empty;
 
@@ -152,7 +187,7 @@ namespace Ubiquity.NET.Llvm
                 var current = LLVMGetFirstTarget( );
                 while( current != default )
                 {
-                    yield return FromHandle( current );
+                    yield return new( current );
                     current = LLVMGetNextTarget( current );
                 }
             }
@@ -172,7 +207,7 @@ namespace Ubiquity.NET.Llvm
 
             return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMsg ).Failed
                 ? throw new InternalCodeGeneratorException( errorMsg ?? "Failed to get target from triple and no message provided from LLVM!" )
-                : FromHandle( targetHandle );
+                : new( targetHandle );
         }
 
         internal Target( LLVMTargetRef targetHandle )
@@ -207,24 +242,5 @@ namespace Ubiquity.NET.Llvm
                                                              );
             return targetMachineHandle;
         }
-
-        internal static Target FromHandle( LLVMTargetRef targetHandle )
-        {
-            targetHandle.ThrowIfInvalid();
-
-            lock( TargetMap )
-            {
-                if( TargetMap.TryGetValue( targetHandle, out Target? retVal ) )
-                {
-                    return retVal;
-                }
-
-                retVal = new Target( targetHandle );
-                TargetMap.Add( targetHandle, retVal );
-                return retVal;
-            }
-        }
-
-        private static readonly Dictionary<LLVMTargetRef, Target> TargetMap = [];
     }
 }

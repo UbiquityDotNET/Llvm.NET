@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+
 namespace Ubiquity.NET.Llvm.Metadata
 {
     internal static class LLVMMetaDataRefExtensions

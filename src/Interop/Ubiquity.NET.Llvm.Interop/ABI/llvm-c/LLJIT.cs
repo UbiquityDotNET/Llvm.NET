@@ -36,9 +36,21 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             void* Ctx
             );
 
+        // simple wrapper to re-order parameters for inconsistent API design
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMErrorRef LLVMOrcCreateLLJIT(
+            LLVMOrcLLJITBuilderRef Builder,
+            /*[MaybeInvalidWhen(Failed)]*/ out LLVMOrcLLJITRef Result
+            )
+        {
+            return LLVMOrcCreateLLJIT(out Result, Builder);
+        }
+
+        // NOTE: Confusingly backwards API design, out is first param, and handle is last!
+        // This is inconsistent with standard practice and even LLVM APIs
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateLLJIT(
+        private static unsafe partial LLVMErrorRef LLVMOrcCreateLLJIT(
             /*[MaybeInvalidWhen(Failed)]*/ out LLVMOrcLLJITRef Result,
             LLVMOrcLLJITBuilderRef Builder
             );
