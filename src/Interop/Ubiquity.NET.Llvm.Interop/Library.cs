@@ -22,6 +22,11 @@ namespace Ubiquity.NET.Llvm.Interop
             LibLLVMRegisterTarget( target, registrations ).ThrowIfFailed();
         }
 
+        public CSemVer GetVersionInfo()
+        {
+            return CSemVer.FromUInt64(LibLLVMGetVersion());
+        }
+
         /// <inheritdoc/>
         public void Dispose( )
         {
@@ -40,22 +45,18 @@ namespace Ubiquity.NET.Llvm.Interop
                 throw new InvalidOperationException("LLVM library was previously initialized. Re-init is not supported in the native library");
             }
 
-            // Verify the version of LLVM in LibLLVM.
-            LLVMGetVersion( out uint actualMajor, out uint actualMinor, out uint actualPatch );
-            if(actualMajor != SupportedVersionMajor
-            || actualMinor != SupportedVersionMinor
-            || actualPatch < SupportedVersionPatch // allow later patches...
+            // Verify the version of LibLLVM.
+            var libLLVMVersion = CSemVer.FromUInt64(LibLLVMGetVersion());
+            if (libLLVMVersion.Major != SupportedVersion.Major
+             || libLLVMVersion.Minor != SupportedVersion.Minor
+             || libLLVMVersion.Patch != SupportedVersion.Patch
             )
             {
-                string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_1_2_Actual_3_4_5;
+                string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_Actual_1;
                 string msg = string.Format( CultureInfo.CurrentCulture
                                           , msgFmt
-                                          , SupportedVersionMajor
-                                          , SupportedVersionMinor
-                                          , SupportedVersionPatch
-                                          , actualMajor
-                                          , actualMinor
-                                          , actualPatch
+                                          , SupportedVersion.ToString()
+                                          , libLLVMVersion.ToString()
                                           );
                 throw new InvalidOperationException( msg );
             }
@@ -74,9 +75,8 @@ namespace Ubiquity.NET.Llvm.Interop
         private readonly Lazy<ImmutableArray<LibLLVMCodeGenTarget>> LazyTargets = new(GetSupportedTargets);
 
         // Expected version info for verification of matched LibLLVM
-        private const int SupportedVersionMajor = 20;
-        private const int SupportedVersionMinor = 1;
-        private const int SupportedVersionPatch = 3;
+        // Interop exports/signatures may not be valid if not a match.
+        private static readonly CSemVer SupportedVersion = new(20, 1, 4);
 
         // Singleton initializer for the supported targets array
         private static ImmutableArray<LibLLVMCodeGenTarget> GetSupportedTargets( )

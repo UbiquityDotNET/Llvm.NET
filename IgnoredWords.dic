@@ -49,6 +49,7 @@ dllimport
 docfx
 docfxconsole
 dotnet
+endianess
 enum
 Enums
 env

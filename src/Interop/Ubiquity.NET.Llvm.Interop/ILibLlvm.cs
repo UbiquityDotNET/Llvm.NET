@@ -30,5 +30,10 @@ namespace Ubiquity.NET.Llvm.Interop
         /// register support for more targets (e.g., ARM includes thumb big and little endian targets).
         /// </remarks>
         ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets {get;}
+
+        /// <summary>Gets version information for the library implementation</summary>
+        /// <param name="llvmVersion">Out param for the</param>
+        /// <returns></returns>
+        CSemVer GetVersionInfo();
     }
 }

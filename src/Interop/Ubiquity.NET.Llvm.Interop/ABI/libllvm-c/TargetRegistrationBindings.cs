@@ -46,16 +46,16 @@
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LibLLVMRegisterTarget(LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations);
+        public static unsafe partial LLVMErrorRef LibLLVMRegisterTarget( LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial Int32 LibLLVMGetNumTargets();
+        public static unsafe partial Int32 LibLLVMGetNumTargets( );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LLVMErrorRef LibLLVMGetRuntimeTargets(LibLLVMCodeGenTarget[] targets)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMErrorRef LibLLVMGetRuntimeTargets( LibLLVMCodeGenTarget[] targets )
         {
-            return LibLLVMGetRuntimeTargets(targets, targets.Length);
+            return LibLLVMGetRuntimeTargets( targets, targets.Length );
         }
 
         [LibraryImport( LibraryName )]
@@ -64,5 +64,9 @@
             [Out, In]
             LibLLVMCodeGenTarget[] targets, Int32 lengthOfArray
         );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LibLLVMGetVersion( );
     }
 }
