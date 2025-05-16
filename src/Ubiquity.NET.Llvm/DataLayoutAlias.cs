@@ -142,12 +142,9 @@ namespace Ubiquity.NET.Llvm
                 return LazyEncodedString.Empty;
             }
 
-            unsafe
-            {
-                byte* pStr = LibLLVMGetDataLayoutString(NativeHandle, out nuint len);
-                Debug.Assert(pStr is not null, "Layout should always have a string representation");
-                return LazyEncodedString.FromUnmanaged(pStr, len)!;
-            }
+            LazyEncodedString? retVal = LibLLVMGetDataLayoutString(NativeHandle);
+            Debug.Assert(retVal is not null, "Layout should always have a string representation");
+            return retVal;
         }
 
         public override string? ToString( )

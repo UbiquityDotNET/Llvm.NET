@@ -11,6 +11,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
     public class ArchitectureExtensionsTests
     {
         [TestMethod]
+        [TestProperty("Description", "Validates the Ubiquity.NET.Llvm.Interop.ArchitectureExtensions.AsLLVMTarget() extension method")]
         public void GetLibLLVMTargetTest( )
         {
             Assert.AreEqual(LibLLVMCodeGenTarget.CodeGenTarget_ARM, Architecture.Arm.AsLLVMTarget());

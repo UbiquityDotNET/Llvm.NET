@@ -21,6 +21,13 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         {
             ArgumentNullException.ThrowIfNull( ctx );
 
+            //ctx.WriteLine("Hello world!"); // Goes to great bit pool in the sky... [Sort-of.]
+            // reality: ctx.Write*() calls go to a string writer, the results of that are captured
+            // stored and then ignored, UNLESS the result of THIS initializer is not success.
+            // Thus, in the real world those APIs are completely useless in an assembly initializer.
+            // Instead an implementation can use the DisplayMessage() method to write data to the
+            // "tests" pane in VS (Where, or if, that is reported in other environments is unknown)
+            // ctx.DisplayMessage(MessageLevel.Informational, nameof(AssemblyInitialize)); // Goes to "Tests" pane in VS
             LibLLVM?.Dispose();
 
             LibLLVM = Library.InitializeLLVM();
