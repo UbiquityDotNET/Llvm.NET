@@ -509,9 +509,35 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTypeRef LLVMGetTypeAttributeValue( LLVMAttributeRef A );
 
-        [LibraryImport( LibraryName )]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMAttributeRef LLVMCreateConstantRangeAttribute(
+            LLVMContextRefAlias C,
+            uint KindID,
+            uint NumBits,
+            [In] UInt64[] LowerWords,
+            [In] UInt64[] UpperWords
+            )
+        {
+#if DEBUG
+            long requiredLen = (NumBits / 64) + ((NumBits % 64) == 0 ? 0 : 1);
+            if (LowerWords.LongLength < requiredLen)
+            {
+                // TODO: Intern and localize this error message format
+                throw new ArgumentException($"Array length ({LowerWords.LongLength}) does not support specified bit width: {NumBits}", nameof(LowerWords));
+            }
+
+            if (UpperWords.LongLength < requiredLen)
+            {
+                // TODO: Intern and localize this error message format
+                throw new ArgumentException($"Array length ({UpperWords.LongLength}) does not support specified bit width: {NumBits}", nameof(UpperWords));
+            }
+#endif
+            return NativeLLVMCreateConstantRangeAttribute(C, KindID, NumBits, LowerWords, UpperWords);
+        }
+
+        [LibraryImport( LibraryName, EntryPoint = "LLVMCreateConstantRangeAttribute" )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMAttributeRef LLVMCreateConstantRangeAttribute(
+        private static unsafe partial LLVMAttributeRef NativeLLVMCreateConstantRangeAttribute(
             LLVMContextRefAlias C,
             uint KindID,
             uint NumBits,
@@ -3398,9 +3424,20 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildCatchRet( LLVMBuilderRef B, LLVMValueRef CatchPad, LLVMBasicBlockRef BB );
 
+        public static LLVMValueRef LLVMBuildCatchPad(
+            LLVMBuilderRef B,
+            LLVMValueRef ParentPad,
+            LLVMValueRef[]? Args,
+            LazyEncodedString? Name
+            )
+        {
+            Args ??= [];
+            return LLVMBuildCatchPad(B, ParentPad, Args, checked((uint)Args.Length), Name ?? LazyEncodedString.Empty);
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCatchPad(
+        private static unsafe partial LLVMValueRef LLVMBuildCatchPad(
             LLVMBuilderRef B,
             LLVMValueRef ParentPad,
             //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs

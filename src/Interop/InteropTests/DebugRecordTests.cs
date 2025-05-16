@@ -22,7 +22,9 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         // where it (As of LLVM 20.1.3) will just crash if the instruction has no
         // debug records attached. (Worse it lands in the dreaded Undefined Behavior
         // if the value is NOT an instruction since it blindly casts it assuming it
-        // is there's no guarantees on what will happen for any other type of Value...)
+        // is - there's no guarantees on what will happen for any other type of Value...)
+        // Thus, LibLLVMHasDbgRecords was introduced to help detect/avoid these problematic
+        // cases.
         [TestMethod]
         public void DebugRecordEnumerationSucceeds( )
         {
@@ -59,7 +61,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             Assert.IsFalse(LibLLVMHasDbgRecords(mallocInst));
 
             // Now attach debug records to the malloc.
-            // first create the information to attach (It's alot...)
+            // first create the information to attach (It's a lot...)
             using LLVMDIBuilderRef diBuilder = LLVMCreateDIBuilder(module);
             LLVMMetadataRef int32DiType = LLVMDIBuilderCreateBasicType(
                 diBuilder,
@@ -89,7 +91,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             LLVMMetadataRef diLocation = LLVMDIBuilderCreateDebugLocation(ctx, 123,4, scope, default);
 
             // Now attach the record to the result of the malloc call
-            // and retest the status as it should be different
+            // and retest the status as it should be different now
             LLVMDbgRecordRef dbgRecord = LLVMDIBuilderInsertDbgValueRecordBefore(diBuilder, mallocInst, int32PtrDiType, emptyExpression, diLocation, mallocInst);
             Assert.IsTrue(LibLLVMHasDbgRecords(mallocInst));
             // this should not crash now... [It shouldn't ever but that's another story...]
