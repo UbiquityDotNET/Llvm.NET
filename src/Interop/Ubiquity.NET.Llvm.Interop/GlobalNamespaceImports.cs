@@ -16,6 +16,7 @@ For an explanation of the benefits of the language feature see: https://www.hans
 
 global using System;
 global using System.Collections.Immutable;
+global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;

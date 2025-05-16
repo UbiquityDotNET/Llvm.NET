@@ -97,12 +97,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 nint nativeContext = materializer.AddRefAndGetNativeContext();
                 try
                 {
-                    using MemoryHandle nativeMem = name.Pin();
                     return LLVMOrcCreateCustomMaterializationUnit(
-                        (byte*)nativeMem.Pointer,
+                        name,
                         (void*)nativeContext,
                         (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
-                        symbols.Count,
+                        checked((nuint)symbols.Count),
                         initSymbol?.Handle ?? LLVMOrcSymbolStringPoolEntryRef.Zero,
                         &NativeCallbacks.Materialize,
                         materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,
@@ -129,7 +128,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
@@ -159,7 +158,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
@@ -181,7 +180,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(context is not null && GCHandle.FromIntPtr( (nint)context ).Target is CustomMaterializer self)
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
                     {
 #pragma warning disable IDISP007 // Don't dispose injected
                         /*

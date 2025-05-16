@@ -6,6 +6,8 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.PassBuilderOptionsBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Class to hold options for an LLVM pass builder</summary>

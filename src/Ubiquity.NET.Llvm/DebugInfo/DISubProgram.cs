@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Debug information for a SubProgram</summary>
@@ -26,7 +28,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public uint Line => LLVMDISubprogramGetLine( Handle );
 
         /// <summary>Gets the name of this <see cref="DISubProgram"/></summary>
-        public override string Name => GetOperandString( 2 );
+        public override LazyEncodedString Name => GetOperandString( 2 );
 
         /// <summary>Gets the linkage name of this <see cref="DISubProgram"/></summary>
         public string LinkageName => GetOperandString( 3 );

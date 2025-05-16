@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public override DIScope? Scope => GetOperand<DIScope>( 1 );
 
         /// <inheritdoc/>
-        public override string Name => GetOperandString( 2 );
+        public override LazyEncodedString Name => GetOperandString( 2 );
 
         internal DINamespace( LLVMMetadataRef handle )
             : base( handle )

@@ -18,9 +18,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
     public static partial class Comdat
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatRef LLVMGetOrInsertComdat(LLVMModuleRef M, string Name);
+        public static unsafe partial LLVMComdatRef LLVMGetOrInsertComdat(LLVMModuleRef M, LazyEncodedString Name);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

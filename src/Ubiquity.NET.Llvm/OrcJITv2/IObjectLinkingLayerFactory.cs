@@ -3,7 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-#if FUTURE_DEVELOPMENT_AREA
+#if SUPPORT_OBJECTLINKING_LAYER_IN_LLJIT_BUILDER
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {

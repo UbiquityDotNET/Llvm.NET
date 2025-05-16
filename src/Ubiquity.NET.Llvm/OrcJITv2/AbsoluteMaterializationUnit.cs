@@ -21,14 +21,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         private static LLVMOrcMaterializationUnitRef MakeHandle(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols)
         {
-            // make a native useable version of the array
+            // make a native usable version of the array
             using IMemoryOwner<LLVMOrcCSymbolMapPair> nativeArrayOwner = absoluteSymbols.InitializeNativeCopy( );
 
             // pin the memory and call the native API
             using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
             unsafe
             {
-                return LLVMOrcAbsoluteSymbols( (LLVMOrcCSymbolMapPair*)nativeMemHandle.Pointer, absoluteSymbols.Count );
+                return LLVMOrcAbsoluteSymbols( (LLVMOrcCSymbolMapPair*)nativeMemHandle.Pointer, checked((nuint)absoluteSymbols.Count) );
             }
         }
     }

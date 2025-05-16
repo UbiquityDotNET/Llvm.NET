@@ -21,14 +21,14 @@ namespace Ubiquity.NET.Llvm
     /// interface as the caller is responsible for disposal of the instance. When
     /// this interface is returned the caller does not own the implementation and
     /// cannot dispose of it. (Generally only methods that act as a factory for a
-    /// module will provide a concreate <see cref="Module"/> instance that the
+    /// module will provide a concrete <see cref="Module"/> instance that the
     /// caller owns. Others are references to a module owned by the container)
     /// </remarks>
     public interface IModule
         : IEquatable<IModule>
     {
         /// <summary>Gets or sets the name of the source file generating this module</summary>
-        public string SourceFileName { get; set; }
+        public LazyEncodedString SourceFileName { get; set; }
 
         /// <summary>Gets the Comdats for this module</summary>
         public ComdatCollection Comdats { get; }
@@ -37,21 +37,20 @@ namespace Ubiquity.NET.Llvm
         public IContext Context { get; }
 
         /// <summary>Gets the IrMetadata for module level flags</summary>
-        public IReadOnlyDictionary<string, ModuleFlag> ModuleFlags { get; }
+        public IReadOnlyDictionary<LazyEncodedString, ModuleFlag> ModuleFlags { get; }
 
         /// <summary>Gets the Debug Compile units for this module</summary>
         public IEnumerable<DICompileUnit> CompileUnits { get; }
 
         /// <summary>Gets or Sets the Data layout string for this module</summary>
         /// <remarks>
-        /// <note type="note">The data layout string doesn't do what seems obvious.
+        /// <note type="important">The data layout string doesn't do what seems obvious.
         /// That is, it doesn't force the target back-end to generate code
         /// or types with a particular layout. Rather, the layout string has
         /// to match the implicit layout of the target. Thus it should only
         /// come from the actual <see cref="TargetMachine"/> the code is
         /// targeting.</note>
         /// </remarks>
-        [DisallowNull]
         public LazyEncodedString DataLayoutString { get; set; }
 
         /// <summary>Gets or sets the target data layout for this module</summary>
@@ -64,7 +63,7 @@ namespace Ubiquity.NET.Llvm
         public IDataLayout Layout { get; set; }
 
         /// <summary>Gets or sets the Target Triple describing the target, ABI and OS</summary>
-        public string TargetTriple { get; set; }
+        public LazyEncodedString TargetTriple { get; set; }
 
         /// <summary>Gets the <see cref="GlobalVariable"/>s contained by this module</summary>
         public IEnumerable<GlobalVariable> Globals { get; }
@@ -82,14 +81,14 @@ namespace Ubiquity.NET.Llvm
         public IEnumerable<GlobalIFunc> IndirectFunctions { get; }
 
         /// <summary>Gets the name of the module</summary>
-        public string Name { get; }
+        public LazyEncodedString Name { get; }
 
         /// <summary>Gets or sets the module level inline assembly</summary>
-        public string ModuleInlineAsm { get; set; }
+        public LazyEncodedString ModuleInlineAsm { get; set; }
 
         /// <summary>Appends inline assembly to the module's inline assembly</summary>
         /// <param name="asm">assembly text</param>
-        public void AppendInlineAsm( string asm );
+        public void AppendInlineAsm( LazyEncodedString asm );
 
         /// <summary>Tries running the specified passes on this function</summary>
         /// <param name="passes">Set of passes to run [Must contain at least one pass]</param>
@@ -104,16 +103,16 @@ namespace Ubiquity.NET.Llvm
         /// and may produce an exception.
         /// </note>
         /// </remarks>
-        public ErrorInfo TryRunPasses( params string[] passes );
+        public ErrorInfo TryRunPasses( params LazyEncodedString[] passes );
 
-        /// <inheritdoc cref="TryRunPasses(string[])"/>
+        /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>
         /// <param name="options">Options for the passes</param>
-        public ErrorInfo TryRunPasses( PassBuilderOptions options, params string[] passes );
+        public ErrorInfo TryRunPasses( PassBuilderOptions options, params LazyEncodedString[] passes );
 
-        /// <inheritdoc cref="TryRunPasses(string[])"/>
+        /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>
         /// <param name="targetMachine">Target machine for the passes</param>
         /// <param name="options">Options for the passes</param>
-        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params string[] passes );
+        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes );
 
         /// <summary>Link another module into this one</summary>
         /// <param name="srcModule">module to link into this one</param>
@@ -134,7 +133,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="name">Name of the function</param>
         /// <param name="function">The function or <see langword="null"/> if not found</param>
         /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
-        public bool TryGetFunction( string name, [MaybeNullWhen( false )] out Function function );
+        public bool TryGetFunction( LazyEncodedString name, [MaybeNullWhen( false )] out Function function );
 
         /// <summary>Create and add a global indirect function</summary>
         /// <param name="name">Name of the function</param>
@@ -142,13 +141,13 @@ namespace Ubiquity.NET.Llvm
         /// <param name="addressSpace">Address space for the indirect function</param>
         /// <param name="resolver">Resolver for the indirect function</param>
         /// <returns>New <see cref="GlobalIFunc"/></returns>
-        public GlobalIFunc CreateAndAddGlobalIFunc( string name, ITypeRef type, uint addressSpace, Function resolver );
+        public GlobalIFunc CreateAndAddGlobalIFunc( LazyEncodedString name, ITypeRef type, uint addressSpace, Function resolver );
 
         /// <summary>Get a named Global Indirect function in the module</summary>
         /// <param name="name">Name of the ifunc to find</param>
         /// <param name="function">Function or <see langword="null"/> if not found</param>
         /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
-        public bool TryGetNamedGlobalIFunc( string name, [MaybeNullWhen( false )] out GlobalIFunc function );
+        public bool TryGetNamedGlobalIFunc( LazyEncodedString name, [MaybeNullWhen( false )] out GlobalIFunc function );
 
         /// <summary>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</summary>
         /// <param name="name">Name of the function to add</param>
@@ -160,7 +159,7 @@ namespace Ubiquity.NET.Llvm
         /// the same name exists with a different signature an exception is thrown as LLVM does
         /// not perform any function overloading.
         /// </remarks>
-        public Function CreateFunction( string name, IFunctionType signature );
+        public Function CreateFunction( LazyEncodedString name, IFunctionType signature );
 
         /// <summary>Writes a bit-code module to a file</summary>
         /// <param name="path">Path to write the bit-code into</param>
@@ -198,12 +197,12 @@ namespace Ubiquity.NET.Llvm
         /// <param name="aliasName">Name of the alias</param>
         /// <param name="addressSpace">Address space for the alias [Default: 0]</param>
         /// <returns><see cref="GlobalAlias"/> for the alias</returns>
-        public GlobalAlias AddAlias( Value aliasee, string aliasName, uint addressSpace = 0 );
+        public GlobalAlias AddAlias( Value aliasee, LazyEncodedString aliasName, uint addressSpace = 0 );
 
         /// <summary>Get an alias by name</summary>
         /// <param name="name">name of the alias to get</param>
         /// <returns>Alias matching <paramref name="name"/> or null if no such alias exists</returns>
-        public GlobalAlias? GetAlias( string name );
+        public GlobalAlias? GetAlias( LazyEncodedString name );
 
         /// <summary>Adds a global to this module with a specific address space</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
@@ -213,7 +212,7 @@ namespace Ubiquity.NET.Llvm
         /// <openissues>
         /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
         /// </openissues>
-        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, string name );
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, LazyEncodedString name );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="addressSpace">Address space to add the global to</param>
@@ -232,7 +231,14 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constVal">Initial value for the global</param>
         /// <param name="name">Name of the variable</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name );
+        public GlobalVariable AddGlobalInAddressSpace(
+            uint addressSpace,
+            ITypeRef typeRef,
+            bool isConst,
+            Linkage linkage,
+            Constant constVal,
+            LazyEncodedString name
+            );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the value</param>
@@ -241,7 +247,7 @@ namespace Ubiquity.NET.Llvm
         /// <openissues>
         /// - What does LLVM do if creating a second Global with the same name (return null, throw, crash??,...)
         /// </openissues>
-        public GlobalVariable AddGlobal( ITypeRef typeRef, string name );
+        public GlobalVariable AddGlobal( ITypeRef typeRef, LazyEncodedString name );
 
         /// <summary>Adds a global to this module</summary>
         /// <param name="typeRef">Type of the value</param>
@@ -258,38 +264,38 @@ namespace Ubiquity.NET.Llvm
         /// <param name="constVal">Initial value for the global</param>
         /// <param name="name">Name of the variable</param>
         /// <returns>New global variable</returns>
-        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, string name );
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name );
 
         /// <summary>Retrieves a <see cref="ITypeRef"/> by name from the module</summary>
         /// <param name="name">Name of the type</param>
         /// <returns>The type or null if no type with the specified name exists in the module</returns>
-        public ITypeRef? GetTypeByName( string name );
+        public ITypeRef? GetTypeByName( LazyEncodedString name );
 
         /// <summary>Retrieves a named global from the module</summary>
         /// <param name="name">Name of the global</param>
         /// <returns><see cref="GlobalVariable"/> or <see langword="null"/> if not found</returns>
-        public GlobalVariable? GetNamedGlobal( string name );
+        public GlobalVariable? GetNamedGlobal( LazyEncodedString name );
 
         /// <summary>Adds a module flag to the module</summary>
         /// <param name="behavior">ModuleHandle flag behavior for this flag</param>
         /// <param name="name">Name of the flag</param>
         /// <param name="value">Value of the flag</param>
-        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, UInt32 value );
+        public void AddModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, UInt32 value );
 
         /// <summary>Adds a module flag to the module</summary>
         /// <param name="behavior">ModuleHandle flag behavior for this flag</param>
         /// <param name="name">Name of the flag</param>
         /// <param name="value">Value of the flag</param>
-        public void AddModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata value );
+        public void AddModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, IrMetadata value );
 
         /// <summary>Adds operand value to named metadata</summary>
         /// <param name="name">Name of the metadata</param>
         /// <param name="value">operand value</param>
-        public void AddNamedMetadataOperand( string name, IrMetadata value );
+        public void AddNamedMetadataOperand( LazyEncodedString name, IrMetadata value );
 
         /// <summary>Adds an llvm.ident metadata string to the module</summary>
         /// <param name="version">version information to place in the llvm.ident metadata</param>
-        public void AddVersionIdentMetadata( string version );
+        public void AddVersionIdentMetadata( LazyEncodedString version );
 
         /// <summary>Creates a Function definition with Debug information</summary>
         /// <param name="diBuilder">The debug info builder to use to create the function (must be associated with this module)</param>
@@ -307,8 +313,8 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Function described by the arguments</returns>
         public Function CreateFunction( ref readonly DIBuilder diBuilder
                                       , DIScope? scope
-                                      , string name
-                                      , string? linkageName
+                                      , LazyEncodedString name
+                                      , LazyEncodedString? linkageName
                                       , DIFile? file
                                       , uint line
                                       , DebugFunctionType signature
@@ -330,7 +336,7 @@ namespace Ubiquity.NET.Llvm
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
         public Function CreateFunction( ref readonly DIBuilder diBuilder
-                                      , string name
+                                      , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
@@ -347,7 +353,7 @@ namespace Ubiquity.NET.Llvm
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
         public Function CreateFunction( ref readonly DIBuilder diBuilder
-                                      , string name
+                                      , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , params IDebugType<ITypeRef, DIType>[] argumentTypes
@@ -369,7 +375,7 @@ namespace Ubiquity.NET.Llvm
         /// space, or bit widths. That is instead of 'llvm.memset.p0i8.i32' use 'llvm.memset.p.i'.
         /// </note>
         /// </remarks>
-        public Function GetIntrinsicDeclaration( string name, params ITypeRef[] args );
+        public Function GetIntrinsicDeclaration( LazyEncodedString name, params ITypeRef[] args );
 
         /// <summary>Gets a declaration for an LLVM intrinsic function</summary>
         /// <param name="id">id of the intrinsic</param>
@@ -411,14 +417,14 @@ namespace Ubiquity.NET.Llvm
         }
 
         // Convenience accessor extension method to resolve ugly casting
-        // to templated interface and make semantic intent clear.
+        // to generic interface and make semantic intent clear.
         internal static LLVMModuleRef GetOwnedHandle( this IGlobalHandleOwner<LLVMModuleRef> owner )
         {
             return owner.OwnedHandle;
         }
 
         // Convenience accessor extension method to resolve ugly casting
-        // to templated interface and make semantic intent clear.
+        // to generic interface and make semantic intent clear.
         internal static void InvalidateFromMove( this IGlobalHandleOwner<LLVMModuleRef> owner )
         {
             owner.InvalidateFromMove();

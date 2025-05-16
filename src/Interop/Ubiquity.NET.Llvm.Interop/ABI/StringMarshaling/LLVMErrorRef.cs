@@ -6,6 +6,8 @@
 
 using System.Security;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
 {
     /// <summary>Global LLVM object handle for an error</summary>
@@ -93,24 +95,36 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         /// This is a static factory as there is no default construction provided
         /// in the LLVM-C API.
         /// </remarks>
-        public static LLVMErrorRef Create(string errMsg)
+        public static LLVMErrorRef Create(LazyEncodedString errMsg)
+        {
+            return LLVMCreateStringError(errMsg);
+        }
+
+        /// <summary>Create a new <see cref="LLVMErrorRef"/> as a <see cref="nint"/> from a <see cref="LazyEncodedString"/></summary>
+        /// <param name="errMsg">Message for the error </param>
+        /// <returns>new instance</returns>
+        /// <remarks>
+        /// <para>This is a static factory as there is no default construction provided
+        /// in the LLVM-C API.</para>
+        /// <para>This form of the factory is normally used directly only for out/return reverse P/Invoke scenarios.
+        /// In all other cases a fully wrapped safe handle (<see cref="LLVMErrorRef"/>) is used via <see cref="Create(LazyEncodedString)"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe nint CreateForNativeOut(LazyEncodedString errMsg)
         {
             unsafe
             {
-                byte* bytes = ExecutionEncodingStringMarshaller.ConvertToUnmanaged(errMsg);
-                try
-                {
-                    return new(LLVMCreateStringError(bytes));
-                }
-                finally
-                {
-                    ExecutionEncodingStringMarshaller.Free(bytes);
-                }
+                // handle the marshalling to convert it directly.
+                // Theoretically the source generator supports reverse P/Invoke marshalling,
+                // but there is NO documentation or obvious options to "invoke" such a thing.
+                // So, until that is found this is done "manually" here.
+                using var mem = errMsg.Pin();
+                return RawLLVMCreateStringError((byte*)mem.Pointer);
             }
 
-            [DllImport( LibraryName )]
+            [DllImport( LibraryName, EntryPoint = "LLVMCreateStringError" )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            static unsafe extern nint /*LLVMErrorRef*/ LLVMCreateStringError(byte* ErrMsg);
+            static unsafe extern nint /*LLVMErrorRef*/ RawLLVMCreateStringError(byte* ErrMsg);
         }
 
         protected override void Dispose( bool disposing )

@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
 
 namespace Ubiquity.NET.Llvm.Values
@@ -37,16 +39,21 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets name of the value (if any)</summary>
         /// <remarks>
         /// <note type="note">
-        /// LLVM will add a numeric suffix to the name set if a
-        /// value with the name already exists. Thus, the name
-        /// read from this property may not match what is set.
+        /// LLVM will add a numeric suffix to the name set if a value with the name already exists.
+        /// Thus, the name read from this property may not match what is set.
         /// </note>
+        /// The value may not have a name, thus it is possible to get a <see langword="null"/> value
+        /// for this property. It is never valid to set the Name to <see langword="null"/>.
         /// </remarks>
-        public string Name
+        [DisallowNull]
+        public LazyEncodedString? Name
         {
-            get => LLVMGetValueName2( Handle, out size_t _ ) ?? string.Empty;
-
-            set => LLVMSetValueName2( Handle, value, value.ThrowIfNull().Length );
+            get => LLVMGetValueName2( Handle )!; //
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                LLVMSetValueName2( Handle, value );
+            }
         }
 
         /// <summary>Gets a value indicating whether this value is Undefined</summary>

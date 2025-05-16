@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.IRBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Instructions
 {

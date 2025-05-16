@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
+
 namespace Ubiquity.NET.Llvm.Instructions
 {
     /// <summary>LLVM Instruction opcodes</summary>
@@ -468,10 +472,11 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( Handle, out size_t numEntries );
-                for( long i = 0; i < numEntries.ToInt32( ); ++i )
+                using var entries = LLVMInstructionGetAllMetadataOtherThanDebugLoc( Handle, out nuint numEntries );
+                uint uintLen = checked((uint)numEntries);
+                for( uint i = 0; i < uintLen; ++i )
                 {
-                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
+                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, i );
                     yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
                 }
             }

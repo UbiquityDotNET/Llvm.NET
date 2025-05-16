@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.UT
             using var machine = GetTargetMachine( target );
 
             Assert.IsNotNull( machine );
-            Assert.AreSame( target, machine.Target );
+            Assert.AreEqual( target, machine.Target );
             Assert.AreEqual( DefaultTargetTriple, machine.Triple );
             Assert.AreEqual( DefaultTargetCpu, machine.Cpu );
             Assert.AreEqual( DefaultTargetFeatures, machine.Features );

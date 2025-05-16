@@ -209,72 +209,275 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMDIBuilderFinalizeSubprogram(LLVMDIBuilderRef Builder, LLVMMetadataRef Subprogram);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateCompileUnit(
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateCompileUnit(
             LLVMDIBuilderRef Builder,
             LLVMDWARFSourceLanguage Lang,
             LLVMMetadataRef FileRef,
-            string? Producer,
-            size_t ProducerLen,
+            LazyEncodedString? Producer,
             [MarshalAs( UnmanagedType.Bool )] bool isOptimized,
-            string? Flags,
-            size_t FlagsLen,
+            LazyEncodedString? Flags,
             uint RuntimeVer,
-            string? SplitName,
-            size_t SplitNameLen,
+            LazyEncodedString? SplitName,
             LLVMDWARFEmissionKind Kind,
             uint DWOId,
             [MarshalAs( UnmanagedType.Bool )] bool SplitDebugInlining,
             [MarshalAs( UnmanagedType.Bool )] bool DebugInfoForProfiling,
-            string? SysRoot,
-            size_t SysRootLen,
-            string? SDK,
-            size_t SDKLen);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFile(LLVMDIBuilderRef Builder, string? Filename, size_t FilenameLen, string? Directory, size_t DirectoryLen);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateModule(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentScope, string Name, size_t NameLen, string ConfigMacros, size_t ConfigMacrosLen, string IncludePath, size_t IncludePathLen, string APINotesFile, size_t APINotesFileLen);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNameSpace(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentScope, string Name, size_t NameLen, [MarshalAs( UnmanagedType.Bool )] bool ExportSymbols);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFunction(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, string LinkageName, size_t LinkageNameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool IsLocalToUnit, [MarshalAs( UnmanagedType.Bool )] bool IsDefinition, uint ScopeLine, LLVMDIFlags Flags, [MarshalAs( UnmanagedType.Bool )] bool IsOptimized);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint Column);
+            LazyEncodedString? SysRoot,
+            LazyEncodedString? SDK
+            )
+        {
+            return LLVMDIBuilderCreateCompileUnit(
+                Builder,
+                Lang,
+                FileRef,
+                Producer, Producer?.NativeStrLen ?? 0,
+                isOptimized,
+                Flags, Flags?.NativeStrLen ?? 0,
+                RuntimeVer,
+                SplitName, SplitName?.NativeStrLen ?? 0,
+                Kind,
+                DWOId,
+                SplitDebugInlining,
+                DebugInfoForProfiling,
+                SysRoot, SysRoot?.NativeStrLen ?? 0,
+                SDK, SDK?.NativeStrLen ?? 0
+                );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlockFile(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Discriminator);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateCompileUnit(
+            LLVMDIBuilderRef Builder,
+            LLVMDWARFSourceLanguage Lang,
+            LLVMMetadataRef FileRef,
+            LazyEncodedString? Producer, nuint ProducerLen,
+            [MarshalAs( UnmanagedType.Bool )] bool isOptimized,
+            LazyEncodedString? Flags, nuint FlagsLen,
+            uint RuntimeVer,
+            LazyEncodedString? SplitName, nuint SplitNameLen,
+            LLVMDWARFEmissionKind Kind,
+            uint DWOId,
+            [MarshalAs( UnmanagedType.Bool )] bool SplitDebugInlining,
+            [MarshalAs( UnmanagedType.Bool )] bool DebugInfoForProfiling,
+            LazyEncodedString? SysRoot, nuint SysRootLen,
+            LazyEncodedString? SDK, nuint SDKLen
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateFile(LLVMDIBuilderRef Builder, LazyEncodedString Filename, LazyEncodedString Directory)
+        {
+            return LLVMDIBuilderCreateFile(Builder, Filename, Filename.NativeStrLen, Directory, Directory.NativeStrLen);
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromNamespace(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef NS, LLVMMetadataRef File, uint Line);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFile(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Filename, nuint FilenameLen,
+            LazyEncodedString Directory, nuint DirectoryLen
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateModule(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentScope,
+            LazyEncodedString Name,
+            LazyEncodedString ConfigMacros,
+            LazyEncodedString IncludePath,
+            LazyEncodedString APINotesFile
+            )
+        {
+            return LLVMDIBuilderCreateModule(
+                Builder,
+                ParentScope,
+                Name, Name.NativeStrLen,
+                ConfigMacros, Name.NativeStrLen,
+                IncludePath, IncludePath.NativeStrLen,
+                APINotesFile, APINotesFile.NativeStrLen
+                );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef ImportedEntity, LLVMMetadataRef File, uint Line, out LLVMMetadataRef Elements, uint NumElements);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateModule(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentScope,
+            LazyEncodedString Name, nuint NameLen,
+            LazyEncodedString ConfigMacros, nuint ConfigMacrosLen,
+            LazyEncodedString IncludePath, nuint IncludePathLen,
+            LazyEncodedString APINotesFile, nuint APINotesFileLen
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateNameSpace(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentScope,
+            LazyEncodedString Name,
+            [MarshalAs( UnmanagedType.Bool )] bool ExportSymbols
+            )
+        {
+            return LLVMDIBuilderCreateNameSpace(Builder, ParentScope, Name, Name.NativeStrLen, ExportSymbols);
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef M, LLVMMetadataRef File, uint Line, out LLVMMetadataRef Elements, uint NumElements);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNameSpace(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentScope,
+            LazyEncodedString Name, nuint NameLen,
+            [MarshalAs( UnmanagedType.Bool )] bool ExportSymbols
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedDeclaration(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, LLVMMetadataRef Decl, LLVMMetadataRef File, uint Line, string Name, size_t NameLen, out LLVMMetadataRef Elements, uint NumElements);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateFunction(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LazyEncodedString LinkageName,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            [MarshalAs( UnmanagedType.Bool )] bool IsLocalToUnit,
+            [MarshalAs( UnmanagedType.Bool )] bool IsDefinition,
+            uint ScopeLine,
+            LLVMDIFlags Flags,
+            [MarshalAs( UnmanagedType.Bool )] bool IsOptimized
+            )
+        {
+            return LLVMDIBuilderCreateFunction(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                LinkageName, LinkageName.NativeStrLen,
+                File,
+                LineNo,
+                Ty,
+                IsLocalToUnit,
+                IsDefinition,
+                ScopeLine,
+                Flags,
+                IsOptimized
+            );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateDebugLocation(LLVMContextRefAlias Ctx, uint Line, uint Column, LLVMMetadataRef Scope, LLVMMetadataRef InlinedAt);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateFunction(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LazyEncodedString LinkageName, nuint LinkageNameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            [MarshalAs( UnmanagedType.Bool )] bool IsLocalToUnit,
+            [MarshalAs( UnmanagedType.Bool )] bool IsDefinition,
+            uint ScopeLine,
+            LLVMDIFlags Flags,
+            [MarshalAs( UnmanagedType.Bool )] bool IsOptimized
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlock(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef File,
+            uint Line,
+            uint Column
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLexicalBlockFile(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef File,
+            uint Discriminator
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromNamespace(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef NS,
+            LLVMMetadataRef File,
+            uint Line
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef ImportedEntity,
+            LLVMMetadataRef File,
+            uint Line,
+            // There is no marshalling attribute for the length, NumElements MUST be <= Elements.Length
+            [In] LLVMMetadataRef[] Elements,
+            uint NumElements
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef M,
+            LLVMMetadataRef File,
+            uint Line,
+            // There is no marshalling attribute for the length, NumElements MUST be <= Elements.Length
+            [In] LLVMMetadataRef[] Elements,
+            uint NumElements
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateImportedDeclaration(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef Decl,
+            LLVMMetadataRef File,
+            uint Line,
+            LazyEncodedString Name,
+            LLVMMetadataRef[] Elements
+            )
+        {
+            return LLVMDIBuilderCreateImportedDeclaration(
+                Builder,
+                Scope,
+                Decl,
+                File,
+                Line,
+                Name, Name.NativeStrLen,
+                Elements, checked((uint)Elements.LongLength)
+                );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedDeclaration(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef Decl,
+            LLVMMetadataRef File,
+            uint Line,
+            LazyEncodedString Name, nuint NameLen,
+            // There is no marshalling attribute for the length, NumElements MUST be <= Elements.Length
+            [In] LLVMMetadataRef[] Elements,
+            uint NumElements
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateDebugLocation(
+            LLVMContextRefAlias Ctx,
+            uint Line,
+            uint Column,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef InlinedAt
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -296,111 +499,551 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMDIScopeGetFile(LLVMMetadataRef Scope);
 
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMDIFileGetDirectory(LLVMMetadataRef File, out uint Len);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LLVMDIFileGetDirectory(LLVMMetadataRef File)
+        {
+            unsafe
+            {
+                byte* p = LLVMDIFileGetDirectory(File, out uint len);
+                return LazyEncodedString.FromUnmanaged( p, len );
+            }
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMDIFileGetFilename(LLVMMetadataRef File, out uint Len);
+        private static unsafe partial byte* LLVMDIFileGetDirectory(LLVMMetadataRef File, out uint Len);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LLVMDIFileGetFilename(LLVMMetadataRef File)
+        {
+            unsafe
+            {
+                byte* p = LLVMDIFileGetFilename(File, out uint len);
+                return LazyEncodedString.FromUnmanaged(p, len);
+            }
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMDIFileGetSource(LLVMMetadataRef File, out uint Len);
+        private static unsafe partial byte* LLVMDIFileGetFilename(LLVMMetadataRef File, out uint Len);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LLVMDIFileGetSource(LLVMMetadataRef File)
+        {
+            unsafe
+            {
+                byte* p = LLVMDIFileGetSource(File, out uint len);
+                return LazyEncodedString.FromUnmanaged(p, len);
+            }
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef Builder, [In] LLVMMetadataRef[] Data, size_t NumElements);
+        private static unsafe partial byte* LLVMDIFileGetSource(LLVMMetadataRef File, out uint Len);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef Builder, LLVMMetadataRef[] Data)
+        {
+            return LLVMDIBuilderGetOrCreateTypeArray(Builder, Data, checked((nuint)Data.LongLength));
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(LLVMDIBuilderRef Builder, LLVMMetadataRef File, [In] LLVMMetadataRef[] ParameterTypes, uint NumParameterTypes, LLVMDIFlags Flags);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray(
+            LLVMDIBuilderRef Builder,
+            // There is no marshal attribute for the length; NumElements MUST be <= Data.Length
+            [In] LLVMMetadataRef[] Data,
+            nuint NumElements
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMacro(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMDWARFMacinfoRecordType RecordType, string Name, size_t NameLen, string Value, size_t ValueLen);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef File,
+            // There is no marshal attribute for the length; NumParameterTypes MUST be <= ParameterTypes.Length
+            [In] LLVMMetadataRef[] ParameterTypes,
+            uint NumParameterTypes,
+            LLVMDIFlags Flags
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateMacro(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentMacroFile,
+            uint Line,
+            LLVMDWARFMacinfoRecordType RecordType,
+            LazyEncodedString Name,
+            LazyEncodedString Value
+            )
+        {
+            return LLVMDIBuilderCreateMacro(
+                Builder,
+                ParentMacroFile,
+                Line,
+                RecordType,
+                Name, Name.NativeStrLen,
+                Value, Value.NativeStrLen
+                );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMacro(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentMacroFile,
+            uint Line,
+            LLVMDWARFMacinfoRecordType RecordType,
+            LazyEncodedString Name, nuint NameLen,
+            LazyEncodedString Value, nuint ValueLen
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMMetadataRef File);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerator(LLVMDIBuilderRef Builder, string Name, size_t NameLen, Int64 Value, [MarshalAs( UnmanagedType.Bool )] bool IsUnsigned);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateEnumerator(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name,
+            Int64 Value,
+            bool IsUnsigned
+            )
+        {
+            return LLVMDIBuilderCreateEnumerator(
+                Builder,
+                Name, Name.NativeStrLen,
+                Value,
+                IsUnsigned
+                );
+        }
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerationType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, [In] LLVMMetadataRef[] Elements, uint NumElements, LLVMMetadataRef ClassTy);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerator(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name, nuint NameLen,
+            Int64 Value,
+            [MarshalAs( UnmanagedType.Bool )] bool IsUnsigned
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnionType(
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateEnumerationType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
-            string Name,
-            size_t NameLen,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMMetadataRef[] Elements,
+            LLVMMetadataRef ClassTy
+            )
+        {
+            return LLVMDIBuilderCreateEnumerationType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNumber,
+                SizeInBits,
+                AlignInBits,
+                Elements, checked((uint)Elements.LongLength),
+                ClassTy
+                );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateEnumerationType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            [In] LLVMMetadataRef[] Elements,
+            uint NumElements,
+            LLVMMetadataRef ClassTy
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateUnionType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
             LLVMMetadataRef File,
             uint LineNumber,
             UInt64 SizeInBits,
             UInt32 AlignInBits,
             LLVMDIFlags Flags,
-            [In] LLVMMetadataRef[] Elements,
-            uint NumElements,
+            LLVMMetadataRef[] Elements,
             uint RunTimeLang,
-            string UniqueId,
-            size_t UniqueIdLen
+            LazyEncodedString UniqueId
+            )
+        {
+            return LLVMDIBuilderCreateUnionType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNumber,
+                SizeInBits,
+                AlignInBits,
+                Flags,
+                Elements, checked((uint)Elements.LongLength),
+                RunTimeLang,
+                UniqueId, UniqueId.NativeStrLen
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnionType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMDIFlags Flags,
+            [In] LLVMMetadataRef[] Elements, uint NumElements,
+            uint RunTimeLang,
+            LazyEncodedString UniqueId, nuint UniqueIdLen
             );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArrayType(LLVMDIBuilderRef Builder, UInt64 Size, UInt32 AlignInBits, LLVMMetadataRef Ty, [In] LLVMMetadataRef[] Subscripts, uint NumSubscripts);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArrayType(
+            LLVMDIBuilderRef Builder,
+            UInt64 Size,
+            UInt32 AlignInBits,
+            LLVMMetadataRef Ty,
+            [In] LLVMMetadataRef[] Subscripts,
+            uint NumSubscripts
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateVectorType(LLVMDIBuilderRef Builder, UInt64 Size, UInt32 AlignInBits, LLVMMetadataRef Ty, [In] LLVMMetadataRef[] Subscripts, uint NumSubscripts);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateVectorType(
+            LLVMDIBuilderRef Builder,
+            UInt64 Size,
+            UInt32 AlignInBits,
+            LLVMMetadataRef Ty,
+            [In] LLVMMetadataRef[] Subscripts,
+            uint NumSubscripts
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnspecifiedType(LLVMDIBuilderRef Builder, string Name, size_t NameLen);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBasicType(LLVMDIBuilderRef Builder, string Name, size_t NameLen, UInt64 SizeInBits, UInt32 Encoding, LLVMDIFlags Flags);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreatePointerType(LLVMDIBuilderRef Builder, LLVMMetadataRef PointeeTy, UInt64 SizeInBits, UInt32 AlignInBits, uint AddressSpace, string Name, size_t NameLen);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStructType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIFlags Flags, LLVMMetadataRef DerivedFrom, [In] LLVMMetadataRef[] Elements, uint NumElements, uint RunTimeLang, LLVMMetadataRef VTableHolder, string UniqueId, size_t UniqueIdLen);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIFlags Flags, LLVMMetadataRef Ty);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStaticMemberType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, LLVMMetadataRef Type, LLVMDIFlags Flags, LLVMValueRef ConstantVal, UInt32 AlignInBits);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateUnspecifiedType(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name
+            )
+        {
+            return LLVMDIBuilderCreateUnspecifiedType(Builder, Name, Name.NativeStrLen);
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberPointerType(LLVMDIBuilderRef Builder, LLVMMetadataRef PointeeType, LLVMMetadataRef ClassType, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIFlags Flags);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateUnspecifiedType(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name, nuint NameLen
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCIVar(LLVMDIBuilderRef Builder, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIFlags Flags, LLVMMetadataRef Ty, LLVMMetadataRef PropertyNode);
-
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCProperty(LLVMDIBuilderRef Builder, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, string GetterName, size_t GetterNameLen, string SetterName, size_t SetterNameLen, uint PropertyAttributes, LLVMMetadataRef Ty);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateBasicType(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name,
+            UInt64 SizeInBits,
+            UInt32 Encoding,
+            LLVMDIFlags Flags
+            )
+        {
+            return LLVMDIBuilderCreateBasicType(
+                Builder,
+                Name, Name.NativeStrLen,
+                SizeInBits,
+                Encoding,
+                Flags
+            );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjectPointerType(LLVMDIBuilderRef Builder, LLVMMetadataRef Type, [MarshalAs( UnmanagedType.Bool )] bool Implicit);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBasicType(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name, nuint NameLen,
+            UInt64 SizeInBits,
+            UInt32 Encoding,
+            LLVMDIFlags Flags
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreatePointerType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef PointeeTy,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            uint AddressSpace,
+            LazyEncodedString? Name
+            )
+        {
+            return LLVMDIBuilderCreatePointerType(
+                Builder,
+                PointeeTy,
+                SizeInBits,
+                AlignInBits,
+                AddressSpace,
+                Name, Name?.NativeStrLen ?? 0
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreatePointerType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef PointeeTy,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            uint AddressSpace,
+            LazyEncodedString? Name, nuint NameLen
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateStructType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef DerivedFrom,
+            LLVMMetadataRef[] Elements,
+            uint RunTimeLang,
+            LLVMMetadataRef VTableHolder,
+            LazyEncodedString UniqueId
+            )
+        {
+            return LLVMDIBuilderCreateStructType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNumber,
+                SizeInBits,
+                AlignInBits,
+                Flags,
+                DerivedFrom,
+                Elements, checked((uint)Elements.LongLength),
+                RunTimeLang,
+                VTableHolder,
+                UniqueId, UniqueId.NativeStrLen
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStructType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef DerivedFrom,
+            [In] LLVMMetadataRef[] Elements, uint NumElements,
+            uint RunTimeLang,
+            LLVMMetadataRef VTableHolder,
+            LazyEncodedString UniqueId, nuint UniqueIdLen
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateMemberType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNo,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            UInt64 OffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef Ty
+            )
+        {
+            return LLVMDIBuilderCreateMemberType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNo,
+                SizeInBits,
+                AlignInBits,
+                OffsetInBits,
+                Flags,
+                Ty
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            UInt64 OffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef Ty
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateStaticMemberType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            LLVMMetadataRef Type,
+            LLVMDIFlags Flags,
+            LLVMValueRef ConstantVal,
+            UInt32 AlignInBits
+            )
+        {
+            return LLVMDIBuilderCreateStaticMemberType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNumber,
+                Type,
+                Flags,
+                ConstantVal,
+                AlignInBits
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateStaticMemberType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            LLVMMetadataRef Type,
+            LLVMDIFlags Flags,
+            LLVMValueRef ConstantVal,
+            UInt32 AlignInBits
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateMemberPointerType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef PointeeType,
+            LLVMMetadataRef ClassType,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMDIFlags Flags
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateObjCIVar(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNo,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            UInt64 OffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef Ty,
+            LLVMMetadataRef PropertyNode
+            )
+        {
+            return LLVMDIBuilderCreateObjCIVar(
+                Builder,
+                Name, Name.NativeStrLen,
+                File,
+                LineNo,
+                SizeInBits,
+                AlignInBits,
+                OffsetInBits,
+                Flags,
+                Ty,
+                PropertyNode
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCIVar(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            UInt64 OffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef Ty,
+            LLVMMetadataRef PropertyNode
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateObjCProperty(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LazyEncodedString GetterName,
+            LazyEncodedString SetterName,
+            uint PropertyAttributes,
+            LLVMMetadataRef Ty
+            )
+        {
+            return LLVMDIBuilderCreateObjCProperty(
+                Builder,
+                Name, Name.NativeStrLen,
+                File,
+                LineNo,
+                GetterName, GetterName.NativeStrLen,
+                SetterName, SetterName.NativeStrLen,
+                PropertyAttributes,
+                Ty
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjCProperty(
+            LLVMDIBuilderRef Builder,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LazyEncodedString GetterName, nuint GetterNameLen,
+            LazyEncodedString SetterName, nuint SetterNameLen,
+            uint PropertyAttributes,
+            LLVMMetadataRef Ty
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateObjectPointerType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Type,
+            [MarshalAs( UnmanagedType.Bool )] bool Implicit
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -414,38 +1057,255 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNullPtrType(LLVMDIBuilderRef Builder);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTypedef(LLVMDIBuilderRef Builder, LLVMMetadataRef Type, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Scope, UInt32 AlignInBits);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateTypedef(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Type,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Scope,
+            UInt32 AlignInBits
+            )
+        {
+            return LLVMDIBuilderCreateTypedef(
+                Builder,
+                Type,
+                Name, Name.NativeStrLen,
+                File,
+                LineNo,
+                Scope,
+                AlignInBits
+            );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateInheritance(LLVMDIBuilderRef Builder, LLVMMetadataRef Ty, LLVMMetadataRef BaseTy, UInt64 BaseOffset, UInt32 VBPtrOffset, LLVMDIFlags Flags);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTypedef(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Type,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Scope,
+            UInt32 AlignInBits
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateForwardDecl(LLVMDIBuilderRef Builder, uint Tag, string Name, size_t NameLen, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, UInt64 SizeInBits, UInt32 AlignInBits, string UniqueIdentifier, size_t UniqueIdentifierLen);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateInheritance(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Ty,
+            LLVMMetadataRef BaseTy,
+            UInt64 BaseOffset,
+            UInt32 VBPtrOffset,
+            LLVMDIFlags Flags
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType(LLVMDIBuilderRef Builder, uint Tag, string Name, size_t NameLen, LLVMMetadataRef Scope, LLVMMetadataRef File, uint Line, uint RuntimeLang, UInt64 SizeInBits, UInt32 AlignInBits, LLVMDIFlags Flags, string UniqueIdentifier, size_t UniqueIdentifierLen);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateForwardDecl(
+            LLVMDIBuilderRef Builder,
+            uint Tag,
+            LazyEncodedString Name,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef File,
+            uint Line,
+            uint RuntimeLang,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LazyEncodedString UniqueIdentifier
+            )
+        {
+            return LLVMDIBuilderCreateForwardDecl(
+                Builder,
+                Tag,
+                Name, Name.NativeStrLen,
+                Scope,
+                File,
+                Line,
+                RuntimeLang,
+                SizeInBits,
+                AlignInBits,
+                UniqueIdentifier, UniqueIdentifier.NativeStrLen
+            );
+        }
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBitFieldMemberType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt64 OffsetInBits, UInt64 StorageOffsetInBits, LLVMDIFlags Flags, LLVMMetadataRef Type);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateForwardDecl(
+            LLVMDIBuilderRef Builder,
+            uint Tag,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef File,
+            uint Line,
+            uint RuntimeLang,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LazyEncodedString UniqueIdentifier, nuint UniqueIdentifierLen
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType(
+            LLVMDIBuilderRef Builder,
+            uint Tag,
+            LazyEncodedString Name,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef File,
+            uint Line,
+            uint RuntimeLang,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMDIFlags Flags,
+            LazyEncodedString UniqueIdentifier
+            )
+        {
+            return LLVMDIBuilderCreateReplaceableCompositeType(
+                Builder,
+                Tag,
+                Name, Name.NativeStrLen,
+                Scope,
+                File,
+                Line,
+                RuntimeLang,
+                SizeInBits,
+                AlignInBits,
+                Flags,
+                UniqueIdentifier, UniqueIdentifier.NativeStrLen
+            );
+        }
+
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateClassType(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNumber, UInt64 SizeInBits, UInt32 AlignInBits, UInt64 OffsetInBits, LLVMDIFlags Flags, LLVMMetadataRef DerivedFrom, out LLVMMetadataRef Elements, uint NumElements, LLVMMetadataRef VTableHolder, LLVMMetadataRef TemplateParamsNode, string UniqueIdentifier, size_t UniqueIdentifierLen);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType(
+            LLVMDIBuilderRef Builder,
+            uint Tag,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef File,
+            uint Line,
+            uint RuntimeLang,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            LLVMDIFlags Flags,
+            LazyEncodedString UniqueIdentifier, nuint UniqueIdentifierLen
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateBitFieldMemberType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt64 OffsetInBits,
+            UInt64 StorageOffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef Type
+            )
+        {
+            return LLVMDIBuilderCreateBitFieldMemberType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNumber,
+                SizeInBits,
+                OffsetInBits,
+                StorageOffsetInBits,
+                Flags,
+                Type
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateBitFieldMemberType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt64 OffsetInBits,
+            UInt64 StorageOffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef Type
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateClassType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            UInt64 OffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef DerivedFrom,
+            [In] LLVMMetadataRef[] Elements,
+            LLVMMetadataRef VTableHolder,
+            LLVMMetadataRef TemplateParamsNode,
+            LazyEncodedString UniqueIdentifier
+            )
+        {
+            return LLVMDIBuilderCreateClassType(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNumber,
+                SizeInBits,
+                AlignInBits,
+                OffsetInBits,
+                Flags,
+                DerivedFrom,
+                Elements, checked((uint)Elements.LongLength),
+                VTableHolder,
+                TemplateParamsNode,
+                UniqueIdentifier, UniqueIdentifier.NativeStrLen
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateClassType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNumber,
+            UInt64 SizeInBits,
+            UInt32 AlignInBits,
+            UInt64 OffsetInBits,
+            LLVMDIFlags Flags,
+            LLVMMetadataRef DerivedFrom,
+            [In] LLVMMetadataRef[] Elements, uint NumElements,
+            LLVMMetadataRef VTableHolder,
+            LLVMMetadataRef TemplateParamsNode,
+            LazyEncodedString UniqueIdentifier, nuint UniqueIdentifierLen
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArtificialType(LLVMDIBuilderRef Builder, LLVMMetadataRef Type);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LazyEncodedString? LLVMDITypeGetName(LLVMMetadataRef DType)
+        {
+            unsafe
+            {
+                byte* p = LLVMDITypeGetName(DType, out nuint len);
+                return LazyEncodedString.FromUnmanaged(p, len);
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(ConstStringMarshaller))]
-        public static unsafe partial string? LLVMDITypeGetName(LLVMMetadataRef DType, out size_t Length);
+        private static unsafe partial byte* LLVMDITypeGetName(LLVMMetadataRef DType, out nuint Length);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -471,21 +1331,78 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateSubrange(LLVMDIBuilderRef Builder, Int64 LowerBound, Int64 Count);
 
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef Builder, [In] LLVMMetadataRef[] Data, size_t NumElements);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef Builder, LLVMMetadataRef[] Data)
+        {
+            return LLVMDIBuilderGetOrCreateArray(Builder, Data, checked((nuint)Data.LongLength));
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateExpression(LLVMDIBuilderRef Builder, [In] UInt64[] Addr, size_t Length);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateArray(
+            LLVMDIBuilderRef Builder,
+            [In] LLVMMetadataRef[] Data, nuint NumElements
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateExpression(LLVMDIBuilderRef Builder, UInt64[] Addr)
+        {
+            return LLVMDIBuilderCreateExpression(Builder, Addr, checked((nuint)Addr.LongLength));
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateExpression(LLVMDIBuilderRef Builder, [In] UInt64[] Addr, nuint Length);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateConstantValueExpression(LLVMDIBuilderRef Builder, UInt64 Value);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LazyEncodedString Linkage,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            bool LocalToUnit,
+            LLVMMetadataRef Expr,
+            LLVMMetadataRef Decl,
+            UInt32 AlignInBits
+            )
+        {
+            return LLVMDIBuilderCreateGlobalVariableExpression(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                Linkage, Linkage.NativeStrLen,
+                File,
+                LineNo,
+                Ty,
+                LocalToUnit,
+                Expr,
+                Decl,
+                AlignInBits
+            );
+        }
+
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, string Linkage, size_t LinkLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool LocalToUnit, LLVMMetadataRef Expr, LLVMMetadataRef Decl, UInt32 AlignInBits);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LazyEncodedString Linkage, nuint LinkLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            [MarshalAs( UnmanagedType.Bool )] bool LocalToUnit,
+            LLVMMetadataRef Expr,
+            LLVMMetadataRef Decl,
+            UInt32 AlignInBits
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -513,7 +1430,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRefAlias Ctx, out LLVMMetadataRef Data, size_t NumElements);
+        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRefAlias Ctx, [In] LLVMMetadataRef[] Data, nuint NumElements);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -523,33 +1440,172 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMMetadataReplaceAllUsesWith(LLVMMetadataRef TempTargetMetadata, LLVMMetadataRef Replacement);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempGlobalVariableFwdDecl(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, string Linkage, size_t LnkLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool LocalToUnit, LLVMMetadataRef Decl, UInt32 AlignInBits);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateTempGlobalVariableFwdDecl(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LazyEncodedString Linkage,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            bool LocalToUnit,
+            LLVMMetadataRef Decl,
+            UInt32 AlignInBits
+            )
+        {
+            return LLVMDIBuilderCreateTempGlobalVariableFwdDecl(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                Linkage, Linkage.NativeStrLen,
+                File,
+                LineNo,
+                Ty,
+                LocalToUnit,
+                Decl,
+                AlignInBits
+            );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordBefore(LLVMDIBuilderRef Builder, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMValueRef Instr);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempGlobalVariableFwdDecl(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LazyEncodedString Linkage, nuint LnkLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            [MarshalAs( UnmanagedType.Bool )] bool LocalToUnit,
+            LLVMMetadataRef Decl,
+            UInt32 AlignInBits
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordAtEnd(LLVMDIBuilderRef Builder, LLVMValueRef Storage, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMBasicBlockRef Block);
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordBefore(
+            LLVMDIBuilderRef Builder,
+            LLVMValueRef Storage,
+            LLVMMetadataRef VarInfo,
+            LLVMMetadataRef Expr,
+            LLVMMetadataRef DebugLoc,
+            LLVMValueRef Instr
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordBefore(LLVMDIBuilderRef Builder, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMValueRef Instr);
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDeclareRecordAtEnd(
+            LLVMDIBuilderRef Builder,
+            LLVMValueRef Storage,
+            LLVMMetadataRef VarInfo,
+            LLVMMetadataRef Expr,
+            LLVMMetadataRef DebugLoc,
+            LLVMBasicBlockRef Block
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordAtEnd(LLVMDIBuilderRef Builder, LLVMValueRef Val, LLVMMetadataRef VarInfo, LLVMMetadataRef Expr, LLVMMetadataRef DebugLoc, LLVMBasicBlockRef Block);
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordBefore(
+            LLVMDIBuilderRef Builder,
+            LLVMValueRef Val,
+            LLVMMetadataRef VarInfo,
+            LLVMMetadataRef Expr,
+            LLVMMetadataRef DebugLoc,
+            LLVMValueRef Instr
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateAutoVariable(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve, LLVMDIFlags Flags, UInt32 AlignInBits);
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertDbgValueRecordAtEnd(
+            LLVMDIBuilderRef Builder,
+            LLVMValueRef Val,
+            LLVMMetadataRef VarInfo,
+            LLVMMetadataRef Expr,
+            LLVMMetadataRef DebugLoc,
+            LLVMBasicBlockRef Block
+            );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateAutoVariable(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            bool AlwaysPreserve,
+            LLVMDIFlags Flags,
+            UInt32 AlignInBits
+            )
+        {
+            return LLVMDIBuilderCreateAutoVariable(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                File,
+                LineNo,
+                Ty,
+                AlwaysPreserve,
+                Flags,
+                AlignInBits
+            );
+        }
+
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateParameterVariable(LLVMDIBuilderRef Builder, LLVMMetadataRef Scope, string Name, size_t NameLen, uint ArgNo, LLVMMetadataRef File, uint LineNo, LLVMMetadataRef Ty, [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve, LLVMDIFlags Flags);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateAutoVariable(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve,
+            LLVMDIFlags Flags,
+            UInt32 AlignInBits
+            );
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateParameterVariable(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name,
+            uint ArgNo,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            bool AlwaysPreserve,
+            LLVMDIFlags Flags
+            )
+        {
+            return LLVMDIBuilderCreateParameterVariable(
+                Builder,
+                Scope,
+                Name, Name.NativeStrLen,
+                ArgNo,
+                File,
+                LineNo,
+                Ty,
+                AlwaysPreserve,
+                Flags
+            );
+        }
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateParameterVariable(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LazyEncodedString Name, nuint NameLen,
+            uint ArgNo,
+            LLVMMetadataRef File,
+            uint LineNo,
+            LLVMMetadataRef Ty,
+            [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve,
+            LLVMDIFlags Flags
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -571,17 +1627,54 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMInstructionSetDebugLoc(LLVMValueRef Inst, LLVMMetadataRef Loc);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLabel(LLVMDIBuilderRef Builder, LLVMMetadataRef Context, string Name, size_t NameLen, LLVMMetadataRef File, uint LineNo, [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateLabel(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Context,
+            LazyEncodedString Name,
+            LLVMMetadataRef File,
+            uint LineNo,
+            bool AlwaysPreserve
+            )
+        {
+            return LLVMDIBuilderCreateLabel(
+                Builder,
+                Context,
+                Name, Name.NativeStrLen,
+                File,
+                LineNo,
+                AlwaysPreserve
+            );
+        }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelBefore(LLVMDIBuilderRef Builder, LLVMMetadataRef LabelInfo, LLVMMetadataRef Location, LLVMValueRef InsertBefore);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateLabel(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Context,
+            LazyEncodedString Name, nuint NameLen,
+            LLVMMetadataRef File,
+            uint LineNo,
+            [MarshalAs( UnmanagedType.Bool )] bool AlwaysPreserve
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelAtEnd(LLVMDIBuilderRef Builder, LLVMMetadataRef LabelInfo, LLVMMetadataRef Location, LLVMBasicBlockRef InsertAtEnd);
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelBefore(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef LabelInfo,
+            LLVMMetadataRef Location,
+            LLVMValueRef InsertBefore
+            );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMDbgRecordRef LLVMDIBuilderInsertLabelAtEnd(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef LabelInfo,
+            LLVMMetadataRef Location,
+            LLVMBasicBlockRef InsertAtEnd
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

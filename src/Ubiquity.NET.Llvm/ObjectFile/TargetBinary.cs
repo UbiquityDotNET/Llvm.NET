@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Object;
+
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
     /// <summary>Enumeration for kinds of binary/object files</summary>

@@ -11,6 +11,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Metadata;
 
@@ -29,12 +30,10 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             using var testModule = context.CreateBitcodeModule( "test" );
             using var diBuilder = new DIBuilder(testModule);
 
-// testing how API handles NULL
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            // testing how API handles NULL
             var file = diBuilder.CreateFile( null );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.IsNotNull( file );
-            ValidateDIFileProperties( context, file, string.Empty, string.Empty );
+            ValidateDIFileProperties( context, file, LazyEncodedString.Empty, LazyEncodedString.Empty );
         }
 
         [TestMethod]
@@ -45,9 +44,9 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             using var testModule = context.CreateBitcodeModule( "test" );
             using var diBuilder = new DIBuilder(testModule);
 
-            var file = diBuilder.CreateFile( string.Empty );
+            var file = diBuilder.CreateFile( LazyEncodedString.Empty );
             Assert.IsNotNull( file );
-            ValidateDIFileProperties( context, file, string.Empty, string.Empty );
+            ValidateDIFileProperties( context, file, LazyEncodedString.Empty, LazyEncodedString.Empty );
         }
 
         [TestMethod]
@@ -62,7 +61,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             var file = diBuilder.CreateFile( path );
             Assert.IsNotNull( file );
-            ValidateDIFileProperties( context, file, string.Empty, path );
+            ValidateDIFileProperties( context, file, LazyEncodedString.Empty, path );
         }
 
         [TestMethod]
@@ -75,10 +74,8 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             string fileName = $"{nameof(CreateFile_with_null_directory_should_succeed)}.foo";
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             var file = diBuilder.CreateFile( fileName, null );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-            ValidateDIFileProperties( context, file, string.Empty, fileName );
+            ValidateDIFileProperties( context, file, LazyEncodedString.Empty, fileName );
         }
 
         [TestMethod]
@@ -91,8 +88,8 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             string fileName = $"{nameof(CreateFile_with_null_directory_should_succeed)}.foo";
 
-            var file = diBuilder.CreateFile( fileName, string.Empty );
-            ValidateDIFileProperties( context, file, string.Empty, fileName );
+            var file = diBuilder.CreateFile( fileName, LazyEncodedString.Empty );
+            ValidateDIFileProperties( context, file, LazyEncodedString.Empty, fileName );
         }
 
         [TestMethod]
@@ -144,7 +141,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                 using var diBuilder = new DIBuilder(testModule);
 
                 _ = diBuilder.CreateCompileUnit( language: default
-                                               , sourceFilePath: string.Empty // should trigger exception
+                                               , sourceFilePath: LazyEncodedString.Empty // should trigger exception
                                                , producer: null
                                                , optimized: false
                                                , compilationFlags: null
@@ -168,7 +165,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             var unit = diBuilder.CreateCompileUnit( language: default
                                                   , sourceFilePath: sourceFilePath
-                                                  , producer: string.Empty
+                                                  , producer: LazyEncodedString.Empty
                                                   , optimized: false
                                                   , compilationFlags: null
                                                   , runtimeVersion: 0
@@ -190,12 +187,12 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             var unit = diBuilder.CreateCompileUnit( language: default
                                                   , sourceFilePath: sourceFilePath
-                                                  , producer: null!
+                                                  , producer: null
                                                   , optimized: false
                                                   , compilationFlags: null
                                                   , runtimeVersion: 0
                                                   );
-            ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath );
+            ValidateConstructedCompileUnit( unit, context, LazyEncodedString.Empty, sourceFilePath );
         }
 
         [TestMethod]
@@ -210,12 +207,12 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             var unit = diBuilder.CreateCompileUnit( language: default
                                                   , sourceFilePath: sourceFilePath
-                                                  , producer: string.Empty
+                                                  , producer: LazyEncodedString.Empty
                                                   , optimized: false
                                                   , compilationFlags: null
                                                   , runtimeVersion: 0
                                                   );
-            ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath );
+            ValidateConstructedCompileUnit( unit, context, LazyEncodedString.Empty, sourceFilePath );
         }
 
         [TestMethod]
@@ -235,7 +232,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                                                   , compilationFlags: null
                                                   , runtimeVersion: 0
                                                   );
-            ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath, producer );
+            ValidateConstructedCompileUnit( unit, context, LazyEncodedString.Empty, sourceFilePath, producer );
         }
 
         [TestMethod]
@@ -250,13 +247,13 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             var unit = diBuilder.CreateCompileUnit( language: default
                                                   , sourceFilePath: sourceFilePath
-                                                  , producer: string.Empty
+                                                  , producer: LazyEncodedString.Empty
                                                   , optimized: false
-                                                  , compilationFlags: string.Empty
+                                                  , compilationFlags: LazyEncodedString.Empty
                                                   , runtimeVersion: 0
                                                   );
 
-            ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath, string.Empty, string.Empty );
+            ValidateConstructedCompileUnit( unit, context, LazyEncodedString.Empty, sourceFilePath, LazyEncodedString.Empty, LazyEncodedString.Empty );
         }
 
         [TestMethod]
@@ -279,7 +276,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                                                   , runtimeVersion: 0
                                                   );
 
-            ValidateConstructedCompileUnit( unit, context, string.Empty, sourceFilePath, producer, compilationFlags );
+            ValidateConstructedCompileUnit( unit, context, LazyEncodedString.Empty, sourceFilePath, producer, compilationFlags );
         }
         #endregion
 
@@ -1319,22 +1316,22 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 #endif
         private static void ValidateConstructedCompileUnit( DICompileUnit unit
                                                           , IContext context
-                                                          , string? directory
-                                                          , string? fileName
-                                                          , string? producer = null
-                                                          , string? compilationFlags = null
-                                                          , string? splitDebugFileName = null
+                                                          , LazyEncodedString? directory
+                                                          , LazyEncodedString? fileName
+                                                          , LazyEncodedString? producer = null
+                                                          , LazyEncodedString? compilationFlags = null
+                                                          , LazyEncodedString? splitDebugFileName = null
                                                           )
         {
             Assert.IsNotNull( unit );
             Assert.AreEqual( Tag.CompileUnit, unit.Tag );
             Assert.AreEqual( context, unit.Context, "Expect matching context" );
 
-            // direct string properties that are set with 'null' should 'get' as string.Empty
+            // direct string properties that are set with 'null' should 'get' as LazyEncodedString.Empty
             // The raw operand remains as null [see checks below].
-            Assert.AreEqual( compilationFlags ?? string.Empty, unit.Flags, "Expect matching compilation flags" );
-            Assert.AreEqual( producer ?? string.Empty, unit.Producer, "Expect matching producer" );
-            Assert.AreEqual( splitDebugFileName ?? string.Empty, unit.SplitDebugFileName, "Expect matching SplitDebugFileName" );
+            Assert.AreEqual( compilationFlags ?? LazyEncodedString.Empty, unit.Flags, "Expect matching compilation flags" );
+            Assert.AreEqual( producer ?? LazyEncodedString.Empty, unit.Producer, "Expect matching producer" );
+            Assert.AreEqual( splitDebugFileName ?? LazyEncodedString.Empty, unit.SplitDebugFileName, "Expect matching SplitDebugFileName" );
 
             Assert.IsNotNull( unit.EnumTypes, "Expect non-null EnumType" );
             Assert.AreEqual( 0, unit.EnumTypes.Count );
@@ -1389,16 +1386,16 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             // validate the file property
             Assert.IsNotNull( unit.File );
-            ValidateDIFileProperties( context, unit.File!, directory ?? string.Empty, fileName ?? string.Empty );
+            ValidateDIFileProperties( context, unit.File!, directory ?? LazyEncodedString.Empty, fileName ?? LazyEncodedString.Empty );
         }
 
-        private static void ValidateMetadataStringOperand( string operandName, string? expected, IrMetadata? md )
+        private static void ValidateMetadataStringOperand( LazyEncodedString operandName, LazyEncodedString? expected, IrMetadata? md )
         {
             // use IsNullOrEmpty here (NOT IsNullOrWhitespace or just 'is null' as LLVM is supposed
             // to transform an empty string to a null operand.
-            expected = string.IsNullOrEmpty( expected ) ? null : expected;
+            expected = LazyEncodedString.IsNullOrEmpty( expected ) ? null : expected;
             bool isMdString = false;
-            string? actual = null;
+            LazyEncodedString? actual = null;
             if(md is MDString mdstring )
             {
                 isMdString = true;
@@ -1411,18 +1408,18 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
         private static void ValidateDIFileProperties( IContext context
                                                     , DIFile file
-                                                    , string expectedDirectory
-                                                    , string expecteFileName
-                                                    , string? expectedCheckSum = null
-                                                    , string? expectedSourceText = null
+                                                    , LazyEncodedString expectedDirectory
+                                                    , LazyEncodedString expecteFileName
+                                                    , LazyEncodedString? expectedCheckSum = null
+                                                    , LazyEncodedString? expectedSourceText = null
                                                     )
         {
-            /* NOTE: string properties return string.Empty instead of null
+            /* NOTE: string properties return LazyEncodedString.Empty instead of null
             |  however, direct retrieval of operands returns null
             */
 
             string sourceFilePath = Path.Combine(expectedDirectory, expecteFileName);
-            Assert.AreEqual( expectedCheckSum ?? string.Empty, file.CheckSum );
+            Assert.AreEqual( expectedCheckSum ?? LazyEncodedString.Empty, file.CheckSum );
             /* NOT YET AVAILABLE: Assert.AreEqual( expectedChecksumKind, file.ChecksumKind */
             Assert.AreEqual( context, file.Context );
             Assert.AreEqual( expectedDirectory, file.Directory );
@@ -1434,7 +1431,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             Assert.IsFalse( file.IsTemporary );
             Assert.IsTrue( file.IsUniqued, "DIFile should be uniqued" );
             Assert.AreEqual( MetadataKind.DIFile, file.Kind );
-            Assert.AreEqual( string.Empty, file.Name );
+            Assert.AreEqual( LazyEncodedString.Empty, file.Name );
             Assert.IsNotNull( file.Operands );
 
             // validate Operands
@@ -1453,7 +1450,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             Assert.AreEqual( sourceFilePath, file.Path );
             Assert.IsNull( file.Scope );
-            Assert.AreEqual( expectedSourceText ?? string.Empty, file.Source );
+            Assert.AreEqual( expectedSourceText ?? LazyEncodedString.Empty, file.Source );
             Assert.AreEqual( Tag.FileType, file.Tag );
         }
     }

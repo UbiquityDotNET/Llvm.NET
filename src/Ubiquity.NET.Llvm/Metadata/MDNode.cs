@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+
 namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>IrMetadata node for LLVM IR Bitcode modules</summary>
@@ -89,8 +92,8 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <summary>Gets a string operand by index</summary>
         /// <param name="index">Index of the operand</param>
         /// <returns>String value of the operand</returns>
-        public string GetOperandString( int index )
-            => GetOperand<MDString>( index )?.ToString( ) ?? string.Empty;
+        public LazyEncodedString GetOperandString( int index )
+            => GetOperand<MDString>( index )?.ToLazyEncodedString() ?? LazyEncodedString.Empty;
 
         /* TODO: Consider adding these additional properties/methods
         public bool IsTBAAVTableAccess { get; }

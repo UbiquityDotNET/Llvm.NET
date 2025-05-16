@@ -13,47 +13,62 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>ORC v2 LLJIT instance</summary>
-    public class LlJIT
-        : DisposableObject
+    public sealed class LlJIT
+        : IDisposable
+        , IOrcJit
     {
         /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is held in this instance" )]
         public LlJIT()
+            : this(CreateDefaultWithoutBuilder())
         {
-            using LLVMErrorRef err = LLVMOrcCreateLLJIT(out Handle, LLVMOrcLLJITBuilderRef.Zero);
-            err.ThrowIfFailed();
         }
 
         /// <summary>Gets the main library for this JIT instance</summary>
         public JITDyLib MainLib => new(LLVMOrcLLJITGetMainJITDylib(Handle));
 
         /// <summary>Gets the data layout string for this JIT</summary>
-        public LazyEncodedString DataLayoutString
-        {
-            get
-            {
-                unsafe
-                {
-                    return new(LLVMOrcLLJITGetDataLayoutStr(Handle));
-                }
-            }
-        }
+        public LazyEncodedString DataLayoutString => LLVMOrcLLJITGetDataLayoutStr( Handle );
 
         /*
         TODO: Add LibLLVMxxx to make this go away, the underlying JIT HAS a Triple instance!
-              So this is building a string from that, then passed around as a string marshalled to/from
+              So this is building a string from that, then passed around as a string marshaled to/from
               the native abi and then re-parsed back to a !@#$ Triple again - WASTED overhead!
         */
 
         /// <summary>Gets a string representation of the target triple for this JIT</summary>
-        public LazyEncodedString TripleString
+        public LazyEncodedString TripleString => LLVMOrcLLJITGetTripleString( Handle );
+
+        /// <summary>Adds a module to this JIT with removal tracking</summary>
+        /// <param name="ctx">Thread safe context this module is part of</param>
+        /// <param name="module">Module to add</param>
+        /// <param name="lib">Library to work on</param>
+        /// <returns>Resource tracker for this instance</returns>
+        [MustUseReturnValue]
+        public ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module, JITDyLib lib = default)
         {
-            get
+            ArgumentNullException.ThrowIfNull(ctx);
+            ArgumentNullException.ThrowIfNull(module);
+
+            // Default to using MainLib if none specified.
+            if(lib.Handle.IsNull)
             {
-                unsafe
-                {
-                    return new(LLVMOrcLLJITGetTripleString(Handle));
-                }
+                lib = MainLib;
             }
+
+            ResourceTracker tracker = lib.CreateResourceTracker();
+            try
+            {
+                using ThreadSafeModule tsm = new(ctx, module);
+                AddModule(tracker, tsm);
+            }
+            catch
+            {
+                tracker.Dispose();
+                throw;
+            }
+
+            return tracker;
         }
 
         /// <summary>Looks up the native address of a symbol</summary>
@@ -64,13 +79,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            unsafe
-            {
-                using var nativeMem = name.Pin();
-                using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, (byte*)nativeMem.Pointer);
-                errorRef.ThrowIfFailed();
-                return retVal;
-            }
+            // Deal with bad API design, converting errors to an exception and returning the result.
+            using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, name);
+            errorRef.ThrowIfFailed();
+            return retVal;
         }
 
         /// <summary>Adds a module to the JIT</summary>
@@ -78,7 +90,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="module">Module to add</param>
         /// <remarks>
         /// This function has "move" semantics in that the JIT takes ownership of the
-        /// input module and it is no longer useable (Generates <see cref="ObjectDisposedException"/>)
+        /// input module and it is no longer usable (Generates <see cref="ObjectDisposedException"/>)
         /// for any use other than Dispose(). This allows normal clean up in the event of an exception
         /// to occur.
         /// <note type="important">
@@ -101,7 +113,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="module">Module to add</param>
         /// <remarks>
         /// This function has "move" semantics in that the JIT takes ownership of the
-        /// input module and it is no longer useable (Generates <see cref="ObjectDisposedException"/>)
+        /// input module and it is no longer usable (Generates <see cref="ObjectDisposedException"/>)
         /// for any use other than Dispose(). This allows normal clean up in the event of an exception
         /// to occur.
         /// <note type="important">
@@ -126,12 +138,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public SymbolStringPoolEntry MangleAndIntern(LazyEncodedString name)
         {
             ArgumentNullException.ThrowIfNull(name);
-
-            unsafe
-            {
-                using MemoryHandle nativeMem = name.Pin();
-                return new(LLVMOrcLLJITMangleAndIntern(Handle, (byte*)nativeMem.Pointer));
-            }
+            return new(LLVMOrcLLJITMangleAndIntern(Handle, name));
         }
 
         /// <summary>Gets the IR transform layer for this JIT</summary>
@@ -141,14 +148,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public ExecutionSession Session => new(LLVMOrcLLJITGetExecutionSession(Handle));
 
         /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
-            if (disposing)
-            {
-                Handle.Dispose();
-            }
-
-            base.Dispose(disposing);
+            Handle.Dispose();
         }
 
         internal LlJIT(LLVMOrcLLJITRef h)
@@ -157,5 +159,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         private readonly LLVMOrcLLJITRef Handle;
+
+        private static LLVMOrcLLJITRef CreateDefaultWithoutBuilder()
+        {
+            using var errorRef = LLVMOrcCreateLLJIT(LLVMOrcLLJITBuilderRef.Zero, out LLVMOrcLLJITRef retVal);
+            errorRef.ThrowIfFailed();
+            return retVal;
+        }
     }
 }

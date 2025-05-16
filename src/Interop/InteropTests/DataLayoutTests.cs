@@ -4,11 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
 using System.Runtime.InteropServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
+
+using Ubiquity.NET.InteropHelpers;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
 
@@ -20,20 +20,14 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         [TestMethod]
         public void TestParseKnownBad( )
         {
-            ReadOnlySpan<byte> utf8Span = "badlayout"u8;
-            unsafe
+            LazyEncodedString utf8Span = "badlayout"u8;
+            using var errorRef = LibLLVMParseDataLayout(utf8Span, out LLVMTargetDataRef retVal);
+            using(retVal)
             {
-                fixed(byte* p = &MemoryMarshal.GetReference(utf8Span))
-                {
-                    using var ErrorRef = LibLLVMParseDataLayout(p, utf8Span.Length, out LLVMTargetDataRef retVal);
-                    using(retVal)
-                    {
-                        Assert.IsTrue(retVal.IsInvalid);
-                        Assert.IsTrue(ErrorRef.Failed);
-                        string errMsg = ErrorRef.ToString();
-                        Assert.IsFalse(string.IsNullOrWhiteSpace(errMsg));
-                    }
-                }
+                Assert.IsTrue(retVal.IsInvalid);
+                Assert.IsTrue(errorRef.Failed);
+                string errMsg = errorRef.ToString();
+                Assert.IsFalse(string.IsNullOrWhiteSpace(errMsg), "Failure should have an error message");
             }
         }
     }

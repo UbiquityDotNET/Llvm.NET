@@ -37,7 +37,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LLVMCopyStringRepOfTargetData(LLVMTargetDataRefAlias TD);
+        public static unsafe partial LazyEncodedString LLVMCopyStringRepOfTargetData(LLVMTargetDataRefAlias TD);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

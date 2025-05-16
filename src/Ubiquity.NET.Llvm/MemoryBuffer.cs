@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>LLVM MemoryBuffer</summary>
@@ -37,11 +39,11 @@ namespace Ubiquity.NET.Llvm
         /// This constructor makes a copy of the data array as a <see cref="MemoryBuffer"/> the memory in the buffer
         /// is unmanaged memory usable by the LLVM native code. It is released in the Dispose method
         /// </remarks>
-        public MemoryBuffer( byte[] data, string? name = null)
+        public MemoryBuffer( byte[] data, LazyEncodedString? name = null)
         {
             ArgumentNullException.ThrowIfNull( data );
 
-            Handle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, data.Length, name ?? string.Empty )
+            Handle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, name ?? LazyEncodedString.Empty )
                           .ThrowIfInvalid( );
         }
 
@@ -50,14 +52,13 @@ namespace Ubiquity.NET.Llvm
         /// <param name="len">Length of the region</param>
         /// <param name="name">Name of the buffer</param>
         /// <param name="requiresNullTerminator">Indicates if the data requires a null terminator</param>
-        public unsafe MemoryBuffer(byte* data, size_t len, LazyEncodedString name, bool requiresNullTerminator)
+        public unsafe MemoryBuffer(byte* data, nuint len, LazyEncodedString name, bool requiresNullTerminator)
         {
             ArgumentNullException.ThrowIfNull(data);
-            ArgumentOutOfRangeException.ThrowIfLessThan(len, (size_t)1);
+            ArgumentOutOfRangeException.ThrowIfLessThan(len, (nuint)1);
             ArgumentNullException.ThrowIfNull(name);
 
-            using var nativeNameHandle = name.Pin();
-            Handle = LLVMCreateMemoryBufferWithMemoryRange(data, len, (byte*)nativeNameHandle.Pointer, requiresNullTerminator)
+            Handle = LLVMCreateMemoryBufferWithMemoryRange(data, len, name, requiresNullTerminator)
                            .ThrowIfInvalid();
         }
 

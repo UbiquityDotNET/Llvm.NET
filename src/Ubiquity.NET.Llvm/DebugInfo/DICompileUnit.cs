@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
     /// <summary>Defines the amount of debug information to emit</summary>
@@ -38,13 +40,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DwarfEmissionKind EmissionKind => (DwarfEmissionKind)LibLLVMDiCompileUnitGetEmissionKind(Handle);
 
         /// <summary>Gets the name of the producer of this unit</summary>
-        public string Producer => GetOperandString( 1 );
+        public LazyEncodedString Producer => GetOperandString( 1 );
 
         /// <summary>Gets the compilation flags for this unit</summary>
-        public string Flags => GetOperandString( 2 );
+        public LazyEncodedString Flags => GetOperandString( 2 );
 
         /// <summary>Gets the split debug file name for this unit</summary>
-        public string SplitDebugFileName => GetOperandString( 3 );
+        public LazyEncodedString SplitDebugFileName => GetOperandString( 3 );
 
         /// <summary>Gets the enum types in this unit</summary>
         public DICompositeTypeArray EnumTypes => new( GetOperand<MDTuple>( 4 ) );

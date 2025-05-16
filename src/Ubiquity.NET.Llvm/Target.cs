@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -86,23 +87,57 @@ namespace Ubiquity.NET.Llvm
         ObjectFile = LLVMCodeGenFileType.LLVMObjectFile
     }
 
+    /// <summary>Abort behavior when global instruction selection fails to lower/select and instruction</summary>
+    public enum GlobalISelAbortMode
+    {
+        /// <summary>Enabled abort mode</summary>
+        Enable = LLVMGlobalISelAbortMode.LLVMGlobalISelAbortEnable,
+
+        /// <summary>Disabled abort mode</summary>
+        Disable= LLVMGlobalISelAbortMode.LLVMGlobalISelAbortDisable,
+
+        /// <summary>Disabled abort mode with diagnostic</summary>
+        DisableWithDiag = LLVMGlobalISelAbortMode.LLVMGlobalISelAbortDisableWithDiag,
+    }
+
     /// <summary>LLVM Target Instruction Set Architecture</summary>
     public class Target
+        : IEquatable<Target>
     {
+        #region Equality
+        /// <inheritdoc/>
+        public bool Equals( Target? other ) => other is not null && Handle.Equals(other.Handle);
+
+        /// <inheritdoc/>
+        public override bool Equals( object? obj ) => obj is Target t && Equals(t);
+
+        /// <inheritdoc/>
+        public override int GetHashCode( )
+        {
+            return HashCode.Combine(
+                Name,
+                Description,
+                HasJIT,
+                HasTargetMachine,
+                HasAsmBackEnd
+            );
+        }
+        #endregion
+
         /// <summary>Gets the name of this target</summary>
-        public string Name => LLVMGetTargetName( TargetHandle ) ?? string.Empty;
+        public LazyEncodedString Name => LLVMGetTargetName( Handle ) ?? LazyEncodedString.Empty;
 
         /// <summary>Gets the description of this target</summary>
-        public string Description => LLVMGetTargetDescription( TargetHandle ) ?? string.Empty;
+        public LazyEncodedString Description => LLVMGetTargetDescription( Handle ) ?? LazyEncodedString.Empty;
 
         /// <summary>Gets a value indicating whether this target has JIT support</summary>
-        public bool HasJIT => LLVMTargetHasJIT( TargetHandle );
+        public bool HasJIT => LLVMTargetHasJIT( Handle );
 
         /// <summary>Gets a value indicating whether this target has a TargetMachine initialized</summary>
-        public bool HasTargetMachine => LLVMTargetHasTargetMachine( TargetHandle );
+        public bool HasTargetMachine => LLVMTargetHasTargetMachine( Handle );
 
         /// <summary>Gets a value indicating whether this target has an Assembly code generating back end initialized</summary>
-        public bool HasAsmBackEnd => LLVMTargetHasAsmBackend( TargetHandle );
+        public bool HasAsmBackEnd => LLVMTargetHasAsmBackend( Handle );
 
         /// <summary>Creates a <see cref="TargetMachine"/> for the target and specified parameters</summary>
         /// <param name="triple">Target triple for this machine (e.g. -mtriple)</param>
@@ -113,14 +148,14 @@ namespace Ubiquity.NET.Llvm
         /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
         public TargetMachine CreateTargetMachine( Triple triple
-                                                , string? cpu = null
-                                                , string? features = null
+                                                , LazyEncodedString? cpu = null
+                                                , LazyEncodedString? features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
                                                 , RelocationMode relocationMode = RelocationMode.Default
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
+            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
@@ -132,15 +167,15 @@ namespace Ubiquity.NET.Llvm
         /// <param name="relocationMode">Relocation mode for generated code</param>
         /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
         /// <returns><see cref="TargetMachine"/> based on the specified parameters</returns>
-        public TargetMachine CreateTargetMachine( string triple
-                                                , string? cpu = null
-                                                , string? features = null
+        public TargetMachine CreateTargetMachine( LazyEncodedString triple
+                                                , LazyEncodedString? cpu = null
+                                                , LazyEncodedString? features = null
                                                 , CodeGenOpt optLevel = CodeGenOpt.Default
                                                 , RelocationMode relocationMode = RelocationMode.Default
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( this, triple, cpu, features, optLevel, relocationMode, codeModel );
+            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
@@ -152,7 +187,7 @@ namespace Ubiquity.NET.Llvm
                 var current = LLVMGetFirstTarget( );
                 while( current != default )
                 {
-                    yield return FromHandle( current );
+                    yield return new( current );
                     current = LLVMGetNextTarget( current );
                 }
             }
@@ -166,59 +201,46 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="targetTriple">Target triple string describing the target</param>
         /// <returns>Target for the given triple</returns>
-        public static Target FromTriple( string targetTriple )
+        public static Target FromTriple( LazyEncodedString targetTriple )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( targetTriple );
 
             return LLVMGetTargetFromTriple( targetTriple, out LLVMTargetRef targetHandle, out string errorMsg ).Failed
                 ? throw new InternalCodeGeneratorException( errorMsg ?? "Failed to get target from triple and no message provided from LLVM!" )
-                : FromHandle( targetHandle );
+                : new( targetHandle );
         }
 
         internal Target( LLVMTargetRef targetHandle )
         {
             targetHandle.ThrowIfInvalid();
-
-            TargetHandle = targetHandle;
+            Handle = targetHandle;
         }
 
-        internal LLVMTargetRef TargetHandle { get; }
+        internal LLVMTargetRef Handle { get; }
 
-        internal static LLVMTargetMachineRef InternalCreateTargetMachine( Target target, string triple, string? cpu, string? features, CodeGenOpt optLevel, RelocationMode relocationMode, CodeModel codeModel )
+        internal LLVMTargetMachineRef InternalCreateTargetMachine(
+            LazyEncodedString triple,
+            LazyEncodedString? cpu,
+            LazyEncodedString? features,
+            CodeGenOpt optLevel,
+            RelocationMode relocationMode,
+            CodeModel codeModel
+            )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( triple );
             optLevel.ThrowIfNotDefined();
             relocationMode.ThrowIfNotDefined();
             codeModel.ThrowIfNotDefined();
 
-            var targetMachineHandle = LLVMCreateTargetMachine( target.TargetHandle
+            var targetMachineHandle = LLVMCreateTargetMachine( Handle
                                                              , triple
-                                                             , cpu ?? string.Empty
-                                                             , features ?? string.Empty
+                                                             , cpu ?? LazyEncodedString.Empty
+                                                             , features ?? LazyEncodedString.Empty
                                                              , ( LLVMCodeGenOptLevel )optLevel
                                                              , ( LLVMRelocMode )relocationMode
                                                              , ( LLVMCodeModel )codeModel
                                                              );
             return targetMachineHandle;
         }
-
-        internal static Target FromHandle( LLVMTargetRef targetHandle )
-        {
-            targetHandle.ThrowIfInvalid();
-
-            lock( TargetMap )
-            {
-                if( TargetMap.TryGetValue( targetHandle, out Target? retVal ) )
-                {
-                    return retVal;
-                }
-
-                retVal = new Target( targetHandle );
-                TargetMap.Add( targetHandle, retVal );
-                return retVal;
-            }
-        }
-
-        private static readonly Dictionary<LLVMTargetRef, Target> TargetMap = new();
     }
 }

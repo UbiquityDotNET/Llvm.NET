@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
+
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>Common base class for pass managers</summary>

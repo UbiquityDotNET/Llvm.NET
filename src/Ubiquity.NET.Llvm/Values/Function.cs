@@ -13,6 +13,10 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AnalysisBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>LLVM Function definition</summary>
@@ -155,9 +159,9 @@ namespace Ubiquity.NET.Llvm.Values
         /// This method tries to find a block by it's name and returns it if found, if not found a new block is
         /// created and appended to the current function.
         /// </remarks>
-        public BasicBlock FindOrCreateNamedBlock( string name )
+        public BasicBlock FindOrCreateNamedBlock( LazyEncodedString name )
         {
-            return BasicBlocks.FirstOrDefault( b => b.Name == name ) ?? AppendBasicBlock( name );
+            return BasicBlocks.FirstOrDefault( b => b.Name?.Equals(name) ?? false ) ?? AppendBasicBlock( name );
         }
 
         /// <inheritdoc/>
@@ -221,38 +225,34 @@ namespace Ubiquity.NET.Llvm.Values
         /// and may produce an exception.
         /// </note>
         /// </remarks>
-        public ErrorInfo TryRunPasses(params string[] passes)
+        public ErrorInfo TryRunPasses(params LazyEncodedString[] passes)
         {
             using PassBuilderOptions options = new();
             return TryRunPasses(options, passes);
         }
 
-        /// <inheritdoc cref="TryRunPasses(string[])"/>
+        /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>
         /// <param name="options">Options for the passes</param>
-        public ErrorInfo TryRunPasses(PassBuilderOptions options, params string[] passes)
+        public ErrorInfo TryRunPasses(PassBuilderOptions options, params LazyEncodedString[] passes)
         {
             ArgumentNullException.ThrowIfNull(passes);
             ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
 
-            // TODO: [Optimization] provide overload that accepts a ReadOnlySpan<byte> for the pass "string"
-            //       That way the overhead of Join() and conversion to native form is performed exactly once.
-            //       (std::string_view<char8_t> ~= ReadOnlySpan<byte>?)
-
             // While not explicitly documented either way, the PassBuilder used under the hood is capable
             // of handling a NULL target machine.
-            return new(LLVMRunPassesOnFunction(Handle, string.Join(',', passes), LLVMTargetMachineRef.Zero, options.Handle));
+            return new(LLVMRunPassesOnFunction(Handle, LazyEncodedString.Join(',', passes), LLVMTargetMachineRef.Zero, options.Handle));
         }
 
-        /// <inheritdoc cref="TryRunPasses(string[])"/>
+        /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>
         /// <param name="targetMachine">Target machine for the passes</param>
         /// <param name="options">Options for the passes</param>
-        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params string[] passes)
+        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes)
         {
             ArgumentNullException.ThrowIfNull(targetMachine);
             ArgumentNullException.ThrowIfNull(passes);
             ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
 
-            return new(LLVMRunPassesOnFunction(Handle, string.Join(',', passes), targetMachine.Handle, options.Handle));
+            return new(LLVMRunPassesOnFunction(Handle, LazyEncodedString.Join(',', passes), targetMachine.Handle, options.Handle));
         }
 
         internal Function( LLVMValueRef valueRef )

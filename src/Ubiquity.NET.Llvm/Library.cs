@@ -83,18 +83,19 @@ namespace Ubiquity.NET.Llvm
 
         private static ImmutableArray<LazyEncodedString> GetKnownAttributes()
         {
-            size_t len = LibLLVMGetNumKnownAttribs();
+            int len = checked((int)LibLLVMGetNumKnownAttribs());
             unsafe
             {
                 byte** ppData = stackalloc byte*[len];
-                using LLVMErrorRef errorRef = LibLLVMGetKnownAttributeNames(len, ppData);
+                using LLVMErrorRef errorRef = LibLLVMGetKnownAttributeNames(ppData, (nuint)len);
                 errorRef.ThrowIfFailed();
 
                 // Capture strings with lazy encoding
                 var bldr = ImmutableArray.CreateBuilder<LazyEncodedString>(len);
                 for(int i=0; i < len; ++i)
                 {
-                    bldr.Add(new(ppData[i]));
+                    // Should NEVER get a null string but just in case treat it as an empty string.
+                    bldr.Add(LazyEncodedString.FromUnmanaged(ppData[i]) ?? LazyEncodedString.Empty);
                 }
 
                 return bldr.ToImmutable();

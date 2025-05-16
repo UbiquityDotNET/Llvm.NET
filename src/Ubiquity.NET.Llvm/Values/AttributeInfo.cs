@@ -1,5 +1,7 @@
 ﻿using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Kind of argument (if any) for an attribute</summary>
@@ -106,15 +108,17 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="LlvmException">Attribute name is not known</exception>
         public static AttributeInfo From( LazyEncodedString name )
         {
-            using var nativeName = name.Pin();
+            // CONSIDER: Cache results so that overhead of lookup only happens once per name.
+
             // maps directly to native struct, so use it instead of dealing with translation overhead
-            AttributeInfo retVal;
+            using var errorRef = LibLLVMGetAttributeInfo( name, out LibLLVMAttributeInfo retVal );
+            errorRef.ThrowIfFailed();
             unsafe
             {
-                using var errorRef = LibLLVMGetAttributeInfo( (byte*)nativeName.Pointer, name.NativeStrLen, (LibLLVMAttributeInfo*)&retVal );
-                errorRef.ThrowIfFailed();
+                // layouts are intentionally identical, just reinterpret_cast the
+                // values via a pointer.
+                return *(AttributeInfo*)&retVal;
             }
-            return retVal;
         }
     }
 }

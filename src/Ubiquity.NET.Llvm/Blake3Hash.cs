@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm
             {
                 fixed(byte* p = &MemoryMarshal.GetArrayDataReference(array))
                 {
-                    llvm_blake3_hasher_update(ref NativeHasher, p + ibStart, cbSize);
+                    llvm_blake3_hasher_update(ref NativeHasher, p + ibStart, (nuint)cbSize);
                 }
             }
         }

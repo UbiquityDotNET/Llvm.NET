@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+
 namespace Ubiquity.NET.Llvm.Metadata
 {
     /// <summary>Wraps an LLVM NamedMDNode</summary>
@@ -12,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Metadata
     public class NamedMDNode
     {
         /// <summary>Gets the name of the node</summary>
-        public string Name => LLVMGetNamedMetadataName( NativeHandle, out size_t _ ) ?? string.Empty;
+        public LazyEncodedString Name => LLVMGetNamedMetadataName( NativeHandle ) ?? LazyEncodedString.Empty;
 
         /// <summary>Gets the operands for the node</summary>
         public IList<MDNode> Operands { get; }

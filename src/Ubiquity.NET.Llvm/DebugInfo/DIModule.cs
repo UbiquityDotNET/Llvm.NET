@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public override DIScope? Scope => GetOperand<DIScope>( 0 );
 
         /// <inheritdoc/>
-        public override string Name => GetOperandString( 1 );
+        public override LazyEncodedString Name => GetOperandString( 1 );
 
         /// <summary>Gets the configuration macros for the module</summary>
         public string ConfigurationMacros => GetOperandString( 2 );

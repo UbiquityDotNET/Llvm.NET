@@ -6,6 +6,8 @@
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ObjectFileBindings;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Object;
+
 namespace Ubiquity.NET.Llvm.ObjectFile
 {
     // TODO: FIX/Rework this. BAD LLVM API

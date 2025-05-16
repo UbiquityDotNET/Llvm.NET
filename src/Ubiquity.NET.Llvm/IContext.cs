@@ -73,11 +73,11 @@ namespace Ubiquity.NET.Llvm
 
 #if HAVE_API_TO_ENUMERATE_METADATA
         /*
-        public IEnumerable<string> MDKindNames { get; }
+        public IEnumerable<LazyEncodedString> MDKindNames { get; }
         /*TODO: Create interop calls to support additional properties/methods
 
-        public unsigned GetOperandBundleTagId(string name) {...}
-        public IEnumerable<string> OperandBundleTagIds { get; }
+        public unsigned GetOperandBundleTagId(LazyEncodedString name) {...}
+        public IEnumerable<LazyEncodedString> OperandBundleTagIds { get; }
         */
 
         // Underlying LLVM has no mechanism to access the metadata in a context.
@@ -232,7 +232,7 @@ namespace Ubiquity.NET.Llvm
         public Constant CreateNamedConstantStruct(IStructType type, params IEnumerable<Constant> values);
 
         /// <summary>Create an opaque structure type (e.g. a forward reference)</summary>
-        /// <param name="name">Name of the type (use <see cref="string.Empty"/> for anonymous types)</param>
+        /// <param name="name">Name of the type (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
         /// <remarks>
         /// This method creates an opaque type. The <see cref="IStructType.SetBody"/> method provides a means
         /// to add a body, including indication of packed status, to an opaque type at a later time if the
@@ -240,7 +240,7 @@ namespace Ubiquity.NET.Llvm
         /// required)
         /// </remarks>
         /// <returns>New type</returns>
-        public IStructType CreateStructType(string name);
+        public IStructType CreateStructType(LazyEncodedString name);
 
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
         /// <param name="packed">Flag to indicate if the structure is "packed"</param>
@@ -251,7 +251,7 @@ namespace Ubiquity.NET.Llvm
         public IStructType CreateStructType(bool packed, params IEnumerable<ITypeRef> elements);
 
         /// <summary>Creates a new structure type in this <see cref="ContextAlias"/></summary>
-        /// <param name="name">Name of the structure (use <see cref="string.Empty"/> for anonymous types)</param>
+        /// <param name="name">Name of the structure (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
         /// <param name="packed">Flag indicating if the structure is packed</param>
         /// <param name="elements">Types for the structures elements in layout order</param>
         /// <returns>
@@ -260,7 +260,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// If the elements argument list is empty then a complete 0 sized struct is created
         /// </remarks>
-        public IStructType CreateStructType(string name, bool packed, params IEnumerable<ITypeRef> elements);
+        public IStructType CreateStructType(LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements);
 
         /// <summary>Creates a metadata string from the given string</summary>
         /// <param name="value">string to create as metadata</param>
@@ -269,12 +269,12 @@ namespace Ubiquity.NET.Llvm
         /// if <paramref name="value"/> is <see langword="null"/> then the result
         /// represents an empty string.
         /// </remarks>
-        public MDString CreateMetadataString(string? value);
+        public MDString CreateMetadataString(LazyEncodedString? value);
 
         /// <summary>Create an <see cref="MDNode"/> from a string</summary>
         /// <param name="value">String value</param>
         /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
-        public MDNode CreateMDNode(string value);
+        public MDNode CreateMDNode(LazyEncodedString value);
 
         /// <summary>Create a constant data string value</summary>
         /// <param name="value">string to convert into an LLVM constant value</param>
@@ -282,10 +282,10 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// This converts the string to ANSI form and creates an LLVM constant array of i8
         /// characters for the data with a terminating null character. To control the enforcement
-        /// of a terminating null character, use the <see cref="CreateConstantString(string, bool)"/>
+        /// of a terminating null character, use the <see cref="CreateConstantString(LazyEncodedString, bool)"/>
         /// overload to specify the intended behavior.
         /// </remarks>
-        public ConstantDataArray CreateConstantString(string value);
+        public ConstantDataArray CreateConstantString(LazyEncodedString value);
 
         /// <summary>Create a constant data string value</summary>
         /// <param name="value">string to convert into an LLVM constant value</param>
@@ -295,7 +295,7 @@ namespace Ubiquity.NET.Llvm
         /// This converts the string to ANSI form and creates an LLVM constant array of i8
         /// characters for the data. Enforcement of a null terminator depends on the value of <paramref name="nullTerminate"/>
         /// </remarks>
-        public ConstantDataArray CreateConstantString(string value, bool nullTerminate);
+        public ConstantDataArray CreateConstantString(LazyEncodedString value, bool nullTerminate);
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 1</summary>
         /// <param name="constValue">Value for the constant</param>
@@ -369,7 +369,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Create a named <see cref="BasicBlock"/> without inserting it into a function</summary>
         /// <param name="name">Name of the block to create</param>
         /// <returns><see cref="BasicBlock"/> created</returns>
-        public BasicBlock CreateBasicBlock(string name);
+        public BasicBlock CreateBasicBlock(LazyEncodedString name);
 
         /// <summary>Creates a new instance of the <see cref="Module"/> class in this context</summary>
         /// <returns><see cref="Module"/></returns>
@@ -378,7 +378,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Creates a new instance of the <see cref="Module"/> class in a given context</summary>
         /// <param name="moduleId">ModuleHandle's ID</param>
         /// <returns><see cref="Module"/></returns>
-        public Module CreateBitcodeModule(string moduleId);
+        public Module CreateBitcodeModule(LazyEncodedString moduleId);
 
         /// <summary>Parse LLVM IR source for a module, into this context</summary>
         /// <param name="src">LLVM IR Source code of the module</param>
@@ -393,13 +393,13 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// These IDs are uniqued across all modules in this context.
         /// </remarks>
-        public uint GetMDKindId(string name);
+        public uint GetMDKindId(LazyEncodedString name);
 
         /// <summary>Opens a <see cref="TargetBinary"/> from a path</summary>
         /// <param name="path">path to the object file binary</param>
         /// <returns>new object file</returns>
         /// <exception cref="System.IO.IOException">File IO failures</exception>
-        public TargetBinary OpenBinary(string path);
+        public TargetBinary OpenBinary(LazyEncodedString path);
     }
 
     internal static class ContextExtensions

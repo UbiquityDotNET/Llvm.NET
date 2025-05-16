@@ -4,6 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
+
 namespace Ubiquity.NET.Llvm.Values
 {
     /// <summary>Base class for Global objects in an LLVM ModuleHandle</summary>
@@ -42,7 +45,7 @@ namespace Ubiquity.NET.Llvm.Values
         }
 
         /// <summary>Sets metadata for this value</summary>
-        /// <param name="kindID">Id id for the metadata</param>
+        /// <param name="kindID">Id for the metadata</param>
         /// <param name="node">IrMetadata wrapped as a value</param>
         public void SetMetadata( uint kindID, IrMetadata node )
         {
@@ -56,10 +59,14 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                using var entries = LLVMGlobalCopyAllMetadata( Handle, out size_t numEntries );
-                for( long i = 0; i < numEntries.ToInt32( ); ++i )
+                // using keeps the allocated data alive while enumerating
+                // once complete the Dispose method is called to release the native
+                // array.
+                using var entries = LLVMGlobalCopyAllMetadata( Handle, out nuint numEntries );
+                uint indexLimit = checked((uint)numEntries);
+                for( uint i = 0; i < indexLimit; ++i )
                 {
-                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, ( uint )i );
+                    LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, i );
                     yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
                 }
             }

@@ -4,8 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-// Interface+internal type matches file name
-#pragma warning disable SA1649
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Types
 {

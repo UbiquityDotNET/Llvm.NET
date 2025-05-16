@@ -32,22 +32,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull(triple);
 
-            unsafe
-            {
-                using MemoryHandle nativeMem = triple.Pin();
-                using LLVMErrorRef errRef = LLVMOrcCreateLocalLazyCallThroughManager(
-                                                (byte*)nativeMem.Pointer,
-                                                Handle,
-                                                errorHandlerAddress,
-                                                out LLVMOrcLazyCallThroughManagerRef resultHandle
-                                                );
+            using LLVMErrorRef errRef = LLVMOrcCreateLocalLazyCallThroughManager(
+                                            triple,
+                                            Handle,
+                                            errorHandlerAddress,
+                                            out LLVMOrcLazyCallThroughManagerRef resultHandle
+                                            );
 
-                // ownership is transferred to return, this handles release on exception
-                using(resultHandle)
-                {
-                    errRef.ThrowIfFailed();
-                    return new(resultHandle);
-                }
+            // ownership is transferred to return, this handles release on exception
+            using(resultHandle)
+            {
+                errRef.ThrowIfFailed();
+                return new(resultHandle);
             }
         }
 
@@ -82,7 +78,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     return;
                 }
 
-                if(ctx is not null && GCHandle.FromIntPtr((nint)ctx).Target is LookupResultHandler self)
+                if(MarshalGCHandle.TryGet<LookupResultHandler>(context, out LookupResultHandler? self))
                 {
                     // This would bleed the interop type into the caller, but is the most efficient.
                     self(new Span<LLVMOrcCSymbolMapPair>(result, numPairs));
@@ -137,16 +133,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// </remarks>
         public JITDyLib GetOrCreateBareDyLib(LazyEncodedString name)
         {
-            if (TryGetDyLib(name, out JITDyLib foundLib))
-            {
-                return foundLib;
-            }
-
-            unsafe
-            {
-                using MemoryHandle nativeMem = name.Pin();
-                return new(LLVMOrcExecutionSessionCreateBareJITDylib(Handle, (byte*)nativeMem.Pointer));
-            }
+            return TryGetDyLib(name, out JITDyLib foundLib)
+                   ? foundLib
+                   : new(LLVMOrcExecutionSessionCreateBareJITDylib(Handle, name));
         }
 
         /// <summary>Gets or creates a <see cref="JITDyLib"/> in this session by name</summary>
@@ -170,13 +159,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 return lib;
             }
 
-            unsafe
-            {
-                using MemoryHandle nativeMem = name.Pin();
-                using LLVMErrorRef err = LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, (byte*)nativeMem.Pointer);
-                err.ThrowIfFailed();
-                return new(libHandle);
-            }
+            using LLVMErrorRef err = LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, name);
+            err.ThrowIfFailed();
+            return new(libHandle);
         }
 
         /// <summary>Tries to get or create a <see cref="JITDyLib"/> in this session by name</summary>
@@ -204,22 +189,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 return true;
             }
 
-            unsafe
-            {
-                using MemoryHandle nativeMem = name.Pin();
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
 
-                // ownership of return LLVMErrorRef is transferred (MOVE Semantics) to errInfo 'out' param
-                errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, (byte*)nativeMem.Pointer).ThrowIfInvalid());
+            // ownership of return LLVMErrorRef is transferred (MOVE Semantics) to errInfo 'out' param
+            errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, name).ThrowIfInvalid());
 #pragma warning restore IDISP004 // Don't ignore created IDisposable
 
-                if (errInfo.Success)
-                {
-                    lib = new(libHandle);
-                }
-
-                return errInfo.Success;
+            if (errInfo.Success)
+            {
+                lib = new(libHandle);
             }
+
+            return errInfo.Success;
         }
 
         /// <summary>Removes a <see cref="JITDyLib"/> from this session by name</summary>
@@ -247,18 +228,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull(name);
 
             lib = default;
-            unsafe
+            LLVMOrcJITDylibRef nativeLib = LLVMOrcExecutionSessionGetJITDylibByName(Handle, name);
+            if(nativeLib.IsNull)
             {
-                using MemoryHandle nativeMem = name.Pin();
-                LLVMOrcJITDylibRef nativeLib = LLVMOrcExecutionSessionGetJITDylibByName(Handle, (byte*)nativeMem.Pointer);
-                if(nativeLib.IsNull)
-                {
-                    return false;
-                }
-
-                lib = new(nativeLib);
-                return true;
+                return false;
             }
+
+            lib = new(nativeLib);
+            return true;
         }
 
         /// <summary>Interns a string in the pool</summary>
@@ -290,7 +267,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             try
             {
-                if(context is not null && GCHandle.FromIntPtr((nint)context).Target is ErrorReporter self)
+                if(MarshalGCHandle.TryGet<ErrorReporter>(context, out ErrorReporter? self))
                 {
                     // It is Unclear, if this native handler is supposed to Dispose the provided error ref
                     // or not (it makes sense for it to do so). This will do it in one place so that if it

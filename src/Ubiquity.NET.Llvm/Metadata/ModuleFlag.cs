@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// <param name="behavior">Behavior for the flag</param>
         /// <param name="name">Name of the flag</param>
         /// <param name="metadata">IrMetadata for the flag</param>
-        public ModuleFlag( ModuleFlagBehavior behavior, string name, IrMetadata metadata )
+        public ModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, IrMetadata metadata )
         {
             Behavior = behavior;
             Name = name;
@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         public ModuleFlagBehavior Behavior { get; }
 
         /// <summary>Gets the name of flag</summary>
-        public string Name { get; }
+        public LazyEncodedString Name { get; }
 
         /// <summary>Gets the IrMetadata for this flag</summary>
         public IrMetadata Metadata { get; }
@@ -54,7 +54,7 @@ namespace Ubiquity.NET.Llvm.Metadata
             }
 
             Behavior = ( ModuleFlagBehavior )( behaviorConst.ZeroExtendedValue );
-            Name = nameMd.ToString( );
+            Name = nameMd.ToLazyEncodedString( );
             Metadata = node.Operands[ 2 ]!;
         }
     }

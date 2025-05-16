@@ -23,15 +23,37 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcLLJITBuilderSetJITTargetMachineBuilder(LLVMOrcLLJITBuilderRef Builder, LLVMOrcJITTargetMachineBuilderRef JTMB);
+        public static unsafe partial void LLVMOrcLLJITBuilderSetJITTargetMachineBuilder(
+            LLVMOrcLLJITBuilderRef Builder,
+            LLVMOrcJITTargetMachineBuilderRef JTMB
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcLLJITBuilderSetObjectLinkingLayerCreator(LLVMOrcLLJITBuilderRef Builder, LLVMOrcLLJITBuilderObjectLinkingLayerCreatorFunction F, void* Ctx);
+        public static unsafe partial void LLVMOrcLLJITBuilderSetObjectLinkingLayerCreator(
+            LLVMOrcLLJITBuilderRef Builder,
+            LLVMOrcLLJITBuilderObjectLinkingLayerCreatorFunction F,
+            void* Ctx
+            );
 
+        // simple wrapper to re-order parameters for inconsistent API design
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMErrorRef LLVMOrcCreateLLJIT(
+            LLVMOrcLLJITBuilderRef Builder,
+            /*[MaybeInvalidWhen(Failed)]*/ out LLVMOrcLLJITRef Result
+            )
+        {
+            return LLVMOrcCreateLLJIT(out Result, Builder);
+        }
+
+        // NOTE: Confusingly backwards API design, out is first param, and handle is last!
+        // This is inconsistent with standard practice and even LLVM APIs
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcCreateLLJIT(/*[MaybeInvalidWhen(Failed)]*/ out LLVMOrcLLJITRef Result, LLVMOrcLLJITBuilderRef Builder);
+        private static unsafe partial LLVMErrorRef LLVMOrcCreateLLJIT(
+            /*[MaybeInvalidWhen(Failed)]*/ out LLVMOrcLLJITRef Result,
+            LLVMOrcLLJITBuilderRef Builder
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -47,20 +69,15 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
+        public static unsafe partial LazyEncodedString LLVMOrcLLJITGetTripleString(LLVMOrcLLJITRef J);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial byte LLVMOrcLLJITGetGlobalPrefix(LLVMOrcLLJITRef J);
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcLLJITMangleAndIntern(LLVMOrcLLJITRef J, string UnmangledName);
-
-        // overload to allow use with LazyEncodedString
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcLLJITMangleAndIntern(LLVMOrcLLJITRef J, byte* UnmangledName);
+        public static unsafe partial LLVMOrcSymbolStringPoolEntryRef LLVMOrcLLJITMangleAndIntern(LLVMOrcLLJITRef J, LazyEncodedString UnmangledName);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -68,7 +85,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddObjectFileWithRT(LLVMOrcLLJITRef J, LLVMOrcResourceTrackerRef RT, LLVMMemoryBufferRef ObjBuffer);
+        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddObjectFileWithRT(
+            LLVMOrcLLJITRef J,
+            LLVMOrcResourceTrackerRef RT,
+            LLVMMemoryBufferRef ObjBuffer
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -76,11 +97,16 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModuleWithRT(LLVMOrcLLJITRef J, LLVMOrcResourceTrackerRef JD, LLVMOrcThreadSafeModuleRef TSM);
+        public static unsafe partial LLVMErrorRef LLVMOrcLLJITAddLLVMIRModuleWithRT(
+            LLVMOrcLLJITRef J,
+            LLVMOrcResourceTrackerRef JD,
+            LLVMOrcThreadSafeModuleRef TSM
+            );
 
+        // BAD API design, out result should be last parameter... but isn't.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITLookup(LLVMOrcLLJITRef J, out UInt64 Result, byte* Name);
+        public static unsafe partial LLVMErrorRef LLVMOrcLLJITLookup(LLVMOrcLLJITRef J, out UInt64 Result, LazyEncodedString Name);
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -96,6 +122,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
+        public static unsafe partial LazyEncodedString LLVMOrcLLJITGetDataLayoutStr(LLVMOrcLLJITRef J);
     }
 }

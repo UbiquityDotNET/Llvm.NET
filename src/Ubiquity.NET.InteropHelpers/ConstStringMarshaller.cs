@@ -1,4 +1,5 @@
-﻿// -----------------------------------------------------------------------
+﻿#if PROBABLY_DELETE_ME_LATER_AS_LAZYENCODEDSTRING_IS_BETTER
+// -----------------------------------------------------------------------
 // <copyright file="ConstStringMarshaller.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
@@ -55,3 +56,4 @@ namespace Ubiquity.NET.InteropHelpers
         }
     }
 }
+#endif

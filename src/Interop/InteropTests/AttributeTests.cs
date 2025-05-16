@@ -28,29 +28,17 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         public void CustomAttributeTests( )
         {
             using LLVMContextRef ctx = LLVMContextCreate();
-            LazyEncodedString name = new("custom");
-            LazyEncodedString value = new("custom value");
+            LazyEncodedString name = new("custom"u8);
+            LazyEncodedString value = "custom value"u8;
 
-            LLVMAttributeRef attribValue;
-
-            using var memName = name.Pin();
-            using var memValue = value.Pin();
-            unsafe
-            {
-                attribValue = LLVMCreateStringAttribute(ctx, (byte*)memName.Pointer, (uint)name.NativeStrLen, (byte*)memValue.Pointer, (uint)value.NativeStrLen);
-            }
+            LLVMAttributeRef attribValue = LLVMCreateStringAttribute(ctx, name, value);
 
             Assert.IsFalse(attribValue.IsNull);
 
             // LibLLVM should support Custom attributes as well.
-            LibLLVMAttributeInfo info;
             LazyEncodedString attribName = new("custom");
-            using var mem = attribName.Pin();
-            unsafe
-            {
-                using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo((byte*)mem.Pointer, attribName.NativeStrLen, &info);
-                errorRef.ThrowIfFailed();
-            }
+            using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo(attribName, out LibLLVMAttributeInfo info);
+            errorRef.ThrowIfFailed();
 
             Assert.AreEqual(LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, info.ArgKind);
         }
@@ -58,18 +46,23 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         [TestMethod]
         public void AttributeListAttainable( )
         {
-            size_t len = LibLLVMGetNumKnownAttribs();
+            int len = checked((int)LibLLVMGetNumKnownAttribs());
             unsafe
             {
                 byte** ppData = stackalloc byte*[len];
-                using LLVMErrorRef errorRef = LibLLVMGetKnownAttributeNames(len, ppData);
+                using LLVMErrorRef errorRef = LibLLVMGetKnownAttributeNames(ppData, (nuint)len);
                 errorRef.ThrowIfFailed();
 
                 // make sure conversion is plausible.
                 var bldr = ImmutableArray.CreateBuilder<LazyEncodedString>(len);
                 for(int i=0; i < len; ++i)
                 {
-                    bldr.Add(new(ppData[i]));
+                    // https://github.com/microsoft/testfx/issues/5543
+#pragma warning disable MSTEST0037 // Use proper 'Assert' methods
+                    Assert.IsTrue(ppData[i] is not null);
+#pragma warning restore MSTEST0037 // Use proper 'Assert' methods
+
+                    bldr.Add( LazyEncodedString.FromUnmanaged(ppData[i])!);
                 }
 
                 var names = bldr.ToImmutable();

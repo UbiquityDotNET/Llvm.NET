@@ -30,7 +30,7 @@ csharp_style_conditional_delegate_call = true:warning
 csharp_style_expression_bodied_accessors = true:suggestion
 csharp_style_expression_bodied_indexers = true:suggestion
 csharp_style_expression_bodied_methods = true:suggestion
-csharp_style_expression_bodied_operators = true:suggestion
+csharp_style_expression_bodied_operators = when_on_single_line:silent
 csharp_style_expression_bodied_properties = true:warning
 csharp_style_inlined_variable_declaration = true:warning
 csharp_style_pattern_matching_over_as_with_null_check = true:warning
@@ -89,6 +89,8 @@ csharp_prefer_simple_default_expression = true:error
 csharp_space_between_method_declaration_parameter_list_parentheses = true
 csharp_space_between_method_declaration_empty_parameter_list_parentheses = true
 dotnet_diagnostic.SA0001.severity = none
+csharp_style_unused_value_assignment_preference = discard_variable:suggestion
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
 
 # Analysis and refactoring rules for Ubiquity.NET
 # Description: Code analysis rules for Ubiquity.NET projects
@@ -1594,3 +1596,4 @@ dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_prefer_collection_expression = when_types_loosely_match:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
 dotnet_diagnostic.MSTEST0032.severity = none
+dotnet_code_quality_unused_parameters = all:suggestion

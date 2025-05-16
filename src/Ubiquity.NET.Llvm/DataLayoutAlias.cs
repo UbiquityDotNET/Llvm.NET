@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -16,15 +17,23 @@ namespace Ubiquity.NET.Llvm
     {
         #region IEquatable<IDataLayout>
 
+        // TODO: FIXME - This is using the string form of the layout for comparison but that is not definitive
+        //       LLVM-C docs explicitly state the string form should NOT be used for an equivalence test as
+        //       it is possible to have two distinct strings that describe the same actual layout...
+        //       (The layout string is NOT canonicalized in anyway)
         public bool Equals(IDataLayout? other)
             => other is not null
-            && (NativeHandle.Equals(other) || ToLazyEncodedString().Equals(other.ToLazyEncodedString()));
+            && (NativeHandle.Equals(other) || (ToLazyEncodedString()?.Equals(other.ToLazyEncodedString()) ?? false) );
 
         public override bool Equals(object? obj)=> obj is DataLayoutAlias alias
                                                  ? Equals(alias)
                                                  : Equals(obj as IDataLayout);
 
-        public override int GetHashCode() => ToLazyEncodedString().GetHashCode();
+        // TODO: FIXME - This is using the string form of the layout for comparison but that is not definitive
+        //       LLVM-C docs explicitly state the string form should NOT be used for an equivalence test as
+        //       it is possible to have two distinct strings that describe the same actual layout...
+        //       (The layout string is NOT canonicalized in anyway)
+        public override int GetHashCode() => ToLazyEncodedString()?.GetHashCode() ?? 0;
         #endregion
 
         public ByteOrdering Endianness => ( ByteOrdering )LLVMByteOrder( NativeHandle );
@@ -125,16 +134,29 @@ namespace Ubiquity.NET.Llvm
 
         public LazyEncodedString ToLazyEncodedString()
         {
+            // This is mostly to prevent crashes in test debugging
+            // As the handle is null if a breakpoint or step is
+            // in the constructor BEFORE this value is initialized.
+            if (NativeHandle.IsNull)
+            {
+                return LazyEncodedString.Empty;
+            }
+
             unsafe
             {
-                byte* pStr = LibLLVMGetDataLayoutString(NativeHandle, out size_t len);
-                return new(new ReadOnlySpan<byte>(pStr, len.ToInt32()));
+                byte* pStr = LibLLVMGetDataLayoutString(NativeHandle, out nuint len);
+                Debug.Assert(pStr is not null, "Layout should always have a string representation");
+                return LazyEncodedString.FromUnmanaged(pStr, len)!;
             }
         }
 
         public override string? ToString( )
         {
-            return LLVMCopyStringRepOfTargetData( NativeHandle );
+            // LLVM-C has this variant but it requires allocation in native and then dispose from
+            // managed which is overhead that isn't needed, so use the lower overhead form and
+            // force the full encoding here.
+            //return LLVMCopyStringRepOfTargetData( NativeHandle );
+            return ToLazyEncodedString()?.ToString();
         }
 
         public ulong ByteSizeOf( ITypeRef llvmType ) => BitSizeOf( llvmType ) / 8u;

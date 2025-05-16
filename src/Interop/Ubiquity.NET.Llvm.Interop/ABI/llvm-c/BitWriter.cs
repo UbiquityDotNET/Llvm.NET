@@ -8,9 +8,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     public static partial class BitWriter
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( ExecutionEncodingStringMarshaller ) )]
+        [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRefAlias M, string Path);
+        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRefAlias M, LazyEncodedString Path);
 
 // It is debatable if the .NET projections should deal with a raw C "File descriptor", which is
 // exclusively a C/C++ runtime construct that does NOT exist in managed code.

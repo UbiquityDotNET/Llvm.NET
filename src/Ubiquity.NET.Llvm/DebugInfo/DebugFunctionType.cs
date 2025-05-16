@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// and the underlying LLVM type</para>
     /// <note type="note">It is important to keep in mind that signatures are only concerned
     /// with types. That is, they do not include names of parameters. Parameter information is
-    /// provided by <see cref="DIBuilder.CreateArgument(DIScope, string, DIFile, uint, DIType, bool, DebugInfoFlags, ushort)"/>
+    /// provided by <see cref="DIBuilder.CreateArgument(DIScope, LazyEncodedString, DIFile, uint, DIType, bool, DebugInfoFlags, ushort)"/>
     /// and [DIBuilder.InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare*)</note>
     /// </remarks>
     /// <seealso href="xref:llvm_langref#disubroutinetype">LLVM DISubroutineType</seealso>

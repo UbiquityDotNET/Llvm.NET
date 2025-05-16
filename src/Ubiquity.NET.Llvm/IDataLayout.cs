@@ -157,7 +157,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Representation of the data layout</returns>
         /// <remarks>
         /// The returned <see cref="LazyEncodedString"/> retains a copy of the native code form of the string.
-        /// This value is ONLY marshalled to a managed string when needed (and only once, it is cached). This
+        /// This value is ONLY marshaled to a managed string when needed (and only once, it is cached). This
         /// behavior allows for lower overhead re-use of this string in additional APIs as NO marshalling
         /// needs to occur. This does have the overhead of making a copy of the strings contents as the
         /// lifetime of the underlying native string is generally unknown and thus not reliable.

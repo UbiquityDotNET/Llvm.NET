@@ -3,7 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-#if FUTURE_DEVELOPMENT_AREA
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
@@ -12,14 +12,62 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
-        internal TargetMachineBuilder(LLVMOrcJITTargetMachineBuilderRef h)
+        /// <summary>Initializes a new instance of <see cref="TargetMachineBuilder"/></summary>
+        /// <param name="template"><see cref="TargetMachine"/> to use as a template</param>
+        /// <remarks>
+        /// Ownership of the <paramref name="template"/> is transferred to native code by this constructor.
+        /// It is no longer usable (<see cref="TargetMachine.Dispose"/> is a NOP) after this call.
+        /// </remarks>
+        public TargetMachineBuilder( TargetMachine template )
         {
-            Handle = h;
+            ArgumentNullException.ThrowIfNull( template );
+            Handle = LLVMOrcJITTargetMachineBuilderCreateFromTargetMachine( template.Handle );
+            // transfer complete mark it as invalid now
+            template.Handle.SetHandleAsInvalid();
         }
 
-        internal LLVMOrcJITTargetMachineBuilderRef Handle { get; init; }
+        /// <summary>Gets the Triple for this builder as a string</summary>
+        [SuppressMessage( "Style", "IDE0025:Use expression body for property", Justification = "Temporary, as setter is plausible, though seems dubious" )]
+        public LazyEncodedString Triple
+        {
+            get => LLVMOrcJITTargetMachineBuilderGetTargetTriple( Handle );
+            // For now, block this as it seems dubious to allow setting only this
+            //set => LLVMOrcJITTargetMachineBuilderSetTargetTriple( Handle, value );
+        }
+
+        /// <summary>Creates a <see cref="TargetMachineBuilder"/> for the current host system</summary>
+        /// <param name="optLevel">Optimization level</param>
+        /// <param name="relocationMode">Relocation mode for generated code</param>
+        /// <param name="codeModel"><see cref="CodeModel"/> to use for generated code</param>
+        /// <returns>Builder using this host as the template</returns>
+        public static TargetMachineBuilder FromHost(
+            CodeGenOpt optLevel = CodeGenOpt.Default,
+            RelocationMode relocationMode = RelocationMode.Default,
+            CodeModel codeModel = CodeModel.Default
+        )
+        {
+
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // Ownership transfered to return value.
+            return new( TargetMachine.HostMachine(optLevel, relocationMode, codeModel) );
+#pragma warning restore CA2000 // Dispose objects before losing scope
+
+            // While this API does exist, it does NOT provide any means to set the options; they are ALL defaults
+            //using LLVMErrorRef errorRef = LLVMOrcJITTargetMachineBuilderDetectHost(out LLVMOrcJITTargetMachineBuilderRef handle);
+            //errorRef.ThrowIfFailed();
+            //using(handle)
+            //{
+            //    return new(handle);
+            //}
+        }
+
+        internal TargetMachineBuilder( LLVMOrcJITTargetMachineBuilderRef h )
+        {
+            Handle = h.Move();
+        }
+
+        internal LLVMOrcJITTargetMachineBuilderRef Handle { get; }
     }
 }
-#endif

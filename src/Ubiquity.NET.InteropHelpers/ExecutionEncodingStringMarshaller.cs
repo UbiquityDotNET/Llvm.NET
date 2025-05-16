@@ -15,6 +15,11 @@ using System.Text;
 namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for native strings using <see cref="Encoding"/>.</summary>
+    /// <remarks>
+    /// This will handle marshalling of <see cref="string"/>s to/from native code. This is very similar
+    /// to the default string marshalling support except that it does all conversion to/from native code via
+    /// a static <see cref="Encoding"/> property, [defaults to UTF8] so that applications can have control of that.
+    /// </remarks>
     [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(ExecutionEncodingStringMarshaller))]
     [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedIn, typeof(ManagedToUnmanagedIn))]
     public static unsafe class ExecutionEncodingStringMarshaller
@@ -23,12 +28,15 @@ namespace Ubiquity.NET.InteropHelpers
         /// <remarks>
         /// On Windows and MSVC (.NET Framework) the default encoding is that of the OS/Platform runtime. On .NET Core/Linux
         /// UTF8 has reached a level of common standard that you can assume it is the default unless documented otherwise.
-        /// Not so much on Windows. [To be fair there's a LOT more legacy client code targeting Windows to contend with.]
+        /// Not so much on Windows. [To be fair. there's a LOT more legacy client code targeting Windows to contend with.]
         /// This often doesn't matter for const strings as they tend to fall in the ASCII/ANSI (Latin1) encoding ranges.
-        /// However, that isn't guaranteed, which makes for all sorts of "interesting" latent bugs. Even as well documented
-        /// and well thought out as LLVM is, it remains silent on this point. Spelunking the build system generated for LLVM
-        /// itself by CMake there is NOTHING to set either the source or execution encodings for Windows, MSVC or any other
-        /// tool-set that I can see so they seem to be left at defaults.
+        /// However, that isn't guaranteed, which makes for all sorts of "interesting" latent bugs.
+        ///
+        /// <note type="note">Even as well documented and well thought out as LLVM is, it remains silent on this point.
+        /// Spelunking the build system generated for LLVM itself by CMake there is NOTHING to set either the source or
+        /// execution encodings for Windows, MSVC or any other tool-set that I can see so they seem to be left at defaults.
+        /// </note>
+        ///
         /// <note type="information">
         /// For .NET Core, which includes .NET 5+, <see cref="System.Text.Encoding.Default"/> is the same as
         /// <see cref="System.Text.Encoding.UTF8"/> even on Windows. So that is the assumed encoding used here.

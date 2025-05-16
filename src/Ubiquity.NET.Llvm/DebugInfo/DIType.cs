@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
@@ -15,7 +16,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public override DIScope? Scope => Handle == default ? null : GetOperand<DIScope>( 1 );
 
         /// <summary>Gets the name of the type</summary>
-        public override string Name => Handle == default ? string.Empty : GetOperand<MDString>( 2 )?.ToString() ?? string.Empty;
+        public override LazyEncodedString Name => Handle == default ? string.Empty : GetOperand<MDString>( 2 )?.ToString() ?? string.Empty;
 
         /// <summary>Gets the source line for the type</summary>
         public UInt32 Line => Handle == default ? 0 : LLVMDITypeGetLine( Handle );

@@ -13,13 +13,20 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     public readonly ref struct ErrorInfo
     {
+        /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct</summary>
+        /// <param name="msg">Message for the error</param>
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is transferred to this instances. (Move semantics)" )]
+        public ErrorInfo(LazyEncodedString msg)
+            : this( LLVMErrorRef.Create( msg ) )
+        {
+        }
+
         /// <summary>Gets a value indicating whether this instance represents success</summary>
         public bool Success
         {
             get
             {
                 ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
-
                 return Handle.Success;
             }
         }
@@ -34,7 +41,6 @@ namespace Ubiquity.NET.Llvm
         public override string ToString()
         {
             ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
-
             return Handle.ToString();
         }
 
@@ -59,43 +65,14 @@ namespace Ubiquity.NET.Llvm
             Handle.Dispose();
         }
 
-        /// <summary>Factory function to create a new <see cref="ErrorInfo"/> from a string</summary>
-        /// <param name="msg">message for the error</param>
-        /// <returns>Newly constructed <see cref="ErrorInfo"/> with the provided message</returns>
-        public static ErrorInfo Create(string msg)
-        {
-            // ownership of the handle is moved into the return
-            // so dispose is a NOP, UNLESS there is an exception
-            // BEFORE ownership transfer completes.
-            using var handle = LLVMErrorRef.Create(msg);
-            return new(handle);
-        }
-
-        /// <summary>Factory function to create a new <see cref="ErrorInfo"/> from an exception</summary>
-        /// <param name="ex">Exception to create an instance from</param>
-        /// <returns>Newly constructed <see cref="ErrorInfo"/> with the message from <paramref name="ex"/></returns>
-        /// <remarks>
-        /// <note type="important">
-        /// It is important to note that this will convert a <see langword="null"/> for <paramref name="ex"/> into
-        /// a failed result with an empty string. This is to prevent exception within a catch handler. This
-        /// condition is asserted in a debug build so that any attempts to provide a null value are caught and
-        /// fixed.
-        /// </note>
-        /// </remarks>
-        public static ErrorInfo Create(Exception ex)
-        {
-            Debug.Assert(ex is not null, "ERROR: Must not provide NULL - debug assert prevents exception in catch handler. FIX THE CALLER - it's broken!");
-            return Create(ex?.Message ?? string.Empty);
-        }
-
         /// <summary>This provides `move` semantics when transferring ownership of the resources represented by the handle to native code</summary>
         /// <returns>The underlying native handle that will NOT receive any additional clean up or release</returns>
         /// <remarks>
         /// <note type="important">It is important to note that this will release all the safety guarantees of cleanup for a
         /// <see cref="SafeHandle"/>! This is normally used directly as the return value of a callback. It should **NOT** be
-        /// used for `in` parameters. It is possible that the ownership is not fully transferred and some error results leaving
-        /// the resource dangling/leaked. Instead, pass it using normal handle marshalling, then after the native call returns it
-        /// is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
+        /// used for `in` parameters. In that scenario, it is possible that the ownership is not fully transferred and some
+        /// error results leaving the resource dangling/leaked. Instead, pass it using normal handle marshalling, then after
+        /// the native call returns it is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
         /// </note>
         /// </remarks>
         internal nint MoveToNative()
