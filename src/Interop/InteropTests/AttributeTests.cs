@@ -37,12 +37,8 @@ namespace Ubiquity.NET.Llvm.Interop.UT
 
             // LibLLVM should support Custom attributes as well.
             LazyEncodedString attribName = new("custom");
-            LibLLVMAttributeInfo info;
-            unsafe
-            {
-                using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo(attribName, &info);
-                errorRef.ThrowIfFailed();
-            }
+            using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo(attribName, out LibLLVMAttributeInfo info);
+            errorRef.ThrowIfFailed();
 
             Assert.AreEqual(LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, info.ArgKind);
         }
