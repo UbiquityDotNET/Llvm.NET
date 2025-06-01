@@ -3,20 +3,25 @@ uid: Kaleidoscope-ch2
 ---
 
 # 2. Kaleidoscope: Implementing the parser
-The chapter 2 sample doesn't actually generate any code. Instead it focuses on the general
-structure of the samples and parsing of the language. The sample for this chapter enables all
-language features to allow exploring the language and how it is parsed to help better understand
-the rest of the chapters better. It is hoped that users of this library find this helpful.
+The chapter 2 sample doesn't actually generate any code. Instead it focuses on the
+general structure of the samples and parsing of the language. The sample for this
+chapter enables all language features to allow exploring the language and how it is
+parsed to help better understand the rest of the chapters better. It is hoped that
+users of this library find this helpful.
 
-The Ubiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language into a parse tree.
-This has several advantages including logical isolation of the parsing and code generation.
-Additionally, it provides a single formal definition of the grammar for the language. Understanding
-the language grammar from reading the LVM tutorials and source was a difficult task since it isn't
-formally defined in one place. (There are some EBNF like comments in the official LLVM tutorial
-code but it is spread around without much real discussion of the language the tutorials guide you
-to implement)
+The Ubiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language
+into a parse tree. The parse tree is visitied to transform it into a an Abstract
+Syntax Tree (AST). This has several advantages including logical isolation of the
+parsing and code generation. Additionally, it provides a single formal definition
+of the grammar for the language. Understanding the language grammar from reading
+the LVM tutorials and source was a difficult task since it isn't formally defined
+in one place. (There are some EBNF like comments in the official LLVM tutorial
+code but it is spread around without much real discussion of the language the
+tutorials guide you to implement)
 
 ## Formal Grammar
+The following sections cover the formal grammar of the Kaleidoscope language.
+
 ### Lexer symbols
 
 The Kaleidoscope lexer consists of several tokens and is defined in the
@@ -291,12 +296,13 @@ implementation of the function. Once the function produces the return value the 
 IF expression[0] THEN expression[0] ELSE expression[0]
 ```
 Conditional expressions use the very common and familiar if-then-else syntax and semantics with one
-notable unique quality. In Kaleidoscope every language construct is an expression, there are no statements.
-Expressions all produce a value. So the result of the conditional expression is the result of the
-sub-expression selected based on the condition. The condition value is computed and if the result == 0.0
-(false) the `else` expression is used to produce the final result. Otherwise, the `then` expression is
-executed to produce the result. Thus, the actual semantics are more like the ternary operator found C and
-other languages:
+notable unique quality. In Kaleidoscope ***every language construct is an expression***, there are
+no statements. Expressions all produce a value. So the result of the conditional
+expression is the result of the sub-expression selected based on the condition. The
+condition value is computed and if the result == 0.0 (false) the `else` expression
+is used to produce the final result. Otherwise, the `then` expression is executed
+to produce the result. Thus, the actual semantics are more like the ternary
+operator found C and other languages:
 
 ``` C
 condition ? thenExpression : elseExpression
@@ -374,7 +380,7 @@ See [Kaleidoscope Parse Tree Examples](xref:Kaleidoscope-Parsetree-examples) for
 diagrams of the parse tree for various language constructs.
 
 ## Abstract Syntax Tree (AST)
-To further simplify code generators the Kaleidoscope.Runtime library contains the AstBuilder type that is
+To further simplify code generators the Kaleidoscope.Grammar library contains the AstBuilder type that is
 an ANTLR parse tree visitor. AstBuilder will convert a raw ANTLR IParseTree into a a tree of `IAstNode` elements.
 That is, it visits the declarations and definitions in the parse tree to produce a full tree of declarations
 and definitions as they appeared in the source. For interactive modes - the tree will have only one top level node.
@@ -392,43 +398,50 @@ The major simplifying transformations performed in building the AST are:
  * Convert user defined operator expressions into simple function calls to the operator function
 
 >[!NOTE]
->An interesting consequence of these transformations into the AST form is that the concept of user defined
->operators no longer exists in the AST! The AST only deals in function declarations, definitions and the built-in
->operators. All issues of precedence are implicitly resolved in the ordering of the nodes in the AST.
->Thus, the code generation doesn't need to consider the issue of user defined operators or operator
->precedence at all. ([Chapter 6](xref:Kaleidoscope-ch6) covers the details of user defined operators and how
->the Kaleidoscope sample language uses ANTLR to implement them.)
+>An interesting consequence of these transformations into the AST form is that the
+>concept of user defined operators no longer exists in the AST! The AST only deals
+>in function declarations, definitions and the built-in operators. All issues of
+>precedence are implicitly resolved in the ordering of the nodes in the AST.
+>Thus, the code generation doesn't need to consider the issue of user defined
+>operators or operator precedence at all. ([Chapter 6](xref:Kaleidoscope-ch6)
+>covers the details of user defined operators and how the Kaleidoscope sample
+>language uses ANTLR to implement them.)
 
 ## Basic Application Architecture
 
-Generally speaking, there are four main components to most of the sample chapter applications.
+Generally speaking, there are four main components to most of the sample chapter
+applications.
 
   1. The main driver application (e.g. program.cs)
   2. The Read-Evaluate-Print-Loop (e.g. ReplEngine.cs)
-  3. Runtime support (e.g. Kaliedoscope.Runtime and Kaleidoscope.Parser libraries)
+  3. Runtime support (e.g. Kaliedoscope.Grammar and Kaleidoscope.Runtime libraries)
   4. The code generator (e.g. CodeGenerator.cs)
 
 ### Driver
-While each chapter is a bit different from the others. Many of the chapters are virtually identical for
-the driver. In particular Chapters 3-7 only really differ in the name of the app and window title etc... 
+While each chapter is a bit different from the others. Many of the chapters are
+virtually identical for the driver. In particular Chapters 3-7 only really differ
+in the name of the app and window title etc... 
 
 [!code-csharp[Program.cs](Program.cs)]
 
 ### Read, Evaluate, Print loop
-The Kaleidoscope.Runtime library contains an abstract base class for building a standard REPL engine from an
-input TextReader. The base class handles converting the input reader into a sequence of statements, and
-parsing them into AST nodes. The nodes are provided to an application provided generator that produces the
-output result. The REPL engine base uses the abstract ShowResults method to actually show the results.
+The Kaleidoscope.Runtime library contains an abstract base class for building a
+standard REPL engine from an input TextReader. The base class handles converting
+the input reader into a sequence of statements, and parsing them into AST nodes.
+The nodes are provided to an application provided generator that produces the
+output result. The REPL engine base uses the abstract ShowResults method to
+actually show the results.
 
 [!code-csharp[Program.cs](ReplEngine.cs)]
 
 ### Runtime Support
 The Parser contains the support for parsing the Kaleidoscope language from the REPL loop interactive
-input. The parser stack also maintains the global state of the runtime, which controls the language features
-enabled, and if user defined operators are enabled, contains the operators defined along with their
-precedence.
+input. The parser stack also maintains the global state of the runtime, which
+controls the language features enabled, and if user defined operators are enabled,
+contains the operators defined along with their precedence.
 
-After the parser is created an enumerable sequence of statements is created for the parser to process.
+After the parser is created an enumerable sequence of statements is created for the
+parser to process.
 This results in a sequence of AST nodes. After construction, the sequence is used to iterate over all of
 the nodes generated from the user input.
 
