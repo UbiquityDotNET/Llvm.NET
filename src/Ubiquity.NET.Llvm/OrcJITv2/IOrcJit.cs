@@ -70,7 +70,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// if disposed so it is safe to declare instances with a "using".
         /// </note>
         /// </remarks>
-        void AddModule(JITDyLib lib, ThreadSafeModule module);
+        void Add(JITDyLib lib, ThreadSafeModule module);
 
         /// <summary>Adds a module to the JIT</summary>
         /// <param name="tracker">Resource tracker to manage the module</param>
@@ -86,7 +86,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// if disposed so it is safe to declare instances with a "using".
         /// </note>
         /// </remarks>
-        void AddModule(ResourceTracker tracker, ThreadSafeModule module);
+        void Add(ResourceTracker tracker, ThreadSafeModule module);
 
         /// <summary>Mangles and interns a symbol in the JIT's symbol pool</summary>
         /// <param name="name">Symbol name to add</param>

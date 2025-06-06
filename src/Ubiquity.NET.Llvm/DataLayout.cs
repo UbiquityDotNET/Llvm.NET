@@ -9,6 +9,16 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Owning implementation of <see cref="IDataLayout"/></summary>
+    /// <remarks>
+    /// <note type="important">
+    /// <para>There is currently no way to compute a proper hash code for this type. Any attempt to
+    /// call <see cref="GetHashCode"/> will result in a <see cref="NotSupportedException"/>.</para>
+    /// <para>The internal data values used for equality checks are not accessible, even to native
+    /// C++ code, so no projection is possible. .NET has strict requirements on the consistency
+    /// of a hash code with the behavior of equality comparisons, which the current LLVM
+    /// declaration/implementation do not allow.</para>
+    /// </note>
+    /// </remarks>
     public sealed class DataLayout
         : IDataLayout
         , IGlobalHandleOwner<LLVMTargetDataRef>
@@ -21,12 +31,12 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public bool Equals(IDataLayout? other)
             => other is not null
-            && (this.GetUnownedHandle().Equals(other.GetUnownedHandle()) || ToLazyEncodedString().Equals(other.ToLazyEncodedString()));
+            && (this.GetUnownedHandle().Equals(other.GetUnownedHandle()) || Impl.Equals(other));
 
         /// <inheritdoc/>
         public bool Equals(DataLayout? other)
             => other is not null
-            && (NativeHandle.Equals(other.NativeHandle) || ToLazyEncodedString().Equals(other.ToLazyEncodedString()));
+            && (Handle.Equals(other.Handle) || Impl.Equals(other));
 
         /// <inheritdoc/>
         public override bool Equals(object? obj)=> obj is DataLayout owner
@@ -34,7 +44,7 @@ namespace Ubiquity.NET.Llvm
                                                    : Equals(obj as IDataLayout);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => ToLazyEncodedString().GetHashCode();
+        public override int GetHashCode() => Impl.GetHashCode();
         #endregion
 
         #region IDataLayout (via Impl)
@@ -98,16 +108,16 @@ namespace Ubiquity.NET.Llvm
         #endregion
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
-        public bool IsDisposed => NativeHandle is null || NativeHandle.IsInvalid || NativeHandle.IsClosed;
+        public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
 
         /// <inheritdoc/>
         public void Dispose( )
         {
-            NativeHandle.Dispose();
+            Handle.Dispose();
         }
 
         /// <inheritdoc/>
-        public static DataLayout Parse( LazyEncodedString text, IFormatProvider? provider )
+        public static DataLayout Parse( LazyEncodedString text )
         {
             #pragma warning disable IDISP007 // Don't dispose injected
             // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
@@ -122,7 +132,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public static bool TryParse( LazyEncodedString txt, IFormatProvider? provider, [MaybeNullWhen( false )] out DataLayout result )
+        public static bool TryParse( LazyEncodedString txt, [MaybeNullWhen( false )] out DataLayout result )
         {
             result = null;
 
@@ -143,33 +153,35 @@ namespace Ubiquity.NET.Llvm
             #pragma warning restore IDISP007 // Don't dispose injected
         }
 
-        internal DataLayout( LLVMTargetDataRef targetDataHandle, [CallerArgumentExpression(nameof(targetDataHandle))] string? exp = null )
+        internal DataLayout( LLVMTargetDataRef targetDataHandle, [CallerArgumentExpression( nameof( targetDataHandle ) )] string? exp = null )
         {
             if( targetDataHandle is null || targetDataHandle.IsInvalid || targetDataHandle.IsClosed)
             {
                 throw new ArgumentException("Invalid handle", exp);
             }
 
-            NativeHandle = targetDataHandle.Move();
-            AliasImpl = new(NativeHandle);
+            Handle = targetDataHandle.Move();
+            // Implementation is an alias handle, which is a value type that is
+            // essentially a "typedef" for the opaque handle [nint, (void*)]
+            AliasImpl__ = new(Handle);
         }
 
         [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]
-        LLVMTargetDataRef IGlobalHandleOwner<LLVMTargetDataRef>.OwnedHandle => NativeHandle;
+        LLVMTargetDataRef IGlobalHandleOwner<LLVMTargetDataRef>.OwnedHandle => Handle;
+        void IGlobalHandleOwner<LLVMTargetDataRef>.InvalidateFromMove( ) => Handle.SetHandleAsInvalid();
 
-        /// <inheritdoc/>
-        void IGlobalHandleOwner<LLVMTargetDataRef>.InvalidateFromMove( ) => NativeHandle.SetHandleAsInvalid();
+        private readonly LLVMTargetDataRef Handle;
 
+        // TODO: In C#14 convert this to using "field" keyword.
         private DataLayoutAlias Impl
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsDisposed, this);
-                return AliasImpl;
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
+                return AliasImpl__;
             }
         }
 
-        private readonly DataLayoutAlias AliasImpl;
-        private readonly LLVMTargetDataRef NativeHandle;
+        private readonly DataLayoutAlias AliasImpl__;
     }
 }

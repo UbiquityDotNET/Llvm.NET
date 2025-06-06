@@ -27,17 +27,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Handle = h.Move();
         }
 
-        internal LLVMOrcIndirectStubsManagerRef Handle { get; init; }
+        internal LLVMOrcIndirectStubsManagerRef Handle { get; }
 
-        private static LLVMOrcIndirectStubsManagerRef MakeHandle(LazyEncodedString triple)
+        private static LLVMOrcIndirectStubsManagerRef MakeHandle(LazyEncodedString triple, [CallerArgumentExpression(nameof(triple))] string? exp = null)
         {
-            ArgumentNullException.ThrowIfNull(triple);
-
-            unsafe
-            {
-                using MemoryHandle nativeMem = triple.Pin();
-                return LLVMOrcCreateLocalIndirectStubsManager((byte*)nativeMem.Pointer);
-            }
+            triple.ThrowIfNullOrWhiteSpace(exp);
+            return LLVMOrcCreateLocalIndirectStubsManager(triple);
         }
     }
 }

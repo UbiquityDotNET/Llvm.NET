@@ -31,5 +31,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial byte* LibLLVMGetDataLayoutString(LLVMTargetDataRefAlias dataLayout, out nuint outLen);
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static unsafe partial bool LibLLVMTargeDataRefOpEquals(LLVMTargetDataRefAlias lhs, LLVMTargetDataRefAlias rhs);
     }
 }

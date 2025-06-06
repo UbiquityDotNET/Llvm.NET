@@ -30,7 +30,7 @@ namespace Ubiquity.NET.Llvm.Tests
             using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
 
             // Place the generated module in the JIT
-            jit.AddModule(jit.MainLib, mainMod);
+            jit.Add(jit.MainLib, mainMod);
             SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
             using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
@@ -51,7 +51,6 @@ namespace Ubiquity.NET.Llvm.Tests
             jit.MainLib.Define(fooMu);
             jit.MainLib.Define(barMu);
 
-            using var ism = new LocalIndirectStubsManager(triple);
             using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
             using var mangledFoo = jit.MangleAndIntern("foo");
             using var mangledBar = jit.MangleAndIntern("bar");
@@ -61,6 +60,7 @@ namespace Ubiquity.NET.Llvm.Tests
                 [mangledBar] = new(mangledBarBodySymName, flags),
             }.ToImmutable();
 
+            using var ism = new LocalIndirectStubsManager(triple);
             using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
             jit.MainLib.Define(lazyReExports);
 

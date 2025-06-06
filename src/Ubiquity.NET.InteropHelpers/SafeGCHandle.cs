@@ -38,8 +38,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="o">Object to allocate a GCHandle for that is controlled by this instance</param>
         /// <remarks>
         /// It is expected that the type of <paramref name="o"/> has this <see cref="SafeGCHandle"/>
-        /// as a private member so that it controls the lifetime of it's container. Use of this type
-        /// in any other context is the dreaded "undefined behavior".
+        /// as a private member so that it controls the lifetime of it's container.
         /// </remarks>
         public SafeGCHandle(object o)
             : base(0, ownsHandle: true)

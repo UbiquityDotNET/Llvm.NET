@@ -534,10 +534,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcIndirectStubsManagerRef LLVMOrcCreateLocalIndirectStubsManager( byte* TargetTriple );
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeIndirectStubsManager( LLVMOrcIndirectStubsManagerRef ISM );
 
         [LibraryImport( LibraryName )]
@@ -555,7 +551,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcDumpObjectsRef LLVMOrcCreateDumpObjects( LazyEncodedString DumpDir, LazyEncodedString IdentifierOverride );
+        public static unsafe partial LLVMOrcDumpObjectsRef LLVMOrcCreateDumpObjects( LazyEncodedString DumpDir, LazyEncodedString? IdentifierOverride );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -563,6 +559,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcDumpObjects_CallOperator( LLVMOrcDumpObjectsRef DumpObjects, out LLVMMemoryBufferRef ObjBuffer );
+        public static unsafe partial LLVMErrorRef LLVMOrcDumpObjects_CallOperator( LLVMOrcDumpObjectsRef DumpObjects, ref LLVMMemoryBufferRef ObjBuffer );
     }
 }

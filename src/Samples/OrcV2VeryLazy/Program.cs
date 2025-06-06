@@ -21,7 +21,7 @@ internal class Program
         using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
 
         // Place the generated module in the JIT
-        jit.AddModule(jit.MainLib, mainMod);
+        jit.Add(jit.MainLib, mainMod);
         SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
         using var internedFooBodyName = jit.MangleAndIntern(FooBodySymbolName);

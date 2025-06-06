@@ -401,10 +401,22 @@ namespace Ubiquity.NET.InteropHelpers
         /// <exception cref="ArgumentNullException">The provided string is null</exception>
         public static void ThrowIfNullOrEmpty(this LazyEncodedString? self, [CallerArgumentExpression(nameof(self))] string? exp = null)
         {
-            ArgumentNullException.ThrowIfNull(self, exp);
-            if(self.IsEmpty)
+            if(LazyEncodedString.IsNullOrEmpty(self))
             {
-                throw new ArgumentException("String is empty", exp);
+                throw new ArgumentException("String is null or empty", exp);
+            }
+        }
+
+        /// <summary>Throws an exception if the string is null or empty</summary>
+        /// <param name="self">String to test</param>
+        /// <param name="exp">Argument expression that is calling this test [Normally supplied by compiler]</param>
+        /// <exception cref="ArgumentException">The provided string is empty</exception>
+        /// <exception cref="ArgumentNullException">The provided string is null</exception>
+        public static void ThrowIfNullOrWhiteSpace(this LazyEncodedString? self, [CallerArgumentExpression(nameof(self))] string? exp = null)
+        {
+            if(LazyEncodedString.IsNullOrWhiteSpace(self))
+            {
+                throw new ArgumentException("String is null or white space", exp);
             }
         }
     }

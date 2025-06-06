@@ -76,7 +76,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         // Expected version info for verification of matched LibLLVM
         // Interop exports/signatures may not be valid if not a match.
-        private static readonly CSemVer SupportedVersion = new(20, 1, 4);
+        private static readonly CSemVer SupportedVersion = new(20, 1, 6);
 
         // Singleton initializer for the supported targets array
         private static ImmutableArray<LibLLVMCodeGenTarget> GetSupportedTargets( )

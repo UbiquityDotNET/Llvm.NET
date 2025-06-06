@@ -7,55 +7,70 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
+    /// <summary>Delegate for an object layer factory</summary>
+    /// <param name="session">Session to create the layer for</param>
+    /// <param name="triple">Triple to create the layer for</param>
+    /// <returns>new <see cref="ObjectLayer"/> instance</returns>
+    /// <remarks>
+    /// Ownership of the returned layer is transferred to the caller.
+    /// </remarks>
+    public delegate ObjectLayer ObjectLayerFactory( in ExecutionSession session, in Triple triple );
+
     /// <summary>ORC JIT v2 Builder</summary>
     public sealed class LLJitBuilder
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="LLJitBuilder"/> class</summary>
         /// <param name="tmBldr">Target machine builder to use for this instance</param>
-        public LLJitBuilder(TargetMachineBuilder tmBldr)
-            : this(LLVMOrcCreateLLJITBuilder())
+        public LLJitBuilder( TargetMachineBuilder tmBldr )
+            : this( LLVMOrcCreateLLJITBuilder() )
         {
-            SetTargetMachineBuilder(tmBldr);
+            SetTargetMachineBuilder( tmBldr );
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
+            MoveToNative();
+        }
 
-#if SUPPORT_OBJECTLINKING_LAYER
+        private void MoveToNative( )
+        {
+            Handle.SetHandleAsInvalid();
+
             // If the callback context handle exists and is allocated then free it now.
             // The handle for this builder itself is already closed so LLVM should not
             // have any callbacks for this to handle... (docs are silent on the point)
-            if ( !ObjectLinkingLayerContextHandle.IsInvalid && !ObjectLinkingLayerContextHandle.IsClosed )
+            if(!ObjectLinkingLayerContextHandle.IsInvalid && !ObjectLinkingLayerContextHandle.IsClosed)
             {
                 ObjectLinkingLayerContextHandle.Dispose();
             }
-#endif
+
+            // Break any GC references to allow release
+            InternalObjectLayerFactory = null;
         }
 
         /// <summary>Sets the target machine builder for this JIT builder</summary>
         /// <param name="targetMachineBuilder">Target machine builder for this JIT builder</param>
-        public void SetTargetMachineBuilder(TargetMachineBuilder targetMachineBuilder)
+        public void SetTargetMachineBuilder( TargetMachineBuilder targetMachineBuilder )
         {
-            ArgumentNullException.ThrowIfNull(targetMachineBuilder);
-            LLVMOrcLLJITBuilderSetJITTargetMachineBuilder(Handle, targetMachineBuilder.Handle);
+            ArgumentNullException.ThrowIfNull( targetMachineBuilder );
+            LLVMOrcLLJITBuilderSetJITTargetMachineBuilder( Handle, targetMachineBuilder.Handle );
             // Ownership transferred to native code.
             targetMachineBuilder.Handle.SetHandleAsInvalid();
         }
 
-#if SUPPORT_OBJECTLINKING_LAYER
         /// <summary>Sets the object linking layer factory for this builder</summary>
         /// <param name="creator">Factory to use for this builder</param>
         /// <remarks>
         /// If no factory is provided a default instance is used. This allows callers
         /// to customize the behavior if the default is insufficient.
         /// </remarks>
-        public void SetObjectLinkingLayerCreator(IObjectLinkingLayerFactory creator)
+        public void SetObjectLinkingLayerCreator( ObjectLayerFactory creator )
         {
-            ArgumentNullException.ThrowIfNull(creator);
-            ObjectLinkingLayerContextHandle = new(creator);
+            ArgumentNullException.ThrowIfNull( creator );
+            ObjectLinkingLayerContextHandle = new( creator );
 
             unsafe
             {
@@ -66,7 +81,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     );
             }
         }
-#endif
 
         /// <summary>Creates a JIT engine</summary>
         /// <returns>Status results of the operation</returns>
@@ -75,17 +89,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// Thus, after this method is called, it is not valid to use this instance except to
         /// call <see cref="Dispose"/>, which is a NOP.
         /// </remarks>
-        public LlJIT CreateJit()
+        public LlJIT CreateJit( )
         {
-            ObjectDisposedException.ThrowIf(Handle.IsInvalid || Handle.IsClosed, this);
+            ObjectDisposedException.ThrowIf( Handle.IsInvalid || Handle.IsClosed, this );
             using LLVMErrorRef err = LLVMOrcCreateLLJIT(Handle, out LLVMOrcLLJITRef jitHandle);
             // calls Dispose in case something goes wrong before it is moved to return
             // NOTE: This is also a NOP if the call failed and jitHandle is NULL.
             using(jitHandle)
             {
-                Handle.SetHandleAsInvalid(); // failed or not, transfer happened...
+                // failed or not, transfer happened...
+                MoveToNative();
                 err.ThrowIfFailed();
-                return new(jitHandle); // internally "moves" the handle so Dispose is a NOP
+                return new( jitHandle ); // internally "moves" the handle so Dispose is a NOP
             }
         }
 
@@ -105,33 +120,34 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             return new( TargetMachineBuilder.FromHost( optLevel, relocationMode, codeModel ) );
 #pragma warning restore CA2000 // Dispose objects before losing scope
         }
-        private LLJitBuilder(LLVMOrcLLJITBuilderRef h)
+
+        private LLJitBuilder( LLVMOrcLLJITBuilderRef h )
         {
             Handle = h;
-
-#if SUPPORT_OBJECTLINKING_LAYER
-            ObjectLinkingLayerContextHandle = new(this);
-#endif
+            ObjectLinkingLayerContextHandle = new( this );
         }
 
         internal readonly LLVMOrcLLJITBuilderRef Handle;
 
-#if SUPPORT_OBJECTLINKING_LAYER
         private SafeGCHandle ObjectLinkingLayerContextHandle;
+        private ObjectLayerFactory? InternalObjectLayerFactory;
 
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe /*LLVMOrcObjectLayerRef*/ nint NativeObjectLinkingLayerCreatorCallback(void* context, nint sessionRef, byte* triple)
+        private static unsafe /*LLVMOrcObjectLayerRef*/ nint NativeObjectLinkingLayerCreatorCallback(
+            void* context,
+            nint sessionRef,
+            byte* triple
+        )
         {
             try
             {
-                if(MarshalGCHandle.TryGet<IObjectLinkingLayerFactory>(context, out IObjectLinkingLayerFactory? self))
+                if(MarshalGCHandle.TryGet<LLJitBuilder>( context, out LLJitBuilder? self ) && self.InternalObjectLayerFactory is not null)
                 {
                     using var managedTriple = new Triple(LazyEncodedString.FromUnmanaged(triple));
 
                     // caller takes ownership of the resulting handle; Don't Dispose it
-                    ObjectLayer layer = self.Create(new ExecutionSession(sessionRef), managedTriple);
-                    return layer.Handle.MoveToNative();
+                    return self.InternalObjectLayerFactory( new ExecutionSession( sessionRef ), managedTriple ).Handle.MoveToNative();
                 }
 
                 // TODO: How/Can this report an error? Internally the result is (via a C++ lambda) that returns an "llvm::expected"
@@ -143,6 +159,5 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 return 0; // This will probably crash in LLVM anyway - best effort.
             }
         }
-#endif
     }
 }

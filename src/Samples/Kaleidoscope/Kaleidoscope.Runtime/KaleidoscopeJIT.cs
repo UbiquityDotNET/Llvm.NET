@@ -85,8 +85,8 @@ namespace Kaleidoscope.Runtime
 
         public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default ) => ComposedJIT.AddWithTracking( ctx, module, lib );
         public ulong Lookup( LazyEncodedString name ) => ComposedJIT.Lookup( name );
-        public void AddModule( JITDyLib lib, ThreadSafeModule module ) => ComposedJIT.AddModule( lib, module );
-        public void AddModule( ResourceTracker tracker, ThreadSafeModule module ) => ComposedJIT.AddModule( tracker, module );
+        public void Add( JITDyLib lib, ThreadSafeModule module ) => ComposedJIT.Add( lib, module );
+        public void Add( ResourceTracker tracker, ThreadSafeModule module ) => ComposedJIT.Add( tracker, module );
         public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name ) => ComposedJIT.MangleAndIntern( name );
         #endregion
 
