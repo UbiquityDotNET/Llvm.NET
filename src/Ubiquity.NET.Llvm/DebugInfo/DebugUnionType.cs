@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                             )
                   )
         {
-            if( !llvmType.IsOpaque )
+            if(!llvmType.IsOpaque)
             {
                 throw new ArgumentException( Resources.Struct_type_used_as_basis_for_a_union_must_not_have_a_body, nameof( llvmType ) );
             }
@@ -83,7 +83,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public string Name => NativeType.Name;
 
         /// <summary>Gets the description of each member of the type</summary>
-        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>( ).AsReadOnly( );
+        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>().AsReadOnly();
 
         /// <summary>Sets the body of the union type</summary>
         /// <param name="diBuilder">Debug information to use</param>
@@ -102,7 +102,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentNullException.ThrowIfNull( debugElements );
 
-            if( diBuilder.OwningModule.Layout == null )
+            if(diBuilder.OwningModule.Layout == null)
             {
                 throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, nameof( diBuilder ) );
             }
@@ -110,15 +110,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             // Native body is a single element of a type with the largest size
             ulong maxSize = 0UL;
             var nativeMembers = new ITypeRef[1];
-            foreach( var elem in debugElements )
+            foreach(var elem in debugElements)
             {
                 ulong? bitSize = elem.ExplicitLayout?.BitSize ?? diBuilder.OwningModule.Layout.BitSizeOf( elem.DebugType );
-                if( !bitSize.HasValue )
+                if(!bitSize.HasValue)
                 {
                     throw new ArgumentException( Resources.Cannot_determine_layout_for_element__The_element_must_have_an_explicit_layout_or_the_module_has_a_layout_to_use, nameof( debugElements ) );
                 }
 
-                if( maxSize >= bitSize.Value )
+                if(maxSize >= bitSize.Value)
                 {
                     continue;
                 }
@@ -135,7 +135,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var memberTypes = new DIDerivedType[DebugMembers.Count];
             for(int i = 0; i < DebugMembers.Count; ++i)
             {
-                memberTypes[i] = CreateMemberType( in diBuilder, DebugMembers[i]);
+                memberTypes[ i ] = CreateMemberType( in diBuilder, DebugMembers[ i ] );
             }
 
             var (unionBitSize, unionAlign)
@@ -159,11 +159,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         private DIDerivedType CreateMemberType( ref readonly DIBuilder diBuilder, DebugMemberInfo memberInfo )
         {
             ulong bitSize;
-            if( memberInfo.ExplicitLayout is not null)
+            if(memberInfo.ExplicitLayout is not null)
             {
                 bitSize = memberInfo.ExplicitLayout.BitSize;
             }
-            else if( diBuilder.OwningModule.Layout is not null)
+            else if(diBuilder.OwningModule.Layout is not null)
             {
                 bitSize = diBuilder.OwningModule.Layout.BitSizeOf( memberInfo.DebugType );
             }

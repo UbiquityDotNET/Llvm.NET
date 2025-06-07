@@ -32,13 +32,13 @@ namespace Kaleidoscope.Chapter3
         {
             ArgumentNullException.ThrowIfNull( globalState );
 
-            if( globalState.LanguageLevel > LanguageLevel.SimpleExpressions )
+            if(globalState.LanguageLevel > LanguageLevel.SimpleExpressions)
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
 
             RuntimeState = globalState;
-            Context = new Context( );
+            Context = new Context();
             Module = Context.CreateBitcodeModule( "Kaleidoscope" );
             InstructionBuilder = new InstructionBuilder( Context );
         }
@@ -47,28 +47,28 @@ namespace Kaleidoscope.Chapter3
         #region Dispose
         public void Dispose( )
         {
-            Module.Dispose( );
+            Module.Dispose();
             InstructionBuilder.Dispose();
-            Context.Dispose( );
+            Context.Dispose();
         }
         #endregion
 
         #region Generate
         public Value? Generate( IAstNode ast )
         {
-            ArgumentNullException.ThrowIfNull(ast);
+            ArgumentNullException.ThrowIfNull( ast );
 
             // Prototypes, including extern are ignored as AST generation
             // adds them to the RuntimeState so that already has the declarations
             // They are looked up and added to the module as extern if not already
             // present if they are called.
-            if( ast is not FunctionDefinition definition )
+            if(ast is not FunctionDefinition definition)
             {
                 return default;
             }
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
-            return function.ParentModule.Verify(out string msg) ? (Value)function : throw new CodeGeneratorException(msg);
+            return function.ParentModule.Verify( out string msg ) ? (Value)function : throw new CodeGeneratorException( msg );
         }
         #endregion
 
@@ -86,26 +86,26 @@ namespace Kaleidoscope.Chapter3
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
-            switch( binaryOperator.Op )
+            switch(binaryOperator.Op)
             {
             case BuiltInOperatorKind.Less:
-                {
-                    var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
+            {
+                var tmp = InstructionBuilder.Compare( RealPredicate.UnorderedOrLessThan
                                                         , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
                                                         ).RegisterName( "cmptmp" );
-                    return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
-                                             .RegisterName( "booltmp" );
-                }
+                return InstructionBuilder.UIToFPCast( tmp, InstructionBuilder.Context.DoubleType )
+                                         .RegisterName( "booltmp" );
+            }
 
             case BuiltInOperatorKind.Pow:
-                {
-                    var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
-                    return InstructionBuilder.Call( pow
-                                                  , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
-                                                  ).RegisterName( "powtmp" );
-                }
+            {
+                var pow = GetOrDeclareFunction( new Prototype( "llvm.pow.f64", "value", "power" ) );
+                return InstructionBuilder.Call( pow
+                                              , binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              , binaryOperator.Right.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
+                                              ).RegisterName( "powtmp" );
+            }
 
             case BuiltInOperatorKind.Add:
                 return InstructionBuilder.FAdd( binaryOperator.Left.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidExpr )
@@ -141,11 +141,11 @@ namespace Kaleidoscope.Chapter3
             string targetName = functionCall.FunctionPrototype.Name;
 
             Function? function;
-            if( RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ) )
+            if(RuntimeState.FunctionDeclarations.TryGetValue( targetName, out Prototype? target ))
             {
                 function = GetOrDeclareFunction( target );
             }
-            else if( !Module.TryGetFunction( targetName, out function ) )
+            else if(!Module.TryGetFunction( targetName, out function ))
             {
                 throw new CodeGeneratorException( $"Definition for function {targetName} not found" );
             }
@@ -164,7 +164,7 @@ namespace Kaleidoscope.Chapter3
             ArgumentNullException.ThrowIfNull( definition );
 
             var function = GetOrDeclareFunction( definition.Signature );
-            if( !function.IsDeclaration )
+            if(!function.IsDeclaration)
             {
                 throw new CodeGeneratorException( $"Function {function.Name} cannot be redefined in the same module" );
             }
@@ -173,20 +173,20 @@ namespace Kaleidoscope.Chapter3
             {
                 var entryBlock = function.AppendBasicBlock( "entry" );
                 InstructionBuilder.PositionAtEnd( entryBlock );
-                NamedValues.Clear( );
-                foreach( var param in definition.Signature.Parameters )
+                NamedValues.Clear();
+                foreach(var param in definition.Signature.Parameters)
                 {
                     NamedValues[ param.Name ] = function.Parameters[ param.Index ];
                 }
 
                 var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
                 InstructionBuilder.Return( funcReturn );
-                function.Verify( );
+                function.Verify();
                 return function;
             }
-            catch( CodeGeneratorException )
+            catch(CodeGeneratorException)
             {
-                function.EraseFromParent( );
+                function.EraseFromParent();
                 throw;
             }
         }
@@ -197,7 +197,7 @@ namespace Kaleidoscope.Chapter3
         {
             ArgumentNullException.ThrowIfNull( reference );
 
-            if( !NamedValues.TryGetValue( reference.Name, out Value? value ) )
+            if(!NamedValues.TryGetValue( reference.Name, out Value? value ))
             {
                 // Source input is validated by the parser and AstBuilder, therefore
                 // this is the result of an internal error in the generator rather
@@ -215,7 +215,7 @@ namespace Kaleidoscope.Chapter3
         // otherwise declares the function and returns the newly declared function.
         private Function GetOrDeclareFunction( Prototype prototype )
         {
-            if( Module.TryGetFunction( prototype.Name, out Function? function ) )
+            if(Module.TryGetFunction( prototype.Name, out Function? function ))
             {
                 return function;
             }
@@ -224,7 +224,7 @@ namespace Kaleidoscope.Chapter3
             var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
 
             int index = 0;
-            foreach( var argId in prototype.Parameters )
+            foreach(var argId in prototype.Parameters)
             {
                 retVal.Parameters[ index ].Name = argId.Name;
                 ++index;

@@ -28,14 +28,14 @@ namespace Ubiquity.NET.Llvm
     public readonly ref struct DiagnosticInfo
     {
         /// <summary>Gets the severity for this diagnostic</summary>
-        public DiagnosticSeverity Severity => (DiagnosticSeverity)LLVMGetDiagInfoSeverity(Handle);
+        public DiagnosticSeverity Severity => (DiagnosticSeverity)LLVMGetDiagInfoSeverity( Handle );
 
         /// <summary>Gets the description for this diagnostic</summary>
-        public string Description => LLVMGetDiagInfoDescription(Handle);
+        public string Description => LLVMGetDiagInfoDescription( Handle );
 
-        internal DiagnosticInfo(nint abi)
+        internal DiagnosticInfo( nint abi )
         {
-            Handle = LLVMDiagnosticInfoRef.FromABI(abi);
+            Handle = LLVMDiagnosticInfoRef.FromABI( abi );
         }
 
         internal LLVMDiagnosticInfoRef Handle { get; }

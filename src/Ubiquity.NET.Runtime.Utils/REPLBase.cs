@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="generator">Result generator to transform nodes parsed into the evaluated result</param>
         /// <param name="cancelToken">Cancellation token to allow cancellation of the REPL loop</param>
         /// <returns>Async task for the operation</returns>
-        public async Task Run( TextReader input, IParser parser, ICodeGenerator<T> generator, CancellationToken cancelToken = default)
+        public async Task Run( TextReader input, IParser parser, ICodeGenerator<T> generator, CancellationToken cancelToken = default )
         {
             ShowPrompt( ReadyState.StartExpression );
 
@@ -42,21 +42,21 @@ namespace Ubiquity.NET.Runtime.Utils
                           where !ErrorLogger.CheckAndReportParseErrors( node )
                           select node;
 
-            await foreach( IAstNode node in replSeq.WithCancellation(cancelToken) )
+            await foreach(IAstNode node in replSeq.WithCancellation( cancelToken ))
             {
                 try
                 {
                     T? result = generator.Generate( node );
-                    if( result is not null )
+                    if(result is not null)
                     {
                         ShowResults( result );
                     }
                 }
-                catch( CodeGeneratorException ex )
+                catch(CodeGeneratorException ex)
                 {
                     // This is an internal error that is not recoverable.
                     // Show the error and stop additional processing
-                    ErrorLogger.ReportError( ex.ToString( ) );
+                    ErrorLogger.ReportError( ex.ToString() );
                     break;
                 }
             }

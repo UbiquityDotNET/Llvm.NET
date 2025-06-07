@@ -44,19 +44,19 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void RegisteredTargetsTest( )
         {
-            Assert.IsNotNull(ModuleFixtures.LibLLVM);
+            Assert.IsNotNull( ModuleFixtures.LibLLVM );
 
             // Register ALL targets so this test can look at what all of them are
-            ModuleFixtures.LibLLVM.RegisterTarget(CodeGenTarget.All);
+            ModuleFixtures.LibLLVM.RegisterTarget( CodeGenTarget.All );
 
             // For debug builds show the full list to aid in updating test code
             // Obviously this needs review/verification but simplifies the creation
             // of the table.
-            GenerateExpectedTargets( );
+            GenerateExpectedTargets();
 
             Assert.IsNotNull( Target.RegisteredTargets );
             int foundTargets = 0;
-            foreach( var target in Target.RegisteredTargets )
+            foreach(var target in Target.RegisteredTargets)
             {
                 Assert.IsNotNull( target );
                 TargetInfo info = TargetInfo.ExpectedTargets[ target.Name ];
@@ -118,7 +118,7 @@ namespace Ubiquity.NET.Llvm.UT
             public bool HasTargetMachine { get; }
 
             internal static readonly TargetInfoCollection ExpectedTargets = [
-                //   Name, description, HasAsmBackend, HasJIT, HasTargetMachine
+                /*   Name, description, HasAsmBackend, HasJIT, HasTargetMachine */
                 new( "xcore", "XCore", false, false, true ),
                 new( "x86-64", "64-bit X86: EM64T and AMD64", true, true, true ),
                 new( "x86", "32-bit X86: Pentium-Pro and above", true, true, true ),
@@ -176,10 +176,10 @@ namespace Ubiquity.NET.Llvm.UT
         internal static void GenerateExpectedTargets( )
         {
             var bldr = new System.Text.StringBuilder( "internal static readonly TargetInfoCollection ExpectedTargets = new TargetInfoCollection {" );
-            bldr.AppendLine( );
+            bldr.AppendLine();
             var targets = System.Linq.Enumerable.ToList( Target.RegisteredTargets );
-            bldr.AppendLine("    //   Name, description, HasAsmBackend, HasJIT, HasTargetMachine");
-            for( int i = 0; i < targets.Count; ++i )
+            bldr.AppendLine( "    //   Name, description, HasAsmBackend, HasJIT, HasTargetMachine" );
+            for(int i = 0; i < targets.Count; ++i)
             {
                 var target = targets[ i ];
                 bldr.AppendFormat( CultureInfo.InvariantCulture
@@ -195,7 +195,7 @@ namespace Ubiquity.NET.Llvm.UT
             }
 
             bldr.AppendLine( "};" );
-            Debug.WriteLine( bldr.ToString( ) );
+            Debug.WriteLine( bldr.ToString() );
         }
     }
 }

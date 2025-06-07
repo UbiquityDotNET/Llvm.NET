@@ -88,9 +88,10 @@ csharp_style_prefer_null_check_over_type_check = true:error
 csharp_prefer_simple_default_expression = true:error
 csharp_space_between_method_declaration_parameter_list_parentheses = true
 csharp_space_between_method_declaration_empty_parameter_list_parentheses = true
-dotnet_diagnostic.SA0001.severity = none
 csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
+dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.SA1135.severity = none
 
 # Analysis and refactoring rules for Ubiquity.NET
 # Description: Code analysis rules for Ubiquity.NET projects
@@ -1253,8 +1254,6 @@ dotnet_diagnostic.RECS0145.severity = none
 dotnet_diagnostic.RECS0147.severity = warning
 
 dotnet_diagnostic.RECS0154.severity = suggestion
-
-dotnet_diagnostic.SA0001.severity = silent
 
 dotnet_diagnostic.SA1000.severity = none
 

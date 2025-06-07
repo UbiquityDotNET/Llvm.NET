@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static GlobalObject Comdat( this GlobalObject self, string name, ComdatKind kind )
         {
             ArgumentNullException.ThrowIfNull( self );
-            self.Comdat = new(LibLLVMModuleInsertOrUpdateComdat(self.ParentModule.GetUnownedHandle(), name, (LLVMComdatSelectionKind)kind));
+            self.Comdat = new( LibLLVMModuleInsertOrUpdateComdat( self.ParentModule.GetUnownedHandle(), name, (LLVMComdatSelectionKind)kind ) );
             return self;
         }
 

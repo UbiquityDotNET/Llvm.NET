@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <summary>Adds incoming blocks and values to this <see cref="PhiNode"/></summary>
         /// <param name="firstIncoming">first incoming value and block</param>
         /// <param name="additionalIncoming">additional values and blocks</param>
-        public void AddIncoming( (Value Value, BasicBlock Block) firstIncoming, params (Value Value, BasicBlock Block)[ ] additionalIncoming )
+        public void AddIncoming( (Value Value, BasicBlock Block) firstIncoming, params (Value Value, BasicBlock Block)[] additionalIncoming )
         {
             ArgumentNullException.ThrowIfNull( additionalIncoming );
 
@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             LLVMValueRef[ ] llvmValues = [ .. allIncoming.Select( vb => vb.Value.Handle ) ];
             LLVMBasicBlockRef[ ] llvmBlocks = [ .. allIncoming.Select( vb => vb.Block.BlockHandle ) ];
 
-            LLVMAddIncoming( Handle, llvmValues, llvmBlocks, ( uint )llvmValues.Length );
+            LLVMAddIncoming( Handle, llvmValues, llvmBlocks, (uint)llvmValues.Length );
         }
 
         internal PhiNode( LLVMValueRef valueRef )

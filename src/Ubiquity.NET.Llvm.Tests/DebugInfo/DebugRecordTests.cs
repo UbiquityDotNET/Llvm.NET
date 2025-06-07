@@ -25,8 +25,8 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             using var diBuilder = new DIBuilder(module);
             DICompileUnit compilationUnit = diBuilder.CreateCompileUnit(SourceLanguage.CSharp, "test.cs", "test method 0.0.0");
 
-            Assert.IsNotNull(compilationUnit, "Just created CU should not be null");
-            Assert.IsNotNull(compilationUnit.File, "CU should not have null file, it was provided in creation");
+            Assert.IsNotNull( compilationUnit, "Just created CU should not be null" );
+            Assert.IsNotNull( compilationUnit.File, "CU should not have null file, it was provided in creation" );
 
             var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
             var i32Ptr = i32.CreatePointerType(in diBuilder, 0);
@@ -45,30 +45,32 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                                                 , isOptimized: false
                                                 );
 
-            Assert.IsNotNull(testFunc.DISubProgram, "Function creation provided debug info, subprogram should NOT be null");
+            Assert.IsNotNull( testFunc.DISubProgram, "Function creation provided debug info, subprogram should NOT be null" );
 
             var entryBlock = testFunc.AppendBasicBlock("entry");
             using var instBuilder = new InstructionBuilder(entryBlock);
             ConstantInt constOne = ctx.CreateConstant(1);
             Value addInst = instBuilder.Add(constOne, constOne);
-            Assert.IsFalse(addInst is Instruction, "Constant folding should make this a constant, not a real instruction");
+            Assert.IsFalse( addInst is Instruction, "Constant folding should make this a constant, not a real instruction" );
 
             var loc = new DILocation(ctx, 25, 1, testFunc.DISubProgram);
+
             // NOTE: register name not really needed here but matches the lower level interop test
             var mallocValue = instBuilder.Malloc(i32).RegisterName("malloc_1");
-            Assert.IsTrue(mallocValue is Instruction);
+            Assert.IsTrue( mallocValue is Instruction );
             var mallocInst = (Instruction)mallocValue;
-            Assert.IsFalse(mallocInst.HasDebugRecords);
+            Assert.IsFalse( mallocInst.HasDebugRecords );
 
             // Now attach some records to the instruction and test again.
             var diVarInfo = diBuilder.CreateLocalVariable(testFunc.DISubProgram, "testmallocVal", compilationUnit.File, 25, i32Ptr);
-            diBuilder.InsertDeclare(mallocInst, diVarInfo, new DILocation(ctx, 25, 1, testFunc.DISubProgram), mallocInst);
-            Assert.IsTrue(mallocInst.HasDebugRecords);
+            diBuilder.InsertDeclare( mallocInst, diVarInfo, new DILocation( ctx, 25, 1, testFunc.DISubProgram ), mallocInst );
+            Assert.IsTrue( mallocInst.HasDebugRecords );
+
             // Test enumeration of records works (doesn't crash at least)
             DebugRecord[] records = [ .. mallocInst.DebugRecords ];
-            Assert.AreEqual(1, records.Length);
-            Assert.IsFalse(records[0].IsNull, "Should not enumerate a null record" );
-            Assert.IsTrue(records[0].NextRecord.IsNull, "Next record should be null (only one record expected)");
+            Assert.AreEqual( 1, records.Length );
+            Assert.IsFalse( records[ 0 ].IsNull, "Should not enumerate a null record" );
+            Assert.IsTrue( records[ 0 ].NextRecord.IsNull, "Next record should be null (only one record expected)" );
         }
     }
 }

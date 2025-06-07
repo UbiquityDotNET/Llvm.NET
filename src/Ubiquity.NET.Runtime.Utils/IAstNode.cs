@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// -----------------------------------------------------------------------
+// <copyright file="IAstNode.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -23,7 +29,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="visitor">Visitor to dispatch the concrete type to</param>
         /// <param name="arg">Argument to pass to the concrete type as a readonly ref</param>
         /// <returns>Result of visiting this node</returns>
-        TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+        TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TArg : struct, allows ref struct;
     }
 }

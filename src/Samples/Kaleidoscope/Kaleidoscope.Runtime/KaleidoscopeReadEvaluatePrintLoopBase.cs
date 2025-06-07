@@ -29,26 +29,26 @@ namespace Kaleidoscope.Runtime
 
         public abstract ICodeGenerator<T> CreateGenerator( DynamicRuntimeState state );
 
-        public async Task Run( TextReader input, CancellationToken cancelToken = default)
+        public async Task Run( TextReader input, CancellationToken cancelToken = default )
         {
-            await Run(input, null, cancelToken);
+            await Run( input, null, cancelToken );
         }
 
-        public async Task Run( TextReader input, IVisualizer? visualizer, CancellationToken cancelToken = default)
+        public async Task Run( TextReader input, IVisualizer? visualizer, CancellationToken cancelToken = default )
         {
             var parser = new Kaleidoscope.Grammar.Parser(LanguageFeatureLevel, visualizer);
             ICodeGenerator<T> generator = CreateGenerator( parser.GlobalState );
-            await Run(input, parser, generator, cancelToken);
+            await Run( input, parser, generator, cancelToken );
         }
 
         protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level )
-            : base( )
+            : base()
         {
             LanguageFeatureLevel = level;
         }
 
         protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
-            : base(logger)
+            : base( logger )
         {
             LanguageFeatureLevel = level;
         }

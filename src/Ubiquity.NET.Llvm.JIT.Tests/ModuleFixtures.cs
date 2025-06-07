@@ -22,7 +22,6 @@ namespace Ubiquity.NET.LlvmTests
         [AssemblyInitialize]
         public static void AssemblyInitialize( TestContext ctx )
         {
-
             LibLLVM?.Dispose();
 
             LibLLVM = Library.InitializeLLVM();
@@ -34,7 +33,7 @@ namespace Ubiquity.NET.LlvmTests
         [AssemblyCleanup]
         public static void AssemblyCleanup( )
         {
-            LibLLVM?.Dispose( );
+            LibLLVM?.Dispose();
         }
 
         private static ILibLlvm? LibLLVM;

@@ -105,11 +105,12 @@ namespace Ubiquity.NET.Llvm
         : IEquatable<Target>
     {
         #region Equality
-        /// <inheritdoc/>
-        public bool Equals( Target? other ) => other is not null && Handle.Equals(other.Handle);
 
         /// <inheritdoc/>
-        public override bool Equals( object? obj ) => obj is Target t && Equals(t);
+        public bool Equals( Target? other ) => other is not null && Handle.Equals( other.Handle );
+
+        /// <inheritdoc/>
+        public override bool Equals( object? obj ) => obj is Target t && Equals( t );
 
         /// <inheritdoc/>
         public override int GetHashCode( )
@@ -185,7 +186,7 @@ namespace Ubiquity.NET.Llvm
             get
             {
                 var current = LLVMGetFirstTarget( );
-                while( current != default )
+                while(current != default)
                 {
                     yield return new( current );
                     current = LLVMGetNextTarget( current );
@@ -196,7 +197,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="triple">Target <see cref="Triple"/> describing the target</param>
         /// <returns>Target for the given triple</returns>
-        public static Target FromTriple( Triple triple ) => FromTriple( triple.ThrowIfNull().ToString( ).ThrowIfNull() );
+        public static Target FromTriple( Triple triple ) => FromTriple( triple.ThrowIfNull().ToString().ThrowIfNull() );
 
         /// <summary>Gets the target for a given target "triple" value</summary>
         /// <param name="targetTriple">Target triple string describing the target</param>

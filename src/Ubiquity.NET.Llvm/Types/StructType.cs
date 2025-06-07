@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.Types
         public void SetBody( bool packed, params IEnumerable<ITypeRef> elements )
         {
             LLVMTypeRef[ ] llvmArgs = [ .. elements.Select( e => e.GetTypeRef() ) ];
-            LLVMStructSetBody( Handle, llvmArgs, ( uint )llvmArgs.Length, packed );
+            LLVMStructSetBody( Handle, llvmArgs, (uint)llvmArgs.Length, packed );
         }
 
         public string Name => LLVMGetStructName( Handle ) ?? string.Empty;
@@ -60,10 +60,10 @@ namespace Ubiquity.NET.Llvm.Types
             get
             {
                 var members = new List<ITypeRef>( );
-                if( Kind == TypeKind.Struct && !IsOpaque )
+                if(Kind == TypeKind.Struct && !IsOpaque)
                 {
                     uint count = LLVMCountStructElementTypes( Handle );
-                    if( count > 0 )
+                    if(count > 0)
                     {
                         var structElements = new LLVMTypeRef[ count ];
                         LLVMGetStructElementTypes( Handle, structElements );

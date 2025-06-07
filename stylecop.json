@@ -11,7 +11,7 @@
         "namingRules":
         {
             "allowCommonHungarianPrefixes": false,
-            "allowedHungarianPrefixes": ["h", "di", "op", "os", "ir", "is", "do", "un", "on", "to", "if", "no", "v", "in", "p"]
+            "allowedHungarianPrefixes": ["h", "di", "op", "os", "ir", "is", "do", "un", "on", "to", "if", "no", "v", "in", "p", "pp", "by", "dy"]
         },
         "orderingRules":
         {
@@ -27,7 +27,8 @@
         "layoutRules":
         {
             "newlineAtEndOfFile": "require",
-            "allowConsecutiveUsings": true
+            "allowConsecutiveUsings": true,
+            "allowDoWhileOnClosingBrace": true
         },
         "documentationRules":
         {

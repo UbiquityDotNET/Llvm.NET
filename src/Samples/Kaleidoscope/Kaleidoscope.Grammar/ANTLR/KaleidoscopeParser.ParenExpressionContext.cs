@@ -10,7 +10,7 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class ParenExpressionContext
         {
-            public ExpressionContext Expression => ( ExpressionContext )GetChild( 1 );
+            public ExpressionContext Expression => (ExpressionContext)GetChild( 1 );
         }
     }
 }

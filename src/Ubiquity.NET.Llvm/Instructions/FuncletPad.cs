@@ -18,7 +18,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public Value ParentPad => Operands[ ^1 ]!;
 
         /// <summary>Gets the argument operands for this <see cref="FuncletPad"/>.</summary>
-        public IOperandCollection<Value?> ArgOperands => ((IOperandCollection<Value?>)Operands)[1..];
+        public IOperandCollection<Value?> ArgOperands => ((IOperandCollection<Value?>)Operands)[ 1.. ];
 
         internal FuncletPad( LLVMValueRef valueRef )
             : base( valueRef )

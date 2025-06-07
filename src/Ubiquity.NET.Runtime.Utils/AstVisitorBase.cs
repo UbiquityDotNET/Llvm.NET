@@ -1,4 +1,11 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AstVisitorBase.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -13,7 +20,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public virtual TResult? Visit( IAstNode node )
         {
-            return VisitChildren(node);
+            return VisitChildren( node );
         }
 
         /// <inheritdoc cref="AstVisitorBase{TResult, TArg}.VisitChildren(IAstNode, ref readonly TArg)"/>
@@ -21,7 +28,7 @@ namespace Ubiquity.NET.Runtime.Utils
         {
             ArgumentNullException.ThrowIfNull( node );
             TResult? aggregate = DefaultResult;
-            foreach( var child in node.Children )
+            foreach(var child in node.Children)
             {
                 aggregate = AggregateResult( aggregate, child.Accept( this ) );
             }
@@ -29,7 +36,7 @@ namespace Ubiquity.NET.Runtime.Utils
             return aggregate;
         }
 
-        /// <summary>Initializes a new instance of <see cref="AstVisitorBase{TResult}"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="AstVisitorBase{TResult}"/> class</summary>
         /// <param name="defaultResult">Default result to use for visitation</param>
         protected AstVisitorBase( TResult? defaultResult )
         {
@@ -136,6 +143,7 @@ namespace Ubiquity.NET.Runtime.Utils
     /// }
     /// ]]></code>
     /// </example>
+    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Related Generic - split file names is just confusing" )]
     public class AstVisitorBase<TResult, TArg>
         : IAstVisitor<TResult, TArg>
         where TArg : struct, allows ref struct
@@ -150,7 +158,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public virtual TResult? Visit( IAstNode node, ref readonly TArg arg )
         {
-            return VisitChildren(node, in arg);
+            return VisitChildren( node, in arg );
         }
 
         /// <summary>Visits each child and aggregates the results as the return value</summary>
@@ -161,11 +169,11 @@ namespace Ubiquity.NET.Runtime.Utils
         /// The protected virtual method <see cref="AggregateResult"/> is responsible for aggregation
         /// of results. The default is to simply replace the results with that of the new visitation.
         /// </remarks>
-        public virtual TResult? VisitChildren( IAstNode node, ref readonly TArg arg)
+        public virtual TResult? VisitChildren( IAstNode node, ref readonly TArg arg )
         {
             ArgumentNullException.ThrowIfNull( node );
             TResult? aggregate = DefaultResult;
-            foreach( var child in node.Children )
+            foreach(var child in node.Children)
             {
                 aggregate = AggregateResult( aggregate, child.Accept( this, in arg ) );
             }
@@ -173,7 +181,7 @@ namespace Ubiquity.NET.Runtime.Utils
             return aggregate;
         }
 
-        /// <summary>Initializes a new instance of <see cref="AstVisitorBase{TResult, TArg}"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="AstVisitorBase{TResult, TArg}"/> class</summary>
         /// <param name="defaultResult">Default result to use for visitation</param>
         protected AstVisitorBase( TResult? defaultResult )
         {

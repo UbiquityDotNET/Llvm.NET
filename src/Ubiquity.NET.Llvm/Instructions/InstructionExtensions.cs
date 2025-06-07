@@ -22,9 +22,9 @@ namespace Ubiquity.NET.Llvm.Instructions
         public static T SetAlignment<T>( this T self, uint value )
             where T : Instruction
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
-            if( self.IsMemoryAccess )
+            if(self.IsMemoryAccess)
             {
                 self.Alignment = value;
             }
@@ -40,18 +40,18 @@ namespace Ubiquity.NET.Llvm.Instructions
         public static T SetIsVolatile<T>( this T self, bool value )
             where T : Instruction
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
-            if( self.IsMemoryAccess )
+            if(self.IsMemoryAccess)
             {
                 // only load and store instructions have the volatile property
-                if( self is Load loadInst )
+                if(self is Load loadInst)
                 {
                     loadInst.IsVolatile = value;
                 }
                 else
                 {
-                    if( self is Store storeinst )
+                    if(self is Store storeinst)
                     {
                         storeinst.IsVolatile = value;
                     }

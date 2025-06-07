@@ -24,23 +24,23 @@ namespace Kaleidoscope.Grammar.ANTLR
             ArgumentNullException.ThrowIfNull( globalState );
 
             GlobalState = globalState;
-            if( errorListener != null )
+            if(errorListener != null)
             {
-                RemoveErrorListeners( );
+                RemoveErrorListeners();
                 AddErrorListener( new ParseErrorListenerAdapter( errorListener ) );
             }
 
-            if( globalState.LanguageLevel >= LanguageLevel.UserDefinedOperators )
+            if(globalState.LanguageLevel >= LanguageLevel.UserDefinedOperators)
             {
                 AddParseListener( new KaleidoscopeUserOperatorListener( GlobalState ) );
             }
 
-            if( useDiagnosticListener )
+            if(useDiagnosticListener)
             {
                 AddParseListener( new DebugTraceListener( this ) );
             }
 
-            ErrorHandler = new FailedPredicateErrorStrategy( );
+            ErrorHandler = new FailedPredicateErrorStrategy();
         }
 
         /// <summary>Gets the Language level the application supports</summary>

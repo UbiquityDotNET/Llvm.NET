@@ -1,4 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// -----------------------------------------------------------------------
+// <copyright file="SkipTestAttribute.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
@@ -16,7 +22,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
     {
         public override TestResult[] Execute( ITestMethod testMethod )
         {
-            return [new() { Outcome = UnitTestOutcome.Ignored }];
+            return [ new() { Outcome = UnitTestOutcome.Ignored } ];
         }
     }
 }

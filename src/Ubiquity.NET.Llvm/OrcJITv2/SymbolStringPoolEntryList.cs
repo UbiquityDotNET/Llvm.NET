@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// use the <see cref="SymbolStringPoolEntry.SymbolStringPoolEntry(SymbolStringPoolEntry)"/>
         /// "add ref constructor" to gain ownership of the instance.
         /// </remarks>
-        public readonly SymbolStringPoolEntry this[ UInt64 index ] => GetItemAt(index);
+        public readonly SymbolStringPoolEntry this[ UInt64 index ] => GetItemAt( index );
 
         /// <summary>Gets the number of elements in this list</summary>
         public readonly UInt64 Count { get; }
@@ -35,33 +35,33 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// This does not alter the items in the list as this instance does
         /// NOT own the entries.
         /// </remarks>
-        public void Dispose()
+        public void Dispose( )
         {
             unsafe
             {
-                if( NativeArrayPtr is not null)
+                if(NativeArrayPtr is not null)
                 {
-                    LLVMOrcDisposeSymbols(NativeArrayPtr);
+                    LLVMOrcDisposeSymbols( NativeArrayPtr );
                     NativeArrayPtr = null;
                 }
             }
         }
 
-        internal unsafe SymbolStringPoolEntryList(nint* pHandles, UInt64 len)
+        internal unsafe SymbolStringPoolEntryList( nint* pHandles, UInt64 len )
         {
             NativeArrayPtr = pHandles;
             Count = len;
         }
 
         // CONSIDER: This should return a dedicated ref struct type so that the rules of ownership are enforced by compiler instead of documentation...
-        private readonly SymbolStringPoolEntry GetItemAt(UInt64 index)
+        private readonly SymbolStringPoolEntry GetItemAt( UInt64 index )
         {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, Count);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan( index, Count );
 
             unsafe
             {
                 nint abiHandle = *(NativeArrayPtr + index);
-                return new(abiHandle);
+                return new( abiHandle );
             }
         }
 

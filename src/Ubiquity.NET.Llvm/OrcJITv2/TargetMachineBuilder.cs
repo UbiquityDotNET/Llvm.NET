@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <inheritdoc/>
         public void Dispose( ) => Handle.Dispose();
 
-        /// <summary>Initializes a new instance of <see cref="TargetMachineBuilder"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="TargetMachineBuilder"/> class</summary>
         /// <param name="template"><see cref="TargetMachine"/> to use as a template</param>
         /// <remarks>
         /// Ownership of the <paramref name="template"/> is transferred to native code by this constructor.
@@ -24,17 +24,17 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull( template );
             Handle = LLVMOrcJITTargetMachineBuilderCreateFromTargetMachine( template.Handle );
+
             // transfer complete mark it as invalid now
             template.Handle.SetHandleAsInvalid();
         }
 
-        /// <summary>Gets the Triple for this builder as a string</summary>
+        /// <summary>Gets or sets the Triple for this builder as a string</summary>
         [SuppressMessage( "Style", "IDE0025:Use expression body for property", Justification = "Temporary, as setter is plausible, though seems dubious" )]
         public LazyEncodedString Triple
         {
             get => LLVMOrcJITTargetMachineBuilderGetTargetTriple( Handle );
-            // For now, block this as it seems dubious to allow setting only this
-            //set => LLVMOrcJITTargetMachineBuilderSetTargetTriple( Handle, value );
+            set => LLVMOrcJITTargetMachineBuilderSetTargetTriple( Handle, value );
         }
 
         /// <summary>Creates a <see cref="TargetMachineBuilder"/> for the current host system</summary>
@@ -48,12 +48,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             CodeModel codeModel = CodeModel.Default
         )
         {
-
 #pragma warning disable CA2000 // Dispose objects before losing scope
             // Ownership transfered to return value.
-            return new( TargetMachine.HostMachine(optLevel, relocationMode, codeModel) );
+            return new( TargetMachine.HostMachine( optLevel, relocationMode, codeModel ) );
 #pragma warning restore CA2000 // Dispose objects before losing scope
-
+            /*
             // While this API does exist, it does NOT provide any means to set the options; they are ALL defaults
             //using LLVMErrorRef errorRef = LLVMOrcJITTargetMachineBuilderDetectHost(out LLVMOrcJITTargetMachineBuilderRef handle);
             //errorRef.ThrowIfFailed();
@@ -61,6 +60,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             //{
             //    return new(handle);
             //}
+            */
         }
 
         internal TargetMachineBuilder( LLVMOrcJITTargetMachineBuilderRef h )

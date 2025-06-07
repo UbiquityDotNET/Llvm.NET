@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         JITDyLib MainLib { get; }
 
         /// <summary>Gets the data layout string for this JIT</summary>
-        LazyEncodedString DataLayoutString {get;}
+        LazyEncodedString DataLayoutString { get; }
 
         /*
         TODO: Add LibLLVMxxx to make this go away, the underlying JIT HAS a Triple instance!
@@ -48,13 +48,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="lib">Library to work on</param>
         /// <returns>Resource tracker for this instance</returns>
         [MustUseReturnValue]
-        ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module, JITDyLib lib = default);
+        ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default );
 
         /// <summary>Looks up the native address of a symbol</summary>
         /// <param name="name">NameField of the symbol to find the address of</param>
         /// <returns>Address of the symbol</returns>
         /// <exception cref="LlvmException">Error occurred with lookup [Most likely the symbol is not found]</exception>
-        UInt64 Lookup(LazyEncodedString name);
+        UInt64 Lookup( LazyEncodedString name );
 
         /// <summary>Adds a module to the JIT</summary>
         /// <param name="lib">Library to add the module to in this JIT</param>
@@ -70,7 +70,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// if disposed so it is safe to declare instances with a "using".
         /// </note>
         /// </remarks>
-        void AddModule(JITDyLib lib, ThreadSafeModule module);
+        void Add( JITDyLib lib, ThreadSafeModule module );
 
         /// <summary>Adds a module to the JIT</summary>
         /// <param name="tracker">Resource tracker to manage the module</param>
@@ -86,11 +86,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// if disposed so it is safe to declare instances with a "using".
         /// </note>
         /// </remarks>
-        void AddModule(ResourceTracker tracker, ThreadSafeModule module);
+        void Add( ResourceTracker tracker, ThreadSafeModule module );
 
         /// <summary>Mangles and interns a symbol in the JIT's symbol pool</summary>
         /// <param name="name">Symbol name to add</param>
         /// <returns>Entry to the string pool for the symbol</returns>
-        SymbolStringPoolEntry MangleAndIntern(LazyEncodedString name);
+        SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name );
     }
 }

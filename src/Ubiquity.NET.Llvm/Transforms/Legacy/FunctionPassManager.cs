@@ -9,7 +9,7 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>LLVM pass manager for functions</summary>
-    [Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Function instead")]
+    [Obsolete( "Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Function instead" )]
     public sealed class FunctionPassManager
         : PassManager
     {

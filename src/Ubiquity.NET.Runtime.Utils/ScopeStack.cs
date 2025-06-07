@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public ScopeStack( )
         {
-            Scopes.Push( new Dictionary<string, T>( ) );
+            Scopes.Push( new Dictionary<string, T>() );
         }
 
         /// <summary>Gets the depth of the stack</summary>
@@ -48,8 +48,8 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public IDisposable EnterScope( )
         {
-            Scopes.Push( new Dictionary<string, T>( ) );
-            return new DisposableAction( ( ) => Scopes.Pop( ) );
+            Scopes.Push( new Dictionary<string, T>() );
+            return new DisposableAction( ( ) => Scopes.Pop() );
         }
 
         /// <summary>Gets or sets the value of a symbol in scope</summary>
@@ -65,7 +65,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public T this[ string name ]
         {
             get => TryGetValue( name, out T? retVal ) ? retVal : throw new KeyNotFoundException( name );
-            set => Scopes.Peek( )[ name ] = value;
+            set => Scopes.Peek()[ name ] = value;
         }
 
         /// <summary>Attempts to retrieve a value from the stack</summary>
@@ -75,9 +75,9 @@ namespace Ubiquity.NET.Runtime.Utils
         public bool TryGetValue( string name, [MaybeNullWhen( false )] out T value )
         {
             value = default!;
-            foreach( var scope in Scopes )
+            foreach(var scope in Scopes)
             {
-                if( scope.TryGetValue( name, out value ) )
+                if(scope.TryGetValue( name, out value ))
                 {
                     return true;
                 }

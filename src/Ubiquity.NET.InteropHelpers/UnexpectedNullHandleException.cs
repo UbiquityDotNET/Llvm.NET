@@ -18,7 +18,7 @@ namespace Ubiquity.NET.InteropHelpers
     {
         /// <summary>Initializes a new instance of the <see cref="UnexpectedNullHandleException"/> class.</summary>
         /// <param name="message">Exception error message</param>
-        public UnexpectedNullHandleException(string message)
+        public UnexpectedNullHandleException( string message )
             : base( message )
         {
         }
@@ -26,13 +26,13 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Initializes a new instance of the <see cref="UnexpectedNullHandleException"/> class.</summary>
         /// <param name="message">Exception error message</param>
         /// <param name="innerException">Inner Exception</param>
-        public UnexpectedNullHandleException(string message, Exception innerException)
+        public UnexpectedNullHandleException( string message, Exception innerException )
             : base( message, innerException )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="UnexpectedNullHandleException"/> class.</summary>
-        public UnexpectedNullHandleException()
+        public UnexpectedNullHandleException( )
         {
         }
     }

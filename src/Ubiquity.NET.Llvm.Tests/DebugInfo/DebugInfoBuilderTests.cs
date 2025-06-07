@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
     {
         #region DIBuilder.CreateFile
         [TestMethod]
-        [TestCategory("DIBuilder.CreateFile")]
+        [TestCategory( "DIBuilder.CreateFile" )]
         public void CreateFile_with_null_path_should_succeed( )
         {
             using var context = new Context( );
@@ -37,7 +37,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         }
 
         [TestMethod]
-        [TestCategory("DIBuilder.CreateFile")]
+        [TestCategory( "DIBuilder.CreateFile" )]
         public void CreateFile_with_empty_path_should_succeed( )
         {
             using var context =new Context( );
@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         }
 
         [TestMethod]
-        [TestCategory("DIBuilder.CreateFile")]
+        [TestCategory( "DIBuilder.CreateFile" )]
         public void CreateFile_with_valid_path_should_succeed( )
         {
             using var context =new Context( );
@@ -65,7 +65,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         }
 
         [TestMethod]
-        [TestCategory("DIBuilder.CreateFile")]
+        [TestCategory( "DIBuilder.CreateFile" )]
         public void CreateFile_with_null_directory_should_succeed( )
         {
             using var context =new Context( );
@@ -79,7 +79,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         }
 
         [TestMethod]
-        [TestCategory("DIBuilder.CreateFile")]
+        [TestCategory( "DIBuilder.CreateFile" )]
         public void CreateFile_with_empty_directory_should_succeed( )
         {
             using var context =new Context( );
@@ -93,7 +93,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
         }
 
         [TestMethod]
-        [TestCategory("DIBuilder.CreateFile")]
+        [TestCategory( "DIBuilder.CreateFile" )]
         public void CreateFile_with_valid_directory_and_filename_should_succeed( )
         {
             using var context =new Context( );
@@ -126,7 +126,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                                                , runtimeVersion: 0
                                                );
             });
-            Assert.AreEqual( "sourceFilePath", ex.ParamName);
+            Assert.AreEqual( "sourceFilePath", ex.ParamName );
         }
 
         [TestMethod]
@@ -148,7 +148,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                                                , runtimeVersion: 0
                                                );
             });
-            Assert.AreEqual("sourceFilePath", ex.ParamName);
+            Assert.AreEqual( "sourceFilePath", ex.ParamName );
         }
 
         [TestMethod]
@@ -282,7 +282,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
         #region DIBuilder.CreateSubRange
         [TestMethod]
-        [TestCategory("DIBuilder.CreateSubRange")]
+        [TestCategory( "DIBuilder.CreateSubRange" )]
         public void CreateSubRange_create_empty_subrange_should_succeed( )
         {
             using var context =new Context( );
@@ -1371,7 +1371,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             ValidateMetadataStringOperand( nameof( compilationFlags ), compilationFlags, operandList[ 2 ] );
             ValidateMetadataStringOperand( nameof( splitDebugFileName ), splitDebugFileName, operandList[ 3 ] );
 
-            for( int opIndex = 4; opIndex < unit.Operands.Count; ++opIndex )
+            for(int opIndex = 4; opIndex < unit.Operands.Count; ++opIndex)
             {
                 Assert.IsNull( unit.Operands[ opIndex ], $"Expected Operand[{opIndex}]==null" );
             }
@@ -1396,10 +1396,10 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             expected = LazyEncodedString.IsNullOrEmpty( expected ) ? null : expected;
             bool isMdString = false;
             LazyEncodedString? actual = null;
-            if(md is MDString mdstring )
+            if(md is MDString mdstring)
             {
                 isMdString = true;
-                actual = mdstring.ToString( );
+                actual = mdstring.ToString();
             }
 
             Assert.IsTrue( isMdString || expected == null, $"Expect an MDString unless the expected value is null for {operandName}" );

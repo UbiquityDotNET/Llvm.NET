@@ -29,14 +29,14 @@ namespace Kaleidoscope.Chapter6
 
         public override void ShowResults( Value resultValue )
         {
-            switch( resultValue )
+            switch(resultValue)
             {
             case ConstantFP result:
                 // If the cursor is not at the beginning of a line
                 // generate a new line for it
-                if( Console.CursorLeft > 0 )
+                if(Console.CursorLeft > 0)
                 {
-                    Console.WriteLine( );
+                    Console.WriteLine();
                 }
 
                 Console.WriteLine( "{0}", result.Value );
@@ -50,7 +50,7 @@ namespace Kaleidoscope.Chapter6
                 break;
 
             default:
-                throw new InvalidOperationException( );
+                throw new InvalidOperationException();
             }
         }
     }

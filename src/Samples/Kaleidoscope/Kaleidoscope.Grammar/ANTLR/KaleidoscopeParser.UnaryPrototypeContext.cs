@@ -21,11 +21,11 @@ namespace Kaleidoscope.Grammar.ANTLR
             {
                 get
                 {
-                    yield return (Identifier( ).GetText( ), 0, Identifier( ).GetSourceLocation( ));
+                    yield return (Identifier().GetText(), 0, Identifier().GetSourceLocation());
                 }
             }
 
-            public IToken OpToken => unaryop( ).Start;
+            public IToken OpToken => unaryop().Start;
         }
     }
 }

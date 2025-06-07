@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             var ex = Assert.ThrowsExactly<ArgumentNullException>(()=>
                 _ = new DILocation( context, 0, 0, null!, null )
                 );
-            Assert.AreEqual("scope", ex.ParamName);
+            Assert.AreEqual( "scope", ex.ParamName );
         }
 
         [TestMethod]

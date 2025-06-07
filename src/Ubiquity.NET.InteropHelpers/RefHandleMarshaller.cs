@@ -34,12 +34,12 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="nativeArrayPtr">Pointer to a pinned array of raw handles</param>
         /// <param name="size">Number of handles in the array</param>
         /// <returns>Result of the operation</returns>
-        public unsafe delegate TRetVal ReturningOp<TRetVal>(nint* nativeArrayPtr, int size);
+        public unsafe delegate TRetVal ReturningOp<TRetVal>( nint* nativeArrayPtr, int size );
 
         /// <summary>Delegate for an operation with marshaled memory</summary>
         /// <param name="nativeArrayPtr">Pointer to a pinned array of raw handles</param>
         /// <param name="size">Number of handles in the array</param>
-        public unsafe delegate void VoidOp(nint* nativeArrayPtr, int size);
+        public unsafe delegate void VoidOp( nint* nativeArrayPtr, int size );
 
         /// <summary>Marshals an array SafeHandle to a native pointer (as an array of nint) </summary>
         /// <typeparam name="THandle"><see cref="SafeHandle"/> type to marshal</typeparam>
@@ -52,19 +52,19 @@ namespace Ubiquity.NET.InteropHelpers
         /// copied to it (Without any AddRefs etc... the managed array OWNS the handles) before
         /// pinning the memory for the native handles and calling <paramref name="op"/>
         /// </remarks>
-        public static TRetVal WithNativePointer<THandle, TRetVal>(this THandle[] managedArray, ReturningOp<TRetVal> op)
+        public static TRetVal WithNativePointer<THandle, TRetVal>( this THandle[] managedArray, ReturningOp<TRetVal> op )
             where THandle : SafeHandle
         {
-            ArgumentNullException.ThrowIfNull(managedArray);
-            ArgumentNullException.ThrowIfNull(op);
+            ArgumentNullException.ThrowIfNull( managedArray );
+            ArgumentNullException.ThrowIfNull( op );
 
             unsafe
             {
                 using var nativeArray = AllocateNativeSpace(managedArray.Length);
-                FillNative(nativeArray.Memory, managedArray);
+                FillNative( nativeArray.Memory, managedArray );
 
                 using var pinnedHandle = nativeArray.Memory.Pin();
-                return op((nint*)pinnedHandle.Pointer, managedArray.Length);
+                return op( (nint*)pinnedHandle.Pointer, managedArray.Length );
             }
         }
 
@@ -73,36 +73,36 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="managedArray">Managed array of handles to marshal (by reference)</param>
         /// <param name="op">Operation to perform with the native array.</param>
         /// <inheritdoc cref="WithNativePointer{THandle, TRetVal}(THandle[], ReturningOp{TRetVal})" path="/remarks"/>
-        public static void WithNativePointer<THandle>(this THandle[] managedArray, VoidOp op)
+        public static void WithNativePointer<THandle>( this THandle[] managedArray, VoidOp op )
             where THandle : SafeHandle
         {
-            ArgumentNullException.ThrowIfNull(managedArray);
-            ArgumentNullException.ThrowIfNull(op);
+            ArgumentNullException.ThrowIfNull( managedArray );
+            ArgumentNullException.ThrowIfNull( op );
 
             unsafe
             {
                 using var nativeArray = AllocateNativeSpace(managedArray.Length);
-                FillNative(nativeArray.Memory, managedArray);
+                FillNative( nativeArray.Memory, managedArray );
 
                 using var pinnedHandle = nativeArray.Memory.Pin();
-                op((nint*)pinnedHandle.Pointer, managedArray.Length);
+                op( (nint*)pinnedHandle.Pointer, managedArray.Length );
             }
         }
 
-        private static IMemoryOwner<nint> AllocateNativeSpace(int len)
+        private static IMemoryOwner<nint> AllocateNativeSpace( int len )
         {
-            return MemoryPool<nint>.Shared.Rent(Unsafe.SizeOf<nint>()*len);
+            return MemoryPool<nint>.Shared.Rent( Unsafe.SizeOf<nint>() * len );
         }
 
-        private static void FillNative<T>(Memory<nint> nativeSpace, T[] managedArray)
+        private static void FillNative<T>( Memory<nint> nativeSpace, T[] managedArray )
             where T : SafeHandle
         {
-            ArgumentNullException.ThrowIfNull(managedArray);
-            ArgumentOutOfRangeException.ThrowIfNotEqual(nativeSpace.Length, managedArray.Length);
+            ArgumentNullException.ThrowIfNull( managedArray );
+            ArgumentOutOfRangeException.ThrowIfNotEqual( nativeSpace.Length, managedArray.Length );
 
             for(int i = 0; i < managedArray.Length; ++i)
             {
-                nativeSpace.Span[i] = managedArray[i].DangerousGetHandle();
+                nativeSpace.Span[ i ] = managedArray[ i ].DangerousGetHandle();
             }
         }
     }

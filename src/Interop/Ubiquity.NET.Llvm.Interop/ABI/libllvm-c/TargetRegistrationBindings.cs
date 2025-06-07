@@ -1,4 +1,14 @@
-﻿namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
+﻿// -----------------------------------------------------------------------
+// <copyright file="TargetRegistrationBindings.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
+namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public enum LibLLVMCodeGenTarget
     {
@@ -25,7 +35,7 @@
         CodeGenTarget_X86,         // Intel X86 and AMD64
         CodeGenTarget_XCore,       // XMOS core (see: https://en.wikipedia.org/wiki/XMOS)
         CodeGenTarget_All = int.MaxValue
-    };
+    }
 
     [Flags]
     [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "It has one, just not the name the analyzer likes..." )]
@@ -40,7 +50,7 @@
         TargetRegistration_AsmParser = 0x20,
         TargetRegistration_CodeGen = TargetRegistration_Target | TargetRegistration_TargetInfo | TargetRegistration_TargetMachine,
         TargetRegistration_All = TargetRegistration_CodeGen | TargetRegistration_AsmPrinter | TargetRegistration_Disassembler | TargetRegistration_AsmParser
-    };
+    }
 
     public static partial class TargetRegistrationBindings
     {

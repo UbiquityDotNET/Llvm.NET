@@ -16,8 +16,9 @@
       <PackageReference Include="MSTest.TestFramework" />
       <PackageReference Include="MSTest.TestAdapter" />
       <PackageReference Include="Tmds.ExecFunction" />
+      <PackageReference Include="Ubiquity.NET.Versioning" />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Update="EnvDTE" Version="17.13.40008" />
+    <PackageVersion Update="EnvDTE" Version="17.14.40260" />
   </ItemGroup>
 </Project>

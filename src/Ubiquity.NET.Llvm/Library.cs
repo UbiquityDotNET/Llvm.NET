@@ -12,13 +12,13 @@ the low level interop (Test code sometimes does) it must explicitly reference it
 
 using System.Collections.Immutable;
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
+
 // Apply using aliases to simplify avoidance of name conflicts.
 using InteropCodeGenTarget = Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.LibLLVMCodeGenTarget;
 using InteropItf = Ubiquity.NET.Llvm.Interop.ILibLlvm;
 using InteropLib = Ubiquity.NET.Llvm.Interop.Library;
 using InteropTargetRegistration = Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.LibLLVMTargetRegistrationKind;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -75,13 +75,14 @@ namespace Ubiquity.NET.Llvm
             var bldr = ImmutableDictionary.CreateBuilder<LazyEncodedString, AttributeInfo>();
             foreach(LazyEncodedString name in attribNames)
             {
-                bldr.Add(name, AttributeInfo.From(name));
+                bldr.Add( name, AttributeInfo.From( name ) );
             }
 
             return bldr.ToImmutable();
         }
 
-        private static ImmutableArray<LazyEncodedString> GetKnownAttributes()
+        [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "ppData makes sense and matches the API" )]
+        private static ImmutableArray<LazyEncodedString> GetKnownAttributes( )
         {
             int len = checked((int)LibLLVMGetNumKnownAttribs());
             unsafe
@@ -92,10 +93,10 @@ namespace Ubiquity.NET.Llvm
 
                 // Capture strings with lazy encoding
                 var bldr = ImmutableArray.CreateBuilder<LazyEncodedString>(len);
-                for(int i=0; i < len; ++i)
+                for(int i = 0; i < len; ++i)
                 {
                     // Should NEVER get a null string but just in case treat it as an empty string.
-                    bldr.Add(LazyEncodedString.FromUnmanaged(ppData[i]) ?? LazyEncodedString.Empty);
+                    bldr.Add( LazyEncodedString.FromUnmanaged( ppData[ i ] ) ?? LazyEncodedString.Empty );
                 }
 
                 return bldr.ToImmutable();

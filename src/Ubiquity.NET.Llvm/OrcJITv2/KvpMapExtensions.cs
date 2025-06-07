@@ -18,17 +18,17 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     // TODO: Make projected structs layout compat with native so a copy isn't needed
     internal static class KvpMapExtensions
     {
-        internal static LLVMOrcCSymbolAliasMapPair ToABI(this KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry> pair)
+        internal static LLVMOrcCSymbolAliasMapPair ToABI( this KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry> pair )
         {
             return new( pair.Key.ToABI(), pair.Value.ToABI() );
         }
 
-        internal static LLVMOrcCSymbolMapPair ToABI(this KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol> pair)
+        internal static LLVMOrcCSymbolMapPair ToABI( this KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol> pair )
         {
             return new( pair.Key.ToABI(), pair.Value.ToABI() );
         }
 
-        internal static LLVMOrcCSymbolFlagsMapPair ToABI(this KeyValuePair<SymbolStringPoolEntry, SymbolFlags> pair)
+        internal static LLVMOrcCSymbolFlagsMapPair ToABI( this KeyValuePair<SymbolStringPoolEntry, SymbolFlags> pair )
         {
             return new( pair.Key.ToABI(), pair.Value.ToABI() );
         }
@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
             )
         {
-            ArgumentNullException.ThrowIfNull(symbols);
+            ArgumentNullException.ThrowIfNull( symbols );
 
             var nativeArrayOwner = MemoryPool<LLVMOrcCSymbolMapPair>.Shared.Rent(symbols.Count);
             var nativeSpan = nativeArrayOwner.Memory.Span;
@@ -49,6 +49,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i < symbols.Count; ++i)
                 {
                     enumerator.MoveNext();
+
                     // NOTE: This will AddRef the handle for the name (Key)
                     //       As the native code will assume ownership of the name
                     nativeSpan[ i ] = enumerator.Current.ToABI();
@@ -58,7 +59,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 // release any addrefs made so far...
                 enumerator.Reset();
-                for(; i >=0; --i)
+                for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
                     enumerator.Current.Key.DangerousRelease();
@@ -75,7 +76,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols
             )
         {
-            ArgumentNullException.ThrowIfNull(symbols);
+            ArgumentNullException.ThrowIfNull( symbols );
 
             var nativeArrayOwner = MemoryPool<LLVMOrcCSymbolAliasMapPair>.Shared.Rent(symbols.Count);
             var nativeSpan = nativeArrayOwner.Memory.Span;
@@ -86,6 +87,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i < symbols.Count; ++i)
                 {
                     enumerator.MoveNext();
+
                     // NOTE: This will AddRef the handle for the name (Key)
                     //       As the native code will assume ownership of the name
                     nativeSpan[ i ] = enumerator.Current.ToABI();
@@ -95,7 +97,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 // release any addrefs made so far...
                 enumerator.Reset();
-                for(; i >=0; --i)
+                for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
                     enumerator.Current.Key.DangerousRelease();
@@ -112,7 +114,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
             )
         {
-            ArgumentNullException.ThrowIfNull(symbols);
+            ArgumentNullException.ThrowIfNull( symbols );
 
             var nativeArrayOwner = MemoryPool<LLVMOrcCSymbolFlagsMapPair>.Shared.Rent(symbols.Count);
             var nativeSpan = nativeArrayOwner.Memory.Span;
@@ -124,6 +126,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i < symbols.Count; ++i)
                 {
                     enumerator.MoveNext();
+
                     // NOTE: This will AddRef the handle for the name (Key)
                     //       As the native code will assume ownership of the name
                     nativeSpan[ i ] = enumerator.Current.ToABI();
@@ -133,7 +136,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 // release any addrefs made so far...
                 enumerator.Reset();
-                for(; i >=0; --i)
+                for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
                     enumerator.Current.Key.DangerousRelease();
@@ -144,6 +147,5 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             return nativeArrayOwner;
         }
-
     }
 }

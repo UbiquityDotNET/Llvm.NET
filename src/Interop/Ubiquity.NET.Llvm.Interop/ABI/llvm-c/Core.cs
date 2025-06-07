@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
@@ -509,7 +513,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMTypeRef LLVMGetTypeAttributeValue( LLVMAttributeRef A );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMAttributeRef LLVMCreateConstantRangeAttribute(
             LLVMContextRefAlias C,
             uint KindID,
@@ -520,19 +524,19 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         {
 #if DEBUG
             long requiredLen = (NumBits / 64) + ((NumBits % 64) == 0 ? 0 : 1);
-            if (LowerWords.LongLength < requiredLen)
+            if(LowerWords.LongLength < requiredLen)
             {
                 // TODO: Intern and localize this error message format
-                throw new ArgumentException($"Array length ({LowerWords.LongLength}) does not support specified bit width: {NumBits}", nameof(LowerWords));
+                throw new ArgumentException( $"Array length ({LowerWords.LongLength}) does not support specified bit width: {NumBits}", nameof( LowerWords ) );
             }
 
-            if (UpperWords.LongLength < requiredLen)
+            if(UpperWords.LongLength < requiredLen)
             {
                 // TODO: Intern and localize this error message format
-                throw new ArgumentException($"Array length ({UpperWords.LongLength}) does not support specified bit width: {NumBits}", nameof(UpperWords));
+                throw new ArgumentException( $"Array length ({UpperWords.LongLength}) does not support specified bit width: {NumBits}", nameof( UpperWords ) );
             }
 #endif
-            return NativeLLVMCreateConstantRangeAttribute(C, KindID, NumBits, LowerWords, UpperWords);
+            return NativeLLVMCreateConstantRangeAttribute( C, KindID, NumBits, LowerWords, UpperWords );
         }
 
         [LibraryImport( LibraryName, EntryPoint = "LLVMCreateConstantRangeAttribute" )]
@@ -2315,7 +2319,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         // so the types are problematic in full verification. In reality, NumEntries will NOT exceed the uint.MaxValue
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(CountElementName = nameof(NumEntries))]
+        [return: MarshalUsing( CountElementName = nameof( NumEntries ) )]
         public static unsafe partial LLVMValueMetadataEntry LLVMGlobalCopyAllMetadata( LLVMValueRef Value, out nuint NumEntries );
 
         [LibraryImport( LibraryName )]
@@ -2493,7 +2497,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [In] LLVMTypeRef[] ParamTypes
             )
         {
-            return LLVMGetIntrinsicDeclaration(Mod, ID, ParamTypes, checked((nuint)ParamTypes.LongLength));
+            return LLVMGetIntrinsicDeclaration( Mod, ID, ParamTypes, checked((nuint)ParamTypes.LongLength) );
         }
 
         [LibraryImport( LibraryName )]
@@ -2781,7 +2785,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         public static LLVMValueRef LLVMMDStringInContext( LLVMContextRefAlias C, LazyEncodedString Str )
         {
-            return LLVMMDStringInContext(C, Str, checked((uint)Str.NativeStrLen));
+            return LLVMMDStringInContext( C, Str, checked((uint)Str.NativeStrLen) );
         }
 
         [LibraryImport( LibraryName )]
@@ -3072,7 +3076,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString K
             )
         {
-            return LLVMGetCallSiteStringAttribute(C, Idx, K, checked((uint)K.NativeStrLen));
+            return LLVMGetCallSiteStringAttribute( C, Idx, K, checked((uint)K.NativeStrLen) );
         }
 
         [LibraryImport( LibraryName )]
@@ -3347,34 +3351,84 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildIndirectBr( LLVMBuilderRef B, LLVMValueRef Addr, uint NumDests );
 
+        public static LLVMValueRef LLVMBuildCallBr(
+            LLVMBuilderRef builder,
+            LLVMTypeRef typeRef,
+            LLVMValueRef functionValue,
+            LLVMBasicBlockRef defaultDest,
+            LLVMBasicBlockRef[] indirectDest,
+            LLVMValueRef[] args,
+            LLVMOperandBundleRef[] bundles,
+            LazyEncodedString Name
+            )
+        {
+            unsafe
+            {
+                return RefHandleMarshaller.WithNativePointer(
+                            bundles,
+                            ( p, size ) => LLVMBuildCallBr(
+                                               builder,
+                                               typeRef,
+                                               functionValue,
+                                               defaultDest,
+                                               indirectDest,
+                                               checked((uint)indirectDest.Length),
+                                               args,
+                                               checked((uint)args.Length),
+                                               p,
+                                               checked((uint)size),
+                                               Name
+                                               )
+                       );
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCallBr(
+        private static unsafe partial LLVMValueRef LLVMBuildCallBr(
             LLVMBuilderRef B,
             LLVMTypeRef Ty,
             LLVMValueRef Fn,
             LLVMBasicBlockRef DefaultDest,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumIndirectDests
-            [In] LLVMBasicBlockRef[] IndirectDests,
+            [In] LLVMBasicBlockRef[] IndirectDests, // The length of this array MUST be at least NumIndirectDests
             uint NumIndirectDests,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
-            [In] LLVMValueRef[] Args,
+            [In] LLVMValueRef[] Args, // the length of this array MUST be at least NumArgs
             uint NumArgs,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
-            // Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these
+            /* No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
+               Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these */
             /*[In] LLVMOperandBundleRef[]*/ nint* Bundles,
             uint NumBundles,
             LazyEncodedString Name
             );
 
+        public static LLVMValueRef LLVMBuildInvoke2(
+            LLVMBuilderRef builder,
+            LLVMTypeRef typeRef,
+            LLVMValueRef functionValue,
+            LLVMValueRef[] args,
+            LLVMBasicBlockRef @then,
+            LLVMBasicBlockRef @catch,
+            LazyEncodedString name )
+        {
+            return LLVMBuildInvoke2(
+                    builder,
+                    typeRef,
+                    functionValue,
+                    args,
+                    checked((uint)args.Length),
+                    @then,
+                    @catch,
+                    name
+                  );
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInvoke2(
+        private static unsafe partial LLVMValueRef LLVMBuildInvoke2(
             LLVMBuilderRef B,
             LLVMTypeRef Ty,
             LLVMValueRef Fn,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
-            [In] LLVMValueRef[] Args,
+            [In] LLVMValueRef[] Args, // the length of this array MUST be at least NumArgs
             uint NumArgs,
             LLVMBasicBlockRef Then,
             LLVMBasicBlockRef Catch,
@@ -3386,12 +3440,14 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMBuilderRef B,
             LLVMTypeRef Ty,
             LLVMValueRef Fn,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
+
+            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
             [In] LLVMValueRef[] Args,
             uint NumArgs,
             LLVMBasicBlockRef Then,
             LLVMBasicBlockRef Catch,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
+
+            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
             // Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these
             /*[In] LLVMOperandBundleRef[]*/ nint* Bundles,
             uint NumBundles,
@@ -3432,7 +3488,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             )
         {
             Args ??= [];
-            return LLVMBuildCatchPad(B, ParentPad, Args, checked((uint)Args.Length), Name ?? LazyEncodedString.Empty);
+            return LLVMBuildCatchPad( B, ParentPad, Args, checked((uint)Args.Length), Name ?? LazyEncodedString.Empty );
         }
 
         [LibraryImport( LibraryName )]
@@ -3440,7 +3496,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         private static unsafe partial LLVMValueRef LLVMBuildCatchPad(
             LLVMBuilderRef B,
             LLVMValueRef ParentPad,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
+
+            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
             [In] LLVMValueRef[] Args,
             uint NumArgs,
             LazyEncodedString Name
@@ -3451,7 +3508,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe partial LLVMValueRef LLVMBuildCleanupPad(
             LLVMBuilderRef B,
             LLVMValueRef ParentPad,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
+
+            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
             [In] LLVMValueRef[] Args,
             uint NumArgs,
             LazyEncodedString Name
@@ -3504,16 +3562,38 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial uint LLVMGetNumHandlers( LLVMValueRef CatchSwitch );
 
+        public static LLVMBasicBlockRef[] LLVMGetHandlers( LLVMValueRef CatchSwitch )
+        {
+            // Custom marshalling for the return "out" array
+            // while ensuring the size is correct. This takes advantage of the fact
+            // that LLVMBasicBlockRef is a value type that wraps an nint (effectively a stronger
+            // typedef for nint) but is re-interpret cast compatible with nint. So this will
+            // allocate the  required space, pin it, then ask the native code to fill it and
+            // ultimately return it. This is the most efficient means of filling an array,
+            // given the LLVM-C API.
+            unsafe
+            {
+                uint size = LLVMGetNumHandlers(CatchSwitch);
+                var retVal = new LLVMBasicBlockRef[size];
+                fixed(LLVMBasicBlockRef* p = retVal)
+                {
+                    LLVMGetHandlers( CatchSwitch.DangerousGetHandle(), (nint*)p );
+                }
+
+                return retVal;
+            }
+        }
+
+        // Array provided for 'Handlers' must be at least (LLVMGetNumHandlers()) large
+        // Use of generated marshalling is VERY inefficient as it doesn't know
+        // that a LLVMBasicBlockRef is reinterpret_cast<nint> compatible.
+        // and tries to use a buffer array to `marshal` between forms even though
+        // they have the exact same bit pattern
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMGetHandlers(
-            LLVMValueRef CatchSwitch,
-            // Array provided must be at least (LLVMGetNumHandlers()) large
-            // Use of generated marshalling is VERY inefficient as it doesn't know
-            // that a LLVMBasicBlockRef is reinterpret_cast<nint> compatible.
-            // and tries to use a buffer array to `marshal` between forms even though
-            // they have the exact same bit pattern
-            /*[Out] LLVMBasicBlockRef[]*/ LLVMBasicBlockRef* Handlers
+        private static unsafe partial void LLVMGetHandlers(
+            /*LLVMValueRef*/ nint CatchSwitch,
+            /*[Out] LLVMBasicBlockRef[]*/ nint* Handlers
             );
 
         [LibraryImport( LibraryName )]
@@ -3932,10 +4012,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMBuilderRef B,
             LLVMTypeRef _1,
             LLVMValueRef Fn,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
+
+            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
             [In] LLVMValueRef[] Args,
             uint NumArgs,
-            //No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
+
+            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
             // Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these
             /*[In] LLVMOperandBundleRef[]*/ nint* Bundles,
             uint NumBundles,
@@ -4159,7 +4241,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange(
             byte* InputData, nuint InputDataLength, // Intentionally not an array.
             LazyEncodedString BufferName,
-            [MarshalAs( UnmanagedType.Bool)] bool RequiresNullTerminator
+            [MarshalAs( UnmanagedType.Bool )] bool RequiresNullTerminator
             );
 
         [MethodImpl( MethodImplOptions.AggressiveInlining )]
@@ -4171,8 +4253,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRangeCopy(
-            // no marshal length attribute exists for in arrays InputDataLength must be <= InputData.Length
-            [In] byte[] InputData, nuint InputDataLength,
+            [In] byte[] InputData,
+            nuint InputDataLength, // InputDataLength must be <= InputData.Length
             LazyEncodedString BufferName
             );
 

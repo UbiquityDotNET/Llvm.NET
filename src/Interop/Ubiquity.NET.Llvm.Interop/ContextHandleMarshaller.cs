@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="abiValue">native handle value</param>
         /// <returns>Managed code representation of the native opaque handle</returns>
         [SuppressMessage( "Design", "CA1000:Do not declare static members on generic types", Justification = "Needed for marshalling" )]
-        public static T ConvertToManaged(nint abiValue)
+        public static T ConvertToManaged( nint abiValue )
         {
             // NOTE: The AOT compiler will know what type T is here AND it can validate it implements
             //       the static method of the interface, therefore NO BOXING occurs and this is all
@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         [SuppressMessage( "Design", "CA1000:Do not declare static members on generic types", Justification = "Needed for marshalling" )]
-        public static nint ConvertToUnmanaged(T managed)
+        public static nint ConvertToUnmanaged( T managed )
         {
             return managed.DangerousGetHandle();
         }

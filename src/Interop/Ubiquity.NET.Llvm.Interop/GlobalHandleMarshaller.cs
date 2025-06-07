@@ -1,4 +1,10 @@
-﻿namespace Ubiquity.NET.Llvm.Interop
+﻿// -----------------------------------------------------------------------
+// <copyright file="GlobalHandleMarshaller.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Ubiquity.NET.Llvm.Interop
 {
     [CustomMarshaller( typeof( CustomMarshallerAttribute.GenericPlaceholder ), MarshalMode.ElementIn, typeof( GlobalHandleMarshaller<> ) )]
     [CustomMarshaller( typeof( CustomMarshallerAttribute.GenericPlaceholder ), MarshalMode.ElementOut, typeof( GlobalHandleMarshaller<> ) )]
@@ -14,7 +20,7 @@
         public static T ConvertToManaged( nint unmanaged )
         {
             var retVal = new T();
-            Marshal.InitHandle(retVal, unmanaged);
+            Marshal.InitHandle( retVal, unmanaged );
             return retVal;
         }
     }

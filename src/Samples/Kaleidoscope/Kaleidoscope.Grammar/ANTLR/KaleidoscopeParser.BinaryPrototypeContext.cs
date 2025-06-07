@@ -21,12 +21,12 @@ namespace Kaleidoscope.Grammar.ANTLR
         [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Nesting is generated, this is just the non-generated partial" )]
         internal partial class BinaryPrototypeContext
         {
-            public IToken OpToken => userdefinedop( ).Start;
+            public IToken OpToken => userdefinedop().Start;
 
             public override IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
-                => Identifier( ).Select( ( id, i ) => (id.GetText( ), i, id.GetSourceLocation( )) );
+                => Identifier().Select( ( id, i ) => (id.GetText(), i, id.GetSourceLocation()) );
 
-            public int Precedence => ( int )double.Parse( Number( ).GetText( ), CultureInfo.InvariantCulture );
+            public int Precedence => (int)double.Parse( Number().GetText(), CultureInfo.InvariantCulture );
         }
     }
 }

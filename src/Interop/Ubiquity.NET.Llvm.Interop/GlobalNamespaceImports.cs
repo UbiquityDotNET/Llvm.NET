@@ -16,7 +16,6 @@ For an explanation of the benefits of the language feature see: https://www.hans
 
 global using System;
 global using System.Collections.Immutable;
-global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;
@@ -28,10 +27,10 @@ global using System.Runtime.InteropServices.Marshalling;
 global using System.Threading;
 
 global using Ubiquity.NET.InteropHelpers;
-global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
 global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-global using Ubiquity.NET.Llvm.Interop.Properties;
+global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
 global using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
+global using Ubiquity.NET.Llvm.Interop.Properties;
 
 // global using for the NativeMethods type to allow simpler access to the
 // string const for the library name.

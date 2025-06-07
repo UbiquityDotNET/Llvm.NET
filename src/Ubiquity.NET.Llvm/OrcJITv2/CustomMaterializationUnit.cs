@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// This must be a "custom" delegate as the <see cref="JITDyLib"/> is a
     /// ref type that is NOT allowed as a type parameter for <see cref="Action{T1, T2}"/>.
     /// </remarks>
-    public delegate void MaterializationAction(MaterializationResponsibility r);
+    public delegate void MaterializationAction( MaterializationResponsibility r );
 
     /// <summary>Delegate to perform action on discard</summary>
     /// <param name="jitLib">Library the symbols is discarded from</param>
@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// This must be a "custom" delegate as the <see cref="JITDyLib"/> is a
     /// ref type that is NOT allowed as a type parameter for <see cref="Action{T1, T2}"/>.
     /// </remarks>
-    public delegate void DiscardAction(JITDyLib jitLib, SymbolStringPoolEntry symbol);
+    public delegate void DiscardAction( JITDyLib jitLib, SymbolStringPoolEntry symbol );
 
     /// <summary>LLVM ORC JIT v2 custom materialization unit</summary>
     /// <remarks>
@@ -124,11 +124,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-            internal static unsafe void Materialize(void* context, /*LLVMOrcMaterializationResponsibilityRef*/ nint abiResponsibility)
+            internal static unsafe void Materialize( void* context, /*LLVMOrcMaterializationResponsibilityRef*/ nint abiResponsibility )
             {
                 try
                 {
-                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>( context, out CustomMaterializer? self ))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
@@ -154,11 +154,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-            internal static unsafe void Discard(void* context, /*LLVMOrcJITDylibRef*/ nint abiLib, /*LLVMOrcSymbolStringPoolEntryRef*/ nint abiSymbol)
+            internal static unsafe void Discard( void* context, /*LLVMOrcJITDylibRef*/ nint abiLib, /*LLVMOrcSymbolStringPoolEntryRef*/ nint abiSymbol )
             {
                 try
                 {
-                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>( context, out CustomMaterializer? self ))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
@@ -176,11 +176,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-            internal static unsafe void Destroy(void* context)
+            internal static unsafe void Destroy( void* context )
             {
                 try
                 {
-                    if(MarshalGCHandle.TryGet<CustomMaterializer>(context, out CustomMaterializer? self))
+                    if(MarshalGCHandle.TryGet<CustomMaterializer>( context, out CustomMaterializer? self ))
                     {
 #pragma warning disable IDISP007 // Don't dispose injected
                         /*

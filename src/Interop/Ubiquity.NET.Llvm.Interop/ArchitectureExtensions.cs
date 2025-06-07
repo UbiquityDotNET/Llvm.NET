@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="arch">Value to convert</param>
         /// <returns>LLVM code generation target</returns>
         /// <exception cref="NotSupportedException">Native LLVM form of target is unknown</exception>
-        public static LibLLVMCodeGenTarget AsLLVMTarget( this Architecture arch)
+        public static LibLLVMCodeGenTarget AsLLVMTarget( this Architecture arch )
         {
             return arch switch
             {

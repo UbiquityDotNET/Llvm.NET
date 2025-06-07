@@ -10,7 +10,7 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class VariableExpressionContext
         {
-            public string Name => Identifier( ).GetText( );
+            public string Name => Identifier().GetText();
         }
     }
 }

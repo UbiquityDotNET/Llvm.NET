@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             get
             {
                 using LLVMRelocationIteratorRef iterator = LLVMGetRelocations( IteratorRef );
-                while( !LLVMIsRelocationIteratorAtEnd( IteratorRef, iterator ) )
+                while(!LLVMIsRelocationIteratorAtEnd( IteratorRef, iterator ))
                 {
                     yield return new Relocation( this, iterator );
                     LLVMMoveToNextRelocation( iterator );
@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
                 int sectionSize = checked((int)LLVMGetSectionSize( IteratorRef ));
                 unsafe
                 {
-                    return new ReadOnlySpan<byte>( LLVMGetSectionContents( IteratorRef ).ToPointer( ), sectionSize );
+                    return new ReadOnlySpan<byte>( LLVMGetSectionContents( IteratorRef ).ToPointer(), sectionSize );
                 }
             }
         }

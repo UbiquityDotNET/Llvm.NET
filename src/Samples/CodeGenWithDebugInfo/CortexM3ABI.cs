@@ -21,17 +21,17 @@ namespace CodeGenWithDebugInfo
         public CortexM3ABI( )
         {
             LlvmLib = Library.InitializeLLVM();
-            LlvmLib.RegisterTarget(CodeGenTarget.ARM);
+            LlvmLib.RegisterTarget( CodeGenTarget.ARM );
         }
 
         public string ShortName => "M3";
 
-        public void Dispose()
+        public void Dispose( )
         {
             LlvmLib.Dispose();
         }
 
-        public TargetMachine CreateTargetMachine()
+        public TargetMachine CreateTargetMachine( )
         {
             using var triple = new Triple( TripleName );
             return TargetMachine.FromTriple( triple
@@ -45,10 +45,10 @@ namespace CodeGenWithDebugInfo
 
         public void AddAttributesForByValueStructure( Function function, DebugFunctionType debugSig, int paramIndex )
         {
-            ArgumentNullException.ThrowIfNull(function);
-            ArgumentNullException.ThrowIfNull(debugSig);
-            ArgumentOutOfRangeException.ThrowIfNotEqual(debugSig.ParameterTypes.Count, function.Parameters.Count);
-            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(paramIndex, function.Parameters.Count);
+            ArgumentNullException.ThrowIfNull( function );
+            ArgumentNullException.ThrowIfNull( debugSig );
+            ArgumentOutOfRangeException.ThrowIfNotEqual( debugSig.ParameterTypes.Count, function.Parameters.Count );
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual( paramIndex, function.Parameters.Count );
 
             // ByVal pointers indicate by value semantics. The actual LLVM semantics are along the lines of
             // "pass the arg as copy on the arguments stack and set parameter implicitly to that copy's address"
@@ -66,14 +66,14 @@ namespace CodeGenWithDebugInfo
                                         ? debugType.NativeType
                                         : null;
 
-            if(ptrType is null || ptrType.IsOpaque() || !ptrType.ElementType!.IsStruct )
+            if(ptrType is null || ptrType.IsOpaque() || !ptrType.ElementType!.IsStruct)
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }
 
             var layout = function.ParentModule.Layout;
             function.AddAttributes( FunctionAttributeIndex.Parameter0 + paramIndex
-                                  , function.Context.CreateAttribute( "byval"u8, ptrType.ElementType)
+                                  , function.Context.CreateAttribute( "byval"u8, ptrType.ElementType )
                                   , function.Context.CreateAttribute( "align"u8, layout.AbiAlignmentOf( ptrType.ElementType! ) )
                                   );
         }

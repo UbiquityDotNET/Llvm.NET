@@ -38,10 +38,10 @@ namespace Ubiquity.NET.InteropHelpers
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsClosed, this);
+                ObjectDisposedException.ThrowIf( IsClosed, this );
                 unsafe
                 {
-                    return new((void*)handle, LazyStrLen.Value);
+                    return new( (void*)handle, LazyStrLen.Value );
                 }
             }
         }
@@ -52,65 +52,65 @@ namespace Ubiquity.NET.InteropHelpers
         /// The return is a managed string that is equivalent to the string of this pointer.
         /// It's lifetime is controlled by the runtime GC.
         /// </remarks>
-        public override string? ToString()
+        public override string? ToString( )
         {
-            ObjectDisposedException.ThrowIf(IsClosed, this);
+            ObjectDisposedException.ThrowIf( IsClosed, this );
             return ManagedString.Value;
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
+        public override bool Equals( object? obj )
         {
             return ((IEquatable<CStringHandle>)this).Equals( obj as CStringHandle );
         }
 
         /// <inheritdoc/>
-        [SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API")]
-        public override int GetHashCode()
+        [SuppressMessage( "Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API" )]
+        public override int GetHashCode( )
         {
-            ObjectDisposedException.ThrowIf(IsClosed, this);
+            ObjectDisposedException.ThrowIf( IsClosed, this );
             return ToString()?.GetHashCode() ?? 0;
         }
 
         /// <summary>Returns the hash code for this string using the specified rules.</summary>
         /// <param name="comparisonType">One of the enumeration values that specifies the rules to use in the comparison.</param>
         /// <returns>A 32-bit signed integer hash code.</returns>
-        public int GetHashCode(StringComparison comparisonType)
+        public int GetHashCode( StringComparison comparisonType )
         {
-            ObjectDisposedException.ThrowIf(IsClosed, this);
-            return ToString()?.GetHashCode(comparisonType) ?? 0;
+            ObjectDisposedException.ThrowIf( IsClosed, this );
+            return ToString()?.GetHashCode( comparisonType ) ?? 0;
         }
 
         /// <inheritdoc/>
-        public bool Equals(CStringHandle? other)
+        public bool Equals( CStringHandle? other )
         {
             // perf optimization to skip longer scan if possible (null input or exact same handle value)
             return other is not null
-                && ( (handle == other.handle) || Equals(other.ReadOnlySpan));
+                && ((handle == other.handle) || Equals( other.ReadOnlySpan ));
         }
 
         /// <summary>Tests if the span of characters for this string is identical to the provided span</summary>
         /// <param name="otherSpan">Span of bytes to compare this string to</param>
         /// <returns><see langword="true"/> if the spans contain the same data or <see langword="false"/> if not</returns>
-        public bool Equals(ReadOnlySpan<byte> otherSpan)
+        public bool Equals( ReadOnlySpan<byte> otherSpan )
         {
-            return ReadOnlySpan.SequenceEqual(otherSpan);
+            return ReadOnlySpan.SequenceEqual( otherSpan );
         }
 
         /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
-        protected CStringHandle()
+        protected CStringHandle( )
             : base( nint.Zero, ownsHandle: true )
         {
             unsafe
             {
-                ManagedString = new(()=>ExecutionEncodingStringMarshaller.ConvertToManaged((byte*)handle), LazyThreadSafetyMode.ExecutionAndPublication);
-                LazyStrLen = new(()=>MemoryMarshal.CreateReadOnlySpanFromNullTerminated((byte*)handle).Length, LazyThreadSafetyMode.ExecutionAndPublication);
+                ManagedString = new( ( ) => ExecutionEncodingStringMarshaller.ConvertToManaged( (byte*)handle ), LazyThreadSafetyMode.ExecutionAndPublication );
+                LazyStrLen = new( ( ) => MemoryMarshal.CreateReadOnlySpanFromNullTerminated( (byte*)handle ).Length, LazyThreadSafetyMode.ExecutionAndPublication );
             }
         }
 
         /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
         /// <param name="p">Native unwrapped handle</param>
-        protected CStringHandle(nint p)
+        protected CStringHandle( nint p )
             : this()
         {
             SetHandle( p );
@@ -118,7 +118,7 @@ namespace Ubiquity.NET.InteropHelpers
 
         /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
         /// <param name="p">native string pointer</param>
-        protected unsafe CStringHandle(byte* p)
+        protected unsafe CStringHandle( byte* p )
             : this( (nint)p )
         {
         }

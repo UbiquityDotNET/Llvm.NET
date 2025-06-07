@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Extensions
     /// This is ordinarily applied to protected methods that are available to derived types. This indicates
     /// that the protected implementation will validate the parameter and the derived type need not do so.
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage( AttributeTargets.Parameter, AllowMultiple = false, Inherited = false )]
     public sealed class ValidatedNotNullAttribute : Attribute
     {
     }

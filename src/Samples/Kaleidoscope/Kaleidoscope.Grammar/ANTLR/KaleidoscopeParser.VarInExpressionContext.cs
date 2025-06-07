@@ -12,9 +12,9 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class VarInExpressionContext
         {
-            public IReadOnlyList<InitializerContext> Initiaizers => initializer( );
+            public IReadOnlyList<InitializerContext> Initiaizers => initializer();
 
-            public ExpressionContext Scope => expression( );
+            public ExpressionContext Scope => expression();
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             LazyCallThroughManager callThruMgr,
             LocalIndirectStubsManager stubsMgr,
             JITDyLib srcLib,
-            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols)
-            : base(MakeHandle(callThruMgr, stubsMgr, srcLib, symbols))
+            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols )
+            : base( MakeHandle( callThruMgr, stubsMgr, srcLib, symbols ) )
         {
         }
 
@@ -30,10 +30,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             LazyCallThroughManager callThruMgr,
             LocalIndirectStubsManager stubsMgr,
             JITDyLib srcLib,
-            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols)
+            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols )
         {
-            ArgumentNullException.ThrowIfNull(callThruMgr);
-            ArgumentNullException.ThrowIfNull(stubsMgr);
+            ArgumentNullException.ThrowIfNull( callThruMgr );
+            ArgumentNullException.ThrowIfNull( stubsMgr );
 
             // make a native usable version of the input list, pin it and call the native API
             using var nativeArrayOwner = symbols.InitializeNativeCopy( );

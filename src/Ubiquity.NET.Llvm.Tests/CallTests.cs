@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm.UT
     {
         [TestMethod]
         [TestCategory( "Instruction" )]
-        public void Create_varargs_function_with_arbitrary_params_succeeds()
+        public void Create_varargs_function_with_arbitrary_params_succeeds( )
         {
             using var ctx = new Context();
             using var module = ctx.CreateBitcodeModule();
@@ -25,9 +25,9 @@ namespace Ubiquity.NET.Llvm.UT
 
             var function = module.CreateFunction( "VarArgFunc", varArgsSig );
             var entryBlock = function.PrependBasicBlock("entry");
-            using(var bldr = new InstructionBuilder(entryBlock))
+            using(var bldr = new InstructionBuilder( entryBlock ))
             {
-                bldr.Return( );
+                bldr.Return();
             }
 
             var caller = module.CreateFunction("CallVarArgs", callerSig);

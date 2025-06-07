@@ -1,19 +1,25 @@
-﻿using System.Runtime.InteropServices;
+﻿// -----------------------------------------------------------------------
+// <copyright file="EncodingExtensionsTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Runtime.InteropServices;
 using System.Text;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Ubiquity.NET.InteropHelpers.Tests
+namespace Ubiquity.NET.InteropHelpers.UT
 {
-    [TestClass()]
+    [TestClass]
     public class EncodingExtensionsTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void MarshalStringTest( )
         {
             string? emptyString = EncodingExtensions.MarshalString(Encoding.UTF8, []);
-            Assert.IsNotNull(emptyString);
-            Assert.AreEqual(string.Empty, emptyString);
+            Assert.IsNotNull( emptyString );
+            Assert.AreEqual( string.Empty, emptyString );
 
             // NOTE: u8 places a null terminator in the allocated space for the string!
             // [See: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-11.0/utf8-string-literals]
@@ -22,13 +28,13 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             unsafe
             {
                 string? nullString = Encoding.UTF8.MarshalString((byte*)null);
-                Assert.IsNull(nullString);
+                Assert.IsNull( nullString );
 
-                fixed(byte* pMsg = &MemoryMarshal.GetReference(testMsg))
+                fixed(byte* pMsg = &MemoryMarshal.GetReference( testMsg ))
                 {
                     string? managedString = EncodingExtensions.MarshalString(Encoding.UTF8, pMsg);
-                    Assert.IsNotNull(managedString);
-                    Assert.AreEqual(expectedManagedString, managedString);
+                    Assert.IsNotNull( managedString );
+                    Assert.AreEqual( expectedManagedString, managedString );
                 }
             }
         }

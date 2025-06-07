@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,7 +25,7 @@ namespace Ubiquity.NET.Llvm.UT
             using var ctx = new Context( );
             var attribInfo = AttributeInfo.From("alwaysinline");
             var value = ctx.CreateAttribute( "alwaysinline");
-            Assert.AreEqual( AttributeArgKind.None, value.AttributeInfo.ArgKind);
+            Assert.AreEqual( AttributeArgKind.None, value.AttributeInfo.ArgKind );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "alwaysinline", value.Name.ToString() );
             Assert.IsNull( value.StringValue );
@@ -38,13 +39,13 @@ namespace Ubiquity.NET.Llvm.UT
             using var ctx = new Context( );
             var attribInfo = AttributeInfo.From("dereferenceable_or_null");
             var value = ctx.CreateAttribute( "dereferenceable_or_null", 1234ul );
-            Assert.AreEqual( AttributeArgKind.Int, value.AttributeInfo.ArgKind);
+            Assert.AreEqual( AttributeArgKind.Int, value.AttributeInfo.ArgKind );
             Assert.IsFalse( value.IsString );
             Assert.AreEqual( "dereferenceable_or_null", value.Name.ToString() );
             Assert.IsNull( value.StringValue );
             Assert.IsTrue( value.IsInt );
-            Assert.AreEqual( attribInfo.ID, value.Id);
-            Assert.AreEqual( 1234ul, value.IntegerValue);
+            Assert.AreEqual( attribInfo.ID, value.Id );
+            Assert.AreEqual( 1234ul, value.IntegerValue );
         }
 
         [TestMethod]
@@ -60,7 +61,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TestTargetDependentAttributeName, value.Name.ToString() );
             Assert.IsTrue( string.IsNullOrWhiteSpace( value.StringValue?.ToString() ) );
             Assert.IsFalse( value.IsEnum );
-            Assert.AreEqual(0u, value.Id );
+            Assert.AreEqual( 0u, value.Id );
         }
 
         [TestMethod]
@@ -96,6 +97,7 @@ namespace Ubiquity.NET.Llvm.UT
         // test all attributes for an index are available and reflect attributes set
         // (verifies [In,Out] array marshaling is functioning correctly)
         [TestMethod]
+        [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "byValInt32Attrib is NOT Hungarian" )]
         public void AttributeIndexTest( )
         {
             using var ctx = new Context( );

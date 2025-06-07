@@ -19,12 +19,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// a NOP. Thus callers need not care about whether it is transferred or not and just
         /// dispose of it the same either way.
         /// </remarks>
-        public void Add(DefinitionGenerator generator)
+        public void Add( DefinitionGenerator generator )
         {
-            ArgumentNullException.ThrowIfNull(generator);
+            ArgumentNullException.ThrowIfNull( generator );
             Handle.ThrowIfInvalid();
 
-            LLVMOrcJITDylibAddGenerator(Handle, generator.Handle);
+            LLVMOrcJITDylibAddGenerator( Handle, generator.Handle );
+
             // ownership transfer complete, mark it as such so Dispose becomes a NOP.
             generator.Handle.SetHandleAsInvalid();
         }
@@ -37,9 +38,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// but ownership remains with the caller. The invalidation leaves the <see cref="IDisposable.Dispose"/>
         /// call as a NOP and any operations on the unit throw an <see cref="ObjectDisposedException"/>.
         /// </remarks>
-        public void Define(MaterializationUnit materializationUnit)
+        public void Define( MaterializationUnit materializationUnit )
         {
-            ArgumentNullException.ThrowIfNull(materializationUnit);
+            ArgumentNullException.ThrowIfNull( materializationUnit );
             Handle.ThrowIfInvalid();
 
             using LLVMErrorRef errorRef = LLVMOrcJITDylibDefine(Handle, materializationUnit.Handle);
@@ -52,25 +53,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Creates a <see cref="ResourceTracker"/> associated with this library</summary>
         /// <returns>New resource tracker</returns>
         [MustUseReturnValue]
-        public ResourceTracker CreateResourceTracker()
+        public ResourceTracker CreateResourceTracker( )
         {
             Handle.ThrowIfInvalid();
 
-            return new(LLVMOrcJITDylibCreateResourceTracker(Handle));
+            return new( LLVMOrcJITDylibCreateResourceTracker( Handle ) );
         }
 
         /// <summary>Gets the default tracker for this instance</summary>
         /// <returns>Default tracker for this instance</returns>
         [MustUseReturnValue]
-        public ResourceTracker GetDefaultTracker()
+        public ResourceTracker GetDefaultTracker( )
         {
             Handle.ThrowIfInvalid();
 
-            return new(LLVMOrcJITDylibGetDefaultResourceTracker(Handle));
+            return new( LLVMOrcJITDylibGetDefaultResourceTracker( Handle ) );
         }
 
         /// <summary>Equivalent to calling <see cref="ResourceTracker.RemoveAll"/> on all trackers from this instance</summary>
-        public void ClearAllTrackers()
+        public void ClearAllTrackers( )
         {
             Handle.ThrowIfInvalid();
 
@@ -78,14 +79,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             errorRef.ThrowIfFailed();
         }
 
-        internal JITDyLib(LLVMOrcJITDylibRef h)
+        internal JITDyLib( LLVMOrcJITDylibRef h )
         {
             Handle = h;
         }
 
-        internal JITDyLib(nint abiHandle)
+        internal JITDyLib( nint abiHandle )
         {
-            Handle = LLVMOrcJITDylibRef.FromABI(abiHandle);
+            Handle = LLVMOrcJITDylibRef.FromABI( abiHandle );
         }
 
         internal LLVMOrcJITDylibRef Handle { get; init; }

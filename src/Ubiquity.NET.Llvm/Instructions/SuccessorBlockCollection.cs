@@ -23,13 +23,13 @@ namespace Ubiquity.NET.Llvm.Instructions
             get
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                return BasicBlock.FromHandle(LLVMGetSuccessor( Container.Handle, (uint)index ))!;
+                return BasicBlock.FromHandle( LLVMGetSuccessor( Container.Handle, (uint)index ) )!;
             }
 
             set
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                LLVMSetSuccessor( Container.Handle, ( uint )index, value?.BlockHandle ?? default );
+                LLVMSetSuccessor( Container.Handle, (uint)index, value?.BlockHandle ?? default );
             }
         }
 
@@ -40,15 +40,15 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns>Enumerator for the collection</returns>
         public IEnumerator<BasicBlock> GetEnumerator( )
         {
-            for( int i = 0; i < Count; ++i )
+            for(int i = 0; i < Count; ++i)
             {
-                yield return BasicBlock.FromHandle( LLVMGetSuccessor( Container.Handle, ( uint )i ) )!;
+                yield return BasicBlock.FromHandle( LLVMGetSuccessor( Container.Handle, (uint)i ) )!;
             }
         }
 
         /// <summary>Gets an enumerator for the <see cref="BasicBlock"/>s in this collection</summary>
         /// <returns>Enumerator for the collection</returns>
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         /// <inheritdoc/>
         public bool Contains( BasicBlock item ) => this.Any( n => n.Equals( item ) );

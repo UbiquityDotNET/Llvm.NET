@@ -29,7 +29,7 @@ namespace Kaleidoscope.Chapter3
 
         public override void ShowResults( Value resultValue )
         {
-            switch( resultValue )
+            switch(resultValue)
             {
             case Function function:
                 Console.WriteLine( "Defined function: {0}", function.Name );
@@ -37,7 +37,7 @@ namespace Kaleidoscope.Chapter3
                 break;
 
             default:
-                throw new InvalidOperationException( );
+                throw new InvalidOperationException();
             }
         }
     }

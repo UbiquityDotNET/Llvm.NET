@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void SimpleConstructorDisposeTest( )
         {
             var context = new Context();
-            using( context )
+            using(context)
             {
                 Assert.IsNotNull( context );
                 Assert.IsFalse( context.IsDisposed );
@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( context, int8PtrType.Context );
 
             var int8PtrTypeAlt = context.Int8Type.CreatePointerType( );
-            Assert.IsTrue( int8PtrType.Equals( int8PtrTypeAlt) );
+            Assert.IsTrue( int8PtrType.Equals( int8PtrTypeAlt ) );
         }
 
         [TestMethod]
@@ -212,11 +212,11 @@ namespace Ubiquity.NET.Llvm.UT
             // i16 ( i32, float )
             var funcSig = context.CreateFunctionType( in diBuilder, i16, i32, f32 );
             var funcSig2 = context.CreateFunctionType( in diBuilder, i16, i32, f32 );
-            Assert.IsTrue( funcSig.NativeType.Equals(funcSig2.NativeType) );
-            Assert.IsNotNull(funcSig.DebugInfoType);
-            Assert.IsTrue(funcSig.HasDebugInfo());
+            Assert.IsTrue( funcSig.NativeType.Equals( funcSig2.NativeType ) );
+            Assert.IsNotNull( funcSig.DebugInfoType );
+            Assert.IsTrue( funcSig.HasDebugInfo() );
 
-            Assert.IsTrue( funcSig.DebugInfoType.Equals(funcSig2.DebugInfoType) );
+            Assert.IsTrue( funcSig.DebugInfoType.Equals( funcSig2.DebugInfoType ) );
         }
 
         [TestMethod]
@@ -230,7 +230,7 @@ namespace Ubiquity.NET.Llvm.UT
             var funcSig2 = context.GetFunctionType( context.FloatType , context.Int16Type, context.Int32Type);
             Assert.IsNotNull( funcSig );
             Assert.IsNotNull( funcSig2 );
-            Assert.IsTrue( funcSig.Equals(funcSig2));
+            Assert.IsTrue( funcSig.Equals( funcSig2 ) );
         }
 
         [TestMethod]
@@ -615,9 +615,9 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
             Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -647,13 +647,13 @@ namespace Ubiquity.NET.Llvm.UT
                                                     , context.CreateConstant( ( short )-3 )
                                                     );
             Assert.AreEqual( 4, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantStruct>( value.Operands[ 2 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 3 ]);
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 3 ]! ).SignExtendedValue );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantStruct>( value.Operands[ 2 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 3 ] );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 3 ]!).SignExtendedValue );
 
             // verify the nested struct is generated correctly
             var nestedConst = ( Constant )value.Operands[ 2 ]!;
@@ -661,9 +661,9 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsInstanceOfType( nestedConst.Operands[ 1 ]!, typeof( ConstantDataArray ) );
             Assert.IsInstanceOfType( nestedConst.Operands[ 2 ]!, typeof( ConstantInt ) );
 
-            Assert.AreEqual( 5, ( ( ConstantInt )nestedConst.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( "Hello", ( ( ConstantDataSequential )nestedConst.Operands[ 1 ]! ).ExtractAsString( ) );
-            Assert.AreEqual( 6, ( ( ConstantInt )nestedConst.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 5, ((ConstantInt)nestedConst.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( "Hello", ((ConstantDataSequential)nestedConst.Operands[ 1 ]!).ExtractAsString() );
+            Assert.AreEqual( 6, ((ConstantInt)nestedConst.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -687,13 +687,13 @@ namespace Ubiquity.NET.Llvm.UT
                                                     , context.CreateConstant( ( short )-3 )
                                                     );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -719,13 +719,13 @@ namespace Ubiquity.NET.Llvm.UT
 
             var value = context.CreateConstantStruct( true, fields );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -749,13 +749,13 @@ namespace Ubiquity.NET.Llvm.UT
                                             };
             var value = context.CreateConstantStruct( false, fields );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -780,13 +780,13 @@ namespace Ubiquity.NET.Llvm.UT
                                             };
             var value = context.CreateNamedConstantStruct( structType, fields );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -816,13 +816,13 @@ namespace Ubiquity.NET.Llvm.UT
                                             };
             var value = context.CreateNamedConstantStruct( structType, fields );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -852,13 +852,13 @@ namespace Ubiquity.NET.Llvm.UT
                                                          , context.CreateConstant( ( short )-3 )
                                                          );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -888,13 +888,13 @@ namespace Ubiquity.NET.Llvm.UT
                                                          , context.CreateConstant( ( short )-3 )
                                                          );
             Assert.AreEqual( 3, value.Operands.Count );
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ]);
-            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ]);
-            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ]);
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 0 ] );
+            Assert.IsInstanceOfType<ConstantFP>( value.Operands[ 1 ] );
+            Assert.IsInstanceOfType<ConstantInt>( value.Operands[ 2 ] );
 
-            Assert.AreEqual( 1L, ( ( ConstantInt )value.Operands[ 0 ]! ).SignExtendedValue );
-            Assert.AreEqual( 2.0, ( ( ConstantFP )value.Operands[ 1 ]! ).Value );
-            Assert.AreEqual( -3L, ( ( ConstantInt )value.Operands[ 2 ]! ).SignExtendedValue );
+            Assert.AreEqual( 1L, ((ConstantInt)value.Operands[ 0 ]!).SignExtendedValue );
+            Assert.AreEqual( 2.0, ((ConstantFP)value.Operands[ 1 ]!).Value );
+            Assert.AreEqual( -3L, ((ConstantInt)value.Operands[ 2 ]!).SignExtendedValue );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, value.NativeType.IntegerBitWidth );
@@ -915,7 +915,7 @@ namespace Ubiquity.NET.Llvm.UT
             const string content = "Test MDString";
             var mdstring = context.CreateMetadataString( content );
             Assert.IsNotNull( mdstring );
-            Assert.AreEqual( content, mdstring.ToString( ) );
+            Assert.AreEqual( content, mdstring.ToString() );
         }
 
         [TestMethod]
@@ -925,7 +925,7 @@ namespace Ubiquity.NET.Llvm.UT
             using var context = new Context();
             var mdstring = context.CreateMetadataString( string.Empty );
             Assert.IsNotNull( mdstring );
-            Assert.AreEqual( string.Empty, mdstring.ToString( ) );
+            Assert.AreEqual( string.Empty, mdstring.ToString() );
         }
 
         [TestMethod]
@@ -935,7 +935,7 @@ namespace Ubiquity.NET.Llvm.UT
             using var context = new Context();
             var mdstring = context.CreateMetadataString( null );
             Assert.IsNotNull( mdstring );
-            Assert.AreEqual( string.Empty, mdstring.ToString( ) );
+            Assert.AreEqual( string.Empty, mdstring.ToString() );
         }
 
         [TestMethod]
@@ -961,7 +961,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( arrayType );
             Assert.AreEqual( context, arrayType.Context );
             Assert.AreEqual( context.Int8Type, arrayType.ElementType );
-            Assert.AreEqual( ( uint )str.Length + 1 , arrayType.Length ); // +1 for terminating \0
+            Assert.AreEqual( (uint)str.Length + 1, arrayType.Length ); // +1 for terminating \0
             string valueStr = value.ExtractAsString( );
             Assert.IsFalse( string.IsNullOrWhiteSpace( valueStr ) );
             Assert.AreEqual( str, valueStr );
@@ -970,7 +970,7 @@ namespace Ubiquity.NET.Llvm.UT
             byte[ ] strBytes = System.Text.Encoding.ASCII.GetBytes(str);
 
             Assert.AreEqual( strBytes.Length + 1, span.Length ); // +1 for terminating \0
-            for( int i = 0; i < strBytes.Length; ++i )
+            for(int i = 0; i < strBytes.Length; ++i)
             {
                 Assert.AreEqual( strBytes[ i ], span[ i ], $"At index {i}" );
             }
@@ -1001,7 +1001,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( arrayType );
             Assert.AreEqual( context, arrayType.Context );
             Assert.AreEqual( context.Int8Type, arrayType.ElementType );
-            Assert.AreEqual( ( uint )str.Length, arrayType.Length );
+            Assert.AreEqual( (uint)str.Length, arrayType.Length );
             string valueStr = value.ExtractAsString( );
             Assert.IsFalse( LazyEncodedString.IsNullOrWhiteSpace( valueStr ) );
             Assert.AreEqual( str, valueStr );
@@ -1010,7 +1010,7 @@ namespace Ubiquity.NET.Llvm.UT
             byte[ ] strBytes = System.Text.Encoding.ASCII.GetBytes(str);
 
             Assert.AreEqual( strBytes.Length, span.Length );
-            for( int i = 0; i < strBytes.Length; ++i )
+            for(int i = 0; i < strBytes.Length; ++i)
             {
                 Assert.AreEqual( strBytes[ i ], span[ i ], $"At index {i}" );
             }

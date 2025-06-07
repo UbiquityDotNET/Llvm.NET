@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Runtime.Utils
     public class ErrorNodeCollector
         : AstVisitorBase<ImmutableArray<ErrorNode>>
     {
-        /// <summary>Initializes a new instance of <see cref="ErrorNodeCollector"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="ErrorNodeCollector"/> class</summary>
         public ErrorNodeCollector( )
             : base( [] )
         {
@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public override ImmutableArray<ErrorNode> Visit( IAstNode node )
         {
             return node is ErrorNode errNode
-                 ? AggregateResult([ errNode ], base.Visit( node ) )
+                 ? AggregateResult( [ errNode ], base.Visit( node ) )
                  : base.Visit( node );
         }
 

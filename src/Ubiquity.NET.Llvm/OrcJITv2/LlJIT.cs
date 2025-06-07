@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJITUtils;
 
 // They are order by access, unfortunately this analyzer has stupid built-in defaults that
 // puts internal as higher priority than protected and no way to override it.
@@ -19,13 +20,16 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     {
         /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is held in this instance" )]
-        public LlJIT()
-            : this(CreateDefaultWithoutBuilder())
+        public LlJIT( )
+            : this( CreateDefaultWithoutBuilder() )
         {
         }
 
         /// <summary>Gets the main library for this JIT instance</summary>
-        public JITDyLib MainLib => new(LLVMOrcLLJITGetMainJITDylib(Handle));
+        public JITDyLib MainLib => new( LLVMOrcLLJITGetMainJITDylib( Handle ) );
+
+        /// <summary>Gets the global prefix character for this instance</summary>
+        public char GlobalPrefix => (char)LLVMOrcLLJITGetGlobalPrefix( Handle );
 
         /// <summary>Gets the data layout string for this JIT</summary>
         public LazyEncodedString DataLayoutString => LLVMOrcLLJITGetDataLayoutStr( Handle );
@@ -45,10 +49,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="lib">Library to work on</param>
         /// <returns>Resource tracker for this instance</returns>
         [MustUseReturnValue]
-        public ResourceTracker AddWithTracking(ThreadSafeContext ctx, Module module, JITDyLib lib = default)
+        public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default )
         {
-            ArgumentNullException.ThrowIfNull(ctx);
-            ArgumentNullException.ThrowIfNull(module);
+            ArgumentNullException.ThrowIfNull( ctx );
+            ArgumentNullException.ThrowIfNull( module );
 
             // Default to using MainLib if none specified.
             if(lib.Handle.IsNull)
@@ -60,7 +64,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             try
             {
                 using ThreadSafeModule tsm = new(ctx, module);
-                AddModule(tracker, tsm);
+                Add( tracker, tsm );
             }
             catch
             {
@@ -75,9 +79,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="name">NameField of the symbol to find the address of</param>
         /// <returns>Address of the symbol</returns>
         /// <exception cref="LlvmException">Error occurred with lookup [Most likely the symbol is not found]</exception>
-        public UInt64 Lookup(LazyEncodedString name)
+        public UInt64 Lookup( LazyEncodedString name )
         {
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( name );
 
             // Deal with bad API design, converting errors to an exception and returning the result.
             using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, name);
@@ -99,9 +103,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// if disposed so it is safe to declare instances with a "using".
         /// </note>
         /// </remarks>
-        public void AddModule(JITDyLib lib, ThreadSafeModule module)
+        public void Add( JITDyLib lib, ThreadSafeModule module )
         {
-            ArgumentNullException.ThrowIfNull(module);
+            ArgumentNullException.ThrowIfNull( module );
 
             using LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle);
             errRef.ThrowIfFailed();
@@ -122,10 +126,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// if disposed so it is safe to declare instances with a "using".
         /// </note>
         /// </remarks>
-        public void AddModule(ResourceTracker tracker, ThreadSafeModule module)
+        public void Add( ResourceTracker tracker, ThreadSafeModule module )
         {
-            ArgumentNullException.ThrowIfNull(tracker);
-            ArgumentNullException.ThrowIfNull(module);
+            ArgumentNullException.ThrowIfNull( tracker );
+            ArgumentNullException.ThrowIfNull( module );
 
             using LLVMErrorRef errorRef = LLVMOrcLLJITAddLLVMIRModuleWithRT(Handle, tracker.Handle, module.Handle);
             errorRef.ThrowIfFailed();
@@ -135,32 +139,43 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Mangles and interns a symbol in the JIT's symbol pool</summary>
         /// <param name="name">Symbol name to add</param>
         /// <returns>Entry to the string pool for the symbol</returns>
-        public SymbolStringPoolEntry MangleAndIntern(LazyEncodedString name)
+        public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name )
         {
-            ArgumentNullException.ThrowIfNull(name);
-            return new(LLVMOrcLLJITMangleAndIntern(Handle, name));
+            ArgumentNullException.ThrowIfNull( name );
+            return new( LLVMOrcLLJITMangleAndIntern( Handle, name ) );
         }
 
         /// <summary>Gets the IR transform layer for this JIT</summary>
-        public IrTransformLayer TransformLayer => new(LLVMOrcLLJITGetIRTransformLayer(Handle));
+        public IrTransformLayer TransformLayer => new( LLVMOrcLLJITGetIRTransformLayer( Handle ) );
 
         /// <summary>Gets the Execution session for this JIT</summary>
-        public ExecutionSession Session => new(LLVMOrcLLJITGetExecutionSession(Handle));
+        public ExecutionSession Session => new( LLVMOrcLLJITGetExecutionSession( Handle ) );
+
+        /// <summary>Enables debug support in the JIT</summary>
+        /// <remarks>
+        /// This installs the plug-in that submits debug objects to the executor. Executors must
+        /// expose the llvm_orc_registerJITLoaderGDBWrapper symbol.
+        /// </remarks>
+        public void EnableDebugSupport( )
+        {
+            using var err = LLVMOrcLLJITEnableDebugSupport( Handle );
+            err.ThrowIfFailed();
+        }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
 
-        internal LlJIT(LLVMOrcLLJITRef h)
+        internal LlJIT( LLVMOrcLLJITRef h )
         {
             Handle = h.Move();
         }
 
         private readonly LLVMOrcLLJITRef Handle;
 
-        private static LLVMOrcLLJITRef CreateDefaultWithoutBuilder()
+        private static LLVMOrcLLJITRef CreateDefaultWithoutBuilder( )
         {
             using var errorRef = LLVMOrcCreateLLJIT(LLVMOrcLLJITBuilderRef.Zero, out LLVMOrcLLJITRef retVal);
             errorRef.ThrowIfFailed();

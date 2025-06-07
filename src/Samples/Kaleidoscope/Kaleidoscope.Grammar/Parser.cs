@@ -14,6 +14,7 @@ using Antlr4.Runtime.Tree;
 
 using Kaleidoscope.Grammar.ANTLR;
 using Kaleidoscope.Grammar.AST;
+using Kaleidoscope.Grammar.Visualizers;
 
 using Ubiquity.NET.Runtime.Utils;
 
@@ -62,14 +63,14 @@ namespace Kaleidoscope.Grammar
         /// <inheritdoc/>
         public IAstNode Parse( string txt )
         {
-            return Parse( ( txt ?? string.Empty ).ToCharArray( ), ParseMode.ReplLoop );
+            return Parse( (txt ?? string.Empty).ToCharArray(), ParseMode.ReplLoop );
         }
 
         /// <inheritdoc/>
         public IAstNode Parse( TextReader reader )
         {
             ArgumentNullException.ThrowIfNull( reader );
-            return Parse( reader.ReadToEnd( ).ToCharArray( ), ParseMode.FullSource );
+            return Parse( reader.ReadToEnd().ToCharArray(), ParseMode.FullSource );
         }
 
         /// <summary>Specifies the parse mode for parsing Kaleidoscope source input</summary>
@@ -82,7 +83,7 @@ namespace Kaleidoscope.Grammar
             FullSource
         }
 
-        private IAstNode Parse( char[ ] input, ParseMode mode )
+        private IAstNode Parse( char[] input, ParseMode mode )
         {
             try
             {
@@ -94,7 +95,7 @@ namespace Kaleidoscope.Grammar
                 {
                     var docListener = new XDocumentListener( antlrParser );
                     ParseTreeWalker.Default.Walk( docListener, parseTree );
-                    Visualizer.VisualizeParseTree(docListener.Document);
+                    Visualizer.VisualizeParseTree( docListener.Document );
                 }
 
                 IAstNode retVal;
@@ -118,26 +119,26 @@ namespace Kaleidoscope.Grammar
                     if(Visualizer.VisualizationKind.HasFlag( VisualizationKind.Dgml ))
                     {
                         using var writer = new StringWriter(CultureInfo.CurrentCulture);
-                        Visualizer.VisualizeAstDgml(dgmlGenerator.Graph.ToXml());
+                        Visualizer.VisualizeAstDgml( dgmlGenerator.Graph.ToXml() );
                     }
 
                     if(Visualizer.VisualizationKind.HasFlag( VisualizationKind.BlockDiag ))
                     {
                         using var writer = new StringWriter(CultureInfo.CurrentCulture);
                         dgmlGenerator.Graph.WriteAsBlockDiag( writer );
-                        Visualizer.VisualizeBlockDiag(writer.ToString());
+                        Visualizer.VisualizeBlockDiag( writer.ToString() );
                     }
                 }
 
                 return retVal;
             }
-            catch( ParseCanceledException )
+            catch(ParseCanceledException)
             {
                 return new RootNode( default, new ErrorNode( default, "Parse canceled" ) );
             }
         }
 
-        private (KaleidoscopeParser, IParseTree) CoreParse( char[] input, ParseMode mode, ParseErrorCollector errCollector)
+        private (KaleidoscopeParser Op, IParseTree RHS) CoreParse( char[] input, ParseMode mode, ParseErrorCollector errCollector )
         {
             var lexer = new KaleidoscopeLexer( input, GlobalState.LanguageLevel, errCollector );
 

@@ -1,4 +1,10 @@
-﻿using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetMachineBindings;
+﻿// -----------------------------------------------------------------------
+// <copyright file="TargetMachineOptions.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetMachineBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
 
 namespace Ubiquity.NET.Llvm
@@ -9,48 +15,50 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets or sets the CPU name for the machine</summary>
         public LazyEncodedString Cpu
         {
-            get => LibLLVMTargetMachineOptionsGetCPU(Handle) ?? LazyEncodedString.Empty;
-            set => LLVMTargetMachineOptionsSetCPU(Handle, value.ThrowIfNull());
+            get => LibLLVMTargetMachineOptionsGetCPU( Handle ) ?? LazyEncodedString.Empty;
+            set => LLVMTargetMachineOptionsSetCPU( Handle, value.ThrowIfNull() );
         }
 
         /// <summary>Gets or sets the CPU Features for the machine</summary>
         public LazyEncodedString Features
         {
-            get => LibLLVMTargetMachineOptionsGetFeatures(Handle) ?? LazyEncodedString.Empty;
-            set => LLVMTargetMachineOptionsSetFeatures(Handle, value.ThrowIfNull());
+            get => LibLLVMTargetMachineOptionsGetFeatures( Handle ) ?? LazyEncodedString.Empty;
+            set => LLVMTargetMachineOptionsSetFeatures( Handle, value.ThrowIfNull() );
         }
 
         /// <summary>Gets or sets the Code generation options for the machine</summary>
         public CodeGenOpt CodeGenOpt
         {
-            get => (CodeGenOpt)LibLLVMTargetMachineOptionsGetCodeGenOptLevel(Handle);
-            set => LLVMTargetMachineOptionsSetCodeGenOptLevel(Handle, (LLVMCodeGenOptLevel)value);
+            get => (CodeGenOpt)LibLLVMTargetMachineOptionsGetCodeGenOptLevel( Handle );
+            set => LLVMTargetMachineOptionsSetCodeGenOptLevel( Handle, (LLVMCodeGenOptLevel)value );
         }
 
         /// <summary>Gets or sets the relocation mode for the machine</summary>
         public RelocationMode RelocationMode
         {
-            get => (RelocationMode)LibLLVMTargetMachineOptionsGetRelocMode(Handle);
-            set => LLVMTargetMachineOptionsSetRelocMode(Handle, (LLVMRelocMode)value);
+            get => (RelocationMode)LibLLVMTargetMachineOptionsGetRelocMode( Handle );
+            set => LLVMTargetMachineOptionsSetRelocMode( Handle, (LLVMRelocMode)value );
         }
 
         /// <summary>Gets or sets the code model for the machine</summary>
         public CodeModel CodeModel
         {
-            get => (CodeModel)LibLLVMTargetMachineOptionsGetCodeModel(Handle);
-            set => LLVMTargetMachineOptionsSetCodeModel(Handle, (LLVMCodeModel)value);
+            get => (CodeModel)LibLLVMTargetMachineOptionsGetCodeModel( Handle );
+            set => LLVMTargetMachineOptionsSetCodeModel( Handle, (LLVMCodeModel)value );
         }
 
         /// <summary>Gets or sets the ABI for the machine</summary>
         public LazyEncodedString ABI
         {
-            get => LibLLVMTargetMachineOptionsGetABI(Handle) ?? LazyEncodedString.Empty;
-            set => LLVMTargetMachineOptionsSetABI(Handle, value.ThrowIfNull());
+            get => LibLLVMTargetMachineOptionsGetABI( Handle ) ?? LazyEncodedString.Empty;
+            set => LLVMTargetMachineOptionsSetABI( Handle, value.ThrowIfNull() );
         }
-        internal TargetMachineOptions(LLVMTargetMachineOptionsRef h)
+
+        internal TargetMachineOptions( LLVMTargetMachineOptionsRef h )
         {
             Handle = h.Move();
         }
-        internal LLVMTargetMachineOptionsRef Handle {get;}
+
+        internal LLVMTargetMachineOptionsRef Handle { get; }
     }
 }

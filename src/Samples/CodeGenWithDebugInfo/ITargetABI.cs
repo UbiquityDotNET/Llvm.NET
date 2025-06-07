@@ -41,7 +41,7 @@ namespace CodeGenWithDebugInfo
 
         void AddModuleFlags( Module module );
 
-        TargetMachine CreateTargetMachine();
+        TargetMachine CreateTargetMachine( );
     }
     #endregion
 }

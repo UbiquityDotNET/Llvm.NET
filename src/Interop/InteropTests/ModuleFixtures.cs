@@ -17,11 +17,11 @@ namespace Ubiquity.NET.Llvm.Interop.UT
     public static class ModuleFixtures
     {
         [AssemblyInitialize]
-        public static void AssemblyInitialize(TestContext ctx)
+        public static void AssemblyInitialize( TestContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
 
-            //ctx.WriteLine("Hello world!"); // Goes to great bit pool in the sky... [Sort-of.]
+            // ctx.WriteLine("Hello world!"); // Goes to great bit pool in the sky... [Sort-of.]
             // reality: ctx.Write*() calls go to a string writer, the results of that are captured
             // stored and then ignored, UNLESS the result of THIS initializer is not success.
             // Thus, in the real world those APIs are completely useless in an assembly initializer.
@@ -31,6 +31,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             LibLLVM?.Dispose();
 
             LibLLVM = Library.InitializeLLVM();
+
             // Native is assumed, Tests also use Cortex-M3; so load that variant of
             // the interop APIs.
             // NOTE: Target tests may need to register all, but that's OK as it includes
@@ -40,11 +41,11 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         }
 
         [AssemblyCleanup]
-        public static void AssemblyCleanup()
+        public static void AssemblyCleanup( )
         {
             LibLLVM?.Dispose();
         }
 
-        internal static ILibLlvm? LibLLVM;
+        internal static ILibLlvm? LibLLVM { get; private set; }
     }
 }

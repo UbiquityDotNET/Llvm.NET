@@ -38,13 +38,12 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="o">Object to allocate a GCHandle for that is controlled by this instance</param>
         /// <remarks>
         /// It is expected that the type of <paramref name="o"/> has this <see cref="SafeGCHandle"/>
-        /// as a private member so that it controls the lifetime of it's container. Use of this type
-        /// in any other context is the dreaded "undefined behavior".
+        /// as a private member so that it controls the lifetime of it's container.
         /// </remarks>
-        public SafeGCHandle(object o)
-            : base(0, ownsHandle: true)
+        public SafeGCHandle( object o )
+            : base( 0, ownsHandle: true )
         {
-            handle = (nint)GCHandle.Alloc(o);
+            handle = (nint)GCHandle.Alloc( o );
         }
 
         /// <inheritdoc/>
@@ -56,17 +55,17 @@ namespace Ubiquity.NET.InteropHelpers
         /// A native call back that receives the returned context can reconstitute the <see cref="GCHandle"/> via <see cref="GCHandle.FromIntPtr(nint)"/>
         /// and from that it can get the original instance the handle refers to via <see cref="GCHandle.Target"/>
         /// </remarks>
-        public unsafe nint AddRefAndGetNativeContext()
+        public unsafe nint AddRefAndGetNativeContext( )
         {
             bool ignoredButRequired = false;
-            DangerousAddRef(ref ignoredButRequired);
+            DangerousAddRef( ref ignoredButRequired );
             return handle;
         }
 
         /// <inheritdoc/>
-        protected override bool ReleaseHandle()
+        protected override bool ReleaseHandle( )
         {
-            GCHandle.FromIntPtr(handle).Free();
+            GCHandle.FromIntPtr( handle ).Free();
             return true;
         }
     }

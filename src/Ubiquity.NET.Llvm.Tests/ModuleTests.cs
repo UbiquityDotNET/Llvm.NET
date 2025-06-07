@@ -61,11 +61,11 @@ namespace Ubiquity.NET.Llvm.UT
 
             // Functions collection should be valid but empty
             Assert.IsNotNull( module.Functions );
-            Assert.IsFalse( module.Functions.Any( ) );
+            Assert.IsFalse( module.Functions.Any() );
 
             // Globals collection should be valid but empty
             Assert.IsNotNull( module.Globals );
-            Assert.IsFalse( module.Globals.Any( ) );
+            Assert.IsFalse( module.Globals.Any() );
         }
 
         [TestMethod]
@@ -84,11 +84,11 @@ namespace Ubiquity.NET.Llvm.UT
 
             // Functions collection should be valid but empty
             Assert.IsNotNull( module.Functions );
-            Assert.IsFalse( module.Functions.Any( ) );
+            Assert.IsFalse( module.Functions.Any() );
 
             // Globals collection should be valid but empty
             Assert.IsNotNull( module.Globals );
-            Assert.IsFalse( module.Globals.Any( ) );
+            Assert.IsFalse( module.Globals.Any() );
         }
 
         [TestMethod]
@@ -110,18 +110,18 @@ namespace Ubiquity.NET.Llvm.UT
 
             // Functions collection should be valid but empty
             Assert.IsNotNull( module.Functions );
-            Assert.IsFalse( module.Functions.Any( ) );
+            Assert.IsFalse( module.Functions.Any() );
 
             // Globals collection should be valid but empty
             Assert.IsNotNull( module.Globals );
-            Assert.IsFalse( module.Globals.Any( ) );
+            Assert.IsFalse( module.Globals.Any() );
         }
 
         [TestMethod]
         public void DisposeTest( )
         {
-            using( var context = new Context( ) )
-            using( context.CreateBitcodeModule( TestModuleName ) )
+            using(var context = new Context())
+            using(context.CreateBitcodeModule( TestModuleName ))
             {
             }
         }
@@ -151,10 +151,10 @@ namespace Ubiquity.NET.Llvm.UT
             var ex = Assert.ThrowsExactly<ArgumentException>(()=>
                         mergedMod.Link( m1 )
                      );
-            Assert.AreEqual("srcModule", ex.ParamName);
+            Assert.AreEqual( "srcModule", ex.ParamName );
 
             // full message includes the name of the parameter, but that's .NET functionality not tested
-            Assert.IsTrue(ex.Message.StartsWith("Linking modules from different contexts is not allowed"));
+            Assert.IsTrue( ex.Message.StartsWith( "Linking modules from different contexts is not allowed" ) );
         }
 
         [TestMethod]
@@ -190,11 +190,11 @@ namespace Ubiquity.NET.Llvm.UT
             mergedMod.Link( clone1 );
             GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced, true );
             Assert.IsTrue( mergedMod.Verify( out string errMsg ), errMsg );
-            Assert.AreEqual( 1, mergedMod.Functions.Count( ) );
+            Assert.AreEqual( 1, mergedMod.Functions.Count() );
             mergedMod.Link( clone2 );
             GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced, true );
             Assert.IsTrue( mergedMod.Verify( out errMsg ), errMsg );
-            Assert.AreEqual( 2, mergedMod.Functions.Count( ) );
+            Assert.AreEqual( 2, mergedMod.Functions.Count() );
         }
 
         [TestMethod]
@@ -248,8 +248,8 @@ namespace Ubiquity.NET.Llvm.UT
             string tmpFileName = Path.GetTempFileName( );
             try
             {
-                using( var context = new Context( ) )
-                using( var module = context.CreateBitcodeModule( TestModuleName ) )
+                using(var context = new Context())
+                using(var module = context.CreateBitcodeModule( TestModuleName ))
                 {
                     _ = CreateSimpleVoidNopTestFunction( module, "foo" );
                     module.WriteToFile( tmpFileName );
@@ -326,7 +326,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( globalVar );
 
             Assert.AreEqual( "TestInt", globalVar!.Name );
-            Assert.AreEqual( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
+            Assert.AreEqual( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
         }
 
         [TestMethod]
@@ -341,7 +341,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( globalVar );
             Assert.IsNotNull( globalVar.Initializer );
             Assert.IsTrue( LazyEncodedString.IsNullOrWhiteSpace( globalVar.Name ) );
-            Assert.AreEqual( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
+            Assert.AreEqual( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
             Assert.AreEqual( module.Context.Int32Type, globalVar.Initializer!.NativeType );
             Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
             Assert.IsTrue( globalVar.IsConstant );
@@ -363,7 +363,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( globalVar!.Initializer );
 
             Assert.AreEqual( "TestInt", globalVar.Name );
-            Assert.AreEqual( module.Context.Int32Type.CreatePointerType( ), globalVar.NativeType );
+            Assert.AreEqual( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
             Assert.AreEqual( module.Context.Int32Type, globalVar.Initializer!.NativeType );
             Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
             Assert.IsTrue( globalVar.IsConstant );
@@ -415,7 +415,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var dwarfVerConst = ( ( ConstantAsMetadata )dwarfVerFlag.Metadata ).Constant;
             Assert.IsInstanceOfType<ConstantInt>( dwarfVerConst );
-            Assert.AreEqual( 4UL, ( ( ConstantInt )dwarfVerConst ).ZeroExtendedValue );
+            Assert.AreEqual( 4UL, ((ConstantInt)dwarfVerConst).ZeroExtendedValue );
 
             var debugVerFlag = module.ModuleFlags[ Module.DebugVersionValue ];
             Assert.AreEqual( ModuleFlagBehavior.Warning, debugVerFlag.Behavior );
@@ -424,7 +424,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var debugVerConst = ( ( ConstantAsMetadata )debugVerFlag.Metadata ).Constant;
             Assert.IsInstanceOfType<ConstantInt>( debugVerConst );
-            Assert.AreEqual( Module.DebugMetadataVersion, ( ( ConstantInt )debugVerConst ).ZeroExtendedValue );
+            Assert.AreEqual( Module.DebugMetadataVersion, ((ConstantInt)debugVerConst).ZeroExtendedValue );
 
             var wcharSizeFlag = module.ModuleFlags[ "wchar_size" ];
             Assert.AreEqual( ModuleFlagBehavior.Error, wcharSizeFlag.Behavior );
@@ -433,7 +433,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var wcharSizeConst = ( ( ConstantAsMetadata )wcharSizeFlag.Metadata ).Constant;
             Assert.IsInstanceOfType<ConstantInt>( wcharSizeConst );
-            Assert.AreEqual( 4UL, ( ( ConstantInt )wcharSizeConst ).ZeroExtendedValue );
+            Assert.AreEqual( 4UL, ((ConstantInt)wcharSizeConst).ZeroExtendedValue );
 
             var minEnumSizeFlag = module.ModuleFlags[ "wchar_size" ];
             Assert.AreEqual( ModuleFlagBehavior.Error, minEnumSizeFlag.Behavior );
@@ -442,7 +442,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var minEnumSizeConst = ( ( ConstantAsMetadata )minEnumSizeFlag.Metadata ).Constant;
             Assert.IsInstanceOfType<ConstantInt>( minEnumSizeConst );
-            Assert.AreEqual( 4UL, ( ( ConstantInt )minEnumSizeConst ).ZeroExtendedValue );
+            Assert.AreEqual( 4UL, ((ConstantInt)minEnumSizeConst).ZeroExtendedValue );
         }
 
         /*
@@ -555,7 +555,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( entryBlock, testFunc.EntryBlock );
 
             using var irBuilder = new InstructionBuilder( testFunc.EntryBlock! );
-            irBuilder.Return( );
+            irBuilder.Return();
             return testFunc;
         }
 
@@ -570,7 +570,7 @@ namespace Ubiquity.NET.Llvm.UT
             return testFunc;
         }
 
-        private static string GetExpectedModuleText(LazyEncodedString moduleName)
+        private static string GetExpectedModuleText( LazyEncodedString moduleName )
         {
             string expectedText = string.Format( CultureInfo.InvariantCulture, TestModuleTemplate, moduleName );
             if(Environment.NewLine != LlvmNewLine)

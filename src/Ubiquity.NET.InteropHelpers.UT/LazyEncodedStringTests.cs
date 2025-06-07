@@ -1,18 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ubiquity.NET.InteropHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
+﻿// -----------------------------------------------------------------------
+// <copyright file="LazyEncodedStringTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
-namespace Ubiquity.NET.InteropHelpers.Tests
+using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Ubiquity.NET.InteropHelpers.UT
 {
-    [TestClass()]
+    [TestClass]
     public class LazyEncodedStringTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void LazyEncodedStringTest( )
         {
             var lazyString = new LazyEncodedString("managed");
@@ -21,7 +25,7 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             Assert.AreEqual( Encoding.UTF8, lazyString.Encoding );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void LazyEncodedStringTest1( )
         {
             var lazyString = new LazyEncodedString("utf8 Text"u8);
@@ -30,7 +34,7 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             Assert.AreEqual( Encoding.UTF8, lazyString.Encoding );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToStringTest( )
         {
             var lazyString = new LazyEncodedString("utf8 Text"u8);
@@ -45,7 +49,7 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             Assert.AreEqual( managedText, managed2 );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToReadOnlySpanTest( )
         {
             const string managedText = "Some Text";
@@ -60,7 +64,7 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             Assert.IsTrue( utf8Span.SequenceEqual( containedSpan ) );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PinTest( )
         {
             const string managedText = "Some Text";
@@ -101,7 +105,7 @@ namespace Ubiquity.NET.InteropHelpers.Tests
         8 | native  | managed | Equal if contents of string are equal (ordinal compare)
         9 | native  | native  | Equal if contents of native array are equal
         */
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTest( )
         {
             LazyEncodedString? nullString1 = null;
@@ -119,7 +123,10 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             // case 1:
             Assert.IsTrue( nullString1 == nullString2 );
             Assert.IsTrue( Equals( nullString1, nullString1 ) );
+#pragma warning disable SA1131 // Use readable conditions
+            // Order is intentional to test specific operator call
             Assert.IsTrue( null == nullString1 );
+#pragma warning restore SA1131 // Use readable conditions
             Assert.IsTrue( Equals( null, nullString1 ) );
             Assert.IsTrue( nullString1 == null );
             Assert.IsTrue( Equals( nullString1, null ) );
@@ -165,14 +172,14 @@ namespace Ubiquity.NET.InteropHelpers.Tests
             Assert.IsTrue( native1.Equals( native1Rhs ) );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetHashCodeTest( )
         {
             LazyEncodedString managed1 = "tEst one";
             LazyEncodedString native1 = "tEst one"u8;
-            Assert.AreNotEqual(0, managed1.GetHashCode());
-            Assert.AreNotEqual(0, native1.GetHashCode());
-            Assert.AreEqual(managed1.GetHashCode(), native1.GetHashCode());
+            Assert.AreNotEqual( 0, managed1.GetHashCode() );
+            Assert.AreNotEqual( 0, native1.GetHashCode() );
+            Assert.AreEqual( managed1.GetHashCode(), native1.GetHashCode() );
         }
     }
 }

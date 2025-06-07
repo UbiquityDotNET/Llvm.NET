@@ -30,7 +30,7 @@ namespace Kaleidoscope.Grammar
         public static void WriteAsBlockDiag( this DirectedGraph graph, TextWriter writer )
         {
             ArgumentNullException.ThrowIfNull( graph );
-            ArgumentNullException.ThrowIfNull(writer);
+            ArgumentNullException.ThrowIfNull( writer );
 
             using var indentedWriter = new IndentedTextWriter( writer, "    " );
 
@@ -42,15 +42,15 @@ namespace Kaleidoscope.Grammar
 
             indentedWriter.WriteLineNoTabs( string.Empty );
             indentedWriter.WriteLine( "// Nodes" );
-            foreach( var node in graph.Nodes )
+            foreach(var node in graph.Nodes)
             {
                 indentedWriter.Write( "N{0} [label= \"{1}\"", node.Id, node.Label );
-                if( node.Properties.TryGetValue( "Precedence", out object? precedence ) )
+                if(node.Properties.TryGetValue( "Precedence", out object? precedence ))
                 {
                     indentedWriter.Write( ", numbered = {0}", precedence );
                 }
 
-                if( node.Category == "Terminal" )
+                if(node.Category == "Terminal")
                 {
                     indentedWriter.Write( ", shape = circle" );
                 }
@@ -60,7 +60,7 @@ namespace Kaleidoscope.Grammar
 
             indentedWriter.WriteLineNoTabs( string.Empty );
             indentedWriter.WriteLine( "// Edges" );
-            foreach( var link in graph.Links )
+            foreach(var link in graph.Links)
             {
                 indentedWriter.WriteLine( "N{0} -> N{1}", link.Source, link.Target );
             }

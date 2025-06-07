@@ -4,35 +4,30 @@
     Global references are included in ALL projects in this repository
   -->
   <ItemGroup>
-    <GlobalPackageReference Include="CSemVer.Build.Tasks" Version="2.0.5" />
+    <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.0-rc" />
     <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
     <GlobalPackageReference Include="MustUseRetVal" Version="0.0.2" />
     <!--
-        While some aspects of this analyzer are helpful, it hasn't been without issues. Worse, the last non-preview release
-        was Apr of 2019, That's a LONG time ago. Even the most recent preview (beta) was back in Dec. of 2023. So not much
-        sign of life/activity nor hope of updates to bug fixes. It's sad to see this go as relying on a developer/reviewers
-        to follow the rules is a recipe for failures. Automation is how that works. (With occasional overrides that should
-        get the attention of a reviewer).
-        -->
-    <!--<GlobalPackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(NoCommonAnalyzers)' != 'true'" />-->
+    NOTE: This analyzer is sadly, perpetually in "pre-release mode". There have been many issues/discussion on the point
+    and it has all fallen on deaf ears. So policies regarding "NO-Prerelease" components need to be overruled on this one
+    -->
+    <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" Condition="'$(UseStyleCop)' != 'false'" />
   </ItemGroup>
   <!--
     Package versions made consistent across all packages referenced in this repository
    -->
   <ItemGroup>
-    <PackageVersion Include="Polyfill" Version="7.26.0" />
     <PackageVersion Include="System.IO.Hashing" Version="9.0.4" />
-    <PackageVersion Include="System.CodeDom" Version="9.0.2" />
     <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
     <PackageVersion Include="CppSharp" Version="1.1.5.3168" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.10.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
-    <PackageVersion Include="CommandLineParser" Version="2.9.1" />
     <!-- Tests all use the same framework versions -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="3.8.3" />
-    <PackageVersion Include="MSTest.TestFramework" Version="3.8.3" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.9.1" />
+    <PackageVersion Include="MSTest.TestFramework" Version="3.9.1" />
     <PackageVersion Include="Tmds.ExecFunction" Version="0.8.0" />
+    <PackageVersion Include="Ubiquity.NET.Versioning" Version="5.0.0-rc" />
   </ItemGroup>
 </Project>

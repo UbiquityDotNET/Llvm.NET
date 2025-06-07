@@ -40,8 +40,8 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the Calling convention for the method</summary>
         public CallingConvention CallingConvention
         {
-            get => ( CallingConvention )LLVMGetFunctionCallConv( Handle );
-            set => LLVMSetFunctionCallConv( Handle, ( uint )value );
+            get => (CallingConvention)LLVMGetFunctionCallConv( Handle );
+            set => LLVMSetFunctionCallConv( Handle, (uint)value );
         }
 
         /// <summary>Gets the LLVM intrinsicID for the method</summary>
@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the personality function for exception handling in this function</summary>
         public Function? PersonalityFunction
         {
-            get => !LLVMHasPersonalityFn( Handle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( Handle.ThrowIfInvalid( ) ) )!;
+            get => !LLVMHasPersonalityFn( Handle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( Handle.ThrowIfInvalid() ) )!;
 
             set => LLVMSetPersonalityFn( Handle, value?.Handle ?? LLVMValueRef.Zero );
         }
@@ -64,11 +64,11 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the debug information for this function</summary>
         public DISubProgram? DISubProgram
         {
-            get => (DISubProgram?)LLVMGetSubprogram( Handle ).CreateMetadata( );
+            get => (DISubProgram?)LLVMGetSubprogram( Handle ).CreateMetadata();
 
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                ArgumentNullException.ThrowIfNull( value );
                 LLVMSetSubprogram( Handle, value.Handle );
             }
         }
@@ -84,7 +84,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Verifies the function is valid and all blocks properly terminated</summary>
         public void Verify( )
         {
-            if( !Verify( out string? errMsg ) )
+            if(!Verify( out string? errMsg ))
             {
                 throw new InternalCodeGeneratorException( errMsg );
             }
@@ -93,7 +93,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Verifies the function without throwing an exception</summary>
         /// <param name="errMsg">Error message if any, or <see cref="string.Empty"/> if no errors detected</param>
         /// <returns><see langword="true"/> if no errors found</returns>
-        public bool Verify( [MaybeNullWhen(true)] out string errMsg )
+        public bool Verify( [MaybeNullWhen( true )] out string errMsg )
         {
             return LibLLVMVerifyFunctionEx( Handle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errMsg ).Succeeded;
         }
@@ -105,14 +105,14 @@ namespace Ubiquity.NET.Llvm.Values
         {
             LLVMBasicBlockRef firstBlock = LLVMGetFirstBasicBlock( Handle );
             BasicBlock retVal;
-            if( firstBlock == default )
+            if(firstBlock == default)
             {
                 retVal = AppendBasicBlock( name );
             }
             else
             {
                 var blockRef = LLVMInsertBasicBlockInContext( NativeType.Context.GetUnownedHandle(), firstBlock, name );
-                retVal = BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
+                retVal = BasicBlock.FromHandle( blockRef.ThrowIfInvalid() )!;
             }
 
             return retVal;
@@ -132,7 +132,7 @@ namespace Ubiquity.NET.Llvm.Values
         public BasicBlock AppendBasicBlock( string name )
         {
             LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.GetUnownedHandle(), Handle, name );
-            return BasicBlock.FromHandle( blockRef.ThrowIfInvalid( ) )!;
+            return BasicBlock.FromHandle( blockRef.ThrowIfInvalid() )!;
         }
 
         /// <summary>Inserts a basic block before another block in the function</summary>
@@ -143,13 +143,13 @@ namespace Ubiquity.NET.Llvm.Values
         public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
         {
             ArgumentNullException.ThrowIfNull( insertBefore );
-            if( insertBefore.ContainingFunction != null && !EqualityComparer<Function>.Default.Equals(insertBefore.ContainingFunction, this ) )
+            if(insertBefore.ContainingFunction != null && !EqualityComparer<Function>.Default.Equals( insertBefore.ContainingFunction, this ))
             {
                 throw new ArgumentException( "Basic block belongs to another function", nameof( insertBefore ) );
             }
 
             LLVMBasicBlockRef basicBlockRef = LLVMInsertBasicBlockInContext( NativeType.Context.GetUnownedHandle(), insertBefore.BlockHandle, name );
-            return BasicBlock.FromHandle( basicBlockRef.ThrowIfInvalid( ) )!;
+            return BasicBlock.FromHandle( basicBlockRef.ThrowIfInvalid() )!;
         }
 
         /// <summary>Retrieves or creates block by name</summary>
@@ -161,49 +161,49 @@ namespace Ubiquity.NET.Llvm.Values
         /// </remarks>
         public BasicBlock FindOrCreateNamedBlock( LazyEncodedString name )
         {
-            return BasicBlocks.FirstOrDefault( b => b.Name?.Equals(name) ?? false ) ?? AppendBasicBlock( name );
+            return BasicBlocks.FirstOrDefault( b => b.Name?.Equals( name ) ?? false ) ?? AppendBasicBlock( name );
         }
 
         /// <inheritdoc/>
         public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
         {
-            FunctionAttributeAccessor.AddAttributeAtIndex(this, index, attrib);
+            FunctionAttributeAccessor.AddAttributeAtIndex( this, index, attrib );
         }
 
         /// <inheritdoc/>
         public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            return FunctionAttributeAccessor.GetAttributeCountAtIndex(this, index);
+            return FunctionAttributeAccessor.GetAttributeCountAtIndex( this, index );
         }
 
         /// <inheritdoc/>
         public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
         {
-            return FunctionAttributeAccessor.GetAttributesAtIndex(this, index);
+            return FunctionAttributeAccessor.GetAttributesAtIndex( this, index );
         }
 
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, UInt32 id )
         {
-            return FunctionAttributeAccessor.GetAttributeAtIndex(this, index, id);
+            return FunctionAttributeAccessor.GetAttributeAtIndex( this, index, id );
         }
 
         /// <inheritdoc/>
         public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, LazyEncodedString name )
         {
-            return FunctionAttributeAccessor.GetAttributeAtIndex(this, index, name);
+            return FunctionAttributeAccessor.GetAttributeAtIndex( this, index, name );
         }
 
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, UInt32 id )
         {
-            FunctionAttributeAccessor.RemoveAttributeAtIndex(this, index, id);
+            FunctionAttributeAccessor.RemoveAttributeAtIndex( this, index, id );
         }
 
         /// <inheritdoc/>
         public void RemoveAttributeAtIndex( FunctionAttributeIndex index, LazyEncodedString name )
         {
-            FunctionAttributeAccessor.RemoveAttributeAtIndex(this, index, name);
+            FunctionAttributeAccessor.RemoveAttributeAtIndex( this, index, name );
         }
 
         /// <summary>Removes this function from the parent module</summary>
@@ -225,34 +225,34 @@ namespace Ubiquity.NET.Llvm.Values
         /// and may produce an exception.
         /// </note>
         /// </remarks>
-        public ErrorInfo TryRunPasses(params LazyEncodedString[] passes)
+        public ErrorInfo TryRunPasses( params LazyEncodedString[] passes )
         {
             using PassBuilderOptions options = new();
-            return TryRunPasses(options, passes);
+            return TryRunPasses( options, passes );
         }
 
         /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>
         /// <param name="options">Options for the passes</param>
-        public ErrorInfo TryRunPasses(PassBuilderOptions options, params LazyEncodedString[] passes)
+        public ErrorInfo TryRunPasses( PassBuilderOptions options, params LazyEncodedString[] passes )
         {
-            ArgumentNullException.ThrowIfNull(passes);
-            ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
+            ArgumentNullException.ThrowIfNull( passes );
+            ArgumentOutOfRangeException.ThrowIfLessThan( passes.Length, 1 );
 
             // While not explicitly documented either way, the PassBuilder used under the hood is capable
             // of handling a NULL target machine.
-            return new(LLVMRunPassesOnFunction(Handle, LazyEncodedString.Join(',', passes), LLVMTargetMachineRef.Zero, options.Handle));
+            return new( LLVMRunPassesOnFunction( Handle, LazyEncodedString.Join( ',', passes ), LLVMTargetMachineRef.Zero, options.Handle ) );
         }
 
         /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>
         /// <param name="targetMachine">Target machine for the passes</param>
         /// <param name="options">Options for the passes</param>
-        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes)
+        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes )
         {
-            ArgumentNullException.ThrowIfNull(targetMachine);
-            ArgumentNullException.ThrowIfNull(passes);
-            ArgumentOutOfRangeException.ThrowIfLessThan(passes.Length, 1);
+            ArgumentNullException.ThrowIfNull( targetMachine );
+            ArgumentNullException.ThrowIfNull( passes );
+            ArgumentOutOfRangeException.ThrowIfLessThan( passes.Length, 1 );
 
-            return new(LLVMRunPassesOnFunction(Handle, LazyEncodedString.Join(',', passes), targetMachine.Handle, options.Handle));
+            return new( LLVMRunPassesOnFunction( Handle, LazyEncodedString.Join( ',', passes ), targetMachine.Handle, options.Handle ) );
         }
 
         internal Function( LLVMValueRef valueRef )

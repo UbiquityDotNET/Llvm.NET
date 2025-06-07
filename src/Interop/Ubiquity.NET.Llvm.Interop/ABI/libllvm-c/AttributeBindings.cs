@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public enum LibLLVMAttributeArgKind
@@ -13,9 +17,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         LibLLVMAttributeArgKind_Type,
         LibLLVMAttributeArgKind_ConstantRange,
         LibLLVMAttributeArgKind_ConstantRangeList,
-        LibLLVMAttributeArgKind_String, // NOTE: if argkind is string then ID is 0
-                                        // String args MAY be BOOL 'true' 'false' but that is a constraint on the value as a string!
-    };
+        LibLLVMAttributeArgKind_String, // NOTE: if argkind is string then ID is 0; String args MAY be BOOL 'true' 'false' but that is a constraint on the value as a string!
+    }
 
     [Flags]
     [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Matches ABI naming" )]
@@ -33,10 +36,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
                                       | LibLLVMAttributeAllowedOn_Function
                                       | LibLLVMAttributeAllowedOn_CallSite
                                       | LibLLVMAttributeAllowedOn_Global
-    };
+    }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public readonly record struct LibLLVMAttributeInfo(UInt32 ID, LibLLVMAttributeArgKind ArgKind, LibLLVMAttributeAllowedOn AllowedOn);
+    [StructLayout( LayoutKind.Sequential )]
+    public readonly record struct LibLLVMAttributeInfo( UInt32 ID, LibLLVMAttributeArgKind ArgKind, LibLLVMAttributeAllowedOn AllowedOn );
 
     public static partial class AttributeBindings
     {
@@ -47,7 +50,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         // so the returned value is > than LLVMGetLastEnumAttributeKind()
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial nuint LibLLVMGetNumKnownAttribs();
+        public static unsafe partial nuint LibLLVMGetNumKnownAttribs( );
 
         // Fills in an array of const string pointers. No deallocation is needed for each as
         // they are global static constants.
@@ -59,47 +62,47 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
             nuint namesLen
         );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( DisposeMessageMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMAttributeToString(LLVMAttributeRef attribute);
+        public static unsafe partial string LibLLVMAttributeToString( LLVMAttributeRef attribute );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool LibLLVMIsConstantRangeAttribute(LLVMAttributeRef attribute);
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LibLLVMIsConstantRangeAttribute( LLVMAttributeRef attribute );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool LibLLVMIsConstantRangeListAttribute(LLVMAttributeRef attribute);
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LibLLVMIsConstantRangeListAttribute( LLVMAttributeRef attribute );
 
         // The concept of AttributeInfo is entirely unique to LibLLVM (The extended C based API). This consolidates
         // information about an attribute based on it's name. It is implemented in the native code to gather the
         // required information from LLVM and report it as a simple data structure. These are cacheable in that the
         // same name will produce the same attribute info data.
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe static LLVMErrorRef LibLLVMGetAttributeInfo(LazyEncodedString attribName, out LibLLVMAttributeInfo info)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static unsafe LLVMErrorRef LibLLVMGetAttributeInfo( LazyEncodedString attribName, out LibLLVMAttributeInfo info )
         {
-            return LibLLVMGetAttributeInfo(attribName, attribName.NativeStrLen, out info);
+            return LibLLVMGetAttributeInfo( attribName, attribName.NativeStrLen, out info );
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
 
-        private static unsafe partial LLVMErrorRef LibLLVMGetAttributeInfo(LazyEncodedString attribName, nuint nameLen, out LibLLVMAttributeInfo info);
+        private static unsafe partial LLVMErrorRef LibLLVMGetAttributeInfo( LazyEncodedString attribName, nuint nameLen, out LibLLVMAttributeInfo info );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LibLLVMGetAttributeNameFromID(UInt32 id)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LibLLVMGetAttributeNameFromID( UInt32 id )
         {
             unsafe
             {
                 byte* p = LibLLVMGetAttributeNameFromID(id, out uint len);
-                return LazyEncodedString.FromUnmanaged(p, len);
+                return LazyEncodedString.FromUnmanaged( p, len );
             }
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LibLLVMGetAttributeNameFromID(UInt32 id, out uint len);
+        private static unsafe partial byte* LibLLVMGetAttributeNameFromID( UInt32 id, out uint len );
     }
 }

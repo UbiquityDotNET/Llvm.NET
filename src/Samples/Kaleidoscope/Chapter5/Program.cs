@@ -30,7 +30,7 @@ namespace Kaleidoscope.Chapter5
             };
 
             string helloMsg = $"Ubiquity.NET.Llvm Kaleidoscope Interpreter - {repl.LanguageFeatureLevel}";
-            Console.Title = $"{Assembly.GetExecutingAssembly( ).GetName( )}: {helloMsg}";
+            Console.Title = $"{Assembly.GetExecutingAssembly().GetName()}: {helloMsg}";
             Console.WriteLine( helloMsg );
 
             using var libLlvm = InitializeLLVM( );
@@ -38,7 +38,7 @@ namespace Kaleidoscope.Chapter5
             await repl.Run( Console.In, cts.Token );
 
             Console.WriteLine();
-            Console.WriteLine("good bye!");
+            Console.WriteLine( "good bye!" );
         }
     }
 }

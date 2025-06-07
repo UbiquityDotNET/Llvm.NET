@@ -17,11 +17,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Gets the <see cref="DIGlobalVariable"/> for this node</summary>
         public DIGlobalVariable Variable
-            => (DIGlobalVariable)LLVMDIGlobalVariableExpressionGetVariable( Handle ).ThrowIfInvalid( ).CreateMetadata( )!;
+            => (DIGlobalVariable)LLVMDIGlobalVariableExpressionGetVariable( Handle ).ThrowIfInvalid().CreateMetadata()!;
 
         /// <summary>Gets the <see cref="DIExpression"/> for this node</summary>
         public DIExpression Expression
-            => (DIExpression)LLVMDIGlobalVariableExpressionGetExpression( Handle ).ThrowIfInvalid( ).CreateMetadata( )!;
+            => (DIExpression)LLVMDIGlobalVariableExpressionGetExpression( Handle ).ThrowIfInvalid().CreateMetadata()!;
 
         internal DIGlobalVariableExpression( LLVMMetadataRef handle )
             : base( handle )

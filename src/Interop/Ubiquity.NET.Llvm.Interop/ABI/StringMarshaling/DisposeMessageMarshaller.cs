@@ -16,17 +16,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
     /// simply <see cref="string"/> to convert directly to a managed form as that is the only way it is reasonable to use.
     /// </note>
     /// </remarks>
-    [CLSCompliant(false)]
-    [CustomMarshaller(typeof(string),  MarshalMode.ManagedToUnmanagedOut, typeof(DisposeMessageMarshaller))]
-    [CustomMarshaller(typeof(LazyEncodedString), MarshalMode.ManagedToUnmanagedOut, typeof(LazyEncodedDisposeMessage_Out))]
+    [CLSCompliant( false )]
+    [CustomMarshaller( typeof( string ), MarshalMode.ManagedToUnmanagedOut, typeof( DisposeMessageMarshaller ) )]
+    [CustomMarshaller( typeof( LazyEncodedString ), MarshalMode.ManagedToUnmanagedOut, typeof( LazyEncodedDisposeMessage_Out ) )]
     public static unsafe class DisposeMessageMarshaller
     {
         /// <summary>Converts an unmanaged string to a managed version.</summary>
         /// <param name="unmanaged">An unmanaged string to convert.</param>
         /// <returns>The converted managed string.</returns>
-        public static string? ConvertToManaged(byte* unmanaged)
+        public static string? ConvertToManaged( byte* unmanaged )
         {
-            return LazyEncodedStringMarshaller.ConvertToManaged(unmanaged)?.ToString();
+            return LazyEncodedStringMarshaller.ConvertToManaged( unmanaged )?.ToString();
         }
 
         /// <summary>
@@ -56,20 +56,20 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
             /// This two stage conversion is used to ensure that the unmanaged pointer is freed even if there
             /// is an exception in creating the managed version.
             /// </remarks>
-            public readonly LazyEncodedString? ToManaged()
+            public readonly LazyEncodedString? ToManaged( )
             {
                 return LazyEncodedString.FromUnmanaged( UnmanagedPtr );
             }
 
             /// <summary>Captures the unmanaged pointer</summary>
-            /// <param name="unmanaged"></param>
+            /// <param name="unmanaged">Unmanaged pointer to convert</param>
             /// <remarks>
             /// The unmanaged pointer is captured in this method to ensure it
             /// is released even in the face of an exception in the subsequent call
             /// to <see cref="ToManaged()"/>. The generated code for marshalling will
             /// call <see cref="Free"/> from within a `finally` block.
             /// </remarks>
-            public void FromUnmanaged(byte* unmanaged)
+            public void FromUnmanaged( byte* unmanaged )
             {
                 UnmanagedPtr = unmanaged;
             }
@@ -83,12 +83,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
             /// You have been warned!
             /// </note>
             /// </remarks>
-            public readonly void Free()
+            public readonly void Free( )
             {
-                DisposeMessageMarshaller.Free(UnmanagedPtr);
+                DisposeMessageMarshaller.Free( UnmanagedPtr );
             }
 
-            byte* UnmanagedPtr;
+            private byte* UnmanagedPtr;
         }
     }
 }

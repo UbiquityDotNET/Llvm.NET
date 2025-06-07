@@ -8,21 +8,6 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Values
 {
-    /// <summary>Interface for an attribute container</summary>
-    /// <remarks>
-    /// Attribute containers have a set of attributes that are NOT indexed
-    /// by a <see cref="FunctionAttributeIndex"/>. (For example, an <see cref="Argument"/>
-    /// has attributes specific to the one parameter that it is for.)
-    /// </remarks>
-    public interface IAttributeContainer
-    {
-        /// <summary>Context used for creation of attributes</summary>
-        IContext Context {get;}
-
-        /// <summary>Collection of attributes for this container</summary>
-        ICollection<AttributeValue> Attributes {get;}
-    }
-
     /// <summary>Provides a layer of simplicity and backwards compatibility for manipulating attributes on Values</summary>
     public static class AttributeContainerExtensions
     {
@@ -33,59 +18,60 @@ namespace Ubiquity.NET.Llvm.Values
         public static bool Contains( this ICollection<AttributeValue> self, UInt32 id )
         {
             ArgumentNullException.ThrowIfNull( self );
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(id, LLVMGetLastEnumAttributeKind());
+            ArgumentOutOfRangeException.ThrowIfGreaterThan( id, LLVMGetLastEnumAttributeKind() );
 
             return self.Any( a => a.Id == id );
         }
 
         /// <summary>Adds a range of values to a collection</summary>
+        /// <typeparam name="T">Type of elements in the collection</typeparam>
         /// <param name="self">Collection to Add values to</param>
         /// <param name="range">values to add</param>
         public static void AddRange<T>( this ICollection<T> self, params IEnumerable<T>? range )
         {
             ArgumentNullException.ThrowIfNull( self );
-            if( range is null)
+            if(range is null)
             {
                 return;
             }
 
-            foreach( var value in range)
+            foreach(var value in range)
             {
-                self.Add(value);
+                self.Add( value );
             }
         }
 
         /// <summary>Add a range of attributes to an attribute container</summary>
         /// <param name="self">Attribute container to add attributes to</param>
         /// <param name="range">Range of attributes to operate on</param>
-        public static void AddAttributes(this IAttributeContainer self, params IEnumerable<LazyEncodedString>? range)
+        public static void AddAttributes( this IAttributeContainer self, params IEnumerable<LazyEncodedString>? range )
         {
             ArgumentNullException.ThrowIfNull( self );
-            if( range is null)
+            if(range is null)
             {
                 return;
             }
 
-            foreach( var attribName in range)
+            foreach(var attribName in range)
             {
-                self.Attributes.Add(self.Context.CreateAttribute(attribName));
+                self.Attributes.Add( self.Context.CreateAttribute( attribName ) );
             }
         }
 
         /// <summary>Add a range of attributes to an attribute container</summary>
         /// <param name="self">Attribute container to add attributes to</param>
         /// <param name="range">Range of attributes to operate on</param>
-        public static void AddAttributes(this IAttributeContainer self, params IEnumerable<AttributeValue>? range)
+        public static void AddAttributes( this IAttributeContainer self, params IEnumerable<AttributeValue>? range )
         {
             ArgumentNullException.ThrowIfNull( self );
-            if( range is null)
+            if(range is null)
             {
                 return;
             }
 
-            foreach( var value in range)
+            foreach(var value in range)
             {
-                self.Attributes.Add(value);
+                self.Attributes.Add( value );
             }
         }
 
@@ -115,7 +101,7 @@ namespace Ubiquity.NET.Llvm.Values
             where T : notnull, IFunctionAttributeAccessor
         {
             ArgumentNullException.ThrowIfNull( self );
-            self.AddAttributeAtIndex( index, self.Context.CreateAttribute(name) );
+            self.AddAttributeAtIndex( index, self.Context.CreateAttribute( name ) );
             return self;
         }
 
@@ -130,9 +116,9 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( self );
 
-            if( names != null )
+            if(names != null)
             {
-                foreach( var attrib in names )
+                foreach(var attrib in names)
                 {
                     self.AddAttribute( index, attrib );
                 }
@@ -152,9 +138,9 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( self );
 
-            if( attributes != null )
+            if(attributes != null)
             {
-                foreach( var attrib in attributes )
+                foreach(var attrib in attributes)
                 {
                     self.AddAttributeAtIndex( index, attrib );
                 }
@@ -198,15 +184,15 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="index">Index of the attribute</param>
         /// <param name="name">Name of the attribute</param>
         /// <returns>AttributeValue or <see langword="null"/> if not found.</returns>
-        public static AttributeValue? FindAttribute<T>( this T self, FunctionAttributeIndex index, LazyEncodedString name)
+        public static AttributeValue? FindAttribute<T>( this T self, FunctionAttributeIndex index, LazyEncodedString name )
             where T : notnull, IFunctionAttributeAccessor
         {
             var attribInfo = AttributeInfo.From(name);
             return attribInfo.ID == 0
                 ? null
-                : ( from attr in self.GetAttributesAtIndex(index)
-                    where attr.Id == attribInfo.ID
-                    select attr
+                : (from attr in self.GetAttributesAtIndex( index )
+                   where attr.Id == attribInfo.ID
+                   select attr
                   ).FirstOrDefault();
         }
     }

@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
         /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
         /// <param name="triple">Triple for the target machine</param>
@@ -49,7 +49,8 @@ namespace Ubiquity.NET.Llvm
         public LazyEncodedString Features => LLVMGetTargetMachineFeatureString( Handle );
 
         /// <summary>Creates Data Layout information for this machine</summary>
-        public DataLayout CreateTargetData()
+        /// <returns>Created data layout</returns>
+        public DataLayout CreateTargetData( )
         {
             return new( LLVMCreateTargetDataLayout( Handle ) );
         }
@@ -57,36 +58,36 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets or Sets a value indicating whether this machine uses verbose assembly</summary>
         public bool AsmVerbosity
         {
-            get => LibLLVMGetTargetMachineAsmVerbosity(Handle);
-            set => LLVMSetTargetMachineAsmVerbosity(Handle, value);
+            get => LibLLVMGetTargetMachineAsmVerbosity( Handle );
+            set => LLVMSetTargetMachineAsmVerbosity( Handle, value );
         }
 
         /// <summary>Gets or Sets a value indicating whether this machine enables the fast-path instruction selection</summary>
         public bool FastISel
         {
-            get => LibLLVMGetTargetMachineFastISel(Handle);
-            set => LLVMSetTargetMachineFastISel(Handle, value);
+            get => LibLLVMGetTargetMachineFastISel( Handle );
+            set => LLVMSetTargetMachineFastISel( Handle, value );
         }
 
         /// <summary>Gets or Sets a value indicating whether this machine enables global instruction selection</summary>
         public bool GlobalISel
         {
-            get => LibLLVMGetTargetMachineGlobalISel(Handle);
-            set => LLVMSetTargetMachineGlobalISel(Handle, value);
+            get => LibLLVMGetTargetMachineGlobalISel( Handle );
+            set => LLVMSetTargetMachineGlobalISel( Handle, value );
         }
 
-        /// <summary>Sets the abort mode for Global ISel</summary>
+        /// <summary>Gets or Sets the abort mode for Global ISel</summary>
         public GlobalISelAbortMode GlobalISelAbortMode
         {
-            get => (GlobalISelAbortMode)LibLLVMGetTargetMachineGlobalISelAbort(Handle);
-            set => LLVMSetTargetMachineGlobalISelAbort(Handle, (LLVMGlobalISelAbortMode)value);
+            get => (GlobalISelAbortMode)LibLLVMGetTargetMachineGlobalISelAbort( Handle );
+            set => LLVMSetTargetMachineGlobalISelAbort( Handle, (LLVMGlobalISelAbortMode)value );
         }
 
-        /// <summary>Set a value indicating whether this machine uses the MachineOutliner pass</summary>
+        /// <summary>Gets or Sets a value indicating whether this machine uses the MachineOutliner pass</summary>
         public bool MachineOutliner
         {
-            get => LibLLVMGetTargetMachineMachineOutliner(Handle);
-            set => LLVMSetTargetMachineMachineOutliner(Handle, value);
+            get => LibLLVMGetTargetMachineMachineOutliner( Handle );
+            set => LLVMSetTargetMachineMachineOutliner( Handle, value );
         }
 
         /// <summary>Generate code for the target machine from a module</summary>
@@ -100,12 +101,12 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
             fileType.ThrowIfNotDefined();
 
-            if(!skipVerify && !module.Verify(out string errMessage))
+            if(!skipVerify && !module.Verify( out string errMessage ))
             {
-                throw new InvalidOperationException(errMessage.NormalizeLineEndings(LineEndingKind.LineFeed, StringNormalizer.SystemLineEndings));
+                throw new InvalidOperationException( errMessage.NormalizeLineEndings( LineEndingKind.LineFeed, StringNormalizer.SystemLineEndings ) );
             }
 
-            if( module.TargetTriple != null && Triple != module.TargetTriple )
+            if(module.TargetTriple != null && Triple != module.TargetTriple)
             {
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
@@ -116,9 +117,9 @@ namespace Ubiquity.NET.Llvm
                                                     , ( LLVMCodeGenFileType )fileType
                                                     , out string errTxt
                                                     );
-            if( status.Failed )
+            if(status.Failed)
             {
-                throw new InternalCodeGeneratorException( errTxt ?? "Error emitting to file, but LLVM provided no error message!");
+                throw new InternalCodeGeneratorException( errTxt ?? "Error emitting to file, but LLVM provided no error message!" );
             }
         }
 
@@ -130,13 +131,13 @@ namespace Ubiquity.NET.Llvm
         /// The <see cref="Module.TargetTriple"/> must match the <see cref="Triple"/> for this
         /// target.
         /// </remarks>
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer")]
+        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "bufferHandle ownership is 'Moved' to the returned MemoryBuffer" )]
         public MemoryBuffer EmitToBuffer( IModule module, CodeGenFileKind fileType )
         {
             ArgumentNullException.ThrowIfNull( module );
             fileType.ThrowIfNotDefined();
 
-            if( module.TargetTriple != null && Triple != module.TargetTriple )
+            if(module.TargetTriple != null && Triple != module.TargetTriple)
             {
                 throw new ArgumentException( Resources.Triple_specified_for_the_module_doesn_t_match_target_machine, nameof( module ) );
             }
@@ -206,7 +207,7 @@ namespace Ubiquity.NET.Llvm
 
         internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
         {
-            ArgumentNullException.ThrowIfNull(targetMachineHandle);
+            ArgumentNullException.ThrowIfNull( targetMachineHandle );
             targetMachineHandle.ThrowIfInvalid();
 
             Handle = targetMachineHandle.Move();

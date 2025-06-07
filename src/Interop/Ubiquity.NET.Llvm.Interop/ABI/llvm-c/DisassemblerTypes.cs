@@ -14,24 +14,24 @@ namespace Ubiquity.NET.Llvm.Interop
         public readonly byte* Name;
         public readonly UInt64 Value;
 
-        public override bool Equals(object? obj)
+        public override bool Equals( object? obj )
         {
             return obj is LLVMOpInfoSymbol1 v && Equals( v );
         }
 
-        public bool Equals(LLVMOpInfoSymbol1 other)
+        public bool Equals( LLVMOpInfoSymbol1 other )
             => Present == other.Present
             && Name == other.Name
             && Value == other.Value;
 
-        public override int GetHashCode()
+        public override int GetHashCode( )
         {
             return HashCode.Combine( Present, (nint)Name, Value );
         }
 
-        public static bool operator ==(LLVMOpInfoSymbol1 left, LLVMOpInfoSymbol1 right) => left.Equals( right );
+        public static bool operator ==( LLVMOpInfoSymbol1 left, LLVMOpInfoSymbol1 right ) => left.Equals( right );
 
-        public static bool operator !=(LLVMOpInfoSymbol1 left, LLVMOpInfoSymbol1 right) => !(left == right);
+        public static bool operator !=( LLVMOpInfoSymbol1 left, LLVMOpInfoSymbol1 right ) => !(left == right);
     }
 
     [StructLayout( LayoutKind.Sequential )]
@@ -43,12 +43,12 @@ namespace Ubiquity.NET.Llvm.Interop
         public readonly UInt64 Value;
         public readonly UInt64 VariantKind;
 
-        public override bool Equals(object? obj)
+        public override bool Equals( object? obj )
         {
             return obj is LLVMOpInfo1 v && Equals( v );
         }
 
-        public bool Equals(LLVMOpInfo1 other)
+        public bool Equals( LLVMOpInfo1 other )
         {
             return AddSymbol.Equals( other.AddSymbol )
                 && SubtractSymbol.Equals( other.SubtractSymbol )
@@ -56,13 +56,13 @@ namespace Ubiquity.NET.Llvm.Interop
                 && VariantKind == other.VariantKind;
         }
 
-        public override int GetHashCode()
+        public override int GetHashCode( )
         {
             return HashCode.Combine( AddSymbol, SubtractSymbol, Value, VariantKind );
         }
 
-        public static bool operator ==(LLVMOpInfo1 left, LLVMOpInfo1 right) => left.Equals( right );
+        public static bool operator ==( LLVMOpInfo1 left, LLVMOpInfo1 right ) => left.Equals( right );
 
-        public static bool operator !=(LLVMOpInfo1 left, LLVMOpInfo1 right) => !(left == right);
+        public static bool operator !=( LLVMOpInfo1 left, LLVMOpInfo1 right ) => !(left == right);
     }
 }

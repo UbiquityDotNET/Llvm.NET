@@ -29,7 +29,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             : base( llvmType, BuildDebugType( llvmType, elementType, in diBuilder, count, lowerBound, alignment ) )
         {
             ArgumentNullException.ThrowIfNull( elementType );
-            ArgumentNullException.ThrowIfNull(elementType.DebugInfoType);
+            ArgumentNullException.ThrowIfNull( elementType.DebugInfoType );
 
             DebugElementType = elementType;
         }
@@ -79,7 +79,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentNullException.ThrowIfNull( layout );
 
-            if( DebugInfoType != null && DebugInfoType.IsTemporary && !DebugInfoType.IsResolved )
+            if(DebugInfoType != null && DebugInfoType.IsTemporary && !DebugInfoType.IsResolved)
             {
                 DebugInfoType = diBuilder.CreateArrayType( layout.BitSizeOf( NativeType )
                                                   , layout.AbiBitAlignmentOf( NativeType )
@@ -101,12 +101,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( llvmType );
             ArgumentNullException.ThrowIfNull( elementType );
 
-            if( llvmType.ElementType.GetTypeRef( ) != elementType.GetTypeRef( ) )
+            if(llvmType.ElementType.GetTypeRef() != elementType.GetTypeRef())
             {
                 throw new ArgumentException( Resources.ElementType_doesn_t_match_array_element_type );
             }
 
-            if( llvmType.IsSized )
+            if(llvmType.IsSized)
             {
                 return diBuilder.CreateArrayType( diBuilder.OwningModule.Layout.BitSizeOf( llvmType )
                                                 , alignment

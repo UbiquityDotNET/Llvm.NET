@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AstNode.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -6,13 +12,6 @@ namespace Ubiquity.NET.Runtime.Utils
     public abstract class AstNode
         : IAstNode
     {
-        /// <summary>Initializes a new instance of an <see cref="AstNode"/> class</summary>
-        /// <param name="location">Location in the source this node represents</param>
-        protected AstNode(SourceLocation location)
-        {
-            Location = location;
-        }
-
         /// <inheritdoc/>
         public SourceLocation Location { get; }
 
@@ -26,11 +25,19 @@ namespace Ubiquity.NET.Runtime.Utils
         //       looks the same, it isn't as it includes direct calls to the correct overload
         //       of the Visit() method. It is plausible that a source generator could create
         //       the implementation of such mundane and error prone code duplication though...
+
         /// <inheritdoc/>
         public abstract TResult? Accept<TResult>( IAstVisitor<TResult> visitor );
 
         /// <inheritdoc/>
         public abstract TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TArg : struct, allows ref struct;
+
+        /// <summary>Initializes a new instance of the <see cref="AstNode"/> class</summary>
+        /// <param name="location">Location in the source this node represents</param>
+        protected AstNode( SourceLocation location )
+        {
+            Location = location;
+        }
     }
 }

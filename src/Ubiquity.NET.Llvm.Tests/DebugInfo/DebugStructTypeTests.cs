@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
     public class DebugStructTypeTests
     {
         [TestMethod]
-        public void DebugStructType_constructing_empty_struct_succeeds()
+        public void DebugStructType_constructing_empty_struct_succeeds( )
         {
             using var context = new Context( );
             using var testModule = context.CreateBitcodeModule( "test" );
@@ -89,7 +89,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                 elements );
 
             Assert.AreEqual( elements.Length, debugStructType.Members.Count );
-            for(int i =0; i < elements.Length; ++i )
+            for(int i = 0; i < elements.Length; ++i)
             {
                 Assert.AreEqual( elements[ i ], debugStructType.Members[ i ] );
             }

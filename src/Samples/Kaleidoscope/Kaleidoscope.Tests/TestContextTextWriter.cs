@@ -6,6 +6,7 @@
 
 using System.IO;
 using System.Text;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kaleidoscope.Tests
@@ -23,15 +24,15 @@ namespace Kaleidoscope.Tests
 
         public override void Write( char value )
         {
-            if( value == '\n' )
+            if(value == '\n')
             {
                 // remove any preceding \r
-                if( Builder.Length > 0 && Builder[ 0 ] == '\r' )
+                if(Builder.Length > 0 && Builder[ 0 ] == '\r')
                 {
                     Builder.Remove( Builder.Length - 1, 1 );
                 }
 
-                WriteLine( );
+                WriteLine();
             }
             else
             {
@@ -41,8 +42,8 @@ namespace Kaleidoscope.Tests
 
         public override void WriteLine( )
         {
-            Context.WriteLine( Builder.ToString( ) );
-            Builder.Clear( );
+            Context.WriteLine( Builder.ToString() );
+            Builder.Clear();
         }
 
         private readonly TestContext Context;

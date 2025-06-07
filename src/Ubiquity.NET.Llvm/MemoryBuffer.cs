@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
             // Inconsistent API design - returns a status and, in case of failures, an out message instead of LLVMErrorRef
-            if( LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out string msg ).Failed )
+            if(LLVMCreateMemoryBufferWithContentsOfFile( path, out LLVMMemoryBufferRef handle, out string msg ).Failed)
             {
                 string errMsg = msg.ToString() ?? string.Empty;
                 throw new InternalCodeGeneratorException( errMsg );
@@ -39,12 +39,12 @@ namespace Ubiquity.NET.Llvm
         /// This constructor makes a copy of the data array as a <see cref="MemoryBuffer"/> the memory in the buffer
         /// is unmanaged memory usable by the LLVM native code. It is released in the Dispose method
         /// </remarks>
-        public MemoryBuffer( byte[] data, LazyEncodedString? name = null)
+        public MemoryBuffer( byte[] data, LazyEncodedString? name = null )
         {
             ArgumentNullException.ThrowIfNull( data );
 
             Handle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, name ?? LazyEncodedString.Empty )
-                          .ThrowIfInvalid( );
+                          .ThrowIfInvalid();
         }
 
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class to wrap an existing memory region</summary>
@@ -52,27 +52,27 @@ namespace Ubiquity.NET.Llvm
         /// <param name="len">Length of the region</param>
         /// <param name="name">Name of the buffer</param>
         /// <param name="requiresNullTerminator">Indicates if the data requires a null terminator</param>
-        public unsafe MemoryBuffer(byte* data, nuint len, LazyEncodedString name, bool requiresNullTerminator)
+        public unsafe MemoryBuffer( byte* data, nuint len, LazyEncodedString name, bool requiresNullTerminator )
         {
-            ArgumentNullException.ThrowIfNull(data);
-            ArgumentOutOfRangeException.ThrowIfLessThan(len, (nuint)1);
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( data );
+            ArgumentOutOfRangeException.ThrowIfLessThan( len, (nuint)1 );
+            ArgumentNullException.ThrowIfNull( name );
 
-            Handle = LLVMCreateMemoryBufferWithMemoryRange(data, len, name, requiresNullTerminator)
+            Handle = LLVMCreateMemoryBufferWithMemoryRange( data, len, name, requiresNullTerminator )
                            .ThrowIfInvalid();
         }
 
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size => IsDisposed ? 0 : ( int )LLVMGetBufferSize( Handle );
+        public int Size => IsDisposed ? 0 : (int)LLVMGetBufferSize( Handle );
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
-        public byte[ ] ToArray( )
+        public byte[] ToArray( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
             IntPtr bufferStart = LLVMGetBufferStart( Handle );
             byte[ ] retVal = new byte[ Size ];
@@ -93,9 +93,9 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>Creates an efficient means of accessing the raw data of a buffer</remarks>
         public ReadOnlySpan<byte> Slice( int start = 0, int length = -1 )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            if( length == -1 )
+            if(length == -1)
             {
                 length = Size - start;
             }
@@ -103,7 +103,7 @@ namespace Ubiquity.NET.Llvm
             start.ThrowIfOutOfRange( 0, Size - 1 );
             length.ThrowIfOutOfRange( 0, Size );
 
-            if( ( start + length ) > Size )
+            if((start + length) > Size)
             {
                 throw new ArgumentException( Resources.start_plus_length_exceeds_size_of_buffer );
             }

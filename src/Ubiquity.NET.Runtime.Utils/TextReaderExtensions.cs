@@ -27,12 +27,12 @@ namespace Ubiquity.NET.Runtime.Utils
             string? line;
             do
             {
-                line = await input.ReadLineAsync(cancelToken);
-                if( line != null )
+                line = await input.ReadLineAsync( cancelToken );
+                if(line != null)
                 {
                     yield return line;
                 }
-            } while( line != null );
+            } while(line != null);
         }
 
         /// <inheritdoc cref="ToStatements(TextReader, Action{ReadyState}?, char, CancellationToken)"/>
@@ -47,7 +47,7 @@ namespace Ubiquity.NET.Runtime.Utils
             CancellationToken cancelToken = default
             )
         {
-            return ToStatements(reader, prompt, ';', cancelToken);
+            return ToStatements( reader, prompt, ';', cancelToken );
         }
 
         /// <summary>Async operator to encapsulate conversion of text from a <see cref="TextReader"/> into an observable sequence of Kaleidoscope statements</summary>
@@ -65,7 +65,7 @@ namespace Ubiquity.NET.Runtime.Utils
         {
             var stateManager = new ReadyStateManager( prompt );
             var bldr = new StringBuilder( );
-            await foreach( string line in reader.ToLinesAsync( cancelToken) )
+            await foreach(string line in reader.ToLinesAsync( cancelToken ))
             {
                 if(cancelToken.IsCancellationRequested)
                 {
@@ -73,16 +73,16 @@ namespace Ubiquity.NET.Runtime.Utils
                 }
 
                 var partials = SplitLines(bldr, line, terminationChar, cancelToken);
-                foreach( var (txt, isPartial) in partials )
+                foreach(var (txt, isPartial) in partials)
                 {
                     stateManager.UpdateState( txt, isPartial );
-                    if( !isPartial )
+                    if(!isPartial)
                     {
                         yield return txt;
                     }
                 }
 
-                stateManager.Prompt( );
+                stateManager.Prompt();
             }
         }
 
@@ -100,14 +100,14 @@ namespace Ubiquity.NET.Runtime.Utils
             // as input isn't considered completed.
             int completeStatements = statements.Length - 1;
             bool wasLastTerminated = string.IsNullOrEmpty( statements[ ^1 ] ) && statements.Length > 1;
-            if( wasLastTerminated && completeStatements > 1 )
+            if(wasLastTerminated && completeStatements > 1)
             {
                 ++completeStatements;
             }
 
-            for( int i = 0; i < completeStatements; ++i )
+            for(int i = 0; i < completeStatements; ++i)
             {
-                if (cancelToken.IsCancellationRequested)
+                if(cancelToken.IsCancellationRequested)
                 {
                     yield break;
                 }
@@ -115,17 +115,17 @@ namespace Ubiquity.NET.Runtime.Utils
                 string statement = statements[ i ];
                 buffer.Append( statement );
                 buffer.Append( terminationChar );
-                buffer.AppendLine( );
+                buffer.AppendLine();
 
-                yield return (buffer.ToString( ), false);
+                yield return (buffer.ToString(), false);
 
-                if( buffer.Length > statement.Length + 1 )
+                if(buffer.Length > statement.Length + 1)
                 {
-                    buffer.Clear( );
+                    buffer.Clear();
                 }
             }
 
-            if( !wasLastTerminated )
+            if(!wasLastTerminated)
             {
                 string partial = statements[ ^1 ];
                 buffer.AppendLine( partial );

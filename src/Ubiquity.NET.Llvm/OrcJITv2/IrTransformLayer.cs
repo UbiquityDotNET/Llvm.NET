@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// <param name="module">Module transformation is on</param>
     /// <param name="responsibility">Responsibility for this transformation</param>
     /// <param name="replacementModule">New module if this transform replaces it [Set to <see langword="null"/> if </param>
-    public delegate void TransformAction(ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule);
+    public delegate void TransformAction( ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule );
 
     /// <summary>LLVM ORC JIT v2 IR Transform Layer</summary>
     public readonly ref struct IrTransformLayer
@@ -23,14 +23,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Emit a module</summary>
         /// <param name="r">Responsibility provided in materialization call back</param>
         /// <param name="tsm">Thread safe module to emit</param>
-        public void Emit(MaterializationResponsibility r, ThreadSafeModule tsm)
+        public void Emit( MaterializationResponsibility r, ThreadSafeModule tsm )
         {
-            ArgumentNullException.ThrowIfNull(tsm);
+            ArgumentNullException.ThrowIfNull( tsm );
 
             r.ThrowIfIDisposed();
             tsm.ThrowIfIDisposed();
 
-            LLVMOrcIRTransformLayerEmit(Handle, r.Handle, tsm.Handle);
+            LLVMOrcIRTransformLayerEmit( Handle, r.Handle, tsm.Handle );
 
             // transfer of ownership complete, mark them as such now.
             tsm.Handle.SetHandleAsInvalid();
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <summary>Sets the transform function for the transform layer</summary>
         /// <param name="transformAction">Action to perform that transforms modules materialized in a JIT</param>
-        public void SetTransform(TransformAction transformAction)
+        public void SetTransform( TransformAction transformAction )
         {
             // Create a holder for the action; the Dispose will take care of things
             // in the event of an exception and will become a NOP if transfer of
@@ -47,11 +47,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             using var holder = new TransformCallback(transformAction);
             unsafe
             {
-                LLVMOrcIRTransformLayerSetTransform(Handle, TransformCallback.Callback, (void*)holder.AddRefAndGetNativeContext());
+                LLVMOrcIRTransformLayerSetTransform( Handle, TransformCallback.Callback, (void*)holder.AddRefAndGetNativeContext() );
             }
         }
 
-        internal IrTransformLayer(LLVMOrcIRTransformLayerRef h)
+        internal IrTransformLayer( LLVMOrcIRTransformLayerRef h )
         {
             Handle = h;
         }
@@ -62,29 +62,29 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         private sealed class TransformCallback
             : IDisposable
         {
-            public TransformCallback(TransformAction transformAction)
+            public TransformCallback( TransformAction transformAction )
             {
-                AllocatedSelf = new(this);
+                AllocatedSelf = new( this );
                 TransformAction = transformAction;
             }
 
-            public void Dispose()
+            public void Dispose( )
             {
                 AllocatedSelf.Dispose();
             }
 
             internal TransformAction TransformAction { get; }
 
-            internal unsafe nint AddRefAndGetNativeContext()
+            internal unsafe nint AddRefAndGetNativeContext( )
             {
                 return AllocatedSelf.AddRefAndGetNativeContext();
             }
 
             private readonly SafeGCHandle AllocatedSelf;
 
-            internal static unsafe delegate* unmanaged[Cdecl]<void*, nint*, nint, nint> Callback => &Transform;
+            internal static unsafe delegate* unmanaged[Cdecl]< void*, nint*, nint, nint > Callback => &Transform;
 
-            [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+            [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
             private static unsafe /*LLVMErrorRef*/ nint Transform(
                 void* context,
@@ -93,17 +93,17 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 )
             {
                 // Sanity check the input for safety.
-                if (resp == nint.Zero || *modInOut == nint.Zero)
+                if(resp == nint.Zero || *modInOut == nint.Zero)
                 {
                     // created IDisposable is NOT ignored; it's "moved" to native code
-                    return LLVMErrorRef.CreateForNativeOut("Internal Error: got a callback with invalid handle value!"u8);
+                    return LLVMErrorRef.CreateForNativeOut( "Internal Error: got a callback with invalid handle value!"u8 );
                 }
 
                 try
                 {
-                    if(!MarshalGCHandle.TryGet<TransformCallback>(context, out TransformCallback? self))
+                    if(!MarshalGCHandle.TryGet<TransformCallback>( context, out TransformCallback? self ))
                     {
-                        return LLVMErrorRef.CreateForNativeOut("Internal Error: Invalid context provided for native callback"u8);
+                        return LLVMErrorRef.CreateForNativeOut( "Internal Error: Invalid context provided for native callback"u8 );
                     }
 
 #pragma warning disable IDISP001 // Dispose created

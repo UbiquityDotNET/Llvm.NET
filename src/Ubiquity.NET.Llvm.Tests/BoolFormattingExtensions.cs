@@ -1,4 +1,10 @@
-﻿using System.Globalization;
+﻿// -----------------------------------------------------------------------
+// <copyright file="BoolFormattingExtensions.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Globalization;
 
 namespace Ubiquity.NET.Llvm.UT
 {
@@ -10,7 +16,7 @@ namespace Ubiquity.NET.Llvm.UT
     internal static class BoolFormattingExtensions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1308:Normalize strings to uppercase", Justification = "It MUST be lower case; not 'normalizing' a string here." )]
-        public static string ToCSName(this bool value)
+        public static string ToCSName( this bool value )
         {
             return value.ToString( CultureInfo.InvariantCulture ).ToLowerInvariant();
         }

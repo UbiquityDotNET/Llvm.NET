@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public UInt64 BitOffset => Handle == default ? 0 : LLVMDITypeGetOffsetInBits( Handle );
 
         /// <summary>Gets the flags that describe the behaviors for</summary>
-        public DebugInfoFlags DebugInfoFlags => Handle == default ? 0 : ( DebugInfoFlags )LLVMDITypeGetFlags( Handle );
+        public DebugInfoFlags DebugInfoFlags => Handle == default ? 0 : (DebugInfoFlags)LLVMDITypeGetFlags( Handle );
 
         internal DIType( LLVMMetadataRef handle )
             : base( handle )

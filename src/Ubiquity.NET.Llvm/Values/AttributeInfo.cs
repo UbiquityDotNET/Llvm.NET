@@ -1,4 +1,10 @@
-﻿using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AttributeInfo.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
@@ -28,7 +34,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// the string value having the literal 'true' or 'false' [Case sensitive].
         /// </remarks>
         String = LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String,
-    };
+    }
 
     /// <summary>Flags enumeration of places where a given attribute is applicable</summary>
     [Flags]
@@ -53,7 +59,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Attribute is applicable to a global</summary>
         Global = LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_Global,
-    };
+    }
 
     /// <summary>Information regarding an attribute</summary>
     /// <remarks>

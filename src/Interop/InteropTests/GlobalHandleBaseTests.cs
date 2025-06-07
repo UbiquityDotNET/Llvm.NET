@@ -1,73 +1,60 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// -----------------------------------------------------------------------
+// <copyright file="GlobalHandleBaseTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
-    public class TestGlobalHandle
-        : GlobalHandleBase
-    {
-        public TestGlobalHandle()
-            : base(true)
-        {
-        }
-
-        public TestGlobalHandle(nint abi, bool owned = true)
-            : base(abi, owned)
-        {
-        }
-
-        protected override bool ReleaseHandle( )
-        {
-            ++ReleaseHandleCount;
-            return true;
-        }
-
-        public int ReleaseHandleCount { get; private set; } = 0;
-    }
-
-    [TestClass()]
+    [TestClass]
     public class GlobalHandleBaseTests
     {
-        [TestMethod()]
+        [TestMethod]
         [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP017:Prefer using", Justification = "Not appropriate for a test" )]
         [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP016:Don't use disposed instance", Justification = "Not appropriate for a test" )]
         public void BasicStatusTest( )
         {
             TestGlobalHandle ownedInst1 = new(NativeHandleValue, owned: true);
-            Assert.IsTrue(ownedInst1.IsOwned);
-            Assert.IsFalse(ownedInst1.IsClosed);
-            Assert.IsFalse(ownedInst1.IsInvalid);
-            Assert.AreEqual(NativeHandleValue, ownedInst1.DangerousGetHandle());
+            Assert.IsTrue( ownedInst1.IsOwned );
+            Assert.IsFalse( ownedInst1.IsClosed );
+            Assert.IsFalse( ownedInst1.IsInvalid );
+            Assert.AreEqual( NativeHandleValue, ownedInst1.DangerousGetHandle() );
 
             ownedInst1.Dispose();
-            Assert.AreEqual(1, ownedInst1.ReleaseHandleCount);
-            Assert.IsTrue(ownedInst1.IsOwned);
-            Assert.IsTrue(ownedInst1.IsClosed);
+            Assert.AreEqual( 1, ownedInst1.ReleaseHandleCount );
+            Assert.IsTrue( ownedInst1.IsOwned );
+            Assert.IsTrue( ownedInst1.IsClosed );
+
             // Disposal/Close does NOT alter the underlying handle value
             // so the IsInvalid should report false.
-            Assert.IsFalse(ownedInst1.IsInvalid);
-            Assert.AreEqual(NativeHandleValue, ownedInst1.DangerousGetHandle());
+            Assert.IsFalse( ownedInst1.IsInvalid );
+            Assert.AreEqual( NativeHandleValue, ownedInst1.DangerousGetHandle() );
 
             // Additional calls to Close()/Dispose() while a bug, have no detrimental side effects
             ownedInst1.Close();
+
             // Second Dispose does not release the handle again!
-            Assert.AreEqual(1, ownedInst1.ReleaseHandleCount);
-            Assert.IsTrue(ownedInst1.IsOwned);
-            Assert.IsTrue(ownedInst1.IsClosed);
+            Assert.AreEqual( 1, ownedInst1.ReleaseHandleCount );
+            Assert.IsTrue( ownedInst1.IsOwned );
+            Assert.IsTrue( ownedInst1.IsClosed );
+
             // Disposal/Close does NOT alter the underlying handle value
             // so the IsInvalid should report false.
-            Assert.IsFalse(ownedInst1.IsInvalid);
-            Assert.AreEqual(NativeHandleValue, ownedInst1.DangerousGetHandle());
+            Assert.IsFalse( ownedInst1.IsInvalid );
+            Assert.AreEqual( NativeHandleValue, ownedInst1.DangerousGetHandle() );
         }
 
         [TestMethod]
         public void AreSameTest( )
         {
             using TestGlobalHandle ownedInst1 = new(NativeHandleValue, owned: true);
-            Assert.IsTrue(ownedInst1.IsOwned);
-            Assert.IsFalse(ownedInst1.IsClosed);
-            Assert.AreEqual(NativeHandleValue, ownedInst1.DangerousGetHandle());
+            Assert.IsTrue( ownedInst1.IsOwned );
+            Assert.IsFalse( ownedInst1.IsClosed );
+            Assert.AreEqual( NativeHandleValue, ownedInst1.DangerousGetHandle() );
 
             // create an unowned alias with same underlying ABI value
             // NOTE: There is no way to correctly support TWO instances created with
@@ -75,12 +62,35 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             //       the underlying native API contract is for a ref counted object
             //       and the release is decrementing the ref count in native code.
             using TestGlobalHandle unownedInst1 = new(NativeHandleValue, owned: false);
-            Assert.IsFalse(unownedInst1.IsOwned);
-            Assert.IsFalse(unownedInst1.IsClosed);
-            Assert.AreEqual(NativeHandleValue, unownedInst1.DangerousGetHandle());
-            Assert.IsTrue(unownedInst1.AreSame(ownedInst1));
+            Assert.IsFalse( unownedInst1.IsOwned );
+            Assert.IsFalse( unownedInst1.IsClosed );
+            Assert.AreEqual( NativeHandleValue, unownedInst1.DangerousGetHandle() );
+            Assert.IsTrue( unownedInst1.AreSame( ownedInst1 ) );
         }
 
         private const nint NativeHandleValue = 0x12345678;
+    }
+
+    [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "DUH, it's FILE scoped!" )]
+    file class TestGlobalHandle
+        : GlobalHandleBase
+    {
+        public TestGlobalHandle( )
+            : base( true )
+        {
+        }
+
+        public TestGlobalHandle( nint abi, bool owned = true )
+            : base( abi, owned )
+        {
+        }
+
+        public int ReleaseHandleCount { get; private set; } = 0;
+
+        protected override bool ReleaseHandle( )
+        {
+            ++ReleaseHandleCount;
+            return true;
+        }
     }
 }

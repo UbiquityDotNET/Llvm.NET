@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm
     public readonly ref struct PassBuilderOptions
     {
         /// <summary>Initializes a new instance of the <see cref="PassBuilderOptions"/> struct.</summary>
-        public PassBuilderOptions()
+        public PassBuilderOptions( )
             : this( LLVMCreatePassBuilderOptions() )
         {
         }
@@ -150,14 +150,14 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Disposes the underlying LLVM handle</summary>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
 
         internal LLVMPassBuilderOptionsRef Handle { get; init; }
 
-        private PassBuilderOptions(LLVMPassBuilderOptionsRef handle)
+        private PassBuilderOptions( LLVMPassBuilderOptionsRef handle )
         {
             Handle = handle.Move();
         }

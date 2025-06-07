@@ -14,12 +14,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     {
         /// <summary>Initializes a new instance of the <see cref="AbsoluteMaterializationUnit"/> class.</summary>
         /// <param name="absoluteSymbols">Absolute (pre-evaluated) symbols to add to the JIT</param>
-        public AbsoluteMaterializationUnit(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols)
-            : base(MakeHandle(absoluteSymbols))
+        public AbsoluteMaterializationUnit( IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols )
+            : base( MakeHandle( absoluteSymbols ) )
         {
         }
 
-        private static LLVMOrcMaterializationUnitRef MakeHandle(IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols)
+        private static LLVMOrcMaterializationUnitRef MakeHandle( IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> absoluteSymbols )
         {
             // make a native usable version of the array
             using IMemoryOwner<LLVMOrcCSymbolMapPair> nativeArrayOwner = absoluteSymbols.InitializeNativeCopy( );

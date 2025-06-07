@@ -10,7 +10,7 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class ExternalDeclarationContext
         {
-            public PrototypeContext Signature => prototype( );
+            public PrototypeContext Signature => prototype();
         }
     }
 }

@@ -12,9 +12,9 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class ForExpressionContext
         {
-            public InitializerContext Initializer => initializer( );
+            public InitializerContext Initializer => initializer();
 
-            public IReadOnlyList<ExpressionContext> Expressions => expression( );
+            public IReadOnlyList<ExpressionContext> Expressions => expression();
 
             public ExpressionContext EndExpression => expression( 0 );
 

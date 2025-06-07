@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                if( !HasUnwindDestination )
+                if(!HasUnwindDestination)
                 {
                     return null;
                 }
@@ -52,7 +52,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             set
             {
                 ArgumentNullException.ThrowIfNull( value );
-                if( !HasUnwindDestination )
+                if(!HasUnwindDestination)
                 {
                     throw new InvalidOperationException( Resources.Cannot_set_unwindDestination_for_instruction_that_unwinds_to_caller );
                 }

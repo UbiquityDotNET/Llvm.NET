@@ -9,9 +9,9 @@ namespace ReferenceEqualityVerifier
     // NOT general purpose.
     internal static class Diagnostics
     {
-        private static LocalizableResourceString Localized(string resName)
+        private static LocalizableResourceString Localized( string resName )
         {
-            return new LocalizableResourceString(resName, Resources.ResourceManager, typeof(Resources));
+            return new LocalizableResourceString( resName, Resources.ResourceManager, typeof( Resources ) );
         }
 
         internal static ImmutableArray<DiagnosticDescriptor> AllDiagnostics

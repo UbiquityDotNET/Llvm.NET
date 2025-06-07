@@ -23,7 +23,7 @@ namespace Kaleidoscope.Tests
     [SuppressMessage( "StyleCop.CSharp.SpacingRules", "SA1012:Opening braces should be spaced correctly", Justification = "Empty lambda" )]
     public class BasicTests
     {
-        public BasicTests(TestContext testContext)
+        public BasicTests( TestContext testContext )
         {
             RuntimeContext = testContext;
         }
@@ -42,31 +42,31 @@ namespace Kaleidoscope.Tests
                         select parser.Parse( stmt );
 
             // Read, Parse, Print loop
-            await foreach( IAstNode node in nodes )
+            await foreach(IAstNode node in nodes)
             {
                 RuntimeContext.WriteLine( "PARSED: {0}", node );
             }
         }
 
         [TestMethod]
-        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
-        public async Task Chapter3()
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
+        public async Task Chapter3( )
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
-            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3.CodeGenerator( state) );
+            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3.CodeGenerator( state ) );
         }
 
         [TestMethod]
-        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
-        public async Task Chapter3_5()
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
+        public async Task Chapter3_5( )
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
-            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3_5.CodeGenerator( state) );
+            await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter3_5.CodeGenerator( state ) );
         }
 
         [TestMethod]
-        [Description("Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]")]
-        public async Task Chapter4()
+        [Description( "Basic test of Chapter parsing and code generation to ensure it doesn't crash on well-known good input [output is not validated in this test]" )]
+        public async Task Chapter4( )
         {
             using var input = File.OpenText( "simpleExpressions.kls" );
             await RunBasicReplLoop( LanguageLevel.SimpleExpressions, input, ( state, writer ) => new Chapter4.CodeGenerator( state, writer ) );
@@ -93,7 +93,7 @@ namespace Kaleidoscope.Tests
         public async Task Chapter7( )
         {
             using var input = File.OpenText( "fibi.kls" );
-            await RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter7.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.MutableVariables, input, ( state, writer ) => new Chapter7.CodeGenerator( state, writer ) );
         }
 
         [TestMethod]
@@ -101,7 +101,7 @@ namespace Kaleidoscope.Tests
         public async Task Chapter71( )
         {
             using var input = File.OpenText( "fibi.kls" );
-            await RunBasicReplLoop( LanguageLevel.MutableVariables, input, (state, writer) => new Chapter71.CodeGenerator( state, writer ) );
+            await RunBasicReplLoop( LanguageLevel.MutableVariables, input, ( state, writer ) => new Chapter71.CodeGenerator( state, writer ) );
         }
 
         private async Task RunBasicReplLoop( LanguageLevel level
@@ -117,27 +117,27 @@ namespace Kaleidoscope.Tests
             var replSeq = from stmt in input.ToStatements( _=>{ } )
                           select parser.Parse( stmt );
 
-            await foreach( IAstNode node in replSeq )
+            await foreach(IAstNode node in replSeq)
             {
                 var errors = node.CollectErrors();
                 Assert.AreEqual( 0, errors.Length );
 
                 var result = generator.Generate( node );
 
-                if( result is not null )
+                if(result is not null)
                 {
-                    switch( result )
+                    switch(result)
                     {
                     case ConstantFP value:
                         outputWriter.WriteLine( "Evaluated to {0}", value.Value );
                         break;
 
                     case Function function:
-                        outputWriter.WriteLine( "Generated:\n{0}", function.ToString( ) );
+                        outputWriter.WriteLine( "Generated:\n{0}", function.ToString() );
                         break;
 
                     default:
-                        outputWriter.WriteLine( result.ToString( ) );
+                        outputWriter.WriteLine( result.ToString() );
                         break;
                     }
                 }

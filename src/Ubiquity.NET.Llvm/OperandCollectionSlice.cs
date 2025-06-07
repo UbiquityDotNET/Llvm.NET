@@ -34,13 +34,13 @@ namespace Ubiquity.NET.Llvm
         public IEnumerator<T> GetEnumerator( )
         {
             int end = Offset + Count;
-            for( int i = Offset; i < end; ++i )
+            for(int i = Offset; i < end; ++i)
             {
                 yield return InnerCollection[ i ];
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         internal OperandCollectionSlice( IOperandCollection<T> innerCollection, Range sliceRange )
         {

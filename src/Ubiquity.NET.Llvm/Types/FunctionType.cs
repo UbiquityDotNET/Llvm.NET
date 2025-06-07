@@ -42,17 +42,17 @@ namespace Ubiquity.NET.Llvm.Types
             get
             {
                 uint paramCount = LLVMCountParamTypes( Handle );
-                if( paramCount == 0 )
+                if(paramCount == 0)
                 {
-                    return new List<TypeRef>( ).AsReadOnly( );
+                    return new List<TypeRef>().AsReadOnly();
                 }
 
                 var paramTypes = new LLVMTypeRef[ paramCount ];
                 LLVMGetParamTypes( Handle, paramTypes );
-                return ( from p in paramTypes
-                         select (TypeRef)p.CreateType()
-                       ).ToList( )
-                        .AsReadOnly( );
+                return (from p in paramTypes
+                        select (TypeRef)p.CreateType()
+                       ).ToList()
+                        .AsReadOnly();
             }
         }
 

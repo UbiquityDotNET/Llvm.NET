@@ -19,18 +19,18 @@ namespace Ubiquity.NET.Llvm
     /// }
     /// ]]></code>
     /// </example>
-    public delegate void DiagnosticInfoCallbackAction(DiagnosticInfo info);
+    public delegate void DiagnosticInfoCallbackAction( DiagnosticInfo info );
 
     internal sealed class DiagnosticCallbackHolder
         : IDisposable
     {
-        public DiagnosticCallbackHolder(DiagnosticInfoCallbackAction diagnosticHandler)
+        public DiagnosticCallbackHolder( DiagnosticInfoCallbackAction diagnosticHandler )
         {
             Delegate = diagnosticHandler;
             AllocatedSelf = new( this );
         }
 
-        public void Dispose()
+        public void Dispose( )
         {
             if(!AllocatedSelf.IsInvalid && !AllocatedSelf.IsClosed)
             {
@@ -40,18 +40,18 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        internal unsafe nint AddRefAndGetNativeContext()
+        internal unsafe nint AddRefAndGetNativeContext( )
         {
             return AllocatedSelf.AddRefAndGetNativeContext();
         }
 
         [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        internal static unsafe void DiagnosticHandler(nint abiInfo, void* context)
+        internal static unsafe void DiagnosticHandler( nint abiInfo, void* context )
         {
             try
             {
-                if(MarshalGCHandle.TryGet<DiagnosticCallbackHolder>(context, out DiagnosticCallbackHolder? self))
+                if(MarshalGCHandle.TryGet<DiagnosticCallbackHolder>( context, out DiagnosticCallbackHolder? self ))
                 {
                     self.Delegate( new( abiInfo ) );
                 }
@@ -61,7 +61,7 @@ namespace Ubiquity.NET.Llvm
                 // stop in debugger as this is a detected app error.
                 // Test for attached debugger directly to avoid prompts, WER cruft etc...
                 // End user should NOT be prompted to attach a debugger!
-                if (Debugger.IsAttached)
+                if(Debugger.IsAttached)
                 {
                     Debugger.Break();
                 }

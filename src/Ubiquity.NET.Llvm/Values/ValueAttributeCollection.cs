@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Values
             Index = index;
         }
 
-        public int Count => ( int )Container.GetAttributeCountAtIndex( Index );
+        public int Count => (int)Container.GetAttributeCountAtIndex( Index );
 
         public bool IsReadOnly => false;
 
@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         public void Clear( )
         {
-            foreach( AttributeValue attrib in this )
+            foreach(AttributeValue attrib in this)
             {
                 Remove( attrib );
             }
@@ -37,14 +37,14 @@ namespace Ubiquity.NET.Llvm.Values
             return this.Any( a => a == item );
         }
 
-        public void CopyTo( AttributeValue[ ]? array, int arrayIndex )
+        public void CopyTo( AttributeValue[]? array, int arrayIndex )
         {
-            if( array == null )
+            if(array == null)
             {
                 return;
             }
 
-            foreach( AttributeValue attribute in this )
+            foreach(AttributeValue attribute in this)
             {
                 array[ arrayIndex ] = attribute;
                 ++arrayIndex;
@@ -53,13 +53,13 @@ namespace Ubiquity.NET.Llvm.Values
 
         public IEnumerator<AttributeValue> GetEnumerator( )
         {
-            return Container.GetAttributesAtIndex( Index ).GetEnumerator( );
+            return Container.GetAttributesAtIndex( Index ).GetEnumerator();
         }
 
         public bool Remove( AttributeValue item )
         {
             bool retVal = Contains( item );
-            if( item.IsEnum )
+            if(item.IsEnum)
             {
                 Container.RemoveAttributeAtIndex( Index, item.Id );
             }
@@ -71,7 +71,7 @@ namespace Ubiquity.NET.Llvm.Values
             return retVal;
         }
 
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         private readonly IFunctionAttributeAccessor Container;
         private readonly FunctionAttributeIndex Index;

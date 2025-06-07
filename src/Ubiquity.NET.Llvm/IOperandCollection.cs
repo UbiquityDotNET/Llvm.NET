@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets or sets the specified element in the collection</summary>
         /// <param name="index">index of the element in the collection</param>
         /// <returns>The element in the collection</returns>
-        T this[int index] { get; set; }
+        T this[ int index ] { get; set; }
 
         /// <summary>Gets a value indicating whether the collection contains the specified item or not</summary>
         /// <param name="item">Item to look for</param>

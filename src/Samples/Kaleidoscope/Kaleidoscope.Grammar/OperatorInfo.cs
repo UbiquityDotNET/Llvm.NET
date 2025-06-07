@@ -17,7 +17,7 @@ namespace Kaleidoscope.Grammar
         PreFix
     }
 
-    internal readonly record struct OperatorInfo(int TokenType, OperatorKind Kind, int Precedence, bool IsBuiltIn)
+    internal readonly record struct OperatorInfo( int TokenType, OperatorKind Kind, int Precedence, bool IsBuiltIn )
     {
         public OperatorInfo( int tokenType, OperatorKind kind, int precedence )
             : this( tokenType, kind, precedence, false )
@@ -30,13 +30,13 @@ namespace Kaleidoscope.Grammar
     {
         public bool TryAddOrReplaceItem( OperatorInfo item )
         {
-            if( !TryGetValue( item.TokenType, out var existingItem ) )
+            if(!TryGetValue( item.TokenType, out var existingItem ))
             {
                 Add( item );
                 return true;
             }
 
-            if( existingItem.IsBuiltIn )
+            if(existingItem.IsBuiltIn)
             {
                 return false;
             }
@@ -50,7 +50,7 @@ namespace Kaleidoscope.Grammar
 
         protected override void RemoveItem( int index )
         {
-            if( !Items[ index ].IsBuiltIn )
+            if(!Items[ index ].IsBuiltIn)
             {
                 base.RemoveItem( index );
             }
@@ -59,8 +59,8 @@ namespace Kaleidoscope.Grammar
         protected override void ClearItems( )
         {
             var builtIns = Items.Where( oi => oi.IsBuiltIn ).ToList();
-            base.ClearItems( );
-            foreach( var builtin in builtIns )
+            base.ClearItems();
+            foreach(var builtin in builtIns)
             {
                 Add( builtin );
             }
@@ -68,7 +68,7 @@ namespace Kaleidoscope.Grammar
 
         protected override void SetItem( int index, OperatorInfo item )
         {
-            if( !Items[ index ].IsBuiltIn )
+            if(!Items[ index ].IsBuiltIn)
             {
                 base.SetItem( index, item );
             }

@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Llvm
         : IDisposable
     {
         /// <summary>Finalizes an instance of the <see cref="DisposableObject"/> class. This releases any unmanaged resources it owns</summary>
-        ~DisposableObject()
+        ~DisposableObject( )
         {
             Dispose( false );
         }
@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm
         /// disposing.
         /// </remarks>
         [SuppressMessage( "Design", "CA1063:Implement IDisposable Correctly", Justification = "This guarantees dispose is idempotent, and therefore superior to the official pattern" )]
-        public void Dispose()
+        public void Dispose( )
         {
             if(!Interlocked.Exchange( ref IsDisposed_, true ))
             {
@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm
         /// is <see langword="true"/> then the implementation should release managed and unmanaged resources, otherwise it should
         /// only release the unmanaged resources
         /// </remarks>
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose( bool disposing )
         {
         }
 

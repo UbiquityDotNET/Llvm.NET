@@ -174,7 +174,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.IsNotNull( union.DebugInfoType.Elements );
             Assert.AreEqual( members.Length, union.DebugInfoType.Elements.Count );
-            for( int i = 0; i < members.Length; ++i )
+            for(int i = 0; i < members.Length; ++i)
             {
                 var memberType = union.DebugInfoType.Elements[ i ] as DIDerivedType;
                 Assert.IsNotNull( memberType );

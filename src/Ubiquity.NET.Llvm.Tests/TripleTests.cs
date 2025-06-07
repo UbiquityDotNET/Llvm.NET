@@ -103,12 +103,12 @@ namespace Ubiquity.NET.Llvm.UT
                   { ArchKind.RenderScript64, "renderscript64" }
             };
 
-            foreach( var kvp in values )
+            foreach(var kvp in values)
             {
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ ArchKind.UnknownArch ], Triple.GetCanonicalName( ( ArchKind )0x12345678 ) );
+            Assert.AreEqual( values[ ArchKind.UnknownArch ], Triple.GetCanonicalName( (ArchKind)0x12345678 ) );
         }
 
         [TestMethod]
@@ -130,12 +130,12 @@ namespace Ubiquity.NET.Llvm.UT
                 { VendorKind.Mesa,                    "mesa" }
             };
 
-            foreach( var kvp in values )
+            foreach(var kvp in values)
             {
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ VendorKind.Unknown ], Triple.GetCanonicalName( ( VendorKind )0x12345678 ) );
+            Assert.AreEqual( values[ VendorKind.Unknown ], Triple.GetCanonicalName( (VendorKind)0x12345678 ) );
         }
 
         [TestMethod]
@@ -172,12 +172,12 @@ namespace Ubiquity.NET.Llvm.UT
                 { OSKind.AmdPAL,    "amdpal" }
             };
 
-            foreach( var kvp in values )
+            foreach(var kvp in values)
             {
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ OSKind.UnknownOS ], Triple.GetCanonicalName( ( OSKind )0x12345678 ) );
+            Assert.AreEqual( values[ OSKind.UnknownOS ], Triple.GetCanonicalName( (OSKind)0x12345678 ) );
         }
 
         [TestMethod]
@@ -205,12 +205,12 @@ namespace Ubiquity.NET.Llvm.UT
                 { EnvironmentKind.CoreCLR,    "coreclr" },
             };
 
-            foreach( var kvp in values )
+            foreach(var kvp in values)
             {
                 Assert.AreEqual( kvp.Value, Triple.GetCanonicalName( kvp.Key ) );
             }
 
-            Assert.AreEqual( values[ EnvironmentKind.Unknown ], Triple.GetCanonicalName( ( EnvironmentKind )0x12345678 ) );
+            Assert.AreEqual( values[ EnvironmentKind.Unknown ], Triple.GetCanonicalName( (EnvironmentKind)0x12345678 ) );
         }
     }
 }

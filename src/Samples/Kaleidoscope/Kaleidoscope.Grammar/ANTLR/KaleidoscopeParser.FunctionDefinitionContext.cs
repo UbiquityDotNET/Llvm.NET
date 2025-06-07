@@ -10,9 +10,9 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class FunctionDefinitionContext
         {
-            public PrototypeContext Signature => prototype( );
+            public PrototypeContext Signature => prototype();
 
-            public ExpressionContext BodyExpression => expression( );
+            public ExpressionContext BodyExpression => expression();
         }
     }
 }

@@ -30,13 +30,13 @@ namespace Ubiquity.NET.InteropHelpers
         /// If the input <paramref name="span"/> is empty, then this returns <see langword="null"/>.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="self"/> is <see langword="null"/></exception>
-        public static string? MarshalString(this Encoding self, ReadOnlySpan<byte> span)
+        public static string? MarshalString( this Encoding self, ReadOnlySpan<byte> span )
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
             return span.IsEmpty
                  ? string.Empty // optimization for empty spans
-                 : self.GetString( span[^1] == 0 ? span[..^1] : span); // drop the null terminator if there is one.
+                 : self.GetString( span[ ^1 ] == 0 ? span[ ..^1 ] : span ); // drop the null terminator if there is one.
         }
 
         /// <summary>Provides conversion of the native bytes to managed code</summary>
@@ -47,17 +47,17 @@ namespace Ubiquity.NET.InteropHelpers
         /// If the input <paramref name="nativeStringPtr"/> is <see langword="null"/>, then this returns <see langword="null"/>.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="self"/> is <see langword="null"/></exception>
-        public static unsafe string? MarshalString(this Encoding self, byte* nativeStringPtr)
+        public static unsafe string? MarshalString( this Encoding self, byte* nativeStringPtr )
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
-            if (nativeStringPtr is null)
+            if(nativeStringPtr is null)
             {
                 return null;
             }
 
             var span = MemoryMarshal.CreateReadOnlySpanFromNullTerminated( nativeStringPtr );
-            return MarshalString(self, span);
+            return MarshalString( self, span );
         }
     }
 }

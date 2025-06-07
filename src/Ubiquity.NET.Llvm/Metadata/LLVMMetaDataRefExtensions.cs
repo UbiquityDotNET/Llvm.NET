@@ -11,9 +11,9 @@ namespace Ubiquity.NET.Llvm.Metadata
     internal static class LLVMMetaDataRefExtensions
     {
         [SuppressMessage( "Maintainability", "CA1502:Avoid excessive complexity", Justification = "This is an internal factory method for mapping to a managed type" )]
-        internal static IrMetadata? CreateMetadata(this LLVMMetadataRef handle)
+        internal static IrMetadata? CreateMetadata( this LLVMMetadataRef handle )
         {
-            if( handle.IsNull)
+            if(handle.IsNull)
             {
                 return null;
             }

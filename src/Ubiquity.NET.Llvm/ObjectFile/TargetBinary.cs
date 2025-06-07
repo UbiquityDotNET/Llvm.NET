@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         */
 
         /// <summary>Gets the kind of binary this instance contains</summary>
-        public BinaryKind Kind => ( BinaryKind )LLVMBinaryGetType( Handle );
+        public BinaryKind Kind => (BinaryKind)LLVMBinaryGetType( Handle );
 
         /// <summary>Gets the symbols in this <see cref="TargetBinary"/></summary>
         public IEnumerable<Symbol> Symbols
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             get
             {
                 using LLVMSymbolIteratorRef iterator = LLVMObjectFileCopySymbolIterator(Handle);
-                while( !LLVMObjectFileIsSymbolIteratorAtEnd( Handle, iterator ) )
+                while(!LLVMObjectFileIsSymbolIteratorAtEnd( Handle, iterator ))
                 {
                     yield return new Symbol( this, iterator );
                     LLVMMoveToNextSymbol( iterator );
@@ -95,7 +95,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             get
             {
                 using LLVMSectionIteratorRef iterator = LLVMObjectFileCopySectionIterator( Handle );
-                while( !LLVMObjectFileIsSectionIteratorAtEnd( Handle, iterator ) )
+                while(!LLVMObjectFileIsSectionIteratorAtEnd( Handle, iterator ))
                 {
                     yield return new Section( this, iterator );
                     LLVMMoveToNextSection( iterator );
@@ -104,7 +104,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
             BackingBuffer.Dispose();
@@ -125,7 +125,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
 
             BackingBuffer = new( buffer.Handle.Move() );
             Handle = LLVMCreateBinary( BackingBuffer.Handle, context.GetUnownedHandle(), out string? errMsg );
-            if( Handle.IsInvalid )
+            if(Handle.IsInvalid)
             {
                 throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
             }

@@ -10,10 +10,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile(LLVMModuleRefAlias M, LazyEncodedString Path);
+        public static unsafe partial LLVMStatus LLVMWriteBitcodeToFile( LLVMModuleRefAlias M, LazyEncodedString Path );
 
-// It is debatable if the .NET projections should deal with a raw C "File descriptor", which is
-// exclusively a C/C++ runtime construct that does NOT exist in managed code.
+        // It is debatable if the .NET projections should deal with a raw C "File descriptor", which is
+        // exclusively a C/C++ runtime construct that does NOT exist in managed code.
 #if SUPPORT_FILE_DESCRIPTORS
         [LibraryImport( LibraryPath )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -32,6 +32,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMemoryBufferRef LLVMWriteBitcodeToMemoryBuffer(LLVMModuleRefAlias M);
+        public static unsafe partial LLVMMemoryBufferRef LLVMWriteBitcodeToMemoryBuffer( LLVMModuleRefAlias M );
     }
 }

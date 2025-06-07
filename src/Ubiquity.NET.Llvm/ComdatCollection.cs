@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm
         : IEnumerable<Comdat>
     {
         /// <summary>Gets a count of comdats in the associated module</summary>
-        public int Count => checked((int)LibLLVMModuleGetNumComdats(OwningModule.GetUnownedHandle()));
+        public int Count => checked((int)LibLLVMModuleGetNumComdats( OwningModule.GetUnownedHandle() ));
 
         /// <summary>Retrieves <see cref="Comdat"/> by its name</summary>
         /// <param name="key">Name of the <see cref="Comdat"/></param>
@@ -31,9 +31,9 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                ArgumentException.ThrowIfNullOrWhiteSpace(key);
+                ArgumentException.ThrowIfNullOrWhiteSpace( key );
 
-                return TryGetValue(key, out Comdat retVal) ? retVal : throw new KeyNotFoundException(key);
+                return TryGetValue( key, out Comdat retVal ) ? retVal : throw new KeyNotFoundException( key );
             }
         }
 
@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( key );
             kind.ThrowIfNotDefined();
 
-            return new(LibLLVMModuleInsertOrUpdateComdat( OwningModule.GetUnownedHandle(), key, ( LLVMComdatSelectionKind )kind ));
+            return new( LibLLVMModuleInsertOrUpdateComdat( OwningModule.GetUnownedHandle(), key, (LLVMComdatSelectionKind)kind ) );
         }
 
         /// <summary>Gets a value form the collection if it exists</summary>
@@ -56,16 +56,16 @@ namespace Ubiquity.NET.Llvm
         /// <see langword="true"/> if the value was found
         /// the list or <see langword="false"/> otherwise.
         /// </returns>
-        public bool TryGetValue( string key, out Comdat value)
+        public bool TryGetValue( string key, out Comdat value )
         {
-            value = new(LibLLVMModuleGetComdat(OwningModule.GetUnownedHandle(), key));
+            value = new( LibLLVMModuleGetComdat( OwningModule.GetUnownedHandle(), key ) );
             return !value.Handle.IsNull;
         }
 
         /// <summary>Gets a value that indicates if a <see cref="Comdat"/> with a given name exists in the collection</summary>
         /// <param name="key">Name of the <see cref="Comdat"/> to test for</param>
         /// <returns><see langword="true"/> if the entry is present and <see langword="false"/> if not</returns>
-        public bool Contains( string key ) => TryGetValue( key, out Comdat _);
+        public bool Contains( string key ) => TryGetValue( key, out Comdat _ );
 
         /// <summary>Removes a <see cref="Comdat"/> entry from the module</summary>
         /// <param name="key">Name of the <see cref="Comdat"/></param>
@@ -75,18 +75,18 @@ namespace Ubiquity.NET.Llvm
         /// </returns>
         public bool Remove( string key )
         {
-            if(!TryGetValue(key, out Comdat value))
+            if(!TryGetValue( key, out Comdat value ))
             {
                 return false;
             }
 
-            WithGlobalObjects(go=>
+            WithGlobalObjects( go =>
             {
-                if (!go.Comdat.IsNull && go.Comdat.Name == key)
+                if(!go.Comdat.IsNull && go.Comdat.Name == key)
                 {
                     go.Comdat = default;
                 }
-            });
+            } );
 
             LibLLVMModuleComdatRemove( OwningModule.GetUnownedHandle(), value.Handle );
             return true;
@@ -95,22 +95,22 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Removes all the <see cref="Comdat"/> entries from the module</summary>
         public void Clear( )
         {
-            WithGlobalObjects(go => go.Comdat = default);
+            WithGlobalObjects( go => go.Comdat = default );
             LibLLVMModuleComdatClear( OwningModule.GetUnownedHandle() );
         }
 
         /// <inheritdoc/>
-        IEnumerator<Comdat> IEnumerable<Comdat>.GetEnumerator() => new Enumerator(OwningModule);
+        IEnumerator<Comdat> IEnumerable<Comdat>.GetEnumerator( ) => new Enumerator( OwningModule );
 
         /// <inheritdoc/>
-        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(OwningModule);
+        IEnumerator IEnumerable.GetEnumerator( ) => new Enumerator( OwningModule );
 
         /// <summary>Enumerator for comdats</summary>
         internal sealed class Enumerator
             : IEnumerator<Comdat>
         {
             /// <inheritdoc/>
-            public Comdat Current => new(LibLLVMCurrentComdat(Handle));
+            public Comdat Current => new( LibLLVMCurrentComdat( Handle ) );
 
             /// <inheritdoc/>
             /// <remarks>Throws a <see cref="NotSupportedException"/> as boxing the ref struct for return is NOT allowed</remarks>
@@ -122,23 +122,23 @@ namespace Ubiquity.NET.Llvm
             }
 
             /// <inheritdoc/>
-            public void Dispose() => Handle.Dispose();
+            public void Dispose( ) => Handle.Dispose();
 
             /// <inheritdoc/>
-            public bool MoveNext() => LibLLVMNextComdat(Handle);
+            public bool MoveNext( ) => LibLLVMNextComdat( Handle );
 
             /// <inheritdoc/>
-            public void Reset() => LibLLVMModuleComdatIteratorReset(Handle);
+            public void Reset( ) => LibLLVMModuleComdatIteratorReset( Handle );
 
-            internal Enumerator(IModule module)
+            internal Enumerator( IModule module )
             {
-                Handle = LibLLVMModuleBeginComdats(module.GetUnownedHandle());
+                Handle = LibLLVMModuleBeginComdats( module.GetUnownedHandle() );
             }
 
             private readonly LibLLVMComdatIteratorRef Handle;
         }
 
-        internal ComdatCollection(IModule owningModule)
+        internal ComdatCollection( IModule owningModule )
         {
             OwningModule = owningModule;
         }
@@ -147,14 +147,14 @@ namespace Ubiquity.NET.Llvm
         // an option for a ref struct
         private void WithGlobalObjects( Action<GlobalObject> op )
         {
-            foreach( var gv in OwningModule.Globals )
+            foreach(var gv in OwningModule.Globals)
             {
-                op(gv);
+                op( gv );
             }
 
-            foreach( var func in OwningModule.Functions )
+            foreach(var func in OwningModule.Functions)
             {
-                op(func);
+                op( func );
             }
         }
 

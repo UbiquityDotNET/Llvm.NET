@@ -29,7 +29,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitErrorNode( IErrorNode node )
         {
-            return new ErrorNode( node.GetSourceLocation( ), $"Syntax Error: {node}" );
+            return new ErrorNode( node.GetSourceLocation(), $"Syntax Error: {node}" );
         }
 
         public override IAstNode VisitParenExpression( ParenExpressionContext context )
@@ -39,23 +39,23 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitConstExpression( ConstExpressionContext context )
         {
-            return new ConstantExpression( context.GetSourceLocation( ), context.Value );
+            return new ConstantExpression( context.GetSourceLocation(), context.Value );
         }
 
         public override IAstNode VisitVariableExpression( VariableExpressionContext context )
         {
             string varName = context.Name;
             return NamedValues.TryGetValue( varName, out IVariableDeclaration? declaration )
-                ? new VariableReferenceExpression( context.GetSourceLocation( ), declaration )
-                : new ErrorNode( context.GetSourceLocation( ), $"Unknown variable name: {varName}" );
+                ? new VariableReferenceExpression( context.GetSourceLocation(), declaration )
+                : new ErrorNode( context.GetSourceLocation(), $"Unknown variable name: {varName}" );
         }
 
         public override IAstNode VisitFunctionCallExpression( FunctionCallExpressionContext context )
         {
             Prototype? function = FindCallTarget( context.CaleeName );
-            if( function is null )
+            if(function is null)
             {
-                return new ErrorNode( context.GetSourceLocation( ), $"Call to unknown function '{context.CaleeName}'" );
+                return new ErrorNode( context.GetSourceLocation(), $"Call to unknown function '{context.CaleeName}'" );
             }
 
             var argNodes = ( from expCtx in context.expression( )
@@ -70,7 +70,7 @@ namespace Kaleidoscope.Grammar.AST
                 }
             }
 
-            return new FunctionCallExpression( context.GetSourceLocation( ), function, argNodes.Cast<IExpression>() );
+            return new FunctionCallExpression( context.GetSourceLocation(), function, argNodes.Cast<IExpression>() );
         }
 
         public override IAstNode VisitExpression( ExpressionContext context )
@@ -79,15 +79,15 @@ namespace Kaleidoscope.Grammar.AST
             // where the sub-expressions are in evaluation order
             IAstNode lhsNode = context.Atom.Accept( this );
 
-            foreach( var (op, rhs) in context.OperatorExpressions )
+            foreach(var (op, rhs) in context.OperatorExpressions)
             {
-                if (lhsNode is not IExpression lhsExp)
+                if(lhsNode is not IExpression lhsExp)
                 {
                     return lhsNode;
                 }
 
                 var rhsNode = rhs.Accept( this );
-                if (rhsNode is not IExpression rhsExp)
+                if(rhsNode is not IExpression rhsExp)
                 {
                     return rhsNode;
                 }
@@ -102,7 +102,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             var retVal = ( Prototype )context.Signature.Accept( this );
             var errors = retVal.CollectErrors( );
-            if( errors.Length == 0 )
+            if(errors.Length == 0)
             {
                 RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
             }
@@ -112,10 +112,10 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitFunctionDefinition( FunctionDefinitionContext context )
         {
-            BeginFunctionDefinition( );
+            BeginFunctionDefinition();
 
             var sig = ( Prototype )context.Signature.Accept( this );
-            foreach( var param in sig.Parameters )
+            foreach(var param in sig.Parameters)
             {
                 Push( param );
             }
@@ -124,7 +124,7 @@ namespace Kaleidoscope.Grammar.AST
             var errors = body.CollectErrors( );
 
             // test for a non-expression (ErrorNode)
-            if( body is not IExpression exp)
+            if(body is not IExpression exp)
             {
                 return body;
             }
@@ -136,7 +136,7 @@ namespace Kaleidoscope.Grammar.AST
                                                );
 
             // only add valid definitions to the runtime state.
-            if( errors.Length == 0 )
+            if(errors.Length == 0)
             {
                 RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
             }
@@ -152,13 +152,13 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitTopLevelExpression( TopLevelExpressionContext context )
         {
-            BeginFunctionDefinition( );
+            BeginFunctionDefinition();
             var sig = new Prototype( context.GetSourceLocation( ), RuntimeState.GenerateAnonymousName( ), true );
             var bodyNode = context.expression( ).Accept( this );
             var errors = bodyNode.CollectErrors();
 
             // only add valid definitions to the runtime state.
-            if( errors.Length > 0 || bodyNode is not IExpression bodyExp)
+            if(errors.Length > 0 || bodyNode is not IExpression bodyExp)
             {
                 return bodyNode;
             }
@@ -173,20 +173,20 @@ namespace Kaleidoscope.Grammar.AST
         {
             // verify the operator was previously defined
             var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
-            if( opKind == OperatorKind.None )
+            if(opKind == OperatorKind.None)
             {
-                return new ErrorNode( context.GetSourceLocation( ), $"invalid unary operator {context.Op}" );
+                return new ErrorNode( context.GetSourceLocation(), $"invalid unary operator {context.Op}" );
             }
 
             string calleeName = CreateUnaryFunctionName( context.OpToken );
             var function = FindCallTarget( calleeName );
-            if( function == null )
+            if(function == null)
             {
-                return new ErrorNode( context.GetSourceLocation( ), $"reference to unknown unary operator function {calleeName}" );
+                return new ErrorNode( context.GetSourceLocation(), $"reference to unknown unary operator function {calleeName}" );
             }
 
             var arg = context.Rhs.Accept( this );
-            return arg is not IExpression exp ? arg : new FunctionCallExpression( context.GetSourceLocation( ), function, exp );
+            return arg is not IExpression exp ? arg : new FunctionCallExpression( context.GetSourceLocation(), function, exp );
         }
         #endregion
 
@@ -196,23 +196,14 @@ namespace Kaleidoscope.Grammar.AST
                            where child is not TopLevelSemicolonContext
                            select child.Accept( this );
 
-            return new RootNode( context.GetSourceLocation( ), children );
+            return new RootNode( context.GetSourceLocation(), children );
         }
-
-        // sub rules are named and therefore this is never generated/seen now...
-        //public override IAstNode VisitRepl( ReplContext context )
-        //{
-        //    var children = from child in context.children
-        //                   select child.Accept( this );
-        //
-        //    return new RootNode( context.GetSourceLocation( ), children );
-        //}
 
         public override IAstNode VisitConditionalExpression( ConditionalExpressionContext context )
         {
             var expressionSpan = context.GetSourceLocation( );
             var condition = context.Condition.Accept( this );
-            if (condition is not IExpression conditionExp)
+            if(condition is not IExpression conditionExp)
             {
                 return condition;
             }
@@ -224,7 +215,7 @@ namespace Kaleidoscope.Grammar.AST
             }
 
             var elseClause = context.ElseExpression.Accept( this );
-            if (elseClause is not IExpression elseExp)
+            if(elseClause is not IExpression elseExp)
             {
                 return elseClause;
             }
@@ -248,29 +239,29 @@ namespace Kaleidoscope.Grammar.AST
             var initializer = ( LocalVariableDeclaration )context.Initializer.Accept( this );
 
             ForInExpression retVal;
-            using( NamedValues.EnterScope( ) )
+            using(NamedValues.EnterScope())
             {
                 Push( initializer );
 
                 var conditionNode = context.EndExpression.Accept( this );
-                if (conditionNode is not IExpression conditionExp)
+                if(conditionNode is not IExpression conditionExp)
                 {
                     return conditionNode;
                 }
 
                 var stepNode = context.StepExpression?.Accept( this ) ?? new ConstantExpression( default, 1.0 );
-                if (stepNode is not IExpression stepExp)
+                if(stepNode is not IExpression stepExp)
                 {
                     return stepNode;
                 }
 
                 var bodyNode = context.BodyExpression.Accept( this );
-                if (bodyNode is not IExpression bodyExp)
+                if(bodyNode is not IExpression bodyExp)
                 {
                     return bodyNode;
                 }
 
-                retVal = new ForInExpression( context.GetSourceLocation( ), initializer, conditionExp, stepExp, bodyExp );
+                retVal = new ForInExpression( context.GetSourceLocation(), initializer, conditionExp, stepExp, bodyExp );
             }
 
             return retVal;
@@ -278,26 +269,20 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitVarInExpression( VarInExpressionContext context )
         {
-            using( NamedValues.EnterScope( ) )
+            using(NamedValues.EnterScope())
             {
                 var localVariables = from initializer in context.Initiaizers
                                      select ( LocalVariableDeclaration )initializer.Accept( this );
 
-                foreach( var local in localVariables )
+                foreach(var local in localVariables)
                 {
                     Push( local );
                 }
 
                 var bodyNode = context.Scope.Accept( this );
-                return bodyNode is not IExpression bodyExp ? bodyNode : new VarInExpression( context.GetSourceLocation( ), localVariables, bodyExp );
+                return bodyNode is not IExpression bodyExp ? bodyNode : new VarInExpression( context.GetSourceLocation(), localVariables, bodyExp );
             }
         }
-
-        // sub rules are named and therefore this is never generated/seen now...
-        //public override IAstNode VisitPrototype( PrototypeContext context )
-        //{
-        //    return BuildPrototype( context, context.Name );
-        //}
 
         public override IAstNode VisitFunctionPrototype( FunctionPrototypeContext context )
         {
@@ -307,7 +292,7 @@ namespace Kaleidoscope.Grammar.AST
         public override IAstNode VisitInitializer( InitializerContext context )
         {
             var value = ( IExpression )(context.Value?.Accept( this ) ?? new ConstantExpression( context.GetSourceLocation( ), 0.0 ));
-            return new LocalVariableDeclaration( context.GetSourceLocation( )
+            return new LocalVariableDeclaration( context.GetSourceLocation()
                                                , context.Name
                                                , value
                                                );
@@ -330,7 +315,7 @@ namespace Kaleidoscope.Grammar.AST
         private Prototype? FindCallTarget( string calleeName )
         {
             // search defined functions first as they override extern declarations
-            if( RuntimeState.FunctionDefinitions.TryGetValue( calleeName, out FunctionDefinition? definition ) )
+            if(RuntimeState.FunctionDefinitions.TryGetValue( calleeName, out FunctionDefinition? definition ))
             {
                 return definition.Signature;
             }
@@ -343,46 +328,46 @@ namespace Kaleidoscope.Grammar.AST
 
         private IAstNode CreateBinaryOperatorNode( IExpression lhs, BinaryopContext op, IExpression rhs )
         {
-            switch( op.OpToken.Type )
+            switch(op.OpToken.Type)
             {
             case LEFTANGLE:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Less, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Less, rhs );
 
             case CARET:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Pow, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Pow, rhs );
 
             case PLUS:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Add, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Add, rhs );
 
             case MINUS:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Subtract, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Subtract, rhs );
 
             case ASTERISK:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Multiply, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Multiply, rhs );
 
             case SLASH:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Divide, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Divide, rhs );
 
             case ASSIGN:
-                return new BinaryOperatorExpression( op.GetSourceLocation( ), lhs, BuiltInOperatorKind.Assign, rhs );
+                return new BinaryOperatorExpression( op.GetSourceLocation(), lhs, BuiltInOperatorKind.Assign, rhs );
 
             #region UserBinaryOpExpression
             default:
+            {
+                // User defined op?
+                var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
+                if(opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative)
                 {
-                    // User defined op?
-                    var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
-                    if( opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative )
-                    {
-                        return new ErrorNode( op.GetSourceLocation( ), $"Invalid binary operator '{op.OpToken.Text}'" );
-                    }
-
-                    string calleeName = CreateBinaryFunctionName( op.OpToken );
-                    Prototype? callTarget = FindCallTarget( calleeName );
-                    return callTarget is null
-                        ? new ErrorNode( op.GetSourceLocation( ), $"Unary operator function '{calleeName}' not found" )
-                        : new FunctionCallExpression( op.GetSourceLocation( ), callTarget, lhs, rhs );
+                    return new ErrorNode( op.GetSourceLocation(), $"Invalid binary operator '{op.OpToken.Text}'" );
                 }
-                #endregion
+
+                string calleeName = CreateBinaryFunctionName( op.OpToken );
+                Prototype? callTarget = FindCallTarget( calleeName );
+                return callTarget is null
+                    ? new ErrorNode( op.GetSourceLocation(), $"Unary operator function '{calleeName}' not found" )
+                    : new FunctionCallExpression( op.GetSourceLocation(), callTarget, lhs, rhs );
+            }
+            #endregion
             }
         }
 
@@ -398,7 +383,7 @@ namespace Kaleidoscope.Grammar.AST
 
         private IAstNode BuildPrototype( PrototypeContext context, string name )
         {
-            if( string.IsNullOrWhiteSpace( name ) )
+            if(string.IsNullOrWhiteSpace( name ))
             {
                 name = context.Name;
             }
@@ -411,16 +396,16 @@ namespace Kaleidoscope.Grammar.AST
                                       );
 
             // block second incompatible (name + arity ) declaration to prevent issues with in any definitions that may be using it
-            if( RuntimeState.FunctionDeclarations.TryGetValue( name, out Prototype? existingPrototype ) )
+            if(RuntimeState.FunctionDeclarations.TryGetValue( name, out Prototype? existingPrototype ))
             {
-                if( existingPrototype.Parameters.Count != retVal.Parameters.Count )
+                if(existingPrototype.Parameters.Count != retVal.Parameters.Count)
                 {
-                    return new ErrorNode( context.GetSourceLocation( ), "Declaration incompatible with previous declaration" );
+                    return new ErrorNode( context.GetSourceLocation(), "Declaration incompatible with previous declaration" );
                 }
             }
 
             var errors = retVal.CollectErrors( );
-            if( errors.Length == 0 )
+            if(errors.Length == 0)
             {
                 RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
             }
@@ -430,7 +415,7 @@ namespace Kaleidoscope.Grammar.AST
 
         private void BeginFunctionDefinition( )
         {
-            LocalVariables.Clear( );
+            LocalVariables.Clear();
             LocalVarIndex = 0;
         }
 

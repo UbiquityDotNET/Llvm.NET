@@ -30,39 +30,42 @@ namespace Ubiquity.NET.Llvm.Tests
             using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
 
             // Place the generated module in the JIT
-            jit.AddModule(jit.MainLib, mainMod);
+            jit.Add( jit.MainLib, mainMod );
             SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
             using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
 
-            var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags>
+            {
                 [mangledFooBodySymName] = flags,
             }.ToImmutable();
 
             using var mangledBarBodySymName = jit.MangleAndIntern(BarBodySymbolName);
 
-            var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags>
+            {
                 [mangledBarBodySymName] = flags,
             }.ToImmutable();
 
             using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
             using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
 
-            jit.MainLib.Define(fooMu);
-            jit.MainLib.Define(barMu);
+            jit.MainLib.Define( fooMu );
+            jit.MainLib.Define( barMu );
 
-            using var ism = new LocalIndirectStubsManager(triple);
             using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
             using var mangledFoo = jit.MangleAndIntern("foo");
             using var mangledBar = jit.MangleAndIntern("bar");
 
-            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>
+            {
                 [mangledFoo] = new(mangledFooBodySymName, flags),
                 [mangledBar] = new(mangledBarBodySymName, flags),
             }.ToImmutable();
 
+            using var ism = new LocalIndirectStubsManager(triple);
             using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
-            jit.MainLib.Define(lazyReExports);
+            jit.MainLib.Define( lazyReExports );
 
             UInt64 address = jit.Lookup("entry");
 
@@ -70,39 +73,39 @@ namespace Ubiquity.NET.Llvm.Tests
             {
                 var entry = (delegate* unmanaged[Cdecl]<Int32, Int32>)address;
                 int result = entry(1); // Conditionally calls "foo" with lazy materialization
-                Assert.AreEqual(1, result);
+                Assert.AreEqual( 1, result );
 
-                result = entry(0); // Conditionally calls "bar" with lazy materialization
-                Assert.AreEqual(2, result);
+                result = entry( 0 ); // Conditionally calls "bar" with lazy materialization
+                Assert.AreEqual( 2, result );
             }
 
             // Local function to handle materializing the very lazy symbols
             // This function captures "jit" and therefore the materializer instance
             // above must remain valid until the JIT is destroyed or the materialization
             // occurs.
-            void Materialize(MaterializationResponsibility r)
+            void Materialize( MaterializationResponsibility r )
             {
                 // symbol strings returned are NOT owned by this function so Dispose() isn't needed (Though it is an allowed NOP)
                 using var symbols = r.GetRequestedSymbols();
-                Debug.Assert(symbols.Count == 1, "Unexpected number of symbols!");
+                Debug.Assert( symbols.Count == 1, "Unexpected number of symbols!" );
 
                 using var fooBodyName = jit.MangleAndIntern(FooBodySymbolName);
                 using var barBodyName = jit.MangleAndIntern(BarBodySymbolName);
 
                 ThreadSafeModule module;
-                if(symbols[0].Equals(fooBodyName))
+                if(symbols[ 0 ].Equals( fooBodyName ))
                 {
-                    Debug.WriteLine("Parsing module for 'Foo'");
-                    module = ParseTestModule(FooModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "foo-mod");
+                    Debug.WriteLine( "Parsing module for 'Foo'" );
+                    module = ParseTestModule( FooModuleSource.NormalizeLineEndings( LineEndingKind.LineFeed )!, "foo-mod" );
                 }
-                else if (symbols[0].Equals(barBodyName))
+                else if(symbols[ 0 ].Equals( barBodyName ))
                 {
-                    Debug.WriteLine("Parsing module for 'Bar'");
-                    module = ParseTestModule(BarModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "bar-mod");
+                    Debug.WriteLine( "Parsing module for 'Bar'" );
+                    module = ParseTestModule( BarModuleSource.NormalizeLineEndings( LineEndingKind.LineFeed )!, "bar-mod" );
                 }
                 else
                 {
-                    Debug.WriteLine("Unknown symbol");
+                    Debug.WriteLine( "Unknown symbol" );
 
                     // Not a known symbol - fail the materialization request.
                     r.Fail();
@@ -115,15 +118,15 @@ namespace Ubiquity.NET.Llvm.Tests
                 using(module)
                 {
                     // apply the data Layout
-                    module.WithPerThreadModule(ApplyDataLayout);
+                    module.WithPerThreadModule( ApplyDataLayout );
 
                     // Finally emit the module to the JIT.
                     // This transfers ownership of both the responsibility AND the module
                     // to the native LLVM JIT.
-                    jit.TransformLayer.Emit(r, module);
+                    jit.TransformLayer.Emit( r, module );
                 }
 
-                ErrorInfo ApplyDataLayout(IModule module)
+                ErrorInfo ApplyDataLayout( IModule module )
                 {
                     module.DataLayoutString = jit.DataLayoutString;
 
@@ -137,14 +140,14 @@ namespace Ubiquity.NET.Llvm.Tests
             }
         }
 
-        private static ThreadSafeModule ParseTestModule(LazyEncodedString src, LazyEncodedString name)
+        private static ThreadSafeModule ParseTestModule( LazyEncodedString src, LazyEncodedString name )
         {
             using var threadSafeContext = new ThreadSafeContext();
             var ctx = threadSafeContext.PerThreadContext;
 
             // Ownership is transferred, this protects in the event of an exception
             using var module = ctx.ParseModule(src, name);
-            return new ThreadSafeModule(threadSafeContext, module);
+            return new ThreadSafeModule( threadSafeContext, module );
         }
 
         private const string MainModuleSource = """

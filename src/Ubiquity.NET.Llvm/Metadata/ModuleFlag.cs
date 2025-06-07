@@ -33,28 +33,28 @@ namespace Ubiquity.NET.Llvm.Metadata
         {
             ArgumentNullException.ThrowIfNull( node );
 
-            if( node.Operands.Count != 3 )
+            if(node.Operands.Count != 3)
             {
                 throw new ArgumentException( Resources.Expected_node_with_3_operands, nameof( node ) );
             }
 
-            if( node.Operands[ 0 ] is not ConstantAsMetadata behavior)
+            if(node.Operands[ 0 ] is not ConstantAsMetadata behavior)
             {
                 throw new ArgumentException( Resources.Expected_ConstantAsMetadata_for_first_operand, nameof( node ) );
             }
 
-            if( behavior.Constant is not ConstantInt behaviorConst)
+            if(behavior.Constant is not ConstantInt behaviorConst)
             {
                 throw new ArgumentException( Resources.Expected_ConstantInt_wrapped_in_first_operand, nameof( node ) );
             }
 
-            if( node.Operands[ 1 ] is not MDString nameMd)
+            if(node.Operands[ 1 ] is not MDString nameMd)
             {
                 throw new ArgumentException( Resources.Expected_MDString_as_second_operand, nameof( node ) );
             }
 
-            Behavior = ( ModuleFlagBehavior )( behaviorConst.ZeroExtendedValue );
-            Name = nameMd.ToLazyEncodedString( );
+            Behavior = (ModuleFlagBehavior)(behaviorConst.ZeroExtendedValue);
+            Name = nameMd.ToLazyEncodedString();
             Metadata = node.Operands[ 2 ]!;
         }
     }

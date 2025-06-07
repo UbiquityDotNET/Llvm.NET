@@ -10,10 +10,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorTypeId LLVMGetStringErrorTypeId();
+        public static unsafe partial LLVMErrorTypeId LLVMGetStringErrorTypeId( );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMCreateStringError( LazyEncodedString ErrMsg);
+        public static unsafe partial LLVMErrorRef LLVMCreateStringError( LazyEncodedString ErrMsg );
     }
 }

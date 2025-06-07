@@ -12,9 +12,9 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class FunctionCallExpressionContext
         {
-            public string CaleeName => Identifier( ).GetText( );
+            public string CaleeName => Identifier().GetText();
 
-            public IReadOnlyList<ExpressionContext> Args => expression( );
+            public IReadOnlyList<ExpressionContext> Args => expression();
         }
     }
 }

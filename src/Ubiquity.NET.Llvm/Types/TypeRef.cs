@@ -14,9 +14,9 @@ namespace Ubiquity.NET.Llvm.Types
         , ITypeHandleOwner
     {
         /// <inheritdoc/>
-        bool IEquatable<ITypeRef>.Equals(ITypeRef? other) => other is ITypeHandleOwner tho && tho.Equals((ITypeHandleOwner)this);
+        bool IEquatable<ITypeRef>.Equals( ITypeRef? other ) => other is ITypeHandleOwner tho && tho.Equals( (ITypeHandleOwner)this );
 
-        public bool Equals(ITypeHandleOwner? other) => other is not null && Handle.Equals( other.Handle );
+        public bool Equals( ITypeHandleOwner? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public LLVMTypeRef Handle { get; }
@@ -62,37 +62,37 @@ namespace Ubiquity.NET.Llvm.Types
         };
 
         /// <inheritdoc/>
-        public IContext Context => new ContextAlias(LLVMGetTypeContext( Handle ));
+        public IContext Context => new ContextAlias( LLVMGetTypeContext( Handle ) );
 
         /// <inheritdoc/>
         public uint IntegerBitWidth => Kind != TypeKind.Integer ? 0 : LLVMGetIntTypeWidth( Handle );
 
         /// <inheritdoc/>
-        public Constant GetNullValue() => Constant.NullValueFor( this );
+        public Constant GetNullValue( ) => Constant.NullValueFor( this );
 
         /// <inheritdoc/>
-        public IArrayType CreateArrayType(uint count) => (IArrayType)LLVMArrayType( Handle, count ).ThrowIfInvalid().CreateType();
+        public IArrayType CreateArrayType( uint count ) => (IArrayType)LLVMArrayType( Handle, count ).ThrowIfInvalid().CreateType();
 
         /// <inheritdoc/>
-        public IPointerType CreatePointerType() => CreatePointerType( 0 );
+        public IPointerType CreatePointerType( ) => CreatePointerType( 0 );
 
         /// <inheritdoc/>
-        public IPointerType CreatePointerType(uint addressSpace)
+        public IPointerType CreatePointerType( uint addressSpace )
         {
             // create the opaque pointer then set this type as the ElementType.
             return (IPointerType)LLVMPointerType( Handle, addressSpace )
-                                .ThrowIfInvalid( )
+                                .ThrowIfInvalid()
                                 .CreateType( this );
         }
 
         /// <summary>Builds a string representation for this type in LLVM assembly language form</summary>
         /// <returns>Formatted string for this type</returns>
-        public override string? ToString()
+        public override string? ToString( )
         {
             return LLVMPrintTypeToString( Handle );
         }
 
-        internal TypeRef(LLVMTypeRef typeRef)
+        internal TypeRef( LLVMTypeRef typeRef )
         {
             Handle = typeRef;
             if(typeRef == default)

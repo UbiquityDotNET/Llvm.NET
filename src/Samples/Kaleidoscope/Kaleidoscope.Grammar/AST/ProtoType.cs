@@ -25,7 +25,7 @@ namespace Kaleidoscope.Grammar.AST
         /// <param name="location">Source location covering the complete signature</param>
         /// <param name="name"><see cref="Name"/> containing the name of the function</param>
         /// <param name="parameters">Collection of <see cref="Name"/>s for the names of each parameter</param>
-        public Prototype( SourceLocation location, string name, params ParameterDeclaration[ ] parameters )
+        public Prototype( SourceLocation location, string name, params ParameterDeclaration[] parameters )
             : this( location, name, false, false, parameters )
         {
         }
@@ -46,7 +46,7 @@ namespace Kaleidoscope.Grammar.AST
         /// This version of the constructor is used to create synthetic prototypes that don't
         /// exist within the original source.
         /// </remarks>
-        public Prototype( string name, params string[ ] parameters )
+        public Prototype( string name, params string[] parameters )
             : this( default, name, false, false, parameters.Select( ( n, i ) => new ParameterDeclaration( default, name, i ) ) )
         {
         }
@@ -73,7 +73,7 @@ namespace Kaleidoscope.Grammar.AST
             bool isExtern,
             IEnumerable<ParameterDeclaration> parameters
             )
-            : base(location)
+            : base( location )
         {
             Name = name;
             Parameters = [ .. parameters ];
@@ -97,16 +97,16 @@ namespace Kaleidoscope.Grammar.AST
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
-                   ? klsVisitor.Visit(this)
-                   : visitor.Visit(this);
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
         }
 
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
-                   ? klsVisitor.Visit(this, in arg)
-                   : visitor.Visit(this, in arg);
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
         }
 
         /// <inheritdoc/>
@@ -116,25 +116,25 @@ namespace Kaleidoscope.Grammar.AST
         public override string ToString( )
         {
             var bldr = new StringBuilder( );
-            if( IsExtern )
+            if(IsExtern)
             {
                 bldr.Append( "[extern]" );
             }
 
-            if( IsCompilerGenerated )
+            if(IsCompilerGenerated)
             {
                 bldr.Append( "[CompilerGenerated]" );
             }
 
             bldr.Append( Name );
             bldr.Append( '(' );
-            if( Parameters.Count > 0 )
+            if(Parameters.Count > 0)
             {
-                bldr.Append( string.Join( ", ", Parameters.Select( p => p.ToString( ) ) ) );
+                bldr.Append( string.Join( ", ", Parameters.Select( p => p.ToString() ) ) );
             }
 
             bldr.Append( ')' );
-            return bldr.ToString( );
+            return bldr.ToString();
         }
     }
 }

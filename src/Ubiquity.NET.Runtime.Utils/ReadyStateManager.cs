@@ -57,13 +57,13 @@ namespace Ubiquity.NET.Runtime.Utils
             ContinueExpression | false     | x     | StartExpression
             ContinueExpression | true      | x     | ContinueExpression
             */
-            if( State == ReadyState.StartExpression )
+            if(State == ReadyState.StartExpression)
             {
                 bool isBlank = string.IsNullOrWhiteSpace( txt );
 
-                if( !isPartial && isBlank )
+                if(!isPartial && isBlank)
                 {
-                    throw new InvalidOperationException( );
+                    throw new InvalidOperationException();
                 }
 
                 State = isPartial == isBlank ? ReadyState.StartExpression : ReadyState.ContinueExpression;

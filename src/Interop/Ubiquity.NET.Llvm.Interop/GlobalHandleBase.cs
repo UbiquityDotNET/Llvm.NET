@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// state.
         /// </note>
         /// </remarks>
-        public bool AreSame(GlobalHandleBase other)
+        public bool AreSame( GlobalHandleBase other )
         {
             return other is not null
                 && DangerousGetHandle() == other.DangerousGetHandle();
@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
         /// the finalization phase; otherwise, false (not recommended).
         /// </param>
-        protected GlobalHandleBase(bool ownsHandle)
+        protected GlobalHandleBase( bool ownsHandle )
             : base( nint.Zero, ownsHandle )
         {
             IsOwned = ownsHandle;
@@ -70,10 +70,10 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="ownsHandle">true to reliably let System.Runtime.InteropServices.SafeHandle release the handle during
         /// the finalization phase; otherwise, false (not recommended).
         /// </param>
-        protected GlobalHandleBase(nint handle, bool ownsHandle)
-            : base(nint.Zero, ownsHandle)
+        protected GlobalHandleBase( nint handle, bool ownsHandle )
+            : base( nint.Zero, ownsHandle )
         {
-            SetHandle(handle);
+            SetHandle( handle );
             IsOwned = ownsHandle;
 #if DEBUG
 
@@ -88,17 +88,17 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Initializes a new instance of the <see cref="GlobalHandleBase"/> class with the specified value</summary>
         /// <param name="handle">Native handle to wrap in this instance</param>
-        protected GlobalHandleBase(nint handle)
-            : this(ownsHandle: true)
+        protected GlobalHandleBase( nint handle )
+            : this( ownsHandle: true )
         {
-            SetHandle(handle);
+            SetHandle( handle );
         }
 
 #if DEBUG
         /// <summary>Gets creation stack - Debugging aid</summary>
         protected string? CreationStack { get; private set; }
 
-        private void CaptureStack()
+        private void CaptureStack( )
         {
             CreationStack = Environment.StackTrace;
         }
@@ -118,13 +118,13 @@ namespace Ubiquity.NET.Llvm.Interop
         /// matching on the handle types AND improves readability and maintainability by declaring
         /// intent in a "self documenting" fashion.
         /// </remarks>
-        public static T Move<T>(this T self)
+        public static T Move<T>( this T self )
             where T : GlobalHandleBase, new()
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
             T retVal = new();
-            Marshal.InitHandle(retVal, self.DangerousGetHandle());
+            Marshal.InitHandle( retVal, self.DangerousGetHandle() );
             self.SetHandleAsInvalid();
             return retVal;
         }
@@ -140,20 +140,20 @@ namespace Ubiquity.NET.Llvm.Interop
         /// an extension method ensures type matching on the handle types AND improves readability
         /// and maintainability by declaring intent in a "self documenting" fashion.
         /// </remarks>
-        public static T CloneWithAddRef<T>(this T self)
+        public static T CloneWithAddRef<T>( this T self )
             where T : GlobalHandleBase, new()
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
             T retVal = new();
             bool success = false;
-            self.DangerousAddRef(ref success);
-            if (!success)
+            self.DangerousAddRef( ref success );
+            if(!success)
             {
-                throw new InvalidOperationException("Failed to addreff the SafeHandle!");
+                throw new InvalidOperationException( "Failed to addreff the SafeHandle!" );
             }
 
-            Marshal.InitHandle(retVal, self.DangerousGetHandle());
+            Marshal.InitHandle( retVal, self.DangerousGetHandle() );
             return retVal;
         }
 
@@ -169,10 +169,10 @@ namespace Ubiquity.NET.Llvm.Interop
         /// is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
         /// </note>
         /// </remarks>
-        public static nint MoveToNative<T>(this T self)
+        public static nint MoveToNative<T>( this T self )
             where T : GlobalHandleBase
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
             self.SetHandleAsInvalid();
             return self.DangerousGetHandle();
         }
@@ -190,13 +190,13 @@ namespace Ubiquity.NET.Llvm.Interop
         public static T ThrowIfInvalid<T>(
             this T self,
             string message = "Unexpected invalid handle from interop!",
-            [CallerArgumentExpression(nameof(self))] string expression = "",
+            [CallerArgumentExpression( nameof( self ) )] string expression = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0
             )
             where T : GlobalHandleBase
         {
-            ArgumentNullException.ThrowIfNull(self, expression);
+            ArgumentNullException.ThrowIfNull( self, expression );
 
             return self.IsInvalid || self.IsClosed
                  ? throw new ArgumentException( $"Handle is Invalid - {sourceFilePath}@{sourceLineNumber}; {message}", expression )

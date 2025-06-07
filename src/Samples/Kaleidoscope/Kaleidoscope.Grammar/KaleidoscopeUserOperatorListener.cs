@@ -21,7 +21,7 @@ namespace Kaleidoscope.Grammar
         // and update the RuntimeState accordingly, if it is.
         public override void ExitFunctionDefinition( KaleidoscopeParser.FunctionDefinitionContext context )
         {
-            switch( context.Signature )
+            switch(context.Signature)
             {
             case KaleidoscopeParser.UnaryPrototypeContext unaryProto:
                 RuntimeState.TryAddOperator( unaryProto.OpToken, OperatorKind.PreFix, 0 );

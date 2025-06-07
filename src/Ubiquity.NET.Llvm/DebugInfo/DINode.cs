@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : MDNode
     {
         /// <summary>Gets the Dwarf tag for the node</summary>
-        public Tag Tag => Handle == default ? Tag.None : ( Tag )LibLLVMDIDescriptorGetTag( Handle );
+        public Tag Tag => Handle == default ? Tag.None : (Tag)LibLLVMDIDescriptorGetTag( Handle );
 
         internal DINode( LLVMMetadataRef handle )
             : base( handle )

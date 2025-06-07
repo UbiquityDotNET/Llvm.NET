@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="diBuilder">Debug information builder for this module</param>
         /// <param name="name">Source language name of the type</param>
         /// <param name="encoding">Encoding for the type</param>
-        public DebugBasicType( ITypeRef llvmType,  ref readonly DIBuilder diBuilder, string name, DiTypeKind encoding )
+        public DebugBasicType( ITypeRef llvmType, ref readonly DIBuilder diBuilder, string name, DiTypeKind encoding )
             : base( llvmType,
                     diBuilder.CreateBasicType( name
                                              , diBuilder.OwningModule.Layout.BitSizeOf( llvmType )
@@ -36,12 +36,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            if( diBuilder.OwningModule.Layout == null )
+            if(diBuilder.OwningModule.Layout == null)
             {
-                throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, $"{nameof(diBuilder)}.{nameof(diBuilder.OwningModule)}" );
+                throw new ArgumentException( Resources.Module_needs_Layout_to_build_basic_types, $"{nameof( diBuilder )}.{nameof( diBuilder.OwningModule )}" );
             }
 
-            switch( llvmType.Kind )
+            switch(llvmType.Kind)
             {
             case TypeKind.Void:
             case TypeKind.Float16:

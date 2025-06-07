@@ -36,11 +36,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         where TDebug : DIType
     {
         /// <inheritdoc/>
-        bool IEquatable<ITypeRef>.Equals(ITypeRef? other) => other is ITypeHandleOwner tho && tho.Equals( this );
+        bool IEquatable<ITypeRef>.Equals( ITypeRef? other ) => other is ITypeHandleOwner tho && tho.Equals( this );
 
         /// <inheritdoc/>
-        bool IEquatable<ITypeHandleOwner>.Equals(ITypeHandleOwner? other)
-            => other is not null && ((ITypeHandleOwner)this).Handle.Equals(other.Handle);
+        bool IEquatable<ITypeHandleOwner>.Equals( ITypeHandleOwner? other )
+            => other is not null && ((ITypeHandleOwner)this).Handle.Equals( other.Handle );
 
         /// <summary>Gets or sets the Debug information type for this binding</summary>
         /// <remarks>
@@ -57,11 +57,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             get => RawDebugInfoType;
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                ArgumentNullException.ThrowIfNull( value );
 
-                if( ( RawDebugInfoType is not null ) && RawDebugInfoType.IsTemporary )
+                if((RawDebugInfoType is not null) && RawDebugInfoType.IsTemporary)
                 {
-                    if( value.IsTemporary )
+                    if(value.IsTemporary)
                     {
                         throw new InvalidOperationException( Resources.Cannot_replace_a_temporary_with_another_temporary );
                     }
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
         /// <summary>Gets an intentionally undocumented value</summary>
         /// <remarks>internal use only</remarks>
-        LLVMTypeRef ITypeHandleOwner.Handle => NativeType.GetTypeRef( );
+        LLVMTypeRef ITypeHandleOwner.Handle => NativeType.GetTypeRef();
 
         /// <inheritdoc/>
         public bool IsSized => NativeType.IsSized;
@@ -120,13 +120,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public bool IsFloatingPoint => NativeType.IsFloatingPoint;
 
         /// <inheritdoc/>
-        public Constant GetNullValue( ) => NativeType.GetNullValue( );
+        public Constant GetNullValue( ) => NativeType.GetNullValue();
 
         /// <inheritdoc/>
         public IArrayType CreateArrayType( uint count ) => NativeType.CreateArrayType( count );
 
         /// <inheritdoc/>
-        public IPointerType CreatePointerType( ) => NativeType.CreatePointerType( );
+        public IPointerType CreatePointerType( ) => NativeType.CreatePointerType();
 
         /// <inheritdoc/>
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
@@ -134,19 +134,19 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public DebugPointerType CreatePointerType( ref readonly DIBuilder diBuilder, uint addressSpace )
         {
-            if( DebugInfoType == null )
+            if(DebugInfoType == null)
             {
                 throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_pointer_type );
             }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
-            return new DebugPointerType(nativePointer, in diBuilder, DebugInfoType, string.Empty );
+            return new DebugPointerType( nativePointer, in diBuilder, DebugInfoType, string.Empty );
         }
 
         /// <inheritdoc/>
         public DebugArrayType CreateArrayType( ref readonly DIBuilder diBuilder, uint lowerBound, uint count )
         {
-            if( DebugInfoType == null )
+            if(DebugInfoType == null)
             {
                 throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_an_array_type );
             }
@@ -180,7 +180,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="nativeType"><typeparamref name="TNative"/> type instance for this association</param>
         /// <param name="debugType"><typeparamref name="TDebug"/> type instance for this association (use <see langword="null"/> for void)</param>
         /// <returns><see cref="IDebugType{NativeT, DebugT}"/> implementation for the specified association</returns>
-        public static IDebugType<TNative, TDebug> Create<TNative, TDebug>(TNative nativeType, TDebug? debugType)
+        public static IDebugType<TNative, TDebug> Create<TNative, TDebug>( TNative nativeType, TDebug? debugType )
             where TNative : class, ITypeRef
             where TDebug : DIType
         {
@@ -197,7 +197,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see langword="true"/> if the type has debug information</returns>
         public static bool HasDebugInfo( this IDebugType<ITypeRef, DIType> debugType )
         {
-            ArgumentNullException.ThrowIfNull(debugType);
+            ArgumentNullException.ThrowIfNull( debugType );
 
             return debugType.DebugInfoType != null
                 || (debugType.NativeType is ITypeRef nt && nt.IsVoid); // second test is to see if null debugInfo == VOID type

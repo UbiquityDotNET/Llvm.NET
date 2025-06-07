@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal VectorType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind )
+            if(LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMVectorTypeKind)
             {
                 throw new ArgumentException( Resources.Vector_type_reference_expected, nameof( typeRef ) );
             }

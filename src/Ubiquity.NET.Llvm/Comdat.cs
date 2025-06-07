@@ -44,10 +44,10 @@ namespace Ubiquity.NET.Llvm
         #region IEquatable<Comdat>
 
         /// <inheritdoc/>
-        public bool Equals(Comdat other) => Handle.Equals(other.Handle);
+        public bool Equals( Comdat other ) => Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => Handle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
         #endregion
 
         /// <summary>Gets a value indicating whether this instance represents a NULL/Invalid <see cref="Comdat"/></summary>
@@ -69,7 +69,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Initializes a new instance of the <see cref="Comdat"/> struct from an LLVM module and reference</summary>
         /// <param name="comdatRef">LLVM-C API handle for the comdat</param>
         [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1642:Constructor summary documentation should begin with standard text", Justification = "Tooling is too stupid to see 'record struct'" )]
-        internal Comdat(LLVMComdatRef comdatRef )
+        internal Comdat( LLVMComdatRef comdatRef )
         {
             comdatRef.ThrowIfInvalid();
             Handle = comdatRef;

@@ -18,8 +18,8 @@ namespace Ubiquity.NET.Llvm.Values
     /// </ImplementationNaote>
     public interface IFunctionAttributeAccessor
     {
-        /// <summary>Context for the container, used for creating attributes</summary>
-        IContext Context {get;}
+        /// <summary>Gets the context for the container, used for creating attributes</summary>
+        IContext Context { get; }
 
         /// <summary>Gets the count of attributes on a given index</summary>
         /// <param name="index">Index to get the count for</param>
@@ -50,7 +50,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Removes an <see cref="AttributeInfo"/> at a specified index</summary>
         /// <param name="index">Index to add the attribute to</param>
-        /// <param name="id">ID of the attribute attribute to Remove</param>
+        /// <param name="id">ID of the attribute to Remove</param>
         void RemoveAttributeAtIndex( FunctionAttributeIndex index, UInt32 id );
 
         /// <summary>Removes a named attribute at a specified index</summary>
