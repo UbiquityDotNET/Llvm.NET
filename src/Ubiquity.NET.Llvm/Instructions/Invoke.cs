@@ -25,48 +25,48 @@ namespace Ubiquity.NET.Llvm.Instructions
         }
 
         /// <inheritdoc/>
-        public void AddAttributeAtIndex(FunctionAttributeIndex index, AttributeValue attrib)
+        public void AddAttributeAtIndex( FunctionAttributeIndex index, AttributeValue attrib )
         {
-            CallSiteAttributeAccessor.AddAttributeAtIndex(this, index, attrib);
+            CallSiteAttributeAccessor.AddAttributeAtIndex( this, index, attrib );
         }
 
         /// <inheritdoc/>
-        public uint GetAttributeCountAtIndex(FunctionAttributeIndex index)
+        public uint GetAttributeCountAtIndex( FunctionAttributeIndex index )
         {
-            return CallSiteAttributeAccessor.GetAttributeCountAtIndex(this, index);
+            return CallSiteAttributeAccessor.GetAttributeCountAtIndex( this, index );
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AttributeValue> GetAttributesAtIndex(FunctionAttributeIndex index)
+        public IEnumerable<AttributeValue> GetAttributesAtIndex( FunctionAttributeIndex index )
         {
-            return CallSiteAttributeAccessor.GetAttributesAtIndex(this, index);
+            return CallSiteAttributeAccessor.GetAttributesAtIndex( this, index );
         }
 
         /// <inheritdoc/>
-        public AttributeValue GetAttributeAtIndex(FunctionAttributeIndex index, UInt32 id)
+        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, UInt32 id )
         {
-            return CallSiteAttributeAccessor.GetAttributeAtIndex(this, index, id);
+            return CallSiteAttributeAccessor.GetAttributeAtIndex( this, index, id );
         }
 
         /// <inheritdoc/>
-        public AttributeValue GetAttributeAtIndex(FunctionAttributeIndex index, LazyEncodedString name)
+        public AttributeValue GetAttributeAtIndex( FunctionAttributeIndex index, LazyEncodedString name )
         {
-            return CallSiteAttributeAccessor.GetAttributeAtIndex(this, index, name);
+            return CallSiteAttributeAccessor.GetAttributeAtIndex( this, index, name );
         }
 
         /// <inheritdoc/>
-        public void RemoveAttributeAtIndex(FunctionAttributeIndex index, UInt32 id)
+        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, UInt32 id )
         {
-            CallSiteAttributeAccessor.RemoveAttributeAtIndex(this, index, id);
+            CallSiteAttributeAccessor.RemoveAttributeAtIndex( this, index, id );
         }
 
         /// <inheritdoc/>
-        public void RemoveAttributeAtIndex(FunctionAttributeIndex index, LazyEncodedString name)
+        public void RemoveAttributeAtIndex( FunctionAttributeIndex index, LazyEncodedString name )
         {
-            CallSiteAttributeAccessor.RemoveAttributeAtIndex(this, index, name);
+            CallSiteAttributeAccessor.RemoveAttributeAtIndex( this, index, name );
         }
 
-        internal Invoke(LLVMValueRef valueRef)
+        internal Invoke( LLVMValueRef valueRef )
             : base( valueRef )
         {
         }

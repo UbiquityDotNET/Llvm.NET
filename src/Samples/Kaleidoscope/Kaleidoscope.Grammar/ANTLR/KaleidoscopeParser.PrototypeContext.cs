@@ -17,7 +17,7 @@ namespace Kaleidoscope.Grammar.ANTLR
         internal partial class PrototypeContext
         {
             public virtual IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
-                => Enumerable.Empty<(string, int, SourceLocation)>( );
+                => Enumerable.Empty<(string, int, SourceLocation)>();
 
             public virtual string Name => string.Empty;
         }

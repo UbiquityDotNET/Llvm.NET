@@ -24,7 +24,7 @@ namespace Kaleidoscope.Chapter2
 
         public override ICodeGenerator<IAstNode> CreateGenerator( DynamicRuntimeState state )
         {
-            return new CodeGenerator( );
+            return new CodeGenerator();
         }
 
         public override void ShowResults( IAstNode resultValue )

@@ -76,9 +76,9 @@
                 <ImplicitUsings>disable</ImplicitUsings>
                 <!-- NOTE: Top-Level statements blocked as an error in .editorconfig and ImplicitUsings 'feature' VERIFIED in the targets file -->
             </PropertyGroup>
-            <!--<ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
+            <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
-            </ItemGroup>-->
+            </ItemGroup>
         </When>
         <When Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
             <!-- vcxproj uses a different pattern for output paths -->

@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class ConstExpressionContext
         {
-            public double Value => double.Parse( Number( ).GetText( ), CultureInfo.InvariantCulture );
+            public double Value => double.Parse( Number().GetText(), CultureInfo.InvariantCulture );
         }
     }
 }

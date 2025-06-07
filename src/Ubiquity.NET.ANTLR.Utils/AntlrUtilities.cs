@@ -29,7 +29,7 @@ namespace Ubiquity.NET.ANTLR.Utils
             ArgumentNullException.ThrowIfNull( ruleContext );
 
             // if this is an EOF return an invalid interval
-            if( ruleContext.Start.Type == Recognizer<IToken, Antlr4.Runtime.Atn.ParserATNSimulator>.Eof )
+            if(ruleContext.Start.Type == Recognizer<IToken, Antlr4.Runtime.Atn.ParserATNSimulator>.Eof)
             {
                 return Interval.Invalid;
             }
@@ -57,7 +57,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         /// <returns>Source contents for the rule or an empty string if the source is not available</returns>
         public static string GetSourceText( this ParserRuleContext ruleContext, IRecognizer recognizer )
         {
-            return ruleContext.GetSourceText( recognizer.GetSourceStream( ) );
+            return ruleContext.GetSourceText( recognizer.GetSourceStream() );
         }
 
         /// <summary>Gets the source input text for a <see cref="ParserRuleContext"/> parsed from a stream</summary>
@@ -66,7 +66,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         /// <returns>Source contents for the rule or an empty string if the source is not available</returns>
         public static string GetSourceText( this ParserRuleContext ruleContext, ICharStream? charStream )
         {
-            if( charStream == null )
+            if(charStream == null)
             {
                 return string.Empty;
             }
@@ -88,13 +88,13 @@ namespace Ubiquity.NET.ANTLR.Utils
             ArgumentNullException.ThrowIfNull( tree );
 
             var bldr = new StringBuilder( tree.GetHashCode( ).ToString( CultureInfo.InvariantCulture ) );
-            if( tree.Parent != null )
+            if(tree.Parent != null)
             {
                 bldr.Append( tree.Parent.GetChildIndex( tree ) );
-                bldr.Append( tree.Parent.GetUniqueNodeId( ) );
+                bldr.Append( tree.Parent.GetUniqueNodeId() );
             }
 
-            return bldr.ToString( );
+            return bldr.ToString();
         }
 
         /// <summary>Determines the index of a child item in the parent</summary>
@@ -105,9 +105,9 @@ namespace Ubiquity.NET.ANTLR.Utils
         {
             ArgumentNullException.ThrowIfNull( tree );
 
-            for( int i = 0; i < tree.ChildCount; ++i )
+            for(int i = 0; i < tree.ChildCount; ++i)
             {
-                if( item == tree.GetChild( i ) )
+                if(item == tree.GetChild( i ))
                 {
                     return i;
                 }
@@ -123,7 +123,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         {
             ArgumentNullException.ThrowIfNull( bldr );
 
-            for( int i = 0; i < bldr.Length; ++i )
+            for(int i = 0; i < bldr.Length; ++i)
             {
                 yield return bldr[ i ];
             }

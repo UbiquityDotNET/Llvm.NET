@@ -16,7 +16,7 @@ namespace Kaleidoscope.Grammar.AST
         , IVariableDeclaration
     {
         public LocalVariableDeclaration( SourceLocation location, string name, IExpression? initializer, bool compilerGenerated = false )
-            : base(location)
+            : base( location )
         {
             Name = name;
             Initializer = initializer;
@@ -33,23 +33,23 @@ namespace Kaleidoscope.Grammar.AST
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
-                   ? klsVisitor.Visit(this)
-                   : visitor.Visit(this);
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
         }
 
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
-                   ? klsVisitor.Visit(this, in arg)
-                   : visitor.Visit(this, in arg);
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
         }
 
         public override IEnumerable<IAstNode> Children
         {
             get
             {
-                if( Initializer != null )
+                if(Initializer != null)
                 {
                     yield return Initializer;
                 }
@@ -59,21 +59,21 @@ namespace Kaleidoscope.Grammar.AST
         public override string ToString( )
         {
             var bldr = new StringBuilder();
-            if( CompilerGenerated )
+            if(CompilerGenerated)
             {
                 bldr.Append( "[CompilerGenerated]" );
             }
 
             bldr.Append( "Declare(" );
             bldr.Append( Name );
-            if( Initializer != null )
+            if(Initializer != null)
             {
                 bldr.Append( ", " );
                 bldr.Append( Initializer );
             }
 
             bldr.Append( ')' );
-            return bldr.ToString( );
+            return bldr.ToString();
         }
     }
 }

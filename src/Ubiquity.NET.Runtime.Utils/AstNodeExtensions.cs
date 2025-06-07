@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IAstNode.cs" company="Ubiquity.NET Contributors">
+// <copyright file="AstNodeExtensions.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <returns>Collection of errors found</returns>
         public static ImmutableArray<ErrorNode> CollectErrors( this IAstNode node )
         {
-            ArgumentNullException.ThrowIfNull(node);
+            ArgumentNullException.ThrowIfNull( node );
 
             var collector = new ErrorNodeCollector();
             return node.Accept( collector );

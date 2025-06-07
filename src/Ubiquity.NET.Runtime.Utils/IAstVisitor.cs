@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Runtime.Utils
     public interface IAstVisitor<out TResult>
     {
         /// <inheritdoc cref="IAstVisitor{TResult, TArg}.Visit(IAstNode, ref readonly TArg)"/>
-        TResult? Visit(IAstNode node);
+        TResult? Visit( IAstNode node );
     }
 
     /// <summary>Interface for implementing the Visitor pattern with <see cref="IAstNode"/></summary>
@@ -34,6 +34,6 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="node">Node to visit</param>
         /// <param name="arg">Arg associated with this node and visit operation</param>
         /// <returns>Result of the visit</returns>
-        TResult? Visit(IAstNode node, ref readonly TArg arg);
+        TResult? Visit( IAstNode node, ref readonly TArg arg );
     }
 }

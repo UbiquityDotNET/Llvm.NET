@@ -20,7 +20,7 @@ namespace Kaleidoscope.Grammar.AST
                                     , IExpression elseExpression
                                     , LocalVariableDeclaration resultVar
                                     )
-            : base(location)
+            : base( location )
         {
             Condition = condition;
             ThenExpression = thenExpression;
@@ -45,16 +45,16 @@ namespace Kaleidoscope.Grammar.AST
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
-                   ? klsVisitor.Visit(this)
-                   : visitor.Visit(this);
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
         }
 
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
-                   ? klsVisitor.Visit(this, in arg)
-                   : visitor.Visit(this, in arg);
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
         }
 
         public override IEnumerable<IAstNode> Children

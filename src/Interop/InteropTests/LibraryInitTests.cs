@@ -5,15 +5,16 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
-using Ubiquity.NET.InteropHelpers;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
@@ -31,63 +32,66 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         {
             // Module test fixture MUST NOT run in distinct process case to init LLVM
             // or that will result in an exception trying to "re-init" it again here.
-            Assert.IsNull(ModuleFixtures.LibLLVM);
+            Assert.IsNull( ModuleFixtures.LibLLVM );
 
             using(ILibLlvm lib = Library.InitializeLLVM())
             {
-                Assert.IsNotNull(lib);
+                Assert.IsNotNull( lib );
+
                 // Test supported targets; This is a LibLLVM extension as at one point the
                 // set of supported targets was ONLY the native target and that of one
                 // additional targetNames-plat target. That's not true anymore, so this should verify
                 // that ALL (non-experimental) targets are an option.
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_AArch64));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_AMDGPU));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_ARM));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_AVR));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_BPF));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_Hexagon));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_Lanai));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_LoongArch));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_MIPS));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_MSP430));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_NVPTX));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_PowerPC));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_RISCV));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_Sparc));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_SPIRV));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_SystemZ));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_VE));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_WebAssembly));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_X86));
-                Assert.IsTrue(lib.SupportedTargets.Contains(LibLLVMCodeGenTarget.CodeGenTarget_XCore));
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_AArch64 ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_AMDGPU ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_ARM ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_AVR ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_BPF ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_Hexagon ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_Lanai ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_LoongArch ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_MIPS ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_MSP430 ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_NVPTX ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_PowerPC ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_RISCV ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_Sparc ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_SPIRV ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_SystemZ ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_VE ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_WebAssembly ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_X86 ) );
+                Assert.IsTrue( lib.SupportedTargets.Contains( LibLLVMCodeGenTarget.CodeGenTarget_XCore ) );
 
                 // Now test registered targets (subset of supported)
-                lib.RegisterTarget(LibLLVMCodeGenTarget.CodeGenTarget_ARM);
+                lib.RegisterTarget( LibLLVMCodeGenTarget.CodeGenTarget_ARM );
                 var targets = GetRegisteredTargets().ToArray();
+
                 // NOTE: There are multiple actual targets under the one registered target
                 //       The registration is more along the lines of a "family" of targets...
-                Assert.AreEqual(4, targets.Length);
+                Assert.AreEqual( 4, targets.Length );
                 LazyEncodedString?[] targetNames = [ .. targets.Select(h=>LLVMGetTargetName(h)) ];
+
                 // order of names/targets is not guaranteed, so just test for presence via Contains().
                 // Also test that u8 literal is viable
-                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("thumbeb"u8));
-                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("thumb"));
-                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("armeb"));
-                Assert.IsTrue(targetNames.Contains<LazyEncodedString?>("arm"));
+                Assert.IsTrue( targetNames.Contains<LazyEncodedString?>( "thumbeb"u8 ) );
+                Assert.IsTrue( targetNames.Contains<LazyEncodedString?>( "thumb" ) );
+                Assert.IsTrue( targetNames.Contains<LazyEncodedString?>( "armeb" ) );
+                Assert.IsTrue( targetNames.Contains<LazyEncodedString?>( "arm" ) );
             }
 
             // After dispose - "that's all she wrote", LLVM native libraries
             // Do not support re-init, once shutdown is called that's it.
-            Assert.ThrowsExactly<InvalidOperationException>(()=>
+            Assert.ThrowsExactly<InvalidOperationException>( ( ) =>
             {
                 using var lib2 = Library.InitializeLLVM();
-            });
+            } );
         }
 
-        public static IEnumerable<LLVMTargetRef> GetRegisteredTargets()
+        public static IEnumerable<LLVMTargetRef> GetRegisteredTargets( )
         {
             var current = LLVMGetFirstTarget( );
-            while( current != default )
+            while(current != default)
             {
                 yield return current;
                 current = LLVMGetNextTarget( current );

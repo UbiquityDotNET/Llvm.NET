@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
@@ -114,7 +114,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         {
             ArgumentNullException.ThrowIfNull( other );
 
-            if( Handle == default )
+            if(Handle == default)
             {
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
@@ -130,16 +130,16 @@ namespace Ubiquity.NET.Llvm.Metadata
         }
 
         /// <inheritdoc/>
-        public bool Equals(IrMetadata? other) => other is not null && Handle.Equals(other.Handle);
+        public bool Equals( IrMetadata? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => Equals( obj as IrMetadata );
+        public override bool Equals( object? obj ) => Equals( obj as IrMetadata );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => Handle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
 
         /// <summary>Gets a value indicating this metadata's kind</summary>
-        public MetadataKind Kind => ( MetadataKind )LibLLVMGetMetadataID( Handle );
+        public MetadataKind Kind => (MetadataKind)LibLLVMGetMetadataID( Handle );
 
         /// <summary>Gets the internal native handle</summary>
         protected internal LLVMMetadataRef Handle { get; }

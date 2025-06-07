@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Values
             set
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                LLVMSetOperand( Container.Handle, ( uint )index, value?.Handle ?? default );
+                LLVMSetOperand( Container.Handle, (uint)index, value?.Handle ?? default );
             }
         }
 
@@ -39,10 +39,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Enumerator for the operands in this collection</returns>
         public IEnumerator<T?> GetEnumerator( )
         {
-            for( int i = 0; i < Count; ++i )
+            for(int i = 0; i < Count; ++i)
             {
                 var element = GetOperand<T>( i );
-                if( element is null )
+                if(element is null)
                 {
                     yield break;
                 }
@@ -53,7 +53,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Gets an enumerator for this collection</summary>
         /// <returns>Enumerator for the operands in this collection</returns>
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         /// <inheritdoc/>
         public bool Contains( T? item ) => this.Any( n => n == item );
@@ -69,7 +69,7 @@ namespace Ubiquity.NET.Llvm.Values
             where TItem : T
         {
             uint offset = ( uint )i.GetOffset(Count);
-            offset.ThrowIfOutOfRange( 0u, ( uint )Count );
+            offset.ThrowIfOutOfRange( 0u, (uint)Count );
             return Value.FromHandle<TItem>( LLVMGetOperand( Container.Handle, offset ) );
         }
 

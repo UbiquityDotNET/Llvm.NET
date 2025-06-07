@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Comdat;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -64,10 +64,10 @@ namespace Ubiquity.NET.Llvm.Values
                 // array.
                 using var entries = LLVMGlobalCopyAllMetadata( Handle, out nuint numEntries );
                 uint indexLimit = checked((uint)numEntries);
-                for( uint i = 0; i < indexLimit; ++i )
+                for(uint i = 0; i < indexLimit; ++i)
                 {
                     LLVMMetadataRef handle = LLVMValueMetadataEntriesGetMetadata( entries, i );
-                    yield return (MDNode)handle.ThrowIfInvalid( ).CreateMetadata( )!;
+                    yield return (MDNode)handle.ThrowIfInvalid().CreateMetadata()!;
                 }
             }
         }

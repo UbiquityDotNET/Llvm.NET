@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DIType
     {
         /// <summary>Gets the encoding for the type</summary>
-        public DiTypeKind Encoding => ( DiTypeKind )LibLLVMDIBasicTypeGetEncoding( Handle );
+        public DiTypeKind Encoding => (DiTypeKind)LibLLVMDIBasicTypeGetEncoding( Handle );
 
         /// <summary>Initializes a new instance of the <see cref="DIBasicType"/> class.</summary>
         /// <param name="handle"><see cref="LLVMMetadataRef"/> for a  DIBasicType to wrap</param>

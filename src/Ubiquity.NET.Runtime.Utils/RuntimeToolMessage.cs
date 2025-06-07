@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="RuntimeToolMessage.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -41,9 +47,9 @@ namespace Ubiquity.NET.Runtime.Utils
             IFormatProvider? formatProvider = null
         )
         {
-            if (OperatingSystem.IsWindows())
+            if(OperatingSystem.IsWindows())
             {
-                return FormatMSBuild(origin, location, subcategory, category, code, msgText, null);
+                return FormatMSBuild( origin, location, subcategory, category, code, msgText, null );
             }
             else
             {

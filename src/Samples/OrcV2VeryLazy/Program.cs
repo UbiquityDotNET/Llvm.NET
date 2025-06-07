@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="Program.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Diagnostics;
 
 using Ubiquity.NET.Extensions;
@@ -21,11 +27,12 @@ internal class Program
         using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
 
         // Place the generated module in the JIT
-        jit.Add(jit.MainLib, mainMod);
+        jit.Add( jit.MainLib, mainMod );
         SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
         using var internedFooBodyName = jit.MangleAndIntern(FooBodySymbolName);
-        var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+        var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags>
+        {
             [internedFooBodyName] = flags,
         }.ToImmutable();
 
@@ -35,15 +42,16 @@ internal class Program
         // MU is marked as disposed but a call to Dispose() is a safe NOP. Thus, this handles
         // all conditions consistently
         using var fooMu = new CustomMaterializationUnit("FooMU"u8, Materialize, fooSym);
-        jit.MainLib.Define(fooMu);
+        jit.MainLib.Define( fooMu );
 
         using var internedBarBodyName = jit.MangleAndIntern(BarBodySymbolName);
-        var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+        var barSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags>
+        {
             [internedBarBodyName] = flags,
         }.ToImmutable();
 
         using var barMu = new CustomMaterializationUnit("BarMU"u8, Materialize, barSym);
-        jit.MainLib.Define(barMu);
+        jit.MainLib.Define( barMu );
 
         using var ism = new LocalIndirectStubsManager(triple);
         using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
@@ -51,13 +59,14 @@ internal class Program
         using var internedFoo = jit.MangleAndIntern("foo"u8);
         using var internedBar = jit.MangleAndIntern("bar"u8);
 
-        var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry> {
+        var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>
+        {
             [internedFoo] = new(internedFooBodyName, flags),
             [internedBar] = new(internedBarBodyName, flags),
         }.ToImmutable();
 
         using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
-        jit.MainLib.Define(lazyReExports);
+        jit.MainLib.Define( lazyReExports );
 
         UInt64 address = jit.Lookup("entry"u8);
 
@@ -65,39 +74,39 @@ internal class Program
         {
             var entry = (delegate* unmanaged[Cdecl]<Int32, Int32>)address;
             int result = entry(1); // Conditionally calls "foo" with lazy materialization
-            Debug.Assert(1 == result);
+            Debug.Assert( result == 1, $"Expected a result of 1, got {result} instead" );
 
-            result = entry(0); // Conditionally calls "bar" with lazy materialization
-            Debug.Assert(2 == result);
+            result = entry( 0 ); // Conditionally calls "bar" with lazy materialization
+            Debug.Assert( result == 2, $"Expected a result of 2, got {result} instead" );
         }
 
         // Local function to handle materializing the very lazy symbols
         // This function captures "jit" and therefore the materializer instance
         // above must remain valid until the JIT is destroyed or the materialization
         // occurs.
-        void Materialize(MaterializationResponsibility r)
+        void Materialize( MaterializationResponsibility r )
         {
             // symbol strings returned are NOT owned by this function so Dispose() isn't needed (Though it is an allowed NOP)
             using var symbols = r.GetRequestedSymbols();
-            Debug.Assert(symbols.Count == 1, "Unexpected number of symbols!");
+            Debug.Assert( symbols.Count == 1, "Unexpected number of symbols!" );
 
             using var fooBodyName = jit.MangleAndIntern(FooBodySymbolName);
             using var barBodyName = jit.MangleAndIntern(BarBodySymbolName);
 
             ThreadSafeModule module;
-            if(symbols[0].Equals(fooBodyName))
+            if(symbols[ 0 ].Equals( fooBodyName ))
             {
-                Debug.WriteLine("Parsing module for 'Foo'");
-                module = ParseTestModule(FooModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "foo-mod");
+                Debug.WriteLine( "Parsing module for 'Foo'" );
+                module = ParseTestModule( FooModuleSource.NormalizeLineEndings( LineEndingKind.LineFeed )!, "foo-mod" );
             }
-            else if (symbols[0].Equals(barBodyName))
+            else if(symbols[ 0 ].Equals( barBodyName ))
             {
-                Debug.WriteLine("Parsing module for 'Bar'");
-                module = ParseTestModule(BarModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "bar-mod");
+                Debug.WriteLine( "Parsing module for 'Bar'" );
+                module = ParseTestModule( BarModuleSource.NormalizeLineEndings( LineEndingKind.LineFeed )!, "bar-mod" );
             }
             else
             {
-                Debug.WriteLine("Unknown symbol");
+                Debug.WriteLine( "Unknown symbol" );
 
                 // Not a known symbol - fail the materialization request.
                 r.Fail();
@@ -108,15 +117,15 @@ internal class Program
             using(module)
             {
                 // apply the data Layout
-                module.WithPerThreadModule(ApplyDataLayout);
+                module.WithPerThreadModule( ApplyDataLayout );
 
                 // Finally emit the module to the JIT.
                 // This transfers ownership of both the responsibility AND the module
                 // to the native LLVM JIT.
-                jit.TransformLayer.Emit(r, module);
+                jit.TransformLayer.Emit( r, module );
             }
 
-            ErrorInfo ApplyDataLayout(IModule module)
+            ErrorInfo ApplyDataLayout( IModule module )
             {
                 module.DataLayoutString = jit.DataLayoutString;
 
@@ -130,18 +139,18 @@ internal class Program
         }
     }
 
-    static ThreadSafeModule ParseTestModule(LazyEncodedString src, LazyEncodedString name)
+    private static ThreadSafeModule ParseTestModule( LazyEncodedString src, LazyEncodedString name )
     {
         using var threadSafeContext = new ThreadSafeContext();
         var ctx = threadSafeContext.PerThreadContext;
         using var module = ctx.ParseModule( src, name );
-        return new ThreadSafeModule( threadSafeContext, module);
+        return new ThreadSafeModule( threadSafeContext, module );
     }
 
-    const string FooBodySymbolName = "foo_body";
-    const string BarBodySymbolName = "bar_body";
+    private const string FooBodySymbolName = "foo_body";
+    private const string BarBodySymbolName = "bar_body";
 
-    const string MainModuleSource = """
+    private const string MainModuleSource = """
     define i32 @entry(i32 %argc)
     {
     entry:
@@ -165,14 +174,14 @@ internal class Program
     declare i32 @bar()
     """;
 
-    const string FooModuleSource = """
+    private const string FooModuleSource = """
     define i32 @foo_body() {
     entry:
         ret i32 1
     }
     """;
 
-    const string BarModuleSource = """
+    private const string BarModuleSource = """
     define i32 @bar_body()
     {
     entry:

@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm.DebugInfo
 {
@@ -50,14 +50,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public uint Column => LLVMDILocationGetColumn( Handle );
 
         /// <summary>Gets the location this location is inlined at</summary>
-        public DILocation? InlinedAt => (DILocation?)LLVMDILocationGetInlinedAt( Handle ).CreateMetadata( );
+        public DILocation? InlinedAt => (DILocation?)LLVMDILocationGetInlinedAt( Handle ).CreateMetadata();
 
         /// <summary>Gets the scope where this is inlined.</summary>
         /// <remarks>
         /// This walks through the <see cref="InlinedAt"/> properties to return
         /// a <see cref="DILocalScope"/> from the deepest location.
         /// </remarks>
-        public DILocalScope? InlinedAtScope => (DILocalScope?)LibLLVMDILocationGetInlinedAtScope( Handle ).CreateMetadata( );
+        public DILocalScope? InlinedAtScope => (DILocalScope?)LibLLVMDILocationGetInlinedAtScope( Handle ).CreateMetadata();
 
         /// <inheritdoc/>
         public override string ToString( )

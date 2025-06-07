@@ -30,7 +30,7 @@ namespace Ubiquity.NET.Runtime.Utils
         {
         }
 
-        /// <summary>Initializes a new instance of <see cref="CodeGeneratorException"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="CodeGeneratorException"/> class</summary>
         /// <param name="message">Message for the exception</param>
         /// <param name="inner">Inner exception</param>
         public CodeGeneratorException( string message, Exception inner )

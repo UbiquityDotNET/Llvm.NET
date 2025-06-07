@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="DistinctProcessTestMethod.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
     public sealed class DistinctProcessTestMethod
         : TestMethodAttribute
     {
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification="REQUIRED for OOP execution; exception is captured and reported as a failed test")]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for OOP execution; exception is captured and reported as a failed test" )]
         public override TestResult[] Execute( ITestMethod testMethod )
         {
             try
@@ -22,7 +28,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 object? obj = Activator.CreateInstance(testMethod.MethodInfo.DeclaringType!);
                 var action = testMethod.MethodInfo.CreateDelegate<Action>( obj );
                 Executor.Run( action );
-                return [new() { Outcome = UnitTestOutcome.Passed }];
+                return [ new() { Outcome = UnitTestOutcome.Passed } ];
             }
             catch(TypeInitializationException ex)
             {
@@ -34,11 +40,11 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                     TestFailureException = ex.InnerException
                 };
 
-                return [result];
+                return [ result ];
             }
             catch(Exception e)
             {
-                return [new() { TestFailureException = e, Outcome = UnitTestOutcome.Failed }];
+                return [ new() { TestFailureException = e, Outcome = UnitTestOutcome.Failed } ];
             }
         }
 

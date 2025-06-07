@@ -1,4 +1,10 @@
-﻿using System.ComponentModel;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AttributeInfoValidationExtensions.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.ComponentModel;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -16,13 +22,13 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="ArgumentException">Attribute is invalid or not supported on the specified index</exception>
         public static void ThrowIfInvalid(
             this AttributeInfo self,
-            [CallerArgumentExpression(nameof(self))] string? name = null
+            [CallerArgumentExpression( nameof( self ) )] string? name = null
             )
         {
             // TODO: Move exception string literals to a resource...
-            if (self.IsInvalid)
+            if(self.IsInvalid)
             {
-                throw new ArgumentException("AttributeInfo is invalid", name);
+                throw new ArgumentException( "AttributeInfo is invalid", name );
             }
         }
 
@@ -41,20 +47,20 @@ namespace Ubiquity.NET.Llvm.Values
             this AttributeInfo self,
             AttributeAllowedOn allowedOn,
             AttributeArgKind kind,
-            [CallerArgumentExpression(nameof(self))] string? name = null
+            [CallerArgumentExpression( nameof( self ) )] string? name = null
             )
         {
-            self.ThrowIfInvalid(name);
+            self.ThrowIfInvalid( name );
 
             // TODO: Move exception string literals to a resource...
-            if (!self.AllowedOn.HasFlag(allowedOn))
+            if(!self.AllowedOn.HasFlag( allowedOn ))
             {
-                throw new ArgumentException("Attribute not allowed on specified index", name);
+                throw new ArgumentException( "Attribute not allowed on specified index", name );
             }
 
-            if (self.ArgKind != kind)
+            if(self.ArgKind != kind)
             {
-                throw new ArgumentException($"Attribute self indicates the wrong kind of argument. [expected: {kind}; got: {self.ArgKind}]", nameof(kind));
+                throw new ArgumentException( $"Attribute self indicates the wrong kind of argument. [expected: {kind}; got: {self.ArgKind}]", nameof( kind ) );
             }
         }
 
@@ -67,7 +73,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static void ThrowIfInvalid(
             this AttributeInfo self,
             FunctionAttributeIndex index,
-            [CallerArgumentExpression(nameof(self))] string? name = null
+            [CallerArgumentExpression( nameof( self ) )] string? name = null
             )
         {
             AttributeAllowedOn allowedOn = index switch
@@ -78,7 +84,7 @@ namespace Ubiquity.NET.Llvm.Values
                 _ => throw new InvalidEnumArgumentException(nameof(index)),
             };
 
-            ThrowIfInvalid(self, allowedOn, self.ArgKind, name);
+            ThrowIfInvalid( self, allowedOn, self.ArgKind, name );
         }
     }
 }

@@ -4,22 +4,26 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public static partial class DataLayoutBindings
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LLVMErrorRef LibLLVMParseDataLayout(LazyEncodedString layoutString, out LLVMTargetDataRef outRetVal)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMErrorRef LibLLVMParseDataLayout( LazyEncodedString layoutString, out LLVMTargetDataRef outRetVal )
         {
-            return LibLLVMParseDataLayout(layoutString, layoutString.NativeStrLen, out outRetVal);
+            return LibLLVMParseDataLayout( layoutString, layoutString.NativeStrLen, out outRetVal );
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial LLVMErrorRef LibLLVMParseDataLayout(LazyEncodedString layoutString, nuint strLen, out LLVMTargetDataRef outRetVal);
+        private static unsafe partial LLVMErrorRef LibLLVMParseDataLayout( LazyEncodedString layoutString, nuint strLen, out LLVMTargetDataRef outRetVal );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LibLLVMGetDataLayoutString(LLVMTargetDataRefAlias dataLayout)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LibLLVMGetDataLayoutString( LLVMTargetDataRefAlias dataLayout )
         {
             unsafe
             {
@@ -30,11 +34,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LibLLVMGetDataLayoutString(LLVMTargetDataRefAlias dataLayout, out nuint outLen);
+        private static unsafe partial byte* LibLLVMGetDataLayoutString( LLVMTargetDataRefAlias dataLayout, out nuint outLen );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool LibLLVMTargeDataRefOpEquals(LLVMTargetDataRefAlias lhs, LLVMTargetDataRefAlias rhs);
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LibLLVMTargeDataRefOpEquals( LLVMTargetDataRefAlias lhs, LLVMTargetDataRefAlias rhs );
     }
 }

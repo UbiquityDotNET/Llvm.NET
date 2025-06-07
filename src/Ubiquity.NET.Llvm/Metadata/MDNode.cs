@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
@@ -27,8 +27,8 @@ namespace Ubiquity.NET.Llvm.Metadata
         {
             get
             {
-                ThrowIfDeleted( );
-                return new ContextAlias(LibLLVMGetNodeContext( Handle ));
+                ThrowIfDeleted();
+                return new ContextAlias( LibLLVMGetNodeContext( Handle ) );
             }
         }
 
@@ -64,12 +64,12 @@ namespace Ubiquity.NET.Llvm.Metadata
         {
             ArgumentNullException.ThrowIfNull( other );
 
-            if( !IsTemporary || IsResolved )
+            if(!IsTemporary || IsResolved)
             {
                 throw new InvalidOperationException( Resources.Cannot_replace_non_temporary_or_resolved_MDNode );
             }
 
-            if( Handle == default )
+            if(Handle == default)
             {
                 throw new InvalidOperationException( Resources.Cannot_Replace_all_uses_of_a_null_descriptor );
             }
@@ -123,7 +123,7 @@ namespace Ubiquity.NET.Llvm.Metadata
 
         private void ThrowIfDeleted( )
         {
-            if( IsDeleted )
+            if(IsDeleted)
             {
                 throw new InvalidOperationException( "Cannot operate on a deleted node" );
             }

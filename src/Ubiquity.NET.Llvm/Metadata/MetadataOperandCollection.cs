@@ -24,18 +24,18 @@ namespace Ubiquity.NET.Llvm.Metadata
             set
             {
                 index.ThrowIfOutOfRange( 0, Count - 1 );
-                LibLLVMMDNodeReplaceOperand( Container.Handle, ( uint )index, value?.Handle ?? default );
+                LibLLVMMDNodeReplaceOperand( Container.Handle, (uint)index, value?.Handle ?? default );
             }
         }
 
         /// <summary>Gets the count of operands in this collection</summary>
-        public int Count => checked(( int )LibLLVMMDNodeGetNumOperands( Container.Handle ));
+        public int Count => checked((int)LibLLVMMDNodeGetNumOperands( Container.Handle ));
 
         /// <summary>Gets an enumerator for the operands in this collection</summary>
         /// <returns>Enumerator of operands</returns>
         public IEnumerator<IrMetadata?> GetEnumerator( )
         {
-            for( int i = 0; i < Count; ++i )
+            for(int i = 0; i < Count; ++i)
             {
                 yield return GetOperand<IrMetadata>( i );
             }
@@ -43,10 +43,10 @@ namespace Ubiquity.NET.Llvm.Metadata
 
         /// <summary>Gets an enumerator for the operands in this collection</summary>
         /// <returns>Enumerator of operands</returns>
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         /// <inheritdoc/>
-        public bool Contains( IrMetadata? item ) => this.Any( n => EqualityComparer<IrMetadata>.Default.Equals(n, item) );
+        public bool Contains( IrMetadata? item ) => this.Any( n => EqualityComparer<IrMetadata>.Default.Equals( n, item ) );
 
         /// <summary>Specialized indexer to get the element as a specific derived type</summary>
         /// <typeparam name="TItem">Type of the element (must be derived from <see cref="IrMetadata"/></typeparam>
@@ -59,7 +59,7 @@ namespace Ubiquity.NET.Llvm.Metadata
             where TItem : IrMetadata
         {
             uint offset = ( uint )i.GetOffset(Count);
-            offset.ThrowIfOutOfRange( 0u, ( uint )Count );
+            offset.ThrowIfOutOfRange( 0u, (uint)Count );
             var node = LibLLVMGetOperandNode( LibLLVMMDNodeGetOperand( Container.Handle, offset ) );
             return (TItem)node.CreateMetadata()!;
         }

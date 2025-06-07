@@ -33,23 +33,23 @@ namespace CodeGenWithDebugInfo
         /// <code language="c" title="Example code generated" source="test.c" />
         /// </remarks>
         [SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by platform" )]
-        public static void Main( string[ ] args )
+        public static void Main( string[] args )
         {
             #region CommandlineArguments
-            if( args.Length < 2 || args.Length > 3 )
+            if(args.Length < 2 || args.Length > 3)
             {
-                ShowUsage( );
+                ShowUsage();
                 return;
             }
 
             string outputPath = args.Length == 3 ? args[2] : Environment.CurrentDirectory;
-            if(!Directory.Exists(outputPath))
+            if(!Directory.Exists( outputPath ))
             {
-                Directory.CreateDirectory(outputPath);
+                Directory.CreateDirectory( outputPath );
             }
 
             string srcPath = args[ 1 ];
-            if( !File.Exists( srcPath ) )
+            if(!File.Exists( srcPath ))
             {
                 Console.Error.WriteLine( "Src file not found: '{0}'", srcPath );
                 return;
@@ -60,9 +60,9 @@ namespace CodeGenWithDebugInfo
 
             #region TargetABISelection
             using var targetABI = AbiFactory(args[0]);
-            if (targetABI is null)
+            if(targetABI is null)
             {
-                ShowUsage( );
+                ShowUsage();
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace CodeGenWithDebugInfo
             var abiAttributes = targetABI.BuildTargetDependentFunctionAttributes( context );
             #endregion
 
-            Debug.Assert(compilationUnit.File is not null, "File was set in creation, should NOT be null");
+            Debug.Assert( compilationUnit.File is not null, "File was set in creation, should NOT be null" );
             DIFile diFile = compilationUnit.File;
 
             #region CreatingBasicTypesWithDebugInfo
@@ -126,7 +126,7 @@ namespace CodeGenWithDebugInfo
             // add module flags and compiler identifiers...
             // this can technically occur at any point, though placing it here makes
             // comparing against clang generated files easier
-            AddModuleFlags(targetABI, module );
+            AddModuleFlags( targetABI, module );
             #endregion
 
             #region CreatingQualifiedTypes
@@ -149,10 +149,10 @@ namespace CodeGenWithDebugInfo
             // all temporaries must be replaced by now, this resolves any remaining
             // forward declarations and marks the builder to prevent adding any
             // nodes that are not completely resolved.
-            diBuilder.Finish( );
+            diBuilder.Finish();
 
             // verify the module is still good and print any errors found
-            if( !module.Verify( out string msg ) )
+            if(!module.Verify( out string msg ))
             {
                 Console.Error.WriteLine( "ERROR: {0}", msg );
             }
@@ -160,7 +160,7 @@ namespace CodeGenWithDebugInfo
             {
                 // Module is good, so generate the output files
                 module.WriteToFile( Path.Combine( outputPath, "test.bc" ) );
-                File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString( ) );
+                File.WriteAllText( Path.Combine( outputPath, "test.ll" ), module.WriteToString() );
                 targetMachine.EmitToFile( module, Path.Combine( outputPath, "test.o" ), CodeGenFileKind.ObjectFile );
                 targetMachine.EmitToFile( module, Path.Combine( outputPath, "test.s" ), CodeGenFileKind.AssemblySource );
                 Console.WriteLine( $"Generated test.bc, test.ll, test.o, and test.s to {outputPath}" );
@@ -172,7 +172,7 @@ namespace CodeGenWithDebugInfo
             Console.Error.WriteLine( "Usage: CodeGenWithDebugInfo [X64|M3] <source file path>" );
         }
 
-        private static ITargetABI? AbiFactory(string arg)
+        private static ITargetABI? AbiFactory( string arg )
         {
             return arg.ToUpperInvariant() switch
             {
@@ -251,14 +251,14 @@ namespace CodeGenWithDebugInfo
                                                  .AddAttributes( FunctionAttributeIndex.Function, "nounwind"u8, "noinline"u8, "optimizenone"u8 )
                                                  .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
 
-            Debug.Assert( !fooPtr.IsOpaque(), "Expected the debug info for a pointer was created with a valid ElementType");
+            Debug.Assert( !fooPtr.IsOpaque(), "Expected the debug info for a pointer was created with a valid ElementType" );
             abi.AddAttributesForByValueStructure( copyFunc, copySig, 0 );
             return copyFunc;
         }
         #endregion
 
         #region AddModuleFlags
-        private static void AddModuleFlags(ITargetABI abi, Module module )
+        private static void AddModuleFlags( ITargetABI abi, Module module )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
@@ -302,7 +302,7 @@ namespace CodeGenWithDebugInfo
                                      .SetAlignment( ptrAlign );
 
             bool hasParam0ByVal = copyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval"u8) is not null;
-            if( hasParam0ByVal )
+            if(hasParam0ByVal)
             {
                 diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
                                        , paramSrc
@@ -317,7 +317,7 @@ namespace CodeGenWithDebugInfo
             // insert attach debug record to the local declarations
             diBuilder.InsertDeclare( dstAddr, paramDst, new DILocation( module.Context, 12, 38, copyFunc.DISubProgram ), blk );
 
-            if( !hasParam0ByVal )
+            if(!hasParam0ByVal)
             {
                 // since the function's LLVM signature uses a pointer, which is copied locally
                 // inform the debugger to treat it as the value by dereferencing the pointer
@@ -344,7 +344,7 @@ namespace CodeGenWithDebugInfo
                               , false
                               );
             instBuilder.SetDebugLocation( 16, 1, copyFunc.DISubProgram )
-                       .Return( );
+                       .Return();
         }
 
         private static void CreateDoCopyFunctionBody( Module module
@@ -364,7 +364,7 @@ namespace CodeGenWithDebugInfo
             // create instruction builder to build the body
             using var instBuilder = new InstructionBuilder( blk );
             bool hasParam0ByVal = doCopyFunc.FindAttribute(FunctionAttributeIndex.Parameter0, "byval"u8) is not null;
-            if( !hasParam0ByVal )
+            if(!hasParam0ByVal)
             {
                 // create a temp local copy of the global structure
                 var dstAddr = instBuilder.Alloca( foo )
@@ -392,7 +392,7 @@ namespace CodeGenWithDebugInfo
             }
 
             instBuilder.SetDebugLocation( 26, 1, doCopyFunc.DISubProgram )
-                       .Return( );
+                       .Return();
         }
 
         // obviously this is not clang but using an identical name helps in text comparisons with actual clang output

@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.UT
             var result = stack.EnterScope( );
 
             Assert.IsNotNull( result );
-            using( result )
+            using(result)
             {
                 Assert.AreEqual( 2, stack.Depth );
             }
@@ -42,13 +42,13 @@ namespace Ubiquity.NET.Llvm.UT
 
             var stack = new ScopeStack<int> { [ symbolName ] = 1 };
 
-            using( stack.EnterScope( ) )
+            using(stack.EnterScope())
             {
                 stack[ symbolName ] = 2;
                 Assert.IsTrue( stack.TryGetValue( symbolName, out int value ) );
                 Assert.AreEqual( 2, value );
 
-                using( stack.EnterScope( ) )
+                using(stack.EnterScope())
                 {
                     stack[ symbolName ] = 3;
                     Assert.IsTrue( stack.TryGetValue( symbolName, out int nestedValue ) );

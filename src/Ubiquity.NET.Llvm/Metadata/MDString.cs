@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         /// other native APIs. If the managed form of the string is needed it is obtainable via the <see cref="LazyEncodedString.ToString()"/>
         /// method on the returned value or by calling <see cref="ToString"/> instead.
         /// </remarks>
-        public LazyEncodedString ToLazyEncodedString()
+        public LazyEncodedString ToLazyEncodedString( )
         {
             return LibLLVMGetMDStringText( Handle ) ?? LazyEncodedString.Empty;
         }

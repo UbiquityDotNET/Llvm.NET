@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the ifunc resolver</summary>
         public Constant Resolver
         {
-            get => FromHandle<Function>( LLVMGetGlobalIFuncResolver( Handle ).ThrowIfInvalid( ) )!;
+            get => FromHandle<Function>( LLVMGetGlobalIFuncResolver( Handle ).ThrowIfInvalid() )!;
             set => LLVMSetGlobalIFuncResolver( Handle, value.ThrowIfNull().Handle );
         }
 

@@ -18,7 +18,7 @@ namespace Kaleidoscope.Grammar.AST
         public AstGraphGenerator( )
             : base( null )
         {
-            Graph.Categories.Add( new Category( ) { Id = "TreeNode", Background = "White" } );
+            Graph.Categories.Add( new Category() { Id = "TreeNode", Background = "White" } );
             var style = new Style
             {
                 TargetType = "Node",
@@ -40,7 +40,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             StartGraphNode( root );
             VisitChildren( root );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -48,7 +48,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             StartGraphNode( prototype );
             VisitChildren( prototype );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -57,7 +57,7 @@ namespace Kaleidoscope.Grammar.AST
             StartGraphNode( definition );
             ActiveNode.Label = $"{ActiveNode.Label}: {definition.Name}";
             VisitChildren( definition );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -67,7 +67,7 @@ namespace Kaleidoscope.Grammar.AST
             ActiveNode.Label = $"{ActiveNode.Label}: {constant.Value}";
 
             VisitChildren( constant );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -77,7 +77,7 @@ namespace Kaleidoscope.Grammar.AST
             ActiveNode.Label = $"{ActiveNode.Label}: {reference.Name}";
 
             VisitChildren( reference );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -87,7 +87,7 @@ namespace Kaleidoscope.Grammar.AST
             ActiveNode.Label = $"{ActiveNode.Label}: {functionCall.FunctionPrototype.Name}";
 
             VisitChildren( functionCall );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -97,7 +97,7 @@ namespace Kaleidoscope.Grammar.AST
             ActiveNode.Label = $"{ActiveNode.Label}: {binaryOperator.Name}";
 
             VisitChildren( binaryOperator );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -105,7 +105,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             StartGraphNode( varInExpression );
             VisitChildren( varInExpression );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -115,7 +115,7 @@ namespace Kaleidoscope.Grammar.AST
             ActiveNode.Label = $"{ActiveNode.Label}: {parameterDeclaration.Name}";
 
             VisitChildren( parameterDeclaration );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -123,7 +123,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             StartGraphNode( conditionalExpression );
             VisitChildren( conditionalExpression );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -131,7 +131,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             StartGraphNode( forInExpression );
             VisitChildren( forInExpression );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
@@ -141,11 +141,11 @@ namespace Kaleidoscope.Grammar.AST
             ActiveNode.Label = $"{ActiveNode.Label}: {localVariableDeclaration.Name}";
 
             VisitChildren( localVariableDeclaration );
-            NodeStack.Pop( );
+            NodeStack.Pop();
             return null;
         }
 
-        public DirectedGraph Graph { get; } = new DirectedGraph( );
+        public DirectedGraph Graph { get; } = new DirectedGraph();
 
         private void StartGraphNode( IAstNode node )
         {
@@ -155,9 +155,9 @@ namespace Kaleidoscope.Grammar.AST
                 Label = node.GetType( ).Name,
                 Category = "TreeNode"
             };
-            graphNode.Properties.Add( "SourceInterval", node.Location.ToString( ) );
+            graphNode.Properties.Add( "SourceInterval", node.Location.ToString() );
 
-            if( NodeStack.Count > 0 )
+            if(NodeStack.Count > 0)
             {
                 var link = new Link( )
                 {
@@ -172,11 +172,11 @@ namespace Kaleidoscope.Grammar.AST
             NodeStack.Push( graphNode );
         }
 
-        private Node ActiveNode => NodeStack.Peek( );
+        private Node ActiveNode => NodeStack.Peek();
 
         private static string CreateNodeId( IAstNode node )
         {
-            return $"{node.GetType( ).GUID}-{node.GetHashCode( )}";
+            return $"{node.GetType().GUID}-{node.GetHashCode()}";
         }
 
         private readonly Stack<Node> NodeStack = new();

@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitReader;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -52,18 +52,18 @@ namespace Ubiquity.NET.Llvm
         #region IEquatable<>
 
         /// <inheritdoc/>
-        public bool Equals(IModule? other) => other is not null && ((LLVMModuleRefAlias)NativeHandle).Equals(other.GetUnownedHandle());
+        public bool Equals( IModule? other ) => other is not null && ((LLVMModuleRefAlias)NativeHandle).Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals(Module? other) => other is not null && NativeHandle.Equals(other.NativeHandle);
+        public bool Equals( Module? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => obj is Module owner
+        public override bool Equals( object? obj ) => obj is Module owner
                                                   ? Equals( owner )
-                                                  : Equals( obj as IModule);
+                                                  : Equals( obj as IModule );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => NativeHandle.GetHashCode();
         #endregion
 
         /// <summary>Name of the Debug Version information module flag</summary>
@@ -247,7 +247,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
             ArgumentNullException.ThrowIfNull( context );
 
-            if( !File.Exists( path ) )
+            if(!File.Exists( path ))
             {
                 throw new FileNotFoundException( Resources.Specified_bit_code_file_does_not_exist, path );
             }
@@ -269,8 +269,8 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public static Module LoadFrom( MemoryBuffer buffer, IContext context )
         {
-            ArgumentNullException.ThrowIfNull(buffer);
-            ArgumentNullException.ThrowIfNull(context);
+            ArgumentNullException.ThrowIfNull( buffer );
+            ArgumentNullException.ThrowIfNull( context );
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
 
@@ -281,10 +281,10 @@ namespace Ubiquity.NET.Llvm
 #pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
-        internal Module(LLVMModuleRef h)
+        internal Module( LLVMModuleRef h )
         {
             NativeHandle = h.Move();
-            AliasImpl = new(NativeHandle);
+            AliasImpl = new( NativeHandle );
         }
 
         /// <inheritdoc/>
@@ -298,7 +298,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsDisposed, this);
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
                 return AliasImpl;
             }
         }

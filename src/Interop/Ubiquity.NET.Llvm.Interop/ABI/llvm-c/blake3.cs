@@ -69,11 +69,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LazyEncodedString? llvm_blake3_version();
+        public static unsafe partial LazyEncodedString? llvm_blake3_version( );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init(ref llvm_blake3_hasher self);
+        public static unsafe partial void llvm_blake3_hasher_init( ref llvm_blake3_hasher self );
 
         /// <summary>P/Invoke for LLVM support</summary>
         /// <param name="self">Reference to the unmanaged data structure to work with</param>
@@ -86,11 +86,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         /// </remarks>
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_keyed(ref llvm_blake3_hasher self, /*[In]sizeis(LLVM_BLAKE3_KEY_LEN)*/ byte* key);
+        public static unsafe partial void llvm_blake3_hasher_init_keyed( ref llvm_blake3_hasher self, /*[In]sizeis(LLVM_BLAKE3_KEY_LEN)*/ byte* key );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_derive_key(ref llvm_blake3_hasher self, LazyEncodedString context);
+        public static unsafe partial void llvm_blake3_hasher_init_derive_key( ref llvm_blake3_hasher self, LazyEncodedString context );
 
         /// <summary>P/Invoke for LLVM support</summary>
         /// <param name="self">Reference to the unmanaged data structure to work with</param>
@@ -104,7 +104,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         /// </remarks>
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_init_derive_key_raw(ref llvm_blake3_hasher self, byte* context, nuint context_len);
+        public static unsafe partial void llvm_blake3_hasher_init_derive_key_raw( ref llvm_blake3_hasher self, byte* context, nuint context_len );
 
         /// <summary>P/Invoke for LLVM support</summary>
         /// <param name="self">Reference to the unmanaged data structure to work with</param>
@@ -118,18 +118,18 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         /// </remarks>
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_update(ref llvm_blake3_hasher self, byte* input, nuint input_len);
+        public static unsafe partial void llvm_blake3_hasher_update( ref llvm_blake3_hasher self, byte* input, nuint input_len );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_finalize(ref llvm_blake3_hasher self, [MarshalUsing(CountElementName = nameof(out_len))] out byte[] @out, out nint out_len);
+        public static unsafe partial void llvm_blake3_hasher_finalize( ref llvm_blake3_hasher self, [MarshalUsing( CountElementName = nameof( out_len ) )] out byte[] @out, out nint out_len );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_finalize_seek(ref llvm_blake3_hasher self, UInt64 seek, [MarshalUsing(CountElementName = nameof(out_len))] out byte[] @out, out nint out_len);
+        public static unsafe partial void llvm_blake3_hasher_finalize_seek( ref llvm_blake3_hasher self, UInt64 seek, [MarshalUsing( CountElementName = nameof( out_len ) )] out byte[] @out, out nint out_len );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void llvm_blake3_hasher_reset(ref llvm_blake3_hasher self);
+        public static unsafe partial void llvm_blake3_hasher_reset( ref llvm_blake3_hasher self );
     }
 }

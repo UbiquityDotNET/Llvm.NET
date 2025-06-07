@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Llvm.UT
             byte[ ] expected = Encoding.ASCII.GetBytes( TestData );
             Assert.AreEqual( expected.Length, result.Length );
 
-            for( int i = 0; i < result.Length; ++i )
+            for(int i = 0; i < result.Length; ++i)
             {
                 Assert.AreEqual( expected[ i ], result[ i ] );
             }
@@ -71,7 +71,7 @@ namespace Ubiquity.NET.Llvm.UT
             ReadOnlySpan<byte> result = buffer.Slice( );
 
             byte[ ] expected = Encoding.ASCII.GetBytes( TestData );
-            Assert.IsTrue( expected.AsSpan( ).SequenceEqual( result ) );
+            Assert.IsTrue( expected.AsSpan().SequenceEqual( result ) );
         }
 
         [TestMethod]
@@ -112,15 +112,15 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( buffer );
             Assert.AreEqual( 255, buffer.Size );
             var span = buffer.Slice();
-            for(int i = 0; i < data.Length; ++i )
+            for(int i = 0; i < data.Length; ++i)
             {
                 Assert.AreEqual( data[ i ], span[ i ], $"Index {i}" );
             }
         }
 
-        private static byte[] Range(byte start, byte length)
+        private static byte[] Range( byte start, byte length )
         {
-            return [ .. Enumerable.Range( start, length ).Select( n => ( byte )n ) ];
+            return [ .. Enumerable.Range( start, length ).Select( n => (byte)n ) ];
         }
     }
 }

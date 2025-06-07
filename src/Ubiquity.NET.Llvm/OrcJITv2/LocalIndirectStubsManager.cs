@@ -14,25 +14,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     {
         /// <summary>Initializes a new instance of the <see cref="LocalIndirectStubsManager"/> class.</summary>
         /// <param name="triple">Triple string for the manager</param>
-        public LocalIndirectStubsManager(LazyEncodedString triple)
-            : this(MakeHandle(triple))
+        public LocalIndirectStubsManager( LazyEncodedString triple )
+            : this( MakeHandle( triple ) )
         {
         }
 
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
-        internal LocalIndirectStubsManager(LLVMOrcIndirectStubsManagerRef h)
+        internal LocalIndirectStubsManager( LLVMOrcIndirectStubsManagerRef h )
         {
             Handle = h.Move();
         }
 
         internal LLVMOrcIndirectStubsManagerRef Handle { get; }
 
-        private static LLVMOrcIndirectStubsManagerRef MakeHandle(LazyEncodedString triple, [CallerArgumentExpression(nameof(triple))] string? exp = null)
+        private static LLVMOrcIndirectStubsManagerRef MakeHandle( LazyEncodedString triple, [CallerArgumentExpression( nameof( triple ) )] string? exp = null )
         {
-            triple.ThrowIfNullOrWhiteSpace(exp);
-            return LLVMOrcCreateLocalIndirectStubsManager(triple);
+            triple.ThrowIfNullOrWhiteSpace( exp );
+            return LLVMOrcCreateLocalIndirectStubsManager( triple );
         }
     }
 }

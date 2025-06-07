@@ -14,19 +14,19 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : DisposableObject
     {
         /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
+        protected override void Dispose( bool disposing )
         {
             if(disposing)
             {
                 Handle.Dispose();
             }
 
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
 
         internal LLVMOrcMaterializationUnitRef Handle { get; }
 
-        private protected MaterializationUnit(LLVMOrcMaterializationUnitRef h)
+        private protected MaterializationUnit( LLVMOrcMaterializationUnitRef h )
         {
             Handle = h.Move();
         }

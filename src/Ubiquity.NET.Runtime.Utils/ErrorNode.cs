@@ -19,12 +19,12 @@ namespace Ubiquity.NET.Runtime.Utils
     public class ErrorNode
         : IAstNode
     {
-        /// <summary>Initializes a new instance of <see cref="ErrorNode"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="ErrorNode"/> class</summary>
         /// <param name="location">Original location of the error in source</param>
         /// <param name="err">Error message for the error</param>
         public ErrorNode( SourceLocation location, string err )
         {
-            ArgumentNullException.ThrowIfNull(err);
+            ArgumentNullException.ThrowIfNull( err );
 
             Location = location;
             Error = err;
@@ -42,18 +42,18 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <inheritdoc/>
         public TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
         {
-            ArgumentNullException.ThrowIfNull(visitor);
+            ArgumentNullException.ThrowIfNull( visitor );
 
-            return visitor.Visit(this);
+            return visitor.Visit( this );
         }
 
         /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+        public virtual TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TArg : struct, allows ref struct
         {
-            ArgumentNullException.ThrowIfNull(visitor);
+            ArgumentNullException.ThrowIfNull( visitor );
 
-            return visitor.Visit(this, in arg);
+            return visitor.Visit( this, in arg );
         }
 
         /// <inheritdoc/>

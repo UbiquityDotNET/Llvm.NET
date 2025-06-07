@@ -16,13 +16,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public UInt32 Line => LLVMDIVariableGetLine( Handle );
 
         /// <summary>Gets the Debug information scope for this variable</summary>
-        public DIScope? Scope => (DIScope?)LLVMDIVariableGetScope( Handle ).CreateMetadata( );
+        public DIScope? Scope => (DIScope?)LLVMDIVariableGetScope( Handle ).CreateMetadata();
 
         /// <summary>Gets the Debug information name for this variable</summary>
-        public string Name => ( Operands[ 1 ] as MDString )?.ToString( ) ?? string.Empty;
+        public string Name => (Operands[ 1 ] as MDString)?.ToString() ?? string.Empty;
 
         /// <summary>Gets the Debug information file for this variable</summary>
-        public DIFile? File => (DIFile?)LLVMDIVariableGetFile( Handle ).CreateMetadata( );
+        public DIFile? File => (DIFile?)LLVMDIVariableGetFile( Handle ).CreateMetadata();
 
         /// <summary>Gets the Debug information type for this variable</summary>
         public DIType? DIType => GetOperand<DIType>( 3 );

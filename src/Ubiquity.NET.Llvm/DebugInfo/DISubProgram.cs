@@ -65,7 +65,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <returns><see langword="true"/> if this <see cref="DISubProgram"/> describes <paramref name="function"/> </returns>
         public bool Describes( Function function )
         {
-            return function.DISubProgram is not null && function.DISubProgram.Equals(this);
+            return function.DISubProgram is not null && function.DISubProgram.Equals( this );
         }
 
         internal DISubProgram( LLVMMetadataRef handle )

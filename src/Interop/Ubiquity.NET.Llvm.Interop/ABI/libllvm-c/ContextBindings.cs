@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMContextGetIsODRUniquingDebugTypes(LLVMContextRefAlias context);
+        public static unsafe partial bool LibLLVMContextGetIsODRUniquingDebugTypes( LLVMContextRefAlias context );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

@@ -52,7 +52,7 @@ namespace Ubiquity.NET.Runtime.Utils
             Exception = exception;
         }
 
-        /// <summary>Ges the production source of the error</summary>
+        /// <summary>Gets the production source of the error</summary>
         public ParseErrorSource Source { get; }
 
         /// <summary>Gets the sourceFile containing the error</summary>

@@ -16,13 +16,13 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get
             {
-                if( index >= Count || index < 0 )
+                if(index >= Count || index < 0)
                 {
                     throw new ArgumentOutOfRangeException( nameof( index ) );
                 }
 
                 LLVMValueRef valueRef = LLVMGetParam( OwningFunction.Handle, ( uint )index );
-                return Value.FromHandle<Argument>( valueRef.ThrowIfInvalid( ) )!;
+                return Value.FromHandle<Argument>( valueRef.ThrowIfInvalid() )!;
             }
         }
 
@@ -31,20 +31,20 @@ namespace Ubiquity.NET.Llvm.Values
             get
             {
                 uint count = LLVMCountParams( OwningFunction.Handle );
-                return ( int )Math.Min( count, int.MaxValue );
+                return (int)Math.Min( count, int.MaxValue );
             }
         }
 
         public IEnumerator<Argument> GetEnumerator( )
         {
-            for( uint i = 0; i < Count; ++i )
+            for(uint i = 0; i < Count; ++i)
             {
                 LLVMValueRef val = LLVMGetParam( OwningFunction.Handle, i );
-                yield return Value.FromHandle<Argument>( val.ThrowIfInvalid( ) )!;
+                yield return Value.FromHandle<Argument>( val.ThrowIfInvalid() )!;
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         internal FunctionParameterList( Function owningFunction )
         {

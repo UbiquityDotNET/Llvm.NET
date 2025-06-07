@@ -154,7 +154,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal static LLVMTypeRef GetTypeRef( this ITypeRef self )
         {
             ArgumentNullException.ThrowIfNull( self );
-            return ( ( ITypeHandleOwner )self ).Handle;
+            return ((ITypeHandleOwner)self).Handle;
         }
     }
 }

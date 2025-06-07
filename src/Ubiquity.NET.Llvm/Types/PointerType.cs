@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal PointerType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind )
+            if(LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMPointerTypeKind)
             {
                 throw new ArgumentException( Resources.Pointer_type_reference_expected, nameof( typeRef ) );
             }

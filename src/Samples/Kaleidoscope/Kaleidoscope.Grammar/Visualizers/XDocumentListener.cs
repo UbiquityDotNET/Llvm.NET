@@ -32,7 +32,7 @@ namespace Kaleidoscope.Grammar
         public override void EnterUnaryOpExpression( KaleidoscopeParser.UnaryOpExpressionContext context )
         {
             ArgumentNullException.ThrowIfNull( context );
-            if( ActiveNode is null )
+            if(ActiveNode is null)
             {
                 throw new InvalidOperationException( "ActiveNode is null!" );
             }
@@ -49,12 +49,12 @@ namespace Kaleidoscope.Grammar
         public override void VisitTerminal( ITerminalNode node )
         {
             ArgumentNullException.ThrowIfNull( node );
-            if( ActiveNode is null )
+            if(ActiveNode is null)
             {
                 throw new InvalidOperationException( "ActiveNode is null!" );
             }
 
-            ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText( ) ) ) );
+            ActiveNode.Add( new XElement( "Terminal", new XAttribute( "Value", node.GetText() ) ) );
         }
 
         public override void EnterEveryRule( ParserRuleContext context )
@@ -68,20 +68,20 @@ namespace Kaleidoscope.Grammar
         {
             ArgumentNullException.ThrowIfNull( context );
             base.ExitEveryRule( context );
-            if( ActiveNode is null )
+            if(ActiveNode is null)
             {
                 throw new InvalidOperationException( "ActiveNode is null!" );
             }
 
             ActiveNode.Add( new XAttribute( "Text", context.GetSourceText( Recognizer ) ) );
             ActiveNode.Add( new XAttribute( "RuleIndex", context.RuleIndex ) );
-            ActiveNode.Add( new XAttribute( "SourceInterval", context.SourceInterval.ToString( ) ) );
-            if( context.exception != null )
+            ActiveNode.Add( new XAttribute( "SourceInterval", context.SourceInterval.ToString() ) );
+            if(context.exception != null)
             {
                 ActiveNode.Add( new XAttribute( "Exception", context.exception ) );
             }
 
-            Pop( );
+            Pop();
         }
 
         private void Pop( )
@@ -91,7 +91,7 @@ namespace Kaleidoscope.Grammar
 
         private void Push( XElement element )
         {
-            if( ActiveNode == null )
+            if(ActiveNode == null)
             {
                 Document.Add( element );
             }

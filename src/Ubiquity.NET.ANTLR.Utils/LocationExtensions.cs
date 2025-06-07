@@ -17,8 +17,8 @@ namespace Ubiquity.NET.ANTLR.Utils
     public static class LocationExtensions
     {
         /// <summary>Gets the <see cref="SourceLocation"/> for a given <see cref="ParserRuleContext"/></summary>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
+        /// <param name="ctx">Parser rule context to get the location from</param>
+        /// <returns><see cref="SourceLocation"/> for the context</returns>
         public static SourceLocation GetSourceLocation( this ParserRuleContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
@@ -41,9 +41,9 @@ namespace Ubiquity.NET.ANTLR.Utils
         public static SourceLocation GetSourceLocation( this RuleContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
-            if( ctx is ParserRuleContext ruleCtx )
+            if(ctx is ParserRuleContext ruleCtx)
             {
-                ruleCtx.GetSourceLocation( );
+                ruleCtx.GetSourceLocation();
             }
 
             // NOTE other RuleContext types may track position but a RuleContext itself
@@ -57,7 +57,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         public static SourceLocation GetSourceLocation( this ITerminalNode node )
         {
             ArgumentNullException.ThrowIfNull( node );
-            return node.Symbol.GetSourceLocation( );
+            return node.Symbol.GetSourceLocation();
         }
 
         /// <summary>Gets the <see cref="SourceLocation"/> from an <see cref="IToken"/></summary>
@@ -66,6 +66,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         public static SourceLocation GetSourceLocation( this IToken token )
         {
             ArgumentNullException.ThrowIfNull( token );
+
             // TODO: Q: Should this account for a newline in the token?
             //       A: Probably not, as a token can't span a newline.
             return new SourceLocation( token.Line, token.Column, token.Line, token.Column + token.Text.Length );

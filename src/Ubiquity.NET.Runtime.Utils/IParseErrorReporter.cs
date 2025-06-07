@@ -32,17 +32,17 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="self">Reporter to use for any errors found</param>
         /// <param name="node">Node to find errors from</param>
         /// <returns><see langword="true"/> if any errors were found; <see langword="false"/> if not</returns>
-        public static bool CheckAndReportParseErrors(this IParseErrorReporter self, IAstNode node )
+        public static bool CheckAndReportParseErrors( this IParseErrorReporter self, IAstNode node )
         {
-            ArgumentNullException.ThrowIfNull(self);
+            ArgumentNullException.ThrowIfNull( self );
 
             var errors = node.CollectErrors( );
-            if( errors.Length == 0 )
+            if(errors.Length == 0)
             {
                 return false;
             }
 
-            foreach( var err in errors )
+            foreach(var err in errors)
             {
                 self.ReportError( err );
             }

@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.Values
         , IAttributeContainer
     {
         /// <summary>Gets the function this argument belongs to</summary>
-        public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( Handle ).ThrowIfInvalid( ) )!;
+        public Function ContainingFunction => FromHandle<Function>( LLVMGetParamParent( Handle ).ThrowIfInvalid() )!;
 
         /// <summary>Gets the zero based index of the argument</summary>
         public uint Index => LibLLVMGetArgumentIndex( Handle );
@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><see langword="this"/> for Fluent access</returns>
         public Argument SetAlignment( uint value )
         {
-            ContainingFunction.AddAttributeAtIndex( FunctionAttributeIndex.Parameter0 + ( int )Index
+            ContainingFunction.AddAttributeAtIndex( FunctionAttributeIndex.Parameter0 + (int)Index
                                                   , Context.CreateAttribute( "align", value )
                                                   );
             return this;
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         /// <summary>Gets the attributes for this argument</summary>
         public ICollection<AttributeValue> Attributes
-            => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + ( int )Index );
+            => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + (int)Index );
 
         internal Argument( LLVMValueRef valueRef )
             : base( valueRef )

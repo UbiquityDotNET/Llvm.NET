@@ -7,6 +7,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: CLSCompliant(false)]
+[assembly: CLSCompliant( false )]
 
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Unit Tests" )]

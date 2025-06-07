@@ -111,9 +111,10 @@ namespace ReferenceEqualityVerifier.Test
             await analyzerTest.RunAsync();
         }
 
-        private static AnalyzerTest<DefaultVerifier> CreateTestRunner(string source)
+        private static AnalyzerTest<DefaultVerifier> CreateTestRunner( string source )
         {
-            return new CSharpAnalyzerTest<ReferenceEqualityAnalyzer, DefaultVerifier>{
+            return new CSharpAnalyzerTest<ReferenceEqualityAnalyzer, DefaultVerifier>
+            {
                 TestState = {
                     Sources = { source },
                     ReferenceAssemblies = Net.Net80
@@ -273,7 +274,7 @@ namespace ReferenceEqualityVerifier.Test
 
         """;
 
-       const string NoNamespaceEquatable = """
+        const string NoNamespaceEquatable = """
         using System;
 
         public class BaseClass

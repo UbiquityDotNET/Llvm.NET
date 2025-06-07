@@ -18,30 +18,30 @@ namespace Ubiquity.NET.Llvm
         : HashAlgorithm
     {
         /// <inheritdoc/>
-        public override void Initialize()
+        public override void Initialize( )
         {
-            llvm_blake3_hasher_init(ref NativeHasher);
+            llvm_blake3_hasher_init( ref NativeHasher );
         }
 
         /// <inheritdoc/>
-        protected override void HashCore(byte[] array, int ibStart, int cbSize)
+        protected override void HashCore( byte[] array, int ibStart, int cbSize )
         {
-            ArgumentNullException.ThrowIfNull(array);
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(array.Length, ibStart + cbSize);
+            ArgumentNullException.ThrowIfNull( array );
+            ArgumentOutOfRangeException.ThrowIfGreaterThan( array.Length, ibStart + cbSize );
 
             unsafe
             {
-                fixed(byte* p = &MemoryMarshal.GetArrayDataReference(array))
+                fixed(byte* p = &MemoryMarshal.GetArrayDataReference( array ))
                 {
-                    llvm_blake3_hasher_update(ref NativeHasher, p + ibStart, (nuint)cbSize);
+                    llvm_blake3_hasher_update( ref NativeHasher, p + ibStart, (nuint)cbSize );
                 }
             }
         }
 
         /// <inheritdoc/>
-        protected override byte[] HashFinal()
+        protected override byte[] HashFinal( )
         {
-            llvm_blake3_hasher_finalize(ref NativeHasher, out byte[] retVal, out nint _);
+            llvm_blake3_hasher_finalize( ref NativeHasher, out byte[] retVal, out nint _ );
             return retVal;
         }
 

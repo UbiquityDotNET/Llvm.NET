@@ -42,16 +42,16 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public IEnumerator<T?> GetEnumerator( )
         {
             return Tuple is null
-                ? Enumerable.Empty<T>( ).GetEnumerator( )
+                ? Enumerable.Empty<T>().GetEnumerator()
                 : Tuple.Operands
-                        .Cast<T>( )
-                        .GetEnumerator( );
+                        .Cast<T>()
+                        .GetEnumerator();
         }
 
         /// <summary>Gets an enumerator for the items in the <see cref="MDTuple"/></summary>
         /// <returns>Enumerator</returns>
         /// <remarks>If the underlying tuple is empty this is an empty enumeration</remarks>
-        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+        IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
         internal TupleTypedArrayWrapper( MDTuple? tuple )
         {

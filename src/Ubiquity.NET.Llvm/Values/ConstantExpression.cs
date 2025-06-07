@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.Values
         : Constant
     {
         /// <summary>Gets the constant instruction expression op code</summary>
-        public OpCode OpCode => ( OpCode )LLVMGetConstOpcode( Handle );
+        public OpCode OpCode => (OpCode)LLVMGetConstOpcode( Handle );
 
         /// <summary>Gets an IntToPtr expression to convert an integral value to a pointer</summary>
         /// <param name="value">Constant value to cast to a pointer</param>
@@ -24,18 +24,18 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( value );
 
-            if( value.NativeType.Kind != TypeKind.Integer )
+            if(value.NativeType.Kind != TypeKind.Integer)
             {
                 throw new ArgumentException( Resources.Integer_type_expected, nameof( value ) );
             }
 
-            if( type is not IPointerType)
+            if(type is not IPointerType)
             {
                 throw new ArgumentException( Resources.Pointer_type_expected, nameof( type ) );
             }
 
             LLVMValueRef valueRef = LLVMConstIntToPtr( value.Handle, type.GetTypeRef( ) );
-            return FromHandle<Constant>( valueRef.ThrowIfInvalid( ) )!;
+            return FromHandle<Constant>( valueRef.ThrowIfInvalid() )!;
         }
 
         /// <summary>Creates a constant bit cast expression</summary>
@@ -48,7 +48,7 @@ namespace Ubiquity.NET.Llvm.Values
             ArgumentNullException.ThrowIfNull( value );
 
             var handle = LLVMConstBitCast( value.Handle, toType.GetTypeRef( ) );
-            return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return FromHandle<Constant>( handle.ThrowIfInvalid() )!;
         }
 
         internal ConstantExpression( LLVMValueRef valueRef )

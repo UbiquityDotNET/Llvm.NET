@@ -16,7 +16,7 @@ namespace Kaleidoscope.Grammar.AST
         , IExpression
     {
         public FunctionCallExpression( SourceLocation location, Prototype functionPrototype, params IEnumerable<IExpression> args )
-            : base(location)
+            : base( location )
         {
             FunctionPrototype = functionPrototype;
             Arguments = [ .. args ];
@@ -38,23 +38,23 @@ namespace Kaleidoscope.Grammar.AST
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult> klsVisitor
-                   ? klsVisitor.Visit(this)
-                   : visitor.Visit(this);
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
         }
 
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
             return visitor is IKaleidoscopeAstVisitor<TResult, TArg> klsVisitor
-                   ? klsVisitor.Visit(this, in arg)
-                   : visitor.Visit(this, in arg);
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
         }
 
         public override string ToString( )
         {
             return Arguments.Count == 0
                 ? $"Call({FunctionPrototype})"
-                : $"Call({FunctionPrototype}, {string.Join( ",", Arguments.Select( a => a.ToString( ) ) )})";
+                : $"Call({FunctionPrototype}, {string.Join( ",", Arguments.Select( a => a.ToString() ) )})";
         }
     }
 }

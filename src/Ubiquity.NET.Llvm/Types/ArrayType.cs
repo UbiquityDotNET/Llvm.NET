@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal ArrayType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMArrayTypeKind )
+            if(LLVMGetTypeKind( typeRef ) != LLVMTypeKind.LLVMArrayTypeKind)
             {
                 throw new ArgumentException( Resources.Array_type_reference_expected, nameof( typeRef ) );
             }

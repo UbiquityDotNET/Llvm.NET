@@ -28,7 +28,7 @@ namespace Kaleidoscope.Chapter8
         , ICodeGenerator<Module>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine)
+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -40,10 +40,10 @@ namespace Kaleidoscope.Chapter8
             }
 
             RuntimeState = globalState;
-            Context = new Context( );
+            Context = new Context();
             TargetMachine = machine;
             InstructionBuilder = new InstructionBuilder( Context );
-            Module = Context.CreateBitcodeModule( );
+            Module = Context.CreateBitcodeModule();
             Module.TargetTriple = machine.Triple;
 
             using var layout = TargetMachine.CreateTargetData();
@@ -54,9 +54,9 @@ namespace Kaleidoscope.Chapter8
         #region Dispose
         public void Dispose( )
         {
-            Module.Dispose( );
+            Module.Dispose();
             InstructionBuilder.Dispose();
-            Context.Dispose( );
+            Context.Dispose();
         }
         #endregion
 
@@ -67,19 +67,19 @@ namespace Kaleidoscope.Chapter8
 
             ast.Accept( this );
 
-            if( AnonymousFunctions.Count > 0 )
+            if(AnonymousFunctions.Count > 0)
             {
                 var mainFunction = Module.CreateFunction( "main", Context.GetFunctionType( Context.VoidType ) );
                 var block = mainFunction.AppendBasicBlock( "entry" );
                 using var irBuilder = new InstructionBuilder( block );
                 var printdFunc = Module.CreateFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
-                foreach( var anonFunc in AnonymousFunctions )
+                foreach(var anonFunc in AnonymousFunctions)
                 {
                     var value = irBuilder.Call( anonFunc );
                     irBuilder.Call( printdFunc, value );
                 }
 
-                irBuilder.Return( );
+                irBuilder.Return();
 
                 using var errInfo = Module.TryRunPasses("default<O3>");
                 errInfo.ThrowIfFailed();
@@ -90,7 +90,7 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region ConstantExpression
-        public override Value? Visit(ConstantExpression constant)
+        public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
@@ -99,7 +99,7 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region BinaryOperatorExpression
-        public override Value? Visit(BinaryOperatorExpression binaryOperator)
+        public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
@@ -158,10 +158,10 @@ namespace Kaleidoscope.Chapter8
         }
         #endregion
 
-        public override Value? Visit(FunctionCallExpression functionCall)
+        public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             if(Module is null)
             {
@@ -188,10 +188,10 @@ namespace Kaleidoscope.Chapter8
         }
 
         #region FunctionDefinition
-        public override Value? Visit(FunctionDefinition definition)
+        public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -226,9 +226,9 @@ namespace Kaleidoscope.Chapter8
                     InstructionBuilder.Return( funcReturn );
                     function.Verify();
 
-                    if( definition.IsAnonymous )
+                    if(definition.IsAnonymous)
                     {
-                        function.AddAttribute( FunctionAttributeIndex.Function, "alwaysinline"u8)
+                        function.AddAttribute( FunctionAttributeIndex.Function, "alwaysinline"u8 )
                                 .Linkage( Linkage.Private );
 
                         AnonymousFunctions.Add( function );
@@ -246,7 +246,7 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region VariableReferenceExpression
-        public override Value? Visit(VariableReferenceExpression reference)
+        public override Value? Visit( VariableReferenceExpression reference )
         {
             ArgumentNullException.ThrowIfNull( reference );
 
@@ -264,7 +264,7 @@ namespace Kaleidoscope.Chapter8
         public override Value? Visit( ConditionalExpression conditionalExpression )
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
@@ -321,10 +321,10 @@ namespace Kaleidoscope.Chapter8
         #endregion
 
         #region ForInExpression
-        public override Value? Visit(ForInExpression forInExpression)
+        public override Value? Visit( ForInExpression forInExpression )
         {
             ArgumentNullException.ThrowIfNull( forInExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
@@ -408,7 +408,7 @@ namespace Kaleidoscope.Chapter8
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
                 // for expression always returns 0.0 for consistency, there is no 'void'
-                return Context.DoubleType.GetNullValue( );
+                return Context.DoubleType.GetNullValue();
             }
         }
         #endregion
@@ -416,7 +416,7 @@ namespace Kaleidoscope.Chapter8
         #region VarInExpression
         public override Value? Visit( VarInExpression varInExpression )
         {
-            ArgumentNullException.ThrowIfNull(varInExpression);
+            ArgumentNullException.ThrowIfNull( varInExpression );
 
             using(NamedValues.EnterScope())
             {
@@ -464,7 +464,7 @@ namespace Kaleidoscope.Chapter8
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction(Prototype prototype)
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
             if(Module is null)
             {

@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.Types
         internal SequenceType( LLVMTypeRef typeRef )
             : base( typeRef )
         {
-            if( !IsSequenceTypeRef( typeRef ) )
+            if(!IsSequenceTypeRef( typeRef ))
             {
                 throw new ArgumentException( Resources.Expected_a_sequence_type, nameof( typeRef ) );
             }

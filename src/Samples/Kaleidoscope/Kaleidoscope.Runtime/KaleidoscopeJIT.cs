@@ -26,8 +26,8 @@ namespace Kaleidoscope.Runtime
     {
         /// <summary>Initializes a new instance of the <see cref="KaleidoscopeJIT"/> class.</summary>
         /// <remarks>This creates a JIT with a default set of passes for 'O3'</remarks>
-        public KaleidoscopeJIT()
-            : this("default<O3>"u8)
+        public KaleidoscopeJIT( )
+            : this( "default<O3>"u8 )
         {
         }
 
@@ -40,7 +40,7 @@ namespace Kaleidoscope.Runtime
             // (and disposed of by) the native code in CreateJit().
             // After that call the Dispose call on the builder is
             // a safe NOP.
-            using(var builder = LLJitBuilder.CreateBuilderForHost(CodeGenOpt.Aggressive, RelocationMode.Static, CodeModel.Large))
+            using(var builder = LLJitBuilder.CreateBuilderForHost( CodeGenOpt.Aggressive, RelocationMode.Static, CodeModel.Large ))
             {
                 ComposedJIT = builder.CreateJit();
             }
@@ -55,19 +55,20 @@ namespace Kaleidoscope.Runtime
                 using var putchardName = MangleAndIntern("putchard"u8);
                 using var printdName = MangleAndIntern("printd"u8);
 
-                var absoluteSymbols = new KvpArrayBuilder<SymbolStringPoolEntry, EvaluatedSymbol> {
+                var absoluteSymbols = new KvpArrayBuilder<SymbolStringPoolEntry, EvaluatedSymbol>
+                {
                     [putchardName] = new(MakeRawPtr(&BuiltIns.PutChard), symFlags),
                     [printdName] = new(MakeRawPtr(&BuiltIns.Printd), symFlags),
                 }.ToImmutable();
 
                 using var absoluteMaterializer = new AbsoluteMaterializationUnit(absoluteSymbols);
-                MainLib.Define(absoluteMaterializer);
+                MainLib.Define( absoluteMaterializer );
             }
 
-            TransformLayer.SetTransform(ModuleTransformer);
+            TransformLayer.SetTransform( ModuleTransformer );
         }
 
-        public void Dispose()
+        public void Dispose( )
         {
             ComposedJIT.Dispose();
         }
@@ -83,10 +84,15 @@ namespace Kaleidoscope.Runtime
 
         public ExecutionSession Session => ComposedJIT.Session;
 
-        public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default ) => ComposedJIT.AddWithTracking( ctx, module, lib );
+        public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default )
+            => ComposedJIT.AddWithTracking( ctx, module, lib );
+
         public ulong Lookup( LazyEncodedString name ) => ComposedJIT.Lookup( name );
+
         public void Add( JITDyLib lib, ThreadSafeModule module ) => ComposedJIT.Add( lib, module );
+
         public void Add( ResourceTracker tracker, ThreadSafeModule module ) => ComposedJIT.Add( tracker, module );
+
         public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name ) => ComposedJIT.MangleAndIntern( name );
         #endregion
 
@@ -99,13 +105,13 @@ namespace Kaleidoscope.Runtime
         // resolved to an address. Thus, this is called for EVERY module added the first time
         // it is resolved. (Which may be when the code from another module calls the code in
         // another one)
-        private void ModuleTransformer(ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule)
+        private void ModuleTransformer( ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule )
         {
             // This implementation does not replace the module
             replacementModule = null;
 
             // work on the per thread module directly
-            module.WithPerThreadModule((module)=>
+            module.WithPerThreadModule( ( module ) =>
             {
                 // force it to use the JIT's triple and data layout
                 module.TargetTriple = TripleString;
@@ -113,8 +119,8 @@ namespace Kaleidoscope.Runtime
 
                 // perform optimizations on the whole module if there are
                 // any passes for this JIT instance.
-                return OptimizationPasses.Length == 0 ? default : module.TryRunPasses(OptimizationPasses);
-            });
+                return OptimizationPasses.Length == 0 ? default : module.TryRunPasses( OptimizationPasses );
+            } );
         }
 
         // Optimization passes used in the transform function for materialized modules
@@ -130,8 +136,8 @@ namespace Kaleidoscope.Runtime
         // or passed into a value of a function pointer type.
         // Thus the provided parameter type does the job and allows
         // a simple cast to the required JIT address form.
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static unsafe UInt64 MakeRawPtr(delegate* unmanaged[Cdecl]<double, double> funcPtr)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        private static unsafe UInt64 MakeRawPtr( delegate* unmanaged[Cdecl]< double, double > funcPtr )
         {
             return (UInt64)funcPtr;
         }
@@ -140,7 +146,7 @@ namespace Kaleidoscope.Runtime
         // They are registered with the JIT in the constructor as absolute symbols.
         private static class BuiltIns
         {
-            [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+            [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
             internal static double Printd( double x )
             {
@@ -156,14 +162,14 @@ namespace Kaleidoscope.Runtime
                 }
             }
 
-            [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+            [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
             internal static double PutChard( double x )
             {
                 // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
                 try
                 {
-                    OutputWriter?.Write( ( char )x );
+                    OutputWriter?.Write( (char)x );
                     return 0.0F;
                 }
                 catch

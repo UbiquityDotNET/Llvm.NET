@@ -17,7 +17,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Constant null value of the specified type</returns>
         public static ConstantPointerNull From( ITypeRef type )
         {
-            return FromHandle<ConstantPointerNull>( LLVMConstPointerNull( type.GetTypeRef( ) ).ThrowIfInvalid( ) )!;
+            return FromHandle<ConstantPointerNull>( LLVMConstPointerNull( type.GetTypeRef() ).ThrowIfInvalid() )!;
         }
 
         internal ConstantPointerNull( LLVMValueRef valueRef )

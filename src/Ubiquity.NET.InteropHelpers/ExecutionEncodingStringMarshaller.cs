@@ -20,11 +20,11 @@ namespace Ubiquity.NET.InteropHelpers
     /// to the default string marshalling support except that it does all conversion to/from native code via
     /// a static <see cref="Encoding"/> property, [defaults to UTF8] so that applications can have control of that.
     /// </remarks>
-    [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(ExecutionEncodingStringMarshaller))]
-    [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedIn, typeof(ManagedToUnmanagedIn))]
+    [CustomMarshaller( typeof( string ), MarshalMode.Default, typeof( ExecutionEncodingStringMarshaller ) )]
+    [CustomMarshaller( typeof( string ), MarshalMode.ManagedToUnmanagedIn, typeof( ManagedToUnmanagedIn ) )]
     public static unsafe class ExecutionEncodingStringMarshaller
     {
-        /// <summary>Gets the ExecutionEncoding for the native code</summary>
+        /// <summary>Gets or sets the ExecutionEncoding for the native code</summary>
         /// <remarks>
         /// On Windows and MSVC (.NET Framework) the default encoding is that of the OS/Platform runtime. On .NET Core/Linux
         /// UTF8 has reached a level of common standard that you can assume it is the default unless documented otherwise.
@@ -51,7 +51,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// This does NOT perform any encoding or decoding, just gets the span of the
         /// underlying native bytes.
         /// </remarks>
-        public static ReadOnlySpan<byte> ReadOnlySpanFromNullTerminated(byte* nativePtr)
+        public static ReadOnlySpan<byte> ReadOnlySpanFromNullTerminated( byte* nativePtr )
         {
             return MemoryMarshal.CreateReadOnlySpanFromNullTerminated( nativePtr );
         }
@@ -59,9 +59,9 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Converts a string to an unmanaged version.</summary>
         /// <param name="managed">The managed string to convert.</param>
         /// <returns>An unmanaged string.</returns>
-        public static byte* ConvertToUnmanaged(string? managed)
+        public static byte* ConvertToUnmanaged( string? managed )
         {
-            if (managed is null)
+            if(managed is null)
             {
                 return null;
             }
@@ -71,24 +71,24 @@ namespace Ubiquity.NET.InteropHelpers
             Span<byte> buffer = new (mem, exactByteCount);
 
             int numBytes = Encoding.GetBytes(managed, buffer); // Does NOT include null terminator
-            buffer[numBytes] = 0; // now it has the null terminator! 8^)
-            Debug.Assert(exactByteCount == numBytes + 1, "Mismatched lengths, likely result in bogus native string!");
+            buffer[ numBytes ] = 0; // now it has the null terminator! 8^)
+            Debug.Assert( exactByteCount == numBytes + 1, "Mismatched lengths, likely result in bogus native string!" );
             return mem;
         }
 
         /// <summary>Converts an unmanaged string to a managed version.</summary>
         /// <param name="unmanaged">The unmanaged string to convert.</param>
         /// <returns>A managed string.</returns>
-        public static string? ConvertToManaged(byte* unmanaged)
+        public static string? ConvertToManaged( byte* unmanaged )
         {
-            return Encoding.MarshalString(unmanaged);
+            return Encoding.MarshalString( unmanaged );
         }
 
         /// <summary>Frees the memory for the unmanaged string representation allocated by <see cref="ConvertToUnmanaged"/></summary>
         /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>
-        public static void Free(byte* unmanaged)
+        public static void Free( byte* unmanaged )
         {
-            NativeMemory.Free(unmanaged);
+            NativeMemory.Free( unmanaged );
         }
 
         /// <summary>Custom marshaller to marshal a managed string as an unmanaged string using the <see cref="Encoding"/> property for encoding the native string.</summary>
@@ -106,44 +106,44 @@ namespace Ubiquity.NET.InteropHelpers
             /// then a new buffer is allocated and is not released until <see cref="Free"/> is called to release
             /// it.
             /// </remarks>
-            public void FromManaged(string? managed, Span<byte> buffer)
+            public void FromManaged( string? managed, Span<byte> buffer )
             {
                 AllocatedByThisMarshaller = false;
 
-                if (managed is null)
+                if(managed is null)
                 {
                     NativePointer = null;
                     return;
                 }
 
                 // >= for null terminator
-                if (Encoding.GetMaxByteCount(managed.Length) >= buffer.Length)
+                if(Encoding.GetMaxByteCount( managed.Length ) >= buffer.Length)
                 {
                     // Calculate accurate byte count when the provided stack-allocated buffer is not sufficient
                     int exactByteCount = Encoding.GetByteCount(managed) + 1; // + 1 to include null terminator
-                    if (exactByteCount > buffer.Length)
+                    if(exactByteCount > buffer.Length)
                     {
-                        buffer = new Span<byte>((byte*)NativeMemory.Alloc((nuint)exactByteCount), exactByteCount);
+                        buffer = new Span<byte>( (byte*)NativeMemory.Alloc( (nuint)exactByteCount ), exactByteCount );
                         AllocatedByThisMarshaller = true;
                     }
                 }
 
-                NativePointer = (byte*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer));
+                NativePointer = (byte*)Unsafe.AsPointer( ref MemoryMarshal.GetReference( buffer ) );
 
                 int numBytes = Encoding.GetBytes(managed, buffer);
-                buffer[numBytes] = 0; // Enforce termination assumption in native code
+                buffer[ numBytes ] = 0; // Enforce termination assumption in native code
             }
 
             /// <summary>Converts the current managed string to an unmanaged string.</summary>
             /// <returns>The converted unmanaged string.</returns>
-            public readonly byte* ToUnmanaged() => NativePointer;
+            public readonly byte* ToUnmanaged( ) => NativePointer;
 
             /// <summary>Frees any allocated unmanaged string memory.</summary>
-            public readonly void Free()
+            public readonly void Free( )
             {
-                if (AllocatedByThisMarshaller)
+                if(AllocatedByThisMarshaller)
                 {
-                    NativeMemory.Free(NativePointer);
+                    NativeMemory.Free( NativePointer );
                 }
             }
 

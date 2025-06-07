@@ -4,15 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Analysis;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitWriter;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Linker;
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -24,18 +23,18 @@ namespace Ubiquity.NET.Llvm
         #region IEquatable<>
 
         /// <inheritdoc/>
-        public bool Equals(IModule? other) => other is not null && NativeHandle.Equals(other.GetUnownedHandle());
+        public bool Equals( IModule? other ) => other is not null && NativeHandle.Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals(ModuleAlias? other) => other is not null && NativeHandle.Equals(other.NativeHandle);
+        public bool Equals( ModuleAlias? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => obj is ModuleAlias alias
+        public override bool Equals( object? obj ) => obj is ModuleAlias alias
                                                   ? Equals( alias )
-                                                  : Equals( obj as IModule);
+                                                  : Equals( obj as IModule );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => NativeHandle.GetHashCode();
         #endregion
 
         /// <inheritdoc/>
@@ -46,7 +45,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public ComdatCollection Comdats => new(this);
+        public ComdatCollection Comdats => new( this );
 
         /// <inheritdoc/>
         public IContext Context => new ContextAlias( LLVMGetModuleContext( NativeHandle ) );
@@ -64,7 +63,7 @@ namespace Ubiquity.NET.Llvm
                     LazyEncodedString? key = LLVMModuleFlagEntriesGetKey( flags, i);
                     Debug.Assert( key is not null, "Internal LLVM error; should never have a null key" );
                     var metadata = LLVMModuleFlagEntriesGetMetadata( flags, i ).CreateMetadata();
-                    Debug.Assert( metadata is not null, "Internal LLVM error; should never have null metadata");
+                    Debug.Assert( metadata is not null, "Internal LLVM error; should never have null metadata" );
                     retVal.Add( key, new ModuleFlag( (ModuleFlagBehavior)behavior, key, metadata ) );
                 }
 
@@ -75,7 +74,7 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public IEnumerable<DICompileUnit> CompileUnits
             => from node in NamedMetadata
-               where node.Name.Equals("llvm.dbg.cu"u8)
+               where node.Name.Equals( "llvm.dbg.cu"u8 )
                from operand in node.Operands
                let cu = (DICompileUnit)operand
                where cu.EmissionKind != DwarfEmissionKind.None
@@ -200,20 +199,20 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AppendInlineAsm(LazyEncodedString asm)
+        public void AppendInlineAsm( LazyEncodedString asm )
         {
             LLVMAppendModuleInlineAsm( NativeHandle, asm );
         }
 
         /// <inheritdoc/>
-        public ErrorInfo TryRunPasses(params LazyEncodedString[] passes)
+        public ErrorInfo TryRunPasses( params LazyEncodedString[] passes )
         {
             using PassBuilderOptions options = new();
             return TryRunPasses( options, passes );
         }
 
         /// <inheritdoc/>
-        public ErrorInfo TryRunPasses(PassBuilderOptions options, params LazyEncodedString[] passes)
+        public ErrorInfo TryRunPasses( PassBuilderOptions options, params LazyEncodedString[] passes )
         {
             ArgumentNullException.ThrowIfNull( passes );
             ArgumentOutOfRangeException.ThrowIfLessThan( passes.Length, 1 );
@@ -224,7 +223,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public ErrorInfo TryRunPasses(TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes)
+        public ErrorInfo TryRunPasses( TargetMachine targetMachine, PassBuilderOptions options, params LazyEncodedString[] passes )
         {
             ArgumentNullException.ThrowIfNull( targetMachine );
             ArgumentNullException.ThrowIfNull( passes );
@@ -234,11 +233,11 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void Link(Module srcModule)
+        public void Link( Module srcModule )
         {
             ArgumentNullException.ThrowIfNull( srcModule );
 
-            if(!Context.Equals(srcModule.Context))
+            if(!Context.Equals( srcModule.Context ))
             {
                 throw new ArgumentException( Resources.Linking_modules_from_different_contexts_is_not_allowed, nameof( srcModule ) );
             }
@@ -253,13 +252,13 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public bool Verify(out string errorMessage)
+        public bool Verify( out string errorMessage )
         {
             return LLVMVerifyModule( NativeHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errorMessage ).Succeeded;
         }
 
         /// <inheritdoc/>
-        public bool TryGetFunction(LazyEncodedString name, [MaybeNullWhen( false )] out Function function)
+        public bool TryGetFunction( LazyEncodedString name, [MaybeNullWhen( false )] out Function function )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
@@ -275,7 +274,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalIFunc CreateAndAddGlobalIFunc(LazyEncodedString name, ITypeRef type, uint addressSpace, Function resolver)
+        public GlobalIFunc CreateAndAddGlobalIFunc( LazyEncodedString name, ITypeRef type, uint addressSpace, Function resolver )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
             ArgumentNullException.ThrowIfNull( type );
@@ -286,12 +285,12 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public bool TryGetNamedGlobalIFunc(LazyEncodedString name, [MaybeNullWhen( false )] out GlobalIFunc function)
+        public bool TryGetNamedGlobalIFunc( LazyEncodedString name, [MaybeNullWhen( false )] out GlobalIFunc function )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             LLVMValueRef funcRef = LLVMGetNamedGlobalIFunc( NativeHandle, name );
-            if(funcRef.Equals(default))
+            if(funcRef.Equals( default ))
             {
                 function = null;
                 return false;
@@ -302,7 +301,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public Function CreateFunction(LazyEncodedString name, IFunctionType signature)
+        public Function CreateFunction( LazyEncodedString name, IFunctionType signature )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
             ArgumentNullException.ThrowIfNull( signature );
@@ -317,7 +316,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void WriteToFile(string path)
+        public void WriteToFile( string path )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
@@ -329,7 +328,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public bool WriteToTextFile(string path, out string errMsg)
+        public bool WriteToTextFile( string path, out string errMsg )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
@@ -337,19 +336,19 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public string? WriteToString()
+        public string? WriteToString( )
         {
             return LLVMPrintModuleToString( NativeHandle );
         }
 
         /// <inheritdoc/>
-        public MemoryBuffer WriteToBuffer()
+        public MemoryBuffer WriteToBuffer( )
         {
             return new MemoryBuffer( LLVMWriteBitcodeToMemoryBuffer( NativeHandle ) );
         }
 
         /// <inheritdoc/>
-        public GlobalAlias AddAlias(Value aliasee, LazyEncodedString aliasName, uint addressSpace = 0)
+        public GlobalAlias AddAlias( Value aliasee, LazyEncodedString aliasName, uint addressSpace = 0 )
         {
             ArgumentNullException.ThrowIfNull( aliasee );
             ArgumentException.ThrowIfNullOrWhiteSpace( aliasName );
@@ -359,7 +358,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalAlias? GetAlias(LazyEncodedString name)
+        public GlobalAlias? GetAlias( LazyEncodedString name )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
@@ -368,7 +367,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobalInAddressSpace(uint addressSpace, ITypeRef typeRef, LazyEncodedString name)
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, LazyEncodedString name )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
@@ -378,7 +377,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobalInAddressSpace(uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal)
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             linkage.ThrowIfNotDefined();
@@ -388,7 +387,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobalInAddressSpace(uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name)
+        public GlobalVariable AddGlobalInAddressSpace( uint addressSpace, ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             linkage.ThrowIfNotDefined();
@@ -403,7 +402,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobal(ITypeRef typeRef, LazyEncodedString name)
+        public GlobalVariable AddGlobal( ITypeRef typeRef, LazyEncodedString name )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             ArgumentNullException.ThrowIfNull( name );
@@ -413,7 +412,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobal(ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal)
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             linkage.ThrowIfNotDefined();
@@ -423,7 +422,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable AddGlobal(ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name)
+        public GlobalVariable AddGlobal( ITypeRef typeRef, bool isConst, Linkage linkage, Constant constVal, LazyEncodedString name )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             linkage.ThrowIfNotDefined();
@@ -438,7 +437,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public ITypeRef? GetTypeByName(LazyEncodedString name)
+        public ITypeRef? GetTypeByName( LazyEncodedString name )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
@@ -447,7 +446,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public GlobalVariable? GetNamedGlobal(LazyEncodedString name)
+        public GlobalVariable? GetNamedGlobal( LazyEncodedString name )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
@@ -456,7 +455,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AddModuleFlag(ModuleFlagBehavior behavior, LazyEncodedString name, UInt32 value)
+        public void AddModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, UInt32 value )
         {
             behavior.ThrowIfNotDefined();
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
@@ -466,7 +465,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AddModuleFlag(ModuleFlagBehavior behavior, LazyEncodedString name, IrMetadata value)
+        public void AddModuleFlag( ModuleFlagBehavior behavior, LazyEncodedString name, IrMetadata value )
         {
             behavior.ThrowIfNotDefined();
             ArgumentNullException.ThrowIfNull( value );
@@ -476,7 +475,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AddNamedMetadataOperand(LazyEncodedString name, IrMetadata value)
+        public void AddNamedMetadataOperand( LazyEncodedString name, IrMetadata value )
         {
             ArgumentNullException.ThrowIfNull( value );
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
@@ -485,7 +484,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public void AddVersionIdentMetadata(LazyEncodedString version)
+        public void AddVersionIdentMetadata( LazyEncodedString version )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( version );
 
@@ -511,9 +510,9 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
             ArgumentNullException.ThrowIfNull( signature );
 
-            if (!Equals(diBuilder.OwningModule))
+            if(!Equals( diBuilder.OwningModule ))
             {
-                throw new ArgumentException("Builder created for a different module!", nameof(diBuilder));
+                throw new ArgumentException( "Builder created for a different module!", nameof( diBuilder ) );
             }
 
             if(LazyEncodedString.IsNullOrWhiteSpace( linkageName ))
@@ -571,14 +570,14 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public Function GetIntrinsicDeclaration(LazyEncodedString name, params ITypeRef[] args)
+        public Function GetIntrinsicDeclaration( LazyEncodedString name, params ITypeRef[] args )
         {
             uint id = Intrinsic.LookupId( name );
             return GetIntrinsicDeclaration( id, args );
         }
 
         /// <inheritdoc/>
-        public Function GetIntrinsicDeclaration(UInt32 id, params ITypeRef[] args)
+        public Function GetIntrinsicDeclaration( UInt32 id, params ITypeRef[] args )
         {
             ArgumentNullException.ThrowIfNull( args );
 
@@ -593,18 +592,18 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public Module Clone()
+        public Module Clone( )
         {
             return new( LLVMCloneModule( NativeHandle ).ThrowIfInvalid() );
         }
 
         /// <inheritdoc/>
-        public Module Clone(IContext targetContext)
+        public Module Clone( IContext targetContext )
         {
             ArgumentNullException.ThrowIfNull( targetContext );
 
             // optimization if it is the same context, just use existing native support
-            if(targetContext.Equals(Context))
+            if(targetContext.Equals( Context ))
             {
                 return Clone();
             }
@@ -613,11 +612,11 @@ namespace Ubiquity.NET.Llvm
             // so write it to a buffer, then reload that buffer into another context.
             using var buffer = WriteToBuffer( );
             var retVal = Module.LoadFrom( buffer, targetContext );
-            Debug.Assert( retVal.Context.Equals(targetContext), Resources.Expected_to_get_a_module_bound_to_the_specified_context );
+            Debug.Assert( retVal.Context.Equals( targetContext ), Resources.Expected_to_get_a_module_bound_to_the_specified_context );
             return retVal;
         }
 
-        internal ModuleAlias(LLVMModuleRefAlias handle)
+        internal ModuleAlias( LLVMModuleRefAlias handle )
         {
             handle.ThrowIfInvalid();
             NativeHandle = handle;

@@ -31,16 +31,16 @@ namespace Ubiquity.NET.Extensions
     [SuppressMessage( "Design", "CA1010:Generic interface should also be implemented", Justification = "IEnumerable is unused but must exist to support collection initializers" )]
     [SuppressMessage( "Naming", "CA1710:Identifiers should have correct suffix", Justification = "It is the correct suffix" )]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Equality not relevant for a builder" )]
-    public readonly struct DictionaryBuilder<TKey, TValue>()
+    public readonly struct DictionaryBuilder<TKey, TValue>( )
         : IEnumerable
         where TKey : notnull
     {
         /// <summary>Add a key+value pair into the dictionary</summary>
         /// <param name="key">Key for the entry</param>
         /// <param name="value">Value for the entry</param>
-        public void Add(TKey key, TValue value)
+        public void Add( TKey key, TValue value )
         {
-            Builder.Add(key, value);
+            Builder.Add( key, value );
         }
 
         /// <summary>Indexer to set the value of an entry</summary>
@@ -48,21 +48,21 @@ namespace Ubiquity.NET.Extensions
         /// <value>Value to set for the <paramref name="key"/></value>
         /// <returns>Value type [Ignored for set only support]</returns>
         [SuppressMessage( "Design", "CA1044:Properties should not be write only", Justification = "This type is ONLY for building immutable dictionaries" )]
-        public TValue this[TKey key]
+        public TValue this[ TKey key ]
         {
             set => Builder[ key ] = value;
         }
 
         /// <inheritdoc cref="ImmutableDictionary{TKey, TValue}.Builder.ToImmutable"/>
         [MustUseReturnValue]
-        public ImmutableDictionary<TKey, TValue> ToImmutable()
+        public ImmutableDictionary<TKey, TValue> ToImmutable( )
         {
             return Builder.ToImmutable();
         }
 
         /// <inheritdoc/>
         /// <exception cref="NotImplementedException">Always; Do not use this method. It exists only to allow compile time initializer syntax.</exception>
-        public IEnumerator GetEnumerator()
+        public IEnumerator GetEnumerator( )
         {
             // Only implementing IEnumerable because collection initializer
             // syntax is unavailable if you don't.

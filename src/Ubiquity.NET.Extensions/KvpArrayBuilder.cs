@@ -31,16 +31,16 @@ namespace Ubiquity.NET.Extensions
     [SuppressMessage( "Design", "CA1010:Generic interface should also be implemented", Justification = "IEnumerable is unused but must exist to support collection initializers" )]
     [SuppressMessage( "Naming", "CA1710:Identifiers should have correct suffix", Justification = "It is the correct suffix; This is NOT a collection it's a builder" )]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Equality not relevant for a builder" )]
-    public readonly struct KvpArrayBuilder<TKey, TValue>()
+    public readonly struct KvpArrayBuilder<TKey, TValue>( )
         : IEnumerable
         where TKey : notnull
     {
         /// <summary>Add a key+value pair into the dictionary</summary>
         /// <param name="key">Key for the entry</param>
         /// <param name="value">Value for the entry</param>
-        public void Add(TKey key, TValue value)
+        public void Add( TKey key, TValue value )
         {
-            Builder.Add(new(key, value));
+            Builder.Add( new( key, value ) );
         }
 
         /// <summary>Indexer to set the value of an entry</summary>
@@ -57,21 +57,21 @@ namespace Ubiquity.NET.Extensions
         /// </note>
         /// </remarks>
         [SuppressMessage( "Design", "CA1044:Properties should not be write only", Justification = "This type is ONLY for building immutable arrays" )]
-        public TValue this[TKey key]
+        public TValue this[ TKey key ]
         {
             set => Add( key, value );
         }
 
-        /// <inheritdoc cref="ImmutableArray{TKey, TValue}.Builder.ToImmutable"/>
+        /// <inheritdoc cref="ImmutableArray{T}.Builder.ToImmutable"/>
         [MustUseReturnValue]
-        public ImmutableArray<KeyValuePair<TKey, TValue>> ToImmutable()
+        public ImmutableArray<KeyValuePair<TKey, TValue>> ToImmutable( )
         {
             return Builder.ToImmutable();
         }
 
         /// <inheritdoc/>
         /// <exception cref="NotImplementedException">Always; Do not use this method. It exists only to allow compile time initializer syntax.</exception>
-        public IEnumerator GetEnumerator()
+        public IEnumerator GetEnumerator( )
         {
             // Only implementing IEnumerable because collection initializer
             // syntax is unavailable if you don't.

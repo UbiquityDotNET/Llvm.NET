@@ -34,9 +34,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// entry that "owns" a ref count bump (AddRefHandle) on a source string (<paramref name="other"/>). Callers must dispose of the new
         /// instance the same as the original one or the ref count is never reduced and the native memory never reclaimed (That is, it leaks!)
         /// </remarks>
-        public SymbolStringPoolEntry(SymbolStringPoolEntry other)
+        public SymbolStringPoolEntry( SymbolStringPoolEntry other )
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            : this(other.Validate().AddRefHandle())
+            : this( other.Validate().AddRefHandle() )
 #pragma warning restore CA2000 // Dispose objects before losing scope
         {
             // TODO: optimize this to use any lazy evaluated values available in other
@@ -44,9 +44,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <summary>Gets the managed string form of the native string</summary>
         /// <returns>managed string for this handle</returns>
-        public override string? ToString()
+        public override string? ToString( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
             return ManagedString.Value;
         }
@@ -54,9 +54,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         #region IEquatable<SymbolStringPoolEntry>
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
+        public override bool Equals( object? obj )
         {
-            return obj is SymbolStringPoolEntry other && Equals(other);
+            return obj is SymbolStringPoolEntry other && Equals( other );
         }
 
         /// <summary>Compares this string with another to determine if they contain the same contents</summary>
@@ -68,22 +68,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// only useful with entries from different pools.
         /// </note>
         /// </remarks>
-        public bool Equals(SymbolStringPoolEntry? other)
+        public bool Equals( SymbolStringPoolEntry? other )
         {
             return other is not null
-                && ( Handle.Equals(other.Handle) || Equals(other.ReadOnlySpan) );
+                && (Handle.Equals( other.Handle ) || Equals( other.ReadOnlySpan ));
         }
 
         /// <summary>Tests if the span of characters for this string is identical to the provided span</summary>
         /// <param name="otherSpan">Span of bytes to compare this string to</param>
         /// <returns><see langword="true"/> if the spans contain the same data or <see langword="false"/> if not</returns>
-        public bool Equals(ReadOnlySpan<byte> otherSpan) => ReadOnlySpan.SequenceEqual(otherSpan);
+        public bool Equals( ReadOnlySpan<byte> otherSpan ) => ReadOnlySpan.SequenceEqual( otherSpan );
 
         /// <inheritdoc/>
-        [SuppressMessage("Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API")]
-        public override int GetHashCode()
+        [SuppressMessage( "Globalization", "CA1307:Specify StringComparison for clarity", Justification = "Matches string API" )]
+        public override int GetHashCode( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
             return ToString()?.GetHashCode() ?? 0;
         }
@@ -91,16 +91,16 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Gets the hash code for the managed string</summary>
         /// <param name="comparisonType">Kind of comparison to perform when computing the hash code</param>
         /// <returns>Hash code for the managed string</returns>
-        public int GetHashCode(StringComparison comparisonType)
+        public int GetHashCode( StringComparison comparisonType )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            return ToString()?.GetHashCode(comparisonType) ?? 0;
+            return ToString()?.GetHashCode( comparisonType ) ?? 0;
         }
         #endregion
 
         /// <summary>Release the reference to the string</summary>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
@@ -115,47 +115,47 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsDisposed, this);
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
 
                 unsafe
                 {
-                    return new((void*)NativeStringPtr.Value, LazyStrLen.Value);
+                    return new( (void*)NativeStringPtr.Value, LazyStrLen.Value );
                 }
             }
         }
 
-        internal LLVMOrcSymbolStringPoolEntryRefAlias ToABI()
+        internal LLVMOrcSymbolStringPoolEntryRefAlias ToABI( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
             DangerousAddRef();
-            return LLVMOrcSymbolStringPoolEntryRefAlias.FromABI(Handle.DangerousGetHandle());
+            return LLVMOrcSymbolStringPoolEntryRefAlias.FromABI( Handle.DangerousGetHandle() );
         }
 
-        internal SymbolStringPoolEntry(LLVMOrcSymbolStringPoolEntryRef h)
+        internal SymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef h )
         {
-            if (h.IsInvalid || h.IsClosed)
+            if(h.IsInvalid || h.IsClosed)
             {
-                throw new ArgumentNullException(nameof(h));
+                throw new ArgumentNullException( nameof( h ) );
             }
 
             Handle = h.Move();
             unsafe
             {
-                NativeStringPtr = new(()=>(nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication);
-                ManagedString = new(()=>ExecutionEncodingStringMarshaller.ConvertToManaged((byte*)NativeStringPtr.Value), LazyThreadSafetyMode.ExecutionAndPublication);
-                LazyStrLen = new(()=>MemoryMarshal.CreateReadOnlySpanFromNullTerminated((byte*)NativeStringPtr.Value).Length, LazyThreadSafetyMode.ExecutionAndPublication);
+                NativeStringPtr = new( ( ) => (nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication );
+                ManagedString = new( ( ) => ExecutionEncodingStringMarshaller.ConvertToManaged( (byte*)NativeStringPtr.Value ), LazyThreadSafetyMode.ExecutionAndPublication );
+                LazyStrLen = new( ( ) => MemoryMarshal.CreateReadOnlySpanFromNullTerminated( (byte*)NativeStringPtr.Value ).Length, LazyThreadSafetyMode.ExecutionAndPublication );
             }
         }
 
-        internal SymbolStringPoolEntry(nint abiHandle, bool alias = false)
+        internal SymbolStringPoolEntry( nint abiHandle, bool alias = false )
         {
-            Handle = new(abiHandle, !alias);
+            Handle = new( abiHandle, !alias );
             unsafe
             {
-                NativeStringPtr = new(()=>(nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication);
-                ManagedString = new(()=>ExecutionEncodingStringMarshaller.ConvertToManaged((byte*)NativeStringPtr.Value), LazyThreadSafetyMode.ExecutionAndPublication);
-                LazyStrLen = new(()=>MemoryMarshal.CreateReadOnlySpanFromNullTerminated((byte*)NativeStringPtr.Value).Length, LazyThreadSafetyMode.ExecutionAndPublication);
+                NativeStringPtr = new( ( ) => (nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication );
+                ManagedString = new( ( ) => ExecutionEncodingStringMarshaller.ConvertToManaged( (byte*)NativeStringPtr.Value ), LazyThreadSafetyMode.ExecutionAndPublication );
+                LazyStrLen = new( ( ) => MemoryMarshal.CreateReadOnlySpanFromNullTerminated( (byte*)NativeStringPtr.Value ).Length, LazyThreadSafetyMode.ExecutionAndPublication );
             }
         }
 
@@ -167,11 +167,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// that takes ownership of the new ref count BUT the managed caller still
         /// needs to retain a reference to the string.
         /// </remarks>
-        internal void DangerousAddRef()
+        internal void DangerousAddRef( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            LLVMOrcRetainSymbolStringPoolEntry(Handle);
+            LLVMOrcRetainSymbolStringPoolEntry( Handle );
         }
 
         /// <summary>Decreases the ref count on this instance</summary>
@@ -180,19 +180,19 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// and AddRef if an exception occurs in an attempt to transfer ownership
         /// into native code.
         /// </remarks>
-        internal void DangerousRelease()
+        internal void DangerousRelease( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            LLVMOrcReleaseSymbolStringPoolEntry(Handle);
+            LLVMOrcReleaseSymbolStringPoolEntry( Handle );
         }
 
         internal bool IsDisposed => Handle is null || Handle.IsClosed || Handle.IsInvalid;
 
-        private LLVMOrcSymbolStringPoolEntryRef AddRefHandle()
+        private LLVMOrcSymbolStringPoolEntryRef AddRefHandle( )
         {
             DangerousAddRef();
-            return new(Handle.DangerousGetHandle(), owner: true);
+            return new( Handle.DangerousGetHandle(), owner: true );
         }
 
         private readonly Lazy<string?> ManagedString;
@@ -204,10 +204,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "It's file scoped - where else is it supposed to go!?" )]
     file static class ValidationExtensions
     {
-        internal static SymbolStringPoolEntry Validate(this SymbolStringPoolEntry self, [CallerArgumentExpression(nameof(self))] string? exp = null)
+        internal static SymbolStringPoolEntry Validate( this SymbolStringPoolEntry self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
         {
-            ArgumentNullException.ThrowIfNull(self, exp);
-            ObjectDisposedException.ThrowIf(self.IsDisposed, self);
+            ArgumentNullException.ThrowIfNull( self, exp );
+            ObjectDisposedException.ThrowIf( self.IsDisposed, self );
             return self;
         }
     }

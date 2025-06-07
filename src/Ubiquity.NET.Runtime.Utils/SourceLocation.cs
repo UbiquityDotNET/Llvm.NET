@@ -38,8 +38,8 @@ namespace Ubiquity.NET.Runtime.Utils
             formatProvider ??= CultureInfo.CurrentCulture;
             return format switch
             {
-                "B" => FormatMsBuild(formatProvider),
-                "R" => FormatMsBuild(formatProvider), // TODO: Adjust this to select format based on current runtime
+                "B" => FormatMsBuild( formatProvider ),
+                "R" => FormatMsBuild( formatProvider ), // TODO: Adjust this to select format based on current runtime
                 _ => ToString()
             };
         }
@@ -59,7 +59,7 @@ namespace Ubiquity.NET.Runtime.Utils
                      ? $"({StartLine}"
                      : $"({StartLine}, {StartColumn})";
             }
-            else if( EndLine == StartLine)
+            else if(EndLine == StartLine)
             {
                 return $"({StartLine}, {StartColumn}-{EndColumn})";
             }

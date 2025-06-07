@@ -10,14 +10,14 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSymbolIteratorRef LibLLVMSymbolIteratorClone(LLVMSymbolIteratorRef @ref);
+        public static unsafe partial LLVMSymbolIteratorRef LibLLVMSymbolIteratorClone( LLVMSymbolIteratorRef @ref );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSectionIteratorRef LibLLVMSectionIteratorClone(LLVMSectionIteratorRef @ref);
+        public static unsafe partial LLVMSectionIteratorRef LibLLVMSectionIteratorClone( LLVMSectionIteratorRef @ref );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMRelocationIteratorRef LibLLVMRelocationIteratorClone(LLVMRelocationIteratorRef @ref);
+        public static unsafe partial LLVMRelocationIteratorRef LibLLVMRelocationIteratorClone( LLVMRelocationIteratorRef @ref );
     }
 }

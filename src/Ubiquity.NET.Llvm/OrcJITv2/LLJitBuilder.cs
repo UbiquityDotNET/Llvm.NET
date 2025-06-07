@@ -3,6 +3,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJIT;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
@@ -21,11 +22,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="LLJitBuilder"/> class</summary>
-        /// <param name="tmBldr">Target machine builder to use for this instance</param>
-        public LLJitBuilder( TargetMachineBuilder tmBldr )
+        /// <param name="builder">Target machine builder to use for this instance</param>
+        public LLJitBuilder( TargetMachineBuilder builder )
             : this( LLVMOrcCreateLLJITBuilder() )
         {
-            SetTargetMachineBuilder( tmBldr );
+            SetTargetMachineBuilder( builder );
         }
 
         /// <inheritdoc/>
@@ -35,28 +36,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             MoveToNative();
         }
 
-        private void MoveToNative( )
-        {
-            Handle.SetHandleAsInvalid();
-
-            // If the callback context handle exists and is allocated then free it now.
-            // The handle for this builder itself is already closed so LLVM should not
-            // have any callbacks for this to handle... (docs are silent on the point)
-            if(!ObjectLinkingLayerContextHandle.IsInvalid && !ObjectLinkingLayerContextHandle.IsClosed)
-            {
-                ObjectLinkingLayerContextHandle.Dispose();
-            }
-
-            // Break any GC references to allow release
-            InternalObjectLayerFactory = null;
-        }
-
         /// <summary>Sets the target machine builder for this JIT builder</summary>
         /// <param name="targetMachineBuilder">Target machine builder for this JIT builder</param>
         public void SetTargetMachineBuilder( TargetMachineBuilder targetMachineBuilder )
         {
             ArgumentNullException.ThrowIfNull( targetMachineBuilder );
             LLVMOrcLLJITBuilderSetJITTargetMachineBuilder( Handle, targetMachineBuilder.Handle );
+
             // Ownership transferred to native code.
             targetMachineBuilder.Handle.SetHandleAsInvalid();
         }
@@ -93,6 +79,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ObjectDisposedException.ThrowIf( Handle.IsInvalid || Handle.IsClosed, this );
             using LLVMErrorRef err = LLVMOrcCreateLLJIT(Handle, out LLVMOrcLLJITRef jitHandle);
+
             // calls Dispose in case something goes wrong before it is moved to return
             // NOTE: This is also a NOP if the call failed and jitHandle is NULL.
             using(jitHandle)
@@ -121,13 +108,29 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 #pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
+        internal LLVMOrcLLJITBuilderRef Handle { get; }
+
+        private void MoveToNative( )
+        {
+            Handle.SetHandleAsInvalid();
+
+            // If the callback context handle exists and is allocated then free it now.
+            // The handle for this builder itself is already closed so LLVM should not
+            // have any callbacks for this to handle... (docs are silent on the point)
+            if(!ObjectLinkingLayerContextHandle.IsInvalid && !ObjectLinkingLayerContextHandle.IsClosed)
+            {
+                ObjectLinkingLayerContextHandle.Dispose();
+            }
+
+            // Break any GC references to allow release
+            InternalObjectLayerFactory = null;
+        }
+
         private LLJitBuilder( LLVMOrcLLJITBuilderRef h )
         {
             Handle = h;
             ObjectLinkingLayerContextHandle = new( this );
         }
-
-        internal readonly LLVMOrcLLJITBuilderRef Handle;
 
         private SafeGCHandle ObjectLinkingLayerContextHandle;
         private ObjectLayerFactory? InternalObjectLayerFactory;

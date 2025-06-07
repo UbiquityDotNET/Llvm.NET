@@ -29,22 +29,22 @@ namespace Ubiquity.NET.Llvm
         #region IEquatable<>
 
         /// <inheritdoc/>
-        public bool Equals(IDataLayout? other)
+        public bool Equals( IDataLayout? other )
             => other is not null
-            && (this.GetUnownedHandle().Equals(other.GetUnownedHandle()) || Impl.Equals(other));
+            && (this.GetUnownedHandle().Equals( other.GetUnownedHandle() ) || Impl.Equals( other ));
 
         /// <inheritdoc/>
-        public bool Equals(DataLayout? other)
+        public bool Equals( DataLayout? other )
             => other is not null
-            && (Handle.Equals(other.Handle) || Impl.Equals(other));
+            && (Handle.Equals( other.Handle ) || Impl.Equals( other ));
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)=> obj is DataLayout owner
-                                                   ? Equals(owner)
-                                                   : Equals(obj as IDataLayout);
+        public override bool Equals( object? obj ) => obj is DataLayout owner
+                                                   ? Equals( owner )
+                                                   : Equals( obj as IDataLayout );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => Impl.GetHashCode();
+        public override int GetHashCode( ) => Impl.GetHashCode();
         #endregion
 
         #region IDataLayout (via Impl)
@@ -116,58 +116,67 @@ namespace Ubiquity.NET.Llvm
             Handle.Dispose();
         }
 
-        /// <inheritdoc/>
+        /// <summary>Parses a data layout from a textual representation</summary>
+        /// <param name="text">String representation to parse</param>
+        /// <returns>Parsed <see cref="DataLayout"/></returns>
         public static DataLayout Parse( LazyEncodedString text )
         {
-            #pragma warning disable IDISP007 // Don't dispose injected
+#pragma warning disable IDISP007 // Don't dispose injected
             // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
             // nativeRef is NOT injected, it's an OUT param and owned by this call site
             using var errRef = LibLLVMParseDataLayout(text, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
             {
                 errRef.ThrowIfFailed();
-                return new(nativeRef);
+                return new( nativeRef );
             }
-            #pragma warning restore IDISP007 // Don't dispose injected
+#pragma warning restore IDISP007 // Don't dispose injected
         }
 
-        /// <inheritdoc/>
+        /// <summary>Tries to parse a <see cref="DataLayout"/> from a string representation</summary>
+        /// <param name="txt">String representation of the data layout</param>
+        /// <param name="result">Parsed data or <see langword="null"/> if <paramref name="txt"/> does not conform to a layout string</param>
+        /// <returns>Result of the parse (<see langword="true"/> if successful if <see langword="false"/> not)</returns>
         public static bool TryParse( LazyEncodedString txt, [MaybeNullWhen( false )] out DataLayout result )
         {
             result = null;
 
-            #pragma warning disable IDISP007 // Don't dispose injected
+#pragma warning disable IDISP007 // Don't dispose injected
             // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
             // nativeRef is NOT injected, it's an OUT param and owned by this call site
             using var errRef = LibLLVMParseDataLayout(txt, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
             {
-                if (errRef.Failed)
+                if(errRef.Failed)
                 {
                     return false;
                 }
 
-                result = new(nativeRef);
+                result = new( nativeRef );
                 return true;
             }
-            #pragma warning restore IDISP007 // Don't dispose injected
+#pragma warning restore IDISP007 // Don't dispose injected
         }
 
         internal DataLayout( LLVMTargetDataRef targetDataHandle, [CallerArgumentExpression( nameof( targetDataHandle ) )] string? exp = null )
         {
-            if( targetDataHandle is null || targetDataHandle.IsInvalid || targetDataHandle.IsClosed)
+            if(targetDataHandle is null || targetDataHandle.IsInvalid || targetDataHandle.IsClosed)
             {
-                throw new ArgumentException("Invalid handle", exp);
+                throw new ArgumentException( "Invalid handle", exp );
             }
 
             Handle = targetDataHandle.Move();
+
             // Implementation is an alias handle, which is a value type that is
             // essentially a "typedef" for the opaque handle [nint, (void*)]
-            AliasImpl__ = new(Handle);
+            AliasImpl__ = new( Handle );
         }
 
+        /// <inheritdoc/>
         [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]
         LLVMTargetDataRef IGlobalHandleOwner<LLVMTargetDataRef>.OwnedHandle => Handle;
+
+        /// <inheritdoc/>
         void IGlobalHandleOwner<LLVMTargetDataRef>.InvalidateFromMove( ) => Handle.SetHandleAsInvalid();
 
         private readonly LLVMTargetDataRef Handle;

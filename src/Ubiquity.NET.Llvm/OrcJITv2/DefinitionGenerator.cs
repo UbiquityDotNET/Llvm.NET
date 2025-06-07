@@ -13,19 +13,20 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
-            if (disposing)
+            if(disposing)
             {
                 Handle.Dispose();
             }
 
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
 
-        internal DefinitionGenerator(LLVMOrcDefinitionGeneratorRef h)
+        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Ordering is correct, analyzer is to rigid to allow customiztion" )]
+        internal DefinitionGenerator( LLVMOrcDefinitionGeneratorRef h )
         {
             Handle = h.Move();
         }
 
-        internal LLVMOrcDefinitionGeneratorRef Handle {get;}
+        internal LLVMOrcDefinitionGeneratorRef Handle { get; }
     }
 }

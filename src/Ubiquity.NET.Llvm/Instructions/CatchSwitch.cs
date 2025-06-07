@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             get
             {
-                if( !HasUnwindDestination )
+                if(!HasUnwindDestination)
                 {
                     return null;
                 }

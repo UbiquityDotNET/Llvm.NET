@@ -12,11 +12,11 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class UnaryOpExpressionContext
         {
-            public IToken OpToken => unaryop( ).Start;
+            public IToken OpToken => unaryop().Start;
 
             public int Op => OpToken.Type;
 
-            public ExpressionContext Rhs => expression( );
+            public ExpressionContext Rhs => expression();
         }
     }
 }

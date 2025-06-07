@@ -46,4 +46,3 @@ global using Ubiquity.NET.Llvm.Metadata;
 global using Ubiquity.NET.Llvm.Properties;
 global using Ubiquity.NET.Llvm.Types;
 global using Ubiquity.NET.Llvm.Values;
-

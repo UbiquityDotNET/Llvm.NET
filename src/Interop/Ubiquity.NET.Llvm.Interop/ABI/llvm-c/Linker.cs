@@ -17,6 +17,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMStatus LLVMLinkModules2(LLVMModuleRefAlias Dest, LLVMModuleRef Src);
+        public static unsafe partial LLVMStatus LLVMLinkModules2( LLVMModuleRefAlias Dest, LLVMModuleRef Src );
     }
 }

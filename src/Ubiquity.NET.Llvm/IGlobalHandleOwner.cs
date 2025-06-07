@@ -39,6 +39,6 @@ namespace Ubiquity.NET.Llvm
         /// handle in a manner that makes disposal a NOP. (Callers should NOT care about this and still call Dispose()
         /// in case there was an exception and they still own it!)
         /// </remarks>
-        internal void InvalidateFromMove();
+        internal void InvalidateFromMove( );
     }
 }

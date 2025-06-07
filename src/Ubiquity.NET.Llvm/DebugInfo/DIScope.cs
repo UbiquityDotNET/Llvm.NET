@@ -19,14 +19,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             get
             {
-                if( Handle == default )
+                if(Handle == default)
                 {
                     return null;
                 }
 
                 return this is DIFile file
                      ? file
-                     : (DIFile?)LLVMDIScopeGetFile( Handle ).CreateMetadata( );
+                     : (DIFile?)LLVMDIScopeGetFile( Handle ).CreateMetadata();
             }
         }
 

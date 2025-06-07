@@ -19,9 +19,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// of the library and is no longer usable after this (Dispose is still a NOP,
         /// but any other operation results in an <see cref="ObjectDisposedException"/>)
         /// </remarks>
-        public void Add(JITDyLib jitDyLib, MemoryBuffer objBuffer)
+        public void Add( JITDyLib jitDyLib, MemoryBuffer objBuffer )
         {
             using LLVMErrorRef errorRef = LLVMOrcObjectLayerAddObjectFile(Handle, jitDyLib.Handle, objBuffer.Handle);
+
             // Even if an error occurred, ownership is transferred
             objBuffer.Handle.SetHandleAsInvalid();
             errorRef.ThrowIfFailed();
@@ -35,9 +36,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// of the library and is no longer usable after this (Dispose is still a NOP,
         /// but any other operation results in an <see cref="ObjectDisposedException"/>)
         /// </remarks>
-        public void Add(ResourceTracker rt, MemoryBuffer objBuffer)
+        public void Add( ResourceTracker rt, MemoryBuffer objBuffer )
         {
             using LLVMErrorRef errorRef = LLVMOrcObjectLayerAddObjectFileWithRT(Handle, rt.Handle, objBuffer.Handle);
+
             // Even if an error occurred, ownership is transferred
             objBuffer.Handle.SetHandleAsInvalid();
             errorRef.ThrowIfFailed();
@@ -51,17 +53,17 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// Calling Dispose() on either after this is called is a NOP, other
         /// operations result in an <see cref="ObjectDisposedException"/>.
         /// </remarks>
-        public void Emit(MaterializationResponsibility resp, MemoryBuffer objBuffer)
+        public void Emit( MaterializationResponsibility resp, MemoryBuffer objBuffer )
         {
-            LLVMOrcObjectLayerEmit(Handle, resp.Handle, objBuffer.Handle);
+            LLVMOrcObjectLayerEmit( Handle, resp.Handle, objBuffer.Handle );
             resp.Handle.SetHandleAsInvalid();
             objBuffer.Handle.SetHandleAsInvalid();
         }
 
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
-        internal ObjectLayer( LLVMOrcObjectLayerRef h)
+        internal ObjectLayer( LLVMOrcObjectLayerRef h )
         {
             Handle = h.Move();
         }

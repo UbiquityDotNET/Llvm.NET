@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct</summary>
         /// <param name="msg">Message for the error</param>
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is transferred to this instances. (Move semantics)" )]
-        public ErrorInfo(LazyEncodedString msg)
+        public ErrorInfo( LazyEncodedString msg )
             : this( LLVMErrorRef.Create( msg ) )
         {
         }
@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
+                ObjectDisposedException.ThrowIf( IsDisposed, typeof( ErrorInfo ) );
                 return Handle.Success;
             }
         }
@@ -38,9 +38,9 @@ namespace Ubiquity.NET.Llvm
         public bool IsDisposed => Handle is not null && Handle.IsClosed;
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override string ToString( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
+            ObjectDisposedException.ThrowIf( IsDisposed, typeof( ErrorInfo ) );
             return Handle.ToString();
         }
 
@@ -49,18 +49,18 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// The <see cref="Exception.Message"/> is set to the text of this error result.
         /// </remarks>
-        public void ThrowIfFailed()
+        public void ThrowIfFailed( )
         {
-            ObjectDisposedException.ThrowIf(IsDisposed, typeof(ErrorInfo));
+            ObjectDisposedException.ThrowIf( IsDisposed, typeof( ErrorInfo ) );
 
-            if (Failed)
+            if(Failed)
             {
-                throw new InternalCodeGeneratorException(ToString());
+                throw new InternalCodeGeneratorException( ToString() );
             }
         }
 
         /// <summary>Releases the underlying LLVM handle</summary>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
@@ -75,14 +75,14 @@ namespace Ubiquity.NET.Llvm
         /// the native call returns it is safe to call <see cref="SafeHandle.SetHandleAsInvalid"/> to mark it as unowned.
         /// </note>
         /// </remarks>
-        internal nint MoveToNative()
+        internal nint MoveToNative( )
         {
             return Handle?.MoveToNative() ?? 0;
         }
 
-        internal ErrorInfo(LLVMErrorRef h)
+        internal ErrorInfo( LLVMErrorRef h )
         {
-            ArgumentNullException.ThrowIfNull(h);
+            ArgumentNullException.ThrowIfNull( h );
             Handle = h.Move();
         }
 
@@ -92,8 +92,8 @@ namespace Ubiquity.NET.Llvm
         /// This is generally used in unmanaged callbacks to simplify creation of the projection from the raw handle.
         /// </remarks>
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "It is 'moved' to this type; dispose not needed" )]
-        internal ErrorInfo(nint h)
-            : this(new LLVMErrorRef(h))
+        internal ErrorInfo( nint h )
+            : this( new LLVMErrorRef( h ) )
         {
         }
 

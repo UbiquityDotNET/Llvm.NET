@@ -34,13 +34,13 @@ namespace Ubiquity.NET.Llvm.Values
         /// <exception cref="InvalidOperationException">If IsI8Sequence isn't <see langword="true"/></exception>
         public string ExtractAsString( )
         {
-            return ExtractAsString(Encoding.ASCII);
+            return ExtractAsString( Encoding.ASCII );
         }
 
         /// <summary>summary</summary>
         /// <param name="encoding">encoding</param>
         /// <returns>string</returns>
-        public string ExtractAsString(Encoding encoding)
+        public string ExtractAsString( Encoding encoding )
         {
             ArgumentNullException.ThrowIfNull( encoding );
 

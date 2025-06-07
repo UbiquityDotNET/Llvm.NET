@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm
     /// <see cref="nint"/> `TagBuf` parameter of <see cref="OpInfo(ulong, ulong, ulong, ulong, int, nint)"/>
     /// </remarks>
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related only used here" )]
-    [Experimental("LLVM002")]
+    [Experimental( "LLVM002" )]
     public interface IDisassemblerCallbacks
     {
         /// <summary>Purpose not fully known or well explained in LLVM docs</summary>
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="TagType">Tag type [Best guess: discriminator type for the opaque buffer]</param>
         /// <param name="TagBuf">Raw pointer to the buffer. [It is currently assumed this is readonly and the size and shape are determined by <paramref name="TagType"/>]</param>
         /// <returns>Unknown</returns>
-        int OpInfo(UInt64 PC, UInt64 Offset, UInt64 OpSize, UInt64 InstSize, int TagType, nint TagBuf);
+        int OpInfo( UInt64 PC, UInt64 Offset, UInt64 OpSize, UInt64 InstSize, int TagType, nint TagBuf );
 
         /// <summary>Performs symbol lookup for the disassembler</summary>
         /// <param name="referenceValue">referenceValue [Unknown what this is in "reference" to]</param>
@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="ReferenceName">Completely unknown. [Is this really an OUT string or an IN array?]</param>
         /// <returns>Unknown</returns>
         [SuppressMessage( "Design", "CA1045:Do not pass types by reference", Justification = "Matches ABI; Otherwise requires returning (and marshalling) a tuple" )]
-        LazyEncodedString? SymbolLookup(UInt64 referenceValue, ref UInt64 referenceType, UInt64 referencePC, out LazyEncodedString? ReferenceName);
+        LazyEncodedString? SymbolLookup( UInt64 referenceValue, ref UInt64 referenceType, UInt64 referencePC, out LazyEncodedString? ReferenceName );
     }
 
     /// <summary>Options flags for the disassembler</summary>
@@ -76,15 +76,15 @@ namespace Ubiquity.NET.Llvm
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
         /// <summary>Initializes a new instance of the <see cref="Disassembler"/> class.</summary>
         /// <param name="triple">Triple for the instruction set to disassemble</param>
         /// <param name="tagType">TODO: Explain this...</param>
         /// <param name="callBacks">Optional callbacks [Default: <see langword="null"/>]</param>
         /// <remarks>The <paramref name="callBacks"/> parameter is experimental and recommended left as the default value</remarks>
-        public Disassembler( Triple triple, int tagType, IDisassemblerCallbacks? callBacks = null)
-            : this(triple, LazyEncodedString.Empty, LazyEncodedString.Empty, tagType, callBacks)
+        public Disassembler( Triple triple, int tagType, IDisassemblerCallbacks? callBacks = null )
+            : this( triple, LazyEncodedString.Empty, LazyEncodedString.Empty, tagType, callBacks )
         {
         }
 
@@ -99,7 +99,7 @@ namespace Ubiquity.NET.Llvm
                            , int tagType
                            , IDisassemblerCallbacks? callBacks = null
                            )
-            : this(triple, cpu, LazyEncodedString.Empty, tagType, callBacks)
+            : this( triple, cpu, LazyEncodedString.Empty, tagType, callBacks )
         {
         }
 
@@ -117,19 +117,19 @@ namespace Ubiquity.NET.Llvm
                            , IDisassemblerCallbacks? callBacks = null
                            )
         {
-            ArgumentNullException.ThrowIfNull(triple);
-            ArgumentNullException.ThrowIfNull(cpu); // may be empty
-            ArgumentNullException.ThrowIfNull(features);
+            ArgumentNullException.ThrowIfNull( triple );
+            ArgumentNullException.ThrowIfNull( cpu ); // may be empty
+            ArgumentNullException.ThrowIfNull( features );
 
             unsafe
             {
-                ArgumentNullException.ThrowIfNull(triple);
-                CallBacksHandle = callBacks is null ? null : GCHandle.Alloc(callBacks);
+                ArgumentNullException.ThrowIfNull( triple );
+                CallBacksHandle = callBacks is null ? null : GCHandle.Alloc( callBacks );
                 Handle = LLVMCreateDisasmCPUFeatures(
-                        triple.ToString( ) ?? LazyEncodedString.Empty,
+                        triple.ToString() ?? LazyEncodedString.Empty,
                         cpu,
                         features,
-                        CallBacksHandle.HasValue ? GCHandle.ToIntPtr(CallBacksHandle.Value).ToPointer() : null,
+                        CallBacksHandle.HasValue ? GCHandle.ToIntPtr( CallBacksHandle.Value ).ToPointer() : null,
                         tagType,
                         CallBacksHandle.HasValue ? &NativeInfoCallBack : null,
                         CallBacksHandle.HasValue ? &NativeSymbolLookupCallback : null
@@ -142,7 +142,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see langword="true"/> if the options are all supported</returns>
         public bool SetOptions( DisassemblerOptions options )
         {
-            return LLVMSetDisasmOptions( Handle, ( ulong )options );
+            return LLVMSetDisasmOptions( Handle, (ulong)options );
         }
 
         /// <summary>Disassembles an instruction</summary>
@@ -160,12 +160,12 @@ namespace Ubiquity.NET.Llvm
             {
                 using var nativeMemory = MemoryPool<byte>.Shared.Rent(stringBufferSize);
                 using var nativeMemoryPinnedHandle = nativeMemory.Memory.Pin();
-                fixed( byte* ptr = &MemoryMarshal.GetReference( instruction ) )
+                fixed(byte* ptr = &MemoryMarshal.GetReference( instruction ))
                 {
                     byte* pDisasmData = (byte*)nativeMemoryPinnedHandle.Pointer;
-                    Debug.Assert(pDisasmData != null, "should never get a null pointer here");
+                    Debug.Assert( pDisasmData != null, "should never get a null pointer here" );
                     nuint instSize = LLVMDisasmInstruction(Handle, ptr, (UInt64)instruction.Length, pc, pDisasmData, (nuint)stringBufferSize);
-                    return (LazyEncodedString.FromUnmanaged(pDisasmData)!, instSize);
+                    return (LazyEncodedString.FromUnmanaged( pDisasmData )!, instSize);
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace Ubiquity.NET.Llvm
         private readonly LLVMDisasmContextRef Handle;
 
         #region Native marshalling callbacks
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "Helps clarify type for native interop" )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private static unsafe byte* NativeSymbolLookupCallback(
@@ -187,7 +187,7 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                if (!MarshalGCHandle.TryGet<IDisassemblerCallbacks>(disInfo, out IDisassemblerCallbacks? callBacks))
+                if(!MarshalGCHandle.TryGet<IDisassemblerCallbacks>( disInfo, out IDisassemblerCallbacks? callBacks ))
                 {
                     return null;
                 }
@@ -202,7 +202,7 @@ namespace Ubiquity.NET.Llvm
                 // Use of normal marshalling pattern is broken here... The lifetime of the effectively OUT byte pointer referenceName
                 // is undefined. If the marshalling allocates memory for the buffer then it is invalid as soon as this call returns
                 // so not much use as an OUT pointer...
-                if (referenceName is not null)
+                if(referenceName is not null)
                 {
                     *referenceName = null;
                 }
@@ -220,14 +220,14 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe int NativeInfoCallBack(void* disInfo, UInt64 pc, UInt64 offset, UInt64 opSize, UInt64 instSize, int tagType, void* tagBuf)
+        private static unsafe int NativeInfoCallBack( void* disInfo, UInt64 pc, UInt64 offset, UInt64 opSize, UInt64 instSize, int tagType, void* tagBuf )
         {
             try
             {
-                return MarshalGCHandle.TryGet<IDisassemblerCallbacks>(disInfo, out IDisassemblerCallbacks? callBacks)
-                    ? callBacks.OpInfo(pc, offset, opSize, instSize, tagType, (nint)tagBuf)
+                return MarshalGCHandle.TryGet<IDisassemblerCallbacks>( disInfo, out IDisassemblerCallbacks? callBacks )
+                    ? callBacks.OpInfo( pc, offset, opSize, instSize, tagType, (nint)tagBuf )
                     : 0; // TODO: Is this a legit failure return value?
             }
             catch

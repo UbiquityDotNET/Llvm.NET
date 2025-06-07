@@ -20,13 +20,13 @@ namespace CodeGenWithDebugInfo
     {
         public X64ABI( )
         {
-            LlvmLib = Library.InitializeLLVM( );
-            LlvmLib.RegisterTarget(CodeGenTarget.X86);
+            LlvmLib = Library.InitializeLLVM();
+            LlvmLib.RegisterTarget( CodeGenTarget.X86 );
         }
 
         public string ShortName => "x86";
 
-        public void Dispose()
+        public void Dispose( )
         {
             LlvmLib.Dispose();
         }
@@ -45,15 +45,15 @@ namespace CodeGenWithDebugInfo
 
         public void AddAttributesForByValueStructure( Function function, DebugFunctionType debugSig, int paramIndex )
         {
-            ArgumentNullException.ThrowIfNull(function);
-            ArgumentNullException.ThrowIfNull(debugSig);
-            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(paramIndex, function.Parameters.Count);
+            ArgumentNullException.ThrowIfNull( function );
+            ArgumentNullException.ThrowIfNull( debugSig );
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual( paramIndex, function.Parameters.Count );
 
             DebugPointerType? ptrType = debugSig.ParameterTypes[ paramIndex ] is DebugType<DebugPointerType, DIDerivedType> debugType
                                         ? debugType.NativeType
                                         : null;
 
-            if(ptrType is null || ptrType.IsOpaque() || !ptrType.ElementType!.IsStruct )
+            if(ptrType is null || ptrType.IsOpaque() || !ptrType.ElementType!.IsStruct)
             {
                 throw new ArgumentException( "Signature for specified parameter must be a pointer to a structure" );
             }

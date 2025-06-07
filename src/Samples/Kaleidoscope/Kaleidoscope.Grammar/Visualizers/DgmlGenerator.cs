@@ -31,9 +31,9 @@ namespace Kaleidoscope.Grammar
         public DgmlGenerator( KaleidoscopeParser recognizer )
         {
             Recognizer = recognizer;
-            Graph.Categories.Add( new Category( ) { Id = "TreeNode", Background = "White" } );
-            Graph.Categories.Add( new Category( ) { Id = "HasException", Background = "Red" } );
-            Graph.Categories.Add( new Category( ) { Id = "Terminal", Background = "LightSteelBlue" } );
+            Graph.Categories.Add( new Category() { Id = "TreeNode", Background = "White" } );
+            Graph.Categories.Add( new Category() { Id = "HasException", Background = "Red" } );
+            Graph.Categories.Add( new Category() { Id = "Terminal", Background = "LightSteelBlue" } );
             var style = new Style
             {
                 TargetType = "Node",
@@ -64,19 +64,19 @@ namespace Kaleidoscope.Grammar
         public override void VisitTerminal( ITerminalNode node )
         {
             string nodeName = KaleidoscopeLexer.DefaultVocabulary.GetDisplayName( node.Symbol.Type );
-            Graph.Nodes.Add( new Node( )
+            Graph.Nodes.Add( new Node()
             {
-                Id = node.GetUniqueNodeId( ),
+                Id = node.GetUniqueNodeId(),
                 Label = nodeName,
                 Category = "Terminal"
             } );
 
-            if( node.Parent != null )
+            if(node.Parent != null)
             {
-                Graph.Links.Add( new Link( )
+                Graph.Links.Add( new Link()
                 {
-                    Source = node.Parent.GetUniqueNodeId( ),
-                    Target = node.GetUniqueNodeId( )
+                    Source = node.Parent.GetUniqueNodeId(),
+                    Target = node.GetUniqueNodeId()
                 } );
             }
         }
@@ -84,9 +84,9 @@ namespace Kaleidoscope.Grammar
         public override void EnterEveryRule( ParserRuleContext context )
         {
             string typeName = context.GetType( ).Name;
-            Push( new Node( )
+            Push( new Node()
             {
-                Id = context.GetUniqueNodeId( ),
+                Id = context.GetUniqueNodeId(),
                 Label = typeName[ ..^ContextTypeNameSuffix.Length ],
                 Category = "TreeNode"
             } );
@@ -98,32 +98,32 @@ namespace Kaleidoscope.Grammar
 
             ActiveNode.Properties.Add( "Text", context.GetSourceText( Recognizer ) );
             ActiveNode.Properties.Add( "RuleIndex", context.RuleIndex );
-            ActiveNode.Properties.Add( "SourceInterval", context.SourceInterval.ToString( ) );
-            if( context.exception != null )
+            ActiveNode.Properties.Add( "SourceInterval", context.SourceInterval.ToString() );
+            if(context.exception != null)
             {
                 ActiveNode.Category = "HasException";
                 ActiveNode.Properties.Add( "Exception", context.exception );
             }
 
-            if( context.Parent != null )
+            if(context.Parent != null)
             {
-                Graph.Links.Add( new Link( )
+                Graph.Links.Add( new Link()
                 {
-                    Source = context.Parent.GetUniqueNodeId( ),
-                    Target = context.GetUniqueNodeId( )
+                    Source = context.Parent.GetUniqueNodeId(),
+                    Target = context.GetUniqueNodeId()
                 } );
             }
 
-            Pop( );
+            Pop();
         }
 
-        internal DirectedGraph Graph { get; } = new DirectedGraph( );
+        internal DirectedGraph Graph { get; } = new DirectedGraph();
 
-        private Node ActiveNode => NodeStack.Peek( );
+        private Node ActiveNode => NodeStack.Peek();
 
         private Node Pop( )
         {
-            return NodeStack.Pop( );
+            return NodeStack.Pop();
         }
 
         private void Push( Node element )

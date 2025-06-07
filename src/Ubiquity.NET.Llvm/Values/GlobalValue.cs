@@ -114,32 +114,32 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Gets or sets the visibility of this global value</summary>
         public Visibility Visibility
         {
-            get => ( Visibility )LLVMGetVisibility( Handle );
-            set => LLVMSetVisibility( Handle, ( LLVMVisibility )value );
+            get => (Visibility)LLVMGetVisibility( Handle );
+            set => LLVMSetVisibility( Handle, (LLVMVisibility)value );
         }
 
         /// <summary>Gets or sets the linkage specification for this symbol</summary>
         public Linkage Linkage
         {
-            get => ( Linkage )LLVMGetLinkage( Handle );
-            set => LLVMSetLinkage( Handle, ( LLVMLinkage )value );
+            get => (Linkage)LLVMGetLinkage( Handle );
+            set => LLVMSetLinkage( Handle, (LLVMLinkage)value );
         }
 
         /// <summary>Gets or sets a value indicating whether this is an Unnamed address</summary>
         public UnnamedAddressKind UnnamedAddress
         {
-            get => ( UnnamedAddressKind )LLVMGetUnnamedAddress( Handle );
-            set => LLVMSetUnnamedAddress( Handle, ( LLVMUnnamedAddr )value );
+            get => (UnnamedAddressKind)LLVMGetUnnamedAddress( Handle );
+            set => LLVMSetUnnamedAddress( Handle, (LLVMUnnamedAddr)value );
         }
 
         /// <summary>Gets a value indicating whether this is a declaration</summary>
         public bool IsDeclaration => LLVMIsDeclaration( Handle );
 
         /// <summary>Gets the ModuleHandle containing this global value</summary>
-        public IModule ParentModule => new ModuleAlias(LLVMGetGlobalParent( Handle ));
+        public IModule ParentModule => new ModuleAlias( LLVMGetGlobalParent( Handle ) );
 
         /// <summary>Gets the Value Type of this global value instance</summary>
-        public ITypeRef ValueType => LLVMGlobalGetValueType(Handle).CreateType();
+        public ITypeRef ValueType => LLVMGlobalGetValueType( Handle ).CreateType();
 
         internal GlobalValue( LLVMValueRef valueRef )
             : base( valueRef )

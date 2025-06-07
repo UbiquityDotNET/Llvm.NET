@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Values
             get
             {
                 var parent = LLVMGetBasicBlockParent( BlockHandle );
-                if( parent == default )
+                if(parent == default)
                 {
                     return null;
                 }
@@ -75,7 +75,7 @@ namespace Ubiquity.NET.Llvm.Values
             get
             {
                 var current = FirstInstruction;
-                while( current != null )
+                while(current != null)
                 {
                     yield return current;
                     current = GetNextInstruction( current );
@@ -91,7 +91,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             ArgumentNullException.ThrowIfNull( instruction );
 
-            if( !instruction.ContainingBlock.Equals( this ) )
+            if(!instruction.ContainingBlock.Equals( this ))
             {
                 throw new ArgumentException( Resources.Instruction_is_from_a_different_block, nameof( instruction ) );
             }

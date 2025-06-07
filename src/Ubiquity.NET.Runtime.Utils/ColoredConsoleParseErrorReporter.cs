@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Runtime.Utils
     public class ColoredConsoleParseErrorReporter
         : IParseErrorReporter
     {
-        /// <summary>Initializes a new instance of <see cref="ColoredConsoleParseErrorReporter"/></summary>
+        /// <summary>Initializes a new instance of the <see cref="ColoredConsoleParseErrorReporter"/> class</summary>
         /// <param name="origin">Origin of messages to report (Default is none)</param>
         /// <param name="formatProvider">Format provider to use (Default is <see cref="CultureInfo.CurrentCulture"/>)</param>
         /// <remarks>
@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// operating as a stand alone/AOT parser or code generation. In such a case errors generally refer to the input
         /// source file and conform to a platform defined standard for recognition by subsequent stages of the build tooling.
         /// </remarks>
-        public ColoredConsoleParseErrorReporter(string? origin = null, IFormatProvider? formatProvider = null)
+        public ColoredConsoleParseErrorReporter( string? origin = null, IFormatProvider? formatProvider = null )
         {
             origin ??= string.Empty;
             Origin = origin;
@@ -31,21 +31,21 @@ namespace Ubiquity.NET.Runtime.Utils
             FormatProvider = formatProvider;
         }
 
-        /// <summary>Origin of the messages</summary>
+        /// <summary>Gets the origin of the messages</summary>
         /// <remarks>This is either a single file or a an app name</remarks>
-        public string Origin {get; init;}
+        public string Origin { get; init; }
 
-        /// <summary>Format provider to use when formatting values to string</summary>
-        public IFormatProvider FormatProvider {get; init;}
+        /// <summary>Gets the format provider to use when formatting values to string</summary>
+        public IFormatProvider FormatProvider { get; init; }
 
         /// <inheritdoc/>
         public void ReportError( ErrorNode node )
         {
             ArgumentNullException.ThrowIfNull( node );
 
-            if(string.IsNullOrWhiteSpace(Origin))
+            if(string.IsNullOrWhiteSpace( Origin ))
             {
-                ReportError(node.ToString());
+                ReportError( node.ToString() );
             }
             else
             {
@@ -58,7 +58,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <inheritdoc/>
         public void ReportError( string msg )
         {
-            if( !string.IsNullOrWhiteSpace( msg ) )
+            if(!string.IsNullOrWhiteSpace( msg ))
             {
                 var color = Console.ForegroundColor;
                 try

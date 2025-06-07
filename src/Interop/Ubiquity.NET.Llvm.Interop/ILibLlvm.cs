@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Ubiquity.NET.Versioning;
+
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Interface to the core LLVM library itself</summary>
@@ -21,7 +23,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Registers components for the specified targets</summary>
         /// <param name="target">ResolverTarget architecture to register/initialize</param>
         /// <param name="registrations">Flags indicating which components for the target to register/enable</param>
-        void RegisterTarget(LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations = LibLLVMTargetRegistrationKind.TargetRegistration_CodeGen);
+        void RegisterTarget( LibLLVMCodeGenTarget target, LibLLVMTargetRegistrationKind registrations = LibLLVMTargetRegistrationKind.TargetRegistration_CodeGen );
 
         /// <summary>Gets the full list of all targets supported by this instance of the native library</summary>
         /// <remarks>
@@ -29,11 +31,15 @@ namespace Ubiquity.NET.Llvm.Interop
         /// is distinct from the registered targets. Registration of each top level enumerated target may indeed
         /// register support for more targets (e.g., ARM includes thumb big and little endian targets).
         /// </remarks>
-        ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets {get;}
+        ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets { get; }
 
         /// <summary>Gets version information for the library implementation</summary>
-        /// <param name="llvmVersion">Out param for the</param>
-        /// <returns></returns>
-        CSemVer GetVersionInfo();
+        /// <returns><see cref="CSemVer"/> for the native interop library</returns>
+        /// <remarks>
+        /// Not, since it is an extension of LLVM the version is NOT guaranteed to match that of LLVM itself. Though,
+        /// to avoid confusion it usually does and would only deviate when no option is available (Such as the extension
+        /// APIs changed even though LLVM itself did not)
+        /// </remarks>
+        CSemVer GetVersionInfo( );
     }
 }

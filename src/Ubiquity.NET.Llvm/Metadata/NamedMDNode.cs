@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.MetadataBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Metadata
 {
@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.Metadata
         public IList<MDNode> Operands { get; }
 
         /// <summary>Gets the module that owns this node</summary>
-        public IModule ParentModule => new ModuleAlias(LibLLVMNamedMetadataGetParentModule( NativeHandle ));
+        public IModule ParentModule => new ModuleAlias( LibLLVMNamedMetadataGetParentModule( NativeHandle ) );
 
         /// <summary>Erases this node from its parent</summary>
         public void EraseFromParent( ) => LibLLVMNamedMetadataEraseFromParent( NativeHandle );
@@ -48,27 +48,27 @@ namespace Ubiquity.NET.Llvm.Metadata
                 set
                 {
                     index.ThrowIfOutOfRange( 0, Count );
-                    LibLLVMNamedMDNodeSetOperand( OwningNode.NativeHandle, ( uint )index, value.Handle );
+                    LibLLVMNamedMDNodeSetOperand( OwningNode.NativeHandle, (uint)index, value.Handle );
                 }
             }
 
-            public int Count => ( int )LibLLVMNamedMDNodeGetNumOperands( OwningNode.NativeHandle );
+            public int Count => (int)LibLLVMNamedMDNodeGetNumOperands( OwningNode.NativeHandle );
 
             public IEnumerator<MDNode> GetEnumerator( )
             {
-                for( int i = 0; i < Count; ++i )
+                for(int i = 0; i < Count; ++i)
                 {
                     yield return this[ i ];
                 }
             }
 
-            IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator( );
+            IEnumerator IEnumerable.GetEnumerator( ) => GetEnumerator();
 
             public int IndexOf( MDNode item )
             {
-                for( int i = 0; i < Count; ++i )
+                for(int i = 0; i < Count; ++i)
                 {
-                    if( this[ i ].Equals( item ) )
+                    if(this[ i ].Equals( item ))
                     {
                         return i;
                     }
@@ -90,10 +90,10 @@ namespace Ubiquity.NET.Llvm.Metadata
 
             public bool Contains( MDNode item ) => this.Any( n => n.Equals( item ) );
 
-            public void CopyTo( MDNode[ ] array, int arrayIndex )
+            public void CopyTo( MDNode[] array, int arrayIndex )
             {
                 arrayIndex.ThrowIfOutOfRange( 0, array.Length - Count );
-                for( int i = 0; i < Count; ++i )
+                for(int i = 0; i < Count; ++i)
                 {
                     array[ i + arrayIndex ] = this[ i ];
                 }
@@ -101,17 +101,17 @@ namespace Ubiquity.NET.Llvm.Metadata
 
             public bool Remove( MDNode item )
             {
-                throw new NotSupportedException( );
+                throw new NotSupportedException();
             }
 
             public void Insert( int index, MDNode item )
             {
-                throw new NotSupportedException( );
+                throw new NotSupportedException();
             }
 
             public void RemoveAt( int index )
             {
-                throw new NotSupportedException( );
+                throw new NotSupportedException();
             }
 
             public bool IsReadOnly => false;

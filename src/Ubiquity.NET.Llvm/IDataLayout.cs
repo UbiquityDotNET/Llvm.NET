@@ -162,7 +162,7 @@ namespace Ubiquity.NET.Llvm
         /// needs to occur. This does have the overhead of making a copy of the strings contents as the
         /// lifetime of the underlying native string is generally unknown and thus not reliable.
         /// </remarks>
-        public LazyEncodedString ToLazyEncodedString();
+        public LazyEncodedString ToLazyEncodedString( );
 
         /// <summary>Gets the byte size of a type</summary>
         /// <param name="llvmType">Type to determine the size of</param>
@@ -188,20 +188,20 @@ namespace Ubiquity.NET.Llvm
 
     internal static class DataLayoutExtensions
     {
-        internal static LLVMTargetDataRefAlias GetUnownedHandle(this IDataLayout self)
+        internal static LLVMTargetDataRefAlias GetUnownedHandle( this IDataLayout self )
         {
             if(self is IHandleWrapper<LLVMTargetDataRefAlias> wrapper)
             {
                 return wrapper.Handle;
             }
-            else if (self is IGlobalHandleOwner<LLVMTargetDataRef> owner)
+            else if(self is IGlobalHandleOwner<LLVMTargetDataRef> owner)
             {
                 // implicitly cast to the alias handle
                 return owner.OwnedHandle;
             }
             else
             {
-                throw new ArgumentException("Internal Error - Unknown context type!", nameof(self));
+                throw new ArgumentException( "Internal Error - Unknown context type!", nameof( self ) );
             }
         }
     }

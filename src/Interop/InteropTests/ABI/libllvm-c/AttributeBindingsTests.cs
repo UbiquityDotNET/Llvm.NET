@@ -1,6 +1,13 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AttributeBindingsTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,13 +29,15 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         public void LibLLVMGetNumKnownAttribsTest( )
         {
             int len = checked((int)LibLLVMGetNumKnownAttribs());
+
             // Known count of attributes at time of this test
             // Changes are flagged by this test so that updates to consumers or release notes
             // can be made if applicable.
-            Assert.AreEqual(KnownAttributes.Count, len);
+            Assert.AreEqual( KnownAttributes.Count, len );
         }
 
         [TestMethod]
+        [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "ppData makes sense and matches the api" )]
         public void LibLLVMGetKnownAttributeNamesTest( )
         {
             int len = checked((int)LibLLVMGetNumKnownAttribs());
@@ -44,17 +53,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
                 {
                     // https://github.com/microsoft/testfx/issues/5543
 #pragma warning disable MSTEST0037 // Use proper 'Assert' methods
-                    Assert.IsTrue(ppData[i] is not null);
+                    Assert.IsTrue( ppData[ i ] is not null );
 #pragma warning restore MSTEST0037 // Use proper 'Assert' methods
 
                     var les = LazyEncodedString.FromUnmanaged(ppData[i]);
 
-                    actualNames[i] = LazyEncodedString.FromUnmanaged(ppData[i])!;
+                    actualNames[ i ] = LazyEncodedString.FromUnmanaged( ppData[ i ] )!;
                 }
 
                 foreach(var name in actualNames)
                 {
-                    Assert.IsTrue(KnownAttributes.ContainsKey(name), $"Attribute name not known: '{name}'");
+                    Assert.IsTrue( KnownAttributes.ContainsKey( name ), $"Attribute name not known: '{name}'" );
                 }
             }
         }
@@ -67,10 +76,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
             LazyEncodedString value = "custom value"u8;
 
             LLVMAttributeRef attribValue = LLVMCreateStringAttribute(ctx, name, value);
-            Assert.IsFalse(attribValue.IsNull);
+            Assert.IsFalse( attribValue.IsNull );
 
             string result = LibLLVMAttributeToString(attribValue);
-            Assert.AreEqual("\"custom\"=\"custom value\"", result);
+            Assert.AreEqual( "\"custom\"=\"custom value\"", result );
         }
 
         [TestMethod]
@@ -80,20 +89,21 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 
             // create and validate a known constant range attribute
             LLVMAttributeRef knownConstRangeAttrib = LLVMCreateConstantRangeAttribute(ctx, LLVMGetEnumAttributeKindForName("range"u8), 32, [0], [0x12345678]);
-            Assert.IsFalse(knownConstRangeAttrib.IsNull);
+            Assert.IsFalse( knownConstRangeAttrib.IsNull );
             string knownConstRangeAttribAsString = LibLLVMAttributeToString(knownConstRangeAttrib);
+
             // 0x12345678 = 305419896
-            Assert.AreEqual("range(i32 0, 305419896)", knownConstRangeAttribAsString);
+            Assert.AreEqual( "range(i32 0, 305419896)", knownConstRangeAttribAsString );
 
             // Create and validate an attribute that is known NOT to be a constant range
             LLVMAttributeRef enumAttrib = LLVMCreateEnumAttribute(ctx, LLVMGetEnumAttributeKindForName("builtin"u8), 0);
-            Assert.IsFalse(enumAttrib.IsNull);
+            Assert.IsFalse( enumAttrib.IsNull );
             string enumAttribAsString = LibLLVMAttributeToString(enumAttrib);
-            Assert.AreEqual("builtin", enumAttribAsString);
+            Assert.AreEqual( "builtin", enumAttribAsString );
 
             // Now actually test the API in question.
-            Assert.IsTrue(LibLLVMIsConstantRangeAttribute(knownConstRangeAttrib));
-            Assert.IsFalse(LibLLVMIsConstantRangeAttribute(enumAttrib));
+            Assert.IsTrue( LibLLVMIsConstantRangeAttribute( knownConstRangeAttrib ) );
+            Assert.IsFalse( LibLLVMIsConstantRangeAttribute( enumAttrib ) );
         }
 
         [SkipTestMethod]
@@ -116,7 +126,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         [TestMethod]
         public void LibLLVMGetAttributeInfoTest( )
         {
-            foreach(var kvp in KnownAttributes.OrderBy(kvp=>kvp.Value.ID))
+            foreach(var kvp in KnownAttributes.OrderBy( kvp => kvp.Value.ID ))
             {
                 using var err = LibLLVMGetAttributeInfo( kvp.Key, out LibLLVMAttributeInfo info );
                 err.ThrowIfFailed();
@@ -136,9 +146,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
             using LLVMErrorRef errorRef = LibLLVMGetAttributeInfo("custom"u8, out LibLLVMAttributeInfo customAttribinfo);
             errorRef.ThrowIfFailed();
 
-            Assert.AreEqual(0u, customAttribinfo.ID);
-            Assert.AreEqual(LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, customAttribinfo.ArgKind);
-            Assert.AreEqual(LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All, customAttribinfo.AllowedOn);
+            Assert.AreEqual( 0u, customAttribinfo.ID );
+            Assert.AreEqual( LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, customAttribinfo.ArgKind );
+            Assert.AreEqual( LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All, customAttribinfo.AllowedOn );
         }
 
         [TestMethod]
@@ -151,13 +161,14 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
             foreach(var kvp in knownEnumAttribs)
             {
                 var actualName = LibLLVMGetAttributeNameFromID(kvp.Value.ID);
-                Assert.IsNotNull(actualName, $"Name should not be null for ID: {kvp.Value.ID})");
-                Assert.AreEqual(kvp.Key, actualName, $"Name for ID: {kvp.Value.ID} should be '{kvp.Key})'");
+                Assert.IsNotNull( actualName, $"Name should not be null for ID: {kvp.Value.ID})" );
+                Assert.AreEqual( kvp.Key, actualName, $"Name for ID: {kvp.Value.ID} should be '{kvp.Key})'" );
             }
         }
 
-        private readonly static ImmutableDictionary<LazyEncodedString, LibLLVMAttributeInfo> KnownAttributes
-            = new DictionaryBuilder<LazyEncodedString, LibLLVMAttributeInfo> {
+        private static readonly ImmutableDictionary<LazyEncodedString, LibLLVMAttributeInfo> KnownAttributes
+            = new DictionaryBuilder<LazyEncodedString, LibLLVMAttributeInfo>
+            {
                 ["no-infs-fp-math"u8] = new(0, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All),
                 ["approx-func-fp-math"u8] = new(0, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All),
                 ["no-jump-tables"u8] = new(0, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All),
@@ -169,6 +180,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
                 ["unsafe-fp-math"u8] = new(0, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All),
                 ["use-sample-profile"u8] = new(0, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All),
                 ["no-inline-line-tables"u8] = new(0, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_String, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_All),
+
                 // First Enum attribute...
                 ["allocalign"u8] = new(1, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_None, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_Parameter),
                 ["allocptr"u8] = new(2, LibLLVMAttributeArgKind.LibLLVMAttributeArgKind_None, LibLLVMAttributeAllowedOn.LibLLVMAttributeAllowedOn_Parameter),
@@ -273,7 +285,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 
         // for a debug build, write the element entries for the "KnownAttributes"
         // This makes it easier to update that map AFTER validation of any changed values.
-        [Conditional("DEBUG")]
+        [Conditional( "DEBUG" )]
         private static void ShowKnownAttributesEntry( LazyEncodedString name, LibLLVMAttributeInfo info )
         {
             var flagValues = from val in info.AllowedOn.ToString().Split(',')

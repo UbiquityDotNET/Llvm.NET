@@ -1,14 +1,20 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="TargetRegistrationBindingsTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop.UT;
+using Ubiquity.NET.Versioning;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
 
+#pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
     [TestClass]
@@ -24,10 +30,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         public void LibLLVMGetNumTargetsTest( )
         {
             Int32 numTargets = LibLLVMGetNumTargets();
+
             // -3 to account for declared "None, Native, and ALL" values
             // not included in native methods.
             int expectedTargets = Enum.GetValues<LibLLVMCodeGenTarget>().Length - 3;
-            Assert.AreEqual(expectedTargets, numTargets);
+            Assert.AreEqual( expectedTargets, numTargets );
         }
 
         [TestMethod]
@@ -49,7 +56,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 
             foreach(var v in nativeTargets)
             {
-                Assert.IsTrue(targets.Contains(v), $"Target: {v} should be supported");
+                Assert.IsTrue( targets.Contains( v ), $"Target: {v} should be supported" );
             }
         }
 
@@ -57,17 +64,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         public void LibLLVMGetVersionTest( )
         {
             UInt64 ver = LibLLVMGetVersion();
-            Assert.IsTrue( ver > 0);
-            var csemVer  = CSemVer.FromUInt64(ver);
-            Assert.AreEqual(20u, csemVer.Major);
-            Assert.AreEqual(1u, csemVer.Minor);
+            Assert.IsTrue( ver > 0 );
+            var csemVer = CSemVer.From(ver);
+            Assert.AreEqual( 20, csemVer.Major );
+            Assert.AreEqual( 1, csemVer.Minor );
 
             // Testing for an exact match of the patch level (or anything finer grained than that)
             // in an automated test is dubious as it would require updating the tests on effectively
             // EVERY build of the native library... So, this tests for a minimum value that was valid
             // at the time of creation. The above major/minor values should be updated on changes to
             // those assumptions as any number of things may have changed.
-            Assert.IsTrue(4u <= csemVer.Patch);
+            Assert.IsTrue( csemVer.Patch >= 4 );
         }
     }
 }

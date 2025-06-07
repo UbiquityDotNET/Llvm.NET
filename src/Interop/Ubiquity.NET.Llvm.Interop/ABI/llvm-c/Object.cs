@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     public enum LLVMBinaryType
@@ -29,23 +33,23 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
     public static partial class Object
     {
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( DisposeMessageMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBinaryRef LLVMCreateBinary(LLVMMemoryBufferRef MemBuf, LLVMContextRefAlias Context, out string ErrorMessage);
+        public static unsafe partial LLVMBinaryRef LLVMCreateBinary( LLVMMemoryBufferRef MemBuf, LLVMContextRefAlias Context, out string ErrorMessage );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMDisposeBinary(LLVMBinaryRef BR);
+        public static unsafe partial void LLVMDisposeBinary( LLVMBinaryRef BR );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMemoryBufferRef LLVMBinaryCopyMemoryBuffer(LLVMBinaryRef BR);
+        public static unsafe partial LLVMMemoryBufferRef LLVMBinaryCopyMemoryBuffer( LLVMBinaryRef BR );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMBinaryType LLVMBinaryGetType(LLVMBinaryRef BR);
+        public static unsafe partial LLVMBinaryType LLVMBinaryGetType( LLVMBinaryRef BR );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMBinaryRef LLVMMachOUniversalBinaryCopyObjectForArch(
             LLVMBinaryRef BR,
             LazyEncodedString Arch,
@@ -54,7 +58,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         {
             return LLVMMachOUniversalBinaryCopyObjectForArch(
                 BR,
-                Arch, Arch.NativeStrLen,
+                Arch,
+                Arch.NativeStrLen,
                 out ErrorMessage
             );
         }
@@ -64,127 +69,127 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         private static unsafe partial LLVMBinaryRef LLVMMachOUniversalBinaryCopyObjectForArch(
             LLVMBinaryRef BR,
             LazyEncodedString Arch, nuint ArchLen,
-            [MarshalUsing(typeof(DisposeMessageMarshaller))] out string ErrorMessage
+            [MarshalUsing( typeof( DisposeMessageMarshaller ) )] out string ErrorMessage
             );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSectionIteratorRef LLVMObjectFileCopySectionIterator(LLVMBinaryRef BR);
+        public static unsafe partial LLVMSectionIteratorRef LLVMObjectFileCopySectionIterator( LLVMBinaryRef BR );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMObjectFileIsSectionIteratorAtEnd(LLVMBinaryRef BR, LLVMSectionIteratorRef SI);
+        public static unsafe partial bool LLVMObjectFileIsSectionIteratorAtEnd( LLVMBinaryRef BR, LLVMSectionIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSymbolIteratorRef LLVMObjectFileCopySymbolIterator(LLVMBinaryRef BR);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMObjectFileIsSymbolIteratorAtEnd(LLVMBinaryRef BR, LLVMSymbolIteratorRef SI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMMoveToNextSection(LLVMSectionIteratorRef SI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMMoveToContainingSection(LLVMSectionIteratorRef Sect, LLVMSymbolIteratorRef Sym);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMMoveToNextSymbol(LLVMSymbolIteratorRef SI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LazyEncodedString? LLVMGetSectionName(LLVMSectionIteratorRef SI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMGetSectionSize(LLVMSectionIteratorRef SI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial nint LLVMGetSectionContents(LLVMSectionIteratorRef SI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMGetSectionAddress(LLVMSectionIteratorRef SI);
+        public static unsafe partial LLVMSymbolIteratorRef LLVMObjectFileCopySymbolIterator( LLVMBinaryRef BR );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMGetSectionContainsSymbol(LLVMSectionIteratorRef SI, LLVMSymbolIteratorRef Sym);
+        public static unsafe partial bool LLVMObjectFileIsSymbolIteratorAtEnd( LLVMBinaryRef BR, LLVMSymbolIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMRelocationIteratorRef LLVMGetRelocations(LLVMSectionIteratorRef Section);
+        public static unsafe partial void LLVMMoveToNextSection( LLVMSectionIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMIsRelocationIteratorAtEnd(LLVMSectionIteratorRef Section, LLVMRelocationIteratorRef RI);
+        public static unsafe partial void LLVMMoveToContainingSection( LLVMSectionIteratorRef Sect, LLVMSymbolIteratorRef Sym );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMMoveToNextRelocation(LLVMRelocationIteratorRef RI);
+        public static unsafe partial void LLVMMoveToNextSymbol( LLVMSymbolIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LazyEncodedString? LLVMGetSymbolName(LLVMSymbolIteratorRef SI);
+        public static unsafe partial LazyEncodedString? LLVMGetSectionName( LLVMSectionIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMGetSymbolAddress(LLVMSymbolIteratorRef SI);
+        public static unsafe partial UInt64 LLVMGetSectionSize( LLVMSectionIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMGetSymbolSize(LLVMSymbolIteratorRef SI);
+        public static unsafe partial nint LLVMGetSectionContents( LLVMSectionIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMGetRelocationOffset(LLVMRelocationIteratorRef RI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSymbolIteratorRef LLVMGetRelocationSymbol(LLVMRelocationIteratorRef RI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMGetRelocationType(LLVMRelocationIteratorRef RI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(DisposeMessageMarshaller))]
-        public static unsafe partial LazyEncodedString LLVMGetRelocationTypeName(LLVMRelocationIteratorRef RI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(typeof(DisposeMessageMarshaller))]
-        public static unsafe partial LazyEncodedString LLVMGetRelocationValueString(LLVMRelocationIteratorRef RI);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMObjectFileRef LLVMCreateObjectFile(LLVMMemoryBufferRef MemBuf);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSectionIteratorRef LLVMGetSections(LLVMObjectFileRef ObjectFile);
+        public static unsafe partial UInt64 LLVMGetSectionAddress( LLVMSectionIteratorRef SI );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMIsSectionIteratorAtEnd(LLVMObjectFileRef ObjectFile, LLVMSectionIteratorRef SI);
+        public static unsafe partial bool LLVMGetSectionContainsSymbol( LLVMSectionIteratorRef SI, LLVMSymbolIteratorRef Sym );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMSymbolIteratorRef LLVMGetSymbols(LLVMObjectFileRef ObjectFile);
+        public static unsafe partial LLVMRelocationIteratorRef LLVMGetRelocations( LLVMSectionIteratorRef Section );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMIsSymbolIteratorAtEnd(LLVMObjectFileRef ObjectFile, LLVMSymbolIteratorRef SI);
+        public static unsafe partial bool LLVMIsRelocationIteratorAtEnd( LLVMSectionIteratorRef Section, LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LLVMMoveToNextRelocation( LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LazyEncodedString? LLVMGetSymbolName( LLVMSymbolIteratorRef SI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMGetSymbolAddress( LLVMSymbolIteratorRef SI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMGetSymbolSize( LLVMSymbolIteratorRef SI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMGetRelocationOffset( LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMSymbolIteratorRef LLVMGetRelocationSymbol( LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial UInt64 LLVMGetRelocationType( LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
+        public static unsafe partial LazyEncodedString LLVMGetRelocationTypeName( LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalUsing( typeof( DisposeMessageMarshaller ) )]
+        public static unsafe partial LazyEncodedString LLVMGetRelocationValueString( LLVMRelocationIteratorRef RI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMObjectFileRef LLVMCreateObjectFile( LLVMMemoryBufferRef MemBuf );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMSectionIteratorRef LLVMGetSections( LLVMObjectFileRef ObjectFile );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LLVMIsSectionIteratorAtEnd( LLVMObjectFileRef ObjectFile, LLVMSectionIteratorRef SI );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LLVMSymbolIteratorRef LLVMGetSymbols( LLVMObjectFileRef ObjectFile );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LLVMIsSymbolIteratorAtEnd( LLVMObjectFileRef ObjectFile, LLVMSymbolIteratorRef SI );
     }
 }

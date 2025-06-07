@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             // Create an instruction builder to work with and connect it to
             // a new entry block for the test function
             using LLVMBuilderRef testBuilder = LLVMCreateBuilderInContext(ctx);
-            LLVMPositionBuilderAtEnd(testBuilder, testBlock);
+            LLVMPositionBuilderAtEnd( testBuilder, testBlock );
 
             // Now build out some code...
             LLVMValueRef constOne = LLVMConstInt(intType, 1, false);
@@ -52,13 +52,13 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             //
             // Add (from above) is constant folded to a const, so not an instruction... Tests if
             // LibLLVMHasDbgRecords still returns false, however
-            Assert.AreEqual( LLVMValueKind.LLVMConstantIntValueKind, LLVMGetValueKind(r0));
-            Assert.IsFalse(LibLLVMHasDbgRecords(r0));
+            Assert.AreEqual( LLVMValueKind.LLVMConstantIntValueKind, LLVMGetValueKind( r0 ) );
+            Assert.IsFalse( LibLLVMHasDbgRecords( r0 ) );
 
             // Build a call to malloc that is guaranteed not to land in a const.
             LLVMValueRef mallocInst = LLVMBuildMalloc(testBuilder, intType, "malloc_1");
-            Assert.AreEqual( LLVMValueKind.LLVMInstructionValueKind, LLVMGetValueKind(mallocInst));
-            Assert.IsFalse(LibLLVMHasDbgRecords(mallocInst));
+            Assert.AreEqual( LLVMValueKind.LLVMInstructionValueKind, LLVMGetValueKind( mallocInst ) );
+            Assert.IsFalse( LibLLVMHasDbgRecords( mallocInst ) );
 
             // Now attach debug records to the malloc.
             // first create the information to attach (It's a lot...)
@@ -93,13 +93,14 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             // Now attach the record to the result of the malloc call
             // and retest the status as it should be different now
             LLVMDbgRecordRef dbgRecord = LLVMDIBuilderInsertDbgValueRecordBefore(diBuilder, mallocInst, int32PtrDiType, emptyExpression, diLocation, mallocInst);
-            Assert.IsTrue(LibLLVMHasDbgRecords(mallocInst));
+            Assert.IsTrue( LibLLVMHasDbgRecords( mallocInst ) );
+
             // this should not crash now... [It shouldn't ever but that's another story...]
             LLVMDbgRecordRef firstRecord = LLVMGetFirstDbgRecord(mallocInst);
-            Assert.AreEqual(dbgRecord, firstRecord);
-            Assert.IsFalse(firstRecord.IsNull);
+            Assert.AreEqual( dbgRecord, firstRecord );
+            Assert.IsFalse( firstRecord.IsNull );
             LLVMDbgRecordRef nxtRecord = LLVMGetNextDbgRecord(firstRecord);
-            Assert.IsTrue(nxtRecord.IsNull);
+            Assert.IsTrue( nxtRecord.IsNull );
         }
     }
 }

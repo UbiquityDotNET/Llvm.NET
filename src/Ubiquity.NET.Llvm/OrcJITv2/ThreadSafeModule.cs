@@ -13,13 +13,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
         public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
 
         /// <summary>Throws an <see cref="ObjectDisposedException"/> if <see cref="IsDisposed"/> is <see langword="true"/></summary>
-        public void ThrowIfIDisposed() => ObjectDisposedException.ThrowIf(IsDisposed, this);
+        public void ThrowIfIDisposed( ) => ObjectDisposedException.ThrowIf( IsDisposed, this );
 
         /// <summary>Delegate declaration for a generic operation on a module</summary>
         /// <param name="module">module to operate on</param>
@@ -29,11 +29,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// are caught and translated to an LLVMErrorRef for the native code so they do NOT
         /// pass up into the native layer as that knows nothing about managed code exceptions.
         /// </remarks>
-        public delegate ErrorInfo GenericModuleOperation(IModule module);
+        public delegate ErrorInfo GenericModuleOperation( IModule module );
 
         /// <summary>Performs an operation <paramref name="op"/> with a per thread module owned by this <see cref="ThreadSafeModule"/></summary>
         /// <param name="op">Operation to perform with the module</param>
-        public void WithPerThreadModule(GenericModuleOperation op)
+        public void WithPerThreadModule( GenericModuleOperation op )
         {
             ThrowIfIDisposed();
 
@@ -65,54 +65,54 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// usable after this except to dispose it (which is a NOP).
         /// </note>
         /// </remarks>
-        public ThreadSafeModule(ThreadSafeContext context, Module module)
-            : this(MakeHandle(context, module))
+        public ThreadSafeModule( ThreadSafeContext context, Module module )
+            : this( MakeHandle( context, module ) )
         {
             module.InvalidateFromMove();
         }
 
-        internal ThreadSafeModule(nint h, bool alias = false)
+        internal ThreadSafeModule( nint h, bool alias = false )
         {
-            Handle = new(h, !alias);
+            Handle = new( h, !alias );
         }
 
-        internal ThreadSafeModule(LLVMOrcThreadSafeModuleRef h)
+        internal ThreadSafeModule( LLVMOrcThreadSafeModuleRef h )
         {
             Handle = h.Move();
         }
 
         internal LLVMOrcThreadSafeModuleRef Handle { get; init; }
 
-        private static LLVMOrcThreadSafeModuleRef MakeHandle(ThreadSafeContext context, Module module)
+        private static LLVMOrcThreadSafeModuleRef MakeHandle( ThreadSafeContext context, Module module )
         {
-            ArgumentNullException.ThrowIfNull(context);
-            ArgumentNullException.ThrowIfNull(module);
+            ArgumentNullException.ThrowIfNull( context );
+            ArgumentNullException.ThrowIfNull( module );
 
             LLVMOrcThreadSafeModuleRef retVal = LLVMOrcCreateNewThreadSafeModule(module.GetOwnedHandle(), context.Handle);
             module.InvalidateFromMove();
             return retVal;
         }
 
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "All instances are created as an alias or 'moved' to native Dispose() not needed" )]
-        private static unsafe /*LLVMErrorRef*/ nint NativePerThreadModuleCallback(void* context, LLVMModuleRefAlias moduleHandle)
+        private static unsafe /*LLVMErrorRef*/ nint NativePerThreadModuleCallback( void* context, LLVMModuleRefAlias moduleHandle )
         {
             try
             {
-                if(!MarshalGCHandle.TryGet<GenericModuleOperation>(context, out GenericModuleOperation? self))
+                if(!MarshalGCHandle.TryGet<GenericModuleOperation>( context, out GenericModuleOperation? self ))
                 {
-                    return LLVMErrorRef.CreateForNativeOut("Internal Error: Invalid context provided for native callback"u8);
+                    return LLVMErrorRef.CreateForNativeOut( "Internal Error: Invalid context provided for native callback"u8 );
                 }
 
                 IModule mod = new ModuleAlias(moduleHandle);
                 return mod is not null
-                    ? self(mod).MoveToNative()
-                    : LLVMErrorRef.CreateForNativeOut("Internal Error: Could not create wrapped module for native method"u8);
+                    ? self( mod ).MoveToNative()
+                    : LLVMErrorRef.CreateForNativeOut( "Internal Error: Could not create wrapped module for native method"u8 );
             }
             catch(Exception ex)
             {
-                return LLVMErrorRef.CreateForNativeOut(ex.Message);
+                return LLVMErrorRef.CreateForNativeOut( ex.Message );
             }
         }
     }

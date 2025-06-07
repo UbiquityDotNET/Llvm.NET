@@ -54,7 +54,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var memberTypes = new DINode[DebugMembers.Count];
             for(int i = 0; i < DebugMembers.Count; ++i)
             {
-                memberTypes[i] = CreateMemberType( in diBuilder, DebugMembers[i] );
+                memberTypes[ i ] = CreateMemberType( in diBuilder, DebugMembers[ i ] );
             }
 
             var concreteType = diBuilder.CreateStructType( scope: scope
@@ -182,7 +182,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public string SourceName => DebugInfoType?.Name ?? string.Empty;
 
         /// <inheritdoc/>
-        public void SetBody( bool packed, params IEnumerable<ITypeRef> elements)
+        public void SetBody( bool packed, params IEnumerable<ITypeRef> elements )
         {
             NativeType.SetBody( packed, elements );
         }
@@ -243,7 +243,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var memberTypes = new DINode[DebugMembers.Count];
             for(int i = 0; i < DebugMembers.Count; ++i)
             {
-                memberTypes[i] = CreateMemberType( in diBuilder, DebugMembers[i]);
+                memberTypes[ i ] = CreateMemberType( in diBuilder, DebugMembers[ i ] );
             }
 
             var concreteType = diBuilder.CreateStructType( scope: scope
@@ -260,11 +260,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         }
 
         /// <summary>Gets a list of descriptors for each members</summary>
-        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>( ).AsReadOnly( );
+        public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>().AsReadOnly();
 
         private DIDerivedType CreateMemberType( ref readonly DIBuilder diBuilder, DebugMemberInfo memberInfo )
         {
-            if( DebugInfoType == null )
+            if(DebugInfoType == null)
             {
                 throw new InvalidOperationException( Resources.Type_does_not_have_associated_Debug_type_from_which_to_construct_a_Member );
             }
@@ -275,7 +275,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
             // if explicit layout info provided, use it;
             // otherwise use module.Layout as the default
-            if( memberInfo.ExplicitLayout != null )
+            if(memberInfo.ExplicitLayout != null)
             {
                 bitSize = memberInfo.ExplicitLayout.BitSize;
                 bitAlign = memberInfo.ExplicitLayout.BitAlignment;

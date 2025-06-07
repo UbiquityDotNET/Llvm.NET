@@ -20,22 +20,22 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatRef LLVMGetOrInsertComdat(LLVMModuleRef M, LazyEncodedString Name);
+        public static unsafe partial LLVMComdatRef LLVMGetOrInsertComdat( LLVMModuleRef M, LazyEncodedString Name );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatRef LLVMGetComdat(LLVMValueRef V);
+        public static unsafe partial LLVMComdatRef LLVMGetComdat( LLVMValueRef V );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetComdat(LLVMValueRef V, LLVMComdatRef C);
+        public static unsafe partial void LLVMSetComdat( LLVMValueRef V, LLVMComdatRef C );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMComdatSelectionKind LLVMGetComdatSelectionKind(LLVMComdatRef C);
+        public static unsafe partial LLVMComdatSelectionKind LLVMGetComdatSelectionKind( LLVMComdatRef C );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetComdatSelectionKind(LLVMComdatRef C, LLVMComdatSelectionKind Kind);
+        public static unsafe partial void LLVMSetComdatSelectionKind( LLVMComdatRef C, LLVMComdatSelectionKind Kind );
     }
 }

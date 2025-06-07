@@ -153,9 +153,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <summary>Enables debug support in the JIT</summary>
         /// <remarks>
-        /// This installs the plugin that submits debug objects to the executor. Executors must
+        /// This installs the plug-in that submits debug objects to the executor. Executors must
         /// expose the llvm_orc_registerJITLoaderGDBWrapper symbol.
-        ///</remarks>
+        /// </remarks>
         public void EnableDebugSupport( )
         {
             using var err = LLVMOrcLLJITEnableDebugSupport( Handle );

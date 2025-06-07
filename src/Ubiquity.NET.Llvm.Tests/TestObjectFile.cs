@@ -36,9 +36,9 @@ namespace Ubiquity.NET.Llvm.UT
             using var llvmContext = new Context( );
             using var module = llvmContext.CreateBitcodeModule( "test" );
             using var diBuilder = new DIBuilder(module);
-            _ = diBuilder.CreateCompileUnit(SourceLanguage.C, TestSrcFileName, "unit tests");
-            Assert.IsTrue(module.CompileUnits.Any());
-            Assert.IsNotNull(diBuilder.CompileUnit);
+            _ = diBuilder.CreateCompileUnit( SourceLanguage.C, TestSrcFileName, "unit tests" );
+            Assert.IsTrue( module.CompileUnits.Any() );
+            Assert.IsNotNull( diBuilder.CompileUnit );
 
             using var hostTriple = Triple.GetHostTriple();
             using var tm = TargetMachine.FromTriple( hostTriple );
@@ -52,7 +52,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var printDecl = module.CreateFunction( in diBuilder, PrintFuncName, false, voidType, doubleType );
 
-            using(var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, AddFuncName, AddSectionName, 0))
+            using(var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, AddFuncName, AddSectionName, 0 ))
             {
                 bldr.CurrentDebugLocation = new DILocation( llvmContext, 2, 1, bldr.InsertFunction!.DISubProgram! );
                 var result = bldr.FAdd( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
@@ -76,7 +76,7 @@ namespace Ubiquity.NET.Llvm.UT
                 bldr.Return( result );
             }
 
-            using( var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, DivFuncName, DivSectionName, 15 ))
+            using(var bldr = CreateFunctionAndGetBuilder( in diBuilder, module, doubleType, DivFuncName, DivSectionName, 15 ))
             {
                 bldr.CurrentDebugLocation = new DILocation( llvmContext, 17, 1, bldr.InsertFunction!.DISubProgram! );
                 var result = bldr.FDiv( bldr.InsertFunction.Parameters[ 0 ], bldr.InsertFunction.Parameters[ 1 ] );
@@ -84,7 +84,7 @@ namespace Ubiquity.NET.Llvm.UT
                 bldr.Return( result );
             }
 
-            Debug.WriteLine( module.WriteToString( ) );
+            Debug.WriteLine( module.WriteToString() );
             tm.EmitToFile( module, TestObjFileName, CodeGenFileKind.ObjectFile );
         }
 
@@ -138,19 +138,19 @@ namespace Ubiquity.NET.Llvm.UT
                                           || sec.Name == DivSectionName
                                    select sec;
 
-            foreach( var sec in declaredSections )
+            foreach(var sec in declaredSections)
             {
-                Assert.AreEqual( PrintFuncName, sec.Relocations.First( ).Symbol.Name );
+                Assert.AreEqual( PrintFuncName, sec.Relocations.First().Symbol.Name );
             }
         }
 
-        [ClassCleanup(ClassCleanupBehavior.EndOfClass)]
+        [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
         public static void Cleanup( )
         {
             System.IO.File.Delete( TestObjFileName );
         }
 
-        private static InstructionBuilder CreateFunctionAndGetBuilder(ref readonly DIBuilder diBuilder, Module module, DebugBasicType doubleType, string name, string section, uint line )
+        private static InstructionBuilder CreateFunctionAndGetBuilder( ref readonly DIBuilder diBuilder, Module module, DebugBasicType doubleType, string name, string section, uint line )
         {
             DIFile file = diBuilder.CreateFile(TestSrcFileName);
 

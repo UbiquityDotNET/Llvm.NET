@@ -1,4 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// -----------------------------------------------------------------------
+// <copyright file="MarshalGCHandle.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.InteropHelpers
@@ -28,9 +34,9 @@ namespace Ubiquity.NET.InteropHelpers
         /// is effectively moot. So call sites should always specify the generic type parameter <typeparamref name="T"/> explicitly.
         /// </note>
         /// </remarks>
-        public static unsafe bool TryGet<T>(void* ctx, [MaybeNullWhen(false)] out T value)
+        public static unsafe bool TryGet<T>( void* ctx, [MaybeNullWhen( false )] out T value )
         {
-            if (ctx is not null && GCHandle.FromIntPtr( (nint)ctx ).Target is T self)
+            if(ctx is not null && GCHandle.FromIntPtr( (nint)ctx ).Target is T self)
             {
                 value = self;
                 return true;

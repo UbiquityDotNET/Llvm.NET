@@ -27,7 +27,7 @@ namespace Kaleidoscope.Chapter3_5
         , IDisposable
         , ICodeGenerator<Value>
     {
-        public CodeGenerator(DynamicRuntimeState globalState)
+        public CodeGenerator( DynamicRuntimeState globalState )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -43,14 +43,14 @@ namespace Kaleidoscope.Chapter3_5
             InstructionBuilder = new InstructionBuilder( Context );
         }
 
-        public void Dispose()
+        public void Dispose( )
         {
             Module.Dispose();
             InstructionBuilder.Dispose();
             Context.Dispose();
         }
 
-        public Value? Generate(IAstNode ast)
+        public Value? Generate( IAstNode ast )
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -64,17 +64,17 @@ namespace Kaleidoscope.Chapter3_5
             }
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
-            return function.ParentModule.Verify(out string msg) ? (Value)function : throw new CodeGeneratorException(msg);
+            return function.ParentModule.Verify( out string msg ) ? (Value)function : throw new CodeGeneratorException( msg );
         }
 
-        public override Value? Visit(ConstantExpression constant)
+        public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
             return Context.CreateConstant( constant.Value );
         }
 
-        public override Value? Visit(BinaryOperatorExpression binaryOperator)
+        public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
@@ -124,7 +124,7 @@ namespace Kaleidoscope.Chapter3_5
             }
         }
 
-        public override Value? Visit(FunctionCallExpression functionCall)
+        public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
 
@@ -148,7 +148,7 @@ namespace Kaleidoscope.Chapter3_5
         }
 
         #region FunctionDefinition
-        public override Value? Visit(FunctionDefinition definition)
+        public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
 
@@ -184,7 +184,7 @@ namespace Kaleidoscope.Chapter3_5
         }
         #endregion
 
-        public override Value? Visit(VariableReferenceExpression reference)
+        public override Value? Visit( VariableReferenceExpression reference )
         {
             ArgumentNullException.ThrowIfNull( reference );
 
@@ -203,7 +203,7 @@ namespace Kaleidoscope.Chapter3_5
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction(Prototype prototype)
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
             if(Module.TryGetFunction( prototype.Name, out Function? function ))
             {

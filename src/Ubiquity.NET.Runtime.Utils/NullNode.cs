@@ -28,10 +28,10 @@ namespace Ubiquity.NET.Runtime.Utils
         }
 
         /// <inheritdoc/>
-        public virtual TResult? Accept<TResult, TArg>(IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
+        public virtual TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TArg : struct, allows ref struct
         {
-            ArgumentNullException.ThrowIfNull(visitor);
+            ArgumentNullException.ThrowIfNull( visitor );
             return default;
         }
 

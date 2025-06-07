@@ -7,15 +7,12 @@ namespace Ubiquity.NET.Llvm.Interop
     /// <summary>Internal static 'utility' class to handle resolving the correct binary library to use</summary>
     internal static class NativeLibraryResolver
     {
-        private static NativeLibraryHandle NativeLibHandle = new();
-        private static bool ResolverApplied = false;
-
         // !!NOTHING in this method may use P/Invoke to the native LLVM library (Ubiquity.NET.LibLLVM)!!
         //
         // This sets up the resolver AND the values it requires - interop calls may not
         // occur until that is complete. [They are guaranteed to fail (App Crash)!]
         // Returns if the resolver was applied in this call or false if already applied
-        internal static bool Apply()
+        internal static bool Apply( )
         {
             // Only setup an import resolver once per process. Multiple attempts would result in an exception.
             // This translates such a case into a return of 'false'. Once a library is loaded it cannot be
@@ -23,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // has the module and the address of the symbol it replaces the P/Invoke in the same way that
             // native code replaces the thunk for a dllimport. That is, once the address of the exported symbol
             // is known, no further resolution is used.
-            if(Interlocked.CompareExchange(ref ResolverApplied, true, false))
+            if(Interlocked.CompareExchange( ref ResolverApplied, true, false ))
             {
                 return false;
             }
@@ -61,13 +58,13 @@ namespace Ubiquity.NET.Llvm.Interop
 #pragma warning disable CS8601 // Possible null reference assignment.
                 // Should NOT dispose previous as it already is tested for invalid (Known null here)
                 // NOT a null reference as the result of the "try" pattern is tested.
-                if (!NativeLibraryHandle.TryLoad(relativePath, assembly, DllImportSearchPath.AssemblyDirectory, out NativeLibHandle))
+                if(!NativeLibraryHandle.TryLoad( relativePath, assembly, DllImportSearchPath.AssemblyDirectory, out NativeLibHandle ))
                 {
                     // Not found using the normal JIT location, BUT AOT will place it in the same
                     // location as the exe, so test for that..
-                    if(!NativeLibraryHandle.TryLoad(libraryName, assembly, DllImportSearchPath.AssemblyDirectory, out NativeLibHandle))
+                    if(!NativeLibraryHandle.TryLoad( libraryName, assembly, DllImportSearchPath.AssemblyDirectory, out NativeLibHandle ))
                     {
-                        throw new InvalidOperationException("Required LibLLVM native library does not exist!");
+                        throw new InvalidOperationException( "Required LibLLVM native library does not exist!" );
                     }
                 }
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -76,5 +73,8 @@ namespace Ubiquity.NET.Llvm.Interop
 
             return NativeLibHandle.DangerousGetHandle();
         }
+
+        private static NativeLibraryHandle NativeLibHandle = new();
+        private static bool ResolverApplied = false;
     }
 }

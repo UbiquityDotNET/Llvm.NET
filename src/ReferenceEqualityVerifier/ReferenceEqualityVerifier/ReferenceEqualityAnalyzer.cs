@@ -37,7 +37,7 @@ namespace ReferenceEqualityVerifier
             context.RegisterOperationAction( BinaryOpAction, OperationKind.Binary );
         }
 
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification="No loss of information, exception is converted to a diagnostic")]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "No loss of information, exception is converted to a diagnostic" )]
         private void BinaryOpAction( OperationAnalysisContext context )
         {
             try
@@ -77,13 +77,13 @@ namespace ReferenceEqualityVerifier
 
                 // If either one is a value type, not a relevant comparison for this analyzer
                 // NOTE: Mixed types is a syntax error but not one reported by this analyzer.
-                if( lht.IsValueType || rht.IsValueType)
+                if(lht.IsValueType || rht.IsValueType)
                 {
                     return;
                 }
 
                 // is at least one of the types declared in the namespace of interest for this analyzer?
-                if(!IsDeclaredInNamespace( lht, RelevantNamespaceName) && !IsDeclaredInNamespace(rht, RelevantNamespaceName))
+                if(!IsDeclaredInNamespace( lht, RelevantNamespaceName ) && !IsDeclaredInNamespace( rht, RelevantNamespaceName ))
                 {
                     return;
                 }
@@ -100,7 +100,7 @@ namespace ReferenceEqualityVerifier
             }
         }
 
-        private static bool IsDeclaredInNamespace( ITypeSymbol typeSym, string namespaceName)
+        private static bool IsDeclaredInNamespace( ITypeSymbol typeSym, string namespaceName )
         {
             return GetNamespaceNames( typeSym ).Contains( namespaceName );
         }
@@ -145,7 +145,7 @@ namespace ReferenceEqualityVerifier
 
         private static bool IsDerivedFrom( ITypeSymbol derivedType, ITypeSymbol testBaseType )
         {
-            if (testBaseType.TypeKind == TypeKind.Interface)
+            if(testBaseType.TypeKind == TypeKind.Interface)
             {
                 return derivedType.AllInterfaces.Contains( testBaseType, SymbolEqualityComparer.Default );
             }

@@ -20,7 +20,7 @@ namespace Kaleidoscope.Grammar
         protected override void ReportFailedPredicate( Antlr4.Runtime.Parser recognizer, FailedPredicateException e )
         {
             ArgumentNullException.ThrowIfNull( e );
-            switch( e.Predicate )
+            switch(e.Predicate)
             {
             case "FeatureControlFlow":
                 NotifyErrorListeners( recognizer, "Control flow expressions not supported in this version of the language", e );

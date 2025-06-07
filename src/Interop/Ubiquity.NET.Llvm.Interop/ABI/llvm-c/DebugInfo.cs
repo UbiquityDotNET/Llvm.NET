@@ -4,6 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
+// IN semantics arrays and the length of that array are placed on a single line for clarity
+#pragma warning disable SA1117 // Parameters should be on same line or separate lines
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     [Flags]
@@ -182,34 +189,34 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMDebugMetadataVersion();
+        public static unsafe partial uint LLVMDebugMetadataVersion( );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMGetModuleDebugMetadataVersion(LLVMModuleRefAlias Module);
+        public static unsafe partial uint LLVMGetModuleDebugMetadataVersion( LLVMModuleRefAlias Module );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LLVMStripModuleDebugInfo(LLVMModuleRefAlias Module);
+        public static unsafe partial bool LLVMStripModuleDebugInfo( LLVMModuleRefAlias Module );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilderDisallowUnresolved(LLVMModuleRefAlias M);
+        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilderDisallowUnresolved( LLVMModuleRefAlias M );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilder(LLVMModuleRefAlias M);
+        public static unsafe partial LLVMDIBuilderRef LLVMCreateDIBuilder( LLVMModuleRefAlias M );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMDIBuilderFinalize(LLVMDIBuilderRef Builder);
+        public static unsafe partial void LLVMDIBuilderFinalize( LLVMDIBuilderRef Builder );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMDIBuilderFinalizeSubprogram(LLVMDIBuilderRef Builder, LLVMMetadataRef Subprogram);
+        public static unsafe partial void LLVMDIBuilderFinalizeSubprogram( LLVMDIBuilderRef Builder, LLVMMetadataRef Subprogram );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateCompileUnit(
             LLVMDIBuilderRef Builder,
             LLVMDWARFSourceLanguage Lang,
@@ -264,10 +271,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString? SDK, nuint SDKLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LLVMMetadataRef LLVMDIBuilderCreateFile(LLVMDIBuilderRef Builder, LazyEncodedString Filename, LazyEncodedString Directory)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMMetadataRef LLVMDIBuilderCreateFile( LLVMDIBuilderRef Builder, LazyEncodedString Filename, LazyEncodedString Directory )
         {
-            return LLVMDIBuilderCreateFile(Builder, Filename, Filename.NativeStrLen, Directory, Directory.NativeStrLen);
+            return LLVMDIBuilderCreateFile( Builder, Filename, Filename.NativeStrLen, Directory, Directory.NativeStrLen );
         }
 
         [LibraryImport( LibraryName )]
@@ -278,7 +285,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString Directory, nuint DirectoryLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateModule(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef ParentScope,
@@ -309,7 +316,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString APINotesFile, nuint APINotesFileLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateNameSpace(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef ParentScope,
@@ -317,7 +324,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [MarshalAs( UnmanagedType.Bool )] bool ExportSymbols
             )
         {
-            return LLVMDIBuilderCreateNameSpace(Builder, ParentScope, Name, Name.NativeStrLen, ExportSymbols);
+            return LLVMDIBuilderCreateNameSpace( Builder, ParentScope, Name, Name.NativeStrLen, ExportSymbols );
         }
 
         [LibraryImport( LibraryName )]
@@ -329,7 +336,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [MarshalAs( UnmanagedType.Bool )] bool ExportSymbols
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateFunction(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -415,9 +422,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef ImportedEntity,
             LLVMMetadataRef File,
             uint Line,
-            // There is no marshalling attribute for the length, NumElements MUST be <= Elements.Length
             [In] LLVMMetadataRef[] Elements,
-            uint NumElements
+            uint NumElements // NumElements MUST be <= Elements.Length
             );
 
         [LibraryImport( LibraryName )]
@@ -428,12 +434,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef M,
             LLVMMetadataRef File,
             uint Line,
-            // There is no marshalling attribute for the length, NumElements MUST be <= Elements.Length
             [In] LLVMMetadataRef[] Elements,
-            uint NumElements
+            uint NumElements // NumElements MUST be <= Elements.Length
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateImportedDeclaration(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -464,9 +469,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef File,
             uint Line,
             LazyEncodedString Name, nuint NameLen,
-            // There is no marshalling attribute for the length, NumElements MUST be <= Elements.Length
             [In] LLVMMetadataRef[] Elements,
-            uint NumElements
+            uint NumElements // NumElements MUST be <= Elements.Length
             );
 
         [LibraryImport( LibraryName )]
@@ -481,26 +485,26 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMDILocationGetLine(LLVMMetadataRef Location);
+        public static unsafe partial uint LLVMDILocationGetLine( LLVMMetadataRef Location );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMDILocationGetColumn(LLVMMetadataRef Location);
+        public static unsafe partial uint LLVMDILocationGetColumn( LLVMMetadataRef Location );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDILocationGetScope(LLVMMetadataRef Location);
+        public static unsafe partial LLVMMetadataRef LLVMDILocationGetScope( LLVMMetadataRef Location );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDILocationGetInlinedAt(LLVMMetadataRef Location);
+        public static unsafe partial LLVMMetadataRef LLVMDILocationGetInlinedAt( LLVMMetadataRef Location );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIScopeGetFile(LLVMMetadataRef Scope);
+        public static unsafe partial LLVMMetadataRef LLVMDIScopeGetFile( LLVMMetadataRef Scope );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LLVMDIFileGetDirectory(LLVMMetadataRef File)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LLVMDIFileGetDirectory( LLVMMetadataRef File )
         {
             unsafe
             {
@@ -511,49 +515,48 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LLVMDIFileGetDirectory(LLVMMetadataRef File, out uint Len);
+        private static unsafe partial byte* LLVMDIFileGetDirectory( LLVMMetadataRef File, out uint Len );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LLVMDIFileGetFilename(LLVMMetadataRef File)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LLVMDIFileGetFilename( LLVMMetadataRef File )
         {
             unsafe
             {
                 byte* p = LLVMDIFileGetFilename(File, out uint len);
-                return LazyEncodedString.FromUnmanaged(p, len);
+                return LazyEncodedString.FromUnmanaged( p, len );
             }
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LLVMDIFileGetFilename(LLVMMetadataRef File, out uint Len);
+        private static unsafe partial byte* LLVMDIFileGetFilename( LLVMMetadataRef File, out uint Len );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LLVMDIFileGetSource(LLVMMetadataRef File)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LLVMDIFileGetSource( LLVMMetadataRef File )
         {
             unsafe
             {
                 byte* p = LLVMDIFileGetSource(File, out uint len);
-                return LazyEncodedString.FromUnmanaged(p, len);
+                return LazyEncodedString.FromUnmanaged( p, len );
             }
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LLVMDIFileGetSource(LLVMMetadataRef File, out uint Len);
+        private static unsafe partial byte* LLVMDIFileGetSource( LLVMMetadataRef File, out uint Len );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray(LLVMDIBuilderRef Builder, LLVMMetadataRef[] Data)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray( LLVMDIBuilderRef Builder, LLVMMetadataRef[] Data )
         {
-            return LLVMDIBuilderGetOrCreateTypeArray(Builder, Data, checked((nuint)Data.LongLength));
+            return LLVMDIBuilderGetOrCreateTypeArray( Builder, Data, checked((nuint)Data.LongLength) );
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateTypeArray(
             LLVMDIBuilderRef Builder,
-            // There is no marshal attribute for the length; NumElements MUST be <= Data.Length
             [In] LLVMMetadataRef[] Data,
-            nuint NumElements
+            nuint NumElements // NumElements MUST be <= Data.Length
             );
 
         [LibraryImport( LibraryName )]
@@ -561,13 +564,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef File,
-            // There is no marshal attribute for the length; NumParameterTypes MUST be <= ParameterTypes.Length
             [In] LLVMMetadataRef[] ParameterTypes,
-            uint NumParameterTypes,
+            uint NumParameterTypes, // NumParameterTypes MUST be <= ParameterTypes.Length
             LLVMDIFlags Flags
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateMacro(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef ParentMacroFile,
@@ -600,9 +602,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile(LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMMetadataRef File);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile( LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMMetadataRef File );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateEnumerator(
             LLVMDIBuilderRef Builder,
             LazyEncodedString Name,
@@ -627,7 +629,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [MarshalAs( UnmanagedType.Bool )] bool IsUnsigned
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateEnumerationType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -668,7 +670,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef ClassTy
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateUnionType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -736,13 +738,13 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             uint NumSubscripts
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateUnspecifiedType(
             LLVMDIBuilderRef Builder,
             LazyEncodedString Name
             )
         {
-            return LLVMDIBuilderCreateUnspecifiedType(Builder, Name, Name.NativeStrLen);
+            return LLVMDIBuilderCreateUnspecifiedType( Builder, Name, Name.NativeStrLen );
         }
 
         [LibraryImport( LibraryName )]
@@ -752,7 +754,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString Name, nuint NameLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateBasicType(
             LLVMDIBuilderRef Builder,
             LazyEncodedString Name,
@@ -780,7 +782,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMDIFlags Flags
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreatePointerType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef PointeeTy,
@@ -811,7 +813,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString? Name, nuint NameLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateStructType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -863,7 +865,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString UniqueId, nuint UniqueIdLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateMemberType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -906,7 +908,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef Ty
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateStaticMemberType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -957,7 +959,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMDIFlags Flags
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateObjCIVar(
             LLVMDIBuilderRef Builder,
             LazyEncodedString Name,
@@ -1000,7 +1002,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef PropertyNode
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateObjCProperty(
             LLVMDIBuilderRef Builder,
             LazyEncodedString Name,
@@ -1047,17 +1049,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateQualifiedType(LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateQualifiedType( LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReferenceType(LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateReferenceType( LLVMDIBuilderRef Builder, uint Tag, LLVMMetadataRef Type );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNullPtrType(LLVMDIBuilderRef Builder);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateNullPtrType( LLVMDIBuilderRef Builder );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateTypedef(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Type,
@@ -1102,7 +1104,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMDIFlags Flags
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateForwardDecl(
             LLVMDIBuilderRef Builder,
             uint Tag,
@@ -1145,7 +1147,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString UniqueIdentifier, nuint UniqueIdentifierLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateReplaceableCompositeType(
             LLVMDIBuilderRef Builder,
             uint Tag,
@@ -1191,7 +1193,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString UniqueIdentifier, nuint UniqueIdentifierLen
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateBitFieldMemberType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -1234,7 +1236,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMMetadataRef Type
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateClassType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -1291,50 +1293,50 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArtificialType(LLVMDIBuilderRef Builder, LLVMMetadataRef Type);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateArtificialType( LLVMDIBuilderRef Builder, LLVMMetadataRef Type );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LLVMDITypeGetName(LLVMMetadataRef DType)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LLVMDITypeGetName( LLVMMetadataRef DType )
         {
             unsafe
             {
                 byte* p = LLVMDITypeGetName(DType, out nuint len);
-                return LazyEncodedString.FromUnmanaged(p, len);
+                return LazyEncodedString.FromUnmanaged( p, len );
             }
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LLVMDITypeGetName(LLVMMetadataRef DType, out nuint Length);
+        private static unsafe partial byte* LLVMDITypeGetName( LLVMMetadataRef DType, out nuint Length );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMDITypeGetSizeInBits(LLVMMetadataRef DType);
+        public static unsafe partial UInt64 LLVMDITypeGetSizeInBits( LLVMMetadataRef DType );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LLVMDITypeGetOffsetInBits(LLVMMetadataRef DType);
+        public static unsafe partial UInt64 LLVMDITypeGetOffsetInBits( LLVMMetadataRef DType );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt32 LLVMDITypeGetAlignInBits(LLVMMetadataRef DType);
+        public static unsafe partial UInt32 LLVMDITypeGetAlignInBits( LLVMMetadataRef DType );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMDITypeGetLine(LLVMMetadataRef DType);
+        public static unsafe partial uint LLVMDITypeGetLine( LLVMMetadataRef DType );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDIFlags LLVMDITypeGetFlags(LLVMMetadataRef DType);
+        public static unsafe partial LLVMDIFlags LLVMDITypeGetFlags( LLVMMetadataRef DType );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateSubrange(LLVMDIBuilderRef Builder, Int64 LowerBound, Int64 Count);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderGetOrCreateSubrange( LLVMDIBuilderRef Builder, Int64 LowerBound, Int64 Count );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LLVMMetadataRef LLVMDIBuilderGetOrCreateArray(LLVMDIBuilderRef Builder, LLVMMetadataRef[] Data)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMMetadataRef LLVMDIBuilderGetOrCreateArray( LLVMDIBuilderRef Builder, LLVMMetadataRef[] Data )
         {
-            return LLVMDIBuilderGetOrCreateArray(Builder, Data, checked((nuint)Data.LongLength));
+            return LLVMDIBuilderGetOrCreateArray( Builder, Data, checked((nuint)Data.LongLength) );
         }
 
         [LibraryImport( LibraryName )]
@@ -1344,21 +1346,21 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [In] LLVMMetadataRef[] Data, nuint NumElements
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LLVMMetadataRef LLVMDIBuilderCreateExpression(LLVMDIBuilderRef Builder, UInt64[] Addr)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMMetadataRef LLVMDIBuilderCreateExpression( LLVMDIBuilderRef Builder, UInt64[] Addr )
         {
-            return LLVMDIBuilderCreateExpression(Builder, Addr, checked((nuint)Addr.LongLength));
+            return LLVMDIBuilderCreateExpression( Builder, Addr, checked((nuint)Addr.LongLength) );
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateExpression(LLVMDIBuilderRef Builder, [In] UInt64[] Addr, nuint Length);
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateExpression( LLVMDIBuilderRef Builder, [In] UInt64[] Addr, nuint Length );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateConstantValueExpression(LLVMDIBuilderRef Builder, UInt64 Value);
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateConstantValueExpression( LLVMDIBuilderRef Builder, UInt64 Value );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateGlobalVariableExpression(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -1406,41 +1408,41 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt16 LLVMGetDINodeTag(LLVMMetadataRef MD);
+        public static unsafe partial UInt16 LLVMGetDINodeTag( LLVMMetadataRef MD );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetVariable(LLVMMetadataRef GVE);
+        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetVariable( LLVMMetadataRef GVE );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetExpression(LLVMMetadataRef GVE);
+        public static unsafe partial LLVMMetadataRef LLVMDIGlobalVariableExpressionGetExpression( LLVMMetadataRef GVE );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetFile(LLVMMetadataRef Var);
+        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetFile( LLVMMetadataRef Var );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetScope(LLVMMetadataRef Var);
+        public static unsafe partial LLVMMetadataRef LLVMDIVariableGetScope( LLVMMetadataRef Var );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMDIVariableGetLine(LLVMMetadataRef Var);
+        public static unsafe partial uint LLVMDIVariableGetLine( LLVMMetadataRef Var );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode(LLVMContextRefAlias Ctx, [In] LLVMMetadataRef[] Data, nuint NumElements);
+        public static unsafe partial LLVMMetadataRef LLVMTemporaryMDNode( LLVMContextRefAlias Ctx, [In] LLVMMetadataRef[] Data, nuint NumElements );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMDisposeTemporaryMDNode(LLVMMetadataRef TempNode);
+        public static unsafe partial void LLVMDisposeTemporaryMDNode( LLVMMetadataRef TempNode );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMMetadataReplaceAllUsesWith(LLVMMetadataRef TempTargetMetadata, LLVMMetadataRef Replacement);
+        public static unsafe partial void LLVMMetadataReplaceAllUsesWith( LLVMMetadataRef TempTargetMetadata, LLVMMetadataRef Replacement );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateTempGlobalVariableFwdDecl(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -1527,7 +1529,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMBasicBlockRef Block
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateAutoVariable(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -1567,7 +1569,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             UInt32 AlignInBits
             );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateParameterVariable(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
@@ -1609,25 +1611,25 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMGetSubprogram(LLVMValueRef Func);
+        public static unsafe partial LLVMMetadataRef LLVMGetSubprogram( LLVMValueRef Func );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMSetSubprogram(LLVMValueRef Func, LLVMMetadataRef SP);
+        public static unsafe partial void LLVMSetSubprogram( LLVMValueRef Func, LLVMMetadataRef SP );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LLVMDISubprogramGetLine(LLVMMetadataRef Subprogram);
+        public static unsafe partial uint LLVMDISubprogramGetLine( LLVMMetadataRef Subprogram );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMInstructionGetDebugLoc(LLVMValueRef Inst);
+        public static unsafe partial LLVMMetadataRef LLVMInstructionGetDebugLoc( LLVMValueRef Inst );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMInstructionSetDebugLoc(LLVMValueRef Inst, LLVMMetadataRef Loc);
+        public static unsafe partial void LLVMInstructionSetDebugLoc( LLVMValueRef Inst, LLVMMetadataRef Loc );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateLabel(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Context,
@@ -1678,6 +1680,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataKind LLVMGetMetadataKind(LLVMMetadataRef Metadata);
+        public static unsafe partial LLVMMetadataKind LLVMGetMetadataKind( LLVMMetadataRef Metadata );
     }
 }

@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using Ubiquity.NET.Llvm.ObjectFile;
+
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -35,18 +36,18 @@ namespace Ubiquity.NET.Llvm
         #region IEquatable<T>
 
         /// <inheritdoc/>
-        public bool Equals(IContext? other) => other is not null && ((LLVMContextRefAlias)NativeHandle).Equals(other.GetUnownedHandle());
+        public bool Equals( IContext? other ) => other is not null && ((LLVMContextRefAlias)NativeHandle).Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals(Context? other) => other is not null && NativeHandle.Equals(other.NativeHandle);
+        public bool Equals( Context? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => obj is Context owner
-                                                  ? Equals(owner)
+        public override bool Equals( object? obj ) => obj is Context owner
+                                                  ? Equals( owner )
                                                   : Equals( obj as IContext );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => NativeHandle.GetHashCode();
 
         #endregion
 
@@ -67,8 +68,8 @@ namespace Ubiquity.NET.Llvm
         /// the cause of such things.)
         /// </remarks>
         /// <seealso cref="Ubiquity.NET.Llvm.Interop.GlobalHandleBase"/>
-        public Context()
-            : this(LLVMContextCreate())
+        public Context( )
+            : this( LLVMContextCreate() )
         {
         }
 
@@ -108,7 +109,7 @@ namespace Ubiquity.NET.Llvm
         public IStructType CreateStructType( LazyEncodedString name ) => Impl.CreateStructType( name );
 
         /// <inheritdoc/>
-        public IStructType CreateStructType(bool packed, params IEnumerable<ITypeRef> elements) => Impl.CreateStructType(packed, elements);
+        public IStructType CreateStructType( bool packed, params IEnumerable<ITypeRef> elements ) => Impl.CreateStructType( packed, elements );
 
         /// <inheritdoc/>
         public IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements ) => Impl.CreateStructType( name, packed, elements );
@@ -165,20 +166,20 @@ namespace Ubiquity.NET.Llvm
         public ConstantFP CreateConstant( double constValue ) => Impl.CreateConstant( constValue );
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute(LazyEncodedString name) => Impl.CreateAttribute(name);
+        public AttributeValue CreateAttribute( LazyEncodedString name ) => Impl.CreateAttribute( name );
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute(LazyEncodedString name, UInt64 value) => Impl.CreateAttribute(name, value);
+        public AttributeValue CreateAttribute( LazyEncodedString name, UInt64 value ) => Impl.CreateAttribute( name, value );
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute(LazyEncodedString name, ITypeRef value) => Impl.CreateAttribute(name, value);
+        public AttributeValue CreateAttribute( LazyEncodedString name, ITypeRef value ) => Impl.CreateAttribute( name, value );
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute(LazyEncodedString name, UInt32 numBits, UInt64[] lowWords, UInt64[] upperWords)
-            => Impl.CreateAttribute(name, numBits, lowWords, upperWords);
+        public AttributeValue CreateAttribute( LazyEncodedString name, UInt32 numBits, UInt64[] lowWords, UInt64[] upperWords )
+            => Impl.CreateAttribute( name, numBits, lowWords, upperWords );
 
         /// <inheritdoc/>
-        public AttributeValue CreateAttribute(LazyEncodedString name, LazyEncodedString value) => Impl.CreateAttribute(name, value);
+        public AttributeValue CreateAttribute( LazyEncodedString name, LazyEncodedString value ) => Impl.CreateAttribute( name, value );
 
         /// <inheritdoc/>
         public BasicBlock CreateBasicBlock( LazyEncodedString name ) => Impl.CreateBasicBlock( name );
@@ -267,12 +268,12 @@ namespace Ubiquity.NET.Llvm
             NativeHandle.Dispose();
         }
 
-        internal Context(LLVMContextRef h)
+        internal Context( LLVMContextRef h )
         {
             NativeHandle = h.Move();
 
             // Create the implementation from this handle
-            AliasImpl = new(NativeHandle);
+            AliasImpl = new( NativeHandle );
         }
 
         /// <inheritdoc/>
@@ -286,7 +287,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                ObjectDisposedException.ThrowIf(IsDisposed, this);
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
                 return AliasImpl;
             }
         }

@@ -18,15 +18,15 @@ namespace Ubiquity.NET.InteropHelpers
     /// as possible. If conversion has not yet occurred it is done once here.
     /// </remarks>
     [CustomMarshaller( typeof( LazyEncodedString ), MarshalMode.ManagedToUnmanagedIn, typeof( ManagedToUnmanagedIn ) )]
-    [CustomMarshaller( typeof( LazyEncodedString ), MarshalMode.Default, typeof(LazyEncodedStringMarshaller) )]
+    [CustomMarshaller( typeof( LazyEncodedString ), MarshalMode.Default, typeof( LazyEncodedStringMarshaller ) )]
     public static unsafe class LazyEncodedStringMarshaller
     {
         /// <summary>Converts a native string to a <see cref="LazyEncodedString"/> using the default (UTF8) encoding</summary>
         /// <param name="unmanaged">Unmanaged string (in UTF8)</param>
         /// <returns>Wrapped string with lazy conversion to managed form</returns>
-        public static LazyEncodedString? ConvertToManaged(byte* unmanaged)
+        public static LazyEncodedString? ConvertToManaged( byte* unmanaged )
         {
-            return LazyEncodedString.FromUnmanaged(unmanaged);
+            return LazyEncodedString.FromUnmanaged( unmanaged );
         }
 
         // Generally, can't support the [In] direction of [Out,In]
@@ -36,14 +36,14 @@ namespace Ubiquity.NET.InteropHelpers
         // managed values and unpin them after the call..., which is not an option for array elements.
 
         /// <summary>Converts a <see cref="LazyEncodedString"/> to a managed form</summary>
-        /// <param name="managed">managed pointer</param>
+        /// <param name="managed">String to convert or retrieve the native form of</param>
         /// <returns>managed pointer</returns>
         /// <exception cref="NotSupportedException"><paramref name="managed"/> is not <see langword="null"/></exception>
         /// <remarks>
         /// Without state, this version can only convert default <see langword="null"/> values to a <see langword="null"/>
         /// return. Any other value results in an exception.
         /// </remarks>
-        public static unsafe byte* ConvertToUnmanaged(LazyEncodedString? managed)
+        public static unsafe byte* ConvertToUnmanaged( LazyEncodedString? managed )
         {
             // NOTE: Care is needed here as the semantics are unknown and it is NOT legit to assume null means empty.
             //       It might not have that meaning to the caller and this implementation cannot know either way.
@@ -51,7 +51,7 @@ namespace Ubiquity.NET.InteropHelpers
             // Null is convertible without any state so go-ahead with that, anything else requires state.
             return managed is null
                     ? (byte*)null
-                    : throw new NotSupportedException("non-null element for [Out] scenarios is not supported");
+                    : throw new NotSupportedException( "non-null element for [Out] scenarios is not supported" );
         }
 
         /// <summary>Stateful custom marshaller to marshal LazyEncodedString as an unmanaged string</summary>
@@ -70,7 +70,7 @@ namespace Ubiquity.NET.InteropHelpers
             /// <returns>The converted unmanaged string.</returns>
             public byte* ToUnmanaged( )
             {
-                if (Managed is null)
+                if(Managed is null)
                 {
                     return null;
                 }

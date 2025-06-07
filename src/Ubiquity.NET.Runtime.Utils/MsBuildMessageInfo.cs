@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="MsBuildMessageInfo.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Linq;
 
 namespace Ubiquity.NET.Runtime.Utils
@@ -27,20 +33,21 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <paramref name="code"/> must NOT be localized. It is required to universally identify a particular message.
         /// <paramref name="msgText"/>should be localized if the source tool supports localization.
         /// </remarks>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">An argument is not valid</exception>
+        /// <exception cref="ArgumentException">An argument is null</exception>
         public MsBuildMessageInfo(
             string origin,
             SourceLocation? location,
             string? subcategory,
             MsgCategory category,
             string? code,
-            string msgText)
+            string msgText )
         {
-            ArgumentNullException.ThrowIfNull(origin);
-            ArgumentException.ThrowIfNullOrWhiteSpace(msgText);
-            if( code is not null && code.Any((c)=>char.IsWhiteSpace(c)))
+            ArgumentNullException.ThrowIfNull( origin );
+            ArgumentException.ThrowIfNullOrWhiteSpace( msgText );
+            if(code is not null && code.Any( ( c ) => char.IsWhiteSpace( c ) ))
             {
-                throw new ArgumentException("code must not contain whitespace", nameof(code));
+                throw new ArgumentException( "code must not contain whitespace", nameof( code ) );
             }
 
             Origin = origin;
@@ -57,7 +64,7 @@ namespace Ubiquity.NET.Runtime.Utils
             string locString = string.Empty;
             if(Location is not null)
             {
-                locString = Location.Value.ToString("B", null);
+                locString = Location.Value.ToString( "B", null );
             }
 
             // account for optional values with leading space.

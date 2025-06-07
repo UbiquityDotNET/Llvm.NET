@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     public enum LibLLVMDwarfTag
@@ -204,17 +208,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding(LLVMMetadataRef basicType);
+        public static unsafe partial LibLLVMDwarfAttributeEncoding LibLLVMDIBasicTypeGetEncoding( LLVMMetadataRef basicType );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMContextRefAlias LibLLVMGetNodeContext(LLVMMetadataRef node);
+        public static unsafe partial LLVMContextRefAlias LibLLVMGetNodeContext( LLVMMetadataRef node );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind( LLVMMetadataRef handle);
+        public static unsafe partial LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind( LLVMMetadataRef handle );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
             LLVMDIBuilderRef D,
             LLVMMetadataRef Scope,
@@ -233,8 +237,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
             return LibLLVMDIBuilderCreateTempFunctionFwdDecl(
                 D,
                 Scope,
-                Name, Name.NativeStrLen,
-                LinkageName, LinkageName.NativeStrLen,
+                Name,
+                Name.NativeStrLen,
+                LinkageName,
+                LinkageName.NativeStrLen,
                 File,
                 LineNo,
                 Ty,
@@ -265,116 +271,116 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMDIBuilderFinalizeSubProgram(LLVMDIBuilderRef dref, LLVMMetadataRef subProgram);
+        public static unsafe partial void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef subProgram );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMDwarfTag LibLLVMDIDescriptorGetTag(LLVMMetadataRef descriptor);
+        public static unsafe partial LibLLVMDwarfTag LibLLVMDIDescriptorGetTag( LLVMMetadataRef descriptor );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LibLLVMDILocationGetInlinedAtScope(LLVMMetadataRef location);
+        public static unsafe partial LLVMMetadataRef LibLLVMDILocationGetInlinedAtScope( LLVMMetadataRef location );
 
-        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof(DisposeMessageMarshaller) )]
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( DisposeMessageMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial string LibLLVMMetadataAsString(LLVMMetadataRef descriptor);
+        public static unsafe partial string LibLLVMMetadataAsString( LLVMMetadataRef descriptor );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt32 LibLLVMMDNodeGetNumOperands(LLVMMetadataRef node);
+        public static unsafe partial UInt32 LibLLVMMDNodeGetNumOperands( LLVMMetadataRef node );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMMDOperandRef LibLLVMMDNodeGetOperand(LLVMMetadataRef node, UInt32 index);
+        public static unsafe partial LibLLVMMDOperandRef LibLLVMMDNodeGetOperand( LLVMMetadataRef node, UInt32 index );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMMDNodeReplaceOperand(LLVMMetadataRef node, UInt32 index, LLVMMetadataRef operand);
+        public static unsafe partial void LibLLVMMDNodeReplaceOperand( LLVMMetadataRef node, UInt32 index, LLVMMetadataRef operand );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LibLLVMGetOperandNode(LibLLVMMDOperandRef operand);
+        public static unsafe partial LLVMMetadataRef LibLLVMGetOperandNode( LibLLVMMDOperandRef operand );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMModuleRefAlias LibLLVMNamedMetadataGetParentModule(LLVMNamedMDNodeRef namedMDNode);
+        public static unsafe partial LLVMModuleRefAlias LibLLVMNamedMetadataGetParentModule( LLVMNamedMDNodeRef namedMDNode );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMNamedMetadataEraseFromParent(LLVMNamedMDNodeRef namedMDNode);
+        public static unsafe partial void LibLLVMNamedMetadataEraseFromParent( LLVMNamedMDNodeRef namedMDNode );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataKind LibLLVMGetMetadataID(LLVMMetadataRef md);
+        public static unsafe partial LLVMMetadataKind LibLLVMGetMetadataID( LLVMMetadataRef md );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial uint LibLLVMNamedMDNodeGetNumOperands(LLVMNamedMDNodeRef namedMDNode);
+        public static unsafe partial uint LibLLVMNamedMDNodeGetNumOperands( LLVMNamedMDNodeRef namedMDNode );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LibLLVMNamedMDNodeGetOperand(LLVMNamedMDNodeRef namedMDNode, uint index);
+        public static unsafe partial LLVMMetadataRef LibLLVMNamedMDNodeGetOperand( LLVMNamedMDNodeRef namedMDNode, uint index );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMNamedMDNodeSetOperand(LLVMNamedMDNodeRef namedMDNode, uint index, LLVMMetadataRef node);
+        public static unsafe partial void LibLLVMNamedMDNodeSetOperand( LLVMNamedMDNodeRef namedMDNode, uint index, LLVMMetadataRef node );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMNamedMDNodeAddOperand(LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef node);
+        public static unsafe partial void LibLLVMNamedMDNodeAddOperand( LLVMNamedMDNodeRef namedMDNode, LLVMMetadataRef node );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMNamedMDNodeClearOperands(LLVMNamedMDNodeRef namedMDNode);
+        public static unsafe partial void LibLLVMNamedMDNodeClearOperands( LLVMNamedMDNodeRef namedMDNode );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LibLLVMConstantAsMetadata(LLVMValueRef Val);
+        public static unsafe partial LLVMMetadataRef LibLLVMConstantAsMetadata( LLVMValueRef Val );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LazyEncodedString? LibLLVMGetMDStringText(LLVMMetadataRef mdstring)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LazyEncodedString? LibLLVMGetMDStringText( LLVMMetadataRef mdstring )
         {
             unsafe
             {
                 byte* p = LibLLVMGetMDStringText(mdstring, out uint len);
-                return LazyEncodedString.FromUnmanaged(p, len);
+                return LazyEncodedString.FromUnmanaged( p, len );
             }
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LibLLVMGetMDStringText(LLVMMetadataRef mdstring, out uint len);
+        private static unsafe partial byte* LibLLVMGetMDStringText( LLVMMetadataRef mdstring, out uint len );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMAddNamedMetadataOperand2(LLVMModuleRefAlias M, LazyEncodedString name, LLVMMetadataRef Val);
+        public static unsafe partial void LibLLVMAddNamedMetadataOperand2( LLVMModuleRefAlias M, LazyEncodedString name, LLVMMetadataRef Val );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMSetMetadata2(LLVMValueRef Inst, uint KindID, LLVMMetadataRef MD);
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMIsTemporary(LLVMMetadataRef M);
+        public static unsafe partial void LibLLVMSetMetadata2( LLVMValueRef Inst, uint KindID, LLVMMetadataRef MD );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMIsResolved(LLVMMetadataRef M);
+        public static unsafe partial bool LibLLVMIsTemporary( LLVMMetadataRef M );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMIsUniqued(LLVMMetadataRef M);
+        public static unsafe partial bool LibLLVMIsResolved( LLVMMetadataRef M );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMIsDistinct(LLVMMetadataRef M);
+        public static unsafe partial bool LibLLVMIsUniqued( LLVMMetadataRef M );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial Int64 LibLLVMDISubRangeGetLowerBounds(LLVMMetadataRef sr, Int64 defaultLowerBound);
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LibLLVMIsDistinct( LLVMMetadataRef M );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial Int64 LibLLVMDISubRangeGetLowerBounds( LLVMMetadataRef sr, Int64 defaultLowerBound );
     }
 }

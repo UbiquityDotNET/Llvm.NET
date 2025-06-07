@@ -8,57 +8,54 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Values
 {
+    // CONSIDER: move these into Function type itself as they all assume that as the "self" parameter
+
     internal static class FunctionAttributeAccessor
     {
-        /// <inheritdoc/>
-        public static void AddAttributeAtIndex(Function self, FunctionAttributeIndex index, AttributeValue attrib )
+        public static void AddAttributeAtIndex( this Function self, FunctionAttributeIndex index, AttributeValue attrib )
         {
             attrib.AttributeInfo.ThrowIfInvalid( index );
-            LLVMAddAttributeAtIndex( self.Handle, ( LLVMAttributeIndex )index, attrib.NativeAttribute );
+            LLVMAddAttributeAtIndex( self.Handle, (LLVMAttributeIndex)index, attrib.NativeAttribute );
         }
 
-        /// <inheritdoc/>
-        public static uint GetAttributeCountAtIndex(Function self, FunctionAttributeIndex index )
+        public static uint GetAttributeCountAtIndex( this Function self, FunctionAttributeIndex index )
         {
-            return LLVMGetAttributeCountAtIndex( self.Handle, ( LLVMAttributeIndex )index );
+            return LLVMGetAttributeCountAtIndex( self.Handle, (LLVMAttributeIndex)index );
         }
 
-        /// <inheritdoc/>
-        public static IEnumerable<AttributeValue> GetAttributesAtIndex(Function self, FunctionAttributeIndex index )
+        public static IEnumerable<AttributeValue> GetAttributesAtIndex( this Function self, FunctionAttributeIndex index )
         {
             uint count = GetAttributeCountAtIndex( self, index );
-            if( count == 0 )
+            if(count == 0)
             {
                 return [];
             }
 
             var buffer = new LLVMAttributeRef[ count ];
-            LLVMGetAttributesAtIndex( self.Handle, ( LLVMAttributeIndex )index, buffer );
+            LLVMGetAttributesAtIndex( self.Handle, (LLVMAttributeIndex)index, buffer );
             return from attribRef in buffer
                    select new AttributeValue( attribRef );
         }
 
-        /// <inheritdoc/>
-        public static AttributeValue GetAttributeAtIndex( Function self, FunctionAttributeIndex index, UInt32 id )
+        public static AttributeValue GetAttributeAtIndex( this Function self, FunctionAttributeIndex index, UInt32 id )
         {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(id, LLVMGetLastEnumAttributeKind());
+            ArgumentOutOfRangeException.ThrowIfGreaterThan( id, LLVMGetLastEnumAttributeKind() );
             var handle = LLVMGetEnumAttributeAtIndex( self.Handle, ( LLVMAttributeIndex )index, id );
             return new( handle );
         }
 
-        /// <inheritdoc/>
-        public static AttributeValue GetAttributeAtIndex( Function self, FunctionAttributeIndex index, LazyEncodedString name )
+        public static AttributeValue GetAttributeAtIndex( this Function self, FunctionAttributeIndex index, LazyEncodedString name )
         {
-            if( string.IsNullOrWhiteSpace( name ) )
+            if(string.IsNullOrWhiteSpace( name ))
             {
                 throw new ArgumentException( Resources.Name_cannot_be_null_or_empty, nameof( name ) );
             }
 
             var info = AttributeInfo.From(name);
-            if (info.ArgKind != AttributeArgKind.String)
+            if(info.ArgKind != AttributeArgKind.String)
             {
                 // TODO: Localize this message
-                throw new ArgumentException("Not a string argument", nameof(name));
+                throw new ArgumentException( "Not a string argument", nameof( name ) );
             }
 
             unsafe
@@ -74,29 +71,27 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
-        /// <inheritdoc/>
-        public static void RemoveAttributeAtIndex(Function self, FunctionAttributeIndex index, UInt32 id )
+        public static void RemoveAttributeAtIndex( this Function self, FunctionAttributeIndex index, UInt32 id )
         {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(id, LLVMGetLastEnumAttributeKind());
-            LLVMRemoveEnumAttributeAtIndex( self.Handle, ( LLVMAttributeIndex )index, id );
+            ArgumentOutOfRangeException.ThrowIfGreaterThan( id, LLVMGetLastEnumAttributeKind() );
+            LLVMRemoveEnumAttributeAtIndex( self.Handle, (LLVMAttributeIndex)index, id );
         }
 
-        /// <inheritdoc/>
-        public static void RemoveAttributeAtIndex(Function self, FunctionAttributeIndex index, LazyEncodedString name )
+        public static void RemoveAttributeAtIndex( this Function self, FunctionAttributeIndex index, LazyEncodedString name )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var info = AttributeInfo.From(name);
-            if (info.ArgKind != AttributeArgKind.String)
+            if(info.ArgKind != AttributeArgKind.String)
             {
                 // TODO: Localize (and dedup) this message
-                throw new ArgumentException("Not a string argument", nameof(name));
+                throw new ArgumentException( "Not a string argument", nameof( name ) );
             }
 
             unsafe
             {
                 using var mem = name.Pin();
-                LLVMRemoveStringAttributeAtIndex( self.Handle, ( LLVMAttributeIndex )index, (byte*)mem.Pointer, ( uint )name.NativeStrLen);
+                LLVMRemoveStringAttributeAtIndex( self.Handle, (LLVMAttributeIndex)index, (byte*)mem.Pointer, (uint)name.NativeStrLen );
             }
         }
     }

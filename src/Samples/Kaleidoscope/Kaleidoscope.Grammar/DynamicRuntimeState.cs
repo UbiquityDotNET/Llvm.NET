@@ -84,7 +84,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Operator info for the operator or default if not found</returns>
         internal OperatorInfo GetBinOperatorInfo( int tokenType )
         {
-            return BinOpPrecedence.TryGetValue( tokenType, out var value ) ? value : ( default );
+            return BinOpPrecedence.TryGetValue( tokenType, out var value ) ? value : (default);
         }
 
         /// <summary>Gets the unary operator information for a given token type</summary>
@@ -92,7 +92,7 @@ namespace Kaleidoscope.Grammar
         /// <returns>Operator info for the operator or default if not found</returns>
         internal OperatorInfo GetUnaryOperatorInfo( int tokenType )
         {
-            return UnaryOps.TryGetValue( tokenType, out var value ) ? value : ( default );
+            return UnaryOps.TryGetValue( tokenType, out var value ) ? value : (default);
         }
 
         internal bool IsPrefixOp( int tokenType )
@@ -118,7 +118,6 @@ namespace Kaleidoscope.Grammar
                 OperatorKind.InfixLeftAssociative or
                 OperatorKind.InfixRightAssociative => BinOpPrecedence.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, precedence, false ) ),
                 OperatorKind.PreFix => UnaryOps.TryAddOrReplaceItem( new OperatorInfo( tokenType, kind, 0, false ) ),
-                // case OperatorKind.None:
                 _ => throw new ArgumentException( "unknown kind", nameof( kind ) ),
             };
         }

@@ -17,7 +17,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
         /// <summary>Gets the condition for the branch, if any</summary>
         public Value? Condition
-            => !IsConditional ? null : FromHandle<Value>( LLVMGetCondition( Handle ).ThrowIfInvalid( ) );
+            => !IsConditional ? null : FromHandle<Value>( LLVMGetCondition( Handle ).ThrowIfInvalid() );
 
         internal Branch( LLVMValueRef valueRef )
             : base( valueRef )

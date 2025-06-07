@@ -30,7 +30,7 @@ namespace Kaleidoscope.Chapter9
         , ICodeGenerator<Module>
     {
         #region Initialization
-        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath)
+        public CodeGenerator( DynamicRuntimeState globalState, TargetMachine machine, string sourcePath )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -42,10 +42,10 @@ namespace Kaleidoscope.Chapter9
             }
 
             RuntimeState = globalState;
-            Context = new Context( );
+            Context = new Context();
             TargetMachine = machine;
             InstructionBuilder = new InstructionBuilder( Context );
-            Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ));
+            Module = Context.CreateBitcodeModule( Path.GetFileName( sourcePath ) );
             Module.TargetTriple = machine.Triple;
 
             using var layout = TargetMachine.CreateTargetData();
@@ -57,9 +57,9 @@ namespace Kaleidoscope.Chapter9
         #region Dispose
         public void Dispose( )
         {
-            Module.Dispose( );
+            Module.Dispose();
             InstructionBuilder.Dispose();
-            Context.Dispose( );
+            Context.Dispose();
         }
         #endregion
 
@@ -78,19 +78,19 @@ namespace Kaleidoscope.Chapter9
             // use this instance and the DIBuilder to visit the AST
             ast.Accept( this, in diBuilder );
 
-            if( AnonymousFunctions.Count > 0 )
+            if(AnonymousFunctions.Count > 0)
             {
                 var mainFunction = Module.CreateFunction( "main", Context.GetFunctionType( Context.VoidType ) );
                 var block = mainFunction.AppendBasicBlock( "entry" );
                 using var irBuilder = new InstructionBuilder( block );
                 var printdFunc = Module.CreateFunction( "printd", Context.GetFunctionType( Context.DoubleType, Context.DoubleType ) );
-                foreach( var anonFunc in AnonymousFunctions )
+                foreach(var anonFunc in AnonymousFunctions)
                 {
                     var value = irBuilder.Call( anonFunc );
                     irBuilder.Call( printdFunc, value );
                 }
 
-                irBuilder.Return( );
+                irBuilder.Return();
             }
 
             return Module;
@@ -98,7 +98,7 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region ConstantExpression
-        public override Value? Visit(ConstantExpression constant, ref readonly DIBuilder diBuilder)
+        public override Value? Visit( ConstantExpression constant, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
@@ -107,7 +107,7 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region BinaryOperatorExpression
-        public override Value? Visit(BinaryOperatorExpression binaryOperator, ref readonly DIBuilder diBuilder)
+        public override Value? Visit( BinaryOperatorExpression binaryOperator, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
             EmitLocation( binaryOperator );
@@ -168,10 +168,10 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region FunctionCallExpression
-        public override Value? Visit(FunctionCallExpression functionCall, ref readonly DIBuilder diBuilder)
+        public override Value? Visit( FunctionCallExpression functionCall, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             if(Module is null)
             {
@@ -193,7 +193,7 @@ namespace Kaleidoscope.Chapter9
             var args = new Value[functionCall.Arguments.Count];
             for(int i = 0; i < args.Length; ++i)
             {
-                args[i] = functionCall.Arguments[i].Accept(this, in diBuilder) ?? throw new CodeGeneratorException(ExpectValidExpr);
+                args[ i ] = functionCall.Arguments[ i ].Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidExpr );
             }
 
             EmitLocation( functionCall );
@@ -202,10 +202,10 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region FunctionDefinition
-        public override Value? Visit(FunctionDefinition definition, ref readonly DIBuilder diBuilder)
+        public override Value? Visit( FunctionDefinition definition, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = GetOrDeclareFunction( definition.Signature, in diBuilder );
             if(!function.IsDeclaration)
@@ -251,9 +251,9 @@ namespace Kaleidoscope.Chapter9
                     diBuilder.Finish( function.DISubProgram );
                     function.Verify();
 
-                    if( definition.IsAnonymous )
+                    if(definition.IsAnonymous)
                     {
-                        function.AddAttribute( FunctionAttributeIndex.Function, "alwaysinline")
+                        function.AddAttribute( FunctionAttributeIndex.Function, "alwaysinline" )
                                 .Linkage( Linkage.Private );
 
                         AnonymousFunctions.Add( function );
@@ -271,7 +271,7 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region VariableReferenceExpression
-        public override Value? Visit(VariableReferenceExpression reference, ref readonly DIBuilder diBuilder)
+        public override Value? Visit( VariableReferenceExpression reference, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( reference );
 
@@ -291,7 +291,7 @@ namespace Kaleidoscope.Chapter9
         public override Value? Visit( ConditionalExpression conditionalExpression, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
@@ -351,10 +351,10 @@ namespace Kaleidoscope.Chapter9
         #endregion
 
         #region ForInExpression
-        public override Value? Visit(ForInExpression forInExpression, ref readonly DIBuilder diBuilder)
+        public override Value? Visit( ForInExpression forInExpression, ref readonly DIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( forInExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             EmitLocation( forInExpression );
             var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
@@ -439,7 +439,7 @@ namespace Kaleidoscope.Chapter9
                 InstructionBuilder.PositionAtEnd( afterBlock );
 
                 // for expression always returns 0.0 for consistency, there is no 'void'
-                return Context.DoubleType.GetNullValue( );
+                return Context.DoubleType.GetNullValue();
             }
         }
         #endregion
@@ -447,7 +447,7 @@ namespace Kaleidoscope.Chapter9
         #region VarInExpression
         public override Value? Visit( VarInExpression varInExpression, ref readonly DIBuilder diBuilder )
         {
-            ArgumentNullException.ThrowIfNull(varInExpression);
+            ArgumentNullException.ThrowIfNull( varInExpression );
 
             EmitLocation( varInExpression );
             using(NamedValues.EnterScope())
@@ -467,7 +467,7 @@ namespace Kaleidoscope.Chapter9
                 }
 
                 EmitLocation( varInExpression );
-                return varInExpression.Body.Accept( this, in diBuilder);
+                return varInExpression.Body.Accept( this, in diBuilder );
             }
         }
         #endregion
@@ -498,21 +498,21 @@ namespace Kaleidoscope.Chapter9
         private void EmitLocation( IAstNode? node )
         {
             DILocalScope? scope = null;
-            if( LexicalBlocks.Count > 0 )
+            if(LexicalBlocks.Count > 0)
             {
-                scope = LexicalBlocks.Peek( );
+                scope = LexicalBlocks.Peek();
             }
-            else if( InstructionBuilder.InsertFunction != null && InstructionBuilder.InsertFunction.DISubProgram != null )
+            else if(InstructionBuilder.InsertFunction != null && InstructionBuilder.InsertFunction.DISubProgram != null)
             {
                 scope = InstructionBuilder.InsertFunction.DISubProgram;
             }
 
             DILocation? loc = null;
-            if( scope != null )
+            if(scope != null)
             {
                 loc = new DILocation( InstructionBuilder.Context
-                                    , ( uint )( node?.Location.StartLine ?? 0 )
-                                    , ( uint )( node?.Location.StartColumn ?? 0 )
+                                    , (uint)(node?.Location.StartLine ?? 0)
+                                    , (uint)(node?.Location.StartColumn ?? 0)
                                     , scope
                                     );
             }
@@ -525,7 +525,7 @@ namespace Kaleidoscope.Chapter9
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction(Prototype prototype, ref readonly DIBuilder diBuilder)
+        private Function GetOrDeclareFunction( Prototype prototype, ref readonly DIBuilder diBuilder )
         {
             if(Module is null)
             {
@@ -539,7 +539,7 @@ namespace Kaleidoscope.Chapter9
 
             // extern declarations don't get debug information
             Function retVal;
-            if( prototype.IsExtern )
+            if(prototype.IsExtern)
             {
                 var llvmSignature = Context.GetFunctionType( Context.DoubleType, prototype.Parameters.Select( _ => Context.DoubleType ) );
                 retVal = Module.CreateFunction( prototype.Name, llvmSignature );
@@ -553,16 +553,16 @@ namespace Kaleidoscope.Chapter9
                 var signature = Context.CreateFunctionType( in diBuilder, DoubleType!, prototype.Parameters.Select( _ => DoubleType! ) );
                 var lastParamLocation = parameters.Count > 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
-                retVal = Module.CreateFunction(in diBuilder
+                retVal = Module.CreateFunction( in diBuilder
                                               , scope: diBuilder.CompileUnit
                                               , name: prototype.Name
                                               , linkageName: null
                                               , file: debugFile
-                                              , line: ( uint )prototype.Location.StartLine
+                                              , line: (uint)prototype.Location.StartLine
                                               , signature
                                               , isLocalToUnit: false
                                               , isDefinition: true
-                                              , scopeLine: ( uint )lastParamLocation.EndLine
+                                              , scopeLine: (uint)lastParamLocation.EndLine
                                               , debugFlags: prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
                                               , isOptimized: false
                                               );

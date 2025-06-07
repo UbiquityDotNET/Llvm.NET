@@ -4,14 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.OrcJITv2Bindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>Delegate for an error reporter callback</summary>
     /// <param name="info">Information about the error</param>
-    public delegate void ErrorReporter(ref readonly ErrorInfo info);
+    public delegate void ErrorReporter( ref readonly ErrorInfo info );
 
     /// <summary>ORC JIT v2 Execution Session</summary>
     /// <remarks>
@@ -28,9 +28,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="triple">Triple to use for this factory</param>
         /// <param name="errorHandlerAddress">Native JIT address of an error handler</param>
         /// <returns>New call through manager</returns>
-        public LazyCallThroughManager CreateLazyCallThroughManager(LazyEncodedString triple, UInt64 errorHandlerAddress = 0)
+        public LazyCallThroughManager CreateLazyCallThroughManager( LazyEncodedString triple, UInt64 errorHandlerAddress = 0 )
         {
-            ArgumentNullException.ThrowIfNull(triple);
+            ArgumentNullException.ThrowIfNull( triple );
 
             using LLVMErrorRef errRef = LLVMOrcCreateLocalLazyCallThroughManager(
                                             triple,
@@ -43,51 +43,51 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             using(resultHandle)
             {
                 errRef.ThrowIfFailed();
-                return new(resultHandle);
+                return new( resultHandle );
             }
         }
 
-/*
-        [Experimental]
-        public void Lookup(LookupKind kind, scoped ReadOnlySpan<SearchOrder> order, scoped ReadOnlySpan<LookupSet> symbols, LookupResultHandler handler)
-        {
-            // validate args...
-            var ctx = GCHandle.Alloc(handler).ToPointer;
-            var abiOrder[] = ????
-            var abiSymbols = ????
-
-            LLVMOrcExecutionSessionLookup(Handle, (LLVMOrcLookupKind)kind, abiOrder, abiOrder.Length, abiSymbols, abiSymbols.Length, &NativeLookupHandleResult, ctx);
-        }
-
-        // Caller [LLVM internals] OWNS and retains ownership of the array `In` semantics, and takes ownership of ALL entries
-        // Implementations must take action to retain any strings it provides if they have meaning beyond this call (Normally through
-        // some form of `AddRefHandle`)
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static void NativeLookupHandleResult([LLVMErrorRef] nint err, LLVMOrcCSymbolMapPair* result, nint numPairs, void* ctx)
-        {
-            try
-            {
-                var errInfo = new ErrorInfo(err);
-                if(errInfo.Failed)
+        /*
+                [Experimental]
+                public void Lookup(LookupKind kind, scoped ReadOnlySpan<SearchOrder> order, scoped ReadOnlySpan<LookupSet> symbols, LookupResultHandler handler)
                 {
-                    string msg = errInfo.ToString();
-                    // What to do with the string?
-                    // What logging mechanism?
-                    // Can't use Ctx as it is officially undefined if err is a failure...
-                    return;
+                    // validate args...
+                    var ctx = GCHandle.Alloc(handler).ToPointer;
+                    var abiOrder[] = ????
+                    var abiSymbols = ????
+
+                    LLVMOrcExecutionSessionLookup(Handle, (LLVMOrcLookupKind)kind, abiOrder, abiOrder.Length, abiSymbols, abiSymbols.Length, &NativeLookupHandleResult, ctx);
                 }
 
-                if(MarshalGCHandle.TryGet<LookupResultHandler>(context, out LookupResultHandler? self))
+                // Caller [LLVM internals] OWNS and retains ownership of the array `In` semantics, and takes ownership of ALL entries
+                // Implementations must take action to retain any strings it provides if they have meaning beyond this call (Normally through
+                // some form of `AddRefHandle`)
+                [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+                [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
+                private static void NativeLookupHandleResult([LLVMErrorRef] nint err, LLVMOrcCSymbolMapPair* result, nint numPairs, void* ctx)
                 {
-                    // This would bleed the interop type into the caller, but is the most efficient.
-                    self(new Span<LLVMOrcCSymbolMapPair>(result, numPairs));
-                }
+                    try
+                    {
+                        var errInfo = new ErrorInfo(err);
+                        if(errInfo.Failed)
+                        {
+                            string msg = errInfo.ToString();
+                            // What to do with the string?
+                            // What logging mechanism?
+                            // Can't use Ctx as it is officially undefined if err is a failure...
+                            return;
+                        }
 
-                GCHandle.Free(ctx); // release the handle [One-time call]
-            }
-        }
-*/
+                        if(MarshalGCHandle.TryGet<LookupResultHandler>(context, out LookupResultHandler? self))
+                        {
+                            // This would bleed the interop type into the caller, but is the most efficient.
+                            self(new Span<LLVMOrcCSymbolMapPair>(result, numPairs));
+                        }
+
+                        GCHandle.Free(ctx); // release the handle [One-time call]
+                    }
+                }
+        */
 
 #if FUTURE_DEVELOPMENT_AREA
         // CONSIDER: It might be better if this was a method on the JIT (and internal on this type)
@@ -131,11 +131,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// This does not populate any symbols for the library when creating a new one.
         /// All configuration is the responsibility of the caller.
         /// </remarks>
-        public JITDyLib GetOrCreateBareDyLib(LazyEncodedString name)
+        public JITDyLib GetOrCreateBareDyLib( LazyEncodedString name )
         {
-            return TryGetDyLib(name, out JITDyLib foundLib)
+            return TryGetDyLib( name, out JITDyLib foundLib )
                    ? foundLib
-                   : new(LLVMOrcExecutionSessionCreateBareJITDylib(Handle, name));
+                   : new( LLVMOrcExecutionSessionCreateBareJITDylib( Handle, name ) );
         }
 
         /// <summary>Gets or creates a <see cref="JITDyLib"/> in this session by name</summary>
@@ -149,19 +149,19 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// allows for the most efficient use of data that is likely to come from the underlying native code.
         /// </para>
         /// </remarks>
-        public JITDyLib GetOrCreateDyLib(LazyEncodedString name)
+        public JITDyLib GetOrCreateDyLib( LazyEncodedString name )
         {
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( name );
 
             // check if already present and use that as the out value...
-            if (TryGetDyLib(name, out JITDyLib lib))
+            if(TryGetDyLib( name, out JITDyLib lib ))
             {
                 return lib;
             }
 
             using LLVMErrorRef err = LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, name);
             err.ThrowIfFailed();
-            return new(libHandle);
+            return new( libHandle );
         }
 
         /// <summary>Tries to get or create a <see cref="JITDyLib"/> in this session by name</summary>
@@ -177,14 +177,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// allows for the most efficient use of data that is likely to come from the underlying native code.
         /// </para>
         /// </remarks>
-        public bool TryGetOrCreateDyLib(LazyEncodedString name, out JITDyLib lib, out ErrorInfo errInfo)
+        public bool TryGetOrCreateDyLib( LazyEncodedString name, out JITDyLib lib, out ErrorInfo errInfo )
         {
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( name );
 
             errInfo = default; // defaults to success!
 
             // check if already present and use that as the out value...
-            if (TryGetDyLib(name, out lib))
+            if(TryGetDyLib( name, out lib ))
             {
                 return true;
             }
@@ -192,12 +192,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
 
             // ownership of return LLVMErrorRef is transferred (MOVE Semantics) to errInfo 'out' param
-            errInfo = new(LLVMOrcExecutionSessionCreateJITDylib(Handle, out LLVMOrcJITDylibRef libHandle, name).ThrowIfInvalid());
+            errInfo = new( LLVMOrcExecutionSessionCreateJITDylib( Handle, out LLVMOrcJITDylibRef libHandle, name ).ThrowIfInvalid() );
 #pragma warning restore IDISP004 // Don't ignore created IDisposable
 
-            if (errInfo.Success)
+            if(errInfo.Success)
             {
-                lib = new(libHandle);
+                lib = new( libHandle );
             }
 
             return errInfo.Success;
@@ -209,7 +209,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <exception cref="LlvmException">Error from the native interop LLVM API</exception>
         public bool RemoveDyLib( LazyEncodedString name )
         {
-            if(TryGetDyLib(name, out JITDyLib lib))
+            if(TryGetDyLib( name, out JITDyLib lib ))
             {
                 using LLVMErrorRef err = LibLLVMExecutionSessionRemoveDyLib(Handle, lib.Handle);
                 err.ThrowIfFailed();
@@ -223,9 +223,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="name">name of the library</param>
         /// <param name="lib">[out] library if found or <see langword="null"/></param>
         /// <returns><see langword="true"/> if found or <see langword="false"/> if not</returns>
-        public bool TryGetDyLib(LazyEncodedString name, out JITDyLib lib)
+        public bool TryGetDyLib( LazyEncodedString name, out JITDyLib lib )
         {
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( name );
 
             lib = default;
             LLVMOrcJITDylibRef nativeLib = LLVMOrcExecutionSessionGetJITDylibByName(Handle, name);
@@ -234,25 +234,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 return false;
             }
 
-            lib = new(nativeLib);
+            lib = new( nativeLib );
             return true;
         }
 
         /// <summary>Interns a string in the pool</summary>
         /// <param name="name">NameField of the symbol to intern in the pool for this session</param>
         /// <returns>Entry to the string in the pool</returns>
-        public SymbolStringPoolEntry Intern(string name)
+        public SymbolStringPoolEntry Intern( string name )
         {
-            return new(LLVMOrcExecutionSessionIntern(Handle, name));
+            return new( LLVMOrcExecutionSessionIntern( Handle, name ) );
         }
 
-        internal ExecutionSession(LLVMOrcExecutionSessionRef h)
+        internal ExecutionSession( LLVMOrcExecutionSessionRef h )
         {
             Handle = h;
         }
 
-        internal ExecutionSession(nint h)
-            : this(LLVMOrcExecutionSessionRef.FromABI(h))
+        internal ExecutionSession( nint h )
+            : this( LLVMOrcExecutionSessionRef.FromABI( h ) )
         {
         }
 
@@ -261,13 +261,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Native code callback for error reporting</summary>
         /// <param name="context">The context for the callback is a <see cref="GCHandle"/> with a target of <see cref="ErrorReporter"/></param>
         /// <param name="abiErrorRef">ABI handle for an error ref</param>
-        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        private static unsafe void NativeErrorReporterCallback(void* context, /*LLVMErrorRef*/ nint abiErrorRef)
+        private static unsafe void NativeErrorReporterCallback( void* context, /*LLVMErrorRef*/ nint abiErrorRef )
         {
             try
             {
-                if(MarshalGCHandle.TryGet<ErrorReporter>(context, out ErrorReporter? self))
+                if(MarshalGCHandle.TryGet<ErrorReporter>( context, out ErrorReporter? self ))
                 {
                     // It is Unclear, if this native handler is supposed to Dispose the provided error ref
                     // or not (it makes sense for it to do so). This will do it in one place so that if it
@@ -275,7 +275,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     // declaration of the parameter in the delegate]
                     // Ownership is "moved" to the ErrorInfo instance created
                     using var errInfo = new ErrorInfo(abiErrorRef);
-                    self(in errInfo);
+                    self( in errInfo );
                 }
             }
             catch
@@ -283,7 +283,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 // The most likely reason for hitting this assert is that the GC has collected the memory for
                 // the context. This indicates that the caller of SetErrorReporter is NOT keeping the instance
                 // alive as long as it is still needed!
-                Debug.Assert(false, "Exception in native callback!");
+                Debug.Assert( false, "Exception in native callback!" );
             }
         }
     }

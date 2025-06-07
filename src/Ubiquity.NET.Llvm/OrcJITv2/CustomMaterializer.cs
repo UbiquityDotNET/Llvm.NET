@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Initializes a new instance of the <see cref="CustomMaterializer"/> class.</summary>
         /// <param name="materializeAction">Action to perform to materialize the symbol</param>
         /// <param name="discardAction">Action to perform when the JIT discards/replaces a symbol</param>
-        public CustomMaterializer(MaterializationAction materializeAction, DiscardAction? discardAction)
+        public CustomMaterializer( MaterializationAction materializeAction, DiscardAction? discardAction )
         {
             AllocatedSelf = new( this );
             MaterializeHandler = materializeAction;
@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             if(!AllocatedSelf.IsInvalid && !AllocatedSelf.IsClosed)
             {
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         internal bool SupportsDiscard => DiscardHandler is not null;
 
-        internal unsafe nint AddRefAndGetNativeContext()
+        internal unsafe nint AddRefAndGetNativeContext( )
         {
             return AllocatedSelf.AddRefAndGetNativeContext();
         }

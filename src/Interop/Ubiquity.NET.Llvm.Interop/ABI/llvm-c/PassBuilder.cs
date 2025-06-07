@@ -28,62 +28,62 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMPassBuilderOptionsRef LLVMCreatePassBuilderOptions();
+        public static unsafe partial LLVMPassBuilderOptionsRef LLVMCreatePassBuilderOptions( );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetVerifyEach(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool VerifyEach);
+        public static unsafe partial void LLVMPassBuilderOptionsSetVerifyEach( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool VerifyEach );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetDebugLogging(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool DebugLogging);
+        public static unsafe partial void LLVMPassBuilderOptionsSetDebugLogging( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool DebugLogging );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetAAPipeline(LLVMPassBuilderOptionsRef Options, LazyEncodedString AAPipeline);
+        public static unsafe partial void LLVMPassBuilderOptionsSetAAPipeline( LLVMPassBuilderOptionsRef Options, LazyEncodedString AAPipeline );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetLoopInterleaving(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool LoopInterleaving);
+        public static unsafe partial void LLVMPassBuilderOptionsSetLoopInterleaving( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool LoopInterleaving );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetLoopVectorization(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool LoopVectorization);
+        public static unsafe partial void LLVMPassBuilderOptionsSetLoopVectorization( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool LoopVectorization );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetSLPVectorization(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool SLPVectorization);
+        public static unsafe partial void LLVMPassBuilderOptionsSetSLPVectorization( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool SLPVectorization );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetLoopUnrolling(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool LoopUnrolling);
+        public static unsafe partial void LLVMPassBuilderOptionsSetLoopUnrolling( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool LoopUnrolling );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetForgetAllSCEVInLoopUnroll(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool ForgetAllSCEVInLoopUnroll);
+        public static unsafe partial void LLVMPassBuilderOptionsSetForgetAllSCEVInLoopUnroll( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool ForgetAllSCEVInLoopUnroll );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetLicmMssaOptCap(LLVMPassBuilderOptionsRef Options, uint LicmMssaOptCap);
+        public static unsafe partial void LLVMPassBuilderOptionsSetLicmMssaOptCap( LLVMPassBuilderOptionsRef Options, uint LicmMssaOptCap );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetLicmMssaNoAccForPromotionCap(LLVMPassBuilderOptionsRef Options, uint LicmMssaNoAccForPromotionCap);
+        public static unsafe partial void LLVMPassBuilderOptionsSetLicmMssaNoAccForPromotionCap( LLVMPassBuilderOptionsRef Options, uint LicmMssaNoAccForPromotionCap );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetCallGraphProfile(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool CallGraphProfile);
+        public static unsafe partial void LLVMPassBuilderOptionsSetCallGraphProfile( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool CallGraphProfile );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetMergeFunctions(LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool MergeFunctions);
+        public static unsafe partial void LLVMPassBuilderOptionsSetMergeFunctions( LLVMPassBuilderOptionsRef Options, [MarshalAs( UnmanagedType.Bool )] bool MergeFunctions );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMPassBuilderOptionsSetInlinerThreshold(LLVMPassBuilderOptionsRef Options, int Threshold);
+        public static unsafe partial void LLVMPassBuilderOptionsSetInlinerThreshold( LLVMPassBuilderOptionsRef Options, int Threshold );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMDisposePassBuilderOptions(LLVMPassBuilderOptionsRef Options);
+        public static unsafe partial void LLVMDisposePassBuilderOptions( LLVMPassBuilderOptionsRef Options );
     }
 }

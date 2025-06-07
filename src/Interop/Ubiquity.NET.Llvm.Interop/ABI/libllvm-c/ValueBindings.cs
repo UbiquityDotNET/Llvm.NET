@@ -4,12 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
 #pragma warning disable IDE0065, SA1200
-    using unsafe LibLLVMValueCacheItemDeletedCallback = delegate* unmanaged[Cdecl]<nint /*ctx*/,/*LLVMValueRef*/ nint /*@ref*/, nint /*handle*/, void /*retVal*/>;
-    using unsafe LibLLVMValueCacheItemReplacedCallback = delegate* unmanaged[Cdecl]<nint /*ctx*/, /*LLVMValueRef*/ nint /*oldValue*/, nint /*handle*/, /*LLVMValueRef*/nint /*newValue*/, nint /*retVal*/ >;
+    using unsafe LibLLVMValueCacheItemDeletedCallback = delegate* unmanaged[Cdecl]< nint /*ctx*/,/*LLVMValueRef*/ nint /*@ref*/, nint /*handle*/, void /*retVal*/>;
+    using unsafe LibLLVMValueCacheItemReplacedCallback = delegate* unmanaged[Cdecl]< nint /*ctx*/, /*LLVMValueRef*/ nint /*oldValue*/, nint /*handle*/, /*LLVMValueRef*/nint /*newValue*/, nint /*retVal*/ >;
 #pragma warning restore IDE0065, SA1200
 
     public enum LibLLVMValueKind
@@ -125,74 +129,74 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMIsConstantZeroValue(LLVMValueRef valueRef);
+        public static unsafe partial bool LibLLVMIsConstantZeroValue( LLVMValueRef valueRef );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMRemoveGlobalFromParent(LLVMValueRef valueRef);
+        public static unsafe partial void LibLLVMRemoveGlobalFromParent( LLVMValueRef valueRef );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMValueKind LibLLVMGetValueKind(LLVMValueRef valueRef);
+        public static unsafe partial LibLLVMValueKind LibLLVMGetValueKind( LLVMValueRef valueRef );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LibLLVMGetAliasee(LLVMValueRef Val);
+        public static unsafe partial LLVMValueRef LibLLVMGetAliasee( LLVMValueRef Val );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt32 LibLLVMGetArgumentIndex(LLVMValueRef Val);
+        public static unsafe partial UInt32 LibLLVMGetArgumentIndex( LLVMValueRef Val );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMGlobalVariableAddDebugExpression(LLVMValueRef globalVar, LLVMMetadataRef exp);
+        public static unsafe partial void LibLLVMGlobalVariableAddDebugExpression( LLVMValueRef globalVar, LLVMMetadataRef exp );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMFunctionAppendBasicBlock(LLVMValueRef function, LLVMBasicBlockRef block);
+        public static unsafe partial void LibLLVMFunctionAppendBasicBlock( LLVMValueRef function, LLVMBasicBlockRef block );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LibLLVMValueAsMetadataGetValue(LLVMMetadataRef vmd);
+        public static unsafe partial LLVMValueRef LibLLVMValueAsMetadataGetValue( LLVMMetadataRef vmd );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LibLLVMValueCacheRef LibLLVMCreateValueCache(nint ctx, LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback);
+        public static unsafe partial LibLLVMValueCacheRef LibLLVMCreateValueCache( nint ctx, LibLLVMValueCacheItemDeletedCallback deletedCallback, LibLLVMValueCacheItemReplacedCallback replacedCallback );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMValueCacheAdd(LibLLVMValueCacheRef cacheRef, LLVMValueRef value, nint handle);
+        public static unsafe partial void LibLLVMValueCacheAdd( LibLLVMValueCacheRef cacheRef, LLVMValueRef value, nint handle );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial nint LibLLVMValueCacheLookup(LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef);
+        public static unsafe partial nint LibLLVMValueCacheLookup( LibLLVMValueCacheRef cacheRef, LLVMValueRef valueRef );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMIsConstantCString(LLVMValueRef C);
+        public static unsafe partial bool LibLLVMIsConstantCString( LLVMValueRef C );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt32 LibLLVMGetConstantDataSequentialElementCount(LLVMValueRef C);
+        public static unsafe partial UInt32 LibLLVMGetConstantDataSequentialElementCount( LLVMValueRef C );
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ReadOnlySpan<byte> LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C)
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static ReadOnlySpan<byte> LibLLVMGetConstantDataSequentialRawData( LLVMValueRef C )
         {
             unsafe
             {
                 byte* p = LibLLVMGetConstantDataSequentialRawData(C, out nuint len);
-                return new(p, checked((int)len));
+                return new( p, checked((int)len) );
             }
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        private static unsafe partial byte* LibLLVMGetConstantDataSequentialRawData(LLVMValueRef C, out nuint Length);
+        private static unsafe partial byte* LibLLVMGetConstantDataSequentialRawData( LLVMValueRef C, out nuint Length );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [return: MarshalAs( UnmanagedType.Bool )]
-        public static unsafe partial bool LibLLVMHasDbgRecords(LLVMValueRef C);
+        public static unsafe partial bool LibLLVMHasDbgRecords( LLVMValueRef C );
     }
 }

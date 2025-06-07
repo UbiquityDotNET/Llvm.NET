@@ -10,11 +10,11 @@ namespace Ubiquity.NET.Llvm.Types
 {
     internal static class LLVMTypeRefExtensions
     {
-        internal static ITypeRef CreateType(this LLVMTypeRef handle, ITypeRef? elementType = null, [CallerArgumentExpression(nameof(handle))] string? exp = null)
+        internal static ITypeRef CreateType( this LLVMTypeRef handle, ITypeRef? elementType = null, [CallerArgumentExpression( nameof( handle ) )] string? exp = null )
         {
-            if (handle.IsNull)
+            if(handle.IsNull)
             {
-                throw new ArgumentException("Null handle is unmappable", exp);
+                throw new ArgumentException( "Null handle is unmappable", exp );
             }
 
             var kind = ( TypeKind )LLVMGetTypeKind( handle );

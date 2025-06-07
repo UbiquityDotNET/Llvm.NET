@@ -631,7 +631,7 @@ namespace Ubiquity.NET.Llvm
         , IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose() => Handle.Dispose();
+        public void Dispose( ) => Handle.Dispose();
 
         /// <summary>Initializes a new instance of the <see cref="Triple"/> class from a triple string</summary>
         /// <param name="tripleTxt">Triple string to parse</param>
@@ -646,7 +646,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Gets the <see cref="LazyEncodedString"/> form of this instance</summary>
         /// <returns>string form of this instance</returns>
-        public LazyEncodedString ToLazyEncodedString()
+        public LazyEncodedString ToLazyEncodedString( )
         {
             return LibLLVMTripleAsString( Handle, normalize: true );
         }
@@ -656,25 +656,25 @@ namespace Ubiquity.NET.Llvm
         public override string ToString( )
         {
             return ToLazyEncodedString().ToString();
-         }
+        }
 
         /// <summary>Gets the Architecture of the triple</summary>
-        public ArchKind ArchitectureType => ( ArchKind )LibLLVMTripleGetArchType( Handle );
+        public ArchKind ArchitectureType => (ArchKind)LibLLVMTripleGetArchType( Handle );
 
         /// <summary>Gets the Sub Architecture type</summary>
-        public SubArchKind SubArchitecture => ( SubArchKind )LibLLVMTripleGetSubArchType( Handle );
+        public SubArchKind SubArchitecture => (SubArchKind)LibLLVMTripleGetSubArchType( Handle );
 
         /// <summary>Gets the Vendor component of the triple</summary>
-        public VendorKind Vendor => ( VendorKind )LibLLVMTripleGetVendorType( Handle );
+        public VendorKind Vendor => (VendorKind)LibLLVMTripleGetVendorType( Handle );
 
         /// <summary>Gets the OS Type for the triple</summary>
-        public OSKind OS => ( OSKind )LibLLVMTripleGetOsType( Handle );
+        public OSKind OS => (OSKind)LibLLVMTripleGetOsType( Handle );
 
         /// <summary>Gets the environment type for the triple</summary>
-        public EnvironmentKind Environment => ( EnvironmentKind )LibLLVMTripleGetEnvironmentType( Handle );
+        public EnvironmentKind Environment => (EnvironmentKind)LibLLVMTripleGetEnvironmentType( Handle );
 
         /// <summary>Gets the object format type for the triple</summary>
-        public ObjectFormatKind ObjectFormat => ( ObjectFormatKind )LibLLVMTripleGetObjectFormatType( Handle );
+        public ObjectFormatKind ObjectFormat => (ObjectFormatKind)LibLLVMTripleGetObjectFormatType( Handle );
 
         /// <summary>Gets the version number of the environment</summary>
         public Version EnvironmentVersion
@@ -684,7 +684,7 @@ namespace Ubiquity.NET.Llvm
                 LibLLVMTripleGetEnvironmentVersion( Handle, out uint major, out uint minor, out uint micro );
                 checked
                 {
-                    return new Version( ( int )major, ( int )minor, ( int )micro );
+                    return new Version( (int)major, (int)minor, (int)micro );
                 }
             }
         }
@@ -700,7 +700,7 @@ namespace Ubiquity.NET.Llvm
         /// </overloads>
         public static string GetCanonicalName( ArchKind archType )
         {
-            return LibLLVMTripleGetArchTypeName( ( LibLLVMTripleArchType )archType );
+            return LibLLVMTripleGetArchTypeName( (LibLLVMTripleArchType)archType );
         }
 
         /// <summary>Retrieves the canonical name for the vendor component of a triple</summary>
@@ -708,7 +708,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String name for the vendor</returns>
         public static string GetCanonicalName( VendorKind vendorType )
         {
-            return LibLLVMTripleGetVendorTypeName( ( LibLLVMTripleVendorType )vendorType );
+            return LibLLVMTripleGetVendorTypeName( (LibLLVMTripleVendorType)vendorType );
         }
 
         /// <summary>Retrieves the canonical name for the OS component of a triple</summary>
@@ -716,7 +716,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String name for the OS</returns>
         public static string GetCanonicalName( OSKind osType )
         {
-            return LibLLVMTripleGetOsTypeName( ( LibLLVMTripleOSType )osType );
+            return LibLLVMTripleGetOsTypeName( (LibLLVMTripleOSType)osType );
         }
 
         /// <summary>Retrieves the canonical name for the environment component of a triple</summary>
@@ -724,13 +724,13 @@ namespace Ubiquity.NET.Llvm
         /// <returns>String name for the environment component</returns>
         public static string GetCanonicalName( EnvironmentKind envType )
         {
-            return LibLLVMTripleGetEnvironmentTypeName( ( LibLLVMTripleEnvironmentType )envType );
+            return LibLLVMTripleGetEnvironmentTypeName( (LibLLVMTripleEnvironmentType)envType );
         }
 
         /// <inheritdoc/>
         public bool Equals( Triple? other )
         {
-            return other != null && ( ReferenceEquals( this, other ) || LibLLVMTripleOpEqual( Handle, other.Handle ) );
+            return other != null && (ReferenceEquals( this, other ) || LibLLVMTripleOpEqual( Handle, other.Handle ));
         }
 
         /// <inheritdoc/>
@@ -742,7 +742,7 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public override int GetHashCode( )
         {
-            return ToString( )?.GetHashCode( StringComparison.Ordinal ) ?? 0;
+            return ToString()?.GetHashCode( StringComparison.Ordinal ) ?? 0;
         }
 
         /// <summary>Normalizes a triple string</summary>
@@ -757,12 +757,12 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Gets a triple for the host LLVM is built for</summary>
         /// <returns>Host triple</returns>
-        public static Triple GetHostTriple() => new(LibLLVMGetHostTriple());
+        public static Triple GetHostTriple( ) => new( LibLLVMGetHostTriple() );
 
         /// <summary>Implicitly converts a triple to a string</summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>
         /// <returns>Triple as a string or <see cref="string.Empty"/> if <paramref name="triple"/> is <see langword="null"/></returns>
-        public static implicit operator string( Triple? triple ) => triple?.ToString( ) ?? string.Empty;
+        public static implicit operator string( Triple? triple ) => triple?.ToString() ?? string.Empty;
 
         /// <summary>Implicitly converts a triple to a <see cref="LazyEncodedString"/></summary>
         /// <param name="triple"><see cref="Triple"/> to convert</param>

@@ -53,9 +53,9 @@ namespace Ubiquity.NET.Llvm.Types
         /// the method).
         /// </note>
         /// </remarks>
-        public static bool IsOpaque(this IPointerType ptr)
+        public static bool IsOpaque( this IPointerType ptr )
         {
-            ArgumentNullException.ThrowIfNull(ptr);
+            ArgumentNullException.ThrowIfNull( ptr );
             return ptr.ElementType is null;
         }
     }

@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.Interop
     {
         /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
         /// <returns>The handle as an <see cref="nint"/></returns>
-        nint DangerousGetHandle();
+        nint DangerousGetHandle( );
 
         /// <summary>Creates a type specific handle to hold the native opaque pointer</summary>
         /// <param name="abiValue">ABI value of the handle (xxxRef in LLVM terminology)</param>
@@ -31,6 +31,6 @@ namespace Ubiquity.NET.Llvm.Interop
         /// This is a static abstract "factory" method to allow <see cref="ContextHandleMarshaller{T}"/>
         /// to construct instances with non-default constructor.
         /// </remarks>
-        static abstract THandle FromABI(nint abiValue);
+        static abstract THandle FromABI( nint abiValue );
     }
 }

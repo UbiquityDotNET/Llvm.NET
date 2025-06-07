@@ -18,7 +18,6 @@ namespace Ubiquity.NET.InteropHelpers.UT
         public static void AssemblyInitialize( TestContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
-
         }
 
         [AssemblyCleanup]

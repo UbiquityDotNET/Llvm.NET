@@ -14,20 +14,20 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class ExpressionContext
         {
-            public PrimaryExpressionContext Atom => primaryExpression( );
+            public PrimaryExpressionContext Atom => primaryExpression();
 
-            public bool IsAssignment => binaryop( ).Length > 0 && binaryop( )[ 0 ].Start.Type == ASSIGN;
+            public bool IsAssignment => binaryop().Length > 0 && binaryop()[ 0 ].Start.Type == ASSIGN;
 
             public VariableExpressionContext? AssignmentTarget => IsAssignment ? GetChild<VariableExpressionContext>( 0 ) : null;
 
-            public IEnumerable<(BinaryopContext op, IParseTree rhs)> OperatorExpressions
+            public IEnumerable<(BinaryopContext Op, IParseTree RHS)> OperatorExpressions
             {
                 get
                 {
                     // Expression: PrimaryExpression (op expression)*
-                    for( int i = 1; i < ChildCount - 1; i += 2 )
+                    for(int i = 1; i < ChildCount - 1; i += 2)
                     {
-                        yield return (( BinaryopContext )children[ i ], children[ i + 1 ]);
+                        yield return ((BinaryopContext)children[ i ], children[ i + 1 ]);
                     }
                 }
             }

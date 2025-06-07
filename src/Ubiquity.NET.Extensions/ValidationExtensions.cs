@@ -26,10 +26,10 @@ namespace Ubiquity.NET.Extensions
         /// <param name="exp">Name or expression of the value in <paramref name="obj"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="obj"/></returns>
         /// <exception cref="ArgumentNullException"><paramref name="obj"/> is <see langword="null"/></exception>
-        public static T ThrowIfNull<T>([ValidatedNotNull] this T? obj, [CallerArgumentExpression(nameof(obj))] string? exp = null)
+        public static T ThrowIfNull<T>( [ValidatedNotNull] this T? obj, [CallerArgumentExpression( nameof( obj ) )] string? exp = null )
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(obj, exp);
+            ArgumentNullException.ThrowIfNull( obj, exp );
 
             return obj;
         }
@@ -41,11 +41,11 @@ namespace Ubiquity.NET.Extensions
         /// <param name="max">Maximum value allowed for <paramref name="self"/></param>
         /// <param name="exp">Name or expression of the value in <paramref name="self"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="self"/></returns>
-        public static T ThrowIfOutOfRange<T>(this T self, T min, T max, [CallerArgumentExpression(nameof(self))] string? exp = null)
+        public static T ThrowIfOutOfRange<T>( this T self, T min, T max, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, IComparable<T>
         {
-            ArgumentOutOfRangeException.ThrowIfLessThan(self, min, exp);
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(self, max, exp);
+            ArgumentOutOfRangeException.ThrowIfLessThan( self, min, exp );
+            ArgumentOutOfRangeException.ThrowIfGreaterThan( self, max, exp );
 
             return self;
         }
@@ -62,10 +62,10 @@ namespace Ubiquity.NET.Extensions
         /// <see cref="FlagsAttribute"/> as a legit value that is a combination of flags does not have
         /// a defined value (Only single bit values do)
         /// </remarks>
-        public static T ThrowIfNotDefined<T>(this T self, [CallerArgumentExpression(nameof(self))] string? exp = null)
+        public static T ThrowIfNotDefined<T>( this T self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, Enum
         {
-            return Enum.IsDefined<T>(self) ? self : throw new InvalidEnumArgumentException(exp);
+            return Enum.IsDefined<T>( self ) ? self : throw new InvalidEnumArgumentException( exp );
         }
     }
 }

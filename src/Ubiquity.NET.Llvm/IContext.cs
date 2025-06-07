@@ -70,7 +70,6 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets or sets a value indicating whether this context is configured to discard value names</summary>
         public bool DiscardValueNames { get; set; }
 
-
 #if HAVE_API_TO_ENUMERATE_METADATA
         /*
         public IEnumerable<LazyEncodedString> MDKindNames { get; }
@@ -89,7 +88,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Creates a simple attribute without arguments</summary>
         /// <param name="name">name of the attribute</param>
         /// <returns><see cref="AttributeValue"/> of the attribute</returns>
-        public AttributeValue CreateAttribute(LazyEncodedString name);
+        public AttributeValue CreateAttribute( LazyEncodedString name );
 
         /// <summary>Creates an attribute with an integer value parameter</summary>
         /// <param name="name">name of the attribute</param>
@@ -99,14 +98,14 @@ namespace Ubiquity.NET.Llvm
         /// a full 64bit value. Se the LLVM docs for details.</para>
         /// </remarks>
         /// <returns><see cref="AttributeValue"/> with the specified kind and value</returns>
-        public AttributeValue CreateAttribute(LazyEncodedString name, UInt64 value);
+        public AttributeValue CreateAttribute( LazyEncodedString name, UInt64 value );
 
         /// <summary>Create an attribute that accepts a type value</summary>
         /// <param name="name">name of the attribute</param>
         /// <param name="value">Type value to create the attribute with</param>
         /// <returns>Attribute value</returns>
         /// <exception cref="ArgumentException">The <paramref name="name"/> attribute does not accept a type argument</exception>
-        public AttributeValue CreateAttribute(LazyEncodedString name, ITypeRef value);
+        public AttributeValue CreateAttribute( LazyEncodedString name, ITypeRef value );
 
         // TODO: Implement support for APInt with customized BigInteger.
         //       BigInteger mostly fits the bill except it doesn't constrain the max value by a specified number of bits
@@ -130,7 +129,7 @@ namespace Ubiquity.NET.Llvm
         /// and thus <paramref name="numBits"/> indicates the total bit width of the values in the range.
         /// </remarks>
         /// <exception cref="ArgumentException">The <paramref name="name"/> does not accept a constant range value</exception>
-        public AttributeValue CreateAttribute(LazyEncodedString name, UInt32 numBits, UInt64[] lowWords, UInt64[] upperWords);
+        public AttributeValue CreateAttribute( LazyEncodedString name, UInt32 numBits, UInt64[] lowWords, UInt64[] upperWords );
 
         // TODO: Figure out how to create a constant range list attribute as LLVM-C API doesn't provide any means to do that.
 
@@ -138,16 +137,16 @@ namespace Ubiquity.NET.Llvm
         /// <param name="name">Attribute name</param>
         /// <param name="value">Value of the property</param>
         /// <returns><see cref="AttributeValue"/> with the specified name</returns>
-        public AttributeValue CreateAttribute(LazyEncodedString name, LazyEncodedString value);
+        public AttributeValue CreateAttribute( LazyEncodedString name, LazyEncodedString value );
 
         /// <summary>Set a custom diagnostic handler</summary>
         /// <param name="handler">handler</param>
-        public void SetDiagnosticHandler(DiagnosticInfoCallbackAction handler);
+        public void SetDiagnosticHandler( DiagnosticInfoCallbackAction handler );
 
         /// <summary>Get a type that is a pointer to a value of a given type</summary>
         /// <param name="elementType">Type of value the pointer points to</param>
         /// <returns><see cref="IPointerType"/> for a pointer that references a value of type <paramref name="elementType"/></returns>
-        public IPointerType GetPointerTypeFor(ITypeRef elementType);
+        public IPointerType GetPointerTypeFor( ITypeRef elementType );
 
         /// <summary>Get's an LLVM integer type of arbitrary bit width</summary>
         /// <param name="bitWidth">Width of the integer type in bits</param>
@@ -158,13 +157,13 @@ namespace Ubiquity.NET.Llvm
         ///  GetIntType(16) is the same as <see cref="Int16Type"/>, etc... )
         /// </remarks>
         /// <returns>Integer <see cref="ITypeRef"/> for the specified width</returns>
-        public ITypeRef GetIntType(uint bitWidth);
+        public ITypeRef GetIntType( uint bitWidth );
 
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
-        public IFunctionType GetFunctionType(ITypeRef returnType, params IEnumerable<ITypeRef> args);
+        public IFunctionType GetFunctionType( ITypeRef returnType, params IEnumerable<ITypeRef> args );
 
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>
         /// <param name="isVarArgs">Flag to indicate if the method supports C/C++ style VarArgs</param>
@@ -211,7 +210,7 @@ namespace Ubiquity.NET.Llvm
         /// </list>
         /// </note>
         /// </remarks>
-        public Constant CreateConstantStruct(bool packed, params IEnumerable<Constant> values);
+        public Constant CreateConstantStruct( bool packed, params IEnumerable<Constant> values );
 
         /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
         /// <param name="type">Type of the structure to create</param>
@@ -229,7 +228,7 @@ namespace Ubiquity.NET.Llvm
         /// </list>
         /// </note>
         /// </remarks>
-        public Constant CreateNamedConstantStruct(IStructType type, params IEnumerable<Constant> values);
+        public Constant CreateNamedConstantStruct( IStructType type, params IEnumerable<Constant> values );
 
         /// <summary>Create an opaque structure type (e.g. a forward reference)</summary>
         /// <param name="name">Name of the type (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
@@ -240,7 +239,7 @@ namespace Ubiquity.NET.Llvm
         /// required)
         /// </remarks>
         /// <returns>New type</returns>
-        public IStructType CreateStructType(LazyEncodedString name);
+        public IStructType CreateStructType( LazyEncodedString name );
 
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
         /// <param name="packed">Flag to indicate if the structure is "packed"</param>
@@ -248,7 +247,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>
         /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
-        public IStructType CreateStructType(bool packed, params IEnumerable<ITypeRef> elements);
+        public IStructType CreateStructType( bool packed, params IEnumerable<ITypeRef> elements );
 
         /// <summary>Creates a new structure type in this <see cref="ContextAlias"/></summary>
         /// <param name="name">Name of the structure (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
@@ -260,7 +259,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// If the elements argument list is empty then a complete 0 sized struct is created
         /// </remarks>
-        public IStructType CreateStructType(LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements);
+        public IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements );
 
         /// <summary>Creates a metadata string from the given string</summary>
         /// <param name="value">string to create as metadata</param>
@@ -269,12 +268,12 @@ namespace Ubiquity.NET.Llvm
         /// if <paramref name="value"/> is <see langword="null"/> then the result
         /// represents an empty string.
         /// </remarks>
-        public MDString CreateMetadataString(LazyEncodedString? value);
+        public MDString CreateMetadataString( LazyEncodedString? value );
 
         /// <summary>Create an <see cref="MDNode"/> from a string</summary>
         /// <param name="value">String value</param>
         /// <returns>New node with the string as the first element of the <see cref="MDNode.Operands"/> property (as an MDString)</returns>
-        public MDNode CreateMDNode(LazyEncodedString value);
+        public MDNode CreateMDNode( LazyEncodedString value );
 
         /// <summary>Create a constant data string value</summary>
         /// <param name="value">string to convert into an LLVM constant value</param>
@@ -285,7 +284,7 @@ namespace Ubiquity.NET.Llvm
         /// of a terminating null character, use the <see cref="CreateConstantString(LazyEncodedString, bool)"/>
         /// overload to specify the intended behavior.
         /// </remarks>
-        public ConstantDataArray CreateConstantString(LazyEncodedString value);
+        public ConstantDataArray CreateConstantString( LazyEncodedString value );
 
         /// <summary>Create a constant data string value</summary>
         /// <param name="value">string to convert into an LLVM constant value</param>
@@ -295,97 +294,97 @@ namespace Ubiquity.NET.Llvm
         /// This converts the string to ANSI form and creates an LLVM constant array of i8
         /// characters for the data. Enforcement of a null terminator depends on the value of <paramref name="nullTerminate"/>
         /// </remarks>
-        public ConstantDataArray CreateConstantString(LazyEncodedString value, bool nullTerminate);
+        public ConstantDataArray CreateConstantString( LazyEncodedString value, bool nullTerminate );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 1</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(bool constValue);
+        public ConstantInt CreateConstant( bool constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(byte constValue);
+        public ConstantInt CreateConstant( byte constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 8</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public Constant CreateConstant(sbyte constValue);
+        public Constant CreateConstant( sbyte constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(Int16 constValue);
+        public ConstantInt CreateConstant( Int16 constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 16</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(UInt16 constValue);
+        public ConstantInt CreateConstant( UInt16 constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(Int32 constValue);
+        public ConstantInt CreateConstant( Int32 constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 32</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(UInt32 constValue);
+        public ConstantInt CreateConstant( UInt32 constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(Int64 constValue);
+        public ConstantInt CreateConstant( Int64 constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="constValue">Value for the constant</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(UInt64 constValue);
+        public ConstantInt CreateConstant( UInt64 constValue );
 
         /// <summary>Creates a new <see cref="ConstantInt"/> with a bit length of 64</summary>
         /// <param name="bitWidth">Bit width of the integer</param>
         /// <param name="constValue">Value for the constant</param>
         /// <param name="signExtend">flag to indicate if the constant value should be sign extended</param>
         /// <returns><see cref="ConstantInt"/> representing the value</returns>
-        public ConstantInt CreateConstant(uint bitWidth, UInt64 constValue, bool signExtend);
+        public ConstantInt CreateConstant( uint bitWidth, UInt64 constValue, bool signExtend );
 
         /// <summary>Create a constant value of the specified integer type</summary>
         /// <param name="intType">Integer type</param>
         /// <param name="constValue">value</param>
         /// <param name="signExtend">flag to indicate if <paramref name="constValue"/> is sign extended</param>
         /// <returns>Constant for the specified value</returns>
-        public ConstantInt CreateConstant(ITypeRef intType, UInt64 constValue, bool signExtend);
+        public ConstantInt CreateConstant( ITypeRef intType, UInt64 constValue, bool signExtend );
 
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
-        public ConstantFP CreateConstant(float constValue);
+        public ConstantFP CreateConstant( float constValue );
 
         /// <summary>Creates a constant floating point value for a given value</summary>
         /// <param name="constValue">Value to make into a <see cref="ConstantFP"/></param>
         /// <returns>Constant value</returns>
-        public ConstantFP CreateConstant(double constValue);
+        public ConstantFP CreateConstant( double constValue );
 
         /// <summary>Create a named <see cref="BasicBlock"/> without inserting it into a function</summary>
         /// <param name="name">Name of the block to create</param>
         /// <returns><see cref="BasicBlock"/> created</returns>
-        public BasicBlock CreateBasicBlock(LazyEncodedString name);
+        public BasicBlock CreateBasicBlock( LazyEncodedString name );
 
         /// <summary>Creates a new instance of the <see cref="Module"/> class in this context</summary>
         /// <returns><see cref="Module"/></returns>
-        public Module CreateBitcodeModule();
+        public Module CreateBitcodeModule( );
 
         /// <summary>Creates a new instance of the <see cref="Module"/> class in a given context</summary>
         /// <param name="moduleId">ModuleHandle's ID</param>
         /// <returns><see cref="Module"/></returns>
-        public Module CreateBitcodeModule(LazyEncodedString moduleId);
+        public Module CreateBitcodeModule( LazyEncodedString moduleId );
 
         /// <summary>Parse LLVM IR source for a module, into this context</summary>
         /// <param name="src">LLVM IR Source code of the module</param>
         /// <param name="name">Name of the module buffer</param>
         /// <returns>Newly created module parsed from the IR</returns>
         /// <exception cref="LlvmException">Any errors parsing the IR</exception>
-        public Module ParseModule(LazyEncodedString src, LazyEncodedString name);
+        public Module ParseModule( LazyEncodedString src, LazyEncodedString name );
 
         /// <summary>Gets non-zero IrMetadata kind ID for a given name</summary>
         /// <param name="name">name of the metadata kind</param>
@@ -393,31 +392,31 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// These IDs are uniqued across all modules in this context.
         /// </remarks>
-        public uint GetMDKindId(LazyEncodedString name);
+        public uint GetMDKindId( LazyEncodedString name );
 
         /// <summary>Opens a <see cref="TargetBinary"/> from a path</summary>
         /// <param name="path">path to the object file binary</param>
         /// <returns>new object file</returns>
         /// <exception cref="System.IO.IOException">File IO failures</exception>
-        public TargetBinary OpenBinary(LazyEncodedString path);
+        public TargetBinary OpenBinary( LazyEncodedString path );
     }
 
     internal static class ContextExtensions
     {
-        internal static LLVMContextRefAlias GetUnownedHandle(this IContext self)
+        internal static LLVMContextRefAlias GetUnownedHandle( this IContext self )
         {
             if(self is IHandleWrapper<LLVMContextRefAlias> wrapper)
             {
                 return wrapper.Handle;
             }
-            else if (self is IGlobalHandleOwner<LLVMContextRef> owner)
+            else if(self is IGlobalHandleOwner<LLVMContextRef> owner)
             {
                 // implicitly cast to the alias handle
                 return owner.OwnedHandle;
             }
             else
             {
-                throw new ArgumentException("Internal Error - Unknown context type!", nameof(self));
+                throw new ArgumentException( "Internal Error - Unknown context type!", nameof( self ) );
             }
         }
     }

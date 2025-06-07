@@ -18,22 +18,22 @@ namespace Kaleidoscope.Grammar.AST
     {
         public TResult? Visit( IAstNode node )
         {
-            Debug.WriteLine("WARNING using low performance ambiguous type Visit method");
+            Debug.WriteLine( "WARNING using low performance ambiguous type Visit method" );
             return node switch
             {
-                RootNode n => Visit(n),
-                ErrorNode n => Visit(n),
-                Prototype n => Visit(n),
-                FunctionDefinition n => Visit(n),
-                ConstantExpression n => Visit(n),
-                VariableReferenceExpression n => Visit(n),
-                FunctionCallExpression n => Visit(n),
-                BinaryOperatorExpression n => Visit(n),
-                VarInExpression n => Visit(n),
-                ParameterDeclaration n => Visit(n),
-                ConditionalExpression n => Visit(n),
-                ForInExpression n => Visit(n),
-                LocalVariableDeclaration n => Visit(n),
+                RootNode n => Visit( n ),
+                ErrorNode n => Visit( n ),
+                Prototype n => Visit( n ),
+                FunctionDefinition n => Visit( n ),
+                ConstantExpression n => Visit( n ),
+                VariableReferenceExpression n => Visit( n ),
+                FunctionCallExpression n => Visit( n ),
+                BinaryOperatorExpression n => Visit( n ),
+                VarInExpression n => Visit( n ),
+                ParameterDeclaration n => Visit( n ),
+                ConditionalExpression n => Visit( n ),
+                ForInExpression n => Visit( n ),
+                LocalVariableDeclaration n => Visit( n ),
                 _ => DefaultResult
             };
         }
@@ -68,7 +68,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             ArgumentNullException.ThrowIfNull( node );
             TResult? aggregate = DefaultResult;
-            foreach( var child in node.Children )
+            foreach(var child in node.Children)
             {
                 aggregate = AggregateResult( aggregate, child.Accept( this ) );
             }
@@ -97,22 +97,22 @@ namespace Kaleidoscope.Grammar.AST
     {
         public TResult? Visit( IAstNode node, ref readonly TArg arg )
         {
-            Debug.WriteLine("WARNING using low performance ambiguous type Visit method");
+            Debug.WriteLine( "WARNING using low performance ambiguous type Visit method" );
             return node switch
             {
-                RootNode n => Visit(n, in arg),
-                ErrorNode n => Visit(n, in arg),
-                Prototype n => Visit(n, in arg),
-                FunctionDefinition n => Visit(n, in arg),
-                ConstantExpression n => Visit(n, in arg),
-                VariableReferenceExpression n => Visit(n, in arg),
-                FunctionCallExpression n => Visit(n, in arg),
-                BinaryOperatorExpression n => Visit(n, in arg),
-                VarInExpression n => Visit(n, in arg),
-                ParameterDeclaration n => Visit(n, in arg),
-                ConditionalExpression n => Visit(n, in arg),
-                ForInExpression n => Visit(n, in arg),
-                LocalVariableDeclaration n => Visit(n, in arg),
+                RootNode n => Visit( n, in arg ),
+                ErrorNode n => Visit( n, in arg ),
+                Prototype n => Visit( n, in arg ),
+                FunctionDefinition n => Visit( n, in arg ),
+                ConstantExpression n => Visit( n, in arg ),
+                VariableReferenceExpression n => Visit( n, in arg ),
+                FunctionCallExpression n => Visit( n, in arg ),
+                BinaryOperatorExpression n => Visit( n, in arg ),
+                VarInExpression n => Visit( n, in arg ),
+                ParameterDeclaration n => Visit( n, in arg ),
+                ConditionalExpression n => Visit( n, in arg ),
+                ForInExpression n => Visit( n, in arg ),
+                LocalVariableDeclaration n => Visit( n, in arg ),
                 _ => DefaultResult
             };
         }
@@ -147,7 +147,7 @@ namespace Kaleidoscope.Grammar.AST
         {
             ArgumentNullException.ThrowIfNull( node );
             TResult? aggregate = DefaultResult;
-            foreach( var child in node.Children )
+            foreach(var child in node.Children)
             {
                 aggregate = AggregateResult( aggregate, child.Accept( this, in arg ) );
             }

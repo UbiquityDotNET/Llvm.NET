@@ -118,13 +118,13 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             }
         }
 
-        public override bool Equals(object? obj ) => obj is LLVMOrcCSymbolsList other && Equals(other);
+        public override bool Equals( object? obj ) => obj is LLVMOrcCSymbolsList other && Equals( other );
 
         public override int GetHashCode( )
         {
             unsafe
             {
-                return HashCode.Combine((nint)Symbols, Length);
+                return HashCode.Combine( (nint)Symbols, Length );
             }
         }
 
@@ -161,9 +161,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LLVMOrcCLookupSetElement
     {
-        public LLVMOrcCLookupSetElement(LLVMOrcSymbolStringPoolEntryRef name, LLVMOrcSymbolLookupFlags flags)
+        public LLVMOrcCLookupSetElement( LLVMOrcSymbolStringPoolEntryRef name, LLVMOrcSymbolLookupFlags flags )
         {
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull( name );
 
             Name = name.DangerousGetHandle();
             LookupFlags = flags;
@@ -297,7 +297,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing(CountElementName=nameof(NumPairs))]
+        [return: MarshalUsing( CountElementName = nameof( NumPairs ) )]
         public static unsafe partial LLVMOrcCSymbolFlagsMapPair[] LLVMOrcMaterializationResponsibilityGetSymbols(
             LLVMOrcMaterializationResponsibilityRef MR,
             out nuint NumPairs
@@ -335,26 +335,13 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [In] LLVMOrcCSymbolDependenceGroup[] SymbolDepGroups, nuint NumSymbolDepGroups
             );
 
-        //public static LLVMErrorRef LLVMOrcMaterializationResponsibilityDefineMaterializing(
-        //    LLVMOrcMaterializationResponsibilityRef MR,
-        //    [In] LLVMOrcCSymbolFlagsMapPair[] Pairs
-        //    )
-        //{
-        //    return LLVMOrcMaterializationResponsibilityDefineMaterializing(MR, Pairs, checked((nuint)Pairs.LongLength));
-        //}
-
-        //[LibraryImport( LibraryName )]
-        //[UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        //private static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDefineMaterializing(
-        //    LLVMOrcMaterializationResponsibilityRef MR,
-        //    [In] LLVMOrcCSymbolFlagsMapPair[] Pairs, nuint NumPairs
-        //    );
-
+        // NOTE: This is not wrapped to allow casting a wrapped type to the interop struct to avoid copies
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDefineMaterializing(
             LLVMOrcMaterializationResponsibilityRef MR,
-            LLVMOrcCSymbolFlagsMapPair* Pairs, nuint NumPairs
+            LLVMOrcCSymbolFlagsMapPair* Pairs,
+            nuint NumPairs
             );
 
         [LibraryImport( LibraryName )]

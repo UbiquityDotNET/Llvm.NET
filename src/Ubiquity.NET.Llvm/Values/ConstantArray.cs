@@ -22,9 +22,9 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="elementType">Type of elements in the array</param>
         /// <param name="values">Values to initialize the array</param>
         /// <returns>Constant representing the array</returns>
-        public static Constant From( ITypeRef elementType, params Constant[ ] values )
+        public static Constant From( ITypeRef elementType, params Constant[] values )
         {
-            return From( elementType, ( IList<Constant> )values );
+            return From( elementType, (IList<Constant>)values );
         }
 
         /// <summary>Create a constant array of values of a given type with a fixed size, zero filling any unspecified values</summary>
@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// If the number of arguments provided for the values is less than <paramref name="len"/>
         /// then the remaining elements of the array are set with the null value for the <paramref name="elementType"/>
         /// </remarks>
-        public static Constant From( ITypeRef elementType, int len, params Constant[ ] values )
+        public static Constant From( ITypeRef elementType, int len, params Constant[] values )
         {
             ArgumentNullException.ThrowIfNull( elementType );
             ArgumentNullException.ThrowIfNull( values );
@@ -50,14 +50,14 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Constant representing the array</returns>
         public static Constant From( ITypeRef elementType, IList<Constant> values )
         {
-            if( values.Any( v => v.NativeType.GetTypeRef( ) != elementType.GetTypeRef( ) ) )
+            if(values.Any( v => v.NativeType.GetTypeRef() != elementType.GetTypeRef() ))
             {
                 throw new ArgumentException( "One or more value(s) types do not match specified array element type" );
             }
 
             var valueHandles = values.Select( v => v.Handle ).ToArray( );
             var handle = LLVMConstArray( elementType.GetTypeRef(), valueHandles, (uint)valueHandles.Length );
-            return FromHandle<Constant>( handle.ThrowIfInvalid( ) )!;
+            return FromHandle<Constant>( handle.ThrowIfInvalid() )!;
         }
 
         internal ConstantArray( LLVMValueRef valueRef )
@@ -67,13 +67,13 @@ namespace Ubiquity.NET.Llvm.Values
 
         private static IEnumerable<Constant> ZeroFill( ITypeRef elementType, int len, IList<Constant> values )
         {
-            foreach( var value in values )
+            foreach(var value in values)
             {
                 yield return value;
             }
 
             var zeroVal = elementType.GetNullValue( );
-            for( int i = values.Count; i < len; ++i )
+            for(int i = values.Count; i < len; ++i)
             {
                 yield return zeroVal;
             }

@@ -20,7 +20,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Gets a value indicating whether the operation Failed</summary>
         public bool Failed => !Succeeded;
 
-        internal LLVMStatus(int value)
+        internal LLVMStatus( int value )
         {
             ErrorCode = value;
         }

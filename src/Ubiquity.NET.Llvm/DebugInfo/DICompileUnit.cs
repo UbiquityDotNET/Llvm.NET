@@ -37,7 +37,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         */
 
         /// <summary>Gets the emission kind for this compile unit</summary>
-        public DwarfEmissionKind EmissionKind => (DwarfEmissionKind)LibLLVMDiCompileUnitGetEmissionKind(Handle);
+        public DwarfEmissionKind EmissionKind => (DwarfEmissionKind)LibLLVMDiCompileUnitGetEmissionKind( Handle );
 
         /// <summary>Gets the name of the producer of this unit</summary>
         public LazyEncodedString Producer => GetOperandString( 1 );

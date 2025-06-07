@@ -21,14 +21,14 @@ namespace Kaleidoscope.Tests
             ArgumentNullException.ThrowIfNull( ctx );
 
             LibLLVM?.Dispose();
-            LibLLVM = Library.InitializeLLVM( );
+            LibLLVM = Library.InitializeLLVM();
             LibLLVM.RegisterTarget( CodeGenTarget.Native );
         }
 
         [AssemblyCleanup]
         public static void AssemblyCleanup( )
         {
-            LibLLVM?.Dispose( );
+            LibLLVM?.Dispose();
         }
 
         private static ILibLlvm? LibLLVM;

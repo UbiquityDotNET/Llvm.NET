@@ -2,6 +2,8 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 
+using Ubiquity.NET.Versioning;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ErrorHandling;
@@ -22,9 +24,9 @@ namespace Ubiquity.NET.Llvm.Interop
             LibLLVMRegisterTarget( target, registrations ).ThrowIfFailed();
         }
 
-        public CSemVer GetVersionInfo()
+        public CSemVer GetVersionInfo( )
         {
-            return CSemVer.FromUInt64(LibLLVMGetVersion());
+            return CSemVer.From( LibLLVMGetVersion() );
         }
 
         /// <inheritdoc/>
@@ -36,18 +38,18 @@ namespace Ubiquity.NET.Llvm.Interop
 
         /// <summary>Initializes the native LLVM library support</summary>
         /// <returns><see cref="ILibLlvm"/> implementation for the library</returns>
-        public static ILibLlvm InitializeLLVM()
+        public static ILibLlvm InitializeLLVM( )
         {
             // If this is the first call and the library resolver is applied, then validate
             // the version from the library for sanity.
             if(!NativeLibraryResolver.Apply())
             {
-                throw new InvalidOperationException("LLVM library was previously initialized. Re-init is not supported in the native library");
+                throw new InvalidOperationException( "LLVM library was previously initialized. Re-init is not supported in the native library" );
             }
 
             // Verify the version of LibLLVM.
-            var libLLVMVersion = CSemVer.FromUInt64(LibLLVMGetVersion());
-            if (libLLVMVersion.Major != SupportedVersion.Major
+            var libLLVMVersion = CSemVer.From(LibLLVMGetVersion());
+            if(libLLVMVersion.Major != SupportedVersion.Major
              || libLLVMVersion.Minor != SupportedVersion.Minor
              || libLLVMVersion.Patch != SupportedVersion.Patch
             )
@@ -64,7 +66,7 @@ namespace Ubiquity.NET.Llvm.Interop
             return new Library();
         }
 
-        private Library()
+        private Library( )
         {
             unsafe
             {
@@ -83,6 +85,7 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             var resultArray = new LibLLVMCodeGenTarget[LibLLVMGetNumTargets()];
             LibLLVMGetRuntimeTargets( resultArray ).ThrowIfFailed();
+
             // Create a new immutable array without copy (Wraps the input array)
             return ImmutableCollectionsMarshal.AsImmutableArray( resultArray );
         }

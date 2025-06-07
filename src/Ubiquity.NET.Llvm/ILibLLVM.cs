@@ -127,7 +127,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Registers components for ARM AArch64 target(s)</summary>
         /// <param name="target">Target architecture to register/initialize</param>
         /// <param name="registrations">Flags indicating which components to register/enable</param>
-        void RegisterTarget(CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All);
+        void RegisterTarget( CodeGenTarget target, TargetRegistration registrations = TargetRegistration.All );
 
         /// <summary>Gets the supported targets for this library</summary>
         /// <remarks>
@@ -135,14 +135,14 @@ namespace Ubiquity.NET.Llvm
         /// is distinct from the registered targets. Registration of each top level enumerated target may indeed
         /// register support for more targets (e.g., ARM includes thumb big and little endian targets).
         /// </remarks>
-        ImmutableArray<CodeGenTarget> SupportedTargets {get;}
+        ImmutableArray<CodeGenTarget> SupportedTargets { get; }
 
-        /// <summary>Map of all known attributes to this build</summary>
+        /// <summary>Gets a map of all known attributes to this build</summary>
         /// <remarks>
         /// This map includes all enumerated attributes AND all well-known string attributes. Additional
         /// string attributes are always valid as various passes and target machines may use custom
         /// attributes not yet known to, or considered stable by, the LLVM core native code.
         /// </remarks>
-        ImmutableDictionary<LazyEncodedString, AttributeInfo> AttributeMap {get;}
+        ImmutableDictionary<LazyEncodedString, AttributeInfo> AttributeMap { get; }
     }
 }

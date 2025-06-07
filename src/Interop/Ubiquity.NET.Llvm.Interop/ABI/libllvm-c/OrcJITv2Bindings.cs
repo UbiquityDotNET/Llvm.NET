@@ -10,6 +10,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
     {
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LibLLVMExecutionSessionRemoveDyLib(LLVMOrcExecutionSessionRef session, LLVMOrcJITDylibRef lib);
+        public static unsafe partial LLVMErrorRef LibLLVMExecutionSessionRemoveDyLib( LLVMOrcExecutionSessionRef session, LLVMOrcJITDylibRef lib );
     }
 }

@@ -56,11 +56,12 @@ namespace Ubiquity.NET.Llvm.Values
         public bool IsType => LLVMIsTypeAttribute( NativeAttribute );
 
         /// <summary>Gets the <see cref="AttributeInfo"/> for this value</summary>
-        public AttributeInfo AttributeInfo => AttributeInfo.From(Name);
+        public AttributeInfo AttributeInfo => AttributeInfo.From( Name );
 
         /// <summary>Gets a string representation of the attribute</summary>
         /// <returns>Attribute as a string</returns>
         public override string? ToString( ) => LibLLVMAttributeToString( NativeAttribute );
+
         internal AttributeValue( LLVMAttributeRef nativeValue )
         {
             NativeAttribute = nativeValue;

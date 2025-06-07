@@ -13,23 +13,23 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         : CStringHandle
     {
         /// <summary>Default constructor is required for marshalling</summary>
-        public ErrorMessageString()
+        public ErrorMessageString( )
         {
         }
 
-        public ErrorMessageString(nint hABI)
+        public ErrorMessageString( nint hABI )
             : base( hABI )
         {
         }
 
-        protected override bool ReleaseHandle()
+        protected override bool ReleaseHandle( )
         {
             LLVMDisposeErrorMessage( handle );
             return true;
 
             [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            static extern void LLVMDisposeErrorMessage(nint p);
+            static extern void LLVMDisposeErrorMessage( nint p );
         }
     }
 }

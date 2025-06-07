@@ -11,12 +11,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
 
-        internal LazyCallThroughManager(LLVMOrcLazyCallThroughManagerRef h)
+        internal LazyCallThroughManager( LLVMOrcLazyCallThroughManagerRef h )
         {
             Handle = h.Move();
         }

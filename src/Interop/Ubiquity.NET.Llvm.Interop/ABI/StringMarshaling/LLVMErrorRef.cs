@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         : GlobalHandleBase
     {
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class with default values for marshalling</summary>
-        public LLVMErrorRef()
+        public LLVMErrorRef( )
             : base( true )
         {
             LazyMessage = new( LazyGetMessage );
@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
 
         /// <summary>Initializes a new instance of the <see cref="LLVMErrorRef"/> class.</summary>
         /// <param name="handle">Raw native pointer for the handle</param>
-        public LLVMErrorRef(nint handle)
+        public LLVMErrorRef( nint handle )
             : base( true )
         {
             SetHandle( handle );
@@ -49,16 +49,16 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         public bool Failed => !Success;
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override string ToString( )
         {
             return LazyMessage.Value?.ToString() ?? string.Empty;
         }
 
-        public void ThrowIfFailed()
+        public void ThrowIfFailed( )
         {
-            if (Failed)
+            if(Failed)
             {
-                throw new LlvmException(ToString());
+                throw new LlvmException( ToString() );
             }
         }
 
@@ -67,25 +67,25 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         {
             get
             {
-                return LLVMErrorTypeId.FromABI(LLVMGetErrorTypeId(handle));
+                return LLVMErrorTypeId.FromABI( LLVMGetErrorTypeId( handle ) );
 
                 [DllImport( LibraryName )]
                 [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-                static extern /*LLVMErrorTypeId*/nint LLVMGetErrorTypeId(/*LLVMErrorRef*/ nint Err);
+                static extern /*LLVMErrorTypeId*/nint LLVMGetErrorTypeId(/*LLVMErrorRef*/ nint Err );
             }
         }
 
         /// <summary>Reports a failure error if this is a failure condition</summary>
-        public void CantFail()
+        public void CantFail( )
         {
-            if (!IsClosed && !IsInvalid)
+            if(!IsClosed && !IsInvalid)
             {
-                LLVMCantFail(handle);
+                LLVMCantFail( handle );
             }
 
             [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            static extern void LLVMCantFail(/*LLVMErrorRef*/ nint Err);
+            static extern void LLVMCantFail(/*LLVMErrorRef*/ nint Err );
         }
 
         /// <summary>Create a new <see cref="LLVMErrorRef"/> (StringError) from a managed string</summary>
@@ -95,9 +95,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         /// This is a static factory as there is no default construction provided
         /// in the LLVM-C API.
         /// </remarks>
-        public static LLVMErrorRef Create(LazyEncodedString errMsg)
+        public static LLVMErrorRef Create( LazyEncodedString errMsg )
         {
-            return LLVMCreateStringError(errMsg);
+            return LLVMCreateStringError( errMsg );
         }
 
         /// <summary>Create a new <see cref="LLVMErrorRef"/> as a <see cref="nint"/> from a <see cref="LazyEncodedString"/></summary>
@@ -110,7 +110,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         /// In all other cases a fully wrapped safe handle (<see cref="LLVMErrorRef"/>) is used via <see cref="Create(LazyEncodedString)"/>.
         /// </para>
         /// </remarks>
-        public static unsafe nint CreateForNativeOut(LazyEncodedString errMsg)
+        public static unsafe nint CreateForNativeOut( LazyEncodedString errMsg )
         {
             unsafe
             {
@@ -119,38 +119,38 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
                 // but there is NO documentation or obvious options to "invoke" such a thing.
                 // So, until that is found this is done "manually" here.
                 using var mem = errMsg.Pin();
-                return RawLLVMCreateStringError((byte*)mem.Pointer);
+                return RawLLVMCreateStringError( (byte*)mem.Pointer );
             }
 
             [DllImport( LibraryName, EntryPoint = "LLVMCreateStringError" )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            static unsafe extern nint /*LLVMErrorRef*/ RawLLVMCreateStringError(byte* ErrMsg);
+            static unsafe extern nint /*LLVMErrorRef*/ RawLLVMCreateStringError( byte* ErrMsg );
         }
 
         protected override void Dispose( bool disposing )
         {
             // if a message was previously realized, dispose of it now.
-            if (disposing && LazyMessage.IsValueCreated)
+            if(disposing && LazyMessage.IsValueCreated)
             {
                 LazyMessage.Value?.Dispose();
             }
 
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
 
         /// <inheritdoc/>
-        [ SecurityCritical]
-        protected override bool ReleaseHandle()
+        [SecurityCritical]
+        protected override bool ReleaseHandle( )
         {
             LLVMConsumeError( handle );
             return true;
 
             [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            static extern void LLVMConsumeError(nint p);
+            static extern void LLVMConsumeError( nint p );
         }
 
-        private ErrorMessageString? LazyGetMessage()
+        private ErrorMessageString? LazyGetMessage( )
         {
             if(IsClosed || IsInvalid)
             {
@@ -170,7 +170,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
             // cannot allow ANY marshalling. That is done manually by caller.
             [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            static extern /*ErrorMessageString*/ nint LLVMGetErrorMessage(nint p);
+            static extern /*ErrorMessageString*/ nint LLVMGetErrorMessage( nint p );
         }
 
         // use Lazy to cache result of the underlying destructive get

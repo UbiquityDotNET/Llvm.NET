@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static T RegisterName<T>( this T value, string name )
             where T : Value
         {
-            if( value is Instruction )
+            if(value is Instruction)
             {
                 value.Name = name;
             }
@@ -56,7 +56,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             return valueRef == default
                 ? throw new ArgumentException( "Value ref is null", nameof( valueRef ) )
-                : new(LLVMGetTypeContext(LLVMTypeOf( valueRef )));
+                : new( LLVMGetTypeContext( LLVMTypeOf( valueRef ) ) );
         }
 
         [SuppressMessage( "Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Factory that maps wrappers with underlying types" )]
@@ -64,7 +64,7 @@ namespace Ubiquity.NET.Llvm.Values
         internal static Value CreateValueInstance( this LLVMValueRef handle )
         {
             var kind = LibLLVMGetValueKind( handle );
-            switch( kind )
+            switch(kind)
             {
             case LibLLVMValueKind.ArgumentKind:
                 return new Argument( handle );
@@ -289,7 +289,7 @@ namespace Ubiquity.NET.Llvm.Values
 
             // Default to constant, Instruction or generic base Value
             default:
-                if( kind >= LibLLVMValueKind.ConstantFirstValKind && kind <= LibLLVMValueKind.ConstantLastValKind )
+                if(kind >= LibLLVMValueKind.ConstantFirstValKind && kind <= LibLLVMValueKind.ConstantLastValKind)
                 {
                     return new Constant( handle );
                 }

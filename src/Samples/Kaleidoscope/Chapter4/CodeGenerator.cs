@@ -31,7 +31,7 @@ namespace Kaleidoscope.Chapter4
         , ICodeGenerator<Value>
     {
         #region Initialization
-        public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
+        public CodeGenerator( DynamicRuntimeState globalState, TextWriter? outputWriter = null )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -50,7 +50,7 @@ namespace Kaleidoscope.Chapter4
         #endregion
 
         #region Dispose
-        public void Dispose()
+        public void Dispose( )
         {
             foreach(var tracker in FunctionModuleMap.Values)
             {
@@ -65,7 +65,7 @@ namespace Kaleidoscope.Chapter4
         #endregion
 
         #region Generate
-        public Value? Generate(IAstNode ast)
+        public Value? Generate( IAstNode ast )
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -86,9 +86,9 @@ namespace Kaleidoscope.Chapter4
             Debug.Assert( Module is not null, "Module initialization failed" );
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
-            if(!function.ParentModule.Verify(out string msg))
+            if(!function.ParentModule.Verify( out string msg ))
             {
-                throw new CodeGeneratorException(msg);
+                throw new CodeGeneratorException( msg );
             }
 
             if(definition.IsAnonymous)
@@ -135,7 +135,7 @@ namespace Kaleidoscope.Chapter4
         #endregion
 
         #region ConstantExpression
-        public override Value? Visit(ConstantExpression constant)
+        public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
@@ -143,11 +143,11 @@ namespace Kaleidoscope.Chapter4
         }
         #endregion
 
-        public override Value? Visit(BinaryOperatorExpression binaryOperator)
+        public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
             switch(binaryOperator.Op)
             {
             case BuiltInOperatorKind.Less:
@@ -195,10 +195,10 @@ namespace Kaleidoscope.Chapter4
         }
 
         #region FunctionCallExpression
-        public override Value? Visit(FunctionCallExpression functionCall)
+        public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             if(Module is null)
             {
@@ -226,10 +226,10 @@ namespace Kaleidoscope.Chapter4
         #endregion
 
         #region FunctionDefinition
-        public override Value? Visit(FunctionDefinition definition)
+        public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -261,7 +261,7 @@ namespace Kaleidoscope.Chapter4
         }
         #endregion
 
-        public override Value? Visit(VariableReferenceExpression reference)
+        public override Value? Visit( VariableReferenceExpression reference )
         {
             ArgumentNullException.ThrowIfNull( reference );
 
@@ -280,7 +280,7 @@ namespace Kaleidoscope.Chapter4
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction(Prototype prototype)
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
             if(Module is null)
             {

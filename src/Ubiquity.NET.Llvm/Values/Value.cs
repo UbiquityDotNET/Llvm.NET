@@ -4,9 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
-
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Values
 {
@@ -27,13 +26,13 @@ namespace Ubiquity.NET.Llvm.Values
         #region IEquatable<Value>
 
         /// <inheritdoc/>
-        public bool Equals(Value? other) => other is not null && Handle.Equals(other.Handle);
+        public bool Equals( Value? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)=> Equals( obj as Value );
+        public override bool Equals( object? obj ) => Equals( obj as Value );
 
         /// <inheritdoc/>
-        public override int GetHashCode() => Handle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
         #endregion
 
         /// <summary>Gets or sets name of the value (if any)</summary>
@@ -48,10 +47,10 @@ namespace Ubiquity.NET.Llvm.Values
         [DisallowNull]
         public LazyEncodedString? Name
         {
-            get => LLVMGetValueName2( Handle )!; //
+            get => LLVMGetValueName2( Handle )!;
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                ArgumentNullException.ThrowIfNull( value );
                 LLVMSetValueName2( Handle, value );
             }
         }
@@ -80,7 +79,7 @@ namespace Ubiquity.NET.Llvm.Values
             get
             {
                 var kind = LibLLVMGetValueKind( Handle );
-                return ( kind == LibLLVMValueKind.CallKind ) || ( kind == LibLLVMValueKind.InvokeKind );
+                return (kind == LibLLVMValueKind.CallKind) || (kind == LibLLVMValueKind.InvokeKind);
             }
         }
 
@@ -101,7 +100,7 @@ namespace Ubiquity.NET.Llvm.Values
 
         internal Value( LLVMValueRef valueRef )
         {
-            if( valueRef == default )
+            if(valueRef == default)
             {
                 throw new ArgumentNullException( nameof( valueRef ) );
             }

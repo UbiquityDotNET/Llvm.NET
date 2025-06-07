@@ -16,10 +16,10 @@ namespace Kaleidoscope.Grammar.ANTLR
     {
         internal partial class FunctionPrototypeContext
         {
-            public override string Name => Identifier( 0 ).GetText( );
+            public override string Name => Identifier( 0 ).GetText();
 
             public override IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
-                => Identifier( ).Skip( 1 ).Select( ( id, i ) => (id.GetText( ), i, id.GetSourceLocation( )) );
+                => Identifier().Skip( 1 ).Select( ( id, i ) => (id.GetText(), i, id.GetSourceLocation()) );
         }
     }
 }

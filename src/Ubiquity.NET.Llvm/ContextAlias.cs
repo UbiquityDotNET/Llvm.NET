@@ -544,6 +544,18 @@ namespace Ubiquity.NET.Llvm
             set => LLVMContextSetDiscardValueNames( NativeHandle, value );
         }
 
+        LLVMContextRefAlias IHandleWrapper<LLVMContextRefAlias>.Handle => NativeHandle;
+
+        internal ContextAlias( LLVMContextRefAlias nativeHandle )
+        {
+            if(nativeHandle.IsNull)
+            {
+                throw new ArgumentException( "Invalid handle value", nameof( nativeHandle ) );
+            }
+
+            NativeHandle = nativeHandle;
+        }
+
         private AttributeValue InternalCreateStringAttribute( LazyEncodedString name, LazyEncodedString? value = null )
         {
             // if no value provided, use an empty string so native API doesn't crash.
@@ -572,19 +584,6 @@ namespace Ubiquity.NET.Llvm
         public unsigned GetOperandBundleTagId(string name) {...}
         public IEnumerable<string> OperandBundleTagIds { get; }
         */
-
-        LLVMContextRefAlias IHandleWrapper<LLVMContextRefAlias>.Handle => NativeHandle;
-
-        internal ContextAlias( LLVMContextRefAlias nativeHandle )
-        {
-            if(nativeHandle.IsNull)
-            {
-                throw new ArgumentException( "Invalid handle value", nameof( nativeHandle ) );
-            }
-
-            NativeHandle = nativeHandle;
-        }
-
 
         private readonly LLVMContextRefAlias NativeHandle;
     }

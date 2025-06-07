@@ -9,13 +9,13 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 namespace Ubiquity.NET.Llvm.Transforms.Legacy
 {
     /// <summary>Pass manager for running passes against an entire module</summary>
-    [Obsolete("Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module instead")]
+    [Obsolete( "Legacy pass manager support is considered obsolete - use one of the TryRunPasses overloads on Module instead" )]
     public sealed class ModulePassManager
         : PassManager
     {
         /// <summary>Initializes a new instance of the <see cref="ModulePassManager"/> class.</summary>
         public ModulePassManager( )
-            : base( LLVMCreatePassManager( ) )
+            : base( LLVMCreatePassManager() )
         {
         }
 

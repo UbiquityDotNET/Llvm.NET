@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public IEnumerator<string> GetEnumerator( )
         {
             int anonymousIndex = 0;
-            while( true )
+            while(true)
             {
                 yield return $"{NamePrefix}{anonymousIndex++}";
             }
@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator( )
         {
-            return GetEnumerator( );
+            return GetEnumerator();
         }
 
         private readonly string NamePrefix;

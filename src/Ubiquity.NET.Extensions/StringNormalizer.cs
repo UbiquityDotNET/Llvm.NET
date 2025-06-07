@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Extensions
         /// <param name="kind">Kind of line ending to get the string form of</param>
         /// <returns>String form of the specified line ending</returns>
         /// <exception cref="InvalidEnumArgumentException">Unknown value for <paramref name="kind"/></exception>
-        public static string LineEnding(this LineEndingKind kind)
+        public static string LineEnding( this LineEndingKind kind )
         {
             return kind switch
             {
@@ -50,9 +50,9 @@ namespace Ubiquity.NET.Extensions
         /// <param name="txt">input string to convert</param>
         /// <param name="dstKind">destination kind of string to convert</param>
         /// <returns>Normalized string; If dstKind matches the current system environment then this returns <paramref name="txt"/> un-modified</returns>
-        public static string? NormalizeLineEndings(this string txt, LineEndingKind dstKind)
+        public static string? NormalizeLineEndings( this string txt, LineEndingKind dstKind )
         {
-            return txt.NormalizeLineEndings(SystemLineEndings, dstKind);
+            return txt.NormalizeLineEndings( SystemLineEndings, dstKind );
         }
 
         /// <summary>Converts a string into a string with managed environment line endings</summary>
@@ -60,22 +60,22 @@ namespace Ubiquity.NET.Extensions
         /// <param name="srcKind">Line ending kind for the source (<paramref name="txt"/>)</param>
         /// <param name="dstKind">Line ending kind for the destination (return string)</param>
         /// <returns>Normalized string; If the <paramref name="srcKind"/> is the same as <paramref name="dstKind"/> this is returns <paramref name="txt"/> un-modified</returns>
-        public static string? NormalizeLineEndings(this string txt, LineEndingKind srcKind, LineEndingKind dstKind)
+        public static string? NormalizeLineEndings( this string txt, LineEndingKind srcKind, LineEndingKind dstKind )
         {
             // shortcut optimization for environments that match the ABI assumption
             // as well as any null or empty strings
             return string.IsNullOrEmpty( txt ) || srcKind == dstKind
                 ? txt
-                : txt.Replace(srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
+                : txt.Replace( srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
         }
 
         // simplifies consistency of exception in face of unknown environment configuration
-        private static InvalidOperationException UnknownLineEndingsException => new("Unknown environment line ending kind");
+        private static InvalidOperationException UnknownLineEndingsException => new( "Unknown environment line ending kind" );
 
         private static readonly Lazy<LineEndingKind> LazySystemKind = new(ComputeSystemLineEndings);
 
         [SuppressMessage( "Style", "IDE0066:Convert switch statement to expression", Justification = "Reduces readability" )]
-        private static LineEndingKind ComputeSystemLineEndings()
+        private static LineEndingKind ComputeSystemLineEndings( )
         {
             string newLine = Environment.NewLine;
             switch(newLine.Length)

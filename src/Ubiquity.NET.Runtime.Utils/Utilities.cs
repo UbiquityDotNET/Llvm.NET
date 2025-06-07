@@ -24,16 +24,16 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public static string GetSafeFileName( string name, char replacementChar = '_' )
         {
-            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+            ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var bldr = new StringBuilder( name.Length );
             char[ ] invalidChars = Path.GetInvalidFileNameChars( );
-            foreach( char c in name )
+            foreach(char c in name)
             {
                 bldr.Append( invalidChars.Contains( c ) ? replacementChar : c );
             }
 
-            return bldr.ToString( );
+            return bldr.ToString();
         }
     }
 }

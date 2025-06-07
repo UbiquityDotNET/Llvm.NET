@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="ThreadSafeContext"/> class.</summary>
-        public ThreadSafeContext()
+        public ThreadSafeContext( )
         {
             Handle = LLVMOrcCreateNewThreadSafeContext().ThrowIfInvalid();
         }
@@ -33,10 +33,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// result and should NOT assume it is valid.
         /// </note>
         /// </remarks>
-        public ThreadSafeModule AddModule(Module perThreadModule)
+        public ThreadSafeModule AddModule( Module perThreadModule )
         {
-            ArgumentNullException.ThrowIfNull(perThreadModule);
-            ObjectDisposedException.ThrowIf(Handle.IsClosed || Handle.IsInvalid, this);
+            ArgumentNullException.ThrowIfNull( perThreadModule );
+            ObjectDisposedException.ThrowIf( Handle.IsClosed || Handle.IsInvalid, this );
             using var moduleRef = perThreadModule.GetOwnedHandle();
             var retVal = new ThreadSafeModule(LLVMOrcCreateNewThreadSafeModule(moduleRef, Handle).ThrowIfInvalid());
             moduleRef.SetHandleAsInvalid(); // transfer to native complete.
@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
@@ -54,9 +54,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             get
             {
-                ObjectDisposedException.ThrowIf(Handle.IsClosed || Handle.IsInvalid, this);
+                ObjectDisposedException.ThrowIf( Handle.IsClosed || Handle.IsInvalid, this );
 
-                return new ContextAlias(LLVMOrcThreadSafeContextGetContext(Handle));
+                return new ContextAlias( LLVMOrcThreadSafeContextGetContext( Handle ) );
             }
         }
 

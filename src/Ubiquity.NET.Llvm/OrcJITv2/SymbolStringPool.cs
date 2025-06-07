@@ -20,12 +20,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// will no longer have references such as after removing a module or closing
         /// a <see cref="JITDyLib"/>.
         /// </remarks>
-        public void ClearDeadEntries()
+        public void ClearDeadEntries( )
         {
-            LLVMOrcSymbolStringPoolClearDeadEntries(Handle);
+            LLVMOrcSymbolStringPoolClearDeadEntries( Handle );
         }
 
-        internal SymbolStringPool(LLVMOrcSymbolStringPoolRef h)
+        internal SymbolStringPool( LLVMOrcSymbolStringPoolRef h )
         {
             Handle = h;
         }

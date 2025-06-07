@@ -1,4 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// -----------------------------------------------------------------------
+// <copyright file="ContextHandleMarshallerTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ubiquity.NET.Llvm.Interop.UT
 {
@@ -9,19 +15,20 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         public void ConvertToManagedTest( )
         {
             var handle = ContextHandleMarshaller<LibLLVMMDOperandRef>.ConvertToManaged(NativeABIValue);
-            Assert.IsFalse(handle.IsNull);
-            Assert.AreEqual(NativeABIValue, handle.DangerousGetHandle());
-            Assert.AreEqual(NativeABIValue, (nint)handle);
+            Assert.IsFalse( handle.IsNull );
+            Assert.AreEqual( NativeABIValue, handle.DangerousGetHandle() );
+            Assert.AreEqual( NativeABIValue, (nint)handle );
         }
 
         [TestMethod]
         public void ConvertToUnmanagedTest( )
         {
             var handle = LibLLVMMDOperandRef.FromABI(NativeABIValue);
+
             // Validate FromABI() method AND verify assumptions made in subsequent asserts...
-            Assert.AreEqual(NativeABIValue, handle.DangerousGetHandle());
+            Assert.AreEqual( NativeABIValue, handle.DangerousGetHandle() );
             nint abiHandleVal = ContextHandleMarshaller<LibLLVMMDOperandRef>.ConvertToUnmanaged(handle);
-            Assert.AreEqual(NativeABIValue, abiHandleVal);
+            Assert.AreEqual( NativeABIValue, abiHandleVal );
         }
 
         private const nint NativeABIValue = 0x12345678;

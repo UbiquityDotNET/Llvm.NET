@@ -1,4 +1,10 @@
-﻿using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
+﻿// -----------------------------------------------------------------------
+// <copyright file="DumpObject.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
@@ -7,11 +13,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="DumpObject"/> class</summary>
-        /// <param name="dir"></param>
-        /// <param name="identifierOverride"></param>
-        public DumpObject(LazyEncodedString dir, LazyEncodedString? identifierOverride)
+        /// <param name="dir">Directory for the object file</param>
+        /// <param name="identifierOverride">Identifier override</param>
+        public DumpObject( LazyEncodedString dir, LazyEncodedString? identifierOverride )
         {
-            Handle = LLVMOrcCreateDumpObjects(dir, identifierOverride);
+            Handle = LLVMOrcCreateDumpObjects( dir, identifierOverride );
         }
 
         /// <summary>Dumps a single memory buffer as an object file</summary>
@@ -27,7 +33,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// function properly unless there is no exception.
         /// </note>
         /// </remarks>
-        public void Dump(MemoryBuffer objBuffer)
+        public void Dump( MemoryBuffer objBuffer )
         {
             // This API uses an odd (for LLVM at least) signature in that
             // the ref parameter is a pointer to a handle, that is then
@@ -58,15 +64,16 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 // Buffer was released internally by native call
                 objBuffer.Handle.SetHandleAsInvalid();
             }
+
             errRef.ThrowIfFailed();
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void Dispose( )
         {
             Handle.Dispose();
         }
 
-        internal LLVMOrcDumpObjectsRef Handle {get;}
+        internal LLVMOrcDumpObjectsRef Handle { get; }
     }
 }

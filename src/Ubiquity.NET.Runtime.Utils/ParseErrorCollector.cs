@@ -20,10 +20,10 @@ namespace Ubiquity.NET.Runtime.Utils
         public void SyntaxError( SyntaxError syntaxError )
         {
             ArgumentNullException.ThrowIfNull( syntaxError );
-            ErrorNodes = ErrorNodes.Add( new ErrorNode( syntaxError.Location, syntaxError.ToString( ) ) );
+            ErrorNodes = ErrorNodes.Add( new ErrorNode( syntaxError.Location, syntaxError.ToString() ) );
         }
 
         /// <summary>Gets the error nodes found by this listener</summary>
-        public ImmutableArray<ErrorNode> ErrorNodes {get; private set; } = [];
+        public ImmutableArray<ErrorNode> ErrorNodes { get; private set; } = [];
     }
 }

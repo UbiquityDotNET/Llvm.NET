@@ -9,7 +9,6 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
 
 namespace Ubiquity.NET.Llvm
 {
-
 #if NON_STABLE_ABI_TYPES
     /// Primitive type specification.
     [StructLayout(LayoutKind.Sequential, Pack=4, Size=8)]
@@ -75,21 +74,21 @@ namespace Ubiquity.NET.Llvm
     {
         #region IEquatable<IDataLayout>
 
-        public bool Equals(IDataLayout? other)
+        public bool Equals( IDataLayout? other )
             => other is not null
-            && (Handle.Equals(other) || LibLLVMTargeDataRefOpEquals(Handle, other.GetUnownedHandle() ));
+            && (Handle.Equals( other ) || LibLLVMTargeDataRefOpEquals( Handle, other.GetUnownedHandle() ));
 
-        public override bool Equals(object? obj)=> obj is DataLayoutAlias alias
-                                                 ? Equals(alias)
-                                                 : Equals(obj as IDataLayout);
+        public override bool Equals( object? obj ) => obj is DataLayoutAlias alias
+                                                 ? Equals( alias )
+                                                 : Equals( obj as IDataLayout );
 
         // TODO: IMPLEMENT support for DataLayout.GetHashCode()
         // Sadly, the raw values used for equality checks are not available in the LLVM-C API
         // (Not even to native code consumers in C++)
-        public override int GetHashCode() => throw new NotSupportedException("Computation of a hash code for DataLayout is not currently possible");
+        public override int GetHashCode( ) => throw new NotSupportedException( "Computation of a hash code for DataLayout is not currently possible" );
         #endregion
 
-        public ByteOrdering Endianness => ( ByteOrdering )LLVMByteOrder( Handle );
+        public ByteOrdering Endianness => (ByteOrdering)LLVMByteOrder( Handle );
 
         public uint PointerSize( ) => LLVMPointerSize( Handle );
 
@@ -99,8 +98,8 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentNullException.ThrowIfNull( context );
 
-            LLVMTypeRef typeRef = LLVMIntPtrTypeInContext( context.GetUnownedHandle(), Handle );
-            return typeRef.ThrowIfInvalid( ).CreateType();
+            LLVMTypeRef typeRef = LLVMIntPtrTypeInContext(context.GetUnownedHandle(), Handle);
+            return typeRef.ThrowIfInvalid().CreateType();
         }
 
         /* TODO: Additional properties for DataLayout
@@ -149,44 +148,44 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentNullException.ThrowIfNull( context );
 
-            var typeHandle = LLVMIntPtrTypeForASInContext( context.GetUnownedHandle(), Handle, addressSpace );
-            return typeHandle.ThrowIfInvalid( ).CreateType();
+            var typeHandle = LLVMIntPtrTypeForASInContext(context.GetUnownedHandle(), Handle, addressSpace);
+            return typeHandle.ThrowIfInvalid().CreateType();
         }
 
         public ulong BitSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMSizeOfTypeInBits( Handle, typeRef.GetTypeRef( ) );
+            return LLVMSizeOfTypeInBits( Handle, typeRef.GetTypeRef() );
         }
 
         public ulong StoreSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMStoreSizeOfType( Handle, typeRef.GetTypeRef( ) );
+            return LLVMStoreSizeOfType( Handle, typeRef.GetTypeRef() );
         }
 
         public ulong AbiSizeOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMABISizeOfType( Handle, typeRef.GetTypeRef( ) );
+            return LLVMABISizeOfType( Handle, typeRef.GetTypeRef() );
         }
 
         public uint AbiAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMABIAlignmentOfType( Handle, typeRef.GetTypeRef( ) );
+            return LLVMABIAlignmentOfType( Handle, typeRef.GetTypeRef() );
         }
 
         public uint CallFrameAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMCallFrameAlignmentOfType( Handle, typeRef.GetTypeRef( ) );
+            return LLVMCallFrameAlignmentOfType( Handle, typeRef.GetTypeRef() );
         }
 
         public uint PreferredAlignmentOf( ITypeRef typeRef )
         {
             VerifySized( typeRef, nameof( typeRef ) );
-            return LLVMPreferredAlignmentOfType( Handle, typeRef.GetTypeRef( ) );
+            return LLVMPreferredAlignmentOfType( Handle, typeRef.GetTypeRef() );
         }
 
         public uint PreferredAlignmentOf( Value value )
@@ -200,27 +199,27 @@ namespace Ubiquity.NET.Llvm
         public uint ElementAtOffset( IStructType structType, ulong offset )
         {
             VerifySized( structType, nameof( structType ) );
-            return LLVMElementAtOffset( Handle, structType.GetTypeRef( ), offset );
+            return LLVMElementAtOffset( Handle, structType.GetTypeRef(), offset );
         }
 
         public ulong OffsetOfElement( IStructType structType, uint element )
         {
             VerifySized( structType, nameof( structType ) );
-            return LLVMOffsetOfElement( Handle, structType.GetTypeRef( ), element );
+            return LLVMOffsetOfElement( Handle, structType.GetTypeRef(), element );
         }
 
-        public LazyEncodedString ToLazyEncodedString()
+        public LazyEncodedString ToLazyEncodedString( )
         {
             // This is mostly to prevent crashes in test debugging
             // As the handle is null if a breakpoint or step is
             // in the constructor BEFORE this value is initialized.
-            if (Handle.IsNull)
+            if(Handle.IsNull)
             {
                 return LazyEncodedString.Empty;
             }
 
             LazyEncodedString? retVal = LibLLVMGetDataLayoutString(Handle);
-            Debug.Assert(retVal is not null, "Layout should always have a string representation");
+            Debug.Assert( retVal is not null, "Layout should always have a string representation" );
             return retVal;
         }
 
@@ -229,7 +228,7 @@ namespace Ubiquity.NET.Llvm
             // LLVM-C has this variant but it requires allocation in native and then dispose from
             // managed which is overhead that isn't needed, so use the lower overhead form and
             // force the full encoding here.
-            //return LLVMCopyStringRepOfTargetData( NativeHandle );
+            // return LLVMCopyStringRepOfTargetData( NativeHandle );
             return ToLazyEncodedString()?.ToString();
         }
 
@@ -248,18 +247,18 @@ namespace Ubiquity.NET.Llvm
 
         private static void VerifySized( ITypeRef type, string name )
         {
-            if( type == null )
+            if(type == null)
             {
                 throw new ArgumentNullException( name );
             }
 
-            if( !type.IsSized )
+            if(!type.IsSized)
             {
                 throw new ArgumentException( Resources.Type_must_be_sized_to_get_target_size_information, name );
             }
         }
 
         [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface; NOT PUBLIC" )]
-        public LLVMTargetDataRefAlias Handle {get;}
+        public LLVMTargetDataRefAlias Handle { get; }
     }
 }

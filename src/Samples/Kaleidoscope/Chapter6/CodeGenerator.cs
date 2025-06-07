@@ -31,7 +31,7 @@ namespace Kaleidoscope.Chapter6
         , ICodeGenerator<Value>
     {
         #region Initialization
-        public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
+        public CodeGenerator( DynamicRuntimeState globalState, TextWriter? outputWriter = null )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -39,7 +39,7 @@ namespace Kaleidoscope.Chapter6
             // set the global output writer for KlsJIT execution
             // the "built-in" functions need this to generate output somewhere.
             KaleidoscopeJIT.OutputWriter = outputWriter ?? Console.Out;
-            if( globalState.LanguageLevel > LanguageLevel.UserDefinedOperators )
+            if(globalState.LanguageLevel > LanguageLevel.UserDefinedOperators)
             {
                 throw new ArgumentException( "Language features not supported by this generator", nameof( globalState ) );
             }
@@ -50,7 +50,7 @@ namespace Kaleidoscope.Chapter6
         }
         #endregion
 
-        public void Dispose()
+        public void Dispose( )
         {
             foreach(var tracker in FunctionModuleMap.Values)
             {
@@ -63,7 +63,7 @@ namespace Kaleidoscope.Chapter6
             ThreadSafeContext.Dispose();
         }
 
-        public Value? Generate(IAstNode ast)
+        public Value? Generate( IAstNode ast )
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -84,9 +84,9 @@ namespace Kaleidoscope.Chapter6
             Debug.Assert( Module is not null, "Module initialization failed" );
 
             var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
-            if(!function.ParentModule.Verify(out string msg))
+            if(!function.ParentModule.Verify( out string msg ))
             {
-                throw new CodeGeneratorException(msg);
+                throw new CodeGeneratorException( msg );
             }
 
             if(definition.IsAnonymous)
@@ -131,14 +131,14 @@ namespace Kaleidoscope.Chapter6
             }
         }
 
-        public override Value? Visit(ConstantExpression constant)
+        public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
             return ThreadSafeContext.PerThreadContext.CreateConstant( constant.Value );
         }
 
-        public override Value? Visit(BinaryOperatorExpression binaryOperator)
+        public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
@@ -188,10 +188,10 @@ namespace Kaleidoscope.Chapter6
             }
         }
 
-        public override Value? Visit(FunctionCallExpression functionCall)
+        public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             if(Module is null)
             {
@@ -218,10 +218,10 @@ namespace Kaleidoscope.Chapter6
         }
 
         #region FunctionDefinition
-        public override Value? Visit(FunctionDefinition definition)
+        public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -255,7 +255,7 @@ namespace Kaleidoscope.Chapter6
         }
         #endregion
 
-        public override Value? Visit(VariableReferenceExpression reference)
+        public override Value? Visit( VariableReferenceExpression reference )
         {
             ArgumentNullException.ThrowIfNull( reference );
 
@@ -271,10 +271,10 @@ namespace Kaleidoscope.Chapter6
         }
 
         #region ConditionalExpression
-        public override Value? Visit(ConditionalExpression conditionalExpression)
+        public override Value? Visit( ConditionalExpression conditionalExpression )
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var condition = conditionalExpression.Condition.Accept( this );
             if(condition == null)
@@ -329,10 +329,10 @@ namespace Kaleidoscope.Chapter6
         }
         #endregion
 
-        public override Value? Visit(ForInExpression forInExpression)
+        public override Value? Visit( ForInExpression forInExpression )
         {
             ArgumentNullException.ThrowIfNull( forInExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
@@ -427,7 +427,7 @@ namespace Kaleidoscope.Chapter6
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction(Prototype prototype)
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
             if(Module is null)
             {

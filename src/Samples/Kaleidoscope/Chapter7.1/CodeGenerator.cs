@@ -32,7 +32,7 @@ namespace Kaleidoscope.Chapter71
         , IDisposable
         , ICodeGenerator<Value>
     {
-        public CodeGenerator(DynamicRuntimeState globalState, TextWriter? outputWriter = null)
+        public CodeGenerator( DynamicRuntimeState globalState, TextWriter? outputWriter = null )
             : base( null )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -51,12 +51,12 @@ namespace Kaleidoscope.Chapter71
 
             // set up support needed for lazy compilation
             string triple = KlsJIT.TripleString;
-            JitISM = new LocalIndirectStubsManager(triple);
-            JitLCTM = KlsJIT.Session.CreateLazyCallThroughManager(triple);
+            JitISM = new LocalIndirectStubsManager( triple );
+            JitLCTM = KlsJIT.Session.CreateLazyCallThroughManager( triple );
         }
 
         #region Dispose
-        public void Dispose()
+        public void Dispose( )
         {
             // NOTE: There is no map of resource trackers as the JIT handles
             // calling Destroy on a materializer to release any resources it
@@ -71,7 +71,7 @@ namespace Kaleidoscope.Chapter71
         #endregion
 
         #region Generate
-        public Value? Generate(IAstNode ast)
+        public Value? Generate( IAstNode ast )
         {
             ArgumentNullException.ThrowIfNull( ast );
 
@@ -123,20 +123,20 @@ namespace Kaleidoscope.Chapter71
                 // It is unknown if any future input will call the function so don't even generate IR
                 // until it is needed. JIT triggers the callback to 'Materialize' the IR module when
                 // the symbol is looked up so the JIT can then generate native code only when required.
-                AddLazyMaterializer(definition);
+                AddLazyMaterializer( definition );
                 return default;
             }
         }
-#endregion
+        #endregion
 
-        public override Value? Visit(ConstantExpression constant)
+        public override Value? Visit( ConstantExpression constant )
         {
             ArgumentNullException.ThrowIfNull( constant );
 
             return ThreadSafeContext.PerThreadContext.CreateConstant( constant.Value );
         }
 
-        public override Value? Visit(BinaryOperatorExpression binaryOperator)
+        public override Value? Visit( BinaryOperatorExpression binaryOperator )
         {
             ArgumentNullException.ThrowIfNull( binaryOperator );
 
@@ -193,10 +193,11 @@ namespace Kaleidoscope.Chapter71
                 throw new CodeGeneratorException( $"ICE: Invalid binary operator {binaryOperator.Op}" );
             }
         }
-        public override Value? Visit(FunctionCallExpression functionCall)
+
+        public override Value? Visit( FunctionCallExpression functionCall )
         {
             ArgumentNullException.ThrowIfNull( functionCall );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             if(Module is null)
             {
@@ -221,10 +222,11 @@ namespace Kaleidoscope.Chapter71
 
             return InstructionBuilder.Call( function, args ).RegisterName( "calltmp" );
         }
-        public override Value? Visit(FunctionDefinition definition)
+
+        public override Value? Visit( FunctionDefinition definition )
         {
             ArgumentNullException.ThrowIfNull( definition );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = GetOrDeclareFunction( definition.Signature );
             if(!function.IsDeclaration)
@@ -268,7 +270,8 @@ namespace Kaleidoscope.Chapter71
                 throw;
             }
         }
-        public override Value? Visit(VariableReferenceExpression reference)
+
+        public override Value? Visit( VariableReferenceExpression reference )
         {
             ArgumentNullException.ThrowIfNull( reference );
 
@@ -280,10 +283,11 @@ namespace Kaleidoscope.Chapter71
             return InstructionBuilder.Load( value.ElementType, value )
                                      .RegisterName( reference.Name );
         }
-        public override Value? Visit(ConditionalExpression conditionalExpression)
+
+        public override Value? Visit( ConditionalExpression conditionalExpression )
         {
             ArgumentNullException.ThrowIfNull( conditionalExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var result = LookupVariable( conditionalExpression.ResultVariable.Name );
 
@@ -338,10 +342,10 @@ namespace Kaleidoscope.Chapter71
                                      .RegisterName( "ifresult" );
         }
 
-        public override Value? Visit(ForInExpression forInExpression)
+        public override Value? Visit( ForInExpression forInExpression )
         {
             ArgumentNullException.ThrowIfNull( forInExpression );
-            Debug.Assert(InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already");
+            Debug.Assert( InstructionBuilder is not null, "Internal error Instruction builder should be set in Generate already" );
 
             var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( "ICE: Expected block attached to a function at this point" );
 
@@ -432,7 +436,7 @@ namespace Kaleidoscope.Chapter71
 
         public override Value? Visit( VarInExpression varInExpression )
         {
-            ArgumentNullException.ThrowIfNull(varInExpression);
+            ArgumentNullException.ThrowIfNull( varInExpression );
 
             IContext ctx = ThreadSafeContext.PerThreadContext;
             using(NamedValues.EnterScope())
@@ -478,7 +482,7 @@ namespace Kaleidoscope.Chapter71
 
         // Retrieves a Function for a prototype from the current module if it exists,
         // otherwise declares the function and returns the newly declared function.
-        private Function GetOrDeclareFunction(Prototype prototype)
+        private Function GetOrDeclareFunction( Prototype prototype )
         {
             if(Module is null)
             {
@@ -505,7 +509,7 @@ namespace Kaleidoscope.Chapter71
         }
 
         #region AddLazyMaterializer
-        private void AddLazyMaterializer(FunctionDefinition definition)
+        private void AddLazyMaterializer( FunctionDefinition definition )
         {
             FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
 
@@ -514,19 +518,21 @@ namespace Kaleidoscope.Chapter71
             using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
             var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
-            var symbols = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags> {
+            var symbols = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags>
+            {
                 [mangledBodyName] = commonSymbolFlags,
             }.ToImmutable();
 
             using var materializer = new CustomMaterializationUnit($"{definition.Name}MU", Materialize, symbols);
-            dyLib.Define(materializer);
+            dyLib.Define( materializer );
 
-            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>{
+            var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>
+            {
                 [mangledName] = new(mangledBodyName, commonSymbolFlags)
             }.ToImmutable();
 
             using var lazyReExports = new LazyReExportsMaterializationUnit(JitLCTM, JitISM, dyLib, reexports);
-            dyLib.Define(lazyReExports);
+            dyLib.Define( lazyReExports );
             return;
 
             // Local function to materialize the IR for the AST in implDefinition.
@@ -539,19 +545,19 @@ namespace Kaleidoscope.Chapter71
             // it MUST not capture any IDisposable objects such as the mangled
             // symbol names as they are most likely already disposed by the time
             // this is called.
-            void Materialize(MaterializationResponsibility r)
+            void Materialize( MaterializationResponsibility r )
             {
                 // symbol strings returned are NOT owned by this function so Dispose() isn't needed
                 // (Though it is an allowed NOP that silences compiler/analyzer warnings)
                 using var symbols = r.GetRequestedSymbols();
-                Debug.Assert(symbols.Count == 1, "Unexpected number of symbols!");
+                Debug.Assert( symbols.Count == 1, "Unexpected number of symbols!" );
 
                 using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
 
                 ThreadSafeModule tsm;
-                if(symbols[0].Equals(mangledBodyName))
+                if(symbols[ 0 ].Equals( mangledBodyName ))
                 {
-                    Debug.WriteLine("Generating code for {0}", mangledBodyName);
+                    Debug.WriteLine( "Generating code for {0}", mangledBodyName );
 
                     Module?.Dispose();
                     Module = ThreadSafeContext.PerThreadContext.CreateBitcodeModule();
@@ -559,7 +565,7 @@ namespace Kaleidoscope.Chapter71
                     {
                         // generate a function from the AST into the module
                         _ = implDefinition.Accept( this ) ?? throw new CodeGeneratorException( "Failed to lazy generate function - this is an application crash scenario" );
-                        tsm = new(ThreadSafeContext, Module);
+                        tsm = new( ThreadSafeContext, Module );
                     }
                     finally
                     {
@@ -569,7 +575,7 @@ namespace Kaleidoscope.Chapter71
                 }
                 else
                 {
-                    Debug.WriteLine("Unknown symbol");
+                    Debug.WriteLine( "Unknown symbol" );
 
                     // Not a known symbol - fail the materialization request.
                     r.Fail();
@@ -586,7 +592,7 @@ namespace Kaleidoscope.Chapter71
                     // to the native LLVM JIT. The JIT will perform any additional transforms
                     // that are registered (for KLS that includes setting the data layout
                     // and running optimization passes)
-                    KlsJIT.TransformLayer.Emit(r, tsm);
+                    KlsJIT.TransformLayer.Emit( r, tsm );
                 }
             }
         }
@@ -595,7 +601,7 @@ namespace Kaleidoscope.Chapter71
         private const string ExpectValidExpr = "Expected a valid expression";
         private const string ExpectValidFunc = "Expected a valid function";
 
-#region CloneAndRenameFunction
+        #region CloneAndRenameFunction
         [SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "Truly lazy JIT functionality for Windows is disabled for now..." )]
         private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
         {
@@ -613,9 +619,9 @@ namespace Kaleidoscope.Chapter71
                                                        );
             return implDefinition;
         }
-#endregion
+        #endregion
 
-#region PrivateMembers
+        #region PrivateMembers
         private Module? Module;
         private readonly DynamicRuntimeState RuntimeState;
         private readonly ThreadSafeContext ThreadSafeContext;
@@ -624,6 +630,6 @@ namespace Kaleidoscope.Chapter71
         private readonly KaleidoscopeJIT KlsJIT = new( );
         private readonly LocalIndirectStubsManager JitISM;
         private readonly LazyCallThroughManager JitLCTM;
-#endregion
+        #endregion
     }
 }
