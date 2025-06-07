@@ -158,7 +158,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         ///</remarks>
         public void EnableDebugSupport( )
         {
-            LLVMOrcLLJITEnableDebugSupport( Handle ).ThrowIfFailed();
+            using var err = LLVMOrcLLJITEnableDebugSupport( Handle );
+            err.ThrowIfFailed();
         }
 
         /// <inheritdoc/>

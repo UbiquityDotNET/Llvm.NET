@@ -24,9 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <PackageReference Include="System.IO.Hashing" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <None Include="ReadMe.md" Pack="true" PackagePath="\" />

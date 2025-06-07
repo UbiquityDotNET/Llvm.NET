@@ -34,7 +34,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         public void LibLLVMGetRuntimeTargetsTest( )
         {
             var targets = new LibLLVMCodeGenTarget[LibLLVMGetNumTargets()];
-            LibLLVMGetRuntimeTargets( targets ).ThrowIfFailed();
+            using var errorRef = LibLLVMGetRuntimeTargets( targets );
+            errorRef.ThrowIfFailed();
 
             // Test supported targets; This is an extension as at one point the
             // set of supported targets was ONLY the native target and that of one

@@ -118,7 +118,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         {
             foreach(var kvp in KnownAttributes.OrderBy(kvp=>kvp.Value.ID))
             {
-                LibLLVMGetAttributeInfo( kvp.Key, out LibLLVMAttributeInfo info ).ThrowIfFailed();
+                using var err = LibLLVMGetAttributeInfo( kvp.Key, out LibLLVMAttributeInfo info );
+                err.ThrowIfFailed();
+
                 Assert.AreEqual( kvp.Value, info );
                 if(info.ID == 0)
                 {
