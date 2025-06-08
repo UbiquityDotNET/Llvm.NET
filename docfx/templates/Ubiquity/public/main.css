@@ -1,6 +1,18 @@
 @charset "UTF-8";
 
 /*
+Disable display of inherited members. It would be nice if there was a build option to not even generate this noise,
+but sadly, there is none so this disables the final render of such things.
+*/
+.typelist.inheritedMembers {
+    display: none
+}
+
+#logo {
+    background-color: white
+}
+
+/*
 Customized Highlight JS theming
 The default theming that comes with docfx 'modern' support is rather limited. It doesn't
 distinguish between a function definition or invocation as Highlight.JS allows, etc...
