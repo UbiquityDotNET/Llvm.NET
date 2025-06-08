@@ -214,14 +214,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRefAlias S );
 
-        // This does NOT marshal the string, it only provides the raw pointer so that a span is constructible
-        // from the pointer. The memory for the string is OWNED by the entry so the returned pointer is valid
-        // for the lifetime of the referenced entry.
-        // TODO: Consider if this can't or shouldn't be a LazyEncodedString to contain potentially both forms
-        //       as needed.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial byte* LLVMOrcSymbolStringPoolEntryStr( LLVMOrcSymbolStringPoolEntryRef S );
+        public static unsafe partial LazyEncodedString LLVMOrcSymbolStringPoolEntryStr( LLVMOrcSymbolStringPoolEntryRef S );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

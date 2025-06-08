@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>Reference to an entry in a symbol string pool for ORC JIT v2</summary>
     /// <remarks>
-    /// This holds a reference to the symbol string which is ONLY marshalled/converted to
+    /// This holds a reference to the symbol string which is ONLY marshaled/converted to
     /// a managed string in the <see cref="ToString"/> method. This allows comparing strings
     /// etc... without the need of conversion.
     /// <note type="information">
@@ -48,7 +48,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            return ManagedString.Value;
+            return DeferredInitSymbolString.Value.ToString();
         }
 
         #region IEquatable<SymbolStringPoolEntry>
@@ -119,7 +119,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
                 unsafe
                 {
-                    return new( (void*)NativeStringPtr.Value, LazyStrLen.Value );
+                    return DeferredInitSymbolString.Value.ToReadOnlySpan();
                 }
             }
         }
@@ -140,23 +140,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             }
 
             Handle = h.Move();
-            unsafe
-            {
-                NativeStringPtr = new( ( ) => (nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication );
-                ManagedString = new( ( ) => ExecutionEncodingStringMarshaller.ConvertToManaged( (byte*)NativeStringPtr.Value ), LazyThreadSafetyMode.ExecutionAndPublication );
-                LazyStrLen = new( ( ) => MemoryMarshal.CreateReadOnlySpanFromNullTerminated( (byte*)NativeStringPtr.Value ).Length, LazyThreadSafetyMode.ExecutionAndPublication );
-            }
+            DeferredInitSymbolString = new(()=>LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.PublicationOnly);
         }
 
         internal SymbolStringPoolEntry( nint abiHandle, bool alias = false )
         {
             Handle = new( abiHandle, !alias );
-            unsafe
-            {
-                NativeStringPtr = new( ( ) => (nint)LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.ExecutionAndPublication );
-                ManagedString = new( ( ) => ExecutionEncodingStringMarshaller.ConvertToManaged( (byte*)NativeStringPtr.Value ), LazyThreadSafetyMode.ExecutionAndPublication );
-                LazyStrLen = new( ( ) => MemoryMarshal.CreateReadOnlySpanFromNullTerminated( (byte*)NativeStringPtr.Value ).Length, LazyThreadSafetyMode.ExecutionAndPublication );
-            }
+            DeferredInitSymbolString = new(()=>LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.PublicationOnly);
         }
 
         internal LLVMOrcSymbolStringPoolEntryRef Handle { get; }
@@ -195,9 +185,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             return new( Handle.DangerousGetHandle(), owner: true );
         }
 
-        private readonly Lazy<string?> ManagedString;
-        private readonly Lazy<int> LazyStrLen; // count of bytes in the native string (Not including null terminator)
-        private readonly Lazy<nint> NativeStringPtr;
+        // Callers might never need the contents of the string so it is lazily
+        // initialize when needed. String pool entries are interned and thus are immutable, like a .NET string
+        private readonly Lazy<LazyEncodedString> DeferredInitSymbolString;
     }
 
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1400:Access modifier should be declared", Justification = "'file' is an accessibility" )]
