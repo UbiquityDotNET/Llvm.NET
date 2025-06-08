@@ -47,7 +47,7 @@ jobs:
         run: ./Build-All.ps1 -ForceClean -BuildMode Source
 
       - name: Run Tests
-        run: ./Invoke-Tests.ps1
+        run: ./Invoke-UnitTests.ps1
 
       # Upload test results even if failed; unless cancelled
       - name: Upload Test Results
