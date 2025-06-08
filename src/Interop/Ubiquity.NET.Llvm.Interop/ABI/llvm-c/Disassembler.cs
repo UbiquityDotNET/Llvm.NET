@@ -125,6 +125,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [return: MarshalAs( UnmanagedType.Bool )]
         public static unsafe partial bool LLVMSetDisasmOptions( LLVMDisasmContextRef DC, UInt64 Options );
 
+        // OutString is a pre-allocated buffer, OutStringSize is [In] param to indicate how big it is. (Text is Truncated if not big enough)
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial nuint LLVMDisasmInstruction(
@@ -132,7 +133,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             byte* Bytes,
             UInt64 BytesSize,
             UInt64 PC,
-            byte* OutString, nuint OutStringSize // OutString is a pre-allocated buffer, size is how big it is. (Truncated if not big enough)
+            byte* OutString, nuint OutStringSize
             );
     }
 }

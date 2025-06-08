@@ -4,6 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+// Usually ordering applies, however in this case the ordering is by method name
+// and sometimes contains a wrapper method on the low level to make use easier.
+#pragma warning disable SA1202 // Elements should be ordered by access
+
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     // NOTE: Context handles are just value types that wrap around a runtime nint (basically a strong typedef)
@@ -195,9 +199,22 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             );
 
         [Experimental( "LLVM001" )]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe void LLVMOrcExecutionSessionLookup(
+            LLVMOrcExecutionSessionRef ES,
+            LLVMOrcLookupKind K,
+            LLVMOrcCJITDylibSearchOrderElement[] SearchOrder,
+            LLVMOrcCLookupSetElement[] Symbols,
+            LLVMOrcExecutionSessionLookupHandleResultFunction HandleResult,
+            void* Ctx
+            )
+        {
+            LLVMOrcExecutionSessionLookup(ES, K, SearchOrder, checked((uint)SearchOrder.Length), Symbols, checked((uint)Symbols.Length), HandleResult, Ctx);
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcExecutionSessionLookup(
+        private static unsafe partial void LLVMOrcExecutionSessionLookup(
             LLVMOrcExecutionSessionRef ES,
             LLVMOrcLookupKind K,
             [In] LLVMOrcCJITDylibSearchOrderElement[] SearchOrder, nuint SearchOrderSize,
@@ -238,6 +255,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial void LLVMOrcDisposeMaterializationUnit( LLVMOrcMaterializationUnitRef MU );
 
+        // special overload to allow calling this with a re-interpret cast of a layout compatible struct
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(
@@ -250,10 +268,24 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMOrcMaterializationUnitDestroyFunction Destroy
             );
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(
+            LazyEncodedString Name,
+            void* Ctx,
+            LLVMOrcCSymbolFlagsMapPair[] Syms,
+            LLVMOrcSymbolStringPoolEntryRef InitSym,
+            LLVMOrcMaterializationUnitMaterializeFunction Materialize,
+            LLVMOrcMaterializationUnitDiscardFunction Discard,
+            LLVMOrcMaterializationUnitDestroyFunction Destroy
+            )
+        {
+            return LLVMOrcCreateCustomMaterializationUnit(Name, Ctx, Syms, checked((nuint)Syms.Length), InitSym, Materialize, Discard, Destroy);
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(
-            byte* Name,
+        private static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(
+            LazyEncodedString Name,
             void* Ctx,
             [In] LLVMOrcCSymbolFlagsMapPair[] Syms, nuint NumSyms,
             LLVMOrcSymbolStringPoolEntryRef InitSym,
@@ -330,7 +362,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             [In] LLVMOrcCSymbolDependenceGroup[] SymbolDepGroups, nuint NumSymbolDepGroups
             );
 
-        // NOTE: This is not wrapped to allow casting a wrapped type to the interop struct to avoid copies
+        // NOTE: This is not wrapped to allow re-interpret casting a wrapped type to the interop struct to avoid copies
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDefineMaterializing(
@@ -350,12 +382,29 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMOrcMaterializationUnitRef MU
             );
 
+        public static unsafe LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
+            LLVMOrcMaterializationResponsibilityRef MR,
+            LLVMOrcSymbolStringPoolEntryRef[] Symbols,
+            /*[MaybeNullIfFailed]*/out LLVMOrcMaterializationResponsibilityRef? Result
+            )
+        {
+            // Workaround for language limits
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/lambda-expression-errors?f1url=%3FappId%3Droslyn%26k%3Dk(CS1628)#syntax-limitations-in-lambda-expressions
+            LLVMOrcMaterializationResponsibilityRef? result2 = null;
+            var retVal = RefHandleMarshaller.WithNativePointer(
+                Symbols,
+                ( p, s ) => LLVMOrcMaterializationResponsibilityDelegate( MR, p, checked((nuint)s), out result2 )
+            );
+            Result = result2;
+            return retVal;
+        }
+
         // NOTE: The normal ArrayMarshaller and SafeHandleMarshaller are NOT capable of handling arrays of references to safe handles,
-        // so a caller must manually create a pinned array of the underlying handle values and provide a pointer to the first element.
+        // so a caller must manually create a pinned array of the underlying handle values and provides a pointer to the first element.
         // This is normally done with the RefHandleMarshaller class.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
+        private static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
             LLVMOrcMaterializationResponsibilityRef MR,
             /*[In] LLVMOrcSymbolStringPoolEntryRef[]*/ nint* Symbols,
             nuint NumSymbols,

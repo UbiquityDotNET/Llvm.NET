@@ -24,10 +24,22 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMOrcObjectLayerRef LLVMOrcCreateRTDyldObjectLinkingLayerWithMCJITMemoryManagerLikeCallbacks( LLVMOrcExecutionSessionRef ES, void* CreateContextCtx, LLVMMemoryManagerCreateContextCallback CreateContext, LLVMMemoryManagerNotifyTerminatingCallback NotifyTerminating, LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection, LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection, LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory, LLVMMemoryManagerDestroyCallback Destroy );
+        public static unsafe partial LLVMOrcObjectLayerRef LLVMOrcCreateRTDyldObjectLinkingLayerWithMCJITMemoryManagerLikeCallbacks(
+            LLVMOrcExecutionSessionRef ES,
+            void* CreateContextCtx,
+            LLVMMemoryManagerCreateContextCallback CreateContext,
+            LLVMMemoryManagerNotifyTerminatingCallback NotifyTerminating,
+            LLVMMemoryManagerAllocateCodeSectionCallback AllocateCodeSection,
+            LLVMMemoryManagerAllocateDataSectionCallback AllocateDataSection,
+            LLVMMemoryManagerFinalizeMemoryCallback FinalizeMemory,
+            LLVMMemoryManagerDestroyCallback Destroy
+            );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcRTDyldObjectLinkingLayerRegisterJITEventListener( LLVMOrcObjectLayerRef RTDyldObjLinkingLayer, LLVMJITEventListenerRef Listener );
+        public static unsafe partial void LLVMOrcRTDyldObjectLinkingLayerRegisterJITEventListener(
+            LLVMOrcObjectLayerRef RTDyldObjLinkingLayer,
+            LLVMJITEventListenerRef Listener
+            );
     }
 }

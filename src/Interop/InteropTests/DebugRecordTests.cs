@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
 
             LLVMMetadataRef int32PtrDiType = LLVMDIBuilderCreatePointerType(diBuilder, int32DiType, 32, 0, 0, "int*"u8);
             LLVMMetadataRef emptyExpression = LLVMDIBuilderCreateExpression(diBuilder, []);
-            LLVMMetadataRef diFuncType = LLVMDIBuilderCreateSubroutineType(diBuilder, default, [], 0, LLVMDIFlags.LLVMDIFlagPrivate);
+            LLVMMetadataRef diFuncType = LLVMDIBuilderCreateSubroutineType(diBuilder, default, [], LLVMDIFlags.LLVMDIFlagPrivate);
             LLVMMetadataRef scope = LLVMDIBuilderCreateFunction(
                 diBuilder,
                 Scope: default,
