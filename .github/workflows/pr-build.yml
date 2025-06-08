@@ -1,9 +1,14 @@
 name: CI-Build
+permissions:
+  contents: read
+defaults:
+    run:
+        shell: pwsh
+
 on:
   push:
     branches:
       - develop
-      - LLVM20
 
     paths-ignore:
       - '**.md'
@@ -12,14 +17,24 @@ on:
   pull_request:
     branches:
       - develop
-      - LLVM20
 
     paths-ignore:
       - '**.md'
       - '**.dic'
 
 jobs:
-  build:
+  # see: https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#support-fork-repositories-and-dependabot-branches
+  event_file:
+    name: "Event File"
+    runs-on: windows-latest
+    steps:
+      - name: Upload event file
+        uses: actions/upload-artifact@v4
+        with:
+          name: Event File
+          path: ${{ github.event_path }}
+
+  build_target:
     runs-on: windows-latest
     steps:
       - name: Checkout Repo
@@ -31,28 +46,22 @@ jobs:
       - name: Build Source
         run: ./Build-All.ps1 -ForceClean -BuildMode Source
 
-      - name: Publish build logs
-        if: always() && github.event_name == 'pull_request'
+      - name: Run Tests
+        run: ./Invoke-Tests.ps1
+
+      # Upload test results even if failed; unless cancelled
+      - name: Upload Test Results
+        if: (!cancelled())
         uses: actions/upload-artifact@v4
         with:
-            name: Build Logs
-            path: ./BuildOutput/BinLogs
+          name: Test Results
+          path: BuildOutput/Test-Results/*.trx
 
-      - name: Publish NuGET Packages
+      - name: Upload NuGET Packages
         uses: actions/upload-artifact@v4
         with:
             name: NuGet Packages
             path: ./BuildOutput/NuGet
-
-      - name: Run Tests
-        run: ./Invoke-UnitTests.ps1
-
-      - name: Publish test logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-            name: Test Logs
-            path: ./BuildOutput/Test-Results
 
   build-docs:
     runs-on: windows-latest
