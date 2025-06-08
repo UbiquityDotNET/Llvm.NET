@@ -1,36 +1,57 @@
 name: Release-Build
+permissions:
+  contents: write
+  pages: write
+  packages: write
+  actions: read
+defaults:
+  run:
+    shell: pwsh
+
+# only comes into play on a PUSH of a tag to the repository
 on:
   push:
     tags:
-        - 'v*'
+      - 'v*'
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: true
 
 jobs:
-  release-build:
+  build_target:
     runs-on: windows-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Build Source
-        run: .\Build-All.ps1 -FullInit
+        run: .\Build-All.ps1 -FullInit -BuildMode Source
+
+      - name: Run Tests
+        run: ./Invoke-UnitTests.ps1
+
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: BuildOutput/Test-Results/*.trx
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: NuGet Packages
-          path: .\BuildOutput\NuGet
+          name: nuget-packages
+          path: .\BuildOutput\Nuget
 
-      - name: Run Tests
-        run: .\Invoke-UnitTests.ps1
+      - name: Show asset names
+        run: dir BuildOutput/Nuget
 
-      - name: Publish test logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-            name: Test Logs
-            path: .\BuildOutput\Test-Results
+      - name: Build Docs
+        run: ./Build-Docs.ps1
 
       - name: Commit Docs
         env:
@@ -45,31 +66,13 @@ jobs:
           directory: .\BuildOutput\docs
           branch: gh-pages
 
+      - name: Publish packages to NuGet.org
+        run: dotnet nuget push .\BuildOutput\NuGet\*.nupkg -k ${{ secrets.NUGETPUSH_ACCESS_TOKEN }} -s 'https://api.nuget.org/v3/index.json' --skip-duplicate
+
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: (!cancelled())
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: true
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./BuildOutput/Nuget.Packages.zip
-          asset_name: Nuget.Packages.zip
-          asset_content_type: application/zip
-
-      - name: Publish packages to NuGet.org
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.nugetpush_access_token }}
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-        run: |
-            dir .\BuildOutput\NuGet\*.nupkg | %{dotnet nuget push $_ -k $env:NUGET_AUTH_TOKEN -s 'https://api.nuget.org/v3/index.json' -n true}
