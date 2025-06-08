@@ -710,7 +710,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         // so the types are problematic in full verification. In reality, len will NOT exceed the uint.MaxValue
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [return: MarshalUsing( CountElementName = nameof( Len ) )]
         public static unsafe partial LLVMModuleFlagEntry LLVMCopyModuleFlagsMetadata( LLVMModuleRefAlias M, out nuint Len );
 
         [LibraryImport( LibraryName )]
@@ -3055,12 +3054,32 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial uint LLVMGetCallSiteAttributeCount( LLVMValueRef C, LLVMAttributeIndex Idx );
 
+        public static LLVMAttributeRef[] LLVMGetCallSiteAttributes(LLVMValueRef c, LLVMAttributeIndex index)
+        {
+            uint count = LLVMGetCallSiteAttributeCount(c, index );
+            if(count == 0)
+            {
+                return [];
+            }
+
+            var retVal = new LLVMAttributeRef[ count ];
+            unsafe
+            {
+                fixed(LLVMAttributeRef* pBuf = retVal)
+                {
+                    LLVMGetCallSiteAttributes( c, index, pBuf );
+                }
+            }
+
+            return retVal;
+        }
+
         // size of Attrs must contain enough room for LLVMGetCallSiteAttributeCount() elements or memory corruption
         // will occur. The native code only deals with a pointer and assumes it points to a region big enough to
         // hold the correct amount.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMGetCallSiteAttributes(
+        private static unsafe partial void LLVMGetCallSiteAttributes(
             LLVMValueRef C,
             LLVMAttributeIndex Idx,
             /*LLVMAttributeRef[LLVMGetCallSiteAttributeCount(C, Idx)]*/LLVMAttributeRef* Attrs
@@ -3401,6 +3420,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString Name
             );
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LLVMValueRef LLVMBuildInvoke2(
             LLVMBuilderRef builder,
             LLVMTypeRef typeRef,
@@ -3434,9 +3454,40 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMBasicBlockRef Catch,
             LazyEncodedString Name );
 
+        public static LLVMValueRef LLVMBuildInvokeWithOperandBundles(
+            LLVMBuilderRef builder,
+            LLVMTypeRef typeRef,
+            LLVMValueRef functionValue,
+            LLVMValueRef[] args,
+            LLVMBasicBlockRef @then,
+            LLVMBasicBlockRef @catch,
+            LLVMOperandBundleRef[] bundles,
+            LazyEncodedString name
+            )
+        {
+            unsafe
+            {
+                return RefHandleMarshaller.WithNativePointer(
+                            bundles,
+                            ( p, size ) => LLVMBuildInvokeWithOperandBundles(
+                                               builder,
+                                               typeRef,
+                                               functionValue,
+                                               args,
+                                               checked((uint)args.Length),
+                                               @then,
+                                               @catch,
+                                               p,
+                                               checked((uint)size),
+                                               name
+                                               )
+                       );
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildInvokeWithOperandBundles(
+        private static unsafe partial LLVMValueRef LLVMBuildInvokeWithOperandBundles(
             LLVMBuilderRef B,
             LLVMTypeRef Ty,
             LLVMValueRef Fn,
@@ -3480,6 +3531,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildCatchRet( LLVMBuilderRef B, LLVMValueRef CatchPad, LLVMBasicBlockRef BB );
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LLVMValueRef LLVMBuildCatchPad(
             LLVMBuilderRef B,
             LLVMValueRef ParentPad,
@@ -3503,14 +3555,23 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString Name
             );
 
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCleanupPad(
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMValueRef LLVMBuildCleanupPad(
             LLVMBuilderRef B,
             LLVMValueRef ParentPad,
+            LLVMValueRef[] Args,
+            LazyEncodedString Name
+            )
+        {
+            return LLVMBuildCleanupPad(B, ParentPad, Args, checked((uint)Args.Length), Name);
+        }
 
-            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
-            [In] LLVMValueRef[] Args,
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        private static unsafe partial LLVMValueRef LLVMBuildCleanupPad(
+            LLVMBuilderRef B,
+            LLVMValueRef ParentPad,
+            [In] LLVMValueRef[] Args, // the length of this array MUST be at least NumArgs
             uint NumArgs,
             LazyEncodedString Name
             );
@@ -3587,7 +3648,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         // Array provided for 'Handlers' must be at least (LLVMGetNumHandlers()) large
         // Use of generated marshalling is VERY inefficient as it doesn't know
         // that a LLVMBasicBlockRef is reinterpret_cast<nint> compatible.
-        // and tries to use a buffer array to `marshal` between forms even though
+        // and tries to use a retVal array to `marshal` between forms even though
         // they have the exact same bit pattern
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -4006,9 +4067,36 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMValueRef LLVMBuildCall2( LLVMBuilderRef B, LLVMTypeRef _1, LLVMValueRef Fn, [In] LLVMValueRef[] Args, uint NumArgs, LazyEncodedString Name );
 
+        public static LLVMValueRef LLVMBuildCallWithOperandBundles(
+            LLVMBuilderRef B,
+            LLVMTypeRef _1,
+            LLVMValueRef Fn,
+            LLVMValueRef[] Args,
+            LLVMOperandBundleRef[] Bundles,
+            LazyEncodedString Name
+            )
+        {
+            unsafe
+            {
+                return RefHandleMarshaller.WithNativePointer(
+                            Bundles,
+                            ( p, size ) => LLVMBuildCallWithOperandBundles(
+                                               B,
+                                               _1,
+                                               Fn,
+                                               Args,
+                                               checked((uint)Args.Length),
+                                               p,
+                                               checked((uint)size),
+                                               Name
+                                               )
+                       );
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMValueRef LLVMBuildCallWithOperandBundles(
+        private static unsafe partial LLVMValueRef LLVMBuildCallWithOperandBundles(
             LLVMBuilderRef B,
             LLVMTypeRef _1,
             LLVMValueRef Fn,
@@ -4234,8 +4322,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMStatus LLVMCreateMemoryBufferWithSTDIN( out LLVMMemoryBufferRef OutMemBuf, out string OutMessage );
 
-        // NOTE: This does NOT use an array as a param as it MUST remain valid and fixed for the lifetime of this
-        // buffer ref. That is it builds a reference to the data - NOT a copy.
+        // NOTE: This does NOT use an array or span as a param as the data MUST remain valid ***and*** fixed for the lifetime of this
+        // retVal ref. That is this builds a MemoryBuffer with a reference to the data - NOT a copy of it!
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMMemoryBufferRef LLVMCreateMemoryBufferWithMemoryRange(

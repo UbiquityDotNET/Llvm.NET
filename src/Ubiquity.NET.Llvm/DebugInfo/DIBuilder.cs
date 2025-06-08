@@ -590,7 +590,6 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var handle = LLVMDIBuilderCreateSubroutineType( Handle.ThrowIfInvalid()
                                                           , LLVMMetadataRef.Zero
                                                           , handles
-                                                          , checked(( uint )handles.Length)
                                                           , ( LLVMDIFlags )debugFlags
                                                           );
 

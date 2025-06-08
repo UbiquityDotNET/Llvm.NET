@@ -414,9 +414,22 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             uint Line
             );
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef ImportedEntity,
+            LLVMMetadataRef File,
+            uint Line,
+            LLVMMetadataRef[] Elements
+            )
+        {
+            return LLVMDIBuilderCreateImportedModuleFromAlias(Builder, Scope, ImportedEntity, File, Line, Elements, checked((uint)Elements.Length));
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias(
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromAlias(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
             LLVMMetadataRef ImportedEntity,
@@ -426,9 +439,22 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             uint NumElements // NumElements MUST be <= Elements.Length
             );
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef Scope,
+            LLVMMetadataRef M,
+            LLVMMetadataRef File,
+            uint Line,
+            LLVMMetadataRef[] Elements
+            )
+        {
+            return LLVMDIBuilderCreateImportedModuleFromModule(Builder, Scope, M, File, Line, Elements, checked((uint)Elements.Length));
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule(
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateImportedModuleFromModule(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef Scope,
             LLVMMetadataRef M,
@@ -559,9 +585,20 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             nuint NumElements // NumElements MUST be <= Data.Length
             );
 
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef File,
+            LLVMMetadataRef[] ParameterTypes,
+            LLVMDIFlags Flags
+            )
+        {
+            return LLVMDIBuilderCreateSubroutineType(Builder, File, ParameterTypes, checked((uint)ParameterTypes.Length), Flags);
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(
+        private static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateSubroutineType(
             LLVMDIBuilderRef Builder,
             LLVMMetadataRef File,
             [In] LLVMMetadataRef[] ParameterTypes,
@@ -602,7 +639,12 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile( LLVMDIBuilderRef Builder, LLVMMetadataRef ParentMacroFile, uint Line, LLVMMetadataRef File );
+        public static unsafe partial LLVMMetadataRef LLVMDIBuilderCreateTempMacroFile(
+            LLVMDIBuilderRef Builder,
+            LLVMMetadataRef ParentMacroFile,
+            uint Line,
+            LLVMMetadataRef File
+            );
 
         [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LLVMDIBuilderCreateEnumerator(
@@ -1248,7 +1290,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             UInt64 OffsetInBits,
             LLVMDIFlags Flags,
             LLVMMetadataRef DerivedFrom,
-            [In] LLVMMetadataRef[] Elements,
+            LLVMMetadataRef[] Elements,
             LLVMMetadataRef VTableHolder,
             LLVMMetadataRef TemplateParamsNode,
             LazyEncodedString UniqueIdentifier

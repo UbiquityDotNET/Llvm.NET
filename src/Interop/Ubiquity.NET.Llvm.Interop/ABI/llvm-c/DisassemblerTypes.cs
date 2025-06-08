@@ -6,6 +6,10 @@
 
 namespace Ubiquity.NET.Llvm.Interop
 {
+    // NOTE: these are intentionally, NOT record structs as those do NOT allow unsafe types as fields (CS8908)
+    // Sadly, there is a bug where that error won't show in an IDE so it might look safe/OK until you build
+    // (see: https://github.com/dotnet/roslyn/issues/58878)
+
     [StructLayout( LayoutKind.Sequential )]
     public unsafe readonly struct LLVMOpInfoSymbol1
         : IEquatable<LLVMOpInfoSymbol1>

@@ -28,22 +28,7 @@ namespace Ubiquity.NET.Llvm.Values
         public static IEnumerable<AttributeValue> GetAttributesAtIndex( this Instruction self, FunctionAttributeIndex index )
         {
             ThrowIfNotCallSite( self );
-            uint count = GetAttributeCountAtIndex(self, index );
-            if(count == 0)
-            {
-                return [];
-            }
-
-            var buffer = new LLVMAttributeRef[ count ];
-            unsafe
-            {
-                fixed(LLVMAttributeRef* pBuf = buffer)
-                {
-                    LLVMGetCallSiteAttributes( self.Handle, (LLVMAttributeIndex)index, pBuf );
-                }
-            }
-
-            return from attribRef in buffer
+            return from attribRef in LLVMGetCallSiteAttributes( self.Handle, (LLVMAttributeIndex)index)
                    select new AttributeValue( attribRef );
         }
 
