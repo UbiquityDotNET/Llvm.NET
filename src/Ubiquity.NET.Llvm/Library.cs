@@ -13,6 +13,7 @@ the low level interop (Test code sometimes does) it must explicitly reference it
 using System.Collections.Immutable;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 // Apply using aliases to simplify avoidance of name conflicts.
 using InteropCodeGenTarget = Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.LibLLVMCodeGenTarget;
@@ -54,6 +55,9 @@ namespace Ubiquity.NET.Llvm
 
         /// <summary>Gets the native target for the current runtime</summary>
         public static CodeGenTarget NativeTarget => (CodeGenTarget)RuntimeInformation.ProcessArchitecture.AsLLVMTarget();
+
+        /// <inheritdoc/>
+        public uint DebugMetadataVersion => LLVMDebugMetadataVersion();
 
         // "MOVE" construction, this instance takes over responsibility
         // of calling dispose.

@@ -18,18 +18,12 @@ namespace CodeGenWithDebugInfo
     internal sealed class CortexM3ABI
         : ITargetABI
     {
-        public CortexM3ABI( )
+        public CortexM3ABI( ILibLlvm library)
         {
-            LlvmLib = Library.InitializeLLVM();
-            LlvmLib.RegisterTarget( CodeGenTarget.ARM );
+            library.RegisterTarget( CodeGenTarget.ARM );
         }
 
         public string ShortName => "M3";
-
-        public void Dispose( )
-        {
-            LlvmLib.Dispose();
-        }
 
         public TargetMachine CreateTargetMachine( )
         {
@@ -81,8 +75,8 @@ namespace CodeGenWithDebugInfo
         public void AddModuleFlags( Module module )
         {
             // Specify ABI const sizes so linker can detect mismatches
-            module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
-            module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
+            module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size"u8, 4 );
+            module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size"u8, 4 );
         }
 
         public ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
@@ -103,8 +97,6 @@ namespace CodeGenWithDebugInfo
                 ctx.CreateAttribute( "unsafe-fp-math"u8, "false"u8 ),
                 ctx.CreateAttribute( "use-soft-float"u8, "false"u8 )
             ];
-
-        private readonly ILibLlvm LlvmLib;
 
         // Sadly, these can't be utf8 literals, but, they can be static readonly LazyEncodedString!
         private static readonly LazyEncodedString Cpu = "cortex-m3"u8;

@@ -25,7 +25,6 @@ namespace CodeGenWithDebugInfo
     /// </remarks>
     /// <seealso href="https://discourse.llvm.org/t/llvm-introduce-an-abi-lowering-library/84554"/>
     internal interface ITargetABI
-        : IDisposable
     {
         string ShortName { get; }
 

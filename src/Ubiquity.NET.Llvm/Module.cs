@@ -72,9 +72,6 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Name of the Dwarf Version module flag</summary>
         public static readonly LazyEncodedString DwarfVersionValue = "Dwarf Version"u8;
 
-        /// <summary>Gets the current Version of the Debug information used by LLVM</summary>
-        public static UInt32 DebugMetadataVersion => LLVMDebugMetadataVersion();
-
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
         public bool IsDisposed => NativeHandle is null || NativeHandle.IsInvalid || NativeHandle.IsClosed;
 
@@ -192,6 +189,9 @@ namespace Ubiquity.NET.Llvm
         public Module Clone( IContext targetContext ) => Impl.Clone( targetContext );
 
         /// <inheritdoc/>
+        public bool StripDebugInformation() => Impl.StripDebugInformation();
+
+        /// <inheritdoc/>
         public LazyEncodedString SourceFileName { get => Impl.SourceFileName; set => Impl.SourceFileName = value; }
 
         /// <inheritdoc/>
@@ -236,6 +236,9 @@ namespace Ubiquity.NET.Llvm
 
         /// <inheritdoc/>
         public LazyEncodedString ModuleInlineAsm { get => Impl.ModuleInlineAsm; set => Impl.ModuleInlineAsm = value; }
+
+        /// <inheritdoc/>
+        public uint DebugMetadataVersion => Impl.DebugMetadataVersion;
         #endregion
 
         /// <summary>Load a bit-code module from a given file</summary>

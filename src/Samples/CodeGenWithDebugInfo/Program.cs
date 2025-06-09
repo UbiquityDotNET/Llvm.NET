@@ -13,7 +13,6 @@ using System.IO;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Llvm.DebugInfo;
 using Ubiquity.NET.Llvm.Instructions;
-
 using Ubiquity.NET.Llvm.Types;
 using Ubiquity.NET.Llvm.Values;
 
@@ -58,8 +57,10 @@ namespace CodeGenWithDebugInfo
             srcPath = Path.GetFullPath( srcPath );
             #endregion
 
+            using ILibLlvm library = Library.InitializeLLVM();
+
             #region TargetABISelection
-            using var targetABI = AbiFactory(args[0]);
+            ITargetABI? targetABI = AbiFactory(library, args[0]);
             if(targetABI is null)
             {
                 ShowUsage();
@@ -126,7 +127,7 @@ namespace CodeGenWithDebugInfo
             // add module flags and compiler identifiers...
             // this can technically occur at any point, though placing it here makes
             // comparing against clang generated files easier
-            AddModuleFlags( targetABI, module );
+            AddModuleFlags( targetABI, module, library );
             #endregion
 
             #region CreatingQualifiedTypes
@@ -172,12 +173,12 @@ namespace CodeGenWithDebugInfo
             Console.Error.WriteLine( "Usage: CodeGenWithDebugInfo [X64|M3] <source file path>" );
         }
 
-        private static ITargetABI? AbiFactory( string arg )
+        private static ITargetABI? AbiFactory( ILibLlvm library, string arg )
         {
             return arg.ToUpperInvariant() switch
             {
-                "M3" => new CortexM3ABI(),
-                "X64" => new X64ABI(),
+                "M3" => new CortexM3ABI(library),
+                "X64" => new X64ABI(library),
                 _ => null,
             };
         }
@@ -258,10 +259,10 @@ namespace CodeGenWithDebugInfo
         #endregion
 
         #region AddModuleFlags
-        private static void AddModuleFlags( ITargetABI abi, Module module )
+        private static void AddModuleFlags( ITargetABI abi, Module module, ILibLlvm library )
         {
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
-            module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, library.DebugMetadataVersion );
             abi.AddModuleFlags( module );
             module.AddVersionIdentMetadata( VersionIdentString );
         }

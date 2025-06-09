@@ -86,6 +86,9 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets or sets the module level inline assembly</summary>
         public LazyEncodedString ModuleInlineAsm { get; set; }
 
+        /// <summary>Gets the Debug metadata version that is present in this module</summary>
+        public uint DebugMetadataVersion { get; }
+
         /// <summary>Appends inline assembly to the module's inline assembly</summary>
         /// <param name="asm">assembly text</param>
         public void AppendInlineAsm( LazyEncodedString asm );
@@ -391,6 +394,10 @@ namespace Ubiquity.NET.Llvm
         /// <param name="targetContext"><see cref="IContext"/> to clone the module into</param>
         /// <returns>Cloned copy of the module</returns>
         public Module Clone( IContext targetContext );
+
+        /// <summary>Strips debug information from this module</summary>
+        /// <returns><see langword="true"/> if the module was modified; <see langword="false"/> if not</returns>
+        public bool StripDebugInformation();
     }
 
     // Internal helper to get the underlying ABI handle as an "Alias" handle

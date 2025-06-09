@@ -18,18 +18,12 @@ namespace CodeGenWithDebugInfo
     internal sealed class X64ABI
         : ITargetABI
     {
-        public X64ABI( )
+        public X64ABI( ILibLlvm library )
         {
-            LlvmLib = Library.InitializeLLVM();
-            LlvmLib.RegisterTarget( CodeGenTarget.X86 );
+            library.RegisterTarget( CodeGenTarget.X86 );
         }
 
         public string ShortName => "x86";
-
-        public void Dispose( )
-        {
-            LlvmLib.Dispose();
-        }
 
         public TargetMachine CreateTargetMachine( )
         {
@@ -63,7 +57,7 @@ namespace CodeGenWithDebugInfo
 
         public void AddModuleFlags( Module module )
         {
-            module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level", 2 );
+            module.AddModuleFlag( ModuleFlagBehavior.Error, "PIC Level"u8, 2 );
         }
 
         public ImmutableArray<AttributeValue> BuildTargetDependentFunctionAttributes( IContext ctx )
@@ -80,8 +74,6 @@ namespace CodeGenWithDebugInfo
                 ctx.CreateAttribute( "use-soft-float"u8, "false"u8 ),
                 ctx.CreateAttribute( "uwtable"u8, (ulong)UWTableKind.Async)
             ];
-
-        private readonly ILibLlvm LlvmLib;
 
         // Sadly, these can't be utf8 literals, but, they can be static readonly LazyEncodedString!
         private static readonly LazyEncodedString Cpu = "x86-64"u8;

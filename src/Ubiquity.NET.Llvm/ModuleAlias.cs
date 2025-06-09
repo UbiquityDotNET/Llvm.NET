@@ -9,6 +9,7 @@ using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ModuleBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Analysis;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitWriter;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Linker;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Target;
@@ -197,6 +198,9 @@ namespace Ubiquity.NET.Llvm
             get => LLVMGetModuleInlineAsm( NativeHandle ) ?? LazyEncodedString.Empty;
             set => LLVMSetModuleInlineAsm2( NativeHandle, value.ThrowIfNull() );
         }
+
+        /// <inheritdoc/>
+        public uint DebugMetadataVersion => LLVMGetModuleDebugMetadataVersion(NativeHandle);
 
         /// <inheritdoc/>
         public void AppendInlineAsm( LazyEncodedString asm )
@@ -614,6 +618,12 @@ namespace Ubiquity.NET.Llvm
             var retVal = Module.LoadFrom( buffer, targetContext );
             Debug.Assert( retVal.Context.Equals( targetContext ), Resources.Expected_to_get_a_module_bound_to_the_specified_context );
             return retVal;
+        }
+
+        /// <inheritdoc/>
+        public bool StripDebugInformation()
+        {
+            return LLVMStripModuleDebugInfo(NativeHandle);
         }
 
         internal ModuleAlias( LLVMModuleRefAlias handle )
