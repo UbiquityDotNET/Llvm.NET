@@ -144,5 +144,8 @@ namespace Ubiquity.NET.Llvm
         /// attributes not yet known to, or considered stable by, the LLVM core native code.
         /// </remarks>
         ImmutableDictionary<LazyEncodedString, AttributeInfo> AttributeMap { get; }
+
+        /// <summary>Gets the current debug metadata version for this library</summary>
+        uint DebugMetadataVersion { get; }
     }
 }

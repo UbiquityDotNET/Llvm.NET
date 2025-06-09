@@ -393,11 +393,13 @@ namespace Ubiquity.NET.Llvm.UT
         [TestMethod]
         public void AddModuleFlagTest( )
         {
+            Assert.IsNotNull(ModuleFixtures.LibLLVM);
+
             using var context = new Context( );
             using var module = context.CreateBitcodeModule( TestModuleName );
 
             module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
-            module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, Module.DebugMetadataVersion );
+            module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, ModuleFixtures.LibLLVM.DebugMetadataVersion );
             module.AddModuleFlag( ModuleFlagBehavior.Error, "wchar_size", 4 );
             module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
             module.AddVersionIdentMetadata( "unit-tests 1.0" );
@@ -424,7 +426,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var debugVerConst = ( ( ConstantAsMetadata )debugVerFlag.Metadata ).Constant;
             Assert.IsInstanceOfType<ConstantInt>( debugVerConst );
-            Assert.AreEqual( Module.DebugMetadataVersion, ((ConstantInt)debugVerConst).ZeroExtendedValue );
+            Assert.AreEqual( ModuleFixtures.LibLLVM.DebugMetadataVersion, ((ConstantInt)debugVerConst).ZeroExtendedValue );
 
             var wcharSizeFlag = module.ModuleFlags[ "wchar_size" ];
             Assert.AreEqual( ModuleFlagBehavior.Error, wcharSizeFlag.Behavior );

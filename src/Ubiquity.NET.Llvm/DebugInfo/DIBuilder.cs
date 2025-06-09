@@ -1095,7 +1095,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public readonly void Finish( DISubProgram subProgram )
         {
             ArgumentNullException.ThrowIfNull( subProgram );
-            LibLLVMDIBuilderFinalizeSubProgram( Handle.ThrowIfInvalid(), subProgram.Handle );
+            LLVMDIBuilderFinalizeSubprogram( Handle.ThrowIfInvalid(), subProgram.Handle );
         }
 
         /// <summary>Finalizes debug information for all items built by this builder</summary>
