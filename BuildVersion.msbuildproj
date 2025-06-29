@@ -1,7 +1,15 @@
 ﻿<Project Sdk="Microsoft.Build.NoTargets">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <!--
+    Workaround annoying recurring bug: (IDE, MSBUILD, NoTargets?) Force x86 to AnyCPU.
+    Bug is that anything cares or sets a default that the IDE can't set causing it to occur.
+    -->
+    <Platform Condition="'$(Platform)'=='x86'">AnyCPU</Platform>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
 
   <ItemGroup>
     <None Include="Build-docs.ps1"/>

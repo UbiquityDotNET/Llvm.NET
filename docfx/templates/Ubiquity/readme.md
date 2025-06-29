@@ -7,6 +7,11 @@ tutorials. (No surprise that one isn't supported) [Though it oddly IS supported
 directly in the [Local MarkDig based editor](https://github.com/MadsKristensen/MarkdownEditor2022)
 used to edit these files... [Go Figure! :shrug: ]
 
+## layout/_master.tmpl
+This is mostly borrowed from the official DocFX `modern` template. However, the build
+version number was added to the footer. Unfortunately no simpler means was found to do
+that.
+
 ## Theming
 This template also updates the theme for SVG image backgrounds to improve
 readability of the parse diagrams. It also updates the HighlightJS classifiers
