@@ -1,21 +1,25 @@
 ﻿<Project Sdk="Microsoft.Build.NoTargets">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <!--
+    Workaround annoying recurring bug: (IDE, MSBUILD, NoTargets?) Force x86 to AnyCPU.
+    Bug is that anything cares or sets a default that the IDE can't set causing it to occur.
+    -->
+    <Platform Condition="'$(Platform)'=='x86'">AnyCPU</Platform>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
   <!--
   This projects serves as a convenient placeholder to reference the doc files. It uses project relative include
   and exclude patterns to simplify referencing ALL files but skipping over the generated API files.
   (Getting docfx to generate files into a folder outside of the build tree (IntermediateOutputPath) but then
   reference content from that is an exercise in frustration - problem unsolved. So this is used instead.)
   -->
-
   <ItemGroup>
     <!--Every FILE in this folder except this project file itself-->
     <None Include="*.*" Exclude="$(MSBuildThisFile)" />
-    <None Include="templates/**"/>
+    <None Include="templates/**" />
   </ItemGroup>
-
   <ItemGroup>
     <!--Everything in the LLVM sub-folders except the API folder as that contains generated files -->
     <None Include="llvm/**" Exclude="llvm/api/**" />
@@ -24,36 +28,31 @@
     <None Include="llvm/api/*.png" />
     <None Include="llvm/api/llvm-xref.yml" />
   </ItemGroup>
-
   <ItemGroup>
     <!--Everything in the runtime-utils sub-folders except the API folder as that contains generated files -->
     <None Include="runtime-utils/**" Exclude="runtime-utils/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
     <None Include="runtime-utils/api/index.md" />
   </ItemGroup>
-
   <ItemGroup>
     <!--Everything in the extensions sub-folders except the API folder as that contains generated files -->
     <None Include="extensions/**" Exclude="extensions/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
     <None Include="extensions/api/index.md" />
   </ItemGroup>
-
   <ItemGroup>
     <!--Everything in the antlr-utils sub-folders except the API folder as that contains generated files -->
     <None Include="antlr-utils/**" Exclude="antlr-utils/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
     <None Include="antlr-utils/api/index.md" />
   </ItemGroup>
-
   <ItemGroup>
     <!--Everything in the interop-helpers sub-folders except the API folder as that contains generated files -->
     <None Include="interop-helpers/**" Exclude="interop-helpers/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
     <None Include="interop-helpers/api/index.md" />
   </ItemGroup>
-
   <Target Name="AlwaysRun" BeforeTargets="AfterBuild">
-    <Message Importance="High" Text="NOTE: Building $(MSBuildProjectFile) does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files"/>
+    <Message Importance="High" Text="NOTE: Building $(MSBuildProjectFile) does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files" />
   </Target>
 </Project>
