@@ -30,6 +30,9 @@ function Get-CurrentBuildKind
     $currentBuildKind = [BuildKind]::LocalBuild
 
     # IsAutomatedBuild is the top level gate (e.g. if it is false, all the others must be false)
+    # This supports identification of APPVEYOR or GitHub explicitly but also supports the common
+    # `CI` environment variable. Additional build back-ends that don't set the env var therefore,
+    # would need special handling here.
     $isAutomatedBuild = [System.Convert]::ToBoolean($env:CI) `
                         -or [System.Convert]::ToBoolean($env:APPVEYOR) `
                         -or [System.Convert]::ToBoolean($env:GITHUB_ACTIONS)
@@ -39,6 +42,12 @@ function Get-CurrentBuildKind
         # PR and release builds have externally detected indicators that are tested
         # below, so default to a CiBuild (e.g. not a PR, And not a RELEASE)
         $currentBuildKind = [BuildKind]::CiBuild
+
+        # Based on back-end type - determine if this is a release or CI build
+        # The assumption here is that a TAG is pushed to the repo for releases
+        # and therefore that is what distinguishes a release build. Other conditions
+        # would need to use other criteria to determine a PR buddy build, CI build
+        # and release build.
 
         # IsPullRequestBuild indicates an automated buddy build and should not be trusted
         $isPullRequestBuild = $env:GITHUB_BASE_REF -or $env:APPVEYOR_PULL_REQUEST_NUMBER

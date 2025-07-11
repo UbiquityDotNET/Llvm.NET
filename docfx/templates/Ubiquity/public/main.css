@@ -1,8 +1,9 @@
 @charset "UTF-8";
 
 /*
-Disable display of inherited members. It would be nice if there was a build option to not even generate this noise,
-but sadly, there is none so this disables the final render of such things.
+Disable display of inherited members. It would be nice if there was a build option
+to not even generate this noise, but sadly, there is none so this disables the
+final render of such things.
 */
 .typelist.inheritedMembers {
     display: none
@@ -10,6 +11,15 @@ but sadly, there is none so this disables the final render of such things.
 
 #logo {
     background-color: white
+}
+
+ /*
+ For reasons, unknown style sets this to 100% which forces all tables to the available width.
+ That makes for rather ugly tables and surprising results as the editor doesn't do that for
+ it's preview mode.
+ */
+.table {
+    width: auto
 }
 
 /*
