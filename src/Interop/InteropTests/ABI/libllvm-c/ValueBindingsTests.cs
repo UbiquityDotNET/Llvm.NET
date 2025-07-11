@@ -8,98 +8,90 @@ using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop.UT;
-
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
     [TestClass]
     public class ValueBindingsTests
     {
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMIsConstantZeroValueTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMRemoveGlobalFromParentTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetValueKindTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetAliaseeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetArgumentIndexTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGlobalVariableAddDebugExpressionTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMFunctionAppendBasicBlockTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMValueAsMetadataGetValueTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
-        public void LibLLVMCreateValueCacheTest( )
-        {
-            throw new NotImplementedException();
-        }
-
-        [SkipTestMethod]
-        public void LibLLVMValueCacheAddTest( )
-        {
-            throw new NotImplementedException();
-        }
-
-        [SkipTestMethod]
-        public void LibLLVMValueCacheLookupTest( )
-        {
-            throw new NotImplementedException();
-        }
-
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMIsConstantCStringTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetConstantDataSequentialElementCountTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetConstantDataSequentialRawDataTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMHasDbgRecordsTest( )
         {
             throw new NotImplementedException();

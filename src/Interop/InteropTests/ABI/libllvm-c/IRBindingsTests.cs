@@ -6,14 +6,13 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop.UT;
-
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
     [TestClass]
     public class IRBindingsTests
     {
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMHasUnwindDestTest( )
         {
             // As of this writing, the only implemented instructions that might contain an unwind dest are a CleanupReturn and

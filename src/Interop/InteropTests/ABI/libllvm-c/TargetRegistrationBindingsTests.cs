@@ -9,7 +9,6 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop.UT;
 using Ubiquity.NET.Versioning;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
@@ -20,7 +19,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
     [TestClass]
     public class TargetRegistrationBindingsTests
     {
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMRegisterTargetTest( )
         {
             throw new NotImplementedException();

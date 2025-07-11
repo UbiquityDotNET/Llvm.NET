@@ -8,182 +8,209 @@ using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop.UT;
-
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
     [TestClass]
     public class MetadataBindingsTests
     {
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDIBasicTypeGetEncodingTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetNodeContextTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDiCompileUnitGetEmissionKindTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDIBuilderCreateTempFunctionFwdDeclTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDIBuilderFinalizeSubProgramTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDIDescriptorGetTagTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDILocationGetInlinedAtScopeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMMetadataAsStringTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMMDNodeGetNumOperandsTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMMDNodeGetOperandTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMMDNodeReplaceOperandTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetOperandNodeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMetadataGetParentModuleTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMetadataEraseFromParentTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetMetadataIDTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMDNodeGetNumOperandsTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMDNodeGetOperandTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMDNodeSetOperandTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMDNodeAddOperandTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMNamedMDNodeClearOperandsTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMConstantAsMetadataTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetMDStringTextTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMAddNamedMetadataOperand2Test( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMSetMetadata2Test( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMIsTemporaryTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMIsResolvedTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMIsUniquedTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMIsDistinctTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMDISubRangeGetLowerBoundsTest( )
         {
             throw new NotImplementedException();
