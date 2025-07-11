@@ -15,7 +15,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Extensions;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
-using Ubiquity.NET.Llvm.Interop.UT;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
@@ -106,7 +105,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
             Assert.IsFalse( LibLLVMIsConstantRangeAttribute( enumAttrib ) );
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Constant Range List Creation is unknown - test currently ignored")]
         public void LibLLVMIsConstantRangeListAttributeTest( )
         {
             // At present the creation of a constant range list attribute instance is

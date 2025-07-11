@@ -8,74 +8,83 @@ using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop.UT;
-
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
     [TestClass]
     public class TargetMachineBindingsTests
     {
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetTargetMachineAsmVerbosityTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetTargetMachineFastISelTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetTargetMachineGlobalISelTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetTargetMachineGlobalISelAbortTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetTargetMachineMachineOutlinerTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTargetMachineOptionsGetCPUTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTargetMachineOptionsGetFeaturesTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTargetMachineOptionsGetABITest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTargetMachineOptionsGetCodeGenOptLevelTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTargetMachineOptionsGetRelocModeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTargetMachineOptionsGetCodeModelTest( )
         {
             throw new NotImplementedException();
