@@ -8,116 +8,132 @@ using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Ubiquity.NET.Llvm.Interop.UT;
-
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
     [TestClass]
     public class TripleBindingsTests
     {
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMGetHostTripleTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMParseTripleTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleOpEqualTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetArchTypeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetSubArchTypeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetVendorTypeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetOsTypeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleHasEnvironmentTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetEnvironmentTypeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetEnvironmentVersionTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetObjectFormatTypeTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleAsStringTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetArchTypeNameTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetSubArchTypeNameTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetVendorTypeNameTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetOsTypeNameTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetEnvironmentTypeNameTest( )
         {
             throw new NotImplementedException();
         }
 
-        [SkipTestMethod]
+        [TestMethod]
+        [Ignore("Not yet implemented")]
         public void LibLLVMTripleGetObjectFormatTypeNameTest( )
         {
             throw new NotImplementedException();
