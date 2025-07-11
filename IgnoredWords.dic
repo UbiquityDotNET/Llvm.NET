@@ -1,6 +1,7 @@
 ABI
 Accessor
 Addr
+addref
 alloca
 anonymize
 antlr
@@ -49,12 +50,14 @@ dllimport
 docfx
 docfxconsole
 dotnet
+endian
 endianess
 enum
 Enums
 env
 exe
 facepalm
+finalizer
 finalizers
 foo
 fullsrc

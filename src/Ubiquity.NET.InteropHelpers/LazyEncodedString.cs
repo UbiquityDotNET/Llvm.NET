@@ -66,7 +66,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="span">span of native bytes</param>
         /// <param name="encoding">Encoding to use for the string [Optional: Defaults to <see cref="Encoding.UTF8"/> if not provided]</param>
         /// <remarks>This has some performance overhead as it MUST make a copy of the contents of the span. The lifetime
-        /// of <paramref name="span"/> is not guaranteed beyond this call.
+        /// of <paramref name="span"/> is not guaranteed beyond this call and is not allowed as a field of this type.
         /// </remarks>
         public LazyEncodedString( ReadOnlySpan<byte> span, Encoding? encoding = null )
         {
@@ -248,7 +248,9 @@ namespace Ubiquity.NET.InteropHelpers
         /// strings are a <see cref="LazyEncodedString.Empty"/>.
         /// <note type="note">
         /// This method handles safely converting (down casting) the length to an <see cref="int"/>  as required
-        /// by .NET runtime types. [<see cref="nuint"/> is a managed equivalent of size_t]
+        /// by .NET runtime types. [<see cref="nuint"/> is used as managed equivalent of size_t, though the formal C/C++
+        /// definition is compiler/platform specific. Most use an unsigned 64 bit value for a 64 bit platform and an
+        /// unsigned 32 bit value for 32 bit platforms.]
         /// </note>
         /// </remarks>
         public static unsafe LazyEncodedString? FromUnmanaged( byte* p, nuint len )

@@ -4,7 +4,7 @@
     Global references are included in ALL projects in this repository
   -->
   <ItemGroup>
-    <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.0-rc" />
+    <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.5-alpha" />
     <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
     <GlobalPackageReference Include="MustUseRetVal" Version="0.0.2" />
     <!--
@@ -28,6 +28,6 @@
     <PackageVersion Include="MSTest.TestAdapter" Version="3.9.1" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.9.1" />
     <PackageVersion Include="Tmds.ExecFunction" Version="0.8.0" />
-    <PackageVersion Include="Ubiquity.NET.Versioning" Version="5.0.0-rc" />
+    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.1-alpha" />
   </ItemGroup>
 </Project>

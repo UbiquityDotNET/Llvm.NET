@@ -17,7 +17,6 @@
 [assembly: SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1300:Element should begin with upper-case letter", Justification = "Interop ABI naming matches source for most structures and types" )]
 [assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Filenames match that of the native ABI header file" )]
 [assembly: SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Interop ABI naming matches source for most structures and types" )]
-[assembly: SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1642:Constructor summary documentation should begin with standard text", Justification = "Dumb rule - if the summary is really **supposed** to be a fixed format then tooling should just generate it..." )]
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "Interop ABI naming matches source for most structures and types" )]
 [assembly: SuppressMessage( "Redundancies in Symbol Declarations", "RECS0007:The default underlying type of enums is int, so defining it explicitly is redundant.", Justification = "ABI interop; intent is to be explicit for clarity (even if redundant)" )]
 [assembly: SuppressMessage( "Maintainability", "CA1506:Avoid excessive class coupling", Justification = "The whole point of this library is to expose the native ABI methods and types" )]

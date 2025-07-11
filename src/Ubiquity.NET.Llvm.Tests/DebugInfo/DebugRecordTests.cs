@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Linq;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.DebugInfo;

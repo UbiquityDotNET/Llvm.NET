@@ -18,7 +18,7 @@ namespace Ubiquity.NET.InteropHelpers
     /// provide the specific operation to release the pointer. In particular this provides
     /// a simple copy by value marshalling and there is no copy made nor any marshalling to
     /// managed code overhead until <see cref="ToString()"/> is called. In particular,
-    /// <see cref="ReadOnlySpan"/> will NOT make a managed copy and the returned span is to the
+    /// <see cref="ReadOnlySpan"/> will NOT make a managed copy. The returned span is to the
     /// original unmanaged memory.
     /// </remarks>
     public abstract class CStringHandle

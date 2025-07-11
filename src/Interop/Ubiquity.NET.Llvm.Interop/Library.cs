@@ -24,9 +24,17 @@ namespace Ubiquity.NET.Llvm.Interop
             LibLLVMRegisterTarget( target, registrations ).ThrowIfFailed();
         }
 
-        public CSemVer GetVersionInfo( )
+        /// <inheritdoc/>
+        public SemVer ExtendedAPIVersion { get; private set; }
+
+        /// <inheritdoc/>
+        public SemVer LlvmVersion
         {
-            return CSemVer.From( LibLLVMGetVersion() );
+            get
+            {
+                LLVMGetVersion( out UInt32 major, out UInt32 minor, out UInt32 patch );
+                return new SemVer( major, minor, patch );
+            }
         }
 
         /// <inheritdoc/>
@@ -48,26 +56,27 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             // Verify the version of LibLLVM.
-            var libLLVMVersion = CSemVer.From(LibLLVMGetVersion());
-            if(libLLVMVersion.Major != SupportedVersion.Major
-             || libLLVMVersion.Minor != SupportedVersion.Minor
-             || libLLVMVersion.Patch != SupportedVersion.Patch
+            var libVersion = SemVer.Parse(LibLLVMGetVersion()?.ToString() ?? string.Empty, SemVerFormatProvider.CaseInsensitive);
+            if( libVersion.Major != SupportedVersion.Major
+             || libVersion.Minor != SupportedVersion.Minor
+             || libVersion.Patch != SupportedVersion.Patch
             )
             {
                 string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_Actual_1;
                 string msg = string.Format( CultureInfo.CurrentCulture
                                           , msgFmt
                                           , SupportedVersion.ToString()
-                                          , libLLVMVersion.ToString()
+                                          , libVersion.ToString()
                                           );
                 throw new InvalidOperationException( msg );
             }
 
-            return new Library();
+            return new Library(libVersion);
         }
 
-        private Library( )
+        private Library( SemVer libVersion )
         {
+            ExtendedAPIVersion = libVersion;
             unsafe
             {
                 LLVMInstallFatalErrorHandler( &FatalErrorHandler );
