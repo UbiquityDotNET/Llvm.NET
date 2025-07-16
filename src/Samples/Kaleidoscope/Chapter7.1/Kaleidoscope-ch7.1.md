@@ -7,7 +7,7 @@ uid: Kaleidoscope-ch7.1
 > runtime like Kaleidoscope thus far. It does NOT allow for re-defining a
 > function. Once it is defined, you cannot define it again or an exception
 > or application crash will occur. Hopefully a future variant of this sample
-> will address tracking and removing that. See [Special notes for interactive run-times](#special-notes-for-interactive-runtimes)
+> will address tracking and removing that. See [Special notes for interactive run-times](#special-notes-for-interactive-run-times)
 > for more details.
 
 # 7. Kaleidoscope: Extreme Lazy JIT
@@ -138,7 +138,7 @@ language or runtime wants to use. For most DSLs like Kaleidoscope these trade-of
 generally relevant (Or even necessary) as the fundamental point is to simplify expression of a
 particular domain problem in domain terminology. Performance trade-offs are often not that
 important for such cases. (And can occasionally get in the way - See [Special notes for
-interactive run-times](#special-notes-for-interactive-runtimes) below for more details)
+interactive run-times](#special-notes-for-interactive-run-times) below for more details)
 
 ### Special notes for interactive run-times
 It turns out that re-definition of a lazy JIT'd function is a rather complex problem involving
