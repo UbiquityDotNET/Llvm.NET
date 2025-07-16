@@ -14,7 +14,7 @@
     as well as writes details of the initialization to the information and verbose streams.
 
 .PARAMETER ZipNuget
-    Zips all of the nuget packages into a single zip. This is NOT ordinarily needed and consumes a significant abount of time
+    Zips all of the NuGet packages into a single zip. This is NOT ordinarily needed and consumes a significant amount of time
     so it is provided as a flag. Publishing of NUGET packages is now part of the GitHub actions for automated builds and does
     not need this.
 #>

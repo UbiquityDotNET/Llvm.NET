@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm
         /// <summary>MIPS target</summary>
         MIPS = LibLLVMCodeGenTarget.CodeGenTarget_MIPS,
 
-        /// <summary>TI MSP430 Mixed-signal microcontroller</summary>
+        /// <summary>TI MSP430 Mixed-signal micro-controller</summary>
         MSP430 = LibLLVMCodeGenTarget.CodeGenTarget_MSP430,
 
         /// <summary>Nvidia Parallel Thread Execution (Nvidia GPUs)</summary>

@@ -218,7 +218,7 @@ method.
 
 ### Calling LLVM Intrinsics
 The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
-intrinsic memcopy function. This function is lowered to an optimized copy for the target so tat applications need
+intrinsic memcopy function. This function is lowered to an optimized copy for the target so that applications need
 not worry about building optimal versions of IR for this common functionality. Furthermore, the LLVM intrinsic
 supports a variety of signatures for various data types all of which are hidden in the Ubiquity.NET.Llvm method. Rather than
 require callers to create a declaration of the correct signature the Ubiquity.NET.Llvm wrapper automatically figures out the

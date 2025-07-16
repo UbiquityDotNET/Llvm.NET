@@ -1,8 +1,10 @@
 addtmp
 afterloop
 alloca
+allocas
 alltmp
 antlr
+arity
 ascii
 binaryop
 binop
@@ -17,6 +19,7 @@ csharp
 ddtmp
 discardable
 divtmp
+dotnet
 fadd
 fibi
 fmul
@@ -37,6 +40,7 @@ mandelconverger
 multmp
 nextvar
 nobuiltin
+nullability
 paren
 parsetree
 powtmp
@@ -45,7 +49,10 @@ printd
 printdensity
 printstar
 putchard
+readonly
 ret
+serializer
+structs
 subtmp
 uid
 unaryop

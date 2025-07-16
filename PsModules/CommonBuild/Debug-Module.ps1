@@ -1,5 +1,5 @@
 # This script is used for debugging the module when using the
-# [Powershell Tools for VisualStudio 2022](https://marketplace.visualstudio.com/items?itemName=AdamRDriscoll.PowerShellToolsVS2022)
+# [PowerShell Tools for VisualStudio 2022](https://marketplace.visualstudio.com/items?itemName=AdamRDriscoll.PowerShellToolsVS2022)
 # It is MOST useful for computing and reporting the set of functions to export from this module for the PSD1 file.
 Import-Module $PSScriptRoot\CommonBuild.psd1 -Force -Verbose
 CommonBuild\Get-FunctionsToExport

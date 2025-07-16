@@ -11,8 +11,8 @@ for the Ubiquity.NET.Runtime library.
       when developing or debugging a grammar.
 * Adapter for parse error listeners to a unified and abstract
   `Ubiquity.NET.Runtime.IParseErrorListener`.
-  - This allows building consumers that deal with errors and remain indepent of the parsing
-    technology.
+  - This allows building consumers that deal with errors and remain independent of the
+    parsing technology.
 * Extension functions that provides commonly used support for ANTLR
     -  Get a character interval from a ParserRuleContext with support for the standard EOF
        rule.

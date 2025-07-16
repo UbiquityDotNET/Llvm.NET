@@ -1,10 +1,10 @@
 # About
 Ubiquity.NET.Llvm provides a managed Object Oriented (OO) wrapper around an extended C ABI
-for LLVM (An extened form of the official LLVM-C ABI is needed to fill in some gaps
+for LLVM (An extended form of the official LLVM-C ABI is needed to fill in some gaps
 in the official implementation to provide a robust managed OO wrapper).
 
 ## Key Features
-* OO Wrapper around the LLVM API that closesly follows the underlying C++ object model
+* OO Wrapper around the LLVM API that closely follows the underlying C++ object model
 * Sensible patterns for ownership and cleanup
     - Including ownership transfer ("move" semantics)
 * Just In Time (JIT) compilation support

@@ -15,7 +15,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     ///
     /// <para>Primitive types and function signature types are all interned in LLVM, thus there won't be a
     /// strict one to one relationship between an LLVM type and corresponding language specific debug
-    /// type. (e.g. unsigned char, char, byte and signed byte might all be 8 bit integgral values as far
+    /// type. (e.g. unsigned char, char, byte and signed byte might all be 8 bit integral values as far
     /// as LLVM is concerned.) Also, when using the pointer+alloca+memcpy pattern to pass by value the
     /// actual source debug info type is different than the LLVM function signature. This interface and
     /// it's implementations are used to construct native type and debug info pairing to allow applications

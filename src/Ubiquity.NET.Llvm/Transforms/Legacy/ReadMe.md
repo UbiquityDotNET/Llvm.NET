@@ -6,5 +6,5 @@ on the context. According to [LLVM docs](https://llvm.org/docs/WritingAnLLVMPass
 the legacy pass manager is still used for code generation. Though the definition of that term
 is left undefined it is assumed to mean the final stages of compilation that generate the
 target machine code. This much is at least consistent with the naming of things and support in
-the C-API. (You can really only add the target sepcific analysis passes to a legacy pass manager).
+the C-API. (You can really only add the target specific analysis passes to a legacy pass manager).
 For everything else you need the new pass manager support.

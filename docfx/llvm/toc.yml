@@ -5,7 +5,7 @@
   href: articles/Samples/toc.yml
 - name: Namespaces
   href: api/toc.yml
-- name: Release Notes
-  href: ReleaseNotes.md
 - name: Internal Details
   href: articles/InternalDetails/toc.yml
+- name: Release Notes
+  href: ReleaseNotes.md

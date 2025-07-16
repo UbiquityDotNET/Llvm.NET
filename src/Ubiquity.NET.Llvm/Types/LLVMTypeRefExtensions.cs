@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Types
         {
             if(handle.IsNull)
             {
-                throw new ArgumentException( "Null handle is unmappable", exp );
+                throw new ArgumentException( "Null handle is not mappable", exp );
             }
 
             var kind = ( TypeKind )LLVMGetTypeKind( handle );

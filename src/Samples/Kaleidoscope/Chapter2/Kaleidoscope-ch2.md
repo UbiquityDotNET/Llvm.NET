@@ -10,7 +10,7 @@ parsed to help better understand the rest of the chapters better. It is hoped th
 users of this library find this helpful.
 
 The Ubiquity.NET.Llvm version of Kaleidoscope leverages ANTLR4 to parse the language
-into a parse tree. The parse tree is visitied to transform it into a an Abstract
+into a parse tree. The parse tree is visited to transform it into a an Abstract
 Syntax Tree (AST). This has several advantages including logical isolation of the
 parsing and code generation. Additionally, it provides a single formal definition
 of the grammar for the language. Understanding the language grammar from reading
