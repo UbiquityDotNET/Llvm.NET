@@ -11,16 +11,17 @@ The general goal is to parse Kaleidoscope source code to generate a [Module](xre
 representing the source as optimized LLVM IR. This is broken out as a distinct
 chapter to help identify the support for profiling and how it is different from the
 LLVM source samples that link directly to the LLVM libraries (That is, the samples
-are written in C++ AND continue to use the C++ pass builder and management support.
-This level of functionality is only available as the legacy pass management system
-with VERY limited support in the LLVM-C API. [It is so legacy now that almost ALL
-remnants of it are removed from the LLVM-C API, not just deprecated])
+are written in C++ AND use the C++ pass builder and management support that is NOT
+exported via the stable LLVM-C API. This level of functionality is only available
+as the legacy pass management system with VERY limited support in the LLVM-C API.
+[It is so legacy now that almost ALL remnants of it are removed from the LLVM-C API,
+not just deprecated])
 
 ## Code generation
-The Core of this sample doesn't change much from [Chapter 3](xref:Kaleidoscope-ch3). It simply adds
-module generation with optimized IR. To do that there are a few changes to make. In
-fact the optimizations provided don't do much and the resulting IR is much the same.
-[Coming up with a more complex Kaleidoscope sample that actually uses the
+The Core of this sample doesn't change much from [Chapter 3](xref:Kaleidoscope-ch3).
+It simply adds module generation with optimized IR. To do that there are a few changes
+to make. In fact the optimizations provided don't do much and the resulting IR is much
+the same. [Coming up with a more complex Kaleidoscope sample that actually uses the
 optimizations more is left as an exercise for the reader. :wink: ]
 
 ### Initialization
@@ -43,13 +44,14 @@ functions are. Unfortunately, they leave little room for manipulating or customi
 this set (In C++ there is some "wiggle room", in LLVM-C there is NO support for
 this type at all!). Unfortunately, that means that if any function happens to have
 the same name as the TargetLibraryInfo for a given Triple then it will be optimized
-AS a built-in function (even if not declared as one). This is an unfortunate state
+AS a built-in function (even if not declared as one) unless explicitly declared as
+"not" at the call site with an attribute. This is an unfortunate state
 of affairs with the LLVM support for C++ and highly problematic for `C` based
 bindings/projections like this library. Fortunately, there is a scapegoat for this.
 The function can include a `nobuiltin` attribute at the call site to prevent the
-optimizer from assuming the call call is to one of the well known built-in
-functions. This isn't used for Kaleidoscope. But does leave room for problems with
-names that match some arbitrary set of "built-in" symbols.
+optimizer from assuming the call is to one of the well known built-in functions.
+This isn't used for Kaleidoscope. But does leave room for problems with names that
+match some arbitrary set of "built-in" symbols.
 
 [!code-csharp[Main](CodeGenerator.cs#GetOrDeclareFunction)]
 

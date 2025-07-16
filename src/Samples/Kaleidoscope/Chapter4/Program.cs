@@ -18,6 +18,7 @@ namespace Kaleidoscope.Chapter4
     public static class Program
     {
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 4)</summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation of the program.</returns>
         public static async Task Main( )
         {
             var repl = new ReplEngine( );

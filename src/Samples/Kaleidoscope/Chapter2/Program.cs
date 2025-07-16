@@ -18,6 +18,7 @@ namespace Kaleidoscope.Chapter2
         #region Main
 
         /// <summary>C# version of the LLVM Kaleidoscope language tutorial (Chapter 2)</summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation of the program</returns>
         public static async Task Main( )
         {
             var repl = new ReplEngine( );
