@@ -27,7 +27,7 @@ namespace Kaleidoscope.Chapter6
             return new CodeGenerator( state );
         }
 
-        public override void ShowResults( Value resultValue )
+        public override void ProcessResults( Value resultValue )
         {
             switch(resultValue)
             {

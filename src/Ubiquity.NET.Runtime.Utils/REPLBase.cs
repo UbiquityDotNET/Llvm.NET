@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Runtime.Utils
 
         /// <summary>Show or otherwise process the results of an evaluation</summary>
         /// <param name="resultValue">Evaluated result value</param>
-        public abstract void ShowResults( T resultValue );
+        public abstract void ProcessResults( T resultValue );
 
         /// <summary>Gets the error logger to use for logging any parse errors</summary>
         public IParseErrorReporter ErrorLogger { get; }
@@ -49,7 +49,7 @@ namespace Ubiquity.NET.Runtime.Utils
                     T? result = generator.Generate( node );
                     if(result is not null)
                     {
-                        ShowResults( result );
+                        ProcessResults( result );
                     }
                 }
                 catch(CodeGeneratorException ex)

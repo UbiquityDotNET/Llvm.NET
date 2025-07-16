@@ -7,7 +7,6 @@
 using System;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.Visualizers;
 using Kaleidoscope.Runtime;
 
 using Ubiquity.NET.Runtime.Utils;
@@ -27,7 +26,7 @@ namespace Kaleidoscope.Chapter2
             return new CodeGenerator();
         }
 
-        public override void ShowResults( IAstNode resultValue )
+        public override void ProcessResults( IAstNode resultValue )
         {
             Console.WriteLine( "PARSED: {0}", resultValue );
         }
