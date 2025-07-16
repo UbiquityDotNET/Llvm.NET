@@ -4,6 +4,7 @@ permissions:
   pages: write
   packages: write
   actions: read
+
 defaults:
   run:
     shell: pwsh
@@ -67,12 +68,17 @@ jobs:
           branch: gh-pages
 
       - name: Publish packages to NuGet.org
-        run: dotnet nuget push .\BuildOutput\NuGet\*.nupkg -k ${{ secrets.NUGETPUSH_ACCESS_TOKEN }} -s 'https://api.nuget.org/v3/index.json' --skip-duplicate
+        run: |
+          if( [string]::IsNullOrWhiteSpace('${{secrets.NUGETPUSH_ACCESS_TOKEN}}'))
+          {
+              throw "'NUGETPUSH_ACCESS_TOKEN' does not exist, is empty or all whitespace!"
+          }
+          dotnet nuget push .\BuildOutput\NuGet\*.nupkg --api-key '${{secrets.NUGETPUSH_ACCESS_TOKEN}}' --source 'https://api.nuget.org/v3/index.json' --skip-duplicate
 
       - name: Create Release
         if: (!cancelled())
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
           draft: true
+          files: BuildOutput/NuGet/*.nupkg
+
