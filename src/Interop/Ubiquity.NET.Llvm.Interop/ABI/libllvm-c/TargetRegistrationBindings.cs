@@ -75,8 +75,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
             LibLLVMCodeGenTarget[] targets, Int32 lengthOfArray
         );
 
+        public static LazyEncodedString? LibLLVMGetVersion( )
+        {
+            unsafe
+            {
+                byte* p = LibLLVMGetVersion(out nuint len);
+                return LazyEncodedString.FromUnmanaged( p, len );
+            }
+        }
+
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial UInt64 LibLLVMGetVersion( );
+        private static unsafe partial byte* LibLLVMGetVersion(out nuint len);
     }
 }

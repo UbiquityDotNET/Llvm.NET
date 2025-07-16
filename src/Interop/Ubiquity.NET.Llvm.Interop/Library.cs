@@ -24,9 +24,17 @@ namespace Ubiquity.NET.Llvm.Interop
             LibLLVMRegisterTarget( target, registrations ).ThrowIfFailed();
         }
 
-        public CSemVer GetVersionInfo( )
+        /// <inheritdoc/>
+        public SemVer ExtendedAPIVersion { get; private set; }
+
+        /// <inheritdoc/>
+        public SemVer LlvmVersion
         {
-            return CSemVer.From( LibLLVMGetVersion() );
+            get
+            {
+                LLVMGetVersion( out UInt32 major, out UInt32 minor, out UInt32 patch );
+                return new SemVer( major, minor, patch );
+            }
         }
 
         /// <inheritdoc/>
@@ -48,26 +56,27 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             // Verify the version of LibLLVM.
-            var libLLVMVersion = CSemVer.From(LibLLVMGetVersion());
-            if(libLLVMVersion.Major != SupportedVersion.Major
-             || libLLVMVersion.Minor != SupportedVersion.Minor
-             || libLLVMVersion.Patch != SupportedVersion.Patch
+            var libVersion = SemVer.Parse(LibLLVMGetVersion()?.ToString() ?? string.Empty, SemVerFormatProvider.CaseInsensitive);
+            if( libVersion.Major != SupportedVersion.Major
+             || libVersion.Minor != SupportedVersion.Minor
+             || libVersion.Patch != SupportedVersion.Patch
             )
             {
                 string msgFmt = Resources.Mismatched_LibLLVM_version_Expected_0_Actual_1;
                 string msg = string.Format( CultureInfo.CurrentCulture
                                           , msgFmt
                                           , SupportedVersion.ToString()
-                                          , libLLVMVersion.ToString()
+                                          , libVersion.ToString()
                                           );
                 throw new InvalidOperationException( msg );
             }
 
-            return new Library();
+            return new Library(libVersion);
         }
 
-        private Library( )
+        private Library( SemVer libVersion )
         {
+            ExtendedAPIVersion = libVersion;
             unsafe
             {
                 LLVMInstallFatalErrorHandler( &FatalErrorHandler );
@@ -78,7 +87,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         // Expected version info for verification of matched LibLLVM
         // Interop exports/signatures may not be valid if not a match.
-        private static readonly CSemVer SupportedVersion = new(20, 1, 6);
+        private static readonly CSemVer SupportedVersion = new(20, 1, 8);
 
         // Singleton initializer for the supported targets array
         private static ImmutableArray<LibLLVMCodeGenTarget> GetSupportedTargets( )
@@ -91,20 +100,20 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         // Native call back for fatal error handling.
+        // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
         [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         private static unsafe void FatalErrorHandler( byte* reason )
         {
             try
             {
-                // NOTE: LLVM will call exit() upon return from this function and there's no way to stop it
                 Trace.TraceError( "LLVM Fatal Error: '{0}'; Application will exit.", ExecutionEncodingStringMarshaller.ConvertToManaged( reason ) );
             }
             catch(Exception ex)
             {
                 // No finalizers will occur after this, it's a HARD termination of the app.
                 // LLVM will do that on return but this can at least indicate a different problem
-                // from the original LLVM was reporting.
+                // from the original one LLVM was reporting.
                 Environment.FailFast( $"Unhandled exception in {nameof( FatalErrorHandler )}.", ex );
             }
         }

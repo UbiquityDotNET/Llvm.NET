@@ -29,17 +29,31 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <remarks>
         /// This is a simple set of enumerated values for the known targets supported by the library. It
         /// is distinct from the registered targets. Registration of each top level enumerated target may indeed
-        /// register support for more targets (e.g., ARM includes thumb big and little endian targets).
+        /// register support for more targets (e.g., ARM includes thumb big and little endian targets). This reports
+        /// only the top level architectural targets that are supported and available to register not what is currently
+        /// registered.
         /// </remarks>
         ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets { get; }
 
         /// <summary>Gets version information for the library implementation</summary>
-        /// <returns><see cref="CSemVer"/> for the native interop library</returns>
+        /// <returns><see cref="FileVersionQuad"/> for the native interop library</returns>
         /// <remarks>
-        /// Not, since it is an extension of LLVM the version is NOT guaranteed to match that of LLVM itself. Though,
-        /// to avoid confusion it usually does and would only deviate when no option is available (Such as the extension
-        /// APIs changed even though LLVM itself did not)
+        /// <note type="note">Since it is dealing with an extension of LLVM, the version is NOT guaranteed to match that
+        /// of LLVM itself. Though, to avoid confusion, the major, minor and patch usually does and would only deviate
+        /// when no option is available (Such as the extension APIs changed even though LLVM itself did not)</note>
         /// </remarks>
-        CSemVer GetVersionInfo( );
+        SemVer ExtendedAPIVersion { get; }
+
+        /// <summary>Gets version information for LLVM</summary>
+        /// <remarks>
+        /// This is a short hand wrapper around the <see cref="ABI.llvm_c.Core.LLVMGetVersion(out uint, out uint, out uint)"/>
+        /// for a given library instance. It converts the multiple out params to a <see cref="SemVer"/>.
+        /// <note type="note">
+        /// LLVM and the underlying APIs do not support any form of the pre-release information, nor do they support or provide
+        /// the build meta (which doesn't participate in ordering anyway). Therefore, any ordering from <see cref="SemVerComparer"/>
+        /// or <see cref="SemVerComparer.CaseSensitive"/> is valid for these versions and will produce the correct ordering.
+        /// </note>
+        /// </remarks>
+        SemVer LlvmVersion { get; }
     }
 }

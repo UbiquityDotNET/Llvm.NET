@@ -63,18 +63,17 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         [TestMethod]
         public void LibLLVMGetVersionTest( )
         {
-            UInt64 ver = LibLLVMGetVersion();
-            Assert.IsTrue( ver > 0 );
-            var csemVer = CSemVer.From(ver);
-            Assert.AreEqual( 20, csemVer.Major );
-            Assert.AreEqual( 1, csemVer.Minor );
+            var ver = SemVer.Parse(LibLLVMGetVersion()?.ToString() ?? string.Empty, SemVerFormatProvider.CaseInsensitive);
+            Assert.IsTrue( ver is SemVer or CSemVer);
+            Assert.AreEqual( 20, ver.Major );
+            Assert.AreEqual( 1, ver.Minor );
 
             // Testing for an exact match of the patch level (or anything finer grained than that)
             // in an automated test is dubious as it would require updating the tests on effectively
             // EVERY build of the native library... So, this tests for a minimum value that was valid
             // at the time of creation. The above major/minor values should be updated on changes to
             // those assumptions as any number of things may have changed.
-            Assert.IsTrue( csemVer.Patch >= 4 );
+            Assert.IsTrue( ver.Patch >= 7);
         }
     }
 }

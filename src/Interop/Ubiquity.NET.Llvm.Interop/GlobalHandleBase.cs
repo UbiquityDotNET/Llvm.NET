@@ -80,7 +80,7 @@ namespace Ubiquity.NET.Llvm.Interop
             // In a debug build capture the stack for creation of this instance
             // that way it is still available if there is an access violation
             // in the dispose. Usually such a thing indicates the source did NOT
-            // properly apply a using. So it is VERY helpful in debugging odf finalizer
+            // properly apply a using. So it is VERY helpful in debugging of finalizer
             // failures to locate the source.
             CaptureStack();
 #endif
@@ -150,7 +150,7 @@ namespace Ubiquity.NET.Llvm.Interop
             self.DangerousAddRef( ref success );
             if(!success)
             {
-                throw new InvalidOperationException( "Failed to addreff the SafeHandle!" );
+                throw new InvalidOperationException( "Failed to addref the SafeHandle!" );
             }
 
             Marshal.InitHandle( retVal, self.DangerousGetHandle() );

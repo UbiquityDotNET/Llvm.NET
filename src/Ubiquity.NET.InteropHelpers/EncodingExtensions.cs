@@ -17,8 +17,8 @@ namespace Ubiquity.NET.InteropHelpers
     /// these implementation don't throw an exception in such a case. They just
     /// return <see langword="null"/> when given that as the input. That is, if given
     /// <see langword="null"/> these will return <see langword="null"/> so that the
-    /// resulting value mirrors the native value. This is especially important where
-    /// a <see langword="null"/> value has a distinct meaning from an empty string.
+    /// resulting value mirrors the native value. This is especially important in scenarios
+    /// where a <see langword="null"/> value has a distinct meaning from an empty string.
     /// </remarks>
     public static class EncodingExtensions
     {
