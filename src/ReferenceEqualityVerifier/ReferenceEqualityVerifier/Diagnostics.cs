@@ -1,4 +1,10 @@
-﻿using System.Collections.Immutable;
+﻿// -----------------------------------------------------------------------
+// <copyright file="Diagnostics.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Collections.Immutable;
 
 using Microsoft.CodeAnalysis;
 

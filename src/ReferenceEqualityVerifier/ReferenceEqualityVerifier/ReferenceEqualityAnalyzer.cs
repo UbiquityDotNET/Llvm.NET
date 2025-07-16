@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="ReferenceEqualityAnalyzer.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -24,7 +30,7 @@ namespace ReferenceEqualityVerifier
     {
         private const string RelevantNamespaceName = "Ubiquity.NET.Llvm";
 
-        /// <summary>Diagnostics supported by this analyzer</summary>
+        /// <summary>Gets the diagnostics supported by this analyzer</summary>
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => Diagnostics.AllDiagnostics;
 
         /// <summary>Initializes the analyzer to detect potentially incorrect use</summary>
@@ -109,7 +115,7 @@ namespace ReferenceEqualityVerifier
         // EX: `a.b.c` becomes the sequence:
         //    'a', 'a.b`, 'a.b.c'
         // This allows for easy namespace Hierarchy checks.
-        static IEnumerable<string> GetNamespaceNames( ITypeSymbol sym )
+        private static IEnumerable<string> GetNamespaceNames( ITypeSymbol sym )
         {
             return from part in sym.ContainingNamespace.ToDisplayParts()
                    where part.Kind != SymbolDisplayPartKind.Punctuation
@@ -141,7 +147,6 @@ namespace ReferenceEqualityVerifier
                 || IsDerivedFrom( rht, typeSymbol );
         }
 
-
         private static bool IsDerivedFrom( ITypeSymbol derivedType, ITypeSymbol testBaseType )
         {
             if(testBaseType.TypeKind == TypeKind.Interface)
@@ -158,6 +163,7 @@ namespace ReferenceEqualityVerifier
                     }
                 }
             }
+
             return false;
         }
 
