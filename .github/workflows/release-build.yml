@@ -60,7 +60,7 @@ jobs:
           docspush_username: cibuild-telliam
         run: .\Push-Docs.ps1 -SkipPush
 
-      - name: Push Docs
+      - name: Publish Docs
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
