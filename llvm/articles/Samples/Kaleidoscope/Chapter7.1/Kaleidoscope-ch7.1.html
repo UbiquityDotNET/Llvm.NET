@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>7. Kaleidoscope: Extreme Lazy JIT | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="7. Kaleidoscope: Extreme Lazy JIT | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter7.1/Kaleidoscope-ch7.1.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../../index.html">
+            <img id="logo" class="svg" src="../../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Kaleidoscope-ch7.1">
+
+
+<div class="WARNING">
+<h5>Warning</h5>
+<p>There is a fatal flaw in the current design of this support for an interactive
+runtime like Kaleidoscope thus far. It does NOT allow for re-defining a
+function. Once it is defined, you cannot define it again or an exception
+or application crash will occur. Hopefully a future variant of this sample
+will address tracking and removing that. See <a href="#special-notes-for-interactive-run-times">Special notes for interactive run-times</a>
+for more details.</p>
+</div>
+<h1 id="7-kaleidoscope-extreme-lazy-jit">7. Kaleidoscope: Extreme Lazy JIT</h1>
+<p>In the previous chapters the code generation took an AST, converted it to LLVM IR, handed the IR
+to the JIT, which then generated the native code. For a top level anonymous expression that is
+pretty much all you need. But what if a function is defined but not used (yet or ever)? The
+process of generating the IR, and then subsequently the native code, is all wasted overhead in
+such a case. That's not really following through on the &quot;Just-In-Time&quot; part of the JIT. This
+chapter focuses on resolving that with truly lazy JIT that doesn't even generate the LLVM IR
+for a function until it is called for the first time.</p>
+<h2 id="performance-trade-offs">Performance trade-offs</h2>
+<p>As with many things in software, there are trade-offs involved. In this case the trade-off is
+when you JIT compile vs. lazy compile. This choice is a major element to efficient use of a JIT.
+The more you have to JIT before anything can actually run the slower the application startup is.
+If you defer too much then the execution slows down as everything needs to compile code.
+Ultimately, there is no one &quot;right&quot; solution as many factors contribute to the results, including
+the level of optimizations applied during generation. (e.g. it might achieve better results to
+generate unoptimized code during startup, and later regenerate optimized versions of the most
+frequently used code.)</p>
+<p>The approach to balancing the trade-offs taken in this chapter is to eagerly compile top level
+expressions as it is obvious they are going to be called, and discarded afterwards. For function
+definitions, it isn't clear if the functions will or won't be called. While, the code generation
+could scan the function to find all functions it calls to generate them all at the same time -
+there is no guarantee that the input arguments to the function will go through a path that needs
+them all. Thus, for Kaleidoscope, function definitions are all lazy compiled on first use.</p>
+<h2 id="general-concept-of-lazy-compilation">General Concept of Lazy Compilation</h2>
+<p>The general idea is that the language runtime registers every lazy JIT function with the JIT by
+name with a callback function to handle generating code for that function. This does two things
+in the JIT:</p>
+<ol>
+<li>Adds the name to the function symbol table in the JIT</li>
+<li>Creates a stub implementation function in native code that will call back to the JIT when
+application code calls the function.</li>
+</ol>
+<p>The stub is implemented by the JIT to call back into the JIT in a way that includes the
+information needed to identify the correct function to generate code for. The JIT will do some
+of it's own internal setup and then call the code generation callback registered by the runtime
+code generator. This callback is what actually generates the LLVM IR, and ultimately the native
+code, for the function.</p>
+<p>Once the function is generated the generator uses the JIT to update the stub so that, in the
+future, it will just call to the generated function directly. One somewhat confusing aspect of
+this is that there are two symbols in the JIT for what is really only one function. One, is the
+stub that remains at a fixed location (to allow pointer to function patterns to work) the other
+is the JIT compiled actual implementation of the function. They can't both have the same name
+so the code generation for the implementation must use a unique name.</p>
+<h2 id="code-changes-for-lazy-jit">Code changes for lazy JIT</h2>
+<h3 id="initialization">Initialization</h3>
+<p>The LLVM ORC JIT v2 uses a multi-layered system for materializing the IR and eventually the native
+executable code. The Kaleidoscope JIT includes transforms of IR modules to support setting the
+data layout for the module to match the JIT and also to run optimization passes on the module.
+To support lazy evaluation a few such components are needed for the code generator. These are
+setup in the constructor and destroyed in the Dispose method.</p>
+<pre><code class="lang-csharp" name="PrivateMembers">private Module? Module;
+private readonly DynamicRuntimeState RuntimeState;
+private readonly ThreadSafeContext ThreadSafeContext;
+private InstructionBuilder InstructionBuilder;
+private readonly ScopeStack&lt;Alloca&gt; NamedValues = new( );
+private readonly KaleidoscopeJIT KlsJIT = new( );
+private readonly LocalIndirectStubsManager JitISM;
+private readonly LazyCallThroughManager JitLCTM;
+</code></pre><pre><code class="lang-csharp" name="Initialization"></code></pre><pre><code class="lang-csharp" name="Dispose">public void Dispose( )
+{
+    // NOTE: There is no map of resource trackers as the JIT handles
+    // calling Destroy on a materializer to release any resources it
+    // might own.
+    JitLCTM.Dispose();
+    JitISM.Dispose();
+    KlsJIT.Dispose();
+    Module?.Dispose();
+    InstructionBuilder.Dispose();
+    ThreadSafeContext.Dispose();
+}
+</code></pre><h3 id="body-implementation">Body implementation</h3>
+<p>Since the lazy JIT registers the callback stub with the function's name when the actual function
+is generated it needs a new name for the backing body. So, we add a new helper method to
+effectively clone a FunctionDefinition AST node while renaming it. This only needs a shallow
+clone that changes the name so there isn't a lot of overhead for it. (Theoretically, this could
+be done with a readonly struct and 'with', such an optimization is left as an exercise for the
+reader 🤓)</p>
+<pre><code class="lang-csharp" name="CloneAndRenameFunction">[SuppressMessage( &quot;CodeQuality&quot;, &quot;IDE0051:Remove unused private members&quot;, Justification = &quot;Truly lazy JIT functionality for Windows is disabled for now...&quot; )]
+private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
+{
+    // clone the definition with a new name, note that this is really
+    // a shallow clone so there's minimal overhead for the cloning.
+    var newSignature = new Prototype( definition.Signature.Location
+                                    , definition.Signature.Name + &quot;$impl&quot;
+                                    , definition.Signature.Parameters
+                                    );
+
+    var implDefinition = new FunctionDefinition( definition.Location
+                                               , newSignature
+                                               , definition.Body
+                                               , definition.LocalVariables.ToImmutableArray( )
+                                               );
+    return implDefinition;
+}
+</code></pre>
+<p>The name used for the body is the original function name plus the suffix <code>$impl</code> tacked onto the
+end. This suffix was chosen as it includes characters not allowed within the Kaleidoscope
+language so there is no possibility of a name collision.</p>
+<h3 id="code-generation">Code generation</h3>
+<p>The next requirement is to change how we generate the functions. For an anonymous function the
+generation is pretty much the same. There's really no point in going through the process of
+setting up the lazy JIT when the next thing to do is get the address of the function and call it. For other definitions, though,
+things get different as they are selected for lazy JIT.</p>
+<pre><code class="lang-csharp" name="Generate">public Value? Generate( IAstNode ast )
+{
+    ArgumentNullException.ThrowIfNull( ast );
+
+    // Prototypes, including extern are ignored as AST generation
+    // adds them to the RuntimeState so that already has the declarations
+    // They are looked up and added to the module as extern if not already
+    // present if they are called.
+    if(ast is not FunctionDefinition definition)
+    {
+        return default;
+    }
+
+    IContext ctx = ThreadSafeContext.PerThreadContext;
+    InstructionBuilder?.Dispose();
+    InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
+    Module?.Dispose();
+    Module = ctx.CreateBitcodeModule();
+    Debug.Assert( Module is not null, &quot;Module initialization failed&quot; );
+
+    if(definition.IsAnonymous)
+    {
+        // Generate the LLVM IR for this function into the module
+        _ = definition.Accept( this ) as Function ?? throw new CodeGeneratorException( ExpectValidFunc );
+
+        // Directly track modules for anonymous functions as calling the function is the guaranteed
+        // next step and then it is removed as nothing can reference it again.
+        // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
+        // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
+        // up. The object support is more for existing object files than for generated IR.
+        using ResourceTracker resourceTracker = KlsJIT.AddWithTracking(ThreadSafeContext, Module);
+
+        // Invoking the function via a function pointer is an &quot;unsafe&quot; operation.
+        // Also note that .NET has no mechanism to catch native exceptions like
+        // access violations or stack overflows from infinite recursion. They will
+        // crash the app.
+        double nativeRetVal;
+        unsafe
+        {
+            var pFunc = (delegate* unmanaged[Cdecl]&lt;double&gt;)KlsJIT.Lookup(definition.Name);
+            nativeRetVal = pFunc();
+        }
+
+        Value retVal = ctx.CreateConstant( nativeRetVal );
+        resourceTracker.RemoveAll();
+        return retVal;
+    }
+    else
+    {
+        // It is unknown if any future input will call the function so don't even generate IR
+        // until it is needed. JIT triggers the callback to 'Materialize' the IR module when
+        // the symbol is looked up so the JIT can then generate native code only when required.
+        AddLazyMaterializer( definition );
+        return default;
+    }
+}
+</code></pre>
+<p>Function definitions for lazy JIT are first cloned and renamed, as discussed previously. Then a
+lazy module materializer is registered for the name of the function. This creates the stub
+function exported by the function's name with a callback that knows how to generate the LLVM IR
+for the function. The actual code generation call back is a local function that has captured the
+AST so it initializes a new module, generates the function using the visitor pattern to
+generate LLVM IR for the function into the freshly allocated module. (This is where keeping the
+code generation ignorant of the JIT comes in handy as the same code is called to generate a
+function into a module and doesn't need to care if it is eager or lazy)</p>
+<p>The JIT implementation will do the following after the generator
+callback returns:</p>
+<ol>
+<li>Add the returned module to the JIT</li>
+<li>Generate native code for the module</li>
+<li>Get the address of the implementation function</li>
+<li>Update the stub for the function with the address of the function instead of the internal
+callback.</li>
+<li>return the address to the JIT engine so it can ultimately call the function and continue
+on it's merry way.</li>
+</ol>
+<h4 id="lazy-materializer">Lazy Materializer</h4>
+<p>The bulk of the work is in the ORCJIT v2 implementation however kaleidoscope must &quot;hook&quot; into
+the support there to provide a materializer that can convert the AST into an LLVM IR. Technically,
+it provides an LLVM module for a symbol (the body implementation name). The JIT couldn't care
+less about the AST. The materializer will generate the IR for a given symbol by processing the
+AST into a module and providing that to the JIT.</p>
+<pre><code class="lang-csharp" name="AddLazyMaterializer">private void AddLazyMaterializer( FunctionDefinition definition )
+{
+    FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
+
+    var dyLib = KlsJIT.MainLib;
+    using var mangledName = KlsJIT.MangleAndIntern(definition.Name);
+    using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
+    var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
+
+    var symbols = new KvpArrayBuilder&lt;SymbolStringPoolEntry, SymbolFlags&gt;
+    {
+        [mangledBodyName] = commonSymbolFlags,
+    }.ToImmutable();
+
+    using var materializer = new CustomMaterializationUnit($&quot;{definition.Name}MU&quot;, Materialize, symbols);
+    dyLib.Define( materializer );
+
+    var reexports = new KvpArrayBuilder&lt;SymbolStringPoolEntry, SymbolAliasMapEntry&gt;
+    {
+        [mangledName] = new(mangledBodyName, commonSymbolFlags)
+    }.ToImmutable();
+
+    using var lazyReExports = new LazyReExportsMaterializationUnit(JitLCTM, JitISM, dyLib, reexports);
+    dyLib.Define( lazyReExports );
+    return;
+
+    // Local function to materialize the IR for the AST in implDefinition.
+    // This is a local function to enable it to &quot;capture&quot; the AST and any
+    // other values needed. The GC considers these &quot;live&quot; until either the
+    // JIT is destroyed, the materializer is removed from the JIT, or the
+    // symbol is looked up and the materializer runs.
+    // NOTE: This function is called by the JIT asynchronously when the
+    // symbol is resolved to an address in the JIT the first time. Thus,
+    // it MUST not capture any IDisposable objects such as the mangled
+    // symbol names as they are most likely already disposed by the time
+    // this is called.
+    void Materialize( MaterializationResponsibility r )
+    {
+        // symbol strings returned are NOT owned by this function so Dispose() isn't needed
+        // (Though it is an allowed NOP that silences compiler/analyzer warnings)
+        using var symbols = r.GetRequestedSymbols();
+        Debug.Assert( symbols.Count == 1, &quot;Unexpected number of symbols!&quot; );
+
+        using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
+
+        ThreadSafeModule tsm;
+        if(symbols[ 0 ].Equals( mangledBodyName ))
+        {
+            Debug.WriteLine( &quot;Generating code for {0}&quot;, mangledBodyName );
+
+            Module?.Dispose();
+            Module = ThreadSafeContext.PerThreadContext.CreateBitcodeModule();
+            try
+            {
+                // generate a function from the AST into the module
+                _ = implDefinition.Accept( this ) ?? throw new CodeGeneratorException( &quot;Failed to lazy generate function - this is an application crash scenario&quot; );
+                tsm = new( ThreadSafeContext, Module );
+            }
+            finally
+            {
+                Module?.Dispose();
+                Module = null;
+            }
+        }
+        else
+        {
+            Debug.WriteLine( &quot;Unknown symbol&quot; );
+
+            // Not a known symbol - fail the materialization request.
+            r.Fail();
+            r.Dispose();
+            return;
+        }
+
+        // In case of an exception clean up the created ThreadSafeModule instance.
+        // Dispose is a NOP once transferred into Native code
+        using(tsm)
+        {
+            // Finally emit the module to the JIT.
+            // This transfers ownership of both the responsibility AND the module
+            // to the native LLVM JIT. The JIT will perform any additional transforms
+            // that are registered (for KLS that includes setting the data layout
+            // and running optimization passes)
+            KlsJIT.TransformLayer.Emit( r, tsm );
+        }
+    }
+}
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>Implementing Lazy JIT support with Ubiquity.NET.Llvm is a bit more complex, but still not
+significant. It took almost as many words to describe then actual lines of code. Efficiently,
+supporting lazy JIT is a much more complex matter. There are trade-offs doing things lazy, in
+particular the application can stall for a period, while the system generates new code to run
+&quot;on the fly&quot;. Optimizations, when fully enabled, add additional time to the code generation.
+While, for some applications, it may be obvious whether these factors matter or not, in general
+it's not something that can be known, thus the quest for optimal efficiency includes decisions
+on eager vs lazy JIT as well as optimized JIT or not. This can include lazy JIT with minimal
+optimization during startup of an app. Once things are up and going the engine can come back
+to re-generate the functions with full optimization. All sorts of possibilities exist, but the
+basics of how the lazy and eager generation works doesn't change no matter what approach a given
+language or runtime wants to use. For most DSLs like Kaleidoscope these trade-offs are not
+generally relevant (Or even necessary) as the fundamental point is to simplify expression of a
+particular domain problem in domain terminology. Performance trade-offs are often not that
+important for such cases. (And can occasionally get in the way - See <a href="#special-notes-for-interactive-run-times">Special notes for
+interactive run-times</a> below for more details)</p>
+<h3 id="special-notes-for-interactive-run-times">Special notes for interactive run-times</h3>
+<p>It turns out that re-definition of a lazy JIT'd function is a rather complex problem involving
+a lot of moving pieces. The IR module for the AST is lazy generated asynchronously and added to
+the JIT AFTER production by the materialization by the infrastructure. That is, outside of the
+driving application code control so it can't specify a resource tracker. Additionally, there is
+no resource tracker for a materialization unit that can remove the unit BEFORE it is run.</p>
+<p>There are at least three states of a function definition to deal with:</p>
+<ol>
+<li>Not defined anywhere yet (First occurrence)</li>
+<li>Materializer Created, but not yet materialized</li>
+<li>Already materialized.</li>
+</ol>
+<p>Tracking of each is different and thus handling removal will require different implementations.
+All of which requires thread synchronization as the JIT could materialize the function at ANY
+point along the way! So it is possible that while trying to remove a definition it transitions
+from #2 to #3. Even if code for removal looked at the state first it's a classic
+<a href="https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use">TOCTOU</a> problem. There is no
+mechanism in the standard OrcJIT v2 for this scenario. It is arguable what the validity of such
+a thing is for an interactive language/runtime. For any sufficiently complex thing there's at
+least two high level default questions to ask:</p>
+<ol>
+<li>Is it worth the cost of implementation?</li>
+<li>Do we even know HOW to do it yet?</li>
+</ol>
+<p>For an interactive language/runtime like Kaleidoscope, the answer to both thus far is a
+hard 'NO'. This sort of support is best for non-interactive run-times like .NET or Java.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter7.1/Kaleidoscope-ch7.1.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

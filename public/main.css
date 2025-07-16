@@ -1,0 +1,217 @@
+@charset "UTF-8";
+
+/*
+Disable display of inherited members. It would be nice if there was a build option
+to not even generate this noise, but sadly, there is none so this disables the
+final render of such things.
+*/
+.typelist.inheritedMembers {
+    display: none
+}
+
+#logo {
+    background-color: white
+}
+
+ /*
+ For reasons, unknown style sets this to 100% which forces all tables to the available width.
+ That makes for rather ugly tables and surprising results as the editor doesn't do that for
+ it's preview mode.
+ */
+.table {
+    width: auto
+}
+
+/*
+Customized Highlight JS theming
+The default theming that comes with docfx 'modern' support is rather limited. It doesn't
+distinguish between a function definition or invocation as Highlight.JS allows, etc...
+This updated theming allows finer grained control.
+*/
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+}
+
+code.hljs {
+    padding: 3px 5px
+}
+
+.hljs {
+    background: #fff;
+    color: #000
+}
+
+.hljs-comment, .hljs-quote, .hljs-variable {
+    color: green;
+    font-style: italic
+}
+
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-name, .hljs-tag {
+    color: #00f
+}
+
+.hljs-string, .hljs-title, .hljs-section, .hljs-attribute, .hljs-literal, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-addition {
+    color: #a31515
+}
+
+.hljs-title.function_ {
+    color: #a31515;
+    font-weight: bold
+}
+
+.hljs-title.function_.invoke__ {
+    color: Sienna;
+    font-weight: normal;
+    font-style: italic
+}
+
+.hljs-deletion, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-meta {
+    color: #2b91af
+}
+
+.hljs-doctag {
+    color: green
+}
+
+.hljs-attr {
+    color: red
+}
+
+.hljs-symbol, .hljs-bullet, .hljs-link {
+    color: #00b0e8
+}
+
+.hljs-emphasis {
+    font-style: italic
+}
+
+.hljs-strong {
+    font-weight: 700
+}
+
+/*
+For the dark theme, set the background of SVG images to allow better
+visibility of thin lines and drop shadows etc...
+*/
+[data-bs-theme=dark] img,svg {
+    background-color: grey
+}
+
+[data-bs-theme=dark] pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+}
+
+[data-bs-theme=dark] code.hljs {
+    padding: 3px 5px
+}
+
+[data-bs-theme=dark] .hljs {
+    background: #0A0A0A;
+    color: #dcdcdc
+}
+
+[data-bs-theme=dark] .hljs-keyword, [data-bs-theme=dark] .hljs-literal, [data-bs-theme=dark] .hljs-symbol, [data-bs-theme=dark] .hljs-name {
+    color: #569cd6
+}
+
+[data-bs-theme=dark] .hljs-link {
+    color: #569cd6;
+    text-decoration: underline
+}
+
+[data-bs-theme=dark] .hljs-built_in, [data-bs-theme=dark] .hljs-type {
+    color: #4ec9b0
+}
+
+[data-bs-theme=dark] .hljs-number, [data-bs-theme=dark] .hljs-class {
+    color: #b8d7a3
+}
+
+[data-bs-theme=dark] .hljs-string, [data-bs-theme=dark] .hljs-meta .hljs-string {
+    color: #d69d85
+}
+
+[data-bs-theme=dark] .hljs-regexp, [data-bs-theme=dark] .hljs-template-tag {
+    color: #9a5334
+}
+
+[data-bs-theme=dark] .hljs-subst, [data-bs-theme=dark] .hljs-function, [data-bs-theme=dark] .hljs-title, [data-bs-theme=dark] .hljs-params, [data-bs-theme=dark] .hljs-formula {
+    color: #dcdcdc
+}
+
+[data-bs-theme=dark] .hljs-title.function_ {
+    color: LightSkyBlue;
+    font-weight:bold
+}
+
+[data-bs-theme=dark] .hljs-title.function_.invoke__ {
+    color:MediumSeaGreen;
+    font-weight:normal;
+    font-style: italic
+}
+
+[data-bs-theme=dark] .hljs-comment, [data-bs-theme=dark] .hljs-quote {
+    color: #C19C00;
+    font-style: italic
+}
+
+[data-bs-theme=dark] .hljs-doctag {
+    color: DarkGoldenrod;
+}
+
+[data-bs-theme=dark] .hljs-meta, [data-bs-theme=dark] .hljs-meta .hljs-keyword, [data-bs-theme=dark] .hljs-tag {
+    color: #9b9b9b
+}
+
+[data-bs-theme=dark] .hljs-variable, [data-bs-theme=dark] .hljs-template-variable {
+    color: LightSteelBlue;
+    font-style: italic
+}
+
+[data-bs-theme=dark] .hljs-attr, [data-bs-theme=dark] .hljs-attribute {
+    color: #9cdcfe
+}
+
+[data-bs-theme=dark] .hljs-section {
+    color: gold
+}
+
+[data-bs-theme=dark] .hljs-emphasis {
+    font-style: italic
+}
+
+[data-bs-theme=dark] .hljs-strong {
+    font-weight: 700
+}
+
+[data-bs-theme=dark] .hljs-bullet, [data-bs-theme=dark] .hljs-selector-tag, [data-bs-theme=dark] .hljs-selector-id, [data-bs-theme=dark] .hljs-selector-class, [data-bs-theme=dark] .hljs-selector-attr, [data-bs-theme=dark] .hljs-selector-pseudo {
+    color: #d7ba7d
+}
+
+[data-bs-theme=dark] .hljs-addition {
+    background-color: #144212;
+    display: inline-block;
+    width: 100%
+}
+
+[data-bs-theme=dark] .hljs-deletion {
+    background-color: #600;
+    display: inline-block;
+    width: 100%
+}
+
+.hljs {
+    background-color: #f5f5f5
+}
+
+@media print {
+    .hljs {
+        overflow-x: hidden;
+        text-wrap: pretty
+    }
+}
+

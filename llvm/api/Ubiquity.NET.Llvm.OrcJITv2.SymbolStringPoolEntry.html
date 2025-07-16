@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SymbolStringPoolEntry | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SymbolStringPoolEntry | Ubiquity.NET ">
+      
+      <meta name="description" content="Reference to an entry in a symbol string pool for ORC JIT v2">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry" data-uid="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry" class="text-break">
+Class SymbolStringPoolEntry  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntry.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.html">OrcJITv2</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Reference to an entry in a symbol string pool for ORC JIT v2</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SymbolStringPoolEntry : IEquatable&lt;SymbolStringPoolEntry&gt;, IEquatable&lt;ReadOnlySpan&lt;byte&gt;&gt;, IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SymbolStringPoolEntry</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html">SymbolStringPoolEntry</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This holds a reference to the symbol string which is ONLY marshaled/converted to
+a managed string in the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.ToString.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_ToString">ToString()</a> method. This allows comparing strings
+etc... without the need of conversion.</p>
+<div class="NOTE"><h5>information</h5><p>
+String conversion is lazy, so that once it is converted the managed string is cached
+and used as needed. Thus, the overhead of marshalling the string is realized only the
+first time it is needed.
+</p></div>
+</div>
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry__ctor_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_">SymbolStringPoolEntry(SymbolStringPoolEntry)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html">SymbolStringPoolEntry</a> class from another entry (Add ref construction)</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.ReadOnlySpan.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_ReadOnlySpan">ReadOnlySpan</a></dt>
+    <dd><p>Gets a readonly span for the data in this string</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Dispose">Dispose()</a></dt>
+    <dd><p>Release the reference to the string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Equals.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Equals_System_Object_">Equals(object?)</a></dt>
+    <dd><p>Determines whether the specified object is equal to the current object.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Equals.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Equals_System_ReadOnlySpan_System_Byte__">Equals(ReadOnlySpan&lt;byte&gt;)</a></dt>
+    <dd><p>Tests if the span of characters for this string is identical to the provided span</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Equals.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Equals_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_">Equals(SymbolStringPoolEntry?)</a></dt>
+    <dd><p>Compares this string with another to determine if they contain the same contents</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.GetHashCode.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_GetHashCode">GetHashCode()</a></dt>
+    <dd><p>Serves as the default hash function.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.GetHashCode.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_GetHashCode_System_StringComparison_">GetHashCode(StringComparison)</a></dt>
+    <dd><p>Gets the hash code for the managed string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.ToString.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_ToString">ToString()</a></dt>
+    <dd><p>Gets the managed string form of the native string</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntry.cs/#L25" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

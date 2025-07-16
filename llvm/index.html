@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Ubiquity.NET.Llvm | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Ubiquity.NET.Llvm | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/llvm/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="">
+<h1 id="ubiquitynetllvm">Ubiquity.NET.Llvm</h1>
+
+<p>Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches
+the underlying LLVM internal object model. This allows for building code generation, JIT and other utilities leveraging LLVM
+from .NET applications.</p>
+<h2 id="guiding-principles">Guiding principles</h2>
+<ol>
+<li>Mirror the underlying LLVM model as much as possible while
+providing a well behaved .NET projection including:
+<ol>
+<li>Class names and hierarchies</li>
+<li>Object identity and reference equality</li>
+<li><a href="https://en.wikipedia.org/wiki/Fluent_interface">Fluent</a> APIs when plausible and appropriate</li>
+</ol>
+</li>
+<li>Hide low-level interop details and the raw LLVM-C API.<br>
+The native model for LLVM is a C++ class hierarchy and not the LLVM-C API used for most
+language/runtime bindings. Ubiquity.NET.Llvm is designed to provide an OO model that faithfully reflects the
+underlying LLVM model while fitting naturally into .NET programming patterns.</li>
+<li>Leverage existing LLVM-C APIs underneath whenever possible
+<ol>
+<li>Extend only when needed with custom wrappers</li>
+</ol>
+</li>
+<li>FxCop/Code Analysis Clean</li>
+</ol>
+<h2 id="features">Features</h2>
+<ul>
+<li>LLVM Cross target code generation from .NET code</li>
+<li>JIT engine support for creating dynamic domain specific language
+runtimes with JIT support.</li>
+<li>Ahead of time compilation with support for Link time optimization and debug information</li>
+<li>Object model that reflects the underlying LLVM classes</li>
+</ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>It is important to point out that the Ubiquity.NET.Llvm documentation is not a substitute
+for the official LLVM documentation itself. That is, the content here is focused on
+using Ubiquity.NET.Llvm and how it maps to the underlying LLVM. The LLVM documentation is,
+generally speaking, required reading to understand Ubiquity.NET.Llvm. The topics here often
+contain links to the official LLVM documentation to help in further understanding the
+functionality of the library.</p>
+</div>
+<h2 id="breaking-changes-from-prior-versions">Breaking changes from prior versions</h2>
+<p>In Version 20.1.0 a number of issues were resolved using newer .NET as well as in the LLVM
+design itself that allows for a fundamentally new implementation. While there isn't a LOT of
+code that consumers have to change (See the samples and compare against older versions) there
+are important factors to consider in the new library:</p>
+<ol>
+<li>Ownership
+<ul>
+<li>The previous variants of the library did NOT generally consider ownership carefully. It
+routinely provided types that under some circumstances require disposal, and others did
+not (Alias). This caused problems for the interning of projected types as the behavior
+of the first instance interned was used. (Usually leading to leaks or strange crashes at
+obscure unrelated times that made testing extremely difficult [Worst case scenario, it
+works fine in all in-house testing but breaks in the field!).</li>
+</ul>
+</li>
+<li>No Interning of projected types
+<ul>
+<li>Projected types are no longer interned, this dramatically increases performance and
+reduces the complexity of maintenance of this library. Generally it should have little
+impact as anything that produces an alias where the type might in other cases require
+the owner to dispose it should now produce an interface that is not disposable. Anything
+the caller owns IS an IDisposable.
+<ul>
+<li>Move semantics are handled internally where the provided instance is invalidated but
+the Dispose remains a safe NOP. This helps prevent leaks or confusion when transfer is
+unable to complete due to an exception. The caller still owns the resource. Either way,
+Dispose() is called to clean it up, which is either a safe NOP, or an actual release of
+the native resource.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Assumption of Reference Equality
+<ol>
+<li>In the new library there is NO guarantee of reference equality for reference types.
+<ul>
+<li>Such types MAY be value equal if they refer to the same underlying native instance.</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="ownership-and-idisposable">Ownership and IDisposable</h3>
+<p>When dealing with native interop the concept of ownership is of critical importance. The underlying
+resources are NOT controlled by a Garbage collector, and therefore require care to avoid access violations
+and other app crash scenarios. This library aims to make that much easier by using IDisposable for these
+scenarios. It is *<strong>HIGHLY</strong> recommended to use the <a href="https://www.nuget.org/packages/IDisposableAnalyzers/">IDisposableAnalyzers</a>
+in ANY project that consumes this library. (It was/is used internally to find and fix issues across the
+library that were tedious to identify otherwise).</p>
+<h4 id="ownership-transfer-move-semantics">Ownership transfer (move semantics)</h4>
+<p>Sometimes an API will transfer ownership to a containing type or native code in general. In C++ terminology
+that is known as 'move semantics' and typically handled with <code>std::move()</code> but .NET and C# have no such
+concept. To make life easier and keep usage of disposable types consistent, when a method follows the move
+semantics it should be documented as such and, more importantly, it will set the value provided as invalid
+BUT calling <code>Dispose()</code> is still a NOP. This keeps usage consistent even if ownership is transferred.
+Attempting to use an instance after it is transferred will result in an <code>ObjectDisposedException</code>.</p>
+<p>Example from <a class="xref" href="articles/Samples/OrcV2VeryLazy/OrcV2VeryLazy.html">OrcV2VeryLazy</a> sample application</p>
+<pre><code class="lang-C#">// ownership of this Materialization Unit (MU) is &quot;moved&quot; to the JITDyLib in the
+// call to Define. Applying a &quot;using&quot; ensures it is released even if an exception
+// occurs that prevents completion of the transfer. When transfer completes the
+// MU is marked as disposed but a call to Dispose() is a safe NOP. Thus, this handles
+// all conditions consistently
+using var fooMu = new CustomMaterializationUnit(&quot;FooMU&quot;, Materialize, fooSym);
+jit.MainLib.Define(fooMu);
+</code></pre>
+<h3 id="unowned-references-alias">Unowned references (alias)</h3>
+<p>For an unowned reference to an underlying resource an interface is defined such as <a class="xref" href="api/Ubiquity.NET.Llvm.IModule.html">IModule</a>.
+When a property returns an interface only it is not Disposable and ownership remains with the source.
+Care is required on the part of a consumer to not store that instance anywhere and treat it as if it was a
+<code>ref struct</code> (That is, only held on the stack). While the GC is free to clean up such an instance at any time
+this prevents attempts to use the interface after the containing object is destroyed.</p>
+<h3 id="equality">Equality</h3>
+<p>In prior releases of this library a complex scheme of interning projection wrappers was used to support
+reference equality. When you had an instance of class 'foo' you could just compare it to any other using reference
+equality. For any two that referred to the same native instance they'd be the same object. While this had convenience
+for the user it had a multitude of hidden flaws. The biggest is the concept of ownership. [See discussion above]. If
+objects are interned then you would end up with whatever instance was first created, ignoring the ownership completely.
+If the first instance was an unowned alias, then it would leak as nothing owns it... If it was NOT an alias, then,
+when retrieved from interning when an alias is needed to be the result, you could end up with premature disposal...
+It was all confusing on whether you are supposed to call Dispose() or not. (Exact opposite of recommended best practice
+for IDisposable).</p>
+<p>Thus, this version of the library eliminates the confusion and complexity by use of objects that are disposable,
+interfaces and a usage pattern that ensures Dispose() is idempotent and a NOP when already disposed. In the current
+release no interning is performed, and instead wrapping types implement <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1"><code>IEquatable&lt;T&gt;</code></a>
+to allow value equality to compare the underlying native handle and resolve them as the same underlying instance or
+not.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/llvm/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

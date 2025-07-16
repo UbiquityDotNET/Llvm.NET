@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DebugFunctionType | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DebugFunctionType | Ubiquity.NET ">
+      
+      <meta name="description" content="This class provides debug information binding for an  and a">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType" class="text-break">
+Class DebugFunctionType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/DebugInfo/DebugFunctionType.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.html">DebugInfo</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>This class provides debug information binding for an <a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a>
+and a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a></p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DebugFunctionType : DebugType&lt;IFunctionType, DISubroutineType&gt;, IDebugType&lt;IFunctionType, DISubroutineType&gt;, IEquatable&lt;ITypeHandleOwner&gt;, IFunctionType, ITypeRef, IEquatable&lt;ITypeRef&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html">DebugType</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a>, <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a>&gt;</div>
+      <div><span class="xref">DebugFunctionType</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a>, <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<span class="xref">ITypeHandleOwner</span>&gt;</div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.DebugInfoType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_DebugInfoType">DebugType&lt;IFunctionType, DISubroutineType&gt;.DebugInfoType</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.NativeType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_NativeType">DebugType&lt;IFunctionType, DISubroutineType&gt;.NativeType</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsSized.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsSized">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsSized</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.Kind.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_Kind">DebugType&lt;IFunctionType, DISubroutineType&gt;.Kind</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.Context.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_Context">DebugType&lt;IFunctionType, DISubroutineType&gt;.Context</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IntegerBitWidth.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IntegerBitWidth">DebugType&lt;IFunctionType, DISubroutineType&gt;.IntegerBitWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsInteger.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsInteger">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsInteger</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsFloat.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsFloat">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsFloat</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsDouble.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsDouble">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsDouble</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsVoid.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsVoid">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsVoid</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsStruct.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsStruct">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsStruct</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsPointer.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsPointer">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsPointer</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsSequence.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsSequence">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsSequence</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.IsFloatingPoint.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_IsFloatingPoint">DebugType&lt;IFunctionType, DISubroutineType&gt;.IsFloatingPoint</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.GetNullValue.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_GetNullValue">DebugType&lt;IFunctionType, DISubroutineType&gt;.GetNullValue()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.CreateArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_System_UInt32_">DebugType&lt;IFunctionType, DISubroutineType&gt;.CreateArrayType(uint)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.CreatePointerType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType">DebugType&lt;IFunctionType, DISubroutineType&gt;.CreatePointerType()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.CreatePointerType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_System_UInt32_">DebugType&lt;IFunctionType, DISubroutineType&gt;.CreatePointerType(uint)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.CreatePointerType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_">DebugType&lt;IFunctionType, DISubroutineType&gt;.CreatePointerType(ref readonly DIBuilder, uint)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.CreateArrayType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_CreateArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_">DebugType&lt;IFunctionType, DISubroutineType&gt;.CreateArrayType(ref readonly DIBuilder, uint, uint)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType.HasDebugInfo.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_HasDebugInfo_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__">DebugType.HasDebugInfo(IDebugType&lt;ITypeRef, DIType&gt;)</a>
+  </div>
+  </dd></dl>
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Function signatures are unnamed interned types in LLVM. While there is usually a one
+to one mapping between an LLVM function signature type and the source language debug
+signature type - that isn't always true. In particular, when passing data by value. In
+cases where the address of a by value structure is needed, a common pattern is to use
+a pointer to the structure in the signature, then perform an Alloca + memcpy. The
+actual approach taken depends on the calling conventions of the target. In these cases
+you get an LLVM signature that doesn't match the source and could actually match another
+source function where a pointer to the structure is actually used in the source.</p>
+<p>For example, the following two C language functions might use the same LLVM signature:
+<pre><code class="lang-csharp">void foo(struct bar)</code></pre>
+<pre><code class="lang-csharp">void foo2(struct bar*)</code></pre>
+<p>Implementing both of those might be done in LLVM with a single signature:</p>
+<pre><code class="lang-csharp">void (%struct.bar*)</code></pre>
+<p>This class is designed to provide mapping between the debug signature type
+and the underlying LLVM type</p>
+<div class="NOTE"><h5>note</h5><p>It is important to keep in mind that signatures are only concerned
+with types. That is, they do not include names of parameters. Parameter information is
+provided by <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateArgument.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_CreateArgument_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_UInt16_">CreateArgument(DIScope?, LazyEncodedString, DIFile?, uint, DIType?, bool, DebugInfoFlags, ushort)</a>
+and [DIBuilder.InsertDeclare](xref:Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare*)</p></div>
+</div>
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.-ctor.html#Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType__ctor_Ubiquity_NET_Llvm_Types_IFunctionType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">DebugFunctionType(IFunctionType, ref readonly DIBuilder, DebugInfoFlags, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.html">DebugFunctionType</a> class.</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.IsVarArg.html#Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_IsVarArg">IsVarArg</a></dt>
+    <dd><p>Gets a value indicating whether this signature is for a variadic function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ParameterTypes.html#Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_ParameterTypes">ParameterTypes</a></dt>
+    <dd><p>Gets the types of the parameters for the function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ReturnType.html#Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_ReturnType">ReturnType</a></dt>
+    <dd><p>Gets the return type of the function</p>
+</dd>
+  </dl>
+
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/LangRef.html#disubroutinetype">LLVM DISubroutineType</a></span></div>
+  </div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/DebugInfo/DebugFunctionType.cs/#L34" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

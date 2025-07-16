@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>3.5 Kaleidoscope: Generating LLVM IR With optimizations | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="3.5 Kaleidoscope: Generating LLVM IR With optimizations | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter3.5/Kaleidoscope-ch3.5.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../../index.html">
+            <img id="logo" class="svg" src="../../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Kaleidoscope-ch3.5">
+<h1 id="35-kaleidoscope-generating-llvm-ir-with-optimizations">3.5 Kaleidoscope: Generating LLVM IR With optimizations</h1>
+
+<p>This chapter focuses on the basics of optimization with LLVM IR. It diverges from
+the official tutorial where that mixes the optimization with the use of a JIT. This
+sub chapter is attempting to isolate those and was born as a means to test/validate
+the core library and optimization without a JIT (The JIT wrappers didn't exist yet).
+The general goal is to parse Kaleidoscope source code to generate a <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Module.html">Module</a>
+representing the source as optimized LLVM IR. This is broken out as a distinct
+chapter to help identify the support for profiling and how it is different from the
+LLVM source samples that link directly to the LLVM libraries (That is, the samples
+are written in C++ AND use the C++ pass builder and management support that is NOT
+exported via the stable LLVM-C API. This level of functionality is only available
+as the legacy pass management system with VERY limited support in the LLVM-C API.
+[It is so legacy now that almost ALL remnants of it are removed from the LLVM-C API,
+not just deprecated])</p>
+<h2 id="code-generation">Code generation</h2>
+<p>The Core of this sample doesn't change much from <a class="xref" href="../Chapter3/Kaleidoscope-ch3.html">Chapter 3</a>.
+It simply adds module generation with optimized IR. To do that there are a few changes
+to make. In fact the optimizations provided don't do much and the resulting IR is much
+the same. [Coming up with a more complex Kaleidoscope sample that actually uses the
+optimizations more is left as an exercise for the reader. 😉 ]</p>
+<h3 id="initialization">Initialization</h3>
+<p>The code generation maintains state for the transformation as private members. To
+support optimization generally only requires a set of named passes and to call the
+method to run the passes on a function or module. [Technically an overload provides
+the chance to set <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.PassBuilderOptions.html">PassBuilderOptions</a>
+but this sample just uses the overload that applies defaults.] The new pass
+management system uses the string names of passes instead of a distinct type and
+named methods for adding them etc...</p>
+<p>These Options are initialized in a private static member for the passes.</p>
+<pre><code class="lang-csharp" name="Main">private readonly Module Module;
+private readonly DynamicRuntimeState RuntimeState;
+private readonly Context Context;
+private readonly InstructionBuilder InstructionBuilder;
+private readonly Dictionary&lt;string, Value&gt; NamedValues = [];
+private static readonly LazyEncodedString[] PassNames = [
+    &quot;default&lt;O3&gt;&quot;u8
+];
+</code></pre><h3 id="special-attributes-for-parsed-functions">Special attributes for parsed functions</h3>
+<div class="WARNING">
+<h5>Warning</h5>
+</div>
+<p>When performing optimizations with the new pass builder system the
+TargetLibraryInfo (Internal LLVM concept) is used to determine what the &quot;built-in&quot;
+functions are. Unfortunately, they leave little room for manipulating or customizing
+this set (In C++ there is some &quot;wiggle room&quot;, in LLVM-C there is NO support for
+this type at all!). Unfortunately, that means that if any function happens to have
+the same name as the TargetLibraryInfo for a given Triple then it will be optimized
+AS a built-in function (even if not declared as one) unless explicitly declared as
+&quot;not&quot; at the call site with an attribute. This is an unfortunate state
+of affairs with the LLVM support for C++ and highly problematic for <code>C</code> based
+bindings/projections like this library. Fortunately, there is a scapegoat for this.
+The function can include a <code>nobuiltin</code> attribute at the call site to prevent the
+optimizer from assuming the call is to one of the well known built-in functions.
+This isn't used for Kaleidoscope. But does leave room for problems with names that
+match some arbitrary set of &quot;built-in&quot; symbols.</p>
+<pre><code class="lang-csharp" name="Main">
+// Retrieves a Function for a prototype from the current module if it exists,
+// otherwise declares the function and returns the newly declared function.
+private Function GetOrDeclareFunction( Prototype prototype )
+{
+    if(Module.TryGetFunction( prototype.Name, out Function? function ))
+    {
+        return function;
+    }
+
+    var llvmSignature = Context.GetFunctionType( returnType: Context.DoubleType, args: prototype.Parameters.Select( _ =&gt; Context.DoubleType ) );
+    var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
+
+    int index = 0;
+    foreach(var argId in prototype.Parameters)
+    {
+        retVal.Parameters[ index ].Name = argId.Name;
+        ++index;
+    }
+
+    return retVal;
+}
+</code></pre><h3 id="function-definition">Function Definition</h3>
+<p>The only other major change for optimization support is to actually run the
+optimizations. In LLVM optimizations are supported at the module or individual
+function level. For this sample each function definition is optimized as each is
+returned individually. That will change in later chapters. Thus the only real
+change is after generating a new function for a given AST definition the
+optimization passes are run for it. This involves calling one of the overloads
+of the <code>TryRunPasses</code> function and then checking for errors.</p>
+<pre><code class="lang-csharp" name="Main">public override Value? Visit( FunctionDefinition definition )
+{
+    ArgumentNullException.ThrowIfNull( definition );
+
+    var function = GetOrDeclareFunction( definition.Signature );
+    if(!function.IsDeclaration)
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
+
+    try
+    {
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        NamedValues.Clear();
+        foreach(var param in definition.Signature.Parameters)
+        {
+            NamedValues[ param.Name ] = function.Parameters[ param.Index ];
+        }
+
+        var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
+        InstructionBuilder.Return( funcReturn );
+        function.Verify();
+
+        // pass pipeline is run against the module
+        using var errInfo = function.ParentModule.TryRunPasses( PassNames );
+        return errInfo.Success ? (Value)function : throw new CodeGeneratorException( errInfo.ToString() );
+    }
+    catch(CodeGeneratorException)
+    {
+        function.EraseFromParent();
+        throw;
+    }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter3.5/Kaleidoscope-ch3.5.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

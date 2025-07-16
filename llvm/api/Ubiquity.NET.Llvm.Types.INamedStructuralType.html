@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface INamedStructuralType | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface INamedStructuralType | Ubiquity.NET ">
+      
+      <meta name="description" content="Interface for a named type with members">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Types_INamedStructuralType.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Types.INamedStructuralType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Types.INamedStructuralType">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Types_INamedStructuralType" data-uid="Ubiquity.NET.Llvm.Types.INamedStructuralType" class="text-break">
+Interface INamedStructuralType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Types/StructType.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Types.html">Types</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Interface for a named type with members</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface INamedStructuralType : ITypeRef, IEquatable&lt;ITypeRef&gt;</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsSized.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsSized">ITypeRef.IsSized</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.Kind.html#Ubiquity_NET_Llvm_Types_ITypeRef_Kind">ITypeRef.Kind</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsInteger.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsInteger">ITypeRef.IsInteger</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsFloat.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsFloat">ITypeRef.IsFloat</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsDouble.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsDouble">ITypeRef.IsDouble</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsVoid.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsVoid">ITypeRef.IsVoid</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsStruct.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsStruct">ITypeRef.IsStruct</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsPointer.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsPointer">ITypeRef.IsPointer</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsSequence.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsSequence">ITypeRef.IsSequence</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IsFloatingPoint.html#Ubiquity_NET_Llvm_Types_ITypeRef_IsFloatingPoint">ITypeRef.IsFloatingPoint</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.Context.html#Ubiquity_NET_Llvm_Types_ITypeRef_Context">ITypeRef.Context</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.IntegerBitWidth.html#Ubiquity_NET_Llvm_Types_ITypeRef_IntegerBitWidth">ITypeRef.IntegerBitWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.GetNullValue.html#Ubiquity_NET_Llvm_Types_ITypeRef_GetNullValue">ITypeRef.GetNullValue()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.CreateArrayType.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreateArrayType_System_UInt32_">ITypeRef.CreateArrayType(uint)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType">ITypeRef.CreatePointerType()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.CreatePointerType.html#Ubiquity_NET_Llvm_Types_ITypeRef_CreatePointerType_System_UInt32_">ITypeRef.CreatePointerType(uint)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">IEquatable&lt;ITypeRef&gt;.Equals(ITypeRef)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_Types_INamedStructuralType_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is a common interface for structures and unions</p>
+</div>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Types.INamedStructuralType.IsOpaque.html#Ubiquity_NET_Llvm_Types_INamedStructuralType_IsOpaque">IsOpaque</a></dt>
+    <dd><p>Gets a value indicating whether the structure is opaque (e.g. has no body defined yet)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Types.INamedStructuralType.Members.html#Ubiquity_NET_Llvm_Types_INamedStructuralType_Members">Members</a></dt>
+    <dd><p>Gets a list of types for all member elements of the structure</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Types.INamedStructuralType.Name.html#Ubiquity_NET_Llvm_Types_INamedStructuralType_Name">Name</a></dt>
+    <dd><p>Gets the name of the structure</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Types/StructType.cs/#L16" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

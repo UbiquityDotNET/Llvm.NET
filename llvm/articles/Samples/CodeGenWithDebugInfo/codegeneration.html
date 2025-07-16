@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>CodeGenWithDebugInfo | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="CodeGenWithDebugInfo | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/CodeGenWithDebugInfo/codegeneration.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="code-generation-with-debug-info">
+<h1 id="codegenwithdebuginfo">CodeGenWithDebugInfo</h1>
+
+<p>Sample application to generate target machine code. The sample is
+provided in the <a href="https://github.com/UbiquityDotNET/Llvm.NET/tree/master/Samples/CodeGenWithDebugInfo">source tree</a>.</p>
+<p>This sample generates LLVM IR equivalent to what Clang will generate for a sample C file. While it doesn't parse
+the C File, this sample does show all the steps and techniques for using Ubiquity.NET.Llvm to generate the LLVM IR with debug
+information and, ultimately, the target machine code.</p>
+<h2 id="example-c-code">Example C Code</h2>
+<p>The CodeGenWithDebugInfo sample will generate LLVM IR and machine code for the following sample &quot;C&quot; code.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The C code file is provided in the source tree along with a script file to compile it for comparing output with Clang.
+The current implementation was last compared with Clang 5 RC4 - any differences to the latest version of clang
+are expected to be minor. Updating the sample to replicate the latest Clang version is left as an exercise for
+the reader 😁</p>
+</div>
+<pre><code class="lang-c" name="Main">struct foo
+{
+    int a;
+    float b;
+    int c[32];
+};
+
+struct foo bar = { 1, 2.0, { 3, 4 } };
+struct foo baz;
+
+inline static void copy( struct foo const src     // function line here
+                       , struct foo* pDst
+                       )
+{ // function's ScopeLine here
+    *pDst = src;
+}
+
+//void OtherSig( struct foo const* pSrc, struct foo* pDst )
+//{
+//    copy( *pSrc, pDst );
+//}
+//
+void DoCopy( )
+{
+    copy( bar, &amp;baz );
+}
+</code></pre>
+<p>This sample supports targeting two different processor types x64 and ARM Cortex-M3</p>
+<h2 id="initializing-ubiquitynetllvm">Initializing Ubiquity.NET.Llvm</h2>
+<p>The underlying LLVM library requires initialization for it's internal data, furthermore Ubiquity.NET.Llvm must load
+the actual underlying DLL specific to the current system architecture. Thus, the library as a whole requires
+initialization.</p>
+<pre><code class="lang-C#">using static Ubiquity.NET.Llvm.StaticState;
+
+using( InitializeLLVM() )
+{
+    // [...]
+}
+</code></pre>
+<p>The initialization returns an IDisposable so that the calling application can shutdown/cleanup resources
+and potentially re-initialize for a different target if desired. This application only needs to generate one
+module and exit so it just applies a standard C# <code>using</code> scope to ensure proper cleanup.</p>
+<h3 id="target-abi-specific-details">Target ABI specific details</h3>
+<p>In order to isolate the ABI specific details of the target architecture the application uses an interface that
+contains properties and methods to handle target specific support. Furthermore, an application may not need
+to use all of the possible target architectures so the application selects to register/initialize support for
+specific targets. This reduces startup time and resource commitments to only what is required by the application.
+In this sample that is handled in the constructor of the target dependent details. Most compiler type applications
+would allow command line options for the CPU target variants and feature sets. For this sample those are just
+hard coded into the target details class to keep things simple and focused on the rest of the code generation.</p>
+<pre><code class="lang-csharp" name="Main">/// &lt;summary&gt;Simplistic interface for target specific ABI&lt;/summary&gt;
+/// &lt;remarks&gt;
+/// This is NOT a generalized ABI representation - just one that covers the
+/// needs of this generator. Sadly LLVM does not have any sort of abstraction
+/// on the target dependent ABI. That's left to the source generator even though
+/// they all need to effectively implement the same thing. (There is some discussion
+/// about moving the Clang ABI implementations into the LLVM core itself as a
+/// generalized abstraction. That is NOT yet a feature of LLVM)
+/// &lt;/remarks&gt;
+/// &lt;seealso href=&quot;https://discourse.llvm.org/t/llvm-introduce-an-abi-lowering-library/84554&quot;/&gt;
+internal interface ITargetABI
+{
+    string ShortName { get; }
+
+    ImmutableArray&lt;AttributeValue&gt; BuildTargetDependentFunctionAttributes( IContext ctx );
+
+    // NOTE: The debug form of the signature is needed to know the type of the pointer in the native sig
+    // Since the native sign rebuilds the types from information provided by the native LLVM code
+    // the element type of any pointers is lost (It's ALWAYS OPAQUE now..). While it is theoretically
+    // plausible to rebuild the debug information if available that's a lot of work not implemented
+    // in the LLVM libraries (especially when it is more useful to keep track of such things in the
+    // generating app)
+    void AddAttributesForByValueStructure( Function function, DebugFunctionType debugSig, int paramIndex );
+
+    void AddModuleFlags( Module module );
+
+    TargetMachine CreateTargetMachine( );
+}
+</code></pre>
+<p>This interface isolates the rest of the code from knowing which architecture is used, and theoretically
+could include support for additional targets beyond the two in the sample source.</p>
+<p>The sample determines which target to use based on the second command line argument to the application</p>
+<pre><code class="lang-csharp" name="Main">ITargetABI? targetABI = AbiFactory(library, args[0]);
+if(targetABI is null)
+{
+    ShowUsage();
+    return;
+}
+
+string moduleName = $&quot;test_{targetABI.ShortName}.bc&quot;;
+</code></pre><h2 id="creating-the-module">Creating the Module</h2>
+<p>To generate code in Ubiquity.NET.Llvm a <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Module.html">Module</a> is required as
+a container for the LLVM IR. To create a module a <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Context.html">Context</a> is
+required.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The Context and Module are Disposable types in Ubiquity.NET.Llvm to manage some complex and
+hidden ownership transfers that can happen with the different forms of JIT/Execution engines.
+This may not always be true in future versions of the library, but for now they must be disposable.</p>
+</div>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>A Context is, by design, <strong>NOT</strong> a thread safe type. It is designed to contain various interned
+objects in LLVM. All modules are owned by exactly one Context. Applications can create any
+number of threads and create a context for each one. However, threads must not reference the
+context of another thread nor reference any of the objects created within another thread's
+context. This is a fundamental design of LLVM and reduces the complexity of attempting to
+manage collections of objects and interning them in a thread safe manner. Applications instead
+just create a context per thread if needed.</p>
+</div>
+<p>To generate code for a particular target the application initializes the module to include the
+source file name that it was generated from, the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Triple.html">Triple</a> that describes
+the target and a target specific <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DataLayout.html">DataLayout</a>. The sample application
+extracts these from the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.TargetMachine.html">TargetMachine</a> provided by the target
+details interface for the selected target.</p>
+<pre><code class="lang-csharp" name="Main">using var context = new Context( );
+using var module = context.CreateBitcodeModule( moduleName );
+using var diBuilder = new DIBuilder(module);
+DICompileUnit compilationUnit = diBuilder.CreateCompileUnit(SourceLanguage.C99, srcPath, VersionIdentString);
+module.SourceFileName = Path.GetFileName( srcPath );
+using var targetMachine = targetABI.CreateTargetMachine();
+module.TargetTriple = targetMachine.Triple;
+using var layout = targetMachine.CreateTargetData();
+module.Layout = layout;
+
+var abiAttributes = targetABI.BuildTargetDependentFunctionAttributes( context );
+</code></pre><h2 id="creating-the-dicompileunit">Creating the DICompileUnit</h2>
+<p>LLVM Debug information is all scoped to a top level <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a>.
+There is exactly one DICompileUnit for a <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a> and all debug
+information metadata is ultimately a child of that unit. The sample creates the compilation unit just after the
+module is created and the target specific information is added to it. In this sample there is a direct 1:1
+correlation between the compile unit and the source file so it creates a <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIFile.html">DIFile</a>
+for the source at the same time. The sample code creates the DICompileUnit when creating the bit code module. This is
+the normal pattern for creating the compile unit when generating debugging information. Though it is possible
+to create it independently but there usually isn't any real benefit to doing so.</p>
+<h2 id="creating-basic-types-with-debug-information">Creating basic types with debug information</h2>
+<p>In LLVM types are fairly minimalistic and only contain the basic structural information for generating
+the final machine code. Debug information, as metadata in LLVM, provides all the source level debugging
+information. In LLVM this requires creating and tracking both the native type and the Debug information
+metadata as independent object instances. In Ubiquity.NET.Llvm this is handled by a unified debug and type information
+system. That is, in Ubiquity.NET.Llvm a single class is used to represent types and it acts as a binder between the
+full debugging description of the type and the native LLVM minimal description. These types all implement
+a common interface <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>. This interface is used throughout Ubiquity.NET.Llvm
+to expose types in a consistent fashion. Ubiquity.NET.Llvm provides a set of classes for building the bound types.
+This sample uses the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DebugBasicType.html">DebugBasicType</a>. To define the basic types
+used in the generated code with appropriate debug information.</p>
+<pre><code class="lang-csharp" name="Main">// Create basic types used in this compilation
+var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, &quot;int&quot;, DiTypeKind.Signed );
+var f32 = new DebugBasicType( module.Context.FloatType, in diBuilder, &quot;float&quot;, DiTypeKind.Float );
+var voidType = DebugType.Create( module.Context.VoidType, (DIType?)null );
+var i32Array_0_32 = i32.CreateArrayType( in diBuilder, 0, 32 );
+</code></pre>
+<p>This constructs several basic types and assigns them to variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Type</th>
+<th>Language Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i32</td>
+<td>32 bit signed integer</td>
+<td>int</td>
+</tr>
+<tr>
+<td>f32</td>
+<td>32 bit IEEE Float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>voidType</td>
+<td>void type</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>i32Array_0_32</td>
+<td>array i32[0..31]</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<h2 id="creating-qualified-types">Creating qualified types</h2>
+<p>Creating qualified (const, volatile, etc...) and pointers is just as easy as creating the basic types.
+The sample needs a pointer to a const instance of the struct foo. A qualified type for constant foo is
+created first, then a pointer type is created for the const type.</p>
+<pre><code class="lang-csharp" name="Main">// create types for function args
+var constFoo = diBuilder.CreateQualifiedType( fooType.DebugInfoType, QualifiedTypeTag.Const );
+var fooPtr = new DebugPointerType( fooType, in diBuilder );
+</code></pre><h2 id="creating-structure-types">Creating structure types</h2>
+<p>As previously mentioned, the LLVM types only contain basic layout information and not full source
+level debugging information. Thus, for types there are two distinct descriptions, one for the LLVM
+native type and another for the debugging information. As with basic types, Ubiquity.NET.Llvm has support
+for defining complete information for composite structure types. This is done using a collection
+of <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DebugMemberInfo.html">DebugMemberInfo</a>. DebugMemberInfo fully describes an
+element of a composite type including the native LLVM type as well as all the Debugging information
+metadata. A collection of these is then used to create the final composite type with full debug
+data in a simple single call. The sample only needs to create one such type for the <code>struct foo</code>
+in the example source code.</p>
+<pre><code class="lang-csharp" name="Main">// create the LLVM structure type and body with full debug information
+var fooBody = new DebugMemberInfo[ ]
+    {
+        new( 0, &quot;a&quot;, diFile, 3, i32 ),
+        new( 1, &quot;b&quot;, diFile, 4, f32 ),
+        new( 2, &quot;c&quot;, diFile, 5, i32Array_0_32 ),
+    };
+
+var fooType = new DebugStructType( in diBuilder, &quot;struct.foo&quot;, compilationUnit, &quot;foo&quot;, diFile, 1, DebugInfoFlags.None, fooBody );
+</code></pre><h2 id="creating-module-metadata-and-global-variables">Creating module metadata and global variables</h2>
+<p>The sample code contains two global instances of <code>struct foo</code> <code>bar</code> and <code>baz</code>. Furthermore, bar
+is initialized with constant data. The sample starts by constructing the const array data that
+forms the initialized value of <code>bar.c</code>, the source only provides const values for the first two
+entries of a 32 element array. The const data is created via <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Values.ConstantArray.html">ConstArray</a>.
+The full initialized const data for bar is the created from <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct.html">Context.CreateNamedConstantStruct</a></p>
+<pre><code class="lang-csharp" name="Main">// add global variables and constants
+var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
+var barValue = module.Context.CreateNamedConstantStruct( fooType
+                                                       , module.Context.CreateConstant( 1 )
+                                                       , module.Context.CreateConstant( 2.0f )
+                                                       , constArray
+                                                       );
+
+var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
+bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
+bar.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
+
+var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
+baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
+baz.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
+
+// add module flags and compiler identifiers...
+// this can technically occur at any point, though placing it here makes
+// comparing against clang generated files easier
+AddModuleFlags( targetABI, module, library );
+</code></pre><pre><code class="lang-csharp" name="Main">private static void AddModuleFlags( ITargetABI abi, Module module, ILibLlvm library )
+{
+    module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
+    module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, library.DebugMetadataVersion );
+    abi.AddModuleFlags( module );
+    module.AddVersionIdentMetadata( VersionIdentString );
+}
+</code></pre>
+<p>Once the constant data is available an LLVM global is created for it with a name that matches the source name
+via <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Module.AddGlobal.html">AddGlobal</a>. To ensure the linker lays out the structure
+correctly the code uses the layout information for the module to get the ABI required alignment for
+the global and sets the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Values.GlobalObject.Alignment.html#Ubiquity_NET_Llvm_Values_GlobalObject_Alignment">Alignment</a> property for the global.
+Finally the debug information for the global is created as a <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression.html">DIGlobalVariableExpression</a>
+using <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateGlobalVariableExpression.html">CreateGlobalVariableExpression</a>
+finally the added to the variable to complete the creation.</p>
+<p>For the <code>baz</code> instance the process is almost identical. The major difference is that the value of the
+structure is initialized to all zeros. That is the initialized data for the structure is created with
+<a class="xref" href="../../../api/Ubiquity.NET.Llvm.Values.Constant.NullValueFor.html">NullValueFor</a>, which creates an all zero value of a type.</p>
+<pre><code class="lang-csharp" name="Main">// add global variables and constants
+var constArray = ConstantArray.From( i32, 32, module.Context.CreateConstant( 3 ), module.Context.CreateConstant( 4 ) );
+var barValue = module.Context.CreateNamedConstantStruct( fooType
+                                                       , module.Context.CreateConstant( 1 )
+                                                       , module.Context.CreateConstant( 2.0f )
+                                                       , constArray
+                                                       );
+
+var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
+bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
+bar.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
+
+var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
+baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
+baz.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
+
+// add module flags and compiler identifiers...
+// this can technically occur at any point, though placing it here makes
+// comparing against clang generated files easier
+AddModuleFlags( targetABI, module, library );
+</code></pre>
+<p>LLVM modules may contain additional module flags as metadata that describe how the module is generated
+or how the code generation/linker should treat the code. In this sample the dwarf version and debug metadata
+versions are set along with a VersionIdentString that identifies the application that generated the module.
+Additionally, any target specific metadata is added to the module. The ordering of these is generally not
+relevant, however it is very specific in the sample to help ensure the generated IR is as close to the
+Clang version as possible making it possible to run llvm-dis to generate the textual IR files and compare them.</p>
+<pre><code class="lang-csharp" name="Main">private static void AddModuleFlags( ITargetABI abi, Module module, ILibLlvm library )
+{
+    module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DwarfVersionValue, 4 );
+    module.AddModuleFlag( ModuleFlagBehavior.Warning, Module.DebugVersionValue, library.DebugMetadataVersion );
+    abi.AddModuleFlags( module );
+    module.AddVersionIdentMetadata( VersionIdentString );
+}
+</code></pre><h2 id="declaring-the-functions">Declaring the functions</h2>
+<p>The function declarations for both of the two function's is mostly the same, following a common pattern:</p>
+<ol>
+<li>Create the signature with debug information</li>
+<li>Create the function declaration referencing the signature</li>
+<li>Add attributes appropriate for the function</li>
+</ol>
+<p>The two functions illustrate a global externally visible function and a static that is visible only locally.
+This is indicated by the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Internal">Linkage.Internal</a> linkage value.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The use of fluent style extension methods in the Ubiquity.NET.Llvm API helps make it easy to add to or modify
+the attributes and linkage etc...</p>
+</div>
+<p>DeclareCopyFunc() is a bit special in that it handles some target specific support in a generalized way. In
+particular the calling convention for the struct to use the <code>byval</code> form to pass the structure as a pointer
+but that the callee gets a copy of the original. This, is used for some large structures and allows the target
+machine generation room to use alternate means of transferring the data. (Stack or possibly otherwise unused
+registers). For the two processors this sample supports Clang only uses this for the Cortex-M3 so the code
+calls the TargetDetails.AddABIAttributesForByValueStructure) to add the appropriate attributes for the target
+as needed.</p>
+<pre><code class="lang-csharp" name="Main">private static Function DeclareDoCopyFunc(
+    ref readonly DIBuilder diBuilder,
+    DIFile diFile,
+    IDebugType&lt;ITypeRef, DIType&gt; voidType,
+    IEnumerable&lt;AttributeValue&gt; abiAttributes
+    )
+{
+    var module = diBuilder.OwningModule;
+    var doCopySig = module.Context.CreateFunctionType( in diBuilder, voidType );
+
+    var doCopyFunc = module.CreateFunction( in diBuilder
+                                          , scope: diFile
+                                          , name: &quot;DoCopy&quot;
+                                          , linkageName: null
+                                          , file: diFile
+                                          , line: 23
+                                          , signature: doCopySig
+                                          , isLocalToUnit: false
+                                          , isDefinition: true
+                                          , scopeLine: 24
+                                          , debugFlags: DebugInfoFlags.None
+                                          , isOptimized: false
+                                          ).AddAttributes( FunctionAttributeIndex.Function, &quot;noinline&quot;, &quot;nounwind&quot;, &quot;optimizenone&quot;)
+                                           .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
+    return doCopyFunc;
+}
+
+private static Function DeclareCopyFunc( ITargetABI abi
+                                       , ref readonly DIBuilder diBuilder
+                                       , DIFile diFile
+                                       , IDebugType&lt;ITypeRef, DIType&gt; voidType
+                                       , DIDerivedType constFoo
+                                       , DebugPointerType fooPtr
+                                       , IEnumerable&lt;AttributeValue&gt; abiAttributes
+                                       )
+{
+    var module = diBuilder.OwningModule;
+
+    // Since the first parameter is passed by value
+    // using the pointer + alloca + memcopy pattern, the actual
+    // source, and therefore debug, signature is NOT a pointer.
+    // However, that usage would create a signature with two
+    // pointers as the arguments, which doesn't match the source
+    // To get the correct debug info signature this inserts an
+    // explicit DebugType&lt;&gt; that overrides the default behavior
+    // to pair the LLVM pointer type with the original source type.
+    var copySig = module.Context.CreateFunctionType( in diBuilder
+                                                   , voidType
+                                                   , DebugType.Create( fooPtr, constFoo )
+                                                   , fooPtr
+                                                   );
+
+    var copyFunc = module.CreateFunction( in diBuilder
+                                        , scope: diFile
+                                        , name: &quot;copy&quot;
+                                        , linkageName: null
+                                        , file: diFile
+                                        , line: 11
+                                        , signature: copySig
+                                        , isLocalToUnit: true
+                                        , isDefinition: true
+                                        , scopeLine: 14
+                                        , debugFlags: DebugInfoFlags.Prototyped
+                                        , isOptimized: false
+                                        ).Linkage( Linkage.Internal ) // static function
+                                         .AddAttributes( FunctionAttributeIndex.Function, &quot;nounwind&quot;u8, &quot;noinline&quot;u8, &quot;optimizenone&quot;u8 )
+                                         .AddAttributes( FunctionAttributeIndex.Function, abiAttributes );
+
+    Debug.Assert( !fooPtr.IsOpaque(), &quot;Expected the debug info for a pointer was created with a valid ElementType&quot; );
+    abi.AddAttributesForByValueStructure( copyFunc, copySig, 0 );
+    return copyFunc;
+}
+</code></pre><h2 id="generating-function-bodies">Generating function bodies</h2>
+<p>This is where things really get interesting as this is where the actual code is generated for the functions. Up
+to this point everything has created metadata or prototypes and signatures. The code generation generally follows
+a pattern that starts with creation of an entry block to initialize the parameters and then additional blocks for
+the actual code. While LLVM IR uses an SSA form with virtual registers, code generation, usually doesn't need to
+worry about that so long as it follows some basic rules, in particular, all of the locals are allocated a slot
+on the stack via alloca along with any parameters. The parameters are initialized from the signature values. All
+of which is done in the entry block. LLVM has a pass (mem2reg) that will lower this into SSA form with virtual
+registers so that each generating application doesn't have to worry about conversion into SSA form.</p>
+<p>After the parameters are handled in the entry block, the rest of the function is generated based on the source
+language or application defined behavior. In this case the sample generates IR equivalent to the functions defined
+in the sample test.c file. There are a few points to make about the function generation in the sample.</p>
+<h3 id="generating-argument-and-local-variables">Generating Argument and Local variables</h3>
+<p>As discussed the arguments and locals are allocated in the entry block however that only makes them usable in
+the function and ready for the mem2reg pass. In particular there is no debug information attached to the variables.
+To provide debug information LLVM provides an intrinsic function that is used to declare the debug information for
+a variable. In Ubiquity.NET.Llvm this is emitted using the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare.html">InsertDeclare</a>
+method.</p>
+<h3 id="calling-llvm-intrinsics">Calling LLVM Intrinsics</h3>
+<p>The generated code needs to copy some data, rather than directly doing a copy in a loop, the code uses the LLVM
+intrinsic memcopy function. This function is lowered to an optimized copy for the target so that applications need
+not worry about building optimal versions of IR for this common functionality. Furthermore, the LLVM intrinsic
+supports a variety of signatures for various data types all of which are hidden in the Ubiquity.NET.Llvm method. Rather than
+require callers to create a declaration of the correct signature the Ubiquity.NET.Llvm wrapper automatically figures out the
+correct signature from the parameters provided.</p>
+<h2 id="final-llvm-ir">Final LLVM IR</h2>
+<pre><code class="lang-llvm">; ModuleID = 'test_M3.bc'
+source_filename = &quot;test.c&quot;
+target datalayout = &quot;e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64&quot;
+target triple = &quot;thumbv7m-none--eabi&quot;
+
+%struct.foo = type { i32, float, [32 x i32] }
+
+@bar = global %struct.foo { i32 1, float 2.000000e+00, [32 x i32] [i32 3, i32 4, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0] }, align 4, !dbg !0
+@baz = common global %struct.foo zeroinitializer, align 4, !dbg !6
+
+; Function Attrs: noinline nounwind optnone
+define void @DoCopy() #0 !dbg !23 {
+entry:
+  call void @copy(%struct.foo* byval align 4 @bar, %struct.foo* @baz), !dbg !26
+  ret void, !dbg !27
+}
+
+; Function Attrs: noinline nounwind optnone
+define internal void @copy(%struct.foo* byval align 4 %src, %struct.foo* %pDst) #0 !dbg !28 {
+entry:
+  %pDst.addr = alloca %struct.foo*, align 4
+  call void @llvm.dbg.declare(metadata %struct.foo* %src, metadata !33, metadata !34), !dbg !35
+  store %struct.foo* %pDst, %struct.foo** %pDst.addr, align 4
+  call void @llvm.dbg.declare(metadata %struct.foo** %pDst.addr, metadata !36, metadata !34), !dbg !37
+  %0 = load %struct.foo*, %struct.foo** %pDst.addr, align 4, !dbg !38
+  %1 = bitcast %struct.foo* %0 to i8*, !dbg !39
+  %2 = bitcast %struct.foo* %src to i8*, !dbg !39
+  call void @llvm.memcpy.p0i8.p0i8.i32(i8* %1, i8* %2, i32 136, i32 4, i1 false), !dbg !39
+  ret void, !dbg !40
+}
+
+; Function Attrs: nounwind readnone speculatable
+declare void @llvm.dbg.declare(metadata, metadata, metadata) #1
+
+; Function Attrs: argmemonly nounwind
+declare void @llvm.memcpy.p0i8.p0i8.i32(i8* nocapture writeonly, i8* nocapture readonly, i32, i32, i1) #2
+
+attributes #0 = { noinline nounwind optnone &quot;correctly-rounded-divide-sqrt-fp-math&quot;=&quot;false&quot; &quot;disable-tail-calls&quot;=&quot;false&quot; &quot;less-precise-fpmad&quot;=&quot;false&quot; &quot;no-frame-pointer-elim&quot;=&quot;true&quot; &quot;no-frame-pointer-elim-non-leaf&quot; &quot;no-infs-fp-math&quot;=&quot;false&quot; &quot;no-jump-tables&quot;=&quot;false&quot; &quot;no-nans-fp-math&quot;=&quot;false&quot; &quot;no-signed-zeros-fp-math&quot;=&quot;false&quot; &quot;no-trapping-math&quot;=&quot;false&quot; &quot;stack-protector-buffer-size&quot;=&quot;8&quot; &quot;target-cpu&quot;=&quot;cortex-m3&quot; &quot;target-features&quot;=&quot;+hwdiv,+strict-align,+thumb-mode&quot; &quot;unsafe-fp-math&quot;=&quot;false&quot; &quot;use-soft-float&quot;=&quot;false&quot; }
+attributes #1 = { nounwind readnone speculatable }
+attributes #2 = { argmemonly nounwind }
+
+!llvm.dbg.cu = !{!2}
+!llvm.module.flags = !{!18, !19, !20, !21}
+!llvm.ident = !{!22}
+
+!0 = !DIGlobalVariableExpression(var: !1)
+!1 = distinct !DIGlobalVariable(name: &quot;bar&quot;, scope: !2, file: !3, line: 8, type: !8, isLocal: false, isDefinition: true)
+!2 = distinct !DICompileUnit(language: DW_LANG_C99, file: !3, producer: &quot;clang version 5.0.0 (tags/RELEASE_500/rc4)&quot;, isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !4, globals: !5)
+!3 = !DIFile(filename: &quot;test.c&quot;, directory: &quot;D:\5CGitHub\5CUbiquity.NET\5CUbiquity.NET.Llvm\5CBuildOutput\5Cbin\5CCodeGenWithDebugInfo\5CRelease\5Cnetcoreapp2.0\5CSupport Files&quot;)
+!4 = !{}
+!5 = !{!0, !6}
+!6 = !DIGlobalVariableExpression(var: !7)
+!7 = distinct !DIGlobalVariable(name: &quot;baz&quot;, scope: !2, file: !3, line: 9, type: !8, isLocal: false, isDefinition: true)
+!8 = !DICompositeType(tag: DW_TAG_structure_type, name: &quot;foo&quot;, file: !3, line: 1, size: 1088, elements: !9)
+!9 = !{!10, !12, !14}
+!10 = !DIDerivedType(tag: DW_TAG_member, name: &quot;a&quot;, scope: !8, file: !3, line: 3, baseType: !11, size: 32)
+!11 = !DIBasicType(name: &quot;int&quot;, size: 32, encoding: DW_ATE_signed)
+!12 = !DIDerivedType(tag: DW_TAG_member, name: &quot;b&quot;, scope: !8, file: !3, line: 4, baseType: !13, size: 32, offset: 32)
+!13 = !DIBasicType(name: &quot;float&quot;, size: 32, encoding: DW_ATE_float)
+!14 = !DIDerivedType(tag: DW_TAG_member, name: &quot;c&quot;, scope: !8, file: !3, line: 5, baseType: !15, size: 1024, offset: 64)
+!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !11, size: 1024, elements: !16)
+!16 = !{!17}
+!17 = !DISubrange(count: 32)
+!18 = !{i32 2, !&quot;Dwarf Version&quot;, i32 4}
+!19 = !{i32 2, !&quot;Debug Info Version&quot;, i32 3}
+!20 = !{i32 1, !&quot;wchar_size&quot;, i32 4}
+!21 = !{i32 1, !&quot;min_enum_size&quot;, i32 4}
+!22 = !{!&quot;clang version 5.0.0 (tags/RELEASE_500/rc4)&quot;}
+!23 = distinct !DISubprogram(name: &quot;DoCopy&quot;, scope: !3, file: !3, line: 23, type: !24, isLocal: false, isDefinition: true, scopeLine: 24, isOptimized: false, unit: !2, variables: !4)
+!24 = !DISubroutineType(types: !25)
+!25 = !{null}
+!26 = !DILocation(line: 25, column: 5, scope: !23)
+!27 = !DILocation(line: 26, column: 1, scope: !23)
+!28 = distinct !DISubprogram(name: &quot;copy&quot;, scope: !3, file: !3, line: 11, type: !29, isLocal: true, isDefinition: true, scopeLine: 14, flags: DIFlagPrototyped, isOptimized: false, unit: !2, variables: !4)
+!29 = !DISubroutineType(types: !30)
+!30 = !{null, !31, !32}
+!31 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !8)
+!32 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8, size: 32)
+!33 = !DILocalVariable(name: &quot;src&quot;, arg: 1, scope: !28, file: !3, line: 11, type: !31)
+!34 = !DIExpression()
+!35 = !DILocation(line: 11, column: 43, scope: !28)
+!36 = !DILocalVariable(name: &quot;pDst&quot;, arg: 2, scope: !28, file: !3, line: 12, type: !32)
+!37 = !DILocation(line: 12, column: 38, scope: !28)
+!38 = !DILocation(line: 15, column: 6, scope: !28)
+!39 = !DILocation(line: 15, column: 13, scope: !28)
+!40 = !DILocation(line: 16, column: 1, scope: !28)
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/CodeGenWithDebugInfo/codegeneration.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

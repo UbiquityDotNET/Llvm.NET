@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>5. Kaleidoscope: Control Flow | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="5. Kaleidoscope: Control Flow | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter5/Kaleidoscope-ch5.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../../index.html">
+            <img id="logo" class="svg" src="../../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Kaleidoscope-ch5">
+<h1 id="5-kaleidoscope-control-flow">5. Kaleidoscope: Control Flow</h1>
+
+<p>This chapter focuses on adding the support necessary to implement the if-then-else
+and for loop control flow support in the Kaleidoscope language. Without some sort
+of control flow the Kaleidoscope language is not particularly useful. So, this
+chapter completes the core language support to make it a usable language.</p>
+<h2 id="if-then-else">if-then-else</h2>
+<p>It is worth re-visiting the discussion of the intended syntax and semantics for
+conditional flow in <a class="xref" href="../Chapter2/Kaleidoscope-ch2.html#conditionalexpression">Chapter 2</a>. This
+will help in understanding the language functionality to implement.</p>
+<p>The ultimate goal of the changes to support code generation for control flow
+constructs is to transform Kaleidoscope code such as:</p>
+<pre><code class="lang-Kaleidoscope">extern foo();
+extern bar();
+def baz(x) if x then foo() else bar();
+</code></pre>
+<p>and generate LLVM like this (unoptimized):</p>
+<pre><code class="lang-llvm">declare double @foo()
+
+declare double @bar()
+
+define double @baz(double %x) {
+entry:
+  %ifcond = fcmp one double %x, 0.000000e+00
+  br i1 %ifcond, label %then, label %else
+
+then:       ; preds = %entry
+  %calltmp = call double @foo()
+  br label %ifcont
+
+else:       ; preds = %entry
+  %calltmp1 = call double @bar()
+  br label %ifcont
+
+ifcont:     ; preds = %else, %then
+  %iftmp = phi double [ %calltmp, %then ], [ %calltmp1, %else ]
+  ret double %iftmp
+}
+</code></pre>
+<p>The entry code will convert the input x into an llvm i1 value to use as the
+condition for a branch. This is done by comparing the input value of x to 0.0 to
+get the condition boolean value. Then the condition is used to branch to either
+the 'then' block or the 'else' block. The two target blocks contain the generated
+code for the expressions for each part of the conditional and a final branch to a
+continuation block.</p>
+<p>Since the code branch could flow into the continuation block from either the 'else'
+or 'end' blocks a phi instruction is placed at the beginning of the continuation
+block with appropriate values for the result from each of the two predecessor
+blocks. The resulting value is then provided as the return of the function. It is
+important to note that using the phi node in this fashion does not require
+generating all of the code in SSA form. In fact, doing that in the front end is
+strongly discouraged. Generally speaking, there are two primary reasons where a phi
+node may crop up:</p>
+<ol>
+<li>Mutable variables like x = 1; x = x + 1;</li>
+<li>Values that are part of the structure of the language (usually for control flow)</li>
+</ol>
+<p><a class="xref" href="../Chapter7/Kaleidoscope-ch7.html">Chapter 7</a> Covers the mutable variables case in detail and
+the techniques for generating the code without using a phi node. For cases like
+this one where it is straight forward and easy to insert the phi node directly then
+there's no reason not to. Though, the solution provided in Chapter 7 can, and does,
+eliminate the need to manually insert the phi node here as well.</p>
+<h3 id="code-generation">Code Generation</h3>
+<p>Generating the code for the condition expression follows the pattern shown above
+with the following high level steps:</p>
+<ol>
+<li>Generate the code for the condition value expression</li>
+<li>Emit conversion of the result of the condition to an LLVM i1 by comparing to 0.0</li>
+<li>Create a block for the then expression</li>
+<li>Create a block for the else expression</li>
+<li>Create a block for the if continuation</li>
+<li>Emit conditional branch to the then, else blocks</li>
+<li>Switch to the then expression block</li>
+<li>Emit code for the then expression</li>
+<li>Capture the insertion block location as generating the then expression may add
+new blocks.</li>
+<li>Emit a branch to the if continuation block</li>
+<li>Switch to the else block</li>
+<li>Emit code for the else expression</li>
+<li>Emit a branch to the if continuation block</li>
+<li>Capture the insertion block location as generating the else expression may add
+new blocks</li>
+<li>Switch to the if continuation block</li>
+<li>Emit phi node with the results of the insertion blocks and result values
+captured after generating each of the sub expressions</li>
+<li>Use the result...</li>
+</ol>
+<p>That's a bit more complex than the other language constructs seen so far, but is
+still pretty straight forward once you get the general gist of how LLVM IR works.
+There's one extra trick repeated in steps 9 and again in 14, where after generating
+the IR for the sub expressions, the current block insertion point is captured. This
+is needed as the generation for the sub expression may include another conditional
+expression, which may contain a conditional sub expression, ... Thus, the 'current
+block' may well have changed from the starting block. The phi node needs the
+immediate predecessor block and the value it produced, so the current block is
+captured after generation, before switching the block to the next one for
+generation to ensure that the correct block is used with the value.</p>
+<p>The actual code follows the description pretty closely and should now be fairly
+easy to follow:</p>
+<pre><code class="lang-csharp" name="ConditionalExpression">public override Value? Visit( ConditionalExpression conditionalExpression )
+{
+    ArgumentNullException.ThrowIfNull( conditionalExpression );
+    Debug.Assert( InstructionBuilder is not null, &quot;Internal error Instruction builder should be set in Generate already&quot; );
+
+    var condition = conditionalExpression.Condition.Accept( this );
+    if(condition == null)
+    {
+        return null;
+    }
+
+    var condBool = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, condition, ThreadSafeContext.PerThreadContext.CreateConstant( 0.0 ) )
+                                     .RegisterName( &quot;ifcond&quot; );
+
+    var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( &quot;ICE: expected block that is attached to a function at this point&quot; );
+
+    var thenBlock = function.AppendBasicBlock( &quot;then&quot; );
+    var elseBlock = function.AppendBasicBlock( &quot;else&quot; );
+    var continueBlock = function.AppendBasicBlock( &quot;ifcont&quot; );
+    InstructionBuilder.Branch( condBool, thenBlock, elseBlock );
+
+    // generate then block instructions
+    InstructionBuilder.PositionAtEnd( thenBlock );
+
+    // InstructionBuilder.InserBlock after this point is !null
+    Debug.Assert( InstructionBuilder.InsertBlock != null, &quot;expected non-null InsertBlock&quot; );
+    var thenValue = conditionalExpression.ThenExpression.Accept( this );
+    if(thenValue == null)
+    {
+        return null;
+    }
+
+    InstructionBuilder.Branch( continueBlock );
+
+    // capture the insert in case generating else adds new blocks
+    var thenResultBlock = InstructionBuilder.InsertBlock;
+
+    // generate else block
+    InstructionBuilder.PositionAtEnd( elseBlock );
+    var elseValue = conditionalExpression.ElseExpression.Accept( this );
+    if(elseValue == null)
+    {
+        return null;
+    }
+
+    InstructionBuilder.Branch( continueBlock );
+    var elseResultBlock = InstructionBuilder.InsertBlock;
+
+    // generate continue block
+    InstructionBuilder.PositionAtEnd( continueBlock );
+    var phiNode = InstructionBuilder.PhiNode( function.Context.DoubleType )
+                                    .RegisterName( &quot;ifresult&quot; );
+
+    phiNode.AddIncoming( (thenValue, thenResultBlock), (elseValue, elseResultBlock) );
+    return phiNode;
+}
+</code></pre><h2 id="for-loop">For Loop</h2>
+<p>Now that the basics of control flow are available it is possible to leverage the
+same concepts to implement the for loop constructs for the language.</p>
+<p>The general idea is to transform the loops in Kaleidoscope such as this:</p>
+<pre><code class="lang-Kaleidoscope">extern putchard(char);
+def printstar(n)
+  for i = 1, i &lt; n, 1.0 in
+    putchard(42);  # ascii 42 = '*'
+
+# print 100 '*' characters
+printstar(100);
+</code></pre>
+<p>In LLVM IR (unoptimized) that should look like this:</p>
+<pre><code class="lang-llvm">declare double @putchard(double)
+
+define double @printstar(double %n) {
+entry:
+  ; initial value = 1.0 (inlined into phi)
+  br label %loop
+
+loop:       ; preds = %loop, %entry
+  %i = phi double [ 1.000000e+00, %entry ], [ %nextvar, %loop ]
+  ; body
+  %calltmp = call double @putchard(double 4.200000e+01)
+  ; increment
+  %nextvar = fadd double %i, 1.000000e+00
+
+  ; termination test
+  %cmptmp = fcmp ult double %i, %n
+  %booltmp = uitofp i1 %cmptmp to double
+  %loopcond = fcmp one double %booltmp, 0.000000e+00
+  br i1 %loopcond, label %loop, label %afterloop
+
+afterloop:      ; preds = %loop
+  ; loop always returns 0.0
+  ret double 0.000000e+00
+}
+</code></pre>
+<p>Thus, the basic pattern to generate the for loop code consists of the following
+steps:</p>
+<ol>
+<li>Create block for loop header</li>
+<li>Switch to the loop header block</li>
+<li>Emit code to Initialize start value with starting value from initialization
+expression.</li>
+<li>Create block for the loop body</li>
+<li>Create block for the loop end</li>
+<li>Emit unconditional branch to the loop body</li>
+<li>Switch to the loop body block</li>
+<li>Emit phi node for the loop value with the loop header block and initial value
+as first predecessor.</li>
+<li>Push a new scope for named values as the loop body represents a new scope</li>
+<li>Add the variable for the loop to the current scope</li>
+<li>Emit the body expression, which may create new blocks</li>
+<li>Emit the code to compute the next value (e.g. next = current + step )</li>
+<li>Emit code for the end condition</li>
+<li>Emit code to convert the result of the condition to an LLVM i1 for a
+conditional branch</li>
+<li>Capture loop end block for PHI node</li>
+<li>Create after loop block</li>
+<li>Emit conditional branch to the loop body block or after loop block depending
+on the result of the end condition</li>
+<li>Add an incoming predecessor to the phi node at the beginning of the loop body
+for the next loop value and the loop end block it comes from.</li>
+<li>Switch to after block</li>
+<li>Create constant value of 0.0 as the result expression of the for loop</li>
+</ol>
+<p>That's a few more steps than even the if-then-else but the basic concepts of blocks,
+conditional branches and direct phi-nodes remains the same.</p>
+<p>The code to generate a for loop follows this pattern pretty closely.</p>
+<pre><code class="lang-csharp" name="Main">public override Value? Visit( ForInExpression forInExpression )
+{
+    ArgumentNullException.ThrowIfNull( forInExpression );
+    Debug.Assert( InstructionBuilder is not null, &quot;Internal error Instruction builder should be set in Generate already&quot; );
+
+    var function = InstructionBuilder.InsertFunction ?? throw new InternalCodeGeneratorException( &quot;ICE: Expected block attached to a function at this point&quot; );
+
+    string varName = forInExpression.LoopVariable.Name;
+    IContext ctx = ThreadSafeContext.PerThreadContext;
+
+    // Emit the start code first, without 'variable' in scope.
+    Value? startVal;
+    if(forInExpression.LoopVariable.Initializer != null)
+    {
+        startVal = forInExpression.LoopVariable.Initializer.Accept( this );
+        if(startVal is null)
+        {
+            return null;
+        }
+    }
+    else
+    {
+        startVal = ctx.CreateConstant( 0.0 );
+    }
+
+    Debug.Assert( InstructionBuilder.InsertBlock != null, &quot;expected non-null InsertBlock&quot; );
+
+    // Make the new basic block for the loop header, inserting after current
+    // block.
+    var preHeaderBlock = InstructionBuilder.InsertBlock;
+    var loopBlock = function.AppendBasicBlock( &quot;loop&quot; );
+
+    // Insert an explicit fall through from the current block to the loopBlock.
+    InstructionBuilder.Branch( loopBlock );
+
+    // Start insertion in loopBlock.
+    InstructionBuilder.PositionAtEnd( loopBlock );
+
+    // Start the PHI node with an entry for Start.
+    var variable = InstructionBuilder.PhiNode( ctx.DoubleType )
+                                     .RegisterName( varName );
+
+    variable.AddIncoming( startVal, preHeaderBlock );
+
+    // Within the loop, the variable is defined equal to the PHI node.
+    // So, push a new scope for it and any values the body might set
+    using(NamedValues.EnterScope())
+    {
+        NamedValues[ varName ] = variable;
+
+        // Emit the body of the loop.  This, like any other expression, can change the
+        // current BB.  Note that we ignore the value computed by the body, but don't
+        // allow an error.
+        if(forInExpression.Body.Accept( this ) == null)
+        {
+            return null;
+        }
+
+        Value? stepValue = forInExpression.Step.Accept( this );
+        if(stepValue == null)
+        {
+            return null;
+        }
+
+        var nextVar = InstructionBuilder.FAdd( variable, stepValue)
+                                        .RegisterName( &quot;nextvar&quot; );
+
+        // Compute the end condition.
+        Value? endCondition = forInExpression.Condition.Accept( this );
+        if(endCondition == null)
+        {
+            return null;
+        }
+
+        // Convert condition to a bool by comparing non-equal to 0.0.
+        endCondition = InstructionBuilder.Compare( RealPredicate.OrderedAndNotEqual, endCondition, ctx.CreateConstant( 0.0 ) )
+                                         .RegisterName( &quot;loopcond&quot; );
+
+        // capture loop end result block for loop variable PHI node
+        var loopEndBlock = InstructionBuilder.InsertBlock;
+
+        // Create the &quot;after loop&quot; block and insert it.
+        var afterBlock = function.AppendBasicBlock( &quot;afterloop&quot; );
+
+        // Insert the conditional branch into the end of LoopEndBB.
+        InstructionBuilder.Branch( endCondition, loopBlock, afterBlock );
+        InstructionBuilder.PositionAtEnd( afterBlock );
+
+        // AddWithTracking a new entry to the PHI node for the back-edge.
+        variable.AddIncoming( nextVar, loopEndBlock );
+
+        // for expression always returns 0.0 for consistency, there is no 'void'
+        return ctx.DoubleType.GetNullValue();
+    }
+}
+</code></pre>
+<p>The only new functionality in that is the use of the ScopeStack class to support
+nested scopes and the named variables within them. ScopeStack is provided in the
+Ubiquity.NET.Runtime.Utils library. It is basically a stack of name to value
+mapping dictionaries. The EnterScope method will push a new dictionary on to the
+stack and return an IDisposable that will handle popping it back off. This allows
+for nested expressions to use variables in the parent scope and to override them
+with its own value too. That, is the symbols available in a loop include the loop
+variable and any variables in the parent scope, all the way back to the function
+parameters. The stack nature allows for deeper scopes to shadow the variable of the
+same name in the parent, while allowing access to all other variables from other
+scopes.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Control flow is certainly more complex to generate than any of the other language
+constructs but it relies on a few basic primitive building block patterns. Thus, it
+is fairly easy to understand and implement once the basic patterns are understood.
+With the inclusion of control flow the Kaleidoscope language is now a complete,
+albeit simplistic, functional language.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter5/Kaleidoscope-ch5.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

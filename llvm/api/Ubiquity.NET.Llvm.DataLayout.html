@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DataLayout | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DataLayout | Ubiquity.NET ">
+      
+      <meta name="description" content="Owning implementation of">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_DataLayout.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.DataLayout%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.DataLayout">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_DataLayout" data-uid="Ubiquity.NET.Llvm.DataLayout" class="text-break">
+Class DataLayout  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/DataLayout.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Owning implementation of <a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.html">IDataLayout</a></p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class DataLayout : IDataLayout, IDisposable, IEquatable&lt;DataLayout&gt;, IEquatable&lt;IDataLayout&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">DataLayout</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.html">IDataLayout</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.DataLayout.html">DataLayout</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.html">IDataLayout</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_DataLayout_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><div class="IMPORTANT"><h5>important</h5><p>
+<p>There is currently no way to compute a proper hash code for this type. Any attempt to
+call <a class="xref" href="Ubiquity.NET.Llvm.DataLayout.GetHashCode.html#Ubiquity_NET_Llvm_DataLayout_GetHashCode">GetHashCode()</a> will result in a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a>.</p>
+<p>The internal data values used for equality checks are not accessible, even to native
+C++ code, so no projection is possible. .NET has strict requirements on the consistency
+of a hash code with the behavior of equality comparisons, which the current LLVM
+declaration/implementation do not allow.</p>
+</div>
+</div>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.Endianness.html#Ubiquity_NET_Llvm_DataLayout_Endianness">Endianness</a></dt>
+    <dd><p>Gets the byte ordering for this target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.IsDisposed.html#Ubiquity_NET_Llvm_DataLayout_IsDisposed">IsDisposed</a></dt>
+    <dd><p>Gets a value indicating whether this instance is already disposed</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.AbiAlignmentOf.html#Ubiquity_NET_Llvm_DataLayout_AbiAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the ABI specified alignment, in bytes, for a specified type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.AbiBitAlignmentOf.html#Ubiquity_NET_Llvm_DataLayout_AbiBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiBitAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Gets the ABI alignment of the type in bits</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.AbiSizeOf.html#Ubiquity_NET_Llvm_DataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiSizeOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the ABI specified size of the given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.BitOffsetOfElement.html#Ubiquity_NET_Llvm_DataLayout_BitOffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_">BitOffsetOfElement(IStructType, uint)</a></dt>
+    <dd><p>Gets the offset of a structure element in bits</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.BitSizeOf.html#Ubiquity_NET_Llvm_DataLayout_BitSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">BitSizeOf(ITypeRef)</a></dt>
+    <dd><p>Returns the number of bits necessary to hold the specified type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.ByteSizeOf.html#Ubiquity_NET_Llvm_DataLayout_ByteSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">ByteSizeOf(ITypeRef)</a></dt>
+    <dd><p>Gets the byte size of a type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.CallFrameAlignmentOf.html#Ubiquity_NET_Llvm_DataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">CallFrameAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the call frame alignment for a given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.Dispose.html#Ubiquity_NET_Llvm_DataLayout_Dispose">Dispose()</a></dt>
+    <dd><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.ElementAtOffset.html#Ubiquity_NET_Llvm_DataLayout_ElementAtOffset_Ubiquity_NET_Llvm_Types_IStructType_System_UInt64_">ElementAtOffset(IStructType, ulong)</a></dt>
+    <dd><p>Gets the element index for a specific offset in a given structure</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.Equals.html#Ubiquity_NET_Llvm_DataLayout_Equals_System_Object_">Equals(object?)</a></dt>
+    <dd><p>Determines whether the specified object is equal to the current object.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.Equals.html#Ubiquity_NET_Llvm_DataLayout_Equals_Ubiquity_NET_Llvm_DataLayout_">Equals(DataLayout?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.Equals.html#Ubiquity_NET_Llvm_DataLayout_Equals_Ubiquity_NET_Llvm_IDataLayout_">Equals(IDataLayout?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.GetHashCode.html#Ubiquity_NET_Llvm_DataLayout_GetHashCode">GetHashCode()</a></dt>
+    <dd><p>Serves as the default hash function.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.IntPtrType.html#Ubiquity_NET_Llvm_DataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_">IntPtrType(IContext)</a></dt>
+    <dd><p>Retrieves an LLVM integer type with the same bit width as a pointer for the default address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.IntPtrType.html#Ubiquity_NET_Llvm_DataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_System_UInt32_">IntPtrType(IContext, uint)</a></dt>
+    <dd><p>Retrieves an LLVM integer type with the same bit width as
+a pointer for the given address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.OffsetOfElement.html#Ubiquity_NET_Llvm_DataLayout_OffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_">OffsetOfElement(IStructType, uint)</a></dt>
+    <dd><p>Gets the offset of an element in a structure</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.Parse.html#Ubiquity_NET_Llvm_DataLayout_Parse_Ubiquity_NET_InteropHelpers_LazyEncodedString_">Parse(LazyEncodedString)</a></dt>
+    <dd><p>Parses a data layout from a textual representation</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.PointerSize.html#Ubiquity_NET_Llvm_DataLayout_PointerSize">PointerSize()</a></dt>
+    <dd><p>Gets the size of a pointer for the default address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.PointerSize.html#Ubiquity_NET_Llvm_DataLayout_PointerSize_System_UInt32_">PointerSize(uint)</a></dt>
+    <dd><p>Retrieves the size of a pointer for a given address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf.html#Ubiquity_NET_Llvm_DataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">PreferredAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Gets the preferred alignment for an LLVM type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.PreferredAlignmentOf.html#Ubiquity_NET_Llvm_DataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Values_Value_">PreferredAlignmentOf(Value)</a></dt>
+    <dd><p>Gets the preferred alignment for a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.PreferredBitAlignmentOf.html#Ubiquity_NET_Llvm_DataLayout_PreferredBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">PreferredBitAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Gets the preferred alignment of the type in bits</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.StoreSizeOf.html#Ubiquity_NET_Llvm_DataLayout_StoreSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">StoreSizeOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the number of bits required to store a value of the given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.ToLazyEncodedString.html#Ubiquity_NET_Llvm_DataLayout_ToLazyEncodedString">ToLazyEncodedString()</a></dt>
+    <dd><p>Gets the string representation of this data layout as a <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DataLayout.TryParse.html#Ubiquity_NET_Llvm_DataLayout_TryParse_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DataLayout__">TryParse(LazyEncodedString, out DataLayout)</a></dt>
+    <dd><p>Tries to parse a <a class="xref" href="Ubiquity.NET.Llvm.DataLayout.html">DataLayout</a> from a string representation</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/DataLayout.cs/#L22" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

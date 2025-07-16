@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg viewBox="0 0 1984 600" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc>blockdiag
+{
+    default_shape = roundedbox
+    orientation = portrait
+
+    // Nodes
+    N20908074 [label= "TopLevelExpression"];
+    N53954942020908074 [label= "Expression", numbered = 0];
+    N15832433053954942020908074 [label= "ConstExpression"];
+    N8274172015832433053954942020908074 [label= "2", shape = circle];
+    N7358688153954942020908074 [label= "Binaryop"];
+    N6622819907358688153954942020908074 [label= "Userdefinedop"];
+    N5918288006622819907358688153954942020908074 [label= "==", shape = circle];
+    N62883878253954942020908074 [label= "Expression", numbered = 10];
+    N29083993062883878253954942020908074 [label= "ConstExpression"];
+    N60429346029083993062883878253954942020908074 [label= "3", shape = circle];
+    N6993202353954942020908074 [label= "Binaryop"];
+    N6293881806993202353954942020908074 [label= "Userdefinedop"];
+    N2957845106293881806993202353954942020908074 [label= "|", shape = circle];
+    N64879470453954942020908074 [label= "Expression", numbered = 6];
+    N47044325064879470453954942020908074 [label= "ConstExpression"];
+    N20745743047044325064879470453954942020908074 [label= "5", shape = circle];
+    N52493967164879470453954942020908074 [label= "Binaryop"];
+    N2683661052493967164879470453954942020908074 [label= "Builtinop"];
+    N2415295402683661052493967164879470453954942020908074 [label= "&lt;", shape = circle];
+    N16049999264879470453954942020908074 [label= "Expression", numbered = 11];
+    N10232270016049999264879470453954942020908074 [label= "ConstExpression"];
+    N24981566010232270016049999264879470453954942020908074 [label= "4", shape = circle];
+    N23507505553954942020908074 [label= "Binaryop"];
+    N10240961023507505553954942020908074 [label= "Userdefinedop"];
+    N25059790010240961023507505553954942020908074 [label= "|", shape = circle];
+    N24211521653954942020908074 [label= "Expression", numbered = 6];
+    N16577099024211521653954942020908074 [label= "UnaryOpExpression"];
+    N14976165016577099024211521653954942020908074 [label= "Unaryop"];
+    N567760014976165016577099024211521653954942020908074 [label= "Userdefinedop"];
+    N51098460567760014976165016577099024211521653954942020908074 [label= "!", shape = circle];
+    N45988614116577099024211521653954942020908074 [label= "Expression", numbered = 0];
+    N11244347045988614116577099024211521653954942020908074 [label= "ConstExpression"];
+    N34090260011244347045988614116577099024211521653954942020908074 [label= "1", shape = circle];
+
+    // Edges
+    N15832433053954942020908074 -&gt; N8274172015832433053954942020908074
+    N53954942020908074 -&gt; N15832433053954942020908074
+    N6622819907358688153954942020908074 -&gt; N5918288006622819907358688153954942020908074
+    N7358688153954942020908074 -&gt; N6622819907358688153954942020908074
+    N53954942020908074 -&gt; N7358688153954942020908074
+    N29083993062883878253954942020908074 -&gt; N60429346029083993062883878253954942020908074
+    N62883878253954942020908074 -&gt; N29083993062883878253954942020908074
+    N53954942020908074 -&gt; N62883878253954942020908074
+    N6293881806993202353954942020908074 -&gt; N2957845106293881806993202353954942020908074
+    N6993202353954942020908074 -&gt; N6293881806993202353954942020908074
+    N53954942020908074 -&gt; N6993202353954942020908074
+    N47044325064879470453954942020908074 -&gt; N20745743047044325064879470453954942020908074
+    N64879470453954942020908074 -&gt; N47044325064879470453954942020908074
+    N2683661052493967164879470453954942020908074 -&gt; N2415295402683661052493967164879470453954942020908074
+    N52493967164879470453954942020908074 -&gt; N2683661052493967164879470453954942020908074
+    N64879470453954942020908074 -&gt; N52493967164879470453954942020908074
+    N10232270016049999264879470453954942020908074 -&gt; N24981566010232270016049999264879470453954942020908074
+    N16049999264879470453954942020908074 -&gt; N10232270016049999264879470453954942020908074
+    N64879470453954942020908074 -&gt; N16049999264879470453954942020908074
+    N53954942020908074 -&gt; N64879470453954942020908074
+    N10240961023507505553954942020908074 -&gt; N25059790010240961023507505553954942020908074
+    N23507505553954942020908074 -&gt; N10240961023507505553954942020908074
+    N53954942020908074 -&gt; N23507505553954942020908074
+    N567760014976165016577099024211521653954942020908074 -&gt; N51098460567760014976165016577099024211521653954942020908074
+    N14976165016577099024211521653954942020908074 -&gt; N567760014976165016577099024211521653954942020908074
+    N16577099024211521653954942020908074 -&gt; N14976165016577099024211521653954942020908074
+    N11244347045988614116577099024211521653954942020908074 -&gt; N34090260011244347045988614116577099024211521653954942020908074
+    N45988614116577099024211521653954942020908074 -&gt; N11244347045988614116577099024211521653954942020908074
+    N16577099024211521653954942020908074 -&gt; N45988614116577099024211521653954942020908074
+    N24211521653954942020908074 -&gt; N16577099024211521653954942020908074
+    N53954942020908074 -&gt; N24211521653954942020908074
+    N20908074 -&gt; N53954942020908074
+}
+</desc>
+  <path d="M 75 46 L 187 46 A8,8 0 0 1 195 54 L 195 78 A8,8 0 0 1 187 86 L 75 86 A8,8 0 0 1 67 78 L 67 54 A8,8 0 0 1 75 46" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 75 126 L 187 126 A8,8 0 0 1 195 134 L 195 158 A8,8 0 0 1 187 166 L 75 166 A8,8 0 0 1 67 158 L 67 134 A8,8 0 0 1 75 126" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 75 206 L 187 206 A8,8 0 0 1 195 214 L 195 238 A8,8 0 0 1 187 246 L 75 246 A8,8 0 0 1 67 238 L 67 214 A8,8 0 0 1 75 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 267 206 L 379 206 A8,8 0 0 1 387 214 L 387 238 A8,8 0 0 1 379 246 L 267 246 A8,8 0 0 1 259 238 L 259 214 A8,8 0 0 1 267 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 459 206 L 571 206 A8,8 0 0 1 579 214 L 579 238 A8,8 0 0 1 571 246 L 459 246 A8,8 0 0 1 451 238 L 451 214 A8,8 0 0 1 459 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 651 206 L 763 206 A8,8 0 0 1 771 214 L 771 238 A8,8 0 0 1 763 246 L 651 246 A8,8 0 0 1 643 238 L 643 214 A8,8 0 0 1 651 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 843 206 L 955 206 A8,8 0 0 1 963 214 L 963 238 A8,8 0 0 1 955 246 L 843 246 A8,8 0 0 1 835 238 L 835 214 A8,8 0 0 1 843 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1419 206 L 1531 206 A8,8 0 0 1 1539 214 L 1539 238 A8,8 0 0 1 1531 246 L 1419 246 A8,8 0 0 1 1411 238 L 1411 214 A8,8 0 0 1 1419 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1611 206 L 1723 206 A8,8 0 0 1 1731 214 L 1731 238 A8,8 0 0 1 1723 246 L 1611 246 A8,8 0 0 1 1603 238 L 1603 214 A8,8 0 0 1 1611 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="131" cy="306" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 267 286 L 379 286 A8,8 0 0 1 387 294 L 387 318 A8,8 0 0 1 379 326 L 267 326 A8,8 0 0 1 259 318 L 259 294 A8,8 0 0 1 267 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="323" cy="386" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 459 286 L 571 286 A8,8 0 0 1 579 294 L 579 318 A8,8 0 0 1 571 326 L 459 326 A8,8 0 0 1 451 318 L 451 294 A8,8 0 0 1 459 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="515" cy="386" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 651 286 L 763 286 A8,8 0 0 1 771 294 L 771 318 A8,8 0 0 1 763 326 L 651 326 A8,8 0 0 1 643 318 L 643 294 A8,8 0 0 1 651 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="707" cy="386" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 843 286 L 955 286 A8,8 0 0 1 963 294 L 963 318 A8,8 0 0 1 955 326 L 843 326 A8,8 0 0 1 835 318 L 835 294 A8,8 0 0 1 843 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1035 286 L 1147 286 A8,8 0 0 1 1155 294 L 1155 318 A8,8 0 0 1 1147 326 L 1035 326 A8,8 0 0 1 1027 318 L 1027 294 A8,8 0 0 1 1035 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1227 286 L 1339 286 A8,8 0 0 1 1347 294 L 1347 318 A8,8 0 0 1 1339 326 L 1227 326 A8,8 0 0 1 1219 318 L 1219 294 A8,8 0 0 1 1227 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="899" cy="386" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1035 366 L 1147 366 A8,8 0 0 1 1155 374 L 1155 398 A8,8 0 0 1 1147 406 L 1035 406 A8,8 0 0 1 1027 398 L 1027 374 A8,8 0 0 1 1035 366" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="1091" cy="466" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1227 366 L 1339 366 A8,8 0 0 1 1347 374 L 1347 398 A8,8 0 0 1 1339 406 L 1227 406 A8,8 0 0 1 1219 398 L 1219 374 A8,8 0 0 1 1227 366" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="1283" cy="466" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1419 286 L 1531 286 A8,8 0 0 1 1539 294 L 1539 318 A8,8 0 0 1 1531 326 L 1419 326 A8,8 0 0 1 1411 318 L 1411 294 A8,8 0 0 1 1419 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="1475" cy="386" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1611 286 L 1723 286 A8,8 0 0 1 1731 294 L 1731 318 A8,8 0 0 1 1723 326 L 1611 326 A8,8 0 0 1 1603 318 L 1603 294 A8,8 0 0 1 1611 286" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1611 366 L 1723 366 A8,8 0 0 1 1731 374 L 1731 398 A8,8 0 0 1 1723 406 L 1611 406 A8,8 0 0 1 1603 398 L 1603 374 A8,8 0 0 1 1611 366" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1803 366 L 1915 366 A8,8 0 0 1 1923 374 L 1923 398 A8,8 0 0 1 1915 406 L 1803 406 A8,8 0 0 1 1795 398 L 1795 374 A8,8 0 0 1 1803 366" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1611 446 L 1723 446 A8,8 0 0 1 1731 454 L 1731 478 A8,8 0 0 1 1723 486 L 1611 486 A8,8 0 0 1 1603 478 L 1603 454 A8,8 0 0 1 1611 446" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="1667" cy="546" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 1803 446 L 1915 446 A8,8 0 0 1 1923 454 L 1923 478 A8,8 0 0 1 1915 486 L 1803 486 A8,8 0 0 1 1795 478 L 1795 454 A8,8 0 0 1 1803 446" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="1859" cy="546" fill="rgb(0,0,0)" rx="24" ry="24" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 72 40 L 184 40 A8,8 0 0 1 192 48 L 192 72 A8,8 0 0 1 184 80 L 72 80 A8,8 0 0 1 64 72 L 64 48 A8,8 0 0 1 72 40" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="128" y="66">TopLevelExpression</text>
+  <path d="M 72 120 L 184 120 A8,8 0 0 1 192 128 L 192 152 A8,8 0 0 1 184 160 L 72 160 A8,8 0 0 1 64 152 L 64 128 A8,8 0 0 1 72 120" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="128" y="146">Expression</text>
+  <ellipse cx="64" cy="120" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="64" y="125">0</text>
+  <path d="M 72 200 L 184 200 A8,8 0 0 1 192 208 L 192 232 A8,8 0 0 1 184 240 L 72 240 A8,8 0 0 1 64 232 L 64 208 A8,8 0 0 1 72 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="128" y="226">ConstExpression</text>
+  <path d="M 264 200 L 376 200 A8,8 0 0 1 384 208 L 384 232 A8,8 0 0 1 376 240 L 264 240 A8,8 0 0 1 256 232 L 256 208 A8,8 0 0 1 264 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="320" y="226">Binaryop</text>
+  <path d="M 456 200 L 568 200 A8,8 0 0 1 576 208 L 576 232 A8,8 0 0 1 568 240 L 456 240 A8,8 0 0 1 448 232 L 448 208 A8,8 0 0 1 456 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="512" y="226">Expression</text>
+  <ellipse cx="448" cy="200" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="12" x="448" y="205">10</text>
+  <path d="M 648 200 L 760 200 A8,8 0 0 1 768 208 L 768 232 A8,8 0 0 1 760 240 L 648 240 A8,8 0 0 1 640 232 L 640 208 A8,8 0 0 1 648 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="704" y="226">Binaryop</text>
+  <path d="M 840 200 L 952 200 A8,8 0 0 1 960 208 L 960 232 A8,8 0 0 1 952 240 L 840 240 A8,8 0 0 1 832 232 L 832 208 A8,8 0 0 1 840 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="896" y="226">Expression</text>
+  <ellipse cx="832" cy="200" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="832" y="205">6</text>
+  <path d="M 1416 200 L 1528 200 A8,8 0 0 1 1536 208 L 1536 232 A8,8 0 0 1 1528 240 L 1416 240 A8,8 0 0 1 1408 232 L 1408 208 A8,8 0 0 1 1416 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="1472" y="226">Binaryop</text>
+  <path d="M 1608 200 L 1720 200 A8,8 0 0 1 1728 208 L 1728 232 A8,8 0 0 1 1720 240 L 1608 240 A8,8 0 0 1 1600 232 L 1600 208 A8,8 0 0 1 1608 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="1664" y="226">Expression</text>
+  <ellipse cx="1600" cy="200" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1600" y="205">6</text>
+  <ellipse cx="128" cy="300" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="128" y="305">2</text>
+  <path d="M 264 280 L 376 280 A8,8 0 0 1 384 288 L 384 312 A8,8 0 0 1 376 320 L 264 320 A8,8 0 0 1 256 312 L 256 288 A8,8 0 0 1 264 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="78" x="320" y="306">Userdefinedop</text>
+  <ellipse cx="320" cy="380" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="12" x="320" y="385">==</text>
+  <path d="M 456 280 L 568 280 A8,8 0 0 1 576 288 L 576 312 A8,8 0 0 1 568 320 L 456 320 A8,8 0 0 1 448 312 L 448 288 A8,8 0 0 1 456 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="512" y="306">ConstExpression</text>
+  <ellipse cx="512" cy="380" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="512" y="385">3</text>
+  <path d="M 648 280 L 760 280 A8,8 0 0 1 768 288 L 768 312 A8,8 0 0 1 760 320 L 648 320 A8,8 0 0 1 640 312 L 640 288 A8,8 0 0 1 648 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="78" x="704" y="306">Userdefinedop</text>
+  <ellipse cx="704" cy="380" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="704" y="386">|</text>
+  <path d="M 840 280 L 952 280 A8,8 0 0 1 960 288 L 960 312 A8,8 0 0 1 952 320 L 840 320 A8,8 0 0 1 832 312 L 832 288 A8,8 0 0 1 840 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="896" y="306">ConstExpression</text>
+  <path d="M 1032 280 L 1144 280 A8,8 0 0 1 1152 288 L 1152 312 A8,8 0 0 1 1144 320 L 1032 320 A8,8 0 0 1 1024 312 L 1024 288 A8,8 0 0 1 1032 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="1088" y="306">Binaryop</text>
+  <path d="M 1224 280 L 1336 280 A8,8 0 0 1 1344 288 L 1344 312 A8,8 0 0 1 1336 320 L 1224 320 A8,8 0 0 1 1216 312 L 1216 288 A8,8 0 0 1 1224 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="1280" y="306">Expression</text>
+  <ellipse cx="1216" cy="280" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="12" x="1216" y="285">11</text>
+  <ellipse cx="896" cy="380" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="896" y="385">5</text>
+  <path d="M 1032 360 L 1144 360 A8,8 0 0 1 1152 368 L 1152 392 A8,8 0 0 1 1144 400 L 1032 400 A8,8 0 0 1 1024 392 L 1024 368 A8,8 0 0 1 1032 360" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="1088" y="386">Builtinop</text>
+  <ellipse cx="1088" cy="460" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1088" y="465">&lt;</text>
+  <path d="M 1224 360 L 1336 360 A8,8 0 0 1 1344 368 L 1344 392 A8,8 0 0 1 1336 400 L 1224 400 A8,8 0 0 1 1216 392 L 1216 368 A8,8 0 0 1 1224 360" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="1280" y="386">ConstExpression</text>
+  <ellipse cx="1280" cy="460" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1280" y="465">4</text>
+  <path d="M 1416 280 L 1528 280 A8,8 0 0 1 1536 288 L 1536 312 A8,8 0 0 1 1528 320 L 1416 320 A8,8 0 0 1 1408 312 L 1408 288 A8,8 0 0 1 1416 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="78" x="1472" y="306">Userdefinedop</text>
+  <ellipse cx="1472" cy="380" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1472" y="386">|</text>
+  <path d="M 1608 280 L 1720 280 A8,8 0 0 1 1728 288 L 1728 312 A8,8 0 0 1 1720 320 L 1608 320 A8,8 0 0 1 1600 312 L 1600 288 A8,8 0 0 1 1608 280" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="102" x="1664" y="306">UnaryOpExpression</text>
+  <path d="M 1608 360 L 1720 360 A8,8 0 0 1 1728 368 L 1728 392 A8,8 0 0 1 1720 400 L 1608 400 A8,8 0 0 1 1600 392 L 1600 368 A8,8 0 0 1 1608 360" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="1664" y="386">Unaryop</text>
+  <path d="M 1800 360 L 1912 360 A8,8 0 0 1 1920 368 L 1920 392 A8,8 0 0 1 1912 400 L 1800 400 A8,8 0 0 1 1792 392 L 1792 368 A8,8 0 0 1 1800 360" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="1856" y="386">Expression</text>
+  <ellipse cx="1792" cy="360" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1792" y="365">0</text>
+  <path d="M 1608 440 L 1720 440 A8,8 0 0 1 1728 448 L 1728 472 A8,8 0 0 1 1720 480 L 1608 480 A8,8 0 0 1 1600 472 L 1600 448 A8,8 0 0 1 1608 440" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="78" x="1664" y="466">Userdefinedop</text>
+  <ellipse cx="1664" cy="540" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1664" y="545">!</text>
+  <path d="M 1800 440 L 1912 440 A8,8 0 0 1 1920 448 L 1920 472 A8,8 0 0 1 1912 480 L 1800 480 A8,8 0 0 1 1792 472 L 1792 448 A8,8 0 0 1 1800 440" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="1856" y="466">ConstExpression</text>
+  <ellipse cx="1856" cy="540" fill="rgb(255,255,255)" rx="24" ry="24" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="6" x="1856" y="545">1</text>
+  <path d="M 128 80 L 128 112" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,119 124,112 132,112 128,119" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,199 124,192 132,192 128,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 704 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 704 180 L 704 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="704,199 700,192 708,192 704,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 896 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 896 180 L 896 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="896,199 892,192 900,192 896,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 320 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 320 180 L 320 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="320,199 316,192 324,192 320,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 1472 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 1472 180 L 1472 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1472,199 1468,192 1476,192 1472,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 1664 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 1664 180 L 1664 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1664,199 1660,192 1668,192 1664,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 512 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 512 180 L 512 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="512,199 508,192 516,192 512,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 240 L 128 268" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,275 124,268 132,268 128,275" stroke="rgb(0,0,0)" />
+  <path d="M 320 240 L 320 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="320,279 316,272 324,272 320,279" stroke="rgb(0,0,0)" />
+  <path d="M 320 320 L 320 348" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="320,355 316,348 324,348 320,355" stroke="rgb(0,0,0)" />
+  <path d="M 512 240 L 512 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="512,279 508,272 516,272 512,279" stroke="rgb(0,0,0)" />
+  <path d="M 512 320 L 512 348" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="512,355 508,348 516,348 512,355" stroke="rgb(0,0,0)" />
+  <path d="M 704 240 L 704 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="704,279 700,272 708,272 704,279" stroke="rgb(0,0,0)" />
+  <path d="M 704 320 L 704 348" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="704,355 700,348 708,348 704,355" stroke="rgb(0,0,0)" />
+  <path d="M 896 240 L 896 260" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 896 260 L 1280 260" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 1280 260 L 1280 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1280,279 1276,272 1284,272 1280,279" stroke="rgb(0,0,0)" />
+  <path d="M 896 240 L 896 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="896,279 892,272 900,272 896,279" stroke="rgb(0,0,0)" />
+  <path d="M 896 240 L 896 260" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 896 260 L 1088 260" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 1088 260 L 1088 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1088,279 1084,272 1092,272 1088,279" stroke="rgb(0,0,0)" />
+  <path d="M 896 320 L 896 348" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="896,355 892,348 900,348 896,355" stroke="rgb(0,0,0)" />
+  <path d="M 1088 320 L 1088 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1088,359 1084,352 1092,352 1088,359" stroke="rgb(0,0,0)" />
+  <path d="M 1088 400 L 1088 428" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1088,435 1084,428 1092,428 1088,435" stroke="rgb(0,0,0)" />
+  <path d="M 1280 320 L 1280 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1280,359 1276,352 1284,352 1280,359" stroke="rgb(0,0,0)" />
+  <path d="M 1280 400 L 1280 428" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1280,435 1276,428 1284,428 1280,435" stroke="rgb(0,0,0)" />
+  <path d="M 1472 240 L 1472 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1472,279 1468,272 1476,272 1472,279" stroke="rgb(0,0,0)" />
+  <path d="M 1472 320 L 1472 348" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1472,355 1468,348 1476,348 1472,355" stroke="rgb(0,0,0)" />
+  <path d="M 1664 240 L 1664 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1664,279 1660,272 1668,272 1664,279" stroke="rgb(0,0,0)" />
+  <path d="M 1664 320 L 1664 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1664,359 1660,352 1668,352 1664,359" stroke="rgb(0,0,0)" />
+  <path d="M 1664 320 L 1664 340" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 1664 340 L 1856 340" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 1856 340 L 1856 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1856,359 1852,352 1860,352 1856,359" stroke="rgb(0,0,0)" />
+  <path d="M 1664 400 L 1664 432" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1664,439 1660,432 1668,432 1664,439" stroke="rgb(0,0,0)" />
+  <path d="M 1664 480 L 1664 508" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1664,515 1660,508 1668,508 1664,515" stroke="rgb(0,0,0)" />
+  <path d="M 1856 400 L 1856 432" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1856,439 1852,432 1860,432 1856,439" stroke="rgb(0,0,0)" />
+  <path d="M 1856 480 L 1856 508" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1856,515 1852,508 1860,508 1856,515" stroke="rgb(0,0,0)" />
+</svg>

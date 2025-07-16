@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Enum MetadataKind | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Enum MetadataKind | Ubiquity.NET ">
+      
+      <meta name="description" content="Enumeration to define metadata type kind">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Metadata_MetadataKind.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Metadata.MetadataKind%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Metadata.MetadataKind">
+
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Metadata_MetadataKind" data-uid="Ubiquity.NET.Llvm.Metadata.MetadataKind" class="text-break">
+Enum MetadataKind  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Metadata.html">Metadata</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Enumeration to define metadata type kind</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum MetadataKind</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_ConstantAsMetadata"><code>ConstantAsMetadata = 1</code></dt>
+  
+  <dd><p>Constant Value as metadata</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIBasicType"><code>DIBasicType = 12</code></dt>
+  
+  <dd><p>Debug info basic type</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DICompileUnit"><code>DICompileUnit = 17</code></dt>
+  
+  <dd><p>Debug info Compilation Unit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DICompositeType"><code>DICompositeType = 14</code></dt>
+  
+  <dd><p>Debug info composite type</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIDerivedType"><code>DIDerivedType = 13</code></dt>
+  
+  <dd><p>Debug info derived type</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIEnumerator"><code>DIEnumerator = 11</code></dt>
+  
+  <dd><p>Debug info enumerator</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIExpression"><code>DIExpression = 7</code></dt>
+  
+  <dd><p>Debug info expression</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIFile"><code>DIFile = 16</code></dt>
+  
+  <dd><p>Debug info file reference</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIGlobalVariable"><code>DIGlobalVariable = 25</code></dt>
+  
+  <dd><p>Debug info for a global variable</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIGlobalVariableExpression"><code>DIGlobalVariableExpression = 8</code></dt>
+  
+  <dd><p>Debug info global variable expression</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIImportedEntity"><code>DIImportedEntity = 29</code></dt>
+  
+  <dd><p>Debug info for an imported entity</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DILexicalBlock"><code>DILexicalBlock = 19</code></dt>
+  
+  <dd><p>Debug info lexical block</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DILexicalBlockFile"><code>DILexicalBlockFile = 20</code></dt>
+  
+  <dd><p>Debug info lexical block file</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DILocalVariable"><code>DILocalVariable = 26</code></dt>
+  
+  <dd><p>Debug info for a local variable</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DILocation"><code>DILocation = 6</code></dt>
+  
+  <dd><p>Debug info location</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIMacro"><code>DIMacro = 31</code></dt>
+  
+  <dd><p>Debug info for a macro</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIMacroFile"><code>DIMacroFile = 32</code></dt>
+  
+  <dd><p>Debug info for a macro file</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIModule"><code>DIModule = 22</code></dt>
+  
+  <dd><p>Debug info fro a module</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DINamespace"><code>DINamespace = 21</code></dt>
+  
+  <dd><p>Debug info namespace</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DIObjCProperty"><code>DIObjCProperty = 28</code></dt>
+  
+  <dd><p>Debug info for an Objective C style property</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DISubprogram"><code>DISubprogram = 18</code></dt>
+  
+  <dd><p>Debug info sub program</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DISubrange"><code>DISubrange = 10</code></dt>
+  
+  <dd><p>Debug info sub range</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DISubroutineType"><code>DISubroutineType = 15</code></dt>
+  
+  <dd><p>Debug info subroutine type</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DITemplateTypeParameter"><code>DITemplateTypeParameter = 23</code></dt>
+  
+  <dd><p>Debug info for a template type parameter</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DITemplateValueParameter"><code>DITemplateValueParameter = 24</code></dt>
+  
+  <dd><p>Debug info for a template value parameter</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_DistinctMDOperandPlaceholder"><code>DistinctMDOperandPlaceholder = 3</code></dt>
+  
+  <dd><p>Distinct metadata place holder</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_GenericDINode"><code>GenericDINode = 9</code></dt>
+  
+  <dd><p>Generic Debug info node</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_LocalAsMetadata"><code>LocalAsMetadata = 2</code></dt>
+  
+  <dd><p>Local value as metadata</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_MDString"><code>MDString = 0</code></dt>
+  
+  <dd><p>IrMetadata string</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Metadata_MetadataKind_MDTuple"><code>MDTuple = 5</code></dt>
+  
+  <dd><p>IrMetadata tuple</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Metadata/IrMetadata.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

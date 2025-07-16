@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Enum ArchKind | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Enum ArchKind | Ubiquity.NET ">
+      
+      <meta name="description" content="Enumeration for the Architecture portion of a target triple">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_ArchKind.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.ArchKind%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.ArchKind">
+
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_ArchKind" data-uid="Ubiquity.NET.Llvm.ArchKind" class="text-break">
+Enum ArchKind  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Triple.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Enumeration for the Architecture portion of a target triple</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum ArchKind</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Ubiquity_NET_Llvm_ArchKind_AMDGCN"><code>AMDGCN = 26</code></dt>
+  
+  <dd><p>AMD GCN GPUs</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Aarch64"><code>Aarch64 = 3</code></dt>
+  
+  <dd><p>AArch64 (little endian): aarch64</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Aarch64BE"><code>Aarch64BE = 4</code></dt>
+  
+  <dd><p>AArch64 (big endian): aarch64_be</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Aarch64_32"><code>Aarch64_32 = 5</code></dt>
+  
+  <dd><p>AArch64 32 bit (Little endian) ILP32: aarch64_32</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Amd64"><code>Amd64 = 38</code></dt>
+  
+  <dd><p>X86 64-bit (amd64)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Amdil"><code>Amdil = 43</code></dt>
+  
+  <dd><p>AMD IL</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Amdil64"><code>Amdil64 = 44</code></dt>
+  
+  <dd><p>AMD IL 64-bit pointers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Arc"><code>Arc = 6</code></dt>
+  
+  <dd><p>Synopsis ARC</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Arm"><code>Arm = 1</code></dt>
+  
+  <dd><p>ARM (little endian): arm, armv.*, xscale</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Armeb"><code>Armeb = 2</code></dt>
+  
+  <dd><p>ARM (big endian): armeb</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Avr"><code>Avr = 7</code></dt>
+  
+  <dd><p>AVR: Atmel AVR micro-controller</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_BPFeb"><code>BPFeb = 9</code></dt>
+  
+  <dd><p>eBPF or extended BPF or 64-bit BPF (big endian)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_BPFel"><code>BPFel = 8</code></dt>
+  
+  <dd><p>eBPF or extended BPF or 64-bit BPF (little endian)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Csky"><code>Csky = 10</code></dt>
+  
+  <dd><p>csky</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_DXil"><code>DXil = 11</code></dt>
+  
+  <dd><p>32-bit DirectX bytecode</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Hexagon"><code>Hexagon = 12</code></dt>
+  
+  <dd><p>Hexagon processor</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Hsail"><code>Hsail = 45</code></dt>
+  
+  <dd><p>AMD HSAIL</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Hsail64"><code>Hsail64 = 46</code></dt>
+  
+  <dd><p>AMD HSAIL with 64-bit pointers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Kalimba"><code>Kalimba = 52</code></dt>
+  
+  <dd><p>Generic Kalimba</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Lanai"><code>Lanai = 54</code></dt>
+  
+  <dd><p>Lanai 32-bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_LoongArch32"><code>LoongArch32 = 13</code></dt>
+  
+  <dd><p>LoongArch (32-bit)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_LoongArch64"><code>LoongArch64 = 14</code></dt>
+  
+  <dd><p>LoongArch (64-bit)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_M68k"><code>M68k = 15</code></dt>
+  
+  <dd><p>Motorola 680x0 family</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_MIPS"><code>MIPS = 16</code></dt>
+  
+  <dd><p>MIPS: mips, mipsallegrex</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_MIPS64"><code>MIPS64 = 18</code></dt>
+  
+  <dd><p>MIPS 64 bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_MIPS64el"><code>MIPS64el = 19</code></dt>
+  
+  <dd><p>MIPS 64-bit little endian</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_MIPSel"><code>MIPSel = 17</code></dt>
+  
+  <dd><p>MIPSEL: mipsel, mipsallegrexel</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_MSP430"><code>MSP430 = 20</code></dt>
+  
+  <dd><p>MSP430</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Nvptx"><code>Nvptx = 41</code></dt>
+  
+  <dd><p>NVidia PTX 32-bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Nvptx64"><code>Nvptx64 = 42</code></dt>
+  
+  <dd><p>NVidia PTX 64-bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_PPC"><code>PPC = 21</code></dt>
+  
+  <dd><p>PowerPC</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_PPC64"><code>PPC64 = 23</code></dt>
+  
+  <dd><p>PowerPC 64-bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_PPC64le"><code>PPC64le = 24</code></dt>
+  
+  <dd><p>PowerPC 64-bit little endian</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_PPCle"><code>PPCle = 22</code></dt>
+  
+  <dd><p>powerpc (little endian)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_R600"><code>R600 = 25</code></dt>
+  
+  <dd><p>R600 AMD GPUS HD2XXX-HD6XXX</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_RenderScript32"><code>RenderScript32 = 57</code></dt>
+  
+  <dd><p>Renderscript 32-bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_RenderScript64"><code>RenderScript64 = 58</code></dt>
+  
+  <dd><p>Renderscript 64-bit</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_RiscV32"><code>RiscV32 = 27</code></dt>
+  
+  <dd><p>RISC-V (32-bit)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_RiscV64"><code>RiscV64 = 28</code></dt>
+  
+  <dd><p>RISC-V (64-bit)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Shave"><code>Shave = 53</code></dt>
+  
+  <dd><p>Movidius vector VLIW processors</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Sparc"><code>Sparc = 29</code></dt>
+  
+  <dd><p>Sparc</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Sparcel"><code>Sparcel = 31</code></dt>
+  
+  <dd><p>SPARC Little-Endian</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Sparcv9"><code>Sparcv9 = 30</code></dt>
+  
+  <dd><p>SPARC V9</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Spir"><code>Spir = 47</code></dt>
+  
+  <dd><p>Standard Portable IR for OpenCL 32-bit version</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Spir64"><code>Spir64 = 48</code></dt>
+  
+  <dd><p>Standard Portable IR for OpenCL 64-bit version</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_SpirV"><code>SpirV = 49</code></dt>
+  
+  <dd><p>SPIR-V with logical memory layout.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_SpirV32"><code>SpirV32 = 50</code></dt>
+  
+  <dd><p>SPIR-V with 32-bit pointers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_SpirV64"><code>SpirV64 = 51</code></dt>
+  
+  <dd><p>SPIR-V with 64-bit pointers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_SystemZ"><code>SystemZ = 32</code></dt>
+  
+  <dd><p>SystemZ - s390x</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_TCE"><code>TCE = 33</code></dt>
+  
+  <dd><p>TCE</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_TCEle"><code>TCEle = 34</code></dt>
+  
+  <dd><p>TCE Little-Endian</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Thumb"><code>Thumb = 35</code></dt>
+  
+  <dd><p>Thumb (little-endian)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Thumbeb"><code>Thumbeb = 36</code></dt>
+  
+  <dd><p>Thumb (big-endian)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_UnknownArch"><code>UnknownArch = 0</code></dt>
+  
+  <dd><p>Invalid or unknown architecture</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Ve"><code>Ve = 59</code></dt>
+  
+  <dd><p>NEC SX Aurora Vector Engine</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Wasm32"><code>Wasm32 = 55</code></dt>
+  
+  <dd><p>WebAssembly with 32-bit pointers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Wasm64"><code>Wasm64 = 56</code></dt>
+  
+  <dd><p>WebAssembly with 64-bit pointers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_X86"><code>X86 = 37</code></dt>
+  
+  <dd><p>x86 i[3-9]86</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Xcore"><code>Xcore = 39</code></dt>
+  
+  <dd><p>XCore</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_ArchKind_Xtensa"><code>Xtensa = 40</code></dt>
+  
+  <dd><p>Tensilica: Xtensa</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Triple.cs/#L14" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

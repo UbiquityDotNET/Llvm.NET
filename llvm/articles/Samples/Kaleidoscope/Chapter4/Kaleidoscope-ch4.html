@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>4. Kaleidoscope: Adding JIT | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="4. Kaleidoscope: Adding JIT | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter4/Kaleidoscope-ch4.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../../index.html">
+            <img id="logo" class="svg" src="../../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Kaleidoscope-ch4">
+<h1 id="4-kaleidoscope-adding-jit">4. Kaleidoscope: Adding JIT</h1>
+
+<p>At this point things generally re-converge with the official LLVM tutorials
+(optimization was already covered in the previous sub-chapter.)</p>
+<h2 id="adding-jit-compilation">Adding JIT Compilation</h2>
+<p>Now that the code generation produces optimized code, it is time to get to the fun
+part - executing code! The basic idea is to allow the user to type in the
+Kaleidoscope code as supported thus far and it will execute to produce a result.
+Unlike the previous chapters, instead of just printing out the LLVM IR
+representation of a top level expression this sample will execute the code and
+provide the results back to the user! (Like a real language/Tool should!)</p>
+<h3 id="main-driver">Main Driver</h3>
+<p>The changes needed to the main driver are pretty simple, mostly consisting of
+removing a couple lines of code that print out the LLVM IR for the module at the
+end when defined. The code already supported showing the results if it was a
+floating point value by checking if the generated value is a
+<a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Values.ConstantFP.html">ConstantFP</a>. We'll see a bit later on
+why that is a ConstantFP value.</p>
+<h3 id="code-generator">Code Generator</h3>
+<p>The code generation needs an update to support using a JIT engine to generate and
+execute the Kaleidescope code provided by the user.</p>
+<h4 id="generator-fields">Generator fields</h4>
+<p>To begin with, the generator needs some additional members, including the JIT
+engine.</p>
+<pre><code class="lang-csharp" name="PrivateMembers">private Module? Module;
+private readonly DynamicRuntimeState RuntimeState;
+private readonly ThreadSafeContext ThreadSafeContext;
+private InstructionBuilder? InstructionBuilder;
+private readonly Dictionary&lt;string, Value&gt; NamedValues = [];
+private readonly KaleidoscopeJIT KlsJIT = new( );
+private readonly Dictionary&lt;string, ResourceTracker&gt; FunctionModuleMap = [];
+</code></pre>
+<p>The JIT engine is retained for the generator to use. The same engine is held for
+the lifetime of the generator so that functions are added to the same engine and
+can call functions previously added. The JIT provides a 'tracker' for every module
+added, which is used to reference the module in the JIT, this is normally used to
+remove the module from the JIT engine when re-defining a function. Thus, a map of
+the function names and the JIT tracker created for them is maintained. Additionally,
+a collection of defined function prototypes is retained to enable matching a
+function call to a previously defined function. Since the JIT support uses a module
+per function approach, lookups on the current module aren't sufficient.</p>
+<p>The JIT engine use a <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext.html">ThreadSafeContext</a>
+and <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule.html">ThreadSafeModule</a> to manage
+callbacks and materialization in the JIT while supporting multiple threads of
+execution. Thus the context type for all modules and generation options needs the
+new type.</p>
+<p>As described previously the names of functions the module is generated for is held
+in a dictionary with the <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker.html">ResourceTracker</a>
+for that module to ensure it is 'removable'.</p>
+<h4 id="generator-initialization">Generator initialization</h4>
+<p>The initialization of the generator requires updating to support the new members.</p>
+<pre><code class="lang-csharp" name="Initialization">public CodeGenerator( DynamicRuntimeState globalState, TextWriter? outputWriter = null )
+    : base( null )
+{
+    ArgumentNullException.ThrowIfNull( globalState );
+
+    // set the global output writer for KlsJIT execution
+    // the &quot;built-in&quot; functions need this to generate output somewhere.
+    KaleidoscopeJIT.OutputWriter = outputWriter ?? Console.Out;
+    if(globalState.LanguageLevel &gt; LanguageLevel.SimpleExpressions)
+    {
+        throw new ArgumentException( &quot;Language features not supported by this generator&quot;, nameof( globalState ) );
+    }
+
+    RuntimeState = globalState;
+    ThreadSafeContext = new();
+}
+</code></pre>
+<p>In particular, the static output writer is set for the JIT to use whatever writer
+was provided. Normally, this is the system console but for testing it can be any
+standard <code>TextWriter</code>. Then the <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext.html">ThreadSafeContext</a>
+is created for the generator and used to create the instruction builder.</p>
+<h4 id="jit-engine">JIT Engine</h4>
+<p>The JIT engine itself is a class provided in the Kaleidoscope.Runtime library
+that wraps a Ubiquity.NET.Llvm OrcJIT engine. It is NOT derived from that class as
+a JIT engine is created using a &quot;Builder&quot; or factory pattern. So it is not possible
+to create a derived type using a builder.</p>
+<pre><code class="lang-csharp" name="Kaleidoscope JIT">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;KaleidoscopeJIT.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+using Ubiquity.NET.Extensions;
+using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Llvm;
+using Ubiquity.NET.Llvm.OrcJITv2;
+
+namespace Kaleidoscope.Runtime
+{
+    /// &lt;summary&gt;JIT engine for Kaleidoscope language&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This engine uses the &lt;see cref=&quot;Ubiquity.NET.Llvm.OrcJITv2.LlJIT&quot;/&gt; engine to support lazy
+    /// compilation of LLVM IR modules added to the JIT.
+    /// &lt;/remarks&gt;
+    public sealed class KaleidoscopeJIT
+        : IOrcJit
+    {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;KaleidoscopeJIT&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;remarks&gt;This creates a JIT with a default set of passes for 'O3'&lt;/remarks&gt;
+        public KaleidoscopeJIT( )
+            : this( &quot;default&lt;O3&gt;&quot;u8 )
+        {
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;KaleidoscopeJIT&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;optimizationPasses&quot;&gt;Optimization passes to use for each module transform in this JIT&lt;/param&gt;
+        public KaleidoscopeJIT( params LazyEncodedString[] optimizationPasses )
+        {
+            // using scope as safety in the face of exceptions
+            // normal flow is that the builder is transferred to
+            // (and disposed of by) the native code in CreateJit().
+            // After that call the Dispose call on the builder is
+            // a safe NOP.
+            using(var builder = LLJitBuilder.CreateBuilderForHost( CodeGenOpt.Aggressive, RelocationMode.Static, CodeModel.Large ))
+            {
+                ComposedJIT = builder.CreateJit();
+            }
+
+            OptimizationPasses = optimizationPasses;
+            SymbolFlags symFlags = new(SymbolGenericOption.Callable);
+
+            // Add a materializer for the well-known symbols so they are available to
+            // callers via an &quot;extern&quot; declaration.
+            unsafe
+            {
+                using var putchardName = MangleAndIntern(&quot;putchard&quot;u8);
+                using var printdName = MangleAndIntern(&quot;printd&quot;u8);
+
+                var absoluteSymbols = new KvpArrayBuilder&lt;SymbolStringPoolEntry, EvaluatedSymbol&gt;
+                {
+                    [putchardName] = new(MakeRawPtr(&amp;BuiltIns.PutChard), symFlags),
+                    [printdName] = new(MakeRawPtr(&amp;BuiltIns.Printd), symFlags),
+                }.ToImmutable();
+
+                using var absoluteMaterializer = new AbsoluteMaterializationUnit(absoluteSymbols);
+                MainLib.Define( absoluteMaterializer );
+            }
+
+            TransformLayer.SetTransform( ModuleTransformer );
+        }
+
+        public void Dispose( )
+        {
+            ComposedJIT.Dispose();
+        }
+
+        #region IIOrcJit (via ComposedJIT)
+        public JITDyLib MainLib =&gt; ComposedJIT.MainLib;
+
+        public LazyEncodedString DataLayoutString =&gt; ComposedJIT.DataLayoutString;
+
+        public LazyEncodedString TripleString =&gt; ComposedJIT.TripleString;
+
+        public IrTransformLayer TransformLayer =&gt; ComposedJIT.TransformLayer;
+
+        public ExecutionSession Session =&gt; ComposedJIT.Session;
+
+        public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default )
+            =&gt; ComposedJIT.AddWithTracking( ctx, module, lib );
+
+        public ulong Lookup( LazyEncodedString name ) =&gt; ComposedJIT.Lookup( name );
+
+        public void Add( JITDyLib lib, ThreadSafeModule module ) =&gt; ComposedJIT.Add( lib, module );
+
+        public void Add( ResourceTracker tracker, ThreadSafeModule module ) =&gt; ComposedJIT.Add( tracker, module );
+
+        public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name ) =&gt; ComposedJIT.MangleAndIntern( name );
+        #endregion
+
+        /// &lt;summary&gt;Gets or sets the output writer for output from the program.&lt;/summary&gt;
+        /// &lt;remarks&gt;The default writer is &lt;see cref=&quot;Console.Out&quot;/&gt;.&lt;/remarks&gt;
+        public static TextWriter OutputWriter { get; set; } = Console.Out;
+
+        // call back to handle per module transforms in the JIT
+        // Each IR module is added to the JIT and only converted to native code once, when
+        // resolved to an address. Thus, this is called for EVERY module added the first time
+        // it is resolved. (Which may be when the code from another module calls the code in
+        // another one)
+        private void ModuleTransformer( ThreadSafeModule module, MaterializationResponsibility responsibility, out ThreadSafeModule? replacementModule )
+        {
+            // This implementation does not replace the module
+            replacementModule = null;
+
+            // work on the per thread module directly
+            module.WithPerThreadModule( ( module ) =&gt;
+            {
+                // force it to use the JIT's triple and data layout
+                module.TargetTriple = TripleString;
+                module.DataLayoutString = DataLayoutString;
+
+                // perform optimizations on the whole module if there are
+                // any passes for this JIT instance.
+                return OptimizationPasses.Length == 0 ? default : module.TryRunPasses( OptimizationPasses );
+            } );
+        }
+
+        // Optimization passes used in the transform function for materialized modules
+        // Default constructor set covers the basics; more are possible and may produce
+        // better results but could also end up taking more effort than just materializing
+        // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged
+        // for any serious production use.
+        private readonly LazyEncodedString[] OptimizationPasses;
+        private readonly LlJIT ComposedJIT;
+
+        // Cleaner workaround for ugly compiler casting requirements
+        // The &amp; operator officially has no type and MUST be cast to
+        // or passed into a value of a function pointer type.
+        // Thus the provided parameter type does the job and allows
+        // a simple cast to the required JIT address form.
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        private static unsafe UInt64 MakeRawPtr( delegate* unmanaged[Cdecl]&lt; double, double &gt; funcPtr )
+        {
+            return (UInt64)funcPtr;
+        }
+
+        // These are the built-in functions known by the Kaleidoscope JIT and used by many of the sample chapters.
+        // They are registered with the JIT in the constructor as absolute symbols.
+        private static class BuiltIns
+        {
+            [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            [SuppressMessage( &quot;Design&quot;, &quot;CA1031:Do not catch general exception types&quot;, Justification = &quot;REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code&quot; )]
+            internal static double Printd( double x )
+            {
+                // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
+                try
+                {
+                    OutputWriter?.WriteLine( x );
+                    return 0.0F;
+                }
+                catch
+                {
+                    return 0.0;
+                }
+            }
+
+            [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
+            [SuppressMessage( &quot;Design&quot;, &quot;CA1031:Do not catch general exception types&quot;, Justification = &quot;REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code&quot; )]
+            internal static double PutChard( double x )
+            {
+                // STOP ALL EXCEPTIONS from bubbling out to JIT'ed code
+                try
+                {
+                    OutputWriter?.Write( (char)x );
+                    return 0.0F;
+                }
+                catch
+                {
+                    return 0.0;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p><a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html">LlJIT</a> provides support for declaring
+functions that are external to the JIT that the JIT'd module code can call (
+Absolutes). For Kaleidoscope, two such functions are defined directly in
+<code>KaleidoscopeJIT</code> (<code>putchard</code> and <code>printd</code>), which is consistent with the same
+functions used in the official LLVM C++ tutorial. Thus, allowing sharing of samples
+between the two. These functions are used to provide rudimentary console output
+support.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>All such methods implemented in .NET must block any exception from bubbling out
+of the call as the JIT engine doesn't know anything about them and neither does
+the Kaleidoscope language. Exceptions thrown in these functions would produce
+undefined results, at best - probably crashing the application.</p>
+</div>
+<h4 id="generator-dispose">Generator Dispose</h4>
+<p>Since the JIT engine is disposable, the code generators Dispose() method must now
+call the Dispose() method on the JIT engine.</p>
+<pre><code class="lang-csharp" name="Dispose">public void Dispose( )
+{
+    foreach(var tracker in FunctionModuleMap.Values)
+    {
+        tracker.Dispose();
+    }
+
+    KlsJIT.Dispose();
+    Module?.Dispose();
+    InstructionBuilder?.Dispose();
+    ThreadSafeContext.Dispose();
+}
+</code></pre><h4 id="generate-method">Generate Method</h4>
+<p>To actually execute the code the generated modules are added to the JIT. If the
+function is an anonymous top level expression, it is eagerly compiled and a
+delegate is retrieved from the JIT to allow calling the compiled function directly.
+The delegate is then called to get the result. Once an anonymous function produces
+a value, it is no longer used so is removed from the JIT and the result value
+returned. For other functions the module is added to the JIT and the function is
+returned.</p>
+<p>For named function definitions, the module is lazy added to the JIT as it isn't
+known if/when the function is called. The JIT engine will compile modules lazy
+added into native code on first use. (Though if the function is never used, then
+creating the IR module was wasted. (<a class="xref" href="../Chapter7.1/Kaleidoscope-ch7.1.html">Chapter 7.1</a> has a
+solution for even that extra overhead - truly lazy JIT). Since Kaleidoscope is
+generally a dynamic language it is possible and reasonable for the user to
+re-define a function (to fix an error, or provide a completely different
+implementation all together). Therefore, any named functions are removed from the
+JIT, if they existed, before adding in the new definition. Otherwise the JIT
+resolver would still resolve to the previously compiled instance.</p>
+<pre><code class="lang-csharp" name="Generate">public Value? Generate( IAstNode ast )
+{
+    ArgumentNullException.ThrowIfNull( ast );
+
+    // Prototypes, including extern are ignored as AST generation
+    // adds them to the RuntimeState so that already has the declarations
+    // They are looked up and added to the module as extern if not already
+    // present if they are called.
+    if(ast is not FunctionDefinition definition)
+    {
+        return default;
+    }
+
+    IContext ctx = ThreadSafeContext.PerThreadContext;
+    InstructionBuilder?.Dispose();
+    InstructionBuilder = new InstructionBuilder( ThreadSafeContext.PerThreadContext );
+    Module?.Dispose();
+    Module = ctx.CreateBitcodeModule();
+    Debug.Assert( Module is not null, &quot;Module initialization failed&quot; );
+
+    var function = definition.Accept( this ) as Function ?? throw new CodeGeneratorException(ExpectValidFunc);
+    if(!function.ParentModule.Verify( out string msg ))
+    {
+        throw new CodeGeneratorException( msg );
+    }
+
+    if(definition.IsAnonymous)
+    {
+        // Directly track modules for anonymous functions as calling the function is the guaranteed
+        // next step and then it is removed as nothing can reference it again.
+        // NOTE, this could eagerly compile the IR to an object file as a memory buffer and then add
+        // that - but what would be the point? The JIT can do that for us as soon as the symbol is looked
+        // up. The object support is more for existing object files than for generated IR.
+        using ResourceTracker resourceTracker = KlsJIT.AddWithTracking(ThreadSafeContext, Module);
+
+        // Invoking the function via a function pointer is an &quot;unsafe&quot; operation.
+        // Also note that .NET has no mechanism to catch native exceptions like
+        // access violations or stack overflows from infinite recursion. They will
+        // crash the app.
+        double nativeRetVal;
+        unsafe
+        {
+            var pFunc = (delegate* unmanaged[Cdecl]&lt;double&gt;)KlsJIT.Lookup(definition.Name);
+            nativeRetVal = pFunc();
+        }
+
+        Value retVal = ctx.CreateConstant( nativeRetVal );
+        resourceTracker.RemoveAll();
+        return retVal;
+    }
+    else
+    {
+        // Destroy any previously generated module for this function.
+        // This allows re-definition as the new module will provide the
+        // implementation.
+        if(FunctionModuleMap.Remove( definition.Name, out ResourceTracker? tracker ))
+        {
+            tracker.RemoveAll();
+            tracker.Dispose();
+        }
+
+        // Unknown if any future input will call the function so add it for lazy compilation.
+        // Native code is generated for the module automatically only when required.
+        FunctionModuleMap.Add( definition.Name, KlsJIT.AddWithTracking( ThreadSafeContext, Module ) );
+        return function;
+    }
+}
+</code></pre>
+<p>Keeping all the JIT interaction in the generate method isolates the rest of the
+generation from any awareness of the JIT. This will help when adding truly lazy JIT
+compilation in <a class="xref" href="../Chapter7.1/Kaleidoscope-ch7.1.html">Chapter 7.1</a> and AOT compilation in
+<a class="xref" href="../Chapter8/Kaleidoscope-ch8.html">Chapter 8</a></p>
+<h4 id="getordeclarefunction">GetOrDeclareFunction()</h4>
+<p>Next is to update the GetOrDeclareFunction() to handle the new support for
+<a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext.html">ThreadSafeContext</a> and a sanity
+check for the nullability of a module.</p>
+<pre><code class="lang-csharp" name="Main">
+// Retrieves a Function for a prototype from the current module if it exists,
+// otherwise declares the function and returns the newly declared function.
+private Function GetOrDeclareFunction( Prototype prototype )
+{
+    if(Module is null)
+    {
+        throw new InvalidOperationException( &quot;ICE: Can't get or declare a function without an active module&quot; );
+    }
+
+    if(Module.TryGetFunction( prototype.Name, out Function? function ))
+    {
+        return function;
+    }
+
+    IContext ctx = ThreadSafeContext.PerThreadContext;
+    var llvmSignature = ctx.GetFunctionType( returnType: ctx.DoubleType, args: prototype.Parameters.Select( _ =&gt; ctx.DoubleType ) );
+    var retVal = Module.CreateFunction( prototype.Name, llvmSignature );
+
+    int index = 0;
+    foreach(var argId in prototype.Parameters)
+    {
+        retVal.Parameters[ index ].Name = argId.Name;
+        ++index;
+    }
+
+    return retVal;
+}
+</code></pre><h4 id="function-definitions">Function Definitions</h4>
+<p>Visiting a function definition needs to remove the previously added manual step of
+running the optimization passes. That is now handled by the Kaleidescope JIT as a
+transformation layer. Before final target code generation is performed on a symbol
+the transforms are run to perform any modifications desired. This makes the
+optimization process a lazy operation as well as the final target machine native
+code generation. The JIT is setup with a default pass pipeline that is roughly
+equivalent to a the Clang compiler with 'O3' optimizations.</p>
+<pre><code class="lang-csharp" name="Main">public override Value? Visit( FunctionDefinition definition )
+{
+    ArgumentNullException.ThrowIfNull( definition );
+    Debug.Assert( InstructionBuilder is not null, &quot;Internal error Instruction builder should be set in Generate already&quot; );
+
+    var function = GetOrDeclareFunction( definition.Signature );
+    if(!function.IsDeclaration)
+    {
+        throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
+    }
+
+    try
+    {
+        var entryBlock = function.AppendBasicBlock( &quot;entry&quot; );
+        InstructionBuilder.PositionAtEnd( entryBlock );
+        NamedValues.Clear();
+        foreach(var param in definition.Signature.Parameters)
+        {
+            NamedValues[ param.Name ] = function.Parameters[ param.Index ];
+        }
+
+        var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
+        InstructionBuilder.Return( funcReturn );
+        function.Verify();
+
+        return function;
+    }
+    catch(CodeGeneratorException)
+    {
+        function.EraseFromParent();
+        throw;
+    }
+}
+</code></pre><h2 id="conclusion">Conclusion</h2>
+<p>While the amount of words needed to describe the changes to support JIT execution
+here isn't exactly small, the actual code changes required really are. The Parser
+and JIT engine do all the heavy lifting. Ubiquity.NET.Llvm.JIT provides a clean
+interface to the underlying LLVM OrcJIT v2 that fits with common patterns and
+runtime support for .NET. Very cool, indeed! 🤓</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Chapter4/Kaleidoscope-ch4.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

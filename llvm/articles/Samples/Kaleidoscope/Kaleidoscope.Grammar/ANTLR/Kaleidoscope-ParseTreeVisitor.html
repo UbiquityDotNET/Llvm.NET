@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Kaleidoscope Parse Tree Visitors | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Kaleidoscope Parse Tree Visitors | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Kaleidoscope.Grammar/ANTLR/Kaleidoscope-ParseTreeVisitor.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../../../index.html">
+            <img id="logo" class="svg" src="../../../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Kaleidoscope-ParseTreeVisitor">
+<h1 id="kaleidoscope-parse-tree-visitors">Kaleidoscope Parse Tree Visitors</h1>
+
+<p>The Ubiquity.NET.Llvm Kaleidoscope tutorials all use ANTLR4 to parse the Kaleidoscope language When ANTLR processes the
+language grammar description to generate the lexer and parser it also generates a base &quot;visitor&quot; class for applying
+the <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Visitor pattern</a> to the parse tree. This is the primary mechanism
+for generating the <a class="xref" href="../AST/Kaleidoscope-AST.html">AST</a> for these examples. The AST transformation classes derive from the ANTLR
+generated base visitor class.</p>
+<p>There are only a few top level rules in the grammar to consider (although each has many sub rules).</p>
+<pre><code class="lang-antlr" name="repl">repl
+    : DEF prototype expression[0] # FunctionDefinition
+    | EXTERN prototype            # ExternalDeclaration
+    | expression[0]               # TopLevelExpression
+    | SEMICOLON                   # TopLevelSemicolon
+    ;
+
+</code></pre>
+<p>The parse tree consist of a tree of nodes generated for each rule in the grammar. The rule classes are generated at
+build time when the antlr grammar file is parsed. The C# target for ANTLR4 will generate the rule classes with the
+partial keyword, allowing the application code to add application specific support to the rule classes, and thus to
+the parse tree. For Kaleidoscope, this is used to provide simpler access to the information parsed from the Kaleidoscope
+language input simplifying generation of the AST. For simplicity and clarity of understanding each of the extended partial
+classes are placed into their own source file.</p>
+<p>Generally speaking, the use of ANTLR and the ParseTree is a hidden internal implementation detail of the Ubiquity.NET.Llvm
+Kaleidoscope tutorials. The actual code generation deals only with the AST so the parsing could be done with some
+other technology. (Though with all the functionality that ANTLR4 provides it would take a strong argument to justify
+something else)</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Kaleidoscope.Grammar/ANTLR/Kaleidoscope-ParseTreeVisitor.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

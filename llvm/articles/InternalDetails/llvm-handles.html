@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>LLVM-C Handle Wrappers | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="LLVM-C Handle Wrappers | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/llvm/articles/InternalDetails/llvm-handles.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="">
+
+<h2 id="llvm-c-handle-wrappers">LLVM-C Handle wrappers</h2>
+<p>&quot;Handles&quot; for LLVM are just opaque pointers. They generally come in one of three forms.</p>
+<ol>
+<li>Context owned<br>
+Where there is always a well known owner that ultimately is responsible for
+disposing/releasing the resource.</li>
+<li>Global resources<br>
+Where there is no parent child ownership relationship and callers must manually
+release the resource.</li>
+<li>An unowned alias to a resource<br>
+This occurs when a child of a resource contains a reference to the parent. In
+such a case the handle should be considered like an alias and not disposed.</li>
+</ol>
+<p>The Handle implementations in Ubiquity.NET.Llvm follow consistent patterns for
+implementing each form of handle. All handle types are generated from the native C++
+headers. Thus, they area source only NuGet package built along with the native
+extended C API library.
+Ultimately, the handles are reduced to two forms:</p>
+<ol>
+<li>Requires caller to release them
+<ul>
+<li>Lifetime of the thing the handle refers to is controlled by the caller</li>
+<li>Release is implemented by standard .NET pattern with <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></li>
+</ul>
+</li>
+<li>Does NOT require any dispose
+<ul>
+<li>Lifetime of the thing the handle refers to is controlled by the container</li>
+</ul>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The generated sources are not useful outside of the <code>Ubiquity.NET.Llvm.Interop</code> as
+they use classes within that as a base class. The use of code generation for the
+handles in a different repo is a bit fragile as the  generated handles are derived
+from and depend on support in a different consuming repository. This is a result of
+the historical split of the native code libraries. The build of that, takes a MUCH
+longer time AND requires distinct runners for each RID supported. While there is
+thinking about how to unify these repositories, that isn't done yet. The focus is
+on getting the support for LLVM20.x and especially the JIT support. [It's been a
+long run with LLVM10 as the only option.]</p>
+</div>
+<h3 id="contextual-handles-and-aliases">Contextual handles and Aliases</h3>
+<p>These handles are never manually released or disposed, though releasing their containers will
+make them invalid. The general pattern for implementing such handles is to use a generated
+struct that is marked as implementing the <code>IContextHandle&lt;THandle&gt;</code> interface. This interface
+is ONLY used during marshalling where the concrete type <code>THandle</code> is known and therefore does
+NOT require any boxing. The struct is essentially a strongly typed alias for an nint value.
+Contiguous sequences of these handles are re-interpret castable to a sequence of nint. (The
+interop support uses this for efficient marshalling of arrays.)</p>
+<h3 id="global-handles">Global Handles</h3>
+<p>Global handles require the caller to explicitly release the resources. In
+Ubiquity.NET.Llvm.Interop these are managed with the .NET <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.interopservices.safehandle">SafeHandle</a>
+types through an LLVM interop specific derived type <code>GlobalHandleBase</code>. Since these types are
+derived from a <code>SafeHandle</code> they are cleaned up with the standard .NET <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>.</p>
+<p>All resource handles in <code>Ubiquity.NET.Llvm,Interop</code> requiring explicit release are handled consistently
+using the generated handle types as a distinct type derived from <code>GlobalHandleBase</code></p>
+<p>Global handles that also have an alias include a declaration of the alias type and allow
+conversion to the unowned form of the handle.</p>
+<h3 id="global-alias-handles">Global Alias handles</h3>
+<p>Global alias handles are a specialized form of global handles where they do not participate in
+ownership control/release. These are commonly used when a child of a global container exposes
+a property that references the parent container. In such cases the reference retrieved from the
+child shouldn't be used to destroy the parent when no longer used.</p>
+<p>In Ubiquity.NET.Llvm.Interop this is represented as an unowned context handle, that is alias
+handles are the same as a context handle. There is no way to convert from an unowned alias to
+an owned global handle (The other way around is allowed and supported)</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/llvm/articles/InternalDetails/llvm-handles.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Kaleidoscope Abstract Syntax Tree | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Kaleidoscope Abstract Syntax Tree | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Kaleidoscope.Grammar/AST/Kaleidoscope-AST.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../../../index.html">
+            <img id="logo" class="svg" src="../../../../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Kaleidoscope-AST">
+<h1 id="kaleidoscope-abstract-syntax-tree">Kaleidoscope Abstract Syntax Tree</h1>
+
+<p>As with many language parsing systems Kaleidoscope leverages an Abstract Syntax Tree (AST) to simplify
+generating code from the parsed language. Each type of node in the tree implements the IAstNode interface</p>
+<p>This interface provides the basic properties of any node in the tree for common uses. The Kaleidoscope
+language is a simple one and, therefore, has only a few kinds of nodes. The AST consist of the following
+basic categories of nodes:</p>
+<ul>
+<li><a href="#root-node">Root Node</a>
+<ul>
+<li><a href="#function-declaration">Function Declaration</a></li>
+<li><a href="#function-definition">Function Definition</a></li>
+<li><a href="#variable-declaration">Variable Declaration</a>
+<ul>
+<li><a href="#local-variable">Local Variable</a></li>
+<li><a href="#function-parameter">Function Parameter</a></li>
+</ul>
+</li>
+<li><a href="#expression">Expression</a>
+<ul>
+<li><a href="#variable-reference">Variable Reference</a></li>
+<li><a href="#unary-operator">Unary Operator</a></li>
+<li><a href="#binary-operator">Binary Operator</a>
+<ul>
+<li><a href="#assignment">Assignment</a></li>
+</ul>
+</li>
+<li><a href="#function-call">Function Call</a></li>
+<li><a href="#conditional">Conditional</a></li>
+<li><a href="#for-in">For-In</a></li>
+<li><a href="#var-in">Var-In</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="root-node">Root Node</h2>
+<p>The AstNode class forms the common base for all AST nodes, it provides the common location
+support for all nodes.</p>
+<pre><code class="lang-csharp" name="RootNode">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;RootNode.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class RootNode
+        : AstNode
+        , IAstNode
+    {
+        public RootNode( SourceLocation location, IAstNode child )
+            : this( location, [ child ] )
+        {
+        }
+
+        public RootNode( SourceLocation location, IEnumerable&lt;IAstNode&gt; children )
+            : base( location )
+        {
+            ChildNodes = [ .. children ];
+        }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children =&gt; ChildNodes;
+
+        public override string ToString( )
+        {
+            return string.Join( ' ', Children );
+        }
+
+        private readonly ImmutableArray&lt;IAstNode&gt; ChildNodes;
+    }
+}
+</code></pre><h2 id="function-definition">Function Definition</h2>
+<p>FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
+and the full body of the function.</p>
+<pre><code class="lang-csharp" name="FunctionDefinition">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;FunctionDefinition.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    /// &lt;summary&gt;AST type for a function definition&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This supports construction of anonymous functions
+    /// that do not have an explicit prototype in the source language
+    /// &lt;/remarks&gt;
+    public sealed class FunctionDefinition
+        : AstNode
+        , IAstNode
+    {
+        public FunctionDefinition( SourceLocation location
+                                 , Prototype signature
+                                 , IExpression body
+                                 , bool isAnonymous = false
+                                 )
+            : this( location, signature, body, ImmutableArray.Create&lt;LocalVariableDeclaration&gt;(), isAnonymous )
+        {
+        }
+
+        public FunctionDefinition( SourceLocation location
+                                 , Prototype signature
+                                 , IExpression body
+                                 , IImmutableList&lt;LocalVariableDeclaration&gt; localVariables
+                                 , bool isAnonymous = false
+                                 )
+            : base( location )
+        {
+            Signature = signature;
+            Body = body;
+            IsAnonymous = isAnonymous;
+            LocalVariables = localVariables;
+        }
+
+        /// &lt;summary&gt;Gets the prototype signature for the function&lt;/summary&gt;
+        public Prototype Signature { get; }
+
+        /// &lt;summary&gt;Gets the body of the function as an expression tree&lt;/summary&gt;
+        public IExpression Body { get; }
+
+        /// &lt;summary&gt;Gets a value indicating whether this function is an anonymous top level expression&lt;/summary&gt;
+        /// &lt;remarks&gt;This is useful during generation as anonymous expressions are discardable once they are generated&lt;/remarks&gt;
+        public bool IsAnonymous { get; }
+
+        public string Name =&gt; Signature.Name;
+
+        public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters =&gt; Signature.Parameters;
+
+        public IReadOnlyList&lt;LocalVariableDeclaration&gt; LocalVariables { get; }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                yield return Signature;
+                yield return Body;
+            }
+        }
+
+        public override string ToString( )
+        {
+            return $&quot;{Signature}{{{Body}}}&quot;;
+        }
+    }
+}
+</code></pre><h2 id="function-declaration">Function Declaration</h2>
+<pre><code class="lang-csharp" name="Function Signatures (Prototype)">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;ProtoType.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    /// &lt;summary&gt;Encapsulates data describing a function signature&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This is used to enable consistent representation when the prototype
+    /// is synthesized during code generation (i.e. Anonymous expressions)
+    /// &lt;/remarks&gt;
+    public sealed class Prototype
+        : AstNode
+        , IAstNode
+    {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
+        public Prototype( SourceLocation location, string name, params ParameterDeclaration[] parameters )
+            : this( location, name, false, false, parameters )
+        {
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
+        public Prototype( SourceLocation location, string name, IEnumerable&lt;ParameterDeclaration&gt; parameters )
+            : this( location, name, false, false, parameters )
+        {
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;name&quot;&gt;Name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;Names of each parameter&lt;/param&gt;
+        /// &lt;remarks&gt;
+        /// This version of the constructor is used to create synthetic prototypes that don't
+        /// exist within the original source.
+        /// &lt;/remarks&gt;
+        public Prototype( string name, params string[] parameters )
+            : this( default, name, false, false, parameters.Select( ( n, i ) =&gt; new ParameterDeclaration( default, name, i ) ) )
+        {
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;isCompilerGenerated&quot;&gt;Indicates if this is a compiler generated prototype&lt;/param&gt;
+        public Prototype( SourceLocation location, string name, bool isCompilerGenerated )
+            : this( location, name, isCompilerGenerated, false, [] )
+        {
+        }
+
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;Prototype&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;name of the function&lt;/param&gt;
+        /// &lt;param name=&quot;isCompilerGenerated&quot;&gt;Indicates if this is a compiler generated prototype&lt;/param&gt;
+        /// &lt;param name=&quot;isExtern&quot;&gt;Indicates if this is an external prototype&lt;/param&gt;
+        /// &lt;param name=&quot;parameters&quot;&gt;names of each parameter&lt;/param&gt;
+        public Prototype(
+            SourceLocation location,
+            string name,
+            bool isCompilerGenerated,
+            bool isExtern,
+            IEnumerable&lt;ParameterDeclaration&gt; parameters
+            )
+            : base( location )
+        {
+            Name = name;
+            Parameters = [ .. parameters ];
+            IsCompilerGenerated = isCompilerGenerated;
+            IsExtern = isExtern;
+        }
+
+        /// &lt;summary&gt;Gets the name of the function&lt;/summary&gt;
+        public string Name { get; }
+
+        /// &lt;summary&gt;Gets a value indicating whether the function prototype is an extern declaration&lt;/summary&gt;
+        public bool IsExtern { get; }
+
+        /// &lt;summary&gt;Gets a value indicating whether the function prototype is generated internally by compiler&lt;/summary&gt;
+        public bool IsCompilerGenerated { get; }
+
+        /// &lt;summary&gt;Gets the parameters for the function&lt;/summary&gt;
+        public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters { get; }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        /// &lt;inheritdoc/&gt;
+        public override IEnumerable&lt;IAstNode&gt; Children =&gt; Parameters;
+
+        /// &lt;inheritdoc/&gt;
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder( );
+            if(IsExtern)
+            {
+                bldr.Append( &quot;[extern]&quot; );
+            }
+
+            if(IsCompilerGenerated)
+            {
+                bldr.Append( &quot;[CompilerGenerated]&quot; );
+            }
+
+            bldr.Append( Name );
+            bldr.Append( '(' );
+            if(Parameters.Count &gt; 0)
+            {
+                bldr.Append( string.Join( &quot;, &quot;, Parameters.Select( p =&gt; p.ToString() ) ) );
+            }
+
+            bldr.Append( ')' );
+            return bldr.ToString();
+        }
+    }
+}
+</code></pre><h2 id="variable-declaration">Variable Declaration</h2>
+<p>IVariableDeclaration is implemented by local variable declarations and parameter declarations. The
+interface abstracts the differences between the two types of variable declarations for most common
+cases. Most code generation or AST consumers don't care about the differences (i.e. Parameters have
+an index but locals don't)</p>
+<pre><code class="lang-csharp" name="IVariableDeclaration">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;IVariableDeclaration.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public interface IVariableDeclaration
+        : IAstNode
+    {
+        string Name { get; }
+
+        bool CompilerGenerated { get; }
+    }
+}
+</code></pre><h3 id="local-variable">Local Variable</h3>
+<pre><code class="lang-csharp" name="Local Variable Declarations">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;LocalVariableDeclaration.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Text;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class LocalVariableDeclaration
+        : AstNode
+        , IVariableDeclaration
+    {
+        public LocalVariableDeclaration( SourceLocation location, string name, IExpression? initializer, bool compilerGenerated = false )
+            : base( location )
+        {
+            Name = name;
+            Initializer = initializer;
+            CompilerGenerated = compilerGenerated;
+        }
+
+        public string Name { get; }
+
+        public IExpression? Initializer { get; }
+
+        public bool CompilerGenerated { get; }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                if(Initializer != null)
+                {
+                    yield return Initializer;
+                }
+            }
+        }
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder();
+            if(CompilerGenerated)
+            {
+                bldr.Append( &quot;[CompilerGenerated]&quot; );
+            }
+
+            bldr.Append( &quot;Declare(&quot; );
+            bldr.Append( Name );
+            if(Initializer != null)
+            {
+                bldr.Append( &quot;, &quot; );
+                bldr.Append( Initializer );
+            }
+
+            bldr.Append( ')' );
+            return bldr.ToString();
+        }
+    }
+}
+</code></pre><h3 id="function-parameter">Function Parameter</h3>
+<pre><code class="lang-csharp" name="Parameter declarations">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;ParameterDeclaration.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class ParameterDeclaration
+        : AstNode
+        , IVariableDeclaration
+    {
+        public ParameterDeclaration( SourceLocation location, string name, int index )
+            : base( location )
+        {
+            Name = name;
+            Index = index;
+        }
+
+        public string Name { get; }
+
+        public int Index { get; }
+
+        public bool CompilerGenerated =&gt; false;
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children =&gt; [];
+
+        public override string ToString( )
+        {
+            return Name;
+        }
+    }
+}
+</code></pre><h2 id="expression">Expression</h2>
+<p>Kaleidoscope is a functional language, all expressions produce a value, even if it is always zero. There
+are no statements in the language. Expressions form the core of the language and the bulk of the AST.</p>
+<p>The IExpression interface forms the common interface for all AST expression nodes</p>
+<pre><code class="lang-csharp" name="IExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;IExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    /// &lt;summary&gt;This is a grouping interface for all AST nodes that are valid expressions&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// This is a grouping interface to allow other parts of the system to distinguish between
+    /// an arbitrary node and one that is ultimately an expression. This helps to ensure correctness
+    /// (e.g. a function declaration is not valid as an argument to an operator, only an expression is.
+    /// &lt;/remarks&gt;
+    public interface IExpression
+        : IAstNode
+    {
+    }
+}
+</code></pre>
+<p>While this is an empty interface, it serves to distinguish between AST nodes that are not expressions.
+Thus providing some type safety for consumers. (i.e. it makes no sense to have a prototype as the operand
+for a binary operator so only nodes that implement the IExpression tag interface are allowed) This isn't
+a common or generally recommended pattern for interfaces but makes sense here since some form of differentiation
+is needed.</p>
+<h3 id="unary-operator">Unary Operator</h3>
+<p>Unary operators are all user defined, so the AST simply represents them as a Function Definition. No
+additional node types are needed for unary operators in the AST.</p>
+<h3 id="binary-operator">Binary Operator</h3>
+<p>BinaryOperatorExpression covers the built-in operators, any user defined binary operators are transformed
+to a function declaration/definition</p>
+<pre><code class="lang-csharp" name="BinaryOperatorExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;BinaryOperatorExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public enum BuiltInOperatorKind
+    {
+        Invalid,
+        Assign,
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+        Less,
+        Pow
+    }
+
+    /// &lt;summary&gt;AST Expression node for a binary operator&lt;/summary&gt;
+    public sealed class BinaryOperatorExpression
+        : AstNode
+        , IExpression
+    {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;BinaryOperatorExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Source location of the operator expression&lt;/param&gt;
+        /// &lt;param name=&quot;lhs&quot;&gt;Left hand side expression for the operator&lt;/param&gt;
+        /// &lt;param name=&quot;op&quot;&gt;Operator type&lt;/param&gt;
+        /// &lt;param name=&quot;rhs&quot;&gt;Right hand side expression for the operator&lt;/param&gt;
+        public BinaryOperatorExpression( SourceLocation location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
+            : base( location )
+        {
+            Left = lhs;
+            Op = op;
+            Right = rhs;
+        }
+
+        /// &lt;summary&gt;Gets the left hand side expression&lt;/summary&gt;
+        public IExpression Left { get; }
+
+        /// &lt;summary&gt;Gets the operator kind for this operator&lt;/summary&gt;
+        public BuiltInOperatorKind Op { get; }
+
+        /// &lt;summary&gt;Gets the Operator name for this expression&lt;/summary&gt;
+        public string Name =&gt; Op.ToString();
+
+        /// &lt;summary&gt;Gets the Right hand side expression&lt;/summary&gt;
+        public IExpression Right { get; }
+
+        /// &lt;inheritdoc/&gt;
+        public sealed override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                yield return Left;
+                yield return Right;
+            }
+        }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        /// &lt;inheritdoc/&gt;
+        public override string ToString( )
+        {
+            return $&quot;{Name}({Left},{Right})&quot;;
+        }
+    }
+}
+</code></pre>
+<p>The properties are fairly self explanatory, including the kind of operator and the left and right sides of the
+operator. The normal code generator pattern for the binary operators is:</p>
+<ol>
+<li>Generate code for the left side expression to a new value</li>
+<li>Generate code for the right side expression to a new value</li>
+<li>Apply the operator to the generated left and right values</li>
+<li>Return the result</li>
+</ol>
+<h4 id="assignment">Assignment</h4>
+<p>Assignment is a special kind of binary operator to represent &quot;store&quot; semantics for a variable. (e.g. mutable variables).
+Code generation for the assignment must handle the left side operand with a slightly different pattern. In particular,
+the left hand side is not an evaluated expression. Instead, it is the variable to assign the right hand value to. Thus,
+there isn't anything to evaluate for the left hand side as it is always a Variable Reference for the variable to assign
+the value to.</p>
+<h3 id="function-call">Function Call</h3>
+<p>Calls to functions (extern, user defined operators, or user defined functions) are represented in the AST as a
+FunctionCallExpression. The FunctionCallExpression contains the declaration of the function to call along with
+expressions for all of the arguments to the function.</p>
+<pre><code class="lang-csharp" name="FunctionCallExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;FunctionCallExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Linq;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class FunctionCallExpression
+        : AstNode
+        , IExpression
+    {
+        public FunctionCallExpression( SourceLocation location, Prototype functionPrototype, params IEnumerable&lt;IExpression&gt; args )
+            : base( location )
+        {
+            FunctionPrototype = functionPrototype;
+            Arguments = [ .. args ];
+        }
+
+        public Prototype FunctionPrototype { get; }
+
+        public IReadOnlyList&lt;IExpression&gt; Arguments { get; }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                yield return FunctionPrototype;
+            }
+        }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override string ToString( )
+        {
+            return Arguments.Count == 0
+                ? $&quot;Call({FunctionPrototype})&quot;
+                : $&quot;Call({FunctionPrototype}, {string.Join( &quot;,&quot;, Arguments.Select( a =&gt; a.ToString() ) )})&quot;;
+        }
+    }
+}
+</code></pre><h3 id="variable-reference">Variable Reference</h3>
+<p>A variable reference is used to refer to a variable. In most cases this represents implicit &quot;load&quot; semantics for a
+variable. However, when used as the left hand side of an assignment operator, it has &quot;store&quot; semantics.</p>
+<pre><code class="lang-csharp" name="VariableReferenceExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;VariableReferenceExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class VariableReferenceExpression
+        : AstNode
+        , IExpression
+    {
+        public VariableReferenceExpression( SourceLocation location, IVariableDeclaration declaration )
+            : base( location )
+        {
+            Declaration = declaration;
+        }
+
+        public IVariableDeclaration Declaration { get; }
+
+        public string Name =&gt; Declaration.Name;
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                yield return Declaration;
+            }
+        }
+
+        public override string ToString( )
+        {
+            return $&quot;Load({Name})&quot;;
+        }
+    }
+}
+</code></pre><h3 id="conditional">Conditional</h3>
+<p>In Kaleidoscope conditional expressions follow the familiar if/then/else form, even though they are really more
+like the ternary operator expression <code>( x ? y : z )</code> in C and related languages.</p>
+<pre><code class="lang-csharp" name="ConditionalExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;ConditionalExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class ConditionalExpression
+        : AstNode
+        , IExpression
+    {
+        public ConditionalExpression( SourceLocation location
+                                    , IExpression condition
+                                    , IExpression thenExpression
+                                    , IExpression elseExpression
+                                    , LocalVariableDeclaration resultVar
+                                    )
+            : base( location )
+        {
+            Condition = condition;
+            ThenExpression = thenExpression;
+            ElseExpression = elseExpression;
+            ResultVariable = resultVar;
+        }
+
+        public IExpression Condition { get; }
+
+        public IExpression ThenExpression { get; }
+
+        public IExpression ElseExpression { get; }
+
+        // Compiler generated result variable supports building conditional
+        // expressions without the need for SSA form in the AST/Code generation
+        // by using mutable variables. The result is assigned a value from both
+        // sides of the branch. In pure SSA form this isn't needed as a PHI node
+        // would be used instead.
+        public LocalVariableDeclaration ResultVariable { get; }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                yield return Condition;
+                yield return ThenExpression;
+                yield return ElseExpression;
+            }
+        }
+
+        public override string ToString( )
+        {
+            return $&quot;Conditional({Condition}, {ThenExpression}, {ElseExpression})&quot;;
+        }
+    }
+}
+</code></pre><h3 id="for-in">For-In</h3>
+<p>The for in expression is used to implement loops in Kaleidoscope.</p>
+<pre><code class="lang-csharp" name="ForInExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;ForInExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class ForInExpression
+        : AstNode
+        , IExpression
+    {
+        public ForInExpression( SourceLocation location
+                              , LocalVariableDeclaration loopVariable
+                              , IExpression condition
+                              , IExpression step
+                              , IExpression body
+                              )
+            : base( location )
+        {
+            LoopVariable = loopVariable;
+            Condition = condition;
+            Step = step;
+            Body = body;
+        }
+
+        public LocalVariableDeclaration LoopVariable { get; }
+
+        public IExpression Condition { get; }
+
+        public IExpression Step { get; }
+
+        public IExpression Body { get; }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                yield return LoopVariable;
+                yield return Condition;
+                yield return Step;
+                yield return Body;
+            }
+        }
+
+        public override string ToString( )
+        {
+            return $&quot;for({LoopVariable}, {Condition}, {Step}, {Body})&quot;;
+        }
+    }
+}
+</code></pre><h3 id="var-in">Var-In</h3>
+<p>Var-In Expression is used to provide, potentially nested, local scopes for variables</p>
+<pre><code class="lang-csharp" name="VarInExpression">// -----------------------------------------------------------------------
+// &lt;copyright file=&quot;VarInExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// &lt;/copyright&gt;
+// -----------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Text;
+
+using Ubiquity.NET.Runtime.Utils;
+
+namespace Kaleidoscope.Grammar.AST
+{
+    public sealed class VarInExpression
+        : AstNode
+        , IExpression
+    {
+        public VarInExpression( SourceLocation location, IEnumerable&lt;LocalVariableDeclaration&gt; localVariables, IExpression body )
+            : base( location )
+        {
+            LocalVariables = localVariables;
+            Body = body;
+        }
+
+        public IEnumerable&lt;LocalVariableDeclaration&gt; LocalVariables { get; }
+
+        public IExpression Body { get; }
+
+        public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult&gt; klsVisitor
+                   ? klsVisitor.Visit( this )
+                   : visitor.Visit( this );
+        }
+
+        public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
+            where TResult : default
+        {
+            return visitor is IKaleidoscopeAstVisitor&lt;TResult, TArg&gt; klsVisitor
+                   ? klsVisitor.Visit( this, in arg )
+                   : visitor.Visit( this, in arg );
+        }
+
+        public override IEnumerable&lt;IAstNode&gt; Children
+        {
+            get
+            {
+                foreach(var local in LocalVariables)
+                {
+                    yield return local;
+                }
+
+                yield return Body;
+            }
+        }
+
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder( &quot;VarIn{&quot; );
+            bldr.AppendJoin( ',', LocalVariables )
+                .Append( &quot;}(&quot; )
+                .Append( Body )
+                .Append( ')' );
+            return bldr.ToString();
+        }
+    }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/src/Samples/Kaleidoscope/Kaleidoscope.Grammar/AST/Kaleidoscope-AST.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

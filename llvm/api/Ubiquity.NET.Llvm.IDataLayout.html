@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IDataLayout | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IDataLayout | Ubiquity.NET ">
+      
+      <meta name="description" content="Provides access to LLVM target data layout information">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_IDataLayout.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.IDataLayout%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.IDataLayout">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_IDataLayout" data-uid="Ubiquity.NET.Llvm.IDataLayout" class="text-break">
+Interface IDataLayout  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/IDataLayout.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Provides access to LLVM target data layout information</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDataLayout</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_IDataLayout_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>There is a distinction between various sizes and alignment for a given type
+that are target dependent.</p>
+<p>The following table illustrates the differences in sizes and their meaning
+ for a sample set of types.</p>
+|   Type  | SizeInBits | StoreSizeInBits | AbiSizeInBits |
+|---------|------------|-----------------|---------------|
+| i1      | 1          | 8               | 8             |
+| i8      | 8          | 8               | 8             |
+| i19     | 19         | 24              | 32            |
+| i32     | 32         | 32              | 32            |
+| i10     | 100        | 104             | 128           |
+| i128    | 128        | 128             | 128           |
+| Float   | 32         | 32              | 32            |
+| Double  | 64         | 64              | 64            |
+| X86_FP80| 80         | 80              | 96            |
+<div class="NOTE"><h5>note</h5><p>
+The allocation size depends on the alignment, and thus on the target.
+The values in the example table are for x86-32-linux.
+</p></div>
+|   Property      | Definition |
+|-----------------|------------|
+| SizeInBits      | Minimum number of bits needed to represent the full range of values for the type |
+| StoreSizeInBits | Minimum number of bits needed to actually store a *single* value of the type |
+| AbiSizeInBits   | Total number of bits used to store a value in a sequence, including any alignment padding |
+<p>The allocation size determines the total size of each entry in a sequence so that the &quot;next&quot; element is computed
+by adding the size to the start address of the current element.</p>
+</div>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.Endianness.html#Ubiquity_NET_Llvm_IDataLayout_Endianness">Endianness</a></dt>
+    <dd><p>Gets the byte ordering for this target</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.AbiAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_AbiAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the ABI specified alignment, in bytes, for a specified type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.AbiBitAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_AbiBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiBitAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Gets the ABI alignment of the type in bits</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf.html#Ubiquity_NET_Llvm_IDataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiSizeOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the ABI specified size of the given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.BitOffsetOfElement.html#Ubiquity_NET_Llvm_IDataLayout_BitOffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_">BitOffsetOfElement(IStructType, uint)</a></dt>
+    <dd><p>Gets the offset of a structure element in bits</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.BitSizeOf.html#Ubiquity_NET_Llvm_IDataLayout_BitSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">BitSizeOf(ITypeRef)</a></dt>
+    <dd><p>Returns the number of bits necessary to hold the specified type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.ByteSizeOf.html#Ubiquity_NET_Llvm_IDataLayout_ByteSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">ByteSizeOf(ITypeRef)</a></dt>
+    <dd><p>Gets the byte size of a type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">CallFrameAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the call frame alignment for a given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.ElementAtOffset.html#Ubiquity_NET_Llvm_IDataLayout_ElementAtOffset_Ubiquity_NET_Llvm_Types_IStructType_System_UInt64_">ElementAtOffset(IStructType, ulong)</a></dt>
+    <dd><p>Gets the element index for a specific offset in a given structure</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.IntPtrType.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_">IntPtrType(IContext)</a></dt>
+    <dd><p>Retrieves an LLVM integer type with the same bit width as a pointer for the default address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.IntPtrType.html#Ubiquity_NET_Llvm_IDataLayout_IntPtrType_Ubiquity_NET_Llvm_IContext_System_UInt32_">IntPtrType(IContext, uint)</a></dt>
+    <dd><p>Retrieves an LLVM integer type with the same bit width as
+a pointer for the given address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.OffsetOfElement.html#Ubiquity_NET_Llvm_IDataLayout_OffsetOfElement_Ubiquity_NET_Llvm_Types_IStructType_System_UInt32_">OffsetOfElement(IStructType, uint)</a></dt>
+    <dd><p>Gets the offset of an element in a structure</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PointerSize.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize">PointerSize()</a></dt>
+    <dd><p>Gets the size of a pointer for the default address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PointerSize.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize_System_UInt32_">PointerSize(uint)</a></dt>
+    <dd><p>Retrieves the size of a pointer for a given address space of the target</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">PreferredAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Gets the preferred alignment for an LLVM type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Values_Value_">PreferredAlignmentOf(Value)</a></dt>
+    <dd><p>Gets the preferred alignment for a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PreferredBitAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_PreferredBitAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">PreferredBitAlignmentOf(ITypeRef)</a></dt>
+    <dd><p>Gets the preferred alignment of the type in bits</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.StoreSizeOf.html#Ubiquity_NET_Llvm_IDataLayout_StoreSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">StoreSizeOf(ITypeRef)</a></dt>
+    <dd><p>Retrieves the number of bits required to store a value of the given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.ToLazyEncodedString.html#Ubiquity_NET_Llvm_IDataLayout_ToLazyEncodedString">ToLazyEncodedString()</a></dt>
+    <dd><p>Gets the string representation of this data layout as a <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/IDataLayout.cs/#L50" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

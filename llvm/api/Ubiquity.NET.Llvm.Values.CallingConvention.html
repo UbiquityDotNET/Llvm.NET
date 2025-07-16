@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Enum CallingConvention | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Enum CallingConvention | Ubiquity.NET ">
+      
+      <meta name="description" content="Calling Convention for functions">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Values_CallingConvention.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Values.CallingConvention%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Values.CallingConvention">
+
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Values_CallingConvention" data-uid="Ubiquity.NET.Llvm.Values.CallingConvention" class="text-break">
+Enum CallingConvention  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Values/CallingConvention.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Values.html">Values</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Calling Convention for functions</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum CallingConvention</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuComputeShader"><code>AMDGpuComputeShader = 90</code></dt>
+  
+  <dd><p>Calling convention used for Mesa compute shaders.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuEs"><code>AMDGpuEs = 96</code></dt>
+  <dd><p>Calling convention used for AMDPAL shader stage before geometry shader if geometry is in use.</p>
+<p>Either the domain (= tessellation evaluation) shader if tessellation is in use, or otherwise the vertex shader.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuGeometryShader"><code>AMDGpuGeometryShader = 88</code></dt>
+  
+  <dd><p>Calling convention used for Mesa geometry shaders.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuHullShader"><code>AMDGpuHullShader = 93</code></dt>
+  
+  <dd><p>Calling convention used for Mesa hull shaders. (= tessellation control shaders)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuKernel"><code>AMDGpuKernel = 91</code></dt>
+  
+  <dd><p>Calling convention for AMDGPU code object kernels.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuLS"><code>AMDGpuLS = 95</code></dt>
+  
+  <dd><p>Calling convention used for AMDPAL vertex shader if tessellation is in use.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuPixelShader"><code>AMDGpuPixelShader = 89</code></dt>
+  
+  <dd><p>Calling convention used for Mesa pixel shaders.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AMDGpuVertexShader"><code>AMDGpuVertexShader = 87</code></dt>
+  
+  <dd><p>Calling convention used for Mesa vertex shaders.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AVRBuiltIn"><code>AVRBuiltIn = 86</code></dt>
+  
+  <dd><p>Calling convention used for special AVR rtlib functions which have an &quot;optimized&quot; convention to preserve registers.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AVRInterrupt"><code>AVRInterrupt = 84</code></dt>
+  
+  <dd><p>Used for AVR interrupt routines</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AVRSignal"><code>AVRSignal = 85</code></dt>
+  
+  <dd><p>Calling convention used for AVR signal routines</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_AnyReg"><code>AnyReg = 13</code></dt>
+  
+  <dd><p>Calling convention for dynamic register based calls (e.g.stackmap and patchpoint intrinsics)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_ArmAAPCS"><code>ArmAAPCS = 67</code></dt>
+  
+  <dd><p>ARM Architecture Procedure Calling Standard calling convention (aka EABI). Soft float variant</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_ArmAAPCSVfp"><code>ArmAAPCSVfp = 68</code></dt>
+  
+  <dd><p>Same as <a class="xref" href="Ubiquity.NET.Llvm.Values.CallingConvention.html#Ubiquity_NET_Llvm_Values_CallingConvention_ArmAAPCS">ArmAAPCS</a> but uses hard floating point ABI</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_ArmAPCS"><code>ArmAPCS = 66</code></dt>
+  
+  <dd><p>ARM APCS (officially obsolete but some old targets use it)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_C"><code>C = 0</code></dt>
+  <dd><p>The default llvm calling convention, compatible with C</p>
+<p>This convention is the only calling convention that supports varargs calls.
+As with typical C calling conventions, the callee/caller have to
+tolerate certain amounts of prototype mismatch</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_ColdCall"><code>ColdCall = 9</code></dt>
+  
+  <dd><p>Cold calling</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_CxxFastTls"><code>CxxFastTls = 17</code></dt>
+  
+  <dd><p>Calling convention for access functions.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_FastCall"><code>FastCall = 8</code></dt>
+  
+  <dd><p>Fast calling convention</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_FirstTargetSpecific"><code>FirstTargetSpecific = 64</code></dt>
+  
+  <dd><p>Marker enum that identifies the start of the target specific conventions all values greater than or equal to this value are target specific</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_GlasgowHaskellCompiler"><code>GlasgowHaskellCompiler = 10</code></dt>
+  
+  <dd><p>Glasgow Haskell Compiler</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_HHVM"><code>HHVM = 81</code></dt>
+  
+  <dd><p>Calling convention used by HipHop Virtual Machine (HHVM)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_HHVMCCall"><code>HHVMCCall = 82</code></dt>
+  
+  <dd><p>HHVM calling convention for invoking C/C++ helpers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_HiPE"><code>HiPE = 11</code></dt>
+  
+  <dd><p>The High=Performance Erlang convention</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_IntelOpenCLBuiltIn"><code>IntelOpenCLBuiltIn = 77</code></dt>
+  
+  <dd><p>Calling conventions for Intel OpenCL built-ins</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_MSP430BuiltIn"><code>MSP430BuiltIn = 94</code></dt>
+  
+  <dd><p>Calling convention used for special MSP430 rtlib functions which have an &quot;optimized&quot; convention using additional registers.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_MSP430Interrupt"><code>MSP430Interrupt = 69</code></dt>
+  
+  <dd><p>Calling convention used for MSP430 interrupt routines</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_MaxCallingConvention"><code>MaxCallingConvention = 1023</code></dt>
+  
+  <dd><p>The highest possible calling convention ID. Must be some 2^k - 1.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_PreserveAll"><code>PreserveAll = 15</code></dt>
+  
+  <dd><p>Preserve all calling convention for runtime calls that preserves (almost) all registers.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_PreserveMost"><code>PreserveMost = 14</code></dt>
+  
+  <dd><p>Preserve most calling convention for runtime calls that preserves most registers.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_PtxDevice"><code>PtxDevice = 72</code></dt>
+  <dd><p>Call to a PTX device function</p>
+<p>Passes all arguments in register or parameter space.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_PtxKernel"><code>PtxKernel = 71</code></dt>
+  <dd><p>Call to a PTX kernel</p>
+<p>Passes all arguments in parameter space</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_SpirFunction"><code>SpirFunction = 75</code></dt>
+  
+  <dd><p>Calling convention for SPIR non-kernel device functions.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_SpirKernel"><code>SpirKernel = 76</code></dt>
+  
+  <dd><p>Calling convention for SPIR kernel functions.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_Swift"><code>Swift = 16</code></dt>
+  
+  <dd><p>Swift calling convention</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_WebKitJS"><code>WebKitJS = 12</code></dt>
+  
+  <dd><p>Webkit JavaScript calling convention</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86FastCall"><code>X86FastCall = 65</code></dt>
+  <dd><p>X86 fast call convention</p>
+<p>'fast' analog of <a class="xref" href="Ubiquity.NET.Llvm.Values.CallingConvention.html#Ubiquity_NET_Llvm_Values_CallingConvention_X86StdCall">X86StdCall</a>. Passes first two arguments
+in ECX:EDX registers, others - via stack. Callee is responsible for
+stack cleaning.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86Interrupt"><code>X86Interrupt = 83</code></dt>
+  <dd><p>x86 hardware interrupt context</p>
+<p>Callee may take one or two parameters, where the 1st represents a pointer to hardware context frame
+and the 2nd represents hardware error code, the presence of the later depends on the interrupt vector
+taken. Valid for both 32- and 64-bit sub-targets.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86RegCall"><code>X86RegCall = 92</code></dt>
+  
+  <dd><p>Register calling convention used for parameters transfer optimization</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86StdCall"><code>X86StdCall = 64</code></dt>
+  <dd><p>X86 stdcall convention</p>
+<p>This calling convention is mostly used by the Win32 API. It is basically the same as the C
+convention with the difference in that the callee is responsible for popping the arguments
+from the stack.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86ThisCall"><code>X86ThisCall = 70</code></dt>
+  <dd><p>Similar to <a class="xref" href="Ubiquity.NET.Llvm.Values.CallingConvention.html#Ubiquity_NET_Llvm_Values_CallingConvention_X86StdCall">X86StdCall</a>, passes first 'this' argument in ECX all others via stack</p>
+<p>Callee is responsible for stack cleaning. MSVC uses this by default for C++ instance methods in its ABI</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86VectorCall"><code>X86VectorCall = 80</code></dt>
+  
+  <dd><p>MSVC calling convention that passes vectors and vector aggregates in SSE registers</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86x64SysV"><code>X86x64SysV = 78</code></dt>
+  
+  <dd><p>The C convention as specified in the x86-64 supplement to the System V ABI, used on most non-Windows systems.</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_CallingConvention_X86x64Win64"><code>X86x64Win64 = 79</code></dt>
+  <dd><p>The C convention as implemented on Windows/x86-64 and AArch64.</p>
+<p>This convention differs from the more common <a class="xref" href="Ubiquity.NET.Llvm.Values.CallingConvention.html#Ubiquity_NET_Llvm_Values_CallingConvention_X86x64SysV">X86x64SysV</a> convention in a number of ways, most notably in
+that XMM registers used to pass arguments are shadowed by GPRs, and vice versa.</p>
+<p>On AArch64, this is identical to the normal C (AAPCS) calling convention for normal functions,
+but floats are passed in integer registers to variadic functions</p>
+</dd>
+  
+  </dl>
+
+
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/LangRef.html#calling-conventions">LLVM calling conventions</a></span></div>
+  </div>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Values/CallingConvention.cs/#L23" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

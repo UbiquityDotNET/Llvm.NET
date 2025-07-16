@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Marshaling LLVMBool | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Marshaling LLVMBool | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/llvm/articles/InternalDetails/marshal-LLVMBool.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="">
+<h1 id="marshaling-llvmbool">Marshaling LLVMBool</h1>
+
+<p>LLVMBool is a typdef in the LLVM-C API that is both simple and problematic. In it's
+simplest sense an LLVMBool is a representation of a bi-modal value. However, the
+problematic part is that the semantics for the value are different depending on any
+given API. That is, in some cases LLVMBool != 0 is a failure case, and others it is
+a success! The confusion stems from LLVMBool serving a dual role:</p>
+<ol>
+<li>A real boolean true/false</li>
+<li>A status code where 0 == success and non-zero indicates an error</li>
+</ol>
+<p>This duality is confusing and can lead to subtle errors in usage of APIs if translated
+directly into language projections. This makes hands-off automatic generation of P/Invoke
+calls to LLVM either impossible or error prone. Thus, Ubiquity.NET.Llvm uses manually updated P/Invoke
+calls that were initially auto generated to get things started but not maintained via any
+generation tools. In the case of LLVMBool Ubiquity.NET.Llvm uses distinct types for the different
+semantics and declares the interop signatures with the form appropriate to the function
+being called. The two types are LLVMStatus and standard <code>System.Boolean</code> or <code>bool</code> in C#</p>
+<h2 id="llvmstatus">LLVMStatus</h2>
+<p>This is a status value where 0 == Success and non-zero is a failure or false status.
+LLVMStatus is used whenever the 0 == success semantics apply to the API. For example:</p>
+<pre><code class="lang-C#">[DllImport( LibraryPath, EntryPoint = &quot;LLVMWriteBitcodeToFD&quot;, CallingConvention = CallingConvention.Cdecl )]
+internal static extern LLVMStatus LLVMWriteBitcodeToFD( LLVMModuleRef @M, int @FD, int @ShouldClose, int @Unbuffered );
+</code></pre>
+<h2 id="llvmbool">LLVMBool</h2>
+<p>This is the traditional boolean value where 0==false and non-zero is true and uses the
+standard boolean marshaling support for System.Boolean</p>
+<pre><code class="lang-C#">[DllImport( LibraryPath, EntryPoint = &quot;LLVMTypeIsSized&quot;, CallingConvention = CallingConvention.Cdecl )]
+[return: MarshalAs( UnmanagedType.Bool )]
+internal static extern bool LLVMTypeIsSized( LLVMTypeRef @Ty );
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/llvm/articles/InternalDetails/marshal-LLVMBool.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

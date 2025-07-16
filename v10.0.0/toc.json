@@ -1,2 +1,0 @@
-
-{"items":[{"name":"API Documentation","href":"api/index.html","tocHref":"api/toc.json","topicHref":"api/index.html","homepage":"api/index.html"},{"name":"Source Repository","href":"https://github.com/UbiquityDotNET/Llvm.NET","topicHref":"https://github.com/UbiquityDotNET/Llvm.NET"},{"name":"LLVM.org","href":"http://LLVM.org","topicHref":"http://LLVM.org"},{"name":"LLVM Docs","href":"http://releases.llvm.org/20.1.0/docs/index.html","topicHref":"http://releases.llvm.org/20.1.0/docs/index.html"}],"assemblies":["Ubiquity.NET.Llvm"],"llvmVersion":"20.1.0"}

@@ -1,133 +1,134 @@
-﻿<!DOCTYPE html>
-<!--[if IE]><![endif]-->
+<!DOCTYPE html>
 <html>
-  
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Ubiquity.NET.Llvm | Ubiquity.NET.Llvm </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Ubiquity.NET.Llvm | Ubiquity.NET.Llvm ">
-    <meta name="generator" content="docfx 2.58.5.0">
-    
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles/docfx.vendor.css">
-    <link rel="stylesheet" href="styles/docfx.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <meta property="docfx:navrel" content="toc">
-    <meta property="docfx:tocrel" content="toc">
-    
-    
-    
-  </head>
-  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              
-              <a class="navbar-brand" href="index.html">
-                <img id="logo" class="svg" src="DragonSharp48x48.png" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
-                </div>
-              </form>
-                
-                <ul class="nav level1 navbar-nav">
-                      <li>
-                          <a class="xref" href="current/index.html" title="Current Release">Current Release</a>
-                      </li>
-                      <li>
-                          <a href="https://github.com/UbiquityDotNET/Llvm.NET" title="Source Repository">Source Repository</a>
-                      </li>
-                      <li>
-                          <a href="http://LLVM.org" title="LLVM.org">LLVM.org</a>
-                      </li>
-                </ul>    </div>
-          </div>
-        </nav>
-      </header>
-      <div role="main" class="container body-content hide-when-search">
-        <div class="article row grid">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
+      <title>Ubiquity.NET | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Ubiquity.NET | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
 
-<p><img src="DragonSharp.png" alt="Logo"></p>
-<h1 id="ubiquitynetllvm">Ubiquity.NET.Llvm</h1>
-<p>Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API including an Object Oriented model that closely matches 
-the underlying LLVM internal object model. This allows for building code generation and other utilities
-leveraging LLVM from .NET applications.</p>
-<h2 id="guiding-principles">Guiding principles</h2>
-<ol>
-<li>Mirror the underlying LLVM model as much as possible while 
-providing a well behaved .NET projection including:<ol>
-<li>Class names and hierarchies</li>
-<li>Object identity and reference equality</li>
-<li><a href="https://en.wikipedia.org/wiki/Fluent_interface">Fluent</a> APIs when plausible and appropriate</li>
-</ol>
-</li>
-<li>Hide low-level interop details and the raw LLVM-C API.<br>The native model for LLVM is a C++ class hierarchy and not the LLVM-C API used for most
-language/runtime bindings. Ubiquity.NET.Llvm is designed to provide an OO model that faithfully reflects the
-underlying LLVM model while fitting naturally into .NET programming patterns.</li>
-<li>Leverage existing LLVM-C APIs underneath whenever possible<ol>
-<li>Extend only when needed with custom wrappers</li>
-</ol>
-</li>
-<li>FxCop/Code Analysis Clean</li>
-</ol>
-<h2 id="features">Features</h2>
-<ul>
-<li>LLVM Cross target code generation from .NET code</li>
-<li>JIT engine support for creating dynamic domain specific language
-runtimes with JIT support.</li>
-<li>Ahead of time compilation with support for Link time optimization and debug information</li>
-<li>Object model that reflects the underlying LLVM classes</li>
-</ul>
-<h2 id="releases">Releases</h2>
-<p><a class="xref" href="current/index.html">Current</a><br><a class="xref" href="v8.0.1/index.html">v8.0.1</a>  </p>
-</article>
-          </div>
-          <div class="contribution-panel mobile-hide">
-              <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/index/index.md/#L1" title="Improve this Doc" class="fab btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i></a>
-          </div>
-          
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              </nav>
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
             </div>
           </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+        </div>
+
+        <article data-uid="">
+<h1 id="ubiquitynet">Ubiquity.NET</h1>
+
+<p>Ubiquity.NET family of libraries provides support for a number of scenarios but the primary focus is
+AOT code generation of .NET for Embedded systems. We aren't quite there yet, but are rather close. In
+the mean time this set of libraries provides the building blocks needed for creating a Domain Specific
+Language (DSL) implementation including JIT execution. Several useful generalized libraries are also
+included.</p>
+<h2 id="the-libraries-in-this-repository">The Libraries in this repository</h2>
+<p>(At least the ones generating docs at this point anyway! 😁)</p>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="llvm/index.html">Ubiquity.NET.Llvm</a></td>
+<td>This library contains The core of the LLVM projection to .NET</td>
+</tr>
+<tr>
+<td><a href="runtime-utils/index.html">Ubiquity.NET.Runtime.Utils</a></td>
+<td>This library contains common support for DSL runtime and language implementors</td>
+</tr>
+<tr>
+<td><a href="extensions/index.html">Ubiquity.NET.Extensions</a></td>
+<td>This library contains general extensions and helpers for many scenarios using .NET</td>
+</tr>
+<tr>
+<td><a href="antlr-utils/index.html">Ubiquity.NET.Antlr.Utils</a></td>
+<td>This library contains extensions and helpers for using ANTLR with .NET</td>
+</tr>
+<tr>
+<td><a href="interop-helpers/index.html">Ubiquity.NET.InteropHelpers</a></td>
+<td>This library contains extensions and helpers for implementing interop support for native libraries</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
         </div>
       </div>
-      
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            Copyright (C) 2017-2020, Ubiquity.NET Contributors<br><strong>Build:</strong> 10.0.0
-            
-          </div>
-        </div>
-      </footer>
-    </div>
-    
-    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="styles/docfx.js"></script>
-    <script type="text/javascript" src="styles/main.js"></script>
+    </footer>
   </body>
 </html>

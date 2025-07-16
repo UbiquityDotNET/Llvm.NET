@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Enum Linkage | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Enum Linkage | Ubiquity.NET ">
+      
+      <meta name="description" content="Linkage specification for functions and globals">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Values_Linkage.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Values.Linkage%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Values.Linkage">
+
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Values_Linkage" data-uid="Ubiquity.NET.Llvm.Values.Linkage" class="text-break">
+Enum Linkage  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Values/GlobalValue.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Values.html">Values</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Linkage specification for functions and globals</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum Linkage</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_Append"><code>Append = 7</code></dt>
+  
+  <dd><p>Special purpose, applies only to global arrays</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_AvailableExternally"><code>AvailableExternally = 1</code></dt>
+  <dd><p>Available Externally</p>
+<p>Globals with “available_externally” linkage are never emitted into the object file corresponding to the LLVM module.
+From the linker’s perspective, an available_externally global is equivalent to an external declaration. They exist to allow
+in-lining and other optimizations to take place given knowledge of the definition of the global, which is known to be somewhere
+outside the module. Globals with available_externally linkage are allowed to be discarded at will, and allow in-lining and other
+optimizations. This linkage type is only allowed on definitions, not declarations.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_Common"><code>Common = 14</code></dt>
+  
+  <dd><p>Tentative definitions</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_DllExport"><code>DllExport = 11</code></dt>
+  
+  <dd><p>Global to be Exported from a DLL</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_DllImport"><code>DllImport = 10</code></dt>
+  
+  <dd><p>Global to be imported from a DLL</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_External"><code>External = 0</code></dt>
+  
+  <dd><p>Externally visible Global</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_ExternalWeak"><code>ExternalWeak = 12</code></dt>
+  <dd><p>External weak linkage</p>
+<p>The semantics of this linkage follow the ELF object file model: the symbol is weak until linked,
+if not linked, the symbol becomes null instead of being an undefined reference.</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_Internal"><code>Internal = 8</code></dt>
+  
+  <dd><p>Rename collision when linking (i.e static function)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_LinkOnceAny"><code>LinkOnceAny = 2</code></dt>
+  
+  <dd><p>Keep a single copy when linking</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_LinkOnceODR"><code>LinkOnceODR = 3</code></dt>
+  
+  <dd><p>Like <a class="xref" href="Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_LinkOnceAny">LinkOnceAny</a> but can only be replaced by equivalent (One Definition Rule)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_LinkerPrivate"><code>LinkerPrivate = 15</code></dt>
+  
+  <dd><p>Like <a class="xref" href="Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Private">Private</a> but the linker remove this symbol</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_LinkerPrivateWeak"><code>LinkerPrivateWeak = 16</code></dt>
+  
+  <dd><p>Weak form of <a class="xref" href="Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_LinkerPrivate">LinkerPrivate</a></p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_Private"><code>Private = 9</code></dt>
+  
+  <dd><p>Link as <a class="xref" href="Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Internal">Internal</a> but omit from the generated symbol table</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_Weak"><code>Weak = 5</code></dt>
+  
+  <dd><p>Keep one copy when linking (weak)</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Values_Linkage_WeakODR"><code>WeakODR = 6</code></dt>
+  
+  <dd><p>Like <a class="xref" href="Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Weak">Weak</a> but only replaced by something equivalent (e.g. One Definition Rule)</p>
+</dd>
+  </dl>
+
+
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/LangRef.html#linkage-types">LLVM Linkage Types</a></span></div>
+  </div>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Values/GlobalValue.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

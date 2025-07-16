@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class InstructionBuilder | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class InstructionBuilder | Ubiquity.NET ">
+      
+      <meta name="description" content="LLVM Instruction builder allowing managed code to generate IR instructions">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Instructions_InstructionBuilder.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Instructions.InstructionBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder" class="text-break">
+Class InstructionBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Instructions.html">Instructions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>LLVM Instruction builder allowing managed code to generate IR instructions</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class InstructionBuilder : IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">InstructionBuilder</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><div class="IMPORTANT"><h5>important</h5><p>
+Unlike the underlying LLVM APIs these methods do NOT accept a name parameter. Instead,
+the name is added only when needed via the <a class="xref" href="Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_">RegisterName&lt;T&gt;(T, string)</a>
+extension method. That method supports a Fluent style pattern to allow mutating additional
+properties and handles the possibility of a Constant folded value, which does NOT have a register
+name.</p></div>
+</div>
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.-ctor.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder__ctor_Ubiquity_NET_Llvm_IContext_">InstructionBuilder(IContext)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html">InstructionBuilder</a> class for a given <span class="xref">Ubiquity.NET.Llvm.ContextAlias</span></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.-ctor.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder__ctor_Ubiquity_NET_Llvm_Values_BasicBlock_">InstructionBuilder(BasicBlock)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html">InstructionBuilder</a> class for a <a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a></p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Context.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Context">Context</a></dt>
+    <dd><p>Gets the context this builder is creating instructions for</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.CurrentDebugLocation.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_CurrentDebugLocation">CurrentDebugLocation</a></dt>
+    <dd><p>Gets or sets the current Debug Location for this <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html">InstructionBuilder</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.InsertBlock.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_InsertBlock">InsertBlock</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a> this builder is building instructions for</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.InsertFunction.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_InsertFunction">InsertFunction</a></dt>
+    <dd><p>Gets the function this builder currently inserts into</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Add.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Add_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Add(Value, Value)</a></dt>
+    <dd><p>Creates an integer add operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddWithOverflow.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AddWithOverflow_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_Boolean_">AddWithOverflow(Value, Value, bool)</a></dt>
+    <dd><p>Generates a call to the llvm.[s|u]add.with.overflow intrinsic</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_">Alloca(ITypeRef)</a></dt>
+    <dd><p>Creates an alloca instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_">Alloca(ITypeRef, ConstantInt)</a></dt>
+    <dd><p>Creates an alloca instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.And.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_And_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">And(Value, Value)</a></dt>
+    <dd><p>Creates an integer bitwise and operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AppendBasicBlock.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AppendBasicBlock_Ubiquity_NET_Llvm_Values_BasicBlock_">AppendBasicBlock(BasicBlock)</a></dt>
+    <dd><p>Appends a basic block after the <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.InsertBlock.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_InsertBlock">InsertBlock</a> of this <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html">InstructionBuilder</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.ArithmeticShiftRight.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_ArithmeticShiftRight_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">ArithmeticShiftRight(Value, Value)</a></dt>
+    <dd><p>Creates an integer arithmetic shift right operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicAdd.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicAdd_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicAdd(Value, Value)</a></dt>
+    <dd><p>Creates an atomic add instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicAnd.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicAnd_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicAnd(Value, Value)</a></dt>
+    <dd><p>Creates an atomic AND instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicCmpXchg.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicCmpXchg_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicCmpXchg(Value, Value, Value)</a></dt>
+    <dd><p>Creates an atomic Compare exchange instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicFSub.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicFSub_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicFSub(Value, Value)</a></dt>
+    <dd><p>Creates an atomic FSub instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicFadd.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicFadd_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicFadd(Value, Value)</a></dt>
+    <dd><p>Creates an atomic FAdd instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicMax.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicMax_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicMax(Value, Value)</a></dt>
+    <dd><p>Creates an atomic ADD instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicMin.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicMin_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicMin(Value, Value)</a></dt>
+    <dd><p>Creates an atomic MIN instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicNand.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicNand_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicNand(Value, Value)</a></dt>
+    <dd><p>Creates an atomic NAND instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicOr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicOr_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicOr(Value, Value)</a></dt>
+    <dd><p>Creates an atomic or instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicSub.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicSub_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicSub(Value, Value)</a></dt>
+    <dd><p>Creates an atomic subtraction instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicUMax.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicUMax_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicUMax(Value, Value)</a></dt>
+    <dd><p>Creates an atomic UMax instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicUMin.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicUMin_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicUMin(Value, Value)</a></dt>
+    <dd><p>Creates an atomic UMin instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicXchg.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicXchg_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicXchg(Value, Value)</a></dt>
+    <dd><p>Creates an atomic exchange (Read, Modify, Write) instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AtomicXor.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AtomicXor_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">AtomicXor(Value, Value)</a></dt>
+    <dd><p>Creates an atomic XOR instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.BitCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_BitCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">BitCast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a bitcast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Branch.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Branch_Ubiquity_NET_Llvm_Values_BasicBlock_">Branch(BasicBlock)</a></dt>
+    <dd><p>Create an unconditional branch</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Branch.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Branch_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_BasicBlock_Ubiquity_NET_Llvm_Values_BasicBlock_">Branch(Value, BasicBlock, BasicBlock)</a></dt>
+    <dd><p>Creates a conditional branch instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Values_Function_System_Collections_Generic_IReadOnlyList_Ubiquity_NET_Llvm_Values_Value__">Call(Function, IReadOnlyList&lt;Value&gt;)</a></dt>
+    <dd><p>Creates a call function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Values_Function_Ubiquity_NET_Llvm_Values_Value___">Call(Function, params Value[])</a></dt>
+    <dd><p>Creates a call function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Compare.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Compare_Ubiquity_NET_Llvm_Instructions_IntPredicate_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Compare(IntPredicate, Value, Value)</a></dt>
+    <dd><p>Builds an Integer compare instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Compare.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Compare_Ubiquity_NET_Llvm_Instructions_Predicate_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Compare(Predicate, Value, Value)</a></dt>
+    <dd><p>Builds a compare instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Compare.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Compare_Ubiquity_NET_Llvm_Instructions_RealPredicate_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Compare(RealPredicate, Value, Value)</a></dt>
+    <dd><p>Builds a Floating point compare instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.ConstGetElementPtrInBounds.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_ConstGetElementPtrInBounds_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___">ConstGetElementPtrInBounds(Value, params Value[])</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.DebugTrap.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_DebugTrap">DebugTrap()</a></dt>
+    <dd><p>Creates a llvm.debugtrap call</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Dispose.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Dispose">Dispose()</a></dt>
+    <dd><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.DoNothing.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_DoNothing">DoNothing()</a></dt>
+    <dd><p>Creates a call to the llvm.donothing intrinsic</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.ExtractValue.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_ExtractValue_Ubiquity_NET_Llvm_Values_Value_System_UInt32_">ExtractValue(Value, uint)</a></dt>
+    <dd><p>Creates an extractvalue instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FAdd.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FAdd_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">FAdd(Value, Value)</a></dt>
+    <dd><p>Creates a floating point add operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FDiv.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FDiv_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">FDiv(Value, Value)</a></dt>
+    <dd><p>Creates a floating point division operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FMul.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FMul_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">FMul(Value, Value)</a></dt>
+    <dd><p>Creates a floating point multiple operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FNeg.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FNeg_Ubiquity_NET_Llvm_Values_Value_">FNeg(Value)</a></dt>
+    <dd><p>Creates a floating point negation operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FPExt.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FPExt_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">FPExt(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a floating point extend instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FPToSICast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FPToSICast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">FPToSICast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a floating point to signed integer cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FPToUICast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FPToUICast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">FPToUICast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a Floating point to unsigned integer cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FPTrunc.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FPTrunc_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">FPTrunc(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a floating point truncate instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FRem.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FRem_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">FRem(Value, Value)</a></dt>
+    <dd><p>Creates a floating point remainder operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.FSub.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_FSub_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">FSub(Value, Value)</a></dt>
+    <dd><p>Creates a floating point subtraction operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Freeze.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Freeze_Ubiquity_NET_Llvm_Values_Value_">Freeze(Value)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Freeze.html">Freeze</a> instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__">GetElementPtr(ITypeRef, Value, IEnumerable&lt;Value&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__">GetElementPtr(Value, IEnumerable&lt;Value&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___">GetElementPtr(Value, params Value[])</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtrInBounds.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtrInBounds_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__">GetElementPtrInBounds(ITypeRef, Value, IEnumerable&lt;Value&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtrInBounds.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtrInBounds_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___">GetElementPtrInBounds(ITypeRef, Value, params Value[])</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtrInBounds.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtrInBounds_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__">GetElementPtrInBounds(Value, IEnumerable&lt;Value&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtrInBounds.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtrInBounds_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___">GetElementPtrInBounds(Value, params Value[])</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetStructElementPointer_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_UInt32_">GetStructElementPointer(ITypeRef, Value, uint)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element (field) of a structure</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.InsertValue.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_InsertValue_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_UInt32_">InsertValue(Value, Value, uint)</a></dt>
+    <dd><p>Builds an <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InsertValue.html">InsertValue</a> instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.IntCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_IntCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_System_Boolean_">IntCast(Value, ITypeRef, bool)</a></dt>
+    <dd><p>Creates an integer cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.IntToPointer.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_IntToPointer_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_IPointerType_">IntToPointer(Value, IPointerType)</a></dt>
+    <dd><p>Builds a cast from an integer to a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Invoke.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Invoke_Ubiquity_NET_Llvm_Values_Function_System_Collections_Generic_IReadOnlyList_Ubiquity_NET_Llvm_Values_Value__Ubiquity_NET_Llvm_Values_BasicBlock_Ubiquity_NET_Llvm_Values_BasicBlock_">Invoke(Function, IReadOnlyList&lt;Value&gt;, BasicBlock, BasicBlock)</a></dt>
+    <dd><p>Creates an <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Invoke.html">Invoke</a> instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.LandingPad.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_LandingPad_Ubiquity_NET_Llvm_Types_ITypeRef_">LandingPad(ITypeRef)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Instructions.LandingPad.html">LandingPad</a> instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Load.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Load_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_">Load(ITypeRef, Value)</a></dt>
+    <dd><p>Creates a load instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.LogicalShiftRight.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_LogicalShiftRight_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">LogicalShiftRight(Value, Value)</a></dt>
+    <dd><p>Creates an integer logical shift right operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Malloc.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Malloc_Ubiquity_NET_Llvm_Types_ITypeRef_">Malloc(ITypeRef)</a></dt>
+    <dd><p>Inserts a call to malloc</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.MemCpy.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_MemCpy_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_Boolean_">MemCpy(Value, Value, Value, bool)</a></dt>
+    <dd><p>Builds a memcpy intrinsic call</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.MemMove.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_MemMove_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_Boolean_">MemMove(Value, Value, Value, bool)</a></dt>
+    <dd><p>Builds a memmove intrinsic call</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.MemSet.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_MemSet_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_Boolean_">MemSet(Value, Value, Value, bool)</a></dt>
+    <dd><p>Builds a memset intrinsic call</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Mul.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Mul_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Mul(Value, Value)</a></dt>
+    <dd><p>Creates an integer multiplication operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.MulWithOverflow.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_MulWithOverflow_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_Boolean_">MulWithOverflow(Value, Value, bool)</a></dt>
+    <dd><p>Generates a call to the llvm.[s|u]mul.with.overflow intrinsic</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Neg.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Neg_Ubiquity_NET_Llvm_Values_Value_">Neg(Value)</a></dt>
+    <dd><p>Creates an integer negation operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Not.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Not_Ubiquity_NET_Llvm_Values_Value_">Not(Value)</a></dt>
+    <dd><p>Creates an integer logical not operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Or.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Or_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Or(Value, Value)</a></dt>
+    <dd><p>Creates an integer bitwise or operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.PhiNode.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_PhiNode_Ubiquity_NET_Llvm_Types_ITypeRef_">PhiNode(ITypeRef)</a></dt>
+    <dd><p>Creates a Phi instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.PointerToInt.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_PointerToInt_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">PointerToInt(Value, ITypeRef)</a></dt>
+    <dd><p>Builds a cast from a pointer to an integer type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.PositionAtEnd.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_PositionAtEnd_Ubiquity_NET_Llvm_Values_BasicBlock_">PositionAtEnd(BasicBlock)</a></dt>
+    <dd><p>Positions the builder at the end of a given <a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.PositionBefore.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_PositionBefore_Ubiquity_NET_Llvm_Instructions_Instruction_">PositionBefore(Instruction)</a></dt>
+    <dd><p>Positions the builder before the given instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Resume.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Resume_Ubiquity_NET_Llvm_Values_Value_">Resume(Value)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Instructions.ResumeInstruction.html">ResumeInstruction</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Return.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Return">Return()</a></dt>
+    <dd><p>Creates a return instruction for a function that has no return value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Return.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Return_Ubiquity_NET_Llvm_Values_Value_">Return(Value)</a></dt>
+    <dd><p>Creates a return instruction with the return value for a function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SDiv.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SDiv_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">SDiv(Value, Value)</a></dt>
+    <dd><p>Creates an integer signed division operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SIToFPCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SIToFPCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">SIToFPCast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a signed integer to floating point cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SRem.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SRem_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">SRem(Value, Value)</a></dt>
+    <dd><p>Creates an integer signed remainder operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Select.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Select_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Select(Value, Value, Value)</a></dt>
+    <dd><p>Builds a <a class="xref" href="Ubiquity.NET.Llvm.Instructions.SelectInstruction.html">SelectInstruction</a> instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SetDebugLocation.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SetDebugLocation_System_UInt32_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DILocalScope_Ubiquity_NET_Llvm_DebugInfo_DILocation_">SetDebugLocation(uint, uint, DILocalScope, DILocation?)</a></dt>
+    <dd><p>Set the current debug location for this <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html">InstructionBuilder</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SetDebugLocation.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SetDebugLocation_Ubiquity_NET_Llvm_DebugInfo_DILocation_">SetDebugLocation(DILocation?)</a></dt>
+    <dd><p>Set the current debug location for this <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.html">InstructionBuilder</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.ShiftLeft.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_ShiftLeft_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">ShiftLeft(Value, Value)</a></dt>
+    <dd><p>Creates an integer shift left operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SignExtend.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SignExtend_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">SignExtend(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a Sign Extend instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SignExtendOrBitCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SignExtendOrBitCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">SignExtendOrBitCast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a sign extend or bit cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Store.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Store_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Store(Value, Value)</a></dt>
+    <dd><p>Builds an LLVM Store instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Sub.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Sub_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Sub(Value, Value)</a></dt>
+    <dd><p>Creates an integer subtraction operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.SubWithOverflow.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_SubWithOverflow_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_System_Boolean_">SubWithOverflow(Value, Value, bool)</a></dt>
+    <dd><p>Generates a call to the llvm.[s|u]sub.with.overflow intrinsic</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Switch.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Switch_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_BasicBlock_System_UInt32_">Switch(Value, BasicBlock, uint)</a></dt>
+    <dd><p>Creates a switch instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Trap.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Trap">Trap()</a></dt>
+    <dd><p>Creates a llvm.trap call</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Trunc.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Trunc_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">Trunc(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a trunc instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.TruncOrBitCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_TruncOrBitCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">TruncOrBitCast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a trunc or bit cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.UDiv.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_UDiv_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">UDiv(Value, Value)</a></dt>
+    <dd><p>Creates an integer unsigned division operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.UIToFPCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_UIToFPCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">UIToFPCast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates an unsigned integer to floating point cast instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.URem.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_URem_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">URem(Value, Value)</a></dt>
+    <dd><p>Creates an integer unsigned remainder operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Unreachable.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Unreachable">Unreachable()</a></dt>
+    <dd><p>Creates an <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Unreachable.html">Unreachable</a> instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Xor.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Xor_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value_">Xor(Value, Value)</a></dt>
+    <dd><p>Creates an integer bitwise exclusive or operator</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.ZeroExtend.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_ZeroExtend_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">ZeroExtend(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a Zero Extend instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.ZeroExtendOrBitCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_ZeroExtendOrBitCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_">ZeroExtendOrBitCast(Value, ITypeRef)</a></dt>
+    <dd><p>Creates a zero extend or bit cast instruction</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L20" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

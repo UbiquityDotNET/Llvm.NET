@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DISubProgram | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DISubProgram | Ubiquity.NET ">
+      
+      <meta name="description" content="Debug information for a SubProgram">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_DebugInfo_DISubProgram.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.DebugInfo.DISubProgram%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.DebugInfo.DISubProgram">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_DebugInfo_DISubProgram" data-uid="Ubiquity.NET.Llvm.DebugInfo.DISubProgram" class="text-break">
+Class DISubProgram  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.html">DebugInfo</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Debug information for a SubProgram</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class DISubProgram : DILocalScope, IEquatable&lt;IrMetadata&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.html">IrMetadata</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.html">MDNode</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DINode.html">DINode</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIScope.html">DIScope</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalScope.html">DILocalScope</a></div>
+      <div><span class="xref">DISubProgram</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.html">IrMetadata</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalScope.LocalScope.html#Ubiquity_NET_Llvm_DebugInfo_DILocalScope_LocalScope">DILocalScope.LocalScope</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalScope.SubProgram.html#Ubiquity_NET_Llvm_DebugInfo_DILocalScope_SubProgram">DILocalScope.SubProgram</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalScope.FirstNonLexicalBlockFileScope.html#Ubiquity_NET_Llvm_DebugInfo_DILocalScope_FirstNonLexicalBlockFileScope">DILocalScope.FirstNonLexicalBlockFileScope</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIScope.File.html#Ubiquity_NET_Llvm_DebugInfo_DIScope_File">DIScope.File</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIScope.Scope.html#Ubiquity_NET_Llvm_DebugInfo_DIScope_Scope">DIScope.Scope</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DINode.Tag.html#Ubiquity_NET_Llvm_DebugInfo_DINode_Tag">DINode.Tag</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.Context.html#Ubiquity_NET_Llvm_Metadata_MDNode_Context">MDNode.Context</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.IsDeleted.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDeleted">MDNode.IsDeleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.IsTemporary.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsTemporary">MDNode.IsTemporary</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.IsResolved.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsResolved">MDNode.IsResolved</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.IsUniqued.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsUniqued">MDNode.IsUniqued</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.IsDistinct.html#Ubiquity_NET_Llvm_Metadata_MDNode_IsDistinct">MDNode.IsDistinct</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.Operands.html#Ubiquity_NET_Llvm_Metadata_MDNode_Operands">MDNode.Operands</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.ReplaceAllUsesWith.html#Ubiquity_NET_Llvm_Metadata_MDNode_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Metadata_IrMetadata_">MDNode.ReplaceAllUsesWith(IrMetadata)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.GetOperand.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperand__1_System_Int32_">MDNode.GetOperand&lt;T&gt;(int)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.GetOperandString.html#Ubiquity_NET_Llvm_Metadata_MDNode_GetOperandString_System_Int32_">MDNode.GetOperandString(int)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.ToString.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_ToString">IrMetadata.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_Ubiquity_NET_Llvm_Metadata_IrMetadata_">IrMetadata.Equals(IrMetadata)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.Equals.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Equals_System_Object_">IrMetadata.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.GetHashCode.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_GetHashCode">IrMetadata.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Metadata.IrMetadata.Kind.html#Ubiquity_NET_Llvm_Metadata_IrMetadata_Kind">IrMetadata.Kind</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.CompileUnit.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_CompileUnit">CompileUnit</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a> that contains this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ContainingType.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_ContainingType">ContainingType</a></dt>
+    <dd><p>Gets the type that contains this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a>, if any</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Declaration.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Declaration">Declaration</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a> that declares this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Line.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Line">Line</a></dt>
+    <dd><p>Gets the source line associated with this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.LinkageName.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_LinkageName">LinkageName</a></dt>
+    <dd><p>Gets the linkage name of this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Name.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Name">Name</a></dt>
+    <dd><p>Gets the name of this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Signature.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Signature">Signature</a></dt>
+    <dd><p>Gets the signature of this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.TemplateParams.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_TemplateParams">TemplateParams</a></dt>
+    <dd><p>Gets the template parameters of this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a>, if any</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.ThrownTypes.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_ThrownTypes">ThrownTypes</a></dt>
+    <dd><p>Gets the exception types this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a> can throw</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Variables.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Variables">Variables</a></dt>
+    <dd><p>Gets the variables of this <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.Describes.html#Ubiquity_NET_Llvm_DebugInfo_DISubProgram_Describes_Ubiquity_NET_Llvm_Values_Function_">Describes(Function)</a></dt>
+    <dd><p>Determines if this instance describes a given <a class="xref" href="Ubiquity.NET.Llvm.Values.Function.html">Function</a></p>
+</dd>
+  </dl>
+
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/LangRef.html#disubprogram">xref:llvm_langref#disubprogram</a></span></div>
+  </div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/DebugInfo/DISubProgram.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

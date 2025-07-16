@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class CallInstruction | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CallInstruction | Ubiquity.NET ">
+      
+      <meta name="description" content="Call instruction">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Instructions_CallInstruction.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Instructions.CallInstruction%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Instructions.CallInstruction">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Instructions_CallInstruction" data-uid="Ubiquity.NET.Llvm.Instructions.CallInstruction" class="text-break">
+Class CallInstruction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Instructions/CallInstruction.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Instructions.html">Instructions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Call instruction</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class CallInstruction : Instruction, IEquatable&lt;Value&gt;, IFunctionAttributeAccessor</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Values.User.html">User</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.html">Instruction</a></div>
+      <div><span class="xref">CallInstruction</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>&gt;</div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Values.IFunctionAttributeAccessor.html">IFunctionAttributeAccessor</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Intrinsic.html">Intrinsic</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.ContainingBlock.html#Ubiquity_NET_Llvm_Instructions_Instruction_ContainingBlock">Instruction.ContainingBlock</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.Opcode.html#Ubiquity_NET_Llvm_Instructions_Instruction_Opcode">Instruction.Opcode</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.Location.html#Ubiquity_NET_Llvm_Instructions_Instruction_Location">Instruction.Location</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.IsMemoryAccess.html#Ubiquity_NET_Llvm_Instructions_Instruction_IsMemoryAccess">Instruction.IsMemoryAccess</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.HasMetadata.html#Ubiquity_NET_Llvm_Instructions_Instruction_HasMetadata">Instruction.HasMetadata</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.Item.html#Ubiquity_NET_Llvm_Instructions_Instruction_Item_Ubiquity_NET_Llvm_Metadata_MetadataKind_">Instruction.this[MetadataKind]</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.NonDebugLocMetadata.html#Ubiquity_NET_Llvm_Instructions_Instruction_NonDebugLocMetadata">Instruction.NonDebugLocMetadata</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.Alignment.html#Ubiquity_NET_Llvm_Instructions_Instruction_Alignment">Instruction.Alignment</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.Successors.html#Ubiquity_NET_Llvm_Instructions_Instruction_Successors">Instruction.Successors</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.HasDebugRecords.html#Ubiquity_NET_Llvm_Instructions_Instruction_HasDebugRecords">Instruction.HasDebugRecords</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.DebugRecords.html#Ubiquity_NET_Llvm_Instructions_Instruction_DebugRecords">Instruction.DebugRecords</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.User.Operands.html#Ubiquity_NET_Llvm_Values_User_Operands">User.Operands</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.User.Uses.html#Ubiquity_NET_Llvm_Values_User_Uses">User.Uses</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.Equals.html#Ubiquity_NET_Llvm_Values_Value_Equals_Ubiquity_NET_Llvm_Values_Value_">Value.Equals(Value)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.Equals.html#Ubiquity_NET_Llvm_Values_Value_Equals_System_Object_">Value.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.GetHashCode.html#Ubiquity_NET_Llvm_Values_Value_GetHashCode">Value.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.Name.html#Ubiquity_NET_Llvm_Values_Value_Name">Value.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.IsUndefined.html#Ubiquity_NET_Llvm_Values_Value_IsUndefined">Value.IsUndefined</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.IsNull.html#Ubiquity_NET_Llvm_Values_Value_IsNull">Value.IsNull</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.NativeType.html#Ubiquity_NET_Llvm_Values_Value_NativeType">Value.NativeType</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.Context.html#Ubiquity_NET_Llvm_Values_Value_Context">Value.Context</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.IsInstruction.html#Ubiquity_NET_Llvm_Values_Value_IsInstruction">Value.IsInstruction</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.IsFunction.html#Ubiquity_NET_Llvm_Values_Value_IsFunction">Value.IsFunction</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.IsCallSite.html#Ubiquity_NET_Llvm_Values_Value_IsCallSite">Value.IsCallSite</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.ToString.html#Ubiquity_NET_Llvm_Values_Value_ToString">Value.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.ReplaceAllUsesWith.html#Ubiquity_NET_Llvm_Values_Value_ReplaceAllUsesWith_Ubiquity_NET_Llvm_Values_Value_">Value.ReplaceAllUsesWith(Value)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionExtensions.SetAlignment.html#Ubiquity_NET_Llvm_Instructions_InstructionExtensions_SetAlignment__1___0_System_UInt32_">InstructionExtensions.SetAlignment&lt;T&gt;(T, uint)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionExtensions.SetIsVolatile.html#Ubiquity_NET_Llvm_Instructions_InstructionExtensions_SetIsVolatile__1___0_System_Boolean_">InstructionExtensions.SetIsVolatile&lt;T&gt;(T, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.AddAttribute.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_AddAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AttributeContainerExtensions.AddAttribute&lt;T&gt;(T, FunctionAttributeIndex, LazyEncodedString)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.AddAttribute.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_AddAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_Llvm_Values_AttributeValue_">AttributeContainerExtensions.AddAttribute&lt;T&gt;(T, FunctionAttributeIndex, AttributeValue)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.AddAttributes.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_AddAttributes__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_System_Collections_Generic_IEnumerable_Ubiquity_NET_InteropHelpers_LazyEncodedString__">AttributeContainerExtensions.AddAttributes&lt;T&gt;(T, FunctionAttributeIndex, params IEnumerable&lt;LazyEncodedString&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.AddAttributes.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_AddAttributes__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_AttributeValue__">AttributeContainerExtensions.AddAttributes&lt;T&gt;(T, FunctionAttributeIndex, params IEnumerable&lt;AttributeValue&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.FindAttribute.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_FindAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AttributeContainerExtensions.FindAttribute&lt;T&gt;(T, FunctionAttributeIndex, LazyEncodedString)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.RemoveAttribute.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_RemoveAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_System_UInt32_">AttributeContainerExtensions.RemoveAttribute&lt;T&gt;(T, FunctionAttributeIndex, uint)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeContainerExtensions.RemoveAttribute.html#Ubiquity_NET_Llvm_Values_AttributeContainerExtensions_RemoveAttribute__1___0_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AttributeContainerExtensions.RemoveAttribute&lt;T&gt;(T, FunctionAttributeIndex, LazyEncodedString)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.Values.ValueExtensions.RegisterName.html#Ubiquity_NET_Llvm_Values_ValueExtensions_RegisterName__1___0_System_String_">ValueExtensions.RegisterName&lt;T&gt;(T, string)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.IsTailCall.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_IsTailCall">IsTailCall</a></dt>
+    <dd><p>Gets or sets a value indicating whether the call is a tail call</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.TargetFunction.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_TargetFunction">TargetFunction</a></dt>
+    <dd><p>Gets the target function of the call</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.AddAttributeAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_AddAttributeAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_Llvm_Values_AttributeValue_">AddAttributeAtIndex(FunctionAttributeIndex, AttributeValue)</a></dt>
+    <dd><p>Adds an <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeValue.html">AttributeValue</a> at a specified index</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.GetAttributeAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_GetAttributeAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_System_UInt32_">GetAttributeAtIndex(FunctionAttributeIndex, uint)</a></dt>
+    <dd><p>Gets a specific attribute at a given index</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.GetAttributeAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_GetAttributeAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_InteropHelpers_LazyEncodedString_">GetAttributeAtIndex(FunctionAttributeIndex, LazyEncodedString)</a></dt>
+    <dd><p>Gets a named attribute at a given index</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.GetAttributeCountAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_GetAttributeCountAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_">GetAttributeCountAtIndex(FunctionAttributeIndex)</a></dt>
+    <dd><p>Gets the count of attributes on a given index</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.GetAttributesAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_GetAttributesAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_">GetAttributesAtIndex(FunctionAttributeIndex)</a></dt>
+    <dd><p>Gets the attributes on a given index</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.RemoveAttributeAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_RemoveAttributeAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_System_UInt32_">RemoveAttributeAtIndex(FunctionAttributeIndex, uint)</a></dt>
+    <dd><p>Removes an <a class="xref" href="Ubiquity.NET.Llvm.Values.AttributeInfo.html">AttributeInfo</a> at a specified index</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.RemoveAttributeAtIndex.html#Ubiquity_NET_Llvm_Instructions_CallInstruction_RemoveAttributeAtIndex_Ubiquity_NET_Llvm_Values_FunctionAttributeIndex_Ubiquity_NET_InteropHelpers_LazyEncodedString_">RemoveAttributeAtIndex(FunctionAttributeIndex, LazyEncodedString)</a></dt>
+    <dd><p>Removes a named attribute at a specified index</p>
+</dd>
+  </dl>
+
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/LangRef.html#call-instruction">xref:llvm_langref#call-instruction</a></span></div>
+  </div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Instructions/CallInstruction.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

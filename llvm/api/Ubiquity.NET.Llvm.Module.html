@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class Module | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class Module | Ubiquity.NET ">
+      
+      <meta name="description" content="LLVM Bitcode module">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Module.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Module%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Module">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Module" data-uid="Ubiquity.NET.Llvm.Module" class="text-break">
+Class Module  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Module.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>LLVM Bitcode module</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class Module : IModule, IEquatable&lt;IModule&gt;, IDisposable, IEquatable&lt;Module&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">Module</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.IModule.html">IModule</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.IModule.html">IModule</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_Module_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A module is the basic unit for containing code in LLVM. Modules are an in memory
+representation of the LLVM Intermediate Representation (IR) bit-code.</p>
+</div>
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.DebugVersionValue.html">DebugVersionValue</a></dt>
+    <dd><p>Name of the Debug Version information module flag</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.DwarfVersionValue.html">DwarfVersionValue</a></dt>
+    <dd><p>Name of the Dwarf Version module flag</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Aliases.html#Ubiquity_NET_Llvm_Module_Aliases">Aliases</a></dt>
+    <dd><p>Gets the global aliases in this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Comdats.html#Ubiquity_NET_Llvm_Module_Comdats">Comdats</a></dt>
+    <dd><p>Gets the Comdats for this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.CompileUnits.html#Ubiquity_NET_Llvm_Module_CompileUnits">CompileUnits</a></dt>
+    <dd><p>Gets the Debug Compile units for this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Context.html#Ubiquity_NET_Llvm_Module_Context">Context</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.IModule.Context.html#Ubiquity_NET_Llvm_IModule_Context">Context</a> this module belongs to</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.DataLayoutString.html#Ubiquity_NET_Llvm_Module_DataLayoutString">DataLayoutString</a></dt>
+    <dd><p>Gets or Sets the Data layout string for this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.DebugMetadataVersion.html#Ubiquity_NET_Llvm_Module_DebugMetadataVersion">DebugMetadataVersion</a></dt>
+    <dd><p>Gets the Debug metadata version that is present in this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Functions.html#Ubiquity_NET_Llvm_Module_Functions">Functions</a></dt>
+    <dd><p>Gets the functions contained in this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Globals.html#Ubiquity_NET_Llvm_Module_Globals">Globals</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.Values.GlobalVariable.html">GlobalVariable</a>s contained by this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.IndirectFunctions.html#Ubiquity_NET_Llvm_Module_IndirectFunctions">IndirectFunctions</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.Values.GlobalIFunc.html">GlobalIFunc</a>s in this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.IsDisposed.html#Ubiquity_NET_Llvm_Module_IsDisposed">IsDisposed</a></dt>
+    <dd><p>Gets a value indicating whether this instance is already disposed</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Layout.html#Ubiquity_NET_Llvm_Module_Layout">Layout</a></dt>
+    <dd><p>Gets or sets the target data layout for this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.ModuleFlags.html#Ubiquity_NET_Llvm_Module_ModuleFlags">ModuleFlags</a></dt>
+    <dd><p>Gets the IrMetadata for module level flags</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.ModuleInlineAsm.html#Ubiquity_NET_Llvm_Module_ModuleInlineAsm">ModuleInlineAsm</a></dt>
+    <dd><p>Gets or sets the module level inline assembly</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Name.html#Ubiquity_NET_Llvm_Module_Name">Name</a></dt>
+    <dd><p>Gets the name of the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.NamedMetadata.html#Ubiquity_NET_Llvm_Module_NamedMetadata">NamedMetadata</a></dt>
+    <dd><p>Gets the <a class="xref" href="Ubiquity.NET.Llvm.Metadata.NamedMDNode.html">NamedMDNode</a>s for this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.SourceFileName.html#Ubiquity_NET_Llvm_Module_SourceFileName">SourceFileName</a></dt>
+    <dd><p>Gets or sets the name of the source file generating this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.TargetTriple.html#Ubiquity_NET_Llvm_Module_TargetTriple">TargetTriple</a></dt>
+    <dd><p>Gets or sets the Target Triple describing the target, ABI and OS</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddAlias.html#Ubiquity_NET_Llvm_Module_AddAlias_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt32_">AddAlias(Value, LazyEncodedString, uint)</a></dt>
+    <dd><p>Add an alias to the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddGlobal.html#Ubiquity_NET_Llvm_Module_AddGlobal_Ubiquity_NET_Llvm_Types_ITypeRef_System_Boolean_Ubiquity_NET_Llvm_Values_Linkage_Ubiquity_NET_Llvm_Values_Constant_">AddGlobal(ITypeRef, bool, Linkage, Constant)</a></dt>
+    <dd><p>Adds a global to this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddGlobal.html#Ubiquity_NET_Llvm_Module_AddGlobal_Ubiquity_NET_Llvm_Types_ITypeRef_System_Boolean_Ubiquity_NET_Llvm_Values_Linkage_Ubiquity_NET_Llvm_Values_Constant_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AddGlobal(ITypeRef, bool, Linkage, Constant, LazyEncodedString)</a></dt>
+    <dd><p>Adds a global to this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddGlobal.html#Ubiquity_NET_Llvm_Module_AddGlobal_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AddGlobal(ITypeRef, LazyEncodedString)</a></dt>
+    <dd><p>Adds a global to this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddGlobalInAddressSpace.html#Ubiquity_NET_Llvm_Module_AddGlobalInAddressSpace_System_UInt32_Ubiquity_NET_Llvm_Types_ITypeRef_System_Boolean_Ubiquity_NET_Llvm_Values_Linkage_Ubiquity_NET_Llvm_Values_Constant_">AddGlobalInAddressSpace(uint, ITypeRef, bool, Linkage, Constant)</a></dt>
+    <dd><p>Adds a global to this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddGlobalInAddressSpace.html#Ubiquity_NET_Llvm_Module_AddGlobalInAddressSpace_System_UInt32_Ubiquity_NET_Llvm_Types_ITypeRef_System_Boolean_Ubiquity_NET_Llvm_Values_Linkage_Ubiquity_NET_Llvm_Values_Constant_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AddGlobalInAddressSpace(uint, ITypeRef, bool, Linkage, Constant, LazyEncodedString)</a></dt>
+    <dd><p>Adds a global to this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddGlobalInAddressSpace.html#Ubiquity_NET_Llvm_Module_AddGlobalInAddressSpace_System_UInt32_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AddGlobalInAddressSpace(uint, ITypeRef, LazyEncodedString)</a></dt>
+    <dd><p>Adds a global to this module with a specific address space</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddModuleFlag.html#Ubiquity_NET_Llvm_Module_AddModuleFlag_Ubiquity_NET_Llvm_ModuleFlagBehavior_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt32_">AddModuleFlag(ModuleFlagBehavior, LazyEncodedString, uint)</a></dt>
+    <dd><p>Adds a module flag to the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddModuleFlag.html#Ubiquity_NET_Llvm_Module_AddModuleFlag_Ubiquity_NET_Llvm_ModuleFlagBehavior_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Metadata_IrMetadata_">AddModuleFlag(ModuleFlagBehavior, LazyEncodedString, IrMetadata)</a></dt>
+    <dd><p>Adds a module flag to the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddNamedMetadataOperand.html#Ubiquity_NET_Llvm_Module_AddNamedMetadataOperand_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Metadata_IrMetadata_">AddNamedMetadataOperand(LazyEncodedString, IrMetadata)</a></dt>
+    <dd><p>Adds operand value to named metadata</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AddVersionIdentMetadata.html#Ubiquity_NET_Llvm_Module_AddVersionIdentMetadata_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AddVersionIdentMetadata(LazyEncodedString)</a></dt>
+    <dd><p>Adds an llvm.ident metadata string to the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.AppendInlineAsm.html#Ubiquity_NET_Llvm_Module_AppendInlineAsm_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AppendInlineAsm(LazyEncodedString)</a></dt>
+    <dd><p>Appends inline assembly to the module's inline assembly</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Clone.html#Ubiquity_NET_Llvm_Module_Clone">Clone()</a></dt>
+    <dd><p>Clones the current module into the same context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Clone.html#Ubiquity_NET_Llvm_Module_Clone_Ubiquity_NET_Llvm_IContext_">Clone(IContext)</a></dt>
+    <dd><p>Clones the module into a new <a class="xref" href="Ubiquity.NET.Llvm.IContext.html">IContext</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.CreateAndAddGlobalIFunc.html#Ubiquity_NET_Llvm_Module_CreateAndAddGlobalIFunc_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Types_ITypeRef_System_UInt32_Ubiquity_NET_Llvm_Values_Function_">CreateAndAddGlobalIFunc(LazyEncodedString, ITypeRef, uint, Function)</a></dt>
+    <dd><p>Create and add a global indirect function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.CreateFunction.html#Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Types_IFunctionType_">CreateFunction(LazyEncodedString, IFunctionType)</a></dt>
+    <dd><p>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.CreateFunction.html#Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunction(ref readonly DIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dd><p>Creates a function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.CreateFunction.html#Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType____">CreateFunction(ref readonly DIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IDebugType&lt;ITypeRef, DIType&gt;[])</a></dt>
+    <dd><p>Creates a function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.CreateFunction.html#Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_">CreateFunction(ref readonly DIBuilder, DIScope?, LazyEncodedString, LazyEncodedString?, DIFile?, uint, DebugFunctionType, bool, bool, uint, DebugInfoFlags, bool)</a></dt>
+    <dd><p>Creates a Function definition with Debug information</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Dispose.html#Ubiquity_NET_Llvm_Module_Dispose">Dispose()</a></dt>
+    <dd><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Equals.html#Ubiquity_NET_Llvm_Module_Equals_System_Object_">Equals(object?)</a></dt>
+    <dd><p>Determines whether the specified object is equal to the current object.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Equals.html#Ubiquity_NET_Llvm_Module_Equals_Ubiquity_NET_Llvm_IModule_">Equals(IModule?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Equals.html#Ubiquity_NET_Llvm_Module_Equals_Ubiquity_NET_Llvm_Module_">Equals(Module?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.GetAlias.html#Ubiquity_NET_Llvm_Module_GetAlias_Ubiquity_NET_InteropHelpers_LazyEncodedString_">GetAlias(LazyEncodedString)</a></dt>
+    <dd><p>Get an alias by name</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.GetHashCode.html#Ubiquity_NET_Llvm_Module_GetHashCode">GetHashCode()</a></dt>
+    <dd><p>Serves as the default hash function.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.GetIntrinsicDeclaration.html#Ubiquity_NET_Llvm_Module_GetIntrinsicDeclaration_System_UInt32_Ubiquity_NET_Llvm_Types_ITypeRef___">GetIntrinsicDeclaration(uint, params ITypeRef[])</a></dt>
+    <dd><p>Gets a declaration for an LLVM intrinsic function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.GetIntrinsicDeclaration.html#Ubiquity_NET_Llvm_Module_GetIntrinsicDeclaration_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Types_ITypeRef___">GetIntrinsicDeclaration(LazyEncodedString, params ITypeRef[])</a></dt>
+    <dd><p>Gets a declaration for an LLVM intrinsic function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.GetNamedGlobal.html#Ubiquity_NET_Llvm_Module_GetNamedGlobal_Ubiquity_NET_InteropHelpers_LazyEncodedString_">GetNamedGlobal(LazyEncodedString)</a></dt>
+    <dd><p>Retrieves a named global from the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.GetTypeByName.html#Ubiquity_NET_Llvm_Module_GetTypeByName_Ubiquity_NET_InteropHelpers_LazyEncodedString_">GetTypeByName(LazyEncodedString)</a></dt>
+    <dd><p>Retrieves a <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a> by name from the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Link.html#Ubiquity_NET_Llvm_Module_Link_Ubiquity_NET_Llvm_Module_">Link(Module)</a></dt>
+    <dd><p>Link another module into this one</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.LoadFrom.html#Ubiquity_NET_Llvm_Module_LoadFrom_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_IContext_">LoadFrom(LazyEncodedString, IContext)</a></dt>
+    <dd><p>Load a bit-code module from a given file</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.LoadFrom.html#Ubiquity_NET_Llvm_Module_LoadFrom_Ubiquity_NET_Llvm_MemoryBuffer_Ubiquity_NET_Llvm_IContext_">LoadFrom(MemoryBuffer, IContext)</a></dt>
+    <dd><p>Load bit code from a memory buffer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.StripDebugInformation.html#Ubiquity_NET_Llvm_Module_StripDebugInformation">StripDebugInformation()</a></dt>
+    <dd><p>Strips debug information from this module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.TryGetFunction.html#Ubiquity_NET_Llvm_Module_TryGetFunction_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Values_Function__">TryGetFunction(LazyEncodedString, out Function)</a></dt>
+    <dd><p>Looks up a function in the module by name</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.TryGetNamedGlobalIFunc.html#Ubiquity_NET_Llvm_Module_TryGetNamedGlobalIFunc_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Values_GlobalIFunc__">TryGetNamedGlobalIFunc(LazyEncodedString, out GlobalIFunc)</a></dt>
+    <dd><p>Get a named Global Indirect function in the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.TryRunPasses.html#Ubiquity_NET_Llvm_Module_TryRunPasses_Ubiquity_NET_InteropHelpers_LazyEncodedString___">TryRunPasses(params LazyEncodedString[])</a></dt>
+    <dd><p>Tries running the specified passes on this function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.TryRunPasses.html#Ubiquity_NET_Llvm_Module_TryRunPasses_Ubiquity_NET_Llvm_PassBuilderOptions_Ubiquity_NET_InteropHelpers_LazyEncodedString___">TryRunPasses(PassBuilderOptions, params LazyEncodedString[])</a></dt>
+    <dd><p>Tries running the specified passes on this function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.TryRunPasses.html#Ubiquity_NET_Llvm_Module_TryRunPasses_Ubiquity_NET_Llvm_TargetMachine_Ubiquity_NET_Llvm_PassBuilderOptions_Ubiquity_NET_InteropHelpers_LazyEncodedString___">TryRunPasses(TargetMachine, PassBuilderOptions, params LazyEncodedString[])</a></dt>
+    <dd><p>Tries running the specified passes on this function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.Verify.html#Ubiquity_NET_Llvm_Module_Verify_System_String__">Verify(out string)</a></dt>
+    <dd><p>Verifies a bit-code module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.WriteToBuffer.html#Ubiquity_NET_Llvm_Module_WriteToBuffer">WriteToBuffer()</a></dt>
+    <dd><p>Writes the LLVM IR bit code into a memory buffer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.WriteToFile.html#Ubiquity_NET_Llvm_Module_WriteToFile_System_String_">WriteToFile(string)</a></dt>
+    <dd><p>Writes a bit-code module to a file</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.WriteToString.html#Ubiquity_NET_Llvm_Module_WriteToString">WriteToString()</a></dt>
+    <dd><p>Creates a string representation of the module</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Module.WriteToTextFile.html#Ubiquity_NET_Llvm_Module_WriteToTextFile_System_String_System_String__">WriteToTextFile(string, out string)</a></dt>
+    <dd><p>Writes this module as LLVM IR source to a file</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Module.cs/#L46" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

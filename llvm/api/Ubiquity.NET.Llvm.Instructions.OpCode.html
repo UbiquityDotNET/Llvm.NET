@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Enum OpCode | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Enum OpCode | Ubiquity.NET ">
+      
+      <meta name="description" content="LLVM Instruction opcodes">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_Instructions_OpCode.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.Instructions.OpCode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.Instructions.OpCode">
+
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_Instructions_OpCode" data-uid="Ubiquity.NET.Llvm.Instructions.OpCode" class="text-break">
+Enum OpCode  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Instructions/Instruction.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.Instructions.html">Instructions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>LLVM Instruction opcodes</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum OpCode</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_AShr"><code>AShr = 22</code></dt>
+  
+  <dd><p>Arithmetic Shift Right instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Add"><code>Add = 8</code></dt>
+  
+  <dd><p>Add instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_AddrSpaceCast"><code>AddrSpaceCast = 60</code></dt>
+  
+  <dd><p>addressspacecast .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Alloca"><code>Alloca = 26</code></dt>
+  
+  <dd><p>xxx instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_And"><code>And = 23</code></dt>
+  
+  <dd><p>Bitwise And instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_AtomicCmpXchg"><code>AtomicCmpXchg = 56</code></dt>
+  
+  <dd><p>CmpXchg instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_AtomicRMW"><code>AtomicRMW = 57</code></dt>
+  
+  <dd><p>atomicrmw instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_BitCast"><code>BitCast = 41</code></dt>
+  
+  <dd><p>bitcast .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Branch"><code>Branch = 2</code></dt>
+  
+  <dd><p>Branch instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Call"><code>Call = 45</code></dt>
+  
+  <dd><p>call instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_CallBr"><code>CallBr = 67</code></dt>
+  
+  <dd><p>callbr instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_CatchPad"><code>CatchPad = 63</code></dt>
+  
+  <dd><p>catchpad instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_CatchRet"><code>CatchRet = 62</code></dt>
+  
+  <dd><p>catchret instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_CatchSwitch"><code>CatchSwitch = 65</code></dt>
+  
+  <dd><p>catchswitch instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_CleanupPad"><code>CleanupPad = 64</code></dt>
+  
+  <dd><p>cleanuppad instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_CleanupRet"><code>CleanupRet = 61</code></dt>
+  
+  <dd><p>cleanupret instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_ExtractElement"><code>ExtractElement = 50</code></dt>
+  
+  <dd><p>extractelement instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_ExtractValue"><code>ExtractValue = 53</code></dt>
+  
+  <dd><p>extractvalue instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FAdd"><code>FAdd = 9</code></dt>
+  
+  <dd><p>FAdd instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FCmp"><code>FCmp = 43</code></dt>
+  
+  <dd><p>fcmp instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FDiv"><code>FDiv = 16</code></dt>
+  
+  <dd><p>FDiv instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FMul"><code>FMul = 13</code></dt>
+  
+  <dd><p>FMul instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FPExt"><code>FPExt = 38</code></dt>
+  
+  <dd><p>fpext .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FPToSI"><code>FPToSI = 34</code></dt>
+  
+  <dd><p>fptosi .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FPToUI"><code>FPToUI = 33</code></dt>
+  
+  <dd><p>fptoui .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FPTrunc"><code>FPTrunc = 37</code></dt>
+  
+  <dd><p>fptrunc .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FRem"><code>FRem = 19</code></dt>
+  
+  <dd><p>FRem instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_FSub"><code>FSub = 11</code></dt>
+  
+  <dd><p>FSub instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Fence"><code>Fence = 55</code></dt>
+  
+  <dd><p>Fence instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Freeze"><code>Freeze = 68</code></dt>
+  
+  <dd><p>Freeze instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_GetElementPtr"><code>GetElementPtr = 29</code></dt>
+  
+  <dd><p>getelementptr instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_ICmp"><code>ICmp = 42</code></dt>
+  
+  <dd><p>icmp instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_IndirectBranch"><code>IndirectBranch = 4</code></dt>
+  
+  <dd><p>Indirect branch instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_InsertElement"><code>InsertElement = 51</code></dt>
+  
+  <dd><p>insert instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_InsertValue"><code>InsertValue = 54</code></dt>
+  
+  <dd><p>insertvalue instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_IntToPtr"><code>IntToPtr = 40</code></dt>
+  
+  <dd><p>inttoptr .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Invalid"><code>Invalid = 0</code></dt>
+  
+  <dd><p>Invalid or unknown instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Invoke"><code>Invoke = 5</code></dt>
+  
+  <dd><p>Invoke instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_LShr"><code>LShr = 21</code></dt>
+  
+  <dd><p>Logical Shift Right instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_LandingPad"><code>LandingPad = 59</code></dt>
+  
+  <dd><p>landingpad instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Load"><code>Load = 27</code></dt>
+  
+  <dd><p>Load instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Mul"><code>Mul = 12</code></dt>
+  
+  <dd><p>Mul instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Or"><code>Or = 24</code></dt>
+  
+  <dd><p>Bitwise Or instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Phi"><code>Phi = 44</code></dt>
+  
+  <dd><p>phi instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_PtrToInt"><code>PtrToInt = 39</code></dt>
+  
+  <dd><p>ptrtoint .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Resume"><code>Resume = 58</code></dt>
+  
+  <dd><p>resume instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Return"><code>Return = 1</code></dt>
+  
+  <dd><p>Return instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_SDiv"><code>SDiv = 15</code></dt>
+  
+  <dd><p>SDiv instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_SIToFP"><code>SIToFP = 36</code></dt>
+  
+  <dd><p>sitofp .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_SRem"><code>SRem = 18</code></dt>
+  
+  <dd><p>SRem instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Select"><code>Select = 46</code></dt>
+  
+  <dd><p>select instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Shl"><code>Shl = 20</code></dt>
+  
+  <dd><p>Shift Left instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_ShuffleVector"><code>ShuffleVector = 52</code></dt>
+  
+  <dd><p>shufflevector instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_SignExtend"><code>SignExtend = 32</code></dt>
+  
+  <dd><p>sext .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Store"><code>Store = 28</code></dt>
+  
+  <dd><p>Store instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Sub"><code>Sub = 10</code></dt>
+  
+  <dd><p>Sub instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Switch"><code>Switch = 3</code></dt>
+  
+  <dd><p>Switch instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Trunc"><code>Trunc = 30</code></dt>
+  
+  <dd><p>trunc .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_UDiv"><code>UDiv = 14</code></dt>
+  
+  <dd><p>UDiv instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_UIToFP"><code>UIToFP = 35</code></dt>
+  
+  <dd><p>uitofp .. to instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_URem"><code>URem = 17</code></dt>
+  
+  <dd><p>URem instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Unreachable"><code>Unreachable = 7</code></dt>
+  
+  <dd><p>Unreachable instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_UserOp1"><code>UserOp1 = 47</code></dt>
+  
+  <dd><p>Custom user operator1 instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_UserOp2"><code>UserOp2 = 48</code></dt>
+  
+  <dd><p>Custom user operator2 instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_VaArg"><code>VaArg = 49</code></dt>
+  
+  <dd><p>va_arg instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_Xor"><code>Xor = 25</code></dt>
+  
+  <dd><p>Bitwise Xor instruction</p>
+</dd>
+    <dt id="Ubiquity_NET_Llvm_Instructions_OpCode_ZeroExtend"><code>ZeroExtend = 31</code></dt>
+  
+  <dd><p>zext .. to instruction</p>
+</dd>
+  </dl>
+
+
+  <h2 id="Ubiquity_NET_Llvm_Instructions_OpCode_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>These are based on the &quot;C&quot; API and therefore more stable as changes in the underlying instruction ids are remapped in the C API layer</p>
+</div>
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/LangRef.html#instruction-reference">LLVM instruction Reference</a></span></div>
+  </div>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/Instructions/Instruction.cs/#L18" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

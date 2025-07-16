@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class LazyEncodedString | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class LazyEncodedString | Ubiquity.NET ">
+      
+      <meta name="description" content="Lazily encoded string with implicit casting to a read only span of bytes or a normal managed string">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_InteropHelpers_LazyEncodedString.md&amp;value=---%0Auid%3A%20Ubiquity.NET.InteropHelpers.LazyEncodedString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString">
+
+
+
+  <h1 id="Ubiquity_NET_InteropHelpers_LazyEncodedString" data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString" class="text-break">
+Class LazyEncodedString  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.InteropHelpers.html">InteropHelpers</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.InteropHelpers.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Lazily encoded string with implicit casting to a read only span of bytes or a normal managed string</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NativeMarshalling(typeof(LazyEncodedStringMarshaller))]
+public sealed class LazyEncodedString : IEquatable&lt;LazyEncodedString?&gt;, IEquatable&lt;string?&gt;, IEqualityOperators&lt;LazyEncodedString, LazyEncodedString, bool&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">LazyEncodedString</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.iequalityoperators-3">IEqualityOperators</a>&lt;<a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a>, <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedStringValidators.ThrowIfNullOrEmpty.html#Ubiquity_NET_InteropHelpers_LazyEncodedStringValidators_ThrowIfNullOrEmpty_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_String_">LazyEncodedStringValidators.ThrowIfNullOrEmpty(LazyEncodedString?, string?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedStringValidators.ThrowIfNullOrWhiteSpace.html#Ubiquity_NET_InteropHelpers_LazyEncodedStringValidators_ThrowIfNullOrWhiteSpace_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_String_">LazyEncodedStringValidators.ThrowIfNullOrWhiteSpace(LazyEncodedString?, string?)</a>
+  </div>
+  </dd></dl>
+
+
+
+  <h2 id="Ubiquity_NET_InteropHelpers_LazyEncodedString_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This class handles capturing a managed string or a span of bytes for a native one. It supports a lazily
+evaluated representation of the string as a sequence of native bytes or a managed string. The encoding ONLY happens
+once, and ONLY when needed the first time. This reduces the overhead to a onetime hit for any strings that "sometimes"
+get passed to native code or native strings that "sometimes" get used in managed code as a string.</p>
+<p>This is essentially a pair of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.lazy-1">Lazy&lt;T&gt;</a> members to handle conversions in one direction.
+Constructors exist for an existing <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan&lt;T&gt;</a> of bytes and another for a string. Each constructor
+will pre-initialize one of the lazy values and set up the evaluation function for the other. Thus the string
+is encoded/decoded ONLY if needed and then, only once.</p>
+<p>This class handles all the subtle complexity regarding terminators as most of the encoding APIs in .NET will
+drop/ignore a string terminator but native code usually, but not always, requires it. Thus, this ensures the presence
+of a terminator even if the span provided to the constructor doesn't include one. (It has to copy the string anyway
+so why not be nice and robust at the cost of one byte of allocated space)</p>
+</div>
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.-ctor.html#Ubiquity_NET_InteropHelpers_LazyEncodedString__ctor_System_ReadOnlySpan_System_Byte__System_Text_Encoding_">LazyEncodedString(ReadOnlySpan&lt;byte&gt;, Encoding?)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> class from an existing span of native bytes</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.-ctor.html#Ubiquity_NET_InteropHelpers_LazyEncodedString__ctor_System_String_System_Text_Encoding_">LazyEncodedString(string, Encoding?)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> class from an existing managed string</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Empty.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Empty">Empty</a></dt>
+    <dd><p>Gets a <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> representation of an empty string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Encoding.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Encoding">Encoding</a></dt>
+    <dd><p>Gets the encoding used for this instance</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.IsEmpty.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_IsEmpty">IsEmpty</a></dt>
+    <dd><p>Gets a value indicating whether this instance represents an empty string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.NativeLength.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_NativeLength">NativeLength</a></dt>
+    <dd><p>Gets the native size (in bytes, including the terminator) of the memory for this string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.NativeStrLen.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_NativeStrLen">NativeStrLen</a></dt>
+    <dd><p>Gets the native length (in bytes, NOT including the terminator) of the native form of the string</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Equals.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Equals_System_Object_">Equals(object?)</a></dt>
+    <dd><p>Determines whether the specified object is equal to the current object.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Equals.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Equals_System_String_">Equals(string?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Equals.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Equals_Ubiquity_NET_InteropHelpers_LazyEncodedString_">Equals(LazyEncodedString?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.From.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_From_System_String_">From(string?)</a></dt>
+    <dd><p>Converts a managed string into a <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.FromUnmanaged.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_FromUnmanaged_System_Byte__">FromUnmanaged(byte*)</a></dt>
+    <dd><p>Creates a nullable <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> from an unmanaged string pointer (terminated!)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.FromUnmanaged.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_FromUnmanaged_System_Byte__System_UIntPtr_">FromUnmanaged(byte*, nuint)</a></dt>
+    <dd><p>Creates a nullable <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> from an unmanaged view</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.GetHashCode.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_GetHashCode">GetHashCode()</a></dt>
+    <dd><p>Serves as the default hash function.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.IsNullOrEmpty.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_IsNullOrEmpty_Ubiquity_NET_InteropHelpers_LazyEncodedString_">IsNullOrEmpty(LazyEncodedString?)</a></dt>
+    <dd><p>Tests if the given <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> or Empty</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.IsNullOrWhiteSpace.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_IsNullOrWhiteSpace_Ubiquity_NET_InteropHelpers_LazyEncodedString_">IsNullOrWhiteSpace(LazyEncodedString?)</a></dt>
+    <dd><p>Gets a value indicating if the provided instance is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> or all whitespace</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Join.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Join_System_Char_System_Collections_Generic_IEnumerable_Ubiquity_NET_InteropHelpers_LazyEncodedString__">Join(char, params IEnumerable&lt;LazyEncodedString&gt;)</a></dt>
+    <dd><p>Specialized join that optimizes for <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a> values</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Join.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Join__1_System_Char_System_Collections_Generic_IEnumerable___0__">Join&lt;T&gt;(char, params IEnumerable&lt;T&gt;)</a></dt>
+    <dd><p>Concatenates the members of a collection, using the specified separator between each member.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.Pin.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_Pin">Pin()</a></dt>
+    <dd><p>Pins the native representation of this memory for use in native APIs</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.ToReadOnlySpan.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_ToReadOnlySpan_System_Boolean_">ToReadOnlySpan(bool)</a></dt>
+    <dd><p>Gets a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan&lt;T&gt;</a> of bytes for the native encoding of the string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.ToString.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_ToString">ToString()</a></dt>
+    <dd><p>Returns a string that represents the current object.</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Equality.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Equality_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">operator ==(LazyEncodedString?, LazyEncodedString?)</a></dt>
+    <dd><p>Compares two values to determine equality.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_System_ReadOnlySpan_System_Byte___Ubiquity_NET_InteropHelpers_LazyEncodedString">implicit operator LazyEncodedString(ReadOnlySpan&lt;byte&gt;)</a></dt>
+    <dd><p>Convenient implicit conversion of a managed string into a Lazily encoded string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_System_String__Ubiquity_NET_InteropHelpers_LazyEncodedString">implicit operator LazyEncodedString?(string?)</a></dt>
+    <dd><p>Convenient implicit conversion of a managed string into a Lazily encoded string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_Ubiquity_NET_InteropHelpers_LazyEncodedString__System_ReadOnlySpan_System_Byte_">implicit operator ReadOnlySpan&lt;byte&gt;(LazyEncodedString)</a></dt>
+    <dd><p>Implicit cast to a span via <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.ToReadOnlySpan.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_ToReadOnlySpan_System_Boolean_">ToReadOnlySpan(bool)</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_Ubiquity_NET_InteropHelpers_LazyEncodedString__System_String">implicit operator string(LazyEncodedString)</a></dt>
+    <dd><p>Implicit cast to a string via <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.ToString.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_ToString">ToString()</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Inequality.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Inequality_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">operator !=(LazyEncodedString?, LazyEncodedString?)</a></dt>
+    <dd><p>Compares two values to determine inequality.</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L36" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

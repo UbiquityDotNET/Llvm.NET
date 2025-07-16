@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IContext | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IContext | Ubiquity.NET ">
+      
+      <meta name="description" content="Interface for an unowned LLVM Context">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_IContext.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.IContext%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.IContext">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_IContext" data-uid="Ubiquity.NET.Llvm.IContext" class="text-break">
+Interface IContext  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/IContext.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Interface for an unowned LLVM Context</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IContext : IEquatable&lt;IContext&gt;</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">IEquatable&lt;IContext&gt;.Equals(IContext)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_IContext_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This interface is intended to distinguish between an unowned reference to
+a context and something that is owned and requires a call to
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable.dispose">Dispose()</a>. A <a class="xref" href="Ubiquity.NET.Llvm.Context.html">Context</a> is an owned
+type that callers *<strong>MUST</strong> dispose, an <a class="xref" href="Ubiquity.NET.Llvm.IContext.html">IContext</a> interface
+is not.</p>
+</div>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.BoolType.html#Ubiquity_NET_Llvm_IContext_BoolType">BoolType</a></dt>
+    <dd><p>Gets the LLVM boolean type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.DiscardValueNames.html#Ubiquity_NET_Llvm_IContext_DiscardValueNames">DiscardValueNames</a></dt>
+    <dd><p>Gets or sets a value indicating whether this context is configured to discard value names</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.DoubleType.html#Ubiquity_NET_Llvm_IContext_DoubleType">DoubleType</a></dt>
+    <dd><p>Gets the LLVM double precision floating point type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.Float128Type.html#Ubiquity_NET_Llvm_IContext_Float128Type">Float128Type</a></dt>
+    <dd><p>Gets the LLVM 128-Bit floating point type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.FloatType.html#Ubiquity_NET_Llvm_IContext_FloatType">FloatType</a></dt>
+    <dd><p>Gets the LLVM single precision floating point type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.HalfFloatType.html#Ubiquity_NET_Llvm_IContext_HalfFloatType">HalfFloatType</a></dt>
+    <dd><p>Gets the LLVM half precision floating point type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.Int128Type.html#Ubiquity_NET_Llvm_IContext_Int128Type">Int128Type</a></dt>
+    <dd><p>Gets the LLVM 128 bit integer type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.Int16Type.html#Ubiquity_NET_Llvm_IContext_Int16Type">Int16Type</a></dt>
+    <dd><p>Gets the LLVM 16 bit integer type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.Int32Type.html#Ubiquity_NET_Llvm_IContext_Int32Type">Int32Type</a></dt>
+    <dd><p>Gets the LLVM 32 bit integer type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.Int64Type.html#Ubiquity_NET_Llvm_IContext_Int64Type">Int64Type</a></dt>
+    <dd><p>Gets the LLVM 64 bit integer type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.Int8Type.html#Ubiquity_NET_Llvm_IContext_Int8Type">Int8Type</a></dt>
+    <dd><p>Gets the LLVM 8 bit integer type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.MetadataType.html#Ubiquity_NET_Llvm_IContext_MetadataType">MetadataType</a></dt>
+    <dd><p>Gets the LLVM IrMetadata type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.OdrUniqueDebugTypes.html#Ubiquity_NET_Llvm_IContext_OdrUniqueDebugTypes">OdrUniqueDebugTypes</a></dt>
+    <dd><p>Gets or sets a value indicating whether the context keeps a map for uniqueing debug info identifiers across the context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.PpcFloat128Type.html#Ubiquity_NET_Llvm_IContext_PpcFloat128Type">PpcFloat128Type</a></dt>
+    <dd><p>Gets the LLVM PPC 128-bit floating point type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.TokenType.html#Ubiquity_NET_Llvm_IContext_TokenType">TokenType</a></dt>
+    <dd><p>Gets the LLVM token type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.VoidType.html#Ubiquity_NET_Llvm_IContext_VoidType">VoidType</a></dt>
+    <dd><p>Gets the LLVM void type for this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.X86Float80Type.html#Ubiquity_NET_Llvm_IContext_X86Float80Type">X86Float80Type</a></dt>
+    <dd><p>Gets the LLVM X86 80-bit floating point type for this context</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateAttribute.html#Ubiquity_NET_Llvm_IContext_CreateAttribute_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateAttribute(LazyEncodedString)</a></dt>
+    <dd><p>Creates a simple attribute without arguments</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateAttribute.html#Ubiquity_NET_Llvm_IContext_CreateAttribute_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt32_System_UInt64___System_UInt64___">CreateAttribute(LazyEncodedString, uint, ulong[], ulong[])</a></dt>
+    <dd><p>Create an attribute that accepts a constant range value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateAttribute.html#Ubiquity_NET_Llvm_IContext_CreateAttribute_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt64_">CreateAttribute(LazyEncodedString, ulong)</a></dt>
+    <dd><p>Creates an attribute with an integer value parameter</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateAttribute.html#Ubiquity_NET_Llvm_IContext_CreateAttribute_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateAttribute(LazyEncodedString, LazyEncodedString)</a></dt>
+    <dd><p>Creates a string attribute with a value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateAttribute.html#Ubiquity_NET_Llvm_IContext_CreateAttribute_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Types_ITypeRef_">CreateAttribute(LazyEncodedString, ITypeRef)</a></dt>
+    <dd><p>Create an attribute that accepts a type value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateBasicBlock.html#Ubiquity_NET_Llvm_IContext_CreateBasicBlock_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateBasicBlock(LazyEncodedString)</a></dt>
+    <dd><p>Create a named <a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a> without inserting it into a function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateBitcodeModule.html#Ubiquity_NET_Llvm_IContext_CreateBitcodeModule">CreateBitcodeModule()</a></dt>
+    <dd><p>Creates a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> class in this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateBitcodeModule.html#Ubiquity_NET_Llvm_IContext_CreateBitcodeModule_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateBitcodeModule(LazyEncodedString)</a></dt>
+    <dd><p>Creates a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> class in a given context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Boolean_">CreateConstant(bool)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 1</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Byte_">CreateConstant(byte)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 8</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Double_">CreateConstant(double)</a></dt>
+    <dd><p>Creates a constant floating point value for a given value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Int16_">CreateConstant(short)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 16</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Int32_">CreateConstant(int)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 32</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Int64_">CreateConstant(long)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 64</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_SByte_">CreateConstant(sbyte)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 8</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_Single_">CreateConstant(float)</a></dt>
+    <dd><p>Creates a constant floating point value for a given value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_UInt16_">CreateConstant(ushort)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 16</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_UInt32_">CreateConstant(uint)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 32</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_UInt32_System_UInt64_System_Boolean_">CreateConstant(uint, ulong, bool)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 64</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_System_UInt64_">CreateConstant(ulong)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a> with a bit length of 64</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstant.html#Ubiquity_NET_Llvm_IContext_CreateConstant_Ubiquity_NET_Llvm_Types_ITypeRef_System_UInt64_System_Boolean_">CreateConstant(ITypeRef, ulong, bool)</a></dt>
+    <dd><p>Create a constant value of the specified integer type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstantString.html#Ubiquity_NET_Llvm_IContext_CreateConstantString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateConstantString(LazyEncodedString)</a></dt>
+    <dd><p>Create a constant data string value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstantString.html#Ubiquity_NET_Llvm_IContext_CreateConstantString_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_">CreateConstantString(LazyEncodedString, bool)</a></dt>
+    <dd><p>Create a constant data string value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateConstantStruct.html#Ubiquity_NET_Llvm_IContext_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__">CreateConstantStruct(bool, params IEnumerable&lt;Constant&gt;)</a></dt>
+    <dd><p>Creates a constant structure from a set of values</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateFunctionType.html#Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunctionType(ref readonly DIBuilder, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dd><p>Creates a FunctionType with Debug information</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateFunctionType.html#Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunctionType(ref readonly DIBuilder, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dd><p>Creates a FunctionType with Debug information</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateMDNode.html#Ubiquity_NET_Llvm_IContext_CreateMDNode_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateMDNode(LazyEncodedString)</a></dt>
+    <dd><p>Create an <a class="xref" href="Ubiquity.NET.Llvm.Metadata.MDNode.html">MDNode</a> from a string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateMetadataString.html#Ubiquity_NET_Llvm_IContext_CreateMetadataString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateMetadataString(LazyEncodedString?)</a></dt>
+    <dd><p>Creates a metadata string from the given string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateNamedConstantStruct.html#Ubiquity_NET_Llvm_IContext_CreateNamedConstantStruct_Ubiquity_NET_Llvm_Types_IStructType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__">CreateNamedConstantStruct(IStructType, params IEnumerable&lt;Constant&gt;)</a></dt>
+    <dd><p>Creates a constant instance of a specified structure type from a set of values</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateStructType.html#Ubiquity_NET_Llvm_IContext_CreateStructType_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">CreateStructType(bool, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dd><p>Create an anonymous structure type (e.g. Tuple)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateStructType.html#Ubiquity_NET_Llvm_IContext_CreateStructType_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateStructType(LazyEncodedString)</a></dt>
+    <dd><p>Create an opaque structure type (e.g. a forward reference)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.CreateStructType.html#Ubiquity_NET_Llvm_IContext_CreateStructType_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">CreateStructType(LazyEncodedString, bool, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dd><p>Creates a new structure type in this <span class="xref">Ubiquity.NET.Llvm.ContextAlias</span></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.GetFunctionType.html#Ubiquity_NET_Llvm_IContext_GetFunctionType_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">GetFunctionType(bool, ITypeRef, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dd><p>Get an LLVM Function type (e.g. signature)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.GetFunctionType.html#Ubiquity_NET_Llvm_IContext_GetFunctionType_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">GetFunctionType(ITypeRef, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dd><p>Get an LLVM Function type (e.g. signature)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.GetIntType.html#Ubiquity_NET_Llvm_IContext_GetIntType_System_UInt32_">GetIntType(uint)</a></dt>
+    <dd><p>Get's an LLVM integer type of arbitrary bit width</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.GetMDKindId.html#Ubiquity_NET_Llvm_IContext_GetMDKindId_Ubiquity_NET_InteropHelpers_LazyEncodedString_">GetMDKindId(LazyEncodedString)</a></dt>
+    <dd><p>Gets non-zero IrMetadata kind ID for a given name</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.GetPointerTypeFor.html#Ubiquity_NET_Llvm_IContext_GetPointerTypeFor_Ubiquity_NET_Llvm_Types_ITypeRef_">GetPointerTypeFor(ITypeRef)</a></dt>
+    <dd><p>Get a type that is a pointer to a value of a given type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.OpenBinary.html#Ubiquity_NET_Llvm_IContext_OpenBinary_Ubiquity_NET_InteropHelpers_LazyEncodedString_">OpenBinary(LazyEncodedString)</a></dt>
+    <dd><p>Opens a <a class="xref" href="Ubiquity.NET.Llvm.ObjectFile.TargetBinary.html">TargetBinary</a> from a path</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.ParseModule.html#Ubiquity_NET_Llvm_IContext_ParseModule_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">ParseModule(LazyEncodedString, LazyEncodedString)</a></dt>
+    <dd><p>Parse LLVM IR source for a module, into this context</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IContext.SetDiagnosticHandler.html#Ubiquity_NET_Llvm_IContext_SetDiagnosticHandler_Ubiquity_NET_Llvm_DiagnosticInfoCallbackAction_">SetDiagnosticHandler(DiagnosticInfoCallbackAction)</a></dt>
+    <dd><p>Set a custom diagnostic handler</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha/src/Ubiquity.NET.Llvm/IContext.cs/#L19" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
