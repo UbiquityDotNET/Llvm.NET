@@ -7,7 +7,7 @@ uid: Kaleidoscope-ch7.1
 > runtime like Kaleidoscope thus far. It does NOT allow for re-defining a
 > function. Once it is defined, you cannot define it again or an exception
 > or application crash will occur. Hopefully a future variant of this sample
-> will address tracking and removing that. See [Special notes for interactive runtimes](#special-notes-for-interactive-runtimes)
+> will address tracking and removing that. See [Special notes for interactive run-times](#special-notes-for-interactive-runtimes)
 > for more details.
 
 # 7. Kaleidoscope: Extreme Lazy JIT
@@ -59,8 +59,8 @@ so the code generation for the implementation must use a unique name.
 
 ## Code changes for lazy JIT
 ### Initialization
-The LLVM ORC JIT v2 uses a mult-layered system for materializing the IR and eventually the native
-executbable code. The Kaleidoscope JIT includes transfomrs of IR modules to support setting the
+The LLVM ORC JIT v2 uses a multi-layered system for materializing the IR and eventually the native
+executable code. The Kaleidoscope JIT includes transforms of IR modules to support setting the
 data layout for the module to match the JIT and also to run optimization passes on the module.
 To support lazy evaluation a few such components are needed for the code generator. These are 
 setup in the constructor and destroyed in the Dispose method.
@@ -77,7 +77,7 @@ Since the lazy JIT registers the callback stub with the function's name when the
 is generated it needs a new name for the backing body. So, we add a new helper method to
 effectively clone a FunctionDefinition AST node while renaming it. This only needs a shallow
 clone that changes the name so there isn't a lot of overhead for it. (Theoretically, this could
-be done with a readonly struct and 'with', such an optimization is left as an excercise for the
+be done with a readonly struct and 'with', such an optimization is left as an exercise for the
 reader :nerd_face:)
 
 [!code-csharp[CloneAndRenameFunction](CodeGenerator.cs#CloneAndRenameFunction)]
@@ -99,7 +99,7 @@ lazy module materializer is registered for the name of the function. This create
 function exported by the function's name with a callback that knows how to generate the LLVM IR
 for the function. The actual code generation call back is a local function that has captured the
 AST so it initializes a new module, generates the function using the visitor pattern to
-generatio LLVM IR for the function into the freshly allocated module. (This is where keeping the
+generate LLVM IR for the function into the freshly allocated module. (This is where keeping the
 code generation ignorant of the JIT comes in handy as the same code is called to generate a
 function into a module and doesn't need to care if it is eager or lazy)
 
@@ -134,21 +134,21 @@ on eager vs lazy JIT as well as optimized JIT or not. This can include lazy JIT 
 optimization during startup of an app. Once things are up and going the engine can come back
 to re-generate the functions with full optimization. All sorts of possibilities exist, but the
 basics of how the lazy and eager generation works doesn't change no matter what approach a given
-language or runtime wants to use. For most DSLs like Kaleidoscope these tradeoffs are not
+language or runtime wants to use. For most DSLs like Kaleidoscope these trade-offs are not
 generally relevant (Or even necessary) as the fundamental point is to simplify expression of a
-particular domain problem in domain terminology. Performance tradeoffs are often not that
+particular domain problem in domain terminology. Performance trade-offs are often not that
 important for such cases. (And can occasionally get in the way - See [Special notes for
-interactive runtimes](#special-notes-for-interactive-runtimes) below for more details)
+interactive run-times](#special-notes-for-interactive-runtimes) below for more details)
 
-### Special notes for interactive runtimes
+### Special notes for interactive run-times
 It turns out that re-definition of a lazy JIT'd function is a rather complex problem involving
-a lot of moving pieces. The IR module for the AST is lazy generated asychronously and added to
+a lot of moving pieces. The IR module for the AST is lazy generated asynchronously and added to
 the JIT AFTER production by the materialization by the infrastructure. That is, outside of the
 driving application code control so it can't specify a resource tracker. Additionally, there is
 no resource tracker for a materialization unit that can remove the unit BEFORE it is run.
 
 There are at least three states of a function definition to deal with:
-1) Not defined anywhere yet (First occurance)
+1) Not defined anywhere yet (First occurrence)
 2) Materializer Created, but not yet materialized
 3) Already materialized.
 
@@ -157,7 +157,7 @@ All of which requires thread synchronization as the JIT could materialize the fu
 point along the way! So it is possible that while trying to remove a definition it transitions
 from #2 to #3. Even if code for removal looked at the state first it's a classic
 [TOCTOU](https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use) problem. There is no
-mechanism in the standrd OrcJIT v2 for this scenario. It is arguable what the validity of such
+mechanism in the standard OrcJIT v2 for this scenario. It is arguable what the validity of such
 a thing is for an interactive language/runtime. For any sufficiently complex thing there's at
 least two high level default questions to ask:
 
@@ -165,4 +165,4 @@ least two high level default questions to ask:
 2) Do we even know HOW to do it yet?
 
 For an interactive language/runtime like Kaleidoscope, the answer to both thus far is a
-hard 'NO'. This sort of support is best for non-interactive runtimes like .NET or Java.
+hard 'NO'. This sort of support is best for non-interactive run-times like .NET or Java.

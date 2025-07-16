@@ -25,7 +25,7 @@ $buildInfo = Initialize-BuildEnvironment
 # create script scoped alias for git that throws a PowerShell exception if the command fails
 Set-Alias git Invoke-git -scope Script -option Private
 
-# merging the tag to develop branch on the official repository triggers the official build and release of the Nuget Packages
+# merging the tag to develop branch on the official repository triggers the official build and release of the NuGet Packages
 $tagName = Get-BuildVersionTag $buildInfo
 $releaseBranch = "release/$tagName"
 $mergeBackBranchName = "merge-back-$tagName"

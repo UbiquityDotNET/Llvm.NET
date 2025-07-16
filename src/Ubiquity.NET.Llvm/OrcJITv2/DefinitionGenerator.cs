@@ -6,7 +6,7 @@
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
-    /// <summary>Definition Generator for Orc JIT v2</summary>
+    /// <summary>Definition Generator for ORC JIT v2</summary>
     public class DefinitionGenerator
         : DisposableObject
     {
@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             base.Dispose( disposing );
         }
 
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Ordering is correct, analyzer is to rigid to allow customiztion" )]
+        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Ordering is correct, analyzer is too rigid to allow customization" )]
         internal DefinitionGenerator( LLVMOrcDefinitionGeneratorRef h )
         {
             Handle = h.Move();

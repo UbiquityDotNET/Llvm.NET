@@ -13,7 +13,7 @@ function Invoke-External($cmd)
     This provides two core features:
     1) Platform neutral execution of an external command that might conflict with a built-in alias.
     2) Detection of success for an external command (as a non-zero return code) and throws an exception
-        - This is the normal behaviour for command line applications. If the app returns a non-zero value
+        - This is the normal behavior for command line applications. If the app returns a non-zero value
           as a success code, then this script may not be used as it would consider that a failure.
 #>
     $cmdPath = $cmd

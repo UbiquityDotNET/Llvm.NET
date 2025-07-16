@@ -145,7 +145,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <remarks>
         /// Callee may take one or two parameters, where the 1st represents a pointer to hardware context frame
         /// and the 2nd represents hardware error code, the presence of the later depends on the interrupt vector
-        /// taken. Valid for both 32- and 64-bit subtargets.
+        /// taken. Valid for both 32- and 64-bit sub-targets.
         /// </remarks>
         X86Interrupt = 83,
 

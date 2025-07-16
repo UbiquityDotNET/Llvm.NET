@@ -64,7 +64,7 @@ is created for the generator and used to create the instruction builder.
 
 #### JIT Engine
 The JIT engine itself is a class provided in the Kaleidoscope.Runtime library
-that wraps a Ubiquity.NET.Llvm OrcJIT engine. It is NOT dervied from that class as
+that wraps a Ubiquity.NET.Llvm OrcJIT engine. It is NOT derived from that class as
 a JIT engine is created using a "Builder" or factory pattern. So it is not possible
 to create a derived type using a builder.
 

@@ -11,8 +11,6 @@
   </Folder>
   <Folder Name="/Repo Items/">
     <File Path="../.editorconfig" />
-    <File Path="../.github/workflows/pr-build.yml" />
-    <File Path="../.github/workflows/release-build.yml" />
     <File Path="../.gitignore" />
     <File Path="../Build-All.ps1" />
     <File Path="../Build-Docs.ps1" />
@@ -35,11 +33,21 @@
     <File Path="../stylecop.json" />
     <File Path="x64.runsettings" />
   </Folder>
+  <Folder Name="/Repo Items/GitHub/" />
+  <Folder Name="/Repo Items/GitHub/workflow/">
+    <File Path="../.github/workflows/pr-build.yml" />
+    <File Path="../.github/workflows/release-build.yml" />
+  </Folder>
+  <Folder Name="/Repo Items/OneFlow/">
+    <File Path="../OneFlow/Publish-Release.ps1" />
+    <File Path="../OneFlow/ReadMe.md" />
+    <File Path="../OneFlow/Start-Release.ps1" />
+  </Folder>
   <Folder Name="/Samples/">
     <Project Path="Samples/CodeGenWithDebugInfo/CodeGenWithDebugInfo.csproj" />
     <Project Path="Samples/OrcV2VeryLazy/OrcV2VeryLazy.csproj" />
   </Folder>
-  <Folder Name="/Samples/Kaleidoscope/" Id="e5c76233-e9f2-292d-735d-bc453529d142">
+  <Folder Name="/Samples/Kaleidoscope/">
     <File Path="Samples/Kaleidoscope/.editorconfig" />
     <File Path="Samples/Kaleidoscope/IgnoredWords.dic" />
     <File Path="Samples/Kaleidoscope/Kaleidoscope-Overview.md" />

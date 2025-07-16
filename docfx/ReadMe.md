@@ -1,12 +1,12 @@
 # Documentation
 >NOTE:
-> This file itself does NOT particpate in the generated docs output. It documents the input
+> This file itself does NOT participate in the generated docs output. It documents the input
 > to the doc generation and the process for maintainers of this library (Who clearly don't
 > have great memories or are otherwise easily confused. :nerd_face:)
 
 DocFX is used to generate the documentation for this library. There is confusion on
-what the statictoc template means and requires. It is ***LITERALLY*** that the
-Table of Contents (TOC) is staticly generated. So that the entire site is servable
+what the "statictoc" template means and requires. It is ***LITERALLY*** that the
+Table of Contents (TOC) is statically generated. So that the entire site is servable
 from file path. This ***DOES NOT*** mean that the default+modern template is
 unusable for hosted static site scenarios like 'gh-pages' in GitHub. It only means
 that the TOC support will ***require*** a hosted site to provide the contents needed
@@ -16,7 +16,7 @@ project previously fell into those gaps and even constructed a custom template t
 deal with it... Sigh, what a waste of time... :facepalm: ])
 
 ## Changes Over Time
-DocFX has obsoleted the `docfxconsole` NuGet pacakge that was used to run docfx for
+DocFX has obsoleted the `docfxconsole` NuGet package that was used to run docfx for
 a project via MSBUILD. Instead it focused on a .NET tool to do it all via the
 command line. Ultimately the docfx.json serves as the "project" file for the
 different site builds. The PowerShell script `Build-Docs.ps1` was updated to use
@@ -42,7 +42,7 @@ file. Unfortunately, it is in JSON format and unlike any other project is unusab
 directly in an IDE as they don't understand the format of such a thing.
 
 ### favicon.ico
-This provides the standard web brower icon for the site as a whole.
+This provides the standard web browser icon for the site as a whole.
 
 ### index.md
 Markdown for the index (Home) of this site.
@@ -68,7 +68,7 @@ files parsed and generated from the source.
 This contains the main landing page for a given library it has the top bar
 navigation from [toc.yml](#tocyml) AND the left navigation from the generated
 [toc.yml](#generated-left-nav-tocyml) for this API library. (Confusingly, a file
-with the same name, but a completely differnt purpose!)
+with the same name, but a completely different purpose!)
 
 #### Generated left nav TOC.YML
 This version of the overloaded toc.yml file name is used to produce the left

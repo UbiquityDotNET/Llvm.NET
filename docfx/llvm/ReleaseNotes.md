@@ -1,5 +1,5 @@
 # Release Notes
-# V20.0.1.Alpha
+# V20.1.8.Alpha
 Major re-work to support LLVM 20 and .NET 9 and later with focus on performance and heading towards AOT.
 Major changes include:
 * OrcJIT v2 support
@@ -25,12 +25,26 @@ Major changes include:
       cleanup in scope if there is an exception. Sometimes it takes a bit more
       thought to handle properly. (.NET, C# and the general community have no concept of the
       common native code "move semantics" pattern)
+* A significant impact of ownership is in the LLVM transition to DebugRecords
+    - While the core API has not changed, the ownership of the classes has and
+      in particular that a DIBuilder is now a "ref like" type (`ref struct` in C#).
+        - Such a type can reference the module and compile unit but is NOT owned by
+          the module and therefore not exposed as a property for it.
 
-[Additional notes on this release go here...]
 ## Breaking changes
-This is a major release and there are a LOT of changes though they are all fairly small. A look
-at the samples and test code will show that the core of the library didn't change but some things
-about how you use it did.
+This is a major release and there are a LOT of changes though they are all fairly
+small. Ownership is the big change as things have changed in the underlying LLVM and
+this library has shifted to NOT support cached instances as it confuses the question
+of ownership (more specifically the release of resources). A look at the samples and
+test code will show that the core of the library didn't change but some things about
+how you use it did. Additional support packages were created to move common re-usable
+code out of the samples and now exist as part of the same release. [See: the [index
+for these docs](../index.md) for more details]
+
+### New projects
+If you are just starting out and not upgrading to this release then
+1) Welcome to the party!
+2) No need to worry about these major changes.
 
 # v10.0.0
 

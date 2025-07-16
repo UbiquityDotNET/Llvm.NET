@@ -10,8 +10,8 @@ of other custom DSLs. (Along with a core part of the sample infrastructure of th
 
 ## Kaleidoscope specific REPL Loop support
 The Kaleidoscope.Runtime library contains a language/runtime specific implementation of the classic Read,
-Evaluate, Print, Loop (REPL) common for interactive/interpreted/JIT language runtimes. This uses an
-asychronous pattern and allows cancelation via a standard cancellation token. This supports a clean shutown
+Evaluate, Print, Loop (REPL) common for interactive/interpreted/JIT language run-times. This uses an
+asynchronous pattern and allows cancellation via a standard cancellation token. This supports a clean shutdown
 via a CTRl-C handler etc...
 
 ## Kaleidoscope JIT engine

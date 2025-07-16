@@ -152,7 +152,7 @@ namespace Kaleidoscope.Grammar.Visualizers
             }
         }
 
-        // NOTE: The list handling for an xml serializer is a generally under-documented "feature" that is VERY confusing.
+        // NOTE: The list handling for an XML serializer is a generally under-documented "feature" that is VERY confusing.
         // Especially with regard to whether a "container" element is emitted or not. This tries to simplify things by
         // emitting a container element ONLY if containerElementName != null. Otherwise, this produces individual elements.
         internal static IEnumerable<XNode> ToXml<T>( this List<T> container, Func<T, XNode> serializer, XName? containerElementName = null )
