@@ -11,9 +11,6 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="System.Linq.Async" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\..\..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
         <ProjectReference Include="..\Kaleidoscope.Grammar\Kaleidoscope.Grammar.csproj" />
     </ItemGroup>
