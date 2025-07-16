@@ -1,0 +1,65 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{118E4D2B-5ADB-4F7C-9395-B4CEEEE3D2E1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyApplication</RootNamespace>
+    <AssemblyName>MyApplication</AssemblyName>
+    <Name>RepoBuild</Name>
+    <DebugArguments>
+    </DebugArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Debug-Module.ps1" />
+    <Compile Include="RepoBuild.psd1" />
+    <Compile Include="RepoBuild.psm1" />
+    <!--
+    Ideally this would use standard MSBUILD folder depth agnostic GLOB pattern '**';
+    but the 'PowerShell Tools for Visual Studio 2022' project system can't handle that
+    and complains.
+
+    Also NOTE that folder delimiters are forced to use WINDOWS ONLY '\'
+    despite the fact that msbuild is generally agnostic. Again the VSIX extension can't
+    handle things properly without it. (Ditto for the `Folder` Items as well...)
+
+    NO EXPLICIT files should appear here. The IDE will add them when adding any new files.
+    This MUST be overridden before a commit to prevent accidentally leaving out files
+    that are actually in the module. This list is NOT authoritative. The PSM1 file itself
+    uses a glob pattern to find all of the script files and exports the functions contained
+    within it.
+    -->
+    <Compile Include="Public\*.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Public\" />
+  </ItemGroup>
+  <!-- prevents NU1503 -->
+  <Target Name="_IsProjectRestoreSupported" Returns="@(_ValidProjectsForRestore)">
+    <ItemGroup>
+      <_ValidProjectsForRestore Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="VSTest" />
+  <Target Name="Restore" />
+  <Target Name="Build" />
+  <Target Name="Rebuild" />
+  <Import Project="$(MSBuildExtensionsPath)\PowerShell Tools for Visual Studio\PowerShellTools.targets" Condition="Exists('$(MSBuildExtensionsPath)\PowerShell Tools for Visual Studio\PowerShellTools.targets')" />
+</Project>

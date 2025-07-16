@@ -1,4 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------
+// <copyright file="ReferenceEqualityVerifierUnitTests.cs" company="Ubiquity.NET Contributors">
+// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Testing;
@@ -10,7 +16,7 @@ using static Microsoft.CodeAnalysis.Testing.ReferenceAssemblies;
 namespace ReferenceEqualityVerifier.Test
 {
     [TestClass]
-    public class ReferenceEqualityVerifierUnitTest
+    public class ReferenceEqualityVerifierUnitTests
     {
         [TestMethod]
         public async Task EmptySourceAnalyzesClean( )
@@ -77,6 +83,7 @@ namespace ReferenceEqualityVerifier.Test
         public async Task NullCheckDoesNotReportDiagnostics( )
         {
             var analyzerTest = CreateTestRunner(CompareWithNull);
+
             // no diagnostics expected (ref equality against null is always a ref equality check!)
             await analyzerTest.RunAsync();
         }
@@ -87,6 +94,7 @@ namespace ReferenceEqualityVerifier.Test
             // Without namespace checking this would trigger an error;
             // Analyzer should be constrained to ONLY the namespace of interest
             var analyzerTest = CreateTestRunner(NoNamespaceEquatable);
+
             // no diagnostics expected
             await analyzerTest.RunAsync();
         }
@@ -95,6 +103,7 @@ namespace ReferenceEqualityVerifier.Test
         public async Task StructEquatableIsNotReferenceEquality( )
         {
             var analyzerTest = CreateTestRunner(StructEquatable);
+
             // no diagnostics expected
             await analyzerTest.RunAsync();
         }
@@ -115,14 +124,15 @@ namespace ReferenceEqualityVerifier.Test
         {
             return new CSharpAnalyzerTest<ReferenceEqualityAnalyzer, DefaultVerifier>
             {
-                TestState = {
+                TestState =
+                {
                     Sources = { source },
                     ReferenceAssemblies = Net.Net80
                 }
             };
         }
 
-        const string CommonDirectSource = """
+       private const string CommonDirectSource = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -159,7 +169,7 @@ namespace ReferenceEqualityVerifier.Test
         }
         """;
 
-        const string AdvancedItfSource = """
+       private const string AdvancedItfSource = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -181,7 +191,7 @@ namespace ReferenceEqualityVerifier.Test
         }
         """;
 
-        const string EquatableToItfSource = """
+       private const string EquatableToItfSource = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -208,7 +218,7 @@ namespace ReferenceEqualityVerifier.Test
         }
         """;
 
-        const string CompareWithNull = """
+       private const string CompareWithNull = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -230,7 +240,7 @@ namespace ReferenceEqualityVerifier.Test
         }
         """;
 
-        const string CommonBaseEquatable = """
+       private const string CommonBaseEquatable = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -252,7 +262,7 @@ namespace ReferenceEqualityVerifier.Test
 
         """;
 
-        const string IncompleteSyntax = """
+       private const string IncompleteSyntax = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -274,7 +284,7 @@ namespace ReferenceEqualityVerifier.Test
 
         """;
 
-        const string NoNamespaceEquatable = """
+       private const string NoNamespaceEquatable = """
         using System;
 
         public class BaseClass
@@ -294,7 +304,7 @@ namespace ReferenceEqualityVerifier.Test
 
         """;
 
-        const string StructEquatable = """
+       private const string StructEquatable = """
         using System;
 
         namespace Ubiquity.NET.Llvm;
@@ -309,6 +319,5 @@ namespace ReferenceEqualityVerifier.Test
             }
         }
         """;
-
     }
 }

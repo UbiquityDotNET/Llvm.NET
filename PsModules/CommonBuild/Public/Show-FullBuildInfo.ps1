@@ -31,7 +31,4 @@ function Show-FullBuildInfo
 
     Write-Verbose ".NET SDKs:"
     Write-Verbose (dotnet --list-sdks | Out-String)
-
-    Write-Verbose "GITHUB vars"
-    Write-Verbose (dir env:GITHUB* | Format-Table -Property Name, value | Out-String)
 }

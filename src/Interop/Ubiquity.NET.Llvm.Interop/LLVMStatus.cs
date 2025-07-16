@@ -1,6 +1,8 @@
-﻿// <copyright file="Generated.cs" company="Ubiquity.NET Contributors">
+﻿// -----------------------------------------------------------------------
+// <copyright file="LLVMStatus.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 namespace Ubiquity.NET.Llvm.Interop
 {

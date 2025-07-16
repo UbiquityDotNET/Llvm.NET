@@ -1,26 +1,3 @@
-<#
-.SYNOPSIS
-    Project/Repo specific extensions to common support
-
-.DESCRIPTION
-    This provides repository specific functionality used by the various
-    scripts. It will import the common repo neutral module such that this
-    can be considered an extension of that module. It is expected that the
-    various build scrips will "dot source" this one to consume common
-    functionality.
-#>
-
-# reference the common build library. This library is intended
-# for re-use across multiple repositories so should remain independent
-# of the particular details of any specific repository. Over time, this
-# may migrate to a git sub module for easier sharing between projects.
-using module 'PSModules\CommonBuild\CommonBuild.psd1'
-
-Set-StrictMode -version 3.0
-
-$ErrorActionPreference = "Stop"
-$InformationPreference = "Continue"
-
 function Initialize-BuildEnvironment
 {
 <#
@@ -30,10 +7,6 @@ function Initialize-BuildEnvironment
 .PARAMETER FullInit
     Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
     as well as writes details of the initialization to the information and verbose streams.
-
-.PARAMETER AllowVsPreReleases
-    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
-    useful when adding support for new versions during the pre-release stages.
 
 .DESCRIPTION
     This script is used to initialize the build environment in a central place, it returns the
@@ -59,26 +32,38 @@ function Initialize-BuildEnvironment
     values. In essence, the result is like a derived type from the common base. The
     additional properties added are:
 
-    | Name                       | Description                                                                                            |
-    |----------------------------|--------------------------------------------------------------------------------------------------------|
-    | OfficialGitRemoteUrl       | GIT Remote URL for this repository                                                                     |
+    | Name                       | Description                              |
+    |----------------------------|------------------------------------------|
+    | OfficialGitRemoteUrl       | GIT Remote URL for ***this*** repository |
 #>
     # support common parameters
     [cmdletbinding()]
+    [OutputType([hashtable])]
     Param(
-    $repoRoot = $PSScriptRoot,
-    [switch]$FullInit
+        $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..' '..' '..')),
+        [switch]$FullInit
     )
-
-    # use common repo-neutral function to perform most of the initialization
-    $buildInfo = Initialize-CommonBuildEnvironment $repoRoot -FullInit:$FullInit
-    $buildInfo['OfficialGitRemoteUrl'] = 'https://github.com/UbiquityDotNET/Llvm.NET.git'
-
-    if($FullInit)
+    try
     {
-        Show-FullBuildInfo $buildInfo
+        # use common repo-neutral function to perform most of the initialization
+        $buildInfo = Initialize-CommonBuildEnvironment $repoRoot -FullInit:$FullInit
+
+        # Add repo specific values
+        $buildInfo['OfficialGitRemoteUrl'] = 'https://github.com/UbiquityDotNET/Llvm.NET.git'
+
+        # make sure directories required (but not created by build tools) exist
+        New-Item -ItemType Directory -Path $buildInfo['BuildOutputPath'] -ErrorAction SilentlyContinue | Out-Null
+        New-Item -ItemType Directory $buildInfo['NuGetOutputPath'] -ErrorAction SilentlyContinue | Out-Null
+
+        return $buildInfo
     }
-
-    return $buildInfo
+    catch
+    {
+        # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+        # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+        # information is retained and the error reported will include the correct source file and line number
+        # data for the error. Without this, only the error message is retained and the location information is
+        # Line 1, Column 1, of the outer most script file, or the calling location neither of which is useful.
+        throw
+    }
 }
-

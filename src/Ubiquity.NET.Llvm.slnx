@@ -12,11 +12,11 @@
   <Folder Name="/Repo Items/">
     <File Path="../.editorconfig" />
     <File Path="../.gitignore" />
-    <File Path="../Build-All.ps1" />
     <File Path="../Build-Docs.ps1" />
     <File Path="../Build-Source.ps1" />
     <File Path="../BuildVersion.xml" />
     <File Path="../CODE_OF_CONDUCT.md" />
+    <File Path="../Commit-Docs.ps1" />
     <File Path="../Directory.Build.props" />
     <File Path="../Directory.Build.targets" />
     <File Path="../Directory.Packages.props" />
@@ -26,9 +26,7 @@
     <File Path="../Invoke-UnitTests.ps1" />
     <File Path="../LICENSE.md" />
     <File Path="../NuGet.Config" />
-    <File Path="../Push-Docs.ps1" />
     <File Path="../README.md" />
-    <File Path="../repo-buildutils.ps1" />
     <File Path="../Show-Docs.ps1" />
     <File Path="../stylecop.json" />
     <File Path="x64.runsettings" />
@@ -66,9 +64,9 @@
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope.Runtime.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
   </Folder>
-  <Project Path="../BuildVersion.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
+  <Project Path="../PsModules/RepoBuild/RepoBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="118e4d2b-5adb-4f7c-9395-b4ceeee3d2e1" />
   <Project Path="Ubiquity.NET.ANTLR.Utils/Ubiquity.NET.ANTLR.Utils.csproj" />
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
   <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />

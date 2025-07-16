@@ -6,6 +6,6 @@ function Get-VsArchitecture()
         X64 {'x64'}
         Arm {'ARM'}
         Arm64 {'ARM64'}
-        default { throw 'Usupported runtime architecture for MSVC'}
+        default { throw 'Unsupported runtime architecture for MSVC'}
     }
 }

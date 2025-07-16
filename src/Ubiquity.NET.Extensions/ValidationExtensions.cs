@@ -1,11 +1,12 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="FluentValidators.cs" company="Ubiquity.NET Contributors">
+// <copyright file="ValidationExtensions.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Ubiquity.NET.Extensions
@@ -26,7 +27,7 @@ namespace Ubiquity.NET.Extensions
         /// <param name="exp">Name or expression of the value in <paramref name="obj"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="obj"/></returns>
         /// <exception cref="ArgumentNullException"><paramref name="obj"/> is <see langword="null"/></exception>
-        public static T ThrowIfNull<T>( [ValidatedNotNull] this T? obj, [CallerArgumentExpression( nameof( obj ) )] string? exp = null )
+        public static T ThrowIfNull<T>( [NotNull] this T? obj, [CallerArgumentExpression( nameof( obj ) )] string? exp = null )
             where T : class
         {
             ArgumentNullException.ThrowIfNull( obj, exp );

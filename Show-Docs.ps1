@@ -1,3 +1,6 @@
+using module "PSModules/CommonBuild/CommonBuild.psd1"
+using module "PSModules/RepoBuild/RepoBuild.psd1"
+
 <#
 .SYNOPSIS
     Shows docs using the docfx built-in server
@@ -24,8 +27,6 @@ Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . ./repo-buildutils.ps1
-
     if (!$DocsPathToHost)
     {
         if (!$buildInfo)

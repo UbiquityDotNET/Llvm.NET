@@ -1,8 +1,9 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ImplicitNamespaceImports.cs" company="Ubiquity.NET Contributors">
+// <copyright file="GlobalNamespaceImports.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+
 /*
 NOTE:
 While the MsBuild `ImplicitUsings` property is banned from this repo, the C# language feature of global usings is NOT.

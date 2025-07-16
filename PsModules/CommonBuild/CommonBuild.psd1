@@ -81,6 +81,7 @@ FunctionsToExport = @(
     'Get-GitRemoteName',
     'Get-GitHubReleases',
     'Get-GitHubTaggedRelease',
+    'Get-ParsedBuildVersionXML',
     'Initialize-CommonBuildEnvironment',
     'Invoke-External',
     'Invoke-TimedBlock',

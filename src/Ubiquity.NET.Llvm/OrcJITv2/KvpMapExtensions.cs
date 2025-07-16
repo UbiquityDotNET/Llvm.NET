@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AliasMapEntry.cs" company="Ubiquity.NET Contributors">
+// <copyright file="KvpMapExtensions.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -35,7 +35,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
+            [NotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
             )
         {
             ArgumentNullException.ThrowIfNull( symbols );
@@ -73,7 +73,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolAliasMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols
+            [NotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry>> symbols
             )
         {
             ArgumentNullException.ThrowIfNull( symbols );
@@ -111,7 +111,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> InitializeNativeCopy(
-            [ValidatedNotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
+            [NotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
             )
         {
             ArgumentNullException.ThrowIfNull( symbols );

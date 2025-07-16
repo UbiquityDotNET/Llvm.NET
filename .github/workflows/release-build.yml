@@ -31,10 +31,10 @@ jobs:
           fetch-depth: 0
 
       - name: Build Source
-        run: .\Build-All.ps1 -FullInit -BuildMode Source
+        run: .\Build-Source.ps1 -FullInit -ForceClean
 
       - name: Run Tests
-        run: ./Invoke-UnitTests.ps1
+        run: ./Invoke-Tests.ps1
 
       - name: Publish Test Results
         uses: actions/upload-artifact@v4
@@ -58,7 +58,7 @@ jobs:
         env:
           docspush_email: 32618965+cibuild-telliam@users.noreply.github.com
           docspush_username: cibuild-telliam
-        run: .\Push-Docs.ps1 -SkipPush
+        run: .\Commit-Docs.ps1
 
       - name: Publish Docs
         uses: ad-m/github-push-action@master

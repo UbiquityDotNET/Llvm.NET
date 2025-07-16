@@ -25,6 +25,13 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <!-- This is an internal undocumented package ignore the analysis that complains about a missing ReadMe -->
     <NoPackageAnalysis>true</NoPackageAnalysis>
+
+    <!--
+    workaround: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3882
+    Only known solution to prevent complier Null check issues is to disable the rule
+    -->
+    <NoWarn>$(NoWarn);SA1135</NoWarn>
+
   </PropertyGroup>
   <ItemGroup>
     <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
