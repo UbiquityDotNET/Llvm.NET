@@ -1,3 +1,6 @@
+using module '../PSModules/CommonBuild/CommonBuild.psd1'
+using module '../PsModules/RepoBuild/RepoBuild.psd1'
+
 <#
 .SYNOPSIS
     Creates a new public release branch the current branch state as an official release tag
@@ -9,21 +12,38 @@
 .DESCRIPTION
     This function creates and publishes a Release branch
 #>
-
-Param([switch]$TagOnly, [string]$commit = "")
-$repoRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, ".."))
-. (join-path $repoRoot repo-buildutils.ps1)
+[cmdletbinding(SupportsShouldProcess=$True)]
+Param(
+    [string]$commit = ""
+)
 $buildInfo = Initialize-BuildEnvironment
 
-# Create script scoped alias for git that throws a PowerShell exception if the command fails
-Set-Alias git Invoke-git -scope Script -option Private
+$officialRemoteName = Get-GitRemoteName $buildInfo official
+$forkRemoteName = Get-GitRemoteName $buildInfo fork
 
 # create new local branch for the release
-$branchName = "release/$(Get-BuildVersionTag $buildInfo -ReleaseNameOnly)"
-git checkout -b $branchName $commit
+$branchName = "release/$(Get-BuildVersionTag $buildInfo)"
+Write-Information "Creating release branch in local repo"
+if ([string]::IsNullOrWhiteSpace($commit))
+{
+    if($PSCmdlet.ShouldProcess($branchName, "git checkout -b"))
+    {
+        Invoke-External git checkout -b $branchName
+    }
+}
+else
+{
+    if($PSCmdlet.ShouldProcess("$branchName $commit", "git checkout -b"))
+    {
+        Invoke-External git checkout -b $branchName $commit
+    }
+}
 
-# Push to origin so it is clear to all a release is in process
-git push origin $branchName
+# Push to product repo so it is clear to all a release
+# is in process.
+Write-Information "Pushing branch to official repository (Push/Write permission required)"
+if($PSCmdlet.ShouldProcess("$officialRemoteName $branchName", "git push"))
+{
+    Invoke-External git push $officialRemoteName $branchName
+}
 
-# push to fork so that changes go through normal PR process
-git push -u $branchName

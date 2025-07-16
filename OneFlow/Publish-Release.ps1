@@ -1,3 +1,6 @@
+using module '../PSModules/CommonBuild/CommonBuild.psd1'
+using module '../PsModules/RepoBuild/RepoBuild.psd1'
+
 <#
 .SYNOPSIS
     Publishes the current release as a new branch to the upstream repository
@@ -16,33 +19,68 @@
 .NOTE
     For the gory details of this process see: https://www.endoflineblog.com/implementing-oneflow-on-github-bitbucket-and-gitlab
 #>
-
-Param([switch]$TagOnly)
-$repoRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, ".."))
-. (join-path $repoRoot repo-buildutils.ps1)
+[cmdletbinding(SupportsShouldProcess=$True, ConfirmImpact='High')]
+Param()
 $buildInfo = Initialize-BuildEnvironment
 
-# create script scoped alias for git that throws a PowerShell exception if the command fails
-Set-Alias git Invoke-git -scope Script -option Private
+Write-Information "Build Version XML:"
+Write-Information ((Get-ParsedBuildVersionXML -BuildInfo $buildInfo).GetEnumerator() | Sort -Property Name | Out-String)
 
 # merging the tag to develop branch on the official repository triggers the official build and release of the NuGet Packages
 $tagName = Get-BuildVersionTag $buildInfo
+$officialRemoteName = Get-GitRemoteName $buildInfo official
+$forkRemoteName = Get-GitRemoteName $buildInfo fork
+
 $releaseBranch = "release/$tagName"
+$officialReleaseBranch = "$officialRemoteName/$releaseBranch"
+
+$mainBranchName = "master"
+$officialMainBranch = "$officialRemoteName/$mainBranchName"
+
 $mergeBackBranchName = "merge-back-$tagName"
 
-# check out and tag the release branch
-git checkout $releasebranch
-git tag $tagname -m "Official release: $tagname"
-git push --tags
+Write-Information 'Fetching from official repository'
+Invoke-External git fetch $officialRemoteName
 
-# create a "merge-back" child branch to handle any updates/conflict resolutions
-# the tag from the parent will flow through to the final commit of the PR For
-# the merge. Otherwise, the tag is locked to the commit on the release branch
-# and any conflict resolution commits are "AFTER" the tag (and thus, not included
-# in the tagged commit)
-# This PR **MUST** be merged to origin with the --no-ff strategy
-git checkout -b $mergeBackBranchName $releasebranch
-git push $mergeBackBranchName
+if($PSCmdlet.ShouldProcess($officialReleaseBranch, "git switch -C $releaseBranch"))
+{
+    Write-Information "Switching to release branch [$officialReleaseBranch]"
+    Invoke-External git switch '-C' $releaseBranch $officialReleaseBranch
+}
 
-Write-Output "Created and published $mergeBackBranchName to your forked repository, you must create a PR for this change to the Official repository"
-Write-Output "Additionally, these changes **MUST** be merged back without squashing"
+if($PSCmdlet.ShouldProcess($tagName, "create signed tag"))
+{
+    Write-Information 'Creating a signed tag of this branch as the release'
+    Invoke-External git tag -s $tagName '-m' "Official release: $tagName"
+
+    Write-Information 'Verifying signature on tag'
+    Invoke-External git tag -v $tagName
+}
+
+if($PSCmdlet.ShouldProcess($tagName, "git push $officialRemoteName tag"))
+{
+    Write-Information 'Pushing tag to official remote [Starts automated build release process]'
+    Invoke-External git push $officialRemoteName tag $tagName
+}
+
+if($PSCmdlet.ShouldProcess($releasebranch, "git checkout -b $mergeBackBranchName"))
+{
+    Write-Information 'Creating local merge-back branch to merge changes associated with the release'
+    # create a "merge-back" child branch to handle any updates/conflict resolutions when applying
+    # the changes made in the release branch back to the develop branch.
+    Invoke-External git checkout '-b' $mergeBackBranchName $releasebranch
+}
+
+if($PSCmdlet.ShouldProcess("$forkRemoteName $mergeBackBranchName", "git push"))
+{
+    Write-Information 'pushing merge-back branch to fork'
+    Invoke-External git push $forkRemoteName $mergeBackBranchName
+}
+
+if($PSCmdlet.ShouldProcess("$tagName", "Reset main to point to release tag"))
+{
+    Write-Information 'Updating main to point to tagged release'
+    Invoke-External git switch '-C' $mainBranchName $officialMainBranch
+    Invoke-External git reset --hard $tagName
+    Invoke-External git push --force $officialRemoteName $mainBranchName
+}

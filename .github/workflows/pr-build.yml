@@ -13,6 +13,9 @@ on:
     paths-ignore:
       - '**.md'
       - '**.dic'
+      - 'BuildVersion.xml'
+      - 'GitHub/workflows/release-build.yml'
+      - 'OneFlow/**.ps1'
 
   pull_request:
     branches:
@@ -21,6 +24,9 @@ on:
     paths-ignore:
       - '**.md'
       - '**.dic'
+      - 'BuildVersion.xml'
+      - 'GitHub/workflows/release-build.yml'
+      - 'OneFlow/**.ps1'
 
 jobs:
   # see: https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#support-fork-repositories-and-dependabot-branches
