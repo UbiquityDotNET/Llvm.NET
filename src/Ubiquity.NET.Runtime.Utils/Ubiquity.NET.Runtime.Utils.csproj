@@ -22,11 +22,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Linq.Async" />
+    <None Include="ReadMe.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="ReadMe.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>

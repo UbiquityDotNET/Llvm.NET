@@ -17,17 +17,26 @@
     Package versions made consistent across all packages referenced in this repository
    -->
   <ItemGroup>
-    <PackageVersion Include="System.IO.Hashing" Version="9.0.4" />
-    <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
-    <PackageVersion Include="CppSharp" Version="1.1.5.3168" />
+    <!-- Roslyn Analyzers ***MUST*** target older framework -->
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.14.0" />
+    <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.2" />
+    <PackageVersion Include="System.IO.Hashing" Version="9.0.7" />
+
+    <!-- Common packages for solution -->
+    <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
+    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.1" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.10.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
+
     <!-- Tests all use the same framework versions -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="MSTest.TestAdapter" Version="3.9.1" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.9.1" />
     <PackageVersion Include="Tmds.ExecFunction" Version="0.8.0" />
-    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.1" />
   </ItemGroup>
 </Project>

@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.Interop
         ImmutableArray<LibLLVMCodeGenTarget> SupportedTargets { get; }
 
         /// <summary>Gets version information for the library implementation</summary>
-        /// <returns><see cref="FileVersionQuad"/> for the native interop library</returns>
+        /// <returns><see cref="SemVer"/> for the native interop library</returns>
         /// <remarks>
         /// <note type="note">Since it is dealing with an extension of LLVM, the version is NOT guaranteed to match that
         /// of LLVM itself. Though, to avoid confusion, the major, minor and patch usually does and would only deviate
