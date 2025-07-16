@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="REPLBase.cs" company="Ubiquity.NET Contributors">
+// <copyright file="KaleidoscopeReadEvaluatePrintLoopBase.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 <#
-There are are just too many issues and edges that don't work well or at all with
+There are just too many issues and edges that don't work well or at all with
 PS classes and modules. So this fakes a class like we used to do in the "Good ol' days"
 with "C" before any of the modern OO languages were created.
 
@@ -8,7 +8,7 @@ A CMakeConfig is a hash table with the following properties
 |-------------------|-----------|------------|
 | Name              | string    | Name of the configuration |
 | ConfigurationType | string    | Build configuration of the CMAKE build |
-| BuildRoot         | string    | Root directory of the Build (Exctracted from a standard BuildInfo hash table) |
+| BuildRoot         | string    | Root directory of the Build (Extracted from a standard BuildInfo hash table) |
 | SrcRoot           | string    | Root directory of the CMAKE specific build |
 | Generator         | string    | Generator to use for this CMAKE build |
 | CMakeCommandArgs  | ArrayList | Custom args for the CMAKE command |
@@ -95,26 +95,6 @@ function New-CMakeConfig($name, [string]$buildConfiguration, [hashtable]$buildIn
     {
         $self['CMakeBuildVariables']['CMAKE_BUILD_TYPE']=$self['ConfigurationType']
     }
-
-    # Not needed with Ninja builds
-    #if($IsWindows)
-    #{
-    #    # running on ARM64 is not tested or supported
-    #    # This might not be needed now that the build is auto configuring the "VCVARS"
-    #    # Ninja build might also remove the need for this...
-    #    if ([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture -eq "X64" )
-    #    {
-    #        $self['CMakeCommandArgs'].Add('-Thost=x64') | Out-Null
-    #        $self['InheritEnvironments'].Add('msvc_x64_x64') | Out-Null
-    #    }
-    #    else
-    #    {
-    #        $self['InheritEnvironments'].Add('msvc_x64') | Out-Null
-    #    }
-    #
-    #    # pass the /m switch to MSBUILD to enable parallel builds on all available CPU cores
-    #    $self['BuildCommandArgs'].Add('/m') | Out-Null
-    #}
 
     Assert-IsCMakeConfig $self
     return $self

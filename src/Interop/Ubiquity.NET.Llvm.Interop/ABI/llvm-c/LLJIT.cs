@@ -11,9 +11,9 @@
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
-#pragma warning disable IDE0065, SA1200
+#pragma warning disable IDE0065, SA1200, SA1135
     using unsafe LLVMOrcLLJITBuilderObjectLinkingLayerCreatorFunction = delegate* unmanaged[Cdecl]< void* /*Ctx*/, nint /*LLVMOrcExecutionSessionRef ES*/, byte* /*Triple*/, /*LLVMOrcObjectLayerRef*/ nint /*retVal*/>;
-#pragma warning restore IDE0065, SA1200
+#pragma warning restore IDE0065, SA1200, SA1135
 
     public static partial class LLJIT
     {

@@ -1,3 +1,6 @@
+using module "PSModules/CommonBuild/CommonBuild.psd1"
+using module "PSModules/RepoBuild/RepoBuild.psd1"
+
 <#
 .SYNOPSIS
     Builds the docs for this repository
@@ -24,27 +27,6 @@ Param(
     [switch]$ShowDocs
 )
 
-function Get-FullBuildNumber
-{
-    # docfx no longer supports the docfxconsole and insists on doing everything manually
-    # with the command line instead of within a project file... So do it the hard way...
-
-    # First step is to generate a JSON file with the version information that comes
-    # from the MSBUILD tasks in the `CSemVer.Build.Tasks` NUGET package. To do that
-    # a no target project is used to capture the results of the versioning into a
-    # JSON file, then that file is read in to get the values for PS so that a consistent
-    # build number is used for the docs generation.
-
-    # generate the CurrentVersionInfo.json file
-    Write-Information 'Generating CurrentVersionInfo.json'
-
-    Invoke-External dotnet build ./BuildVersion.msbuildproj | Out-Null
-
-    # Read in the generated JSON for use in PS
-    $versionInfo = Get-Content ./CurrentVersionInfo.json | ConvertFrom-Json -AsHashTable
-    return "$($versionInfo['FullBuildNumber'])"
-}
-
 $docFXToolVersion = '2.78.3'
 
 $InformationPreference = 'Continue'
@@ -54,8 +36,6 @@ Push-Location $PSScriptRoot
 $oldPath = $env:Path
 try
 {
-    . ./repo-buildutils.ps1
-
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
 
     # make sure the supported tool is installed.
@@ -90,10 +70,18 @@ try
     # Thus, for now, this uses the docfx build phase.]
     "$([DateTime]::UtcNow.ToString('o'))" | Out-File -Path (Join-Path $docsOutputPath '.nojekyll')
 
-    $fullBuildNumber = Get-FullBuildNumber
     push-location './docfx'
     try
     {
+        Write-Information "Generating Version JSON"
+        Invoke-External dotnet msbuild -restore '-target:GenerateVersionJson' documentation.msbuildproj
+        if(!(Test-Path -PathType Leaf 'CurrentVersionInfo.json'))
+        {
+            throw "CurrentVersionInfo.json - missing/not created!"
+        }
+
+        $versionInfo = Get-Content ./CurrentVersionInfo.json | ConvertFrom-Json -AsHashTable
+        $fullBuildNumber = $versionInfo['FullBuildNumber']
         Write-Information "Building docs [FullBuildNumber=$fullBuildNumber]"
         Invoke-External docfx '-m' _buildVersion=$fullBuildNumber '-o' $docsOutputPath
     }

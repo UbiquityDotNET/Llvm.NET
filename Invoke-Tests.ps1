@@ -1,25 +1,41 @@
+using module "PSModules/CommonBuild/CommonBuild.psd1"
+using module "PSModules/RepoBuild/RepoBuild.psd1"
+
 <#
 .SYNOPSIS
-    Runs the unit tests as well as a validation run of the sample app
+    Script to invoke tests of all the code in this repo
 
 .PARAMETER Configuration
-    This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
+    This sets the build configuration to use, default is "Release" though for inner loop development this
+    may be set to "Debug".
 
-.PARAMETER FullInit
-    Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
-    as well as writes details of the initialization to the information and verbose streams.
+.DESCRIPTION
+    This script is used by the automated build to run tests for the actual build. The Ubiquity.NET
+    family of projects all employ a PowerShell driven build that is generally divorced from the
+    automated build infrastructure used. This is done for several reasons, but the most
+    important ones are the ability to reproduce the build locally for inner development and
+    for flexibility in selecting the actual back end. The back ends have changed a few times
+    over the years and re-writing the entire build in terms of those back ends each time is
+    a lot of wasted effort. Thus, the projects settled on PowerShell as the core automated
+    build tooling.
 #>
+[cmdletbinding()]
 Param(
-    [string]$Configuration="Release",
-    [switch]$FullInit
+    [string]$Configuration="Release"
 )
 
+Set-StrictMode -Version 3.0
+
+Push-Location $PSScriptRoot
+$oldPath = $env:Path
 try
 {
-    . .\repo-buildutils.ps1
-    $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
+    # Pull in the repo specific support but don't force a full initialization of all the environment
+    # as this assumes a build is already complete. This does NOT restore or build ANYTHING. It just
+    # runs the tests.
+    $buildInfo = Initialize-BuildEnvironment
 
-    Push-Location $BuildInfo["SrcRootPath"]
+    Push-Location $BuildInfo['SrcRootPath']
     try
     {
         Invoke-External dotnet test Ubiquity.NET.Llvm.slnx '-c' $Configuration '-tl:off' '--logger:trx' '--no-build' '-s' '.\x64.runsettings'
@@ -59,4 +75,10 @@ catch
     # Line 1, Column 1, of the outer most script file, which is, of course, completely useless.
     throw
 }
+finally
+{
+    Pop-Location
+    $env:Path = $oldPath
+}
 
+Write-Information "Done tests"

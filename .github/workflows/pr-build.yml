@@ -50,10 +50,10 @@ jobs:
            fetch-depth: 0
 
       - name: Build Source
-        run: ./Build-All.ps1 -ForceClean -BuildMode Source
+        run: ./Build-Source.ps1 -ForceClean
 
       - name: Run Tests
-        run: ./Invoke-UnitTests.ps1
+        run: ./Invoke-Tests.ps1
 
       # Upload test results even if failed; unless cancelled
       - name: Upload Test Results
@@ -88,9 +88,3 @@ jobs:
               BuildOutput/docs/
               !BuildOutput/docs/.git/**
 
-      - name: Publish build logs
-        if: always() && github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-            name: Build Logs
-            path: ./BuildOutput/BinLogs

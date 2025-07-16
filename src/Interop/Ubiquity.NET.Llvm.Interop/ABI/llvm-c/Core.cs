@@ -11,10 +11,10 @@
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
-#pragma warning disable IDE0065, SA1200
+#pragma warning disable IDE0065, SA1200, SA1135
     using unsafe LLVMDiagnosticHandler = delegate* unmanaged[Cdecl]</*LLVMDiagnosticInfoRef*/ nint /*_0*/, void* /*_1*/, void /*retVal*/ >;
     using unsafe LLVMYieldCallback = delegate* unmanaged[Cdecl]< nint /*LLVMContextRefAlias*/ /*_0*/, void* /*_1*/, void /*retVal*/ >;
-#pragma warning restore  IDE0065, SA1200
+#pragma warning restore  IDE0065, SA1200, SA1135
 
     [SuppressMessage( "Design", "CA1027:Mark enums with FlagsAttribute", Justification = "Not flags, tooling detection of such is broken" )]
     [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Matches ABI" )]

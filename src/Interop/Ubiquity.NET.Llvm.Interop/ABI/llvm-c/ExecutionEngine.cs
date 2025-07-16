@@ -11,12 +11,12 @@
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
-#pragma warning disable IDE0065, SA1200
+#pragma warning disable IDE0065, SA1200, SA1135
     using unsafe LLVMMemoryManagerAllocateCodeSectionCallback = delegate* unmanaged[Cdecl]< void* /*Opaque*/, nuint /*Size*/, uint /*Alignment*/, uint /*SectionID*/, byte* /*SectionName*/, byte* /*retVal*/>;
     using unsafe LLVMMemoryManagerAllocateDataSectionCallback = delegate* unmanaged[Cdecl]< void* /*Opaque*/, nuint /*Size*/, uint /*Alignment*/, uint /*SectionID*/, byte* /*SectionName*/, bool /*IsReadOnly*/, byte* /*retVal*/>;
     using unsafe LLVMMemoryManagerDestroyCallback = delegate* unmanaged[Cdecl]< void* /*Opaque*/, void /*retVal*/ >;
     using unsafe LLVMMemoryManagerFinalizeMemoryCallback = delegate* unmanaged[Cdecl]< void* /*Opaque*/, byte** /*ErrMsg*/, bool /*retVal*/>;
-#pragma warning restore IDE0065, SA1200
+#pragma warning restore IDE0065, SA1200, SA1135
 
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LLVMMCJITCompilerOptions

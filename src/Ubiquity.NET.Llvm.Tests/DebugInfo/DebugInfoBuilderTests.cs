@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="DiBuilderTests.cs" company="Ubiquity.NET Contributors">
+// <copyright file="DebugInfoBuilderTests.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

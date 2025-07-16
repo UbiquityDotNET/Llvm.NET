@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file="AttributeContainerMixins.cs" company="Ubiquity.NET Contributors">
+// <copyright file="IAttributeContainer.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

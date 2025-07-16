@@ -1,6 +1,8 @@
-﻿// <copyright file="SafeHandleNullIsInvalid.cs" company="Ubiquity.NET Contributors">
+﻿// -----------------------------------------------------------------------
+// <copyright file="GlobalHandleBase.cs" company="Ubiquity.NET Contributors">
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // </copyright>
+// -----------------------------------------------------------------------
 
 using System.Security;
 

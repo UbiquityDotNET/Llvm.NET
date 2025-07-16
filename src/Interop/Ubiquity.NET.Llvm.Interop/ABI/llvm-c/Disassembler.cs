@@ -7,10 +7,10 @@
 namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 {
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
-#pragma warning disable IDE0065, SA1200
+#pragma warning disable IDE0065, SA1200, SA1135
     using unsafe LLVMOpInfoCallback = delegate* unmanaged[Cdecl]< void* /*Context*/, UInt64 /*PC*/, UInt64 /*Offset*/, UInt64 /*OpSize*/, UInt64 /*InstSize*/, int /*TagType*/, void* /*TagBuf*/, int /*retVal*/>;
     using unsafe LLVMSymbolLookupCallback = delegate* unmanaged[Cdecl]< void* /*Context*/, UInt64 /*ReferenceValue*/, UInt64* /*ReferenceType*/, UInt64 /*ReferencePC*/, byte** /*ReferenceName*/, byte* /*retVal*/>;
-#pragma warning restore IDE0065, SA1200
+#pragma warning restore IDE0065, SA1200, SA1135
 
     // These were all originally untyped #defines in the LLVM source
     public static partial class Constants

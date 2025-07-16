@@ -1,26 +1,24 @@
+using module "PSModules/CommonBuild/CommonBuild.psd1"
+using module "PSModules/RepoBuild/RepoBuild.psd1"
+
 <#
 .SYNOPSIS
-    Builds just the source code to produce the binaries and NUGET packages for the Ubiquity.NET.Llvm libraries
+    Builds just the source code to produce the binaries and NuGet packages for the Ubiquity.NET.Llvm libraries
 
 .PARAMETER Configuration
     This sets the build configuration to use, default is "Release" though for inner loop development this may be set to "Debug"
-
-.PARAMETER AllowVsPreReleases
-    Switch to enable use of Visual Studio Pre-Release versions. This is NEVER enabled for official production builds, however it is
-    useful when adding support for new versions during the pre-release stages.
 
 .PARAMETER FullInit
     Performs a full initialization. A full initialization includes forcing a re-capture of the time stamp for local builds
     as well as writes details of the initialization to the information and verbose streams.
 
-.PARAMETER ZipNuget
-    Zips all of the NuGet packages into a single zip. This is NOT ordinarily needed and consumes a significant amount of time
-    so it is provided as a flag. Publishing of NUGET packages is now part of the GitHub actions for automated builds and does
-    not need this.
+.PARAMETER ForceClean
+    Forces a complete clean (Recursive delete of the build output)
 #>
 Param(
     [string]$Configuration="Release",
-    [switch]$FullInit
+    [switch]$FullInit,
+    [switch]$ForceClean
 )
 
 Push-Location $PSScriptRoot
@@ -30,7 +28,6 @@ try
     # Pull in the repo specific support and force a full initialization of all the environment
     # based on the switch parameter. Normally FullInit is done in Build-All, which calls this
     # script. But for a local "inner loop" development this might be the only script used.
-    . .\repo-buildutils.ps1
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
 
     # build the Managed code support

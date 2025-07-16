@@ -16,7 +16,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     //       Implementations MUST handle marshalling of the ABI types manually
 
     // Misplaced using directive; It isn't misplaced - tooling is too brain dead to know the difference between an alias and a using directive
-#pragma warning disable IDE0065, SA1200
+#pragma warning disable IDE0065, SA1200, SA1135
     using unsafe LLVMOrcCAPIDefinitionGeneratorTryToGenerateFunction = delegate* unmanaged[Cdecl]<
         nint /*LLVMOrcDefinitionGeneratorRef*/ /*GeneratorObj*/,
         void* /*Ctx*/,
@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     using unsafe LLVMOrcMaterializationUnitMaterializeFunction = delegate* unmanaged[Cdecl]< void* /*Ctx*/, nint /*LLVMOrcMaterializationResponsibilityRef*/ /*MR*/, void /*retVal*/>;
     using unsafe LLVMOrcObjectTransformLayerTransformFunction = delegate* unmanaged[Cdecl]< void* /*Ctx*/, /*[Out]*/ nint* /*LLVMMemoryBufferRef*/ /*ObjInOut*/, nint /*LLVMErrorRef*/ /*retVal*/ >;
     using unsafe LLVMOrcSymbolPredicate = delegate* unmanaged[Cdecl]< void* /*Ctx*/, nint /*LLVMOrcSymbolStringPoolEntryRef*/ /*Sym*/, int /*retVal*/>;
-#pragma warning restore IDE0065, SA1200
+#pragma warning restore IDE0065, SA1200, SA1135
 
     [Flags]
     [SuppressMessage( "Design", "CA1008:Enums should have zero value", Justification = "Matches ABI naming" )]
