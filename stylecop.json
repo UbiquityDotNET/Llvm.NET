@@ -35,7 +35,7 @@
             "companyName": "Ubiquity.NET Contributors",
             "headerDecoration": "-----------------------------------------------------------------------",
             "documentExposedElements": true,
-            "documentInterfaces": false,
+            "documentInterfaces": true,
             "documentInternalElements": false,
             "documentPrivateElements": false,
             "documentPrivateFields": false,
