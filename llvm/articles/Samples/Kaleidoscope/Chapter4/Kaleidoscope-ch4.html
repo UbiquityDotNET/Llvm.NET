@@ -379,7 +379,7 @@ returned. For other functions the module is added to the JIT and the function is
 returned.</p>
 <p>For named function definitions, the module is lazy added to the JIT as it isn't
 known if/when the function is called. The JIT engine will compile modules lazy
-added into native code on first use. (Though if the function is never used, then
+added into native code on first use. Though, if the function is never used, then
 creating the IR module was wasted. (<a class="xref" href="../Chapter7.1/Kaleidoscope-ch7.1.html">Chapter 7.1</a> has a
 solution for even that extra overhead - truly lazy JIT). Since Kaleidoscope is
 generally a dynamic language it is possible and reasonable for the user to
@@ -559,7 +559,7 @@ runtime support for .NET. Very cool, indeed! 🤓</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha
+          - Build: 20.1.8-alpha.0.1
         </div>
       </div>
     </footer>

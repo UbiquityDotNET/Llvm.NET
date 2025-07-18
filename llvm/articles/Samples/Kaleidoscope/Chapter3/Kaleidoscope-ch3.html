@@ -572,9 +572,10 @@ namespace Kaleidoscope.Grammar.AST
 <div class="NOTE">
 <h5>Note</h5>
 <p>The constant value is uniqued in LLVM so that multiple calls given the same input
-value will produce the same LLVM Value. Ubiquity.NET.Llvm honors this and is
-implemented in a way to ensure that reference equality reflects the identity of
-the uniqued values correctly.</p>
+value will produce the same LLVM Value. Ubiquity.NET.Llvm honors this via value
+equality tests. It does <em><strong>NOT</strong></em> guarantee reference equality. (It used to in
+older versions but no longer does as that led to subtle problems with ownership
+and multi-threaded JIT)</p>
 </div>
 <h3 id="variable-reference-expression">Variable reference expression</h3>
 <p>References to variables in Kaleidoscope, like most other languages, use a name. In
@@ -780,7 +781,7 @@ Ready&gt;
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha
+          - Build: 20.1.8-alpha.0.1
         </div>
       </div>
     </footer>

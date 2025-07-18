@@ -121,7 +121,6 @@ private static readonly LazyEncodedString[] PassNames = [
 </code></pre><h3 id="special-attributes-for-parsed-functions">Special attributes for parsed functions</h3>
 <div class="WARNING">
 <h5>Warning</h5>
-</div>
 <p>When performing optimizations with the new pass builder system the
 TargetLibraryInfo (Internal LLVM concept) is used to determine what the &quot;built-in&quot;
 functions are. Unfortunately, they leave little room for manipulating or customizing
@@ -136,6 +135,7 @@ The function can include a <code>nobuiltin</code> attribute at the call site to 
 optimizer from assuming the call is to one of the well known built-in functions.
 This isn't used for Kaleidoscope. But does leave room for problems with names that
 match some arbitrary set of &quot;built-in&quot; symbols.</p>
+</div>
 <pre><code class="lang-csharp" name="Main">
 // Retrieves a Function for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
@@ -221,7 +221,7 @@ of the <code>TryRunPasses</code> function and then checking for errors.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha
+          - Build: 20.1.8-alpha.0.1
         </div>
       </div>
     </footer>
