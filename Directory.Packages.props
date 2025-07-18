@@ -4,7 +4,7 @@
     Global references are included in ALL projects in this repository
   -->
   <ItemGroup>
-    <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.7-alpha" />
+    <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.7-alpha.0.1" />
     <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
     <GlobalPackageReference Include="MustUseRetVal" Version="0.0.2" />
     <!--
