@@ -175,9 +175,10 @@ Generation of the LLVM IR for a constant is quite simple.
 
 > [!NOTE]
 > The constant value is uniqued in LLVM so that multiple calls given the same input
-> value will produce the same LLVM Value. Ubiquity.NET.Llvm honors this and is
-> implemented in a way to ensure that reference equality reflects the identity of
-> the uniqued values correctly.
+> value will produce the same LLVM Value. Ubiquity.NET.Llvm honors this via value
+> equality tests. It does ***NOT*** guarantee reference equality. (It used to in
+> older versions but no longer does as that led to subtle problems with ownership
+> and multi-threaded JIT)
 
 ### Variable reference expression
 References to variables in Kaleidoscope, like most other languages, use a name. In
