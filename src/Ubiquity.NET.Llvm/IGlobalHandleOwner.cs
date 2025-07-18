@@ -7,6 +7,7 @@
 namespace Ubiquity.NET.Llvm
 {
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related interfaces" )]
+    [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal Interface" )]
     internal interface IHandleWrapper<THandle>
     {
         /// <summary>Gets the handle for this wrapper</summary>
@@ -19,6 +20,7 @@ namespace Ubiquity.NET.Llvm
         internal THandle Handle { get; }
     }
 
+    [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal Interface" )]
     internal interface IGlobalHandleOwner<THandle>
         : IDisposable
         where THandle : GlobalHandleBase
