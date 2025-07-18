@@ -102,7 +102,7 @@ returned.
 
 For named function definitions, the module is lazy added to the JIT as it isn't
 known if/when the function is called. The JIT engine will compile modules lazy
-added into native code on first use. (Though if the function is never used, then
+added into native code on first use. Though, if the function is never used, then
 creating the IR module was wasted. ([Chapter 7.1](xref:Kaleidoscope-ch7.1) has a
 solution for even that extra overhead - truly lazy JIT). Since Kaleidoscope is
 generally a dynamic language it is possible and reasonable for the user to
