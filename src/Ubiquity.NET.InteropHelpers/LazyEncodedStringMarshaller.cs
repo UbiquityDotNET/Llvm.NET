@@ -30,7 +30,7 @@ namespace Ubiquity.NET.InteropHelpers
         }
 
         // Generally, can't support the [In] direction of [Out,In]
-        // The initialized "in" array might be marshaled to the native where it is "updated" and then need marshaled
+        // The initialized "in" array might be marshaled to the native where it is "updated" and then needs marshaling
         // again on the return. This is NOT a supported scenario as conversion would need a stateful form to hold
         // a pinned element for the call. Thus the generated marshalling would need to hold an array of the pinned
         // managed values and unpin them after the call..., which is not an option for array elements.

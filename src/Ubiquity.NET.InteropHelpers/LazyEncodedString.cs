@@ -140,9 +140,9 @@ namespace Ubiquity.NET.InteropHelpers
         /// <inheritdoc/>
         /// <remarks>
         /// May incur the cost of conversion to native if both strings don't have the same
-        /// form. This only performs an ordinal comparison of the values. If both have, a
-        /// managed representation already that is used, otherwise the native data is used
-        /// for the comparison.
+        /// form. If both have, a managed representation already that is used, otherwise the
+        /// native data is used for the comparison. This only performs an ordinal comparison
+        /// of the values.
         /// </remarks>
         public bool Equals( LazyEncodedString? other )
         {
