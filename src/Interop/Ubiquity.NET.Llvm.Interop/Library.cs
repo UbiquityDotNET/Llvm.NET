@@ -68,6 +68,7 @@ namespace Ubiquity.NET.Llvm.Interop
                                           , SupportedVersion.ToString()
                                           , libVersion.ToString()
                                           );
+
                 throw new InvalidOperationException( msg );
             }
 

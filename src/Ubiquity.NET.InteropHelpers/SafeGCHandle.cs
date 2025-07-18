@@ -29,7 +29,10 @@ namespace Ubiquity.NET.InteropHelpers
     /// is, by holding a <see cref="GCHandle"/> to self, with an AddRef'd handle the instance
     /// would live until the app is terminated! Thus applications using this MUST understand
     /// the native code use and account for the disposable of any instances with this as a
-    /// member.</para>
+    /// member. Typically a callback provided to the native code is used to indicate release
+    /// of the resource. That callback will call dispose to decrement the refcount on the
+    /// handle. If the ref count lands at 0, then the object it refers to is subject to
+    /// normal GC.</para>
     /// </remarks>
     public sealed class SafeGCHandle
         : SafeHandle
