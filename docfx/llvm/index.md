@@ -64,7 +64,7 @@ are important factors to consider in the new library:
 When dealing with native interop the concept of ownership is of critical importance. The underlying
 resources are NOT controlled by a Garbage collector, and therefore require care to avoid access violations
 and other app crash scenarios. This library aims to make that much easier by using IDisposable for these
-scenarios. It is ***HIGHLY** recommended to use the [IDisposableAnalyzers](https://www.nuget.org/packages/IDisposableAnalyzers/)
+scenarios. It is ***HIGHLY*** recommended to use the [IDisposableAnalyzers](https://www.nuget.org/packages/IDisposableAnalyzers/)
 in ANY project that consumes this library. (It was/is used internally to find and fix issues across the
 library that were tedious to identify otherwise).
 
