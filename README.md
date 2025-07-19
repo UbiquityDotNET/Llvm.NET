@@ -3,7 +3,7 @@ Projection (bindings) library for LLVM to .NET consumption.
 
 ## Library Information
 ### Build Status
-[![CI-Build](https://github.com/UbiquityDotNET/Llvm.NET/workflows/CI-Build/badge.svg?branch=master&event=push)](https://github.com/UbiquityDotNET/Llvm.NET/actions?query=workflow%3ACI-Build+branch%3Amaster+is%3Ain_progress)
+[![CI-Build](https://github.com/UbiquityDotNET/Llvm.NET/actions/workflows/pr-build.yml/badge.svg)](https://github.com/UbiquityDotNET/Llvm.NET/actions/workflows/pr-build.yml)
 ![Release-Build](https://github.com/UbiquityDotNET/Llvm.NET/workflows/Release-Build/badge.svg)
 
 ### NuGet
