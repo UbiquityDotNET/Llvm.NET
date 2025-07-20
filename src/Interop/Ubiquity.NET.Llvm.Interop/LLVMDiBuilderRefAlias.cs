@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.Interop
 
         // define implicit conversion from an OWNED value
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "Exists, tooling is too stupid to see it" )]
-        public static implicit operator LLVMDIBuilderRefAlias( LLVMDIBuilderRef self ) => From( self );
+        public static implicit operator LLVMDIBuilderRefAlias( LLVMDIBuilderRef other ) => FromABI( other.DangerousGetHandle() );
 
         private LLVMDIBuilderRefAlias( nint p )
         {
