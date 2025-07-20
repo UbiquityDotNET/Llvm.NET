@@ -33,7 +33,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         /// <summary>Initializes a new instance of the <see cref="DIBuilder"/> class.</summary>
         /// <param name="owningModule">Module that owns this builder</param>
-        public DIBuilder( Module owningModule )
+        public DIBuilder( IModule owningModule )
             : this( owningModule, true )
         {
         }
