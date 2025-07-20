@@ -26,10 +26,10 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             Assert.IsNotNull( compilationUnit, "Just created CU should not be null" );
             Assert.IsNotNull( compilationUnit.File, "CU should not have null file, it was provided in creation" );
 
-            var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
-            var i32Ptr = i32.CreatePointerType(in diBuilder, 0);
-            var testFuncSig = ctx.CreateFunctionType(in diBuilder, i32Ptr);
-            var testFunc = module.CreateFunction( in diBuilder
+            var i32 = new DebugBasicType( module.Context.Int32Type, diBuilder, "int", DiTypeKind.Signed );
+            var i32Ptr = i32.CreatePointerType(diBuilder, 0);
+            var testFuncSig = ctx.CreateFunctionType(diBuilder, i32Ptr);
+            var testFunc = module.CreateFunction( diBuilder
                                                 , scope: compilationUnit.File
                                                 , name: "DoCopy"
                                                 , linkageName: null

@@ -94,10 +94,12 @@ namespace Ubiquity.NET.Llvm
         public IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, params IEnumerable<ITypeRef> args ) => Impl.GetFunctionType( isVarArgs, returnType, args );
 
         /// <inheritdoc/>
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes ) => Impl.CreateFunctionType( in diBuilder, retType, argTypes );
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes )
+            => Impl.CreateFunctionType( diBuilder, retType, argTypes );
 
         /// <inheritdoc/>
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder, bool isVarArg, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes ) => Impl.CreateFunctionType( in diBuilder, isVarArg, retType, argTypes );
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder, bool isVarArg, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes )
+            => Impl.CreateFunctionType( diBuilder, isVarArg, retType, argTypes );
 
         /// <inheritdoc/>
         public Constant CreateConstantStruct( bool packed, params IEnumerable<Constant> values ) => Impl.CreateConstantStruct( packed, values );

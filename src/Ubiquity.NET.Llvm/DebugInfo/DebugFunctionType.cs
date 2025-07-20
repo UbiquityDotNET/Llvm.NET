@@ -42,7 +42,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="retType">Return type for the function</param>
         /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
         public DebugFunctionType( IFunctionType llvmType
-                                , ref readonly DIBuilder diBuilder
+                                , IDIBuilder diBuilder
                                 , DebugInfoFlags debugFlags
                                 , IDebugType<ITypeRef, DIType> retType
                                 , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes

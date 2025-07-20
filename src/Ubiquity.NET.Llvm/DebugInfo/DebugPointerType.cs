@@ -18,9 +18,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment on pointer</param>
-        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, ref readonly DIBuilder diBuilder, uint addressSpace = 0, string? name = null, uint alignment = 0 )
+        public DebugPointerType( IDebugType<ITypeRef, DIType> debugElementType, IDIBuilder diBuilder, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( debugElementType.ThrowIfNull().NativeType
-                  , in diBuilder
+                  , diBuilder
                   , debugElementType.DebugInfoType
                   , addressSpace
                   , name
@@ -37,9 +37,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="addressSpace">Target address space for the pointer [Default: 0]</param>
         /// <param name="name">Name of the type [Default: null]</param>
         /// <param name="alignment">Alignment of pointer</param>
-        public DebugPointerType( ITypeRef llvmElementType, ref readonly DIBuilder diBuilder, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
+        public DebugPointerType( ITypeRef llvmElementType, IDIBuilder diBuilder, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0 )
             : this( llvmElementType.ThrowIfNull().CreatePointerType( addressSpace )
-                  , in diBuilder
+                  , diBuilder
                   , elementType
                   , name
                   , alignment
@@ -59,7 +59,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <see cref="ElementType"/> property as the elements the pointer refers to are
         /// unknown.
         /// </remarks>
-        public DebugPointerType( IPointerType llvmPtrType, ref readonly DIBuilder diBuilder, DIType? elementType, string? name = null, uint alignment = 0 )
+        public DebugPointerType( IPointerType llvmPtrType, IDIBuilder diBuilder, DIType? elementType, string? name = null, uint alignment = 0 )
             : base( llvmPtrType
                   , diBuilder.CreatePointerType( elementType
                                                , name

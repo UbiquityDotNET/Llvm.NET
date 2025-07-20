@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.BitReader;
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 
 namespace Ubiquity.NET.Llvm
 {
@@ -165,16 +164,16 @@ namespace Ubiquity.NET.Llvm
         public void AddVersionIdentMetadata( LazyEncodedString version ) => Impl.AddVersionIdentMetadata( version );
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder, DIScope? scope, LazyEncodedString name, LazyEncodedString? linkageName, DIFile? file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized )
-            => Impl.CreateFunction( in diBuilder, scope, name, linkageName, file, line, signature, isLocalToUnit, isDefinition, scopeLine, debugFlags, isOptimized );
+        public Function CreateFunction( IDIBuilder diBuilder, DIScope? scope, LazyEncodedString name, LazyEncodedString? linkageName, DIFile? file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized )
+            => Impl.CreateFunction( diBuilder, scope, name, linkageName, file, line, signature, isLocalToUnit, isDefinition, scopeLine, debugFlags, isOptimized );
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes )
-            => Impl.CreateFunction( in diBuilder, name, isVarArg, returnType, argumentTypes );
+        public Function CreateFunction( IDIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes )
+            => Impl.CreateFunction( diBuilder, name, isVarArg, returnType, argumentTypes );
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, params IDebugType<ITypeRef, DIType>[] argumentTypes )
-            => Impl.CreateFunction( in diBuilder, name, isVarArg, returnType, argumentTypes );
+        public Function CreateFunction( IDIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, params IDebugType<ITypeRef, DIType>[] argumentTypes )
+            => Impl.CreateFunction( diBuilder, name, isVarArg, returnType, argumentTypes );
 
         /// <inheritdoc/>
         public Function GetIntrinsicDeclaration( LazyEncodedString name, params ITypeRef[] args ) => Impl.GetIntrinsicDeclaration( name, args );

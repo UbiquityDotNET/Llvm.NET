@@ -153,12 +153,12 @@ namespace Ubiquity.NET.Llvm.UT
             using var layout = targetMachine.CreateTargetData();
             module.Layout = layout;
 
-            var i16 = new DebugBasicType( context.Int16Type, in diBuilder, "int16", DiTypeKind.Signed );
-            var i32 = new DebugBasicType( context.Int32Type, in diBuilder, "int32", DiTypeKind.Signed );
-            var f32 = new DebugBasicType( context.FloatType, in diBuilder, "float", DiTypeKind.Float );
+            var i16 = new DebugBasicType( context.Int16Type, diBuilder, "int16", DiTypeKind.Signed );
+            var i32 = new DebugBasicType( context.Int32Type, diBuilder, "int32", DiTypeKind.Signed );
+            var f32 = new DebugBasicType( context.FloatType, diBuilder, "float", DiTypeKind.Float );
 
             // i16 ( i32, float )
-            var funcSig = context.CreateFunctionType( in diBuilder, i16, i32, f32 );
+            var funcSig = context.CreateFunctionType( diBuilder, i16, i32, f32 );
 
             Assert.IsNotNull( funcSig );
             Assert.AreEqual( context, funcSig.Context );
@@ -205,13 +205,13 @@ namespace Ubiquity.NET.Llvm.UT
             using var layout = targetMachine.CreateTargetData();
             module.Layout = layout;
 
-            var i16 = new DebugBasicType( context.Int16Type, in diBuilder, "int16", DiTypeKind.Signed );
-            var i32 = new DebugBasicType( context.Int32Type, in diBuilder, "int32", DiTypeKind.Signed );
-            var f32 = new DebugBasicType( context.FloatType, in diBuilder, "float", DiTypeKind.Float );
+            var i16 = new DebugBasicType( context.Int16Type, diBuilder, "int16", DiTypeKind.Signed );
+            var i32 = new DebugBasicType( context.Int32Type, diBuilder, "int32", DiTypeKind.Signed );
+            var f32 = new DebugBasicType( context.FloatType, diBuilder, "float", DiTypeKind.Float );
 
             // i16 ( i32, float )
-            var funcSig = context.CreateFunctionType( in diBuilder, i16, i32, f32 );
-            var funcSig2 = context.CreateFunctionType( in diBuilder, i16, i32, f32 );
+            var funcSig = context.CreateFunctionType( diBuilder, i16, i32, f32 );
+            var funcSig2 = context.CreateFunctionType( diBuilder, i16, i32, f32 );
             Assert.IsTrue( funcSig.NativeType.Equals( funcSig2.NativeType ) );
             Assert.IsNotNull( funcSig.DebugInfoType );
             Assert.IsTrue( funcSig.HasDebugInfo() );

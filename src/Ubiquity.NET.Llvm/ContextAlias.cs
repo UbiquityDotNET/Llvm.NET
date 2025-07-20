@@ -200,32 +200,32 @@ namespace Ubiquity.NET.Llvm
             return (IFunctionType)signature.CreateType();
         }
 
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IDebugType<ITypeRef, DIType>[] argTypes
                                                    )
         {
-            return CreateFunctionType( in diBuilder, false, retType, argTypes );
+            return CreateFunctionType( diBuilder, false, retType, argTypes );
         }
 
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
         {
-            return CreateFunctionType( in diBuilder, false, retType, argTypes );
+            return CreateFunctionType( diBuilder, false, retType, argTypes );
         }
 
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IDebugType<ITypeRef, DIType>[] argTypes
                                                    )
         {
-            return CreateFunctionType( in diBuilder, isVarArg, retType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argTypes );
+            return CreateFunctionType( diBuilder, isVarArg, retType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argTypes );
         }
 
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
@@ -270,7 +270,7 @@ namespace Ubiquity.NET.Llvm
 
             // Input validation complete, now do the actual work...
             var llvmType = GetFunctionType( isVarArg , retType, argTypes);
-            return new DebugFunctionType( llvmType, in diBuilder, DebugInfoFlags.None, retType, argTypes );
+            return new DebugFunctionType( llvmType, diBuilder, DebugInfoFlags.None, retType, argTypes );
         }
 
         public Constant CreateConstantStruct( bool packed, params IEnumerable<Constant> values )

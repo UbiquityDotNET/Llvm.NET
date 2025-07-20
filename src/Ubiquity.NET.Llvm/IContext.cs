@@ -177,7 +177,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    );
@@ -188,7 +188,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="retType">Return type of the function</param>
         /// <param name="argTypes">Argument types of the function</param>
         /// <returns>Function signature</returns>
-        public DebugFunctionType CreateFunctionType( ref readonly DIBuilder diBuilder
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes

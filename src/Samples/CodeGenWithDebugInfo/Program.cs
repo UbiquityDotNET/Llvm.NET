@@ -89,10 +89,10 @@ namespace CodeGenWithDebugInfo
 
             #region CreatingBasicTypesWithDebugInfo
             // Create basic types used in this compilation
-            var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
-            var f32 = new DebugBasicType( module.Context.FloatType, in diBuilder, "float", DiTypeKind.Float );
+            var i32 = new DebugBasicType( module.Context.Int32Type, diBuilder, "int", DiTypeKind.Signed );
+            var f32 = new DebugBasicType( module.Context.FloatType, diBuilder, "float", DiTypeKind.Float );
             var voidType = DebugType.Create( module.Context.VoidType, (DIType?)null );
-            var i32Array_0_32 = i32.CreateArrayType( in diBuilder, 0, 32 );
+            var i32Array_0_32 = i32.CreateArrayType( diBuilder, 0, 32 );
             #endregion
 
             #region CreatingStructureTypes
@@ -104,7 +104,7 @@ namespace CodeGenWithDebugInfo
                     new( 2, "c", diFile, 5, i32Array_0_32 ),
                 };
 
-            var fooType = new DebugStructType( in diBuilder, "struct.foo", compilationUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
+            var fooType = new DebugStructType( diBuilder, "struct.foo", compilationUnit, "foo", diFile, 1, DebugInfoFlags.None, fooBody );
             #endregion
 
             #region CreatingGlobalsAndMetadata
@@ -133,17 +133,17 @@ namespace CodeGenWithDebugInfo
             #region CreatingQualifiedTypes
             // create types for function args
             var constFoo = diBuilder.CreateQualifiedType( fooType.DebugInfoType, QualifiedTypeTag.Const );
-            var fooPtr = new DebugPointerType( fooType, in diBuilder );
+            var fooPtr = new DebugPointerType( fooType, diBuilder );
             #endregion
 
             // Create the functions
             // NOTE: The declaration ordering is reversed from that of the sample code file (test.c)
             //       However, this is what Clang ends up doing for some reason so it is
             //       replicated here to aid in comparing the generated LL files.
-            Function doCopyFunc = DeclareDoCopyFunc( in diBuilder, diFile, voidType, abiAttributes );
-            Function copyFunc = DeclareCopyFunc(targetABI, in diBuilder, diFile, voidType, constFoo, fooPtr, abiAttributes );
+            Function doCopyFunc = DeclareDoCopyFunc( diBuilder, diFile, voidType, abiAttributes );
+            Function copyFunc = DeclareCopyFunc(targetABI, diBuilder, diFile, voidType, constFoo, fooPtr, abiAttributes );
 
-            CreateCopyFunctionBody( in diBuilder, copyFunc, diFile, fooType, fooPtr, constFoo );
+            CreateCopyFunctionBody( diBuilder, copyFunc, diFile, fooType, fooPtr, constFoo );
             CreateDoCopyFunctionBody( module, doCopyFunc, fooType, bar, baz, copyFunc );
 
             // finalize the debug information
@@ -185,16 +185,16 @@ namespace CodeGenWithDebugInfo
 
         #region FunctionDeclarations
         private static Function DeclareDoCopyFunc(
-            ref readonly DIBuilder diBuilder,
+            DIBuilder diBuilder,
             DIFile diFile,
             IDebugType<ITypeRef, DIType> voidType,
             IEnumerable<AttributeValue> abiAttributes
             )
         {
             var module = diBuilder.OwningModule;
-            var doCopySig = module.Context.CreateFunctionType( in diBuilder, voidType );
+            var doCopySig = module.Context.CreateFunctionType( diBuilder, voidType );
 
-            var doCopyFunc = module.CreateFunction( in diBuilder
+            var doCopyFunc = module.CreateFunction( diBuilder
                                                   , scope: diFile
                                                   , name: "DoCopy"
                                                   , linkageName: null
@@ -212,7 +212,7 @@ namespace CodeGenWithDebugInfo
         }
 
         private static Function DeclareCopyFunc( ITargetABI abi
-                                               , ref readonly DIBuilder diBuilder
+                                               , DIBuilder diBuilder
                                                , DIFile diFile
                                                , IDebugType<ITypeRef, DIType> voidType
                                                , DIDerivedType constFoo
@@ -230,13 +230,13 @@ namespace CodeGenWithDebugInfo
             // To get the correct debug info signature this inserts an
             // explicit DebugType<> that overrides the default behavior
             // to pair the LLVM pointer type with the original source type.
-            var copySig = module.Context.CreateFunctionType( in diBuilder
+            var copySig = module.Context.CreateFunctionType( diBuilder
                                                            , voidType
                                                            , DebugType.Create( fooPtr, constFoo )
                                                            , fooPtr
                                                            );
 
-            var copyFunc = module.CreateFunction( in diBuilder
+            var copyFunc = module.CreateFunction( diBuilder
                                                 , scope: diFile
                                                 , name: "copy"
                                                 , linkageName: null
@@ -268,7 +268,7 @@ namespace CodeGenWithDebugInfo
         }
         #endregion
 
-        private static void CreateCopyFunctionBody( ref readonly DIBuilder diBuilder
+        private static void CreateCopyFunctionBody( DIBuilder diBuilder
                                                   , Function copyFunc
                                                   , DIFile diFile
                                                   , ITypeRef foo

@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
+    <ProjectReference Include="..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
   </ItemGroup>
 
 </Project>
