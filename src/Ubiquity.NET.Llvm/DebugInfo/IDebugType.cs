@@ -42,13 +42,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="diBuilder">Debug information builder to use</param>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns><see cref="DebugPointerType"/></returns>
-        DebugPointerType CreatePointerType( ref readonly DIBuilder diBuilder, uint addressSpace );
+        DebugPointerType CreatePointerType( IDIBuilder diBuilder, uint addressSpace );
 
         /// <summary>Creates a type defining an array of elements of this type</summary>
         /// <param name="diBuilder">Debug information builder to use</param>
         /// <param name="lowerBound">Lower bound of the array</param>
         /// <param name="count">Count of elements in the array</param>
         /// <returns><see cref="DebugArrayType"/></returns>
-        DebugArrayType CreateArrayType( ref readonly DIBuilder diBuilder, uint lowerBound, uint count );
+        DebugArrayType CreateArrayType( IDIBuilder diBuilder, uint lowerBound, uint count );
     }
 }

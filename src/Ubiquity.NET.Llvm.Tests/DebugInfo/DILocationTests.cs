@@ -34,14 +34,14 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             using var diBuilder = new DIBuilder(module);
             DICompileUnit cu = diBuilder.CreateCompileUnit( SourceLanguage.C, "test.c", "UnitTest" );
 
-            var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
-            var function = module.CreateFunction( in diBuilder
+            var i32 = new DebugBasicType( module.Context.Int32Type, diBuilder, "int", DiTypeKind.Signed );
+            var function = module.CreateFunction( diBuilder
                                                 , scope: cu
                                                 , name: "test"
                                                 , linkageName: null
                                                 , file: cu.File
                                                 , line: 1
-                                                , signature: context.CreateFunctionType(in diBuilder, i32)
+                                                , signature: context.CreateFunctionType( diBuilder, i32)
                                                 , isLocalToUnit: false
                                                 , isDefinition: true
                                                 , scopeLine: 1

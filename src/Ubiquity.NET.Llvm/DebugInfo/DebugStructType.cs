@@ -25,7 +25,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="packed">Indicates if this type is packed or not</param>
         /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
-        public DebugStructType( ref readonly DIBuilder diBuilder
+        public DebugStructType( IDIBuilder diBuilder
                               , string nativeName
                               , DIScope? scope
                               , string sourceName
@@ -54,7 +54,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var memberTypes = new DINode[DebugMembers.Count];
             for(int i = 0; i < DebugMembers.Count; ++i)
             {
-                memberTypes[ i ] = CreateMemberType( in diBuilder, DebugMembers[ i ] );
+                memberTypes[ i ] = CreateMemberType( diBuilder, DebugMembers[ i ] );
             }
 
             var concreteType = diBuilder.CreateStructType( scope: scope
@@ -84,7 +84,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="derivedFrom">Base type, if any for this type</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public DebugStructType( IStructType llvmType
-                              , ref readonly DIBuilder diBuilder
+                              , IDIBuilder diBuilder
                               , DIScope? scope
                               , string name
                               , DIFile? file
@@ -121,7 +121,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// definition of the type
         /// </remarks>
         public DebugStructType( IStructType llvmType
-                              , ref readonly DIBuilder diBuilder
+                              , IDIBuilder diBuilder
                               , DIScope? scope
                               , string name
                               , DIFile? file
@@ -149,7 +149,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// This constructor creates a replaceable type that is replaced later with a full
         /// definition of the type
         /// </remarks>
-        public DebugStructType( ref readonly DIBuilder diBuilder
+        public DebugStructType( IDIBuilder diBuilder
                               , string nativeName
                               , DIScope? scope
                               , string name
@@ -157,7 +157,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                               , uint line = 0
                               )
             : this( diBuilder.OwningModule.Context.CreateStructType( nativeName )
-                  , in diBuilder
+                  , diBuilder
                   , scope
                   , name
                   , file
@@ -196,7 +196,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="debugFlags">Debug flags for this type</param>
         /// <param name="debugElements">Descriptors for all the elements in the type</param>
         public void SetBody( bool packed
-                           , ref readonly DIBuilder diBuilder
+                           , IDIBuilder diBuilder
                            , DIScope? scope
                            , DIFile? file
                            , uint line
@@ -206,7 +206,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             var debugMembersArray = debugElements as IList<DebugMemberInfo> ?? [ .. debugElements ];
             var nativeElements = debugMembersArray.Select( e => e.DebugType.NativeType );
-            SetBody( packed, in diBuilder, scope, file, line, debugFlags, nativeElements, debugMembersArray );
+            SetBody( packed, diBuilder, scope, file, line, debugFlags, nativeElements, debugMembersArray );
         }
 
         /// <summary>Set the body of a type</summary>
@@ -222,7 +222,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="bitSize">Total bit size for this type or <see langword="null"/> to use default for target</param>
         /// <param name="bitAlignment">Alignment of the type in bits, 0 indicates default for target</param>
         public void SetBody( bool packed
-                           , ref readonly DIBuilder diBuilder
+                           , IDIBuilder diBuilder
                            , DIScope? scope
                            , DIFile? file
                            , uint line
@@ -243,7 +243,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var memberTypes = new DINode[DebugMembers.Count];
             for(int i = 0; i < DebugMembers.Count; ++i)
             {
-                memberTypes[ i ] = CreateMemberType( in diBuilder, DebugMembers[ i ] );
+                memberTypes[ i ] = CreateMemberType( diBuilder, DebugMembers[ i ] );
             }
 
             var concreteType = diBuilder.CreateStructType( scope: scope
@@ -262,7 +262,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets a list of descriptors for each members</summary>
         public IReadOnlyList<DebugMemberInfo> DebugMembers { get; private set; } = new List<DebugMemberInfo>().AsReadOnly();
 
-        private DIDerivedType CreateMemberType( ref readonly DIBuilder diBuilder, DebugMemberInfo memberInfo )
+        private DIDerivedType CreateMemberType( IDIBuilder diBuilder, DebugMemberInfo memberInfo )
         {
             if(DebugInfoType == null)
             {

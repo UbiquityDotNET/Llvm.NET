@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Ubiquity.NET.Extensions;
+using Ubiquity.NET.InteropHelpers;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -32,7 +33,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public ScopeStack( )
         {
-            Scopes.Push( new Dictionary<string, T>() );
+            Scopes.Push( new Dictionary<LazyEncodedString, T>() );
         }
 
         /// <summary>Gets the depth of the stack</summary>
@@ -48,7 +49,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// </remarks>
         public IDisposable EnterScope( )
         {
-            Scopes.Push( new Dictionary<string, T>() );
+            Scopes.Push( new Dictionary<LazyEncodedString, T>() );
             return new DisposableAction( ( ) => Scopes.Pop() );
         }
 
@@ -62,7 +63,8 @@ namespace Ubiquity.NET.Runtime.Utils
         /// in the current scope, even if some outer scope has the same name.
         /// </remarks>
         /// <exception cref="KeyNotFoundException">If the <paramref name="name"/> wasn't found in the active or parent scopes</exception>
-        public T this[ string name ]
+        [SuppressMessage( "Design", "CA1043:Use Integral Or String Argument For Indexers", Justification = "It is a string, it just supports UTF8 as well as System.String" )]
+        public T this[ LazyEncodedString name ]
         {
             get => TryGetValue( name, out T? retVal ) ? retVal : throw new KeyNotFoundException( name );
             set => Scopes.Peek()[ name ] = value;
@@ -72,7 +74,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="name">Name of the value</param>
         /// <param name="value">Value</param>
         /// <returns><see langword="true"/> if the symbol was found from a search of the scopes</returns>
-        public bool TryGetValue( string name, [MaybeNullWhen( false )] out T value )
+        public bool TryGetValue( LazyEncodedString name, [MaybeNullWhen( false )] out T value )
         {
             value = default!;
             foreach(var scope in Scopes)
@@ -86,6 +88,6 @@ namespace Ubiquity.NET.Runtime.Utils
             return false;
         }
 
-        private readonly Stack<IDictionary<string, T>> Scopes = new();
+        private readonly Stack<IDictionary<LazyEncodedString, T>> Scopes = new();
     }
 }

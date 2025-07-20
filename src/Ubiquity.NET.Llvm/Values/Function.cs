@@ -101,7 +101,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Add a new basic block to the beginning of a function</summary>
         /// <param name="name">Name (label) for the block</param>
         /// <returns><see cref="BasicBlock"/> created and inserted at the beginning of the function</returns>
-        public BasicBlock PrependBasicBlock( string name )
+        public BasicBlock PrependBasicBlock( LazyEncodedString name )
         {
             LLVMBasicBlockRef firstBlock = LLVMGetFirstBasicBlock( Handle );
             BasicBlock retVal;
@@ -129,7 +129,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <summary>Creates an appends a new basic block to a function</summary>
         /// <param name="name">Name (label) of the block</param>
         /// <returns><see cref="BasicBlock"/> created and inserted onto the end of the function</returns>
-        public BasicBlock AppendBasicBlock( string name )
+        public BasicBlock AppendBasicBlock( LazyEncodedString name )
         {
             LLVMBasicBlockRef blockRef = LLVMAppendBasicBlockInContext( NativeType.Context.GetUnownedHandle(), Handle, name );
             return BasicBlock.FromHandle( blockRef.ThrowIfInvalid() )!;
@@ -140,7 +140,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// <param name="insertBefore">Block to insert the new block before</param>
         /// <returns>New <see cref="BasicBlock"/> inserted</returns>
         /// <exception cref="ArgumentException"><paramref name="insertBefore"/> belongs to a different function</exception>
-        public BasicBlock InsertBasicBlock( string name, BasicBlock insertBefore )
+        public BasicBlock InsertBasicBlock( LazyEncodedString name, BasicBlock insertBefore )
         {
             ArgumentNullException.ThrowIfNull( insertBefore );
             if(insertBefore.ContainingFunction != null && !EqualityComparer<Function>.Default.Equals( insertBefore.ContainingFunction, this ))

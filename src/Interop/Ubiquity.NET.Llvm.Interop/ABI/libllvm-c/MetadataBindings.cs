@@ -220,7 +220,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
         [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
-            LLVMDIBuilderRef D,
+            LLVMDIBuilderRefAlias D,
             LLVMMetadataRef Scope,
             LazyEncodedString Name,
             LazyEncodedString LinkageName,
@@ -255,7 +255,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
-            LLVMDIBuilderRef D,
+            LLVMDIBuilderRefAlias D,
             LLVMMetadataRef Scope,
             LazyEncodedString Name, nuint NameLen,
             LazyEncodedString LinkageName, nuint LinkageNameLen,
@@ -271,7 +271,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRef dref, LLVMMetadataRef subProgram );
+        public static unsafe partial void LibLLVMDIBuilderFinalizeSubProgram( LLVMDIBuilderRefAlias dref, LLVMMetadataRef subProgram );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

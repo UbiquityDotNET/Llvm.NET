@@ -86,6 +86,7 @@ malloc
 marshallers
 marshalling
 memcopy
+memcpy
 metadata
 Mips
 msbuild

@@ -51,8 +51,8 @@ namespace Ubiquity.NET.Llvm.UT
 
             using var layout = targetMachine.CreateTargetData();
             module.Layout = layout;
-            var intType = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
-            var arrayType = new DebugArrayType(intType, in diBuilder, 3u);
+            var intType = new DebugBasicType( module.Context.Int32Type, diBuilder, "int", DiTypeKind.Signed );
+            var arrayType = new DebugArrayType(intType, diBuilder, 3u);
             Assert.IsNotNull( arrayType );
 
             DICompositeType? mdnode = arrayType.DebugInfoType;

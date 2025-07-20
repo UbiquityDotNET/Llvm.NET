@@ -21,12 +21,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="alignment">Alignment for the type</param>
         public DebugArrayType( IArrayType llvmType
                              , IDebugType<ITypeRef, DIType> elementType
-                             , ref readonly DIBuilder diBuilder
+                             , IDIBuilder diBuilder
                              , uint count
                              , uint lowerBound = 0
                              , uint alignment = 0
                              )
-            : base( llvmType, BuildDebugType( llvmType, elementType, in diBuilder, count, lowerBound, alignment ) )
+            : base( llvmType, BuildDebugType( llvmType, elementType, diBuilder, count, lowerBound, alignment ) )
         {
             ArgumentNullException.ThrowIfNull( elementType );
             ArgumentNullException.ThrowIfNull( elementType.DebugInfoType );
@@ -39,10 +39,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="diBuilder">Debug Information builder to use to build the information for this type</param>
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
-        public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, ref readonly DIBuilder diBuilder, uint count, uint lowerBound = 0 )
+        public DebugArrayType( IDebugType<ITypeRef, DIType> elementType, IDIBuilder diBuilder, uint count, uint lowerBound = 0 )
             : this( elementType.ThrowIfNull().CreateArrayType( count )
                   , elementType
-                  , in diBuilder
+                  , diBuilder
                   , count
                   , lowerBound
                   )
@@ -55,8 +55,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="elementType">Debug type of the array elements</param>
         /// <param name="count">Number of elements in the array</param>
         /// <param name="lowerBound"><see cref="LowerBound"/> value for the array indices [Default: 0]</param>
-        public DebugArrayType( IArrayType llvmType, ref readonly DIBuilder diBuilder, DIType elementType, uint count, uint lowerBound = 0 )
-            : this( DebugType.Create( llvmType.ThrowIfNull().ElementType, elementType ), in diBuilder, count, lowerBound )
+        public DebugArrayType( IArrayType llvmType, IDIBuilder diBuilder, DIType elementType, uint count, uint lowerBound = 0 )
+            : this( DebugType.Create( llvmType.ThrowIfNull().ElementType, elementType ), diBuilder, count, lowerBound )
         {
         }
 
@@ -75,24 +75,24 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Resolves a temporary metadata node for the array if full size information wasn't available at creation time</summary>
         /// <param name="layout">Type layout information</param>
         /// <param name="diBuilder">Debug information builder for creating the new debug information</param>
-        public void ResolveTemporary( IDataLayout layout, ref readonly DIBuilder diBuilder )
+        public void ResolveTemporary( IDataLayout layout, IDIBuilder diBuilder )
         {
             ArgumentNullException.ThrowIfNull( layout );
 
             if(DebugInfoType != null && DebugInfoType.IsTemporary && !DebugInfoType.IsResolved)
             {
                 DebugInfoType = diBuilder.CreateArrayType( layout.BitSizeOf( NativeType )
-                                                  , layout.AbiBitAlignmentOf( NativeType )
-                                                  , DebugElementType.DebugInfoType!
-                                                  , diBuilder.CreateSubRange( LowerBound, NativeType.Length )
-                                                  );
+                                                         , layout.AbiBitAlignmentOf( NativeType )
+                                                         , DebugElementType.DebugInfoType!
+                                                         , diBuilder.CreateSubRange( LowerBound, NativeType.Length )
+                                                         );
             }
         }
 
         [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Result is anything but 'simplified'" )]
         private static DICompositeType BuildDebugType( IArrayType llvmType
                                                      , IDebugType<ITypeRef, DIType> elementType
-                                                     , ref readonly DIBuilder diBuilder
+                                                     , IDIBuilder diBuilder
                                                      , uint count
                                                      , uint lowerBound
                                                      , uint alignment

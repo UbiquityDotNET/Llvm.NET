@@ -497,7 +497,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder
+        public Function CreateFunction( IDIBuilder diBuilder
                                       , DIScope? scope
                                       , LazyEncodedString name
                                       , LazyEncodedString? linkageName
@@ -551,26 +551,26 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder
+        public Function CreateFunction( IDIBuilder diBuilder
                                       , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       )
         {
-            IFunctionType signature = Context.CreateFunctionType( in diBuilder, isVarArg, returnType, argumentTypes );
+            IFunctionType signature = Context.CreateFunctionType( diBuilder, isVarArg, returnType, argumentTypes );
             return CreateFunction( name, signature );
         }
 
         /// <inheritdoc/>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder
+        public Function CreateFunction( IDIBuilder diBuilder
                                       , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , params IDebugType<ITypeRef, DIType>[] argumentTypes
                                       )
         {
-            return CreateFunction( in diBuilder, name, isVarArg, returnType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argumentTypes );
+            return CreateFunction( diBuilder, name, isVarArg, returnType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argumentTypes );
         }
 
         /// <inheritdoc/>

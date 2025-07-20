@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             string sourceName = "empty_struct";
             string linkageName = "_empty_struct";
 
-            var structType = new DebugStructType( in diBuilder
+            var structType = new DebugStructType( diBuilder
                                                 , nativeName: linkageName
                                                 , scope: null
                                                 , sourceName: sourceName
@@ -51,7 +51,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             string sourceName = string.Empty;
             string linkageName = string.Empty;
 
-            var structType = new DebugStructType( in diBuilder
+            var structType = new DebugStructType( diBuilder
                                                 , nativeName: linkageName
                                                 , scope: null
                                                 , sourceName: sourceName
@@ -80,7 +80,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             string sourceName = string.Empty;
             string linkageName = string.Empty;
 
-            var debugStructType = new DebugStructType( in diBuilder, linkageName, file, sourceName, file, line );
+            var debugStructType = new DebugStructType( diBuilder, linkageName, file, sourceName, file, line );
             bool packed = false;
             var elements = new ITypeRef[] { context.Float128Type, context.Int32Type, context.Int64Type };
 

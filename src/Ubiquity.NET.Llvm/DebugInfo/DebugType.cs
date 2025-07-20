@@ -132,7 +132,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public IPointerType CreatePointerType( uint addressSpace ) => NativeType.CreatePointerType( addressSpace );
 
         /// <inheritdoc/>
-        public DebugPointerType CreatePointerType( ref readonly DIBuilder diBuilder, uint addressSpace )
+        public DebugPointerType CreatePointerType( IDIBuilder diBuilder, uint addressSpace )
         {
             if(DebugInfoType == null)
             {
@@ -140,11 +140,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             var nativePointer = NativeType.CreatePointerType( addressSpace );
-            return new DebugPointerType( nativePointer, in diBuilder, DebugInfoType, string.Empty );
+            return new DebugPointerType( nativePointer, diBuilder, DebugInfoType, string.Empty );
         }
 
         /// <inheritdoc/>
-        public DebugArrayType CreateArrayType( ref readonly DIBuilder diBuilder, uint lowerBound, uint count )
+        public DebugArrayType CreateArrayType( IDIBuilder diBuilder, uint lowerBound, uint count )
         {
             if(DebugInfoType == null)
             {
@@ -152,7 +152,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             var llvmArray = NativeType.CreateArrayType( count );
-            return new DebugArrayType( llvmArray, in diBuilder, DebugInfoType, count, lowerBound );
+            return new DebugArrayType( llvmArray, diBuilder, DebugInfoType, count, lowerBound );
         }
 
         /// <summary>Converts a <see cref="DebugType{TNative, TDebug}"/> to <typeparamref name="TDebug"/> by accessing the <see cref="DebugInfoType"/> property</summary>

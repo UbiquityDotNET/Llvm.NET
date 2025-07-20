@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Llvm.UT
             const string unionSymbolName = "testUnion";
             var testFile = diBuilder.CreateFile( "test" );
 
-            var union = new DebugUnionType( in diBuilder, nativeUnionName, null, unionSymbolName, diBuilder.CreateFile("test") );
+            var union = new DebugUnionType( diBuilder, nativeUnionName, null, unionSymbolName, diBuilder.CreateFile("test") );
             Assert.IsNotNull( union );
 
             Assert.IsTrue( module.Verify( out string errMsg ), errMsg );
@@ -106,9 +106,9 @@ namespace Ubiquity.NET.Llvm.UT
             var diCompileUnit = diBuilder.CreateCompileUnit( SourceLanguage.CSharp, "test.cs", "unit-test", false, string.Empty, 0 );
 
             // Create basic types used in this compilation
-            var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, "int", DiTypeKind.Signed );
-            var i16 = new DebugBasicType( module.Context.Int16Type, in diBuilder, "short", DiTypeKind.Signed );
-            var f32 = new DebugBasicType( module.Context.FloatType, in diBuilder, "float", DiTypeKind.Float );
+            var i32 = new DebugBasicType( module.Context.Int32Type, diBuilder, "int", DiTypeKind.Signed );
+            var i16 = new DebugBasicType( module.Context.Int16Type, diBuilder, "short", DiTypeKind.Signed );
+            var f32 = new DebugBasicType( module.Context.FloatType, diBuilder, "float", DiTypeKind.Float );
 
             var members = new[ ]
                     { new DebugMemberInfo( 0, "a", diFile, 3, i32 )
@@ -117,7 +117,7 @@ namespace Ubiquity.NET.Llvm.UT
                     };
 
             var llvmType = module.Context.CreateStructType( nativeUnionName );
-            var union = new DebugUnionType( llvmType, in diBuilder, diCompileUnit, unionSymbolName, diFile, 0, DebugInfoFlags.None, members );
+            var union = new DebugUnionType( llvmType, diBuilder, diCompileUnit, unionSymbolName, diFile, 0, DebugInfoFlags.None, members );
             Assert.IsNotNull( union );
             Assert.IsNotNull( union!.DebugInfoType );
             Assert.IsNotNull( union.NativeType );

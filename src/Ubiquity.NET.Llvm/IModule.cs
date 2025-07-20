@@ -314,7 +314,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="debugFlags">Additional flags describing this function</param>
         /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
         /// <returns>Function described by the arguments</returns>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder
+        public Function CreateFunction( IDIBuilder diBuilder
                                       , DIScope? scope
                                       , LazyEncodedString name
                                       , LazyEncodedString? linkageName
@@ -338,7 +338,7 @@ namespace Ubiquity.NET.Llvm
         /// Function, matching the signature specified. This may be a previously declared or defined
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder
+        public Function CreateFunction( IDIBuilder diBuilder
                                       , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
@@ -355,7 +355,7 @@ namespace Ubiquity.NET.Llvm
         /// Function, matching the signature specified. This may be a previously declared or defined
         /// function or a new function if none matching the name and signature is already present.
         /// </returns>
-        public Function CreateFunction( ref readonly DIBuilder diBuilder
+        public Function CreateFunction( IDIBuilder diBuilder
                                       , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType

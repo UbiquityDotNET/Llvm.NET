@@ -23,7 +23,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="debugFlags">Debug flags for this type</param>
         /// <param name="elements">Descriptors for the members of the type</param>
         public DebugUnionType( IStructType llvmType
-                             , ref readonly DIBuilder diBuilder
+                             , IDIBuilder diBuilder
                              , DIScope? scope
                              , string name
                              , DIFile? file
@@ -45,7 +45,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( Resources.Struct_type_used_as_basis_for_a_union_must_not_have_a_body, nameof( llvmType ) );
             }
 
-            SetBody( in diBuilder, scope, file, line, debugFlags, elements );
+            SetBody( diBuilder, scope, file, line, debugFlags, elements );
         }
 
         /// <summary>Initializes a new instance of the <see cref="DebugUnionType"/> class.</summary>
@@ -55,7 +55,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="name">Debug/source name of the type</param>
         /// <param name="file">Source file containing this type</param>
         /// <param name="line">Line number for this type</param>
-        public DebugUnionType( ref readonly DIBuilder diBuilder
+        public DebugUnionType( IDIBuilder diBuilder
                              , string nativeName
                              , DIScope? scope
                              , string name
@@ -92,7 +92,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <param name="line">line number for the type</param>
         /// <param name="debugFlags">Flags for the type</param>
         /// <param name="debugElements">Descriptors for each element in the type</param>
-        public void SetBody( ref readonly DIBuilder diBuilder
+        public void SetBody( IDIBuilder diBuilder
                            , DIScope? scope
                            , DIFile? file
                            , uint line
@@ -135,7 +135,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var memberTypes = new DIDerivedType[DebugMembers.Count];
             for(int i = 0; i < DebugMembers.Count; ++i)
             {
-                memberTypes[ i ] = CreateMemberType( in diBuilder, DebugMembers[ i ] );
+                memberTypes[ i ] = CreateMemberType( diBuilder, DebugMembers[ i ] );
             }
 
             var (unionBitSize, unionAlign)
@@ -156,7 +156,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         }
 
         [SuppressMessage( "Style", "IDE0045:Convert to conditional expression", Justification = "'Simplification' not so simple - degrades to nested conditional operators" )]
-        private DIDerivedType CreateMemberType( ref readonly DIBuilder diBuilder, DebugMemberInfo memberInfo )
+        private DIDerivedType CreateMemberType( IDIBuilder diBuilder, DebugMemberInfo memberInfo )
         {
             ulong bitSize;
             if(memberInfo.ExplicitLayout is not null)
