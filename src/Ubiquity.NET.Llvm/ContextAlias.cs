@@ -155,15 +155,6 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        public IPointerType GetPointerTypeFor( ITypeRef elementType )
-        {
-            ArgumentNullException.ThrowIfNull( elementType );
-
-            return !Equals( elementType.Context )
-                ? throw new ArgumentException( Resources.Cannot_mix_types_from_different_contexts, nameof( elementType ) )
-                : (IPointerType)LLVMPointerType( elementType.GetTypeRef(), 0 ).CreateType();
-        }
-
         public ITypeRef GetIntType( uint bitWidth )
         {
             ArgumentOutOfRangeException.ThrowIfZero( bitWidth );

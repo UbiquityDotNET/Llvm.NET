@@ -48,7 +48,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         /// <summary>Gets a value indicating whether this instance represents a failure</summary>
         public bool Failed => !Success;
 
-        /// <inheritdoc/>
+        /// <summary>Gets a string representation of the error message</summary>
+        /// <returns>String representation of the error message</returns>
         public override string ToString( )
         {
             return LazyMessage.Value?.ToString() ?? string.Empty;

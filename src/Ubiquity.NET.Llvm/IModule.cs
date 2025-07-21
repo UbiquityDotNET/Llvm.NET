@@ -152,7 +152,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns><see langword="true"/> if the function was found or <see langword="false"/> if not</returns>
         public bool TryGetNamedGlobalIFunc( LazyEncodedString name, [MaybeNullWhen( false )] out GlobalIFunc function );
 
-        /// <summary>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</summary>
+        /// <summary>Gets an existing function with the specified signature in the module or creates a new one if it doesn't exist</summary>
         /// <param name="name">Name of the function to add</param>
         /// <param name="signature">Signature of the function</param>
         /// <returns><see cref="Function"/>matching the specified signature and name</returns>
@@ -163,6 +163,51 @@ namespace Ubiquity.NET.Llvm
         /// not perform any function overloading.
         /// </remarks>
         public Function CreateFunction( LazyEncodedString name, IFunctionType signature );
+
+        /// <summary>Creates a Function definition with Debug information</summary>
+        /// <param name="diBuilder">The debug info builder to use to create the function (must be associated with this module)</param>
+        /// <param name="scope">Containing scope for the function</param>
+        /// <param name="name">Name of the function in source language form</param>
+        /// <param name="linkageName">Mangled linker visible name of the function (may be same as <paramref name="name"/> if mangling not required by source language</param>
+        /// <param name="file">File containing the function definition</param>
+        /// <param name="line">Line number of the function definition</param>
+        /// <param name="signature">LLVM Function type for the signature of the function</param>
+        /// <param name="isLocalToUnit">Flag to indicate if this function is local to the compilation unit</param>
+        /// <param name="isDefinition">Flag to indicate if this is a definition</param>
+        /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
+        /// <param name="debugFlags">Additional flags describing this function</param>
+        /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
+        /// <returns>Function described by the arguments</returns>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , DIScope? scope
+                                      , LazyEncodedString name
+                                      , LazyEncodedString? linkageName
+                                      , DIFile? file
+                                      , uint line
+                                      , DebugFunctionType signature
+                                      , bool isLocalToUnit
+                                      , bool isDefinition
+                                      , uint scopeLine
+                                      , DebugInfoFlags debugFlags
+                                      , bool isOptimized
+                                      );
+
+        /// <summary>Creates a function</summary>
+        /// <param name="diBuilder"><see cref="DIBuilder"/> for creation of debug information</param>
+        /// <param name="name">Name of the function</param>
+        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="argumentTypes">Arguments for the function</param>
+        /// <returns>
+        /// Function, matching the signature specified. This may be a previously declared or defined
+        /// function or a new function if none matching the name and signature is already present.
+        /// </returns>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , LazyEncodedString name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , params IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                      );
 
         /// <summary>Writes a bit-code module to a file</summary>
         /// <param name="path">Path to write the bit-code into</param>
@@ -299,68 +344,6 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Adds an llvm.ident metadata string to the module</summary>
         /// <param name="version">version information to place in the llvm.ident metadata</param>
         public void AddVersionIdentMetadata( LazyEncodedString version );
-
-        /// <summary>Creates a Function definition with Debug information</summary>
-        /// <param name="diBuilder">The debug info builder to use to create the function (must be associated with this module)</param>
-        /// <param name="scope">Containing scope for the function</param>
-        /// <param name="name">Name of the function in source language form</param>
-        /// <param name="linkageName">Mangled linker visible name of the function (may be same as <paramref name="name"/> if mangling not required by source language</param>
-        /// <param name="file">File containing the function definition</param>
-        /// <param name="line">Line number of the function definition</param>
-        /// <param name="signature">LLVM Function type for the signature of the function</param>
-        /// <param name="isLocalToUnit">Flag to indicate if this function is local to the compilation unit</param>
-        /// <param name="isDefinition">Flag to indicate if this is a definition</param>
-        /// <param name="scopeLine">First line of the function's outermost scope, this may not be the same as the first line of the function definition due to source formatting</param>
-        /// <param name="debugFlags">Additional flags describing this function</param>
-        /// <param name="isOptimized">Flag to indicate if this function is optimized</param>
-        /// <returns>Function described by the arguments</returns>
-        public Function CreateFunction( IDIBuilder diBuilder
-                                      , DIScope? scope
-                                      , LazyEncodedString name
-                                      , LazyEncodedString? linkageName
-                                      , DIFile? file
-                                      , uint line
-                                      , DebugFunctionType signature
-                                      , bool isLocalToUnit
-                                      , bool isDefinition
-                                      , uint scopeLine
-                                      , DebugInfoFlags debugFlags
-                                      , bool isOptimized
-                                      );
-
-        /// <summary>Creates a function</summary>
-        /// <param name="diBuilder"><see cref="DIBuilder"/> for creation of debug information</param>
-        /// <param name="name">Name of the function</param>
-        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
-        /// <param name="returnType">Return type of the function</param>
-        /// <param name="argumentTypes">Arguments for the function</param>
-        /// <returns>
-        /// Function, matching the signature specified. This may be a previously declared or defined
-        /// function or a new function if none matching the name and signature is already present.
-        /// </returns>
-        public Function CreateFunction( IDIBuilder diBuilder
-                                      , LazyEncodedString name
-                                      , bool isVarArg
-                                      , IDebugType<ITypeRef, DIType> returnType
-                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
-                                      );
-
-        /// <summary>Creates a function</summary>
-        /// <param name="diBuilder"><see cref="DIBuilder"/> for creation of debug information</param>
-        /// <param name="name">Name of the function</param>
-        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
-        /// <param name="returnType">Return type of the function</param>
-        /// <param name="argumentTypes">Arguments for the function</param>
-        /// <returns>
-        /// Function, matching the signature specified. This may be a previously declared or defined
-        /// function or a new function if none matching the name and signature is already present.
-        /// </returns>
-        public Function CreateFunction( IDIBuilder diBuilder
-                                      , LazyEncodedString name
-                                      , bool isVarArg
-                                      , IDebugType<ITypeRef, DIType> returnType
-                                      , params IDebugType<ITypeRef, DIType>[] argumentTypes
-                                      );
 
         /// <summary>Gets a declaration for an LLVM intrinsic function</summary>
         /// <param name="name">Name of the intrinsic</param>

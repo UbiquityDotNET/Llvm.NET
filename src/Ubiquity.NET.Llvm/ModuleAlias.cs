@@ -555,22 +555,11 @@ namespace Ubiquity.NET.Llvm
                                       , LazyEncodedString name
                                       , bool isVarArg
                                       , IDebugType<ITypeRef, DIType> returnType
-                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                      , params IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       )
         {
             IFunctionType signature = Context.CreateFunctionType( diBuilder, isVarArg, returnType, argumentTypes );
             return CreateFunction( name, signature );
-        }
-
-        /// <inheritdoc/>
-        public Function CreateFunction( IDIBuilder diBuilder
-                                      , LazyEncodedString name
-                                      , bool isVarArg
-                                      , IDebugType<ITypeRef, DIType> returnType
-                                      , params IDebugType<ITypeRef, DIType>[] argumentTypes
-                                      )
-        {
-            return CreateFunction( diBuilder, name, isVarArg, returnType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argumentTypes );
         }
 
         /// <inheritdoc/>

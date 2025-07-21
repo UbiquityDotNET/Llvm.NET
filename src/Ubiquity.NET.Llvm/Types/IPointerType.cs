@@ -21,8 +21,8 @@ namespace Ubiquity.NET.Llvm.Types
         /// Unfortunately that means that IR generators need to track the type of
         /// elements and that this property may be <see langword="null"/> if not
         /// known. In practice, this is true when the pointer was retrieved directly
-        /// from the lower level LLVM APIs and no prior cached managed wrapper exists
-        /// with the type. This, at least, will provide it if available.
+        /// from the lower level LLVM APIs and no Debugging type wrapper exists
+        /// with the type. This, at least, will provide it if it is available.
         /// </remarks>
         ITypeRef? ElementType { get; init; }
     }
