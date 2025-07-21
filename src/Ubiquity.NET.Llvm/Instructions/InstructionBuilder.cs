@@ -366,7 +366,10 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( signature );
             ArgumentNullException.ThrowIfNull( target );
             ArgumentNullException.ThrowIfNull( args );
-            if(target is Function f && f.Signature != signature)
+
+            // NOTE: This only checks that the signatures refer to the same native value
+            //       (That is, it is native reference equality).
+            if(target is Function f && !f.Signature.Equals(signature))
             {
                 throw new ArgumentException("Function and signature mismatch");
             }

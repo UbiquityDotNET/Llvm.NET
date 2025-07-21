@@ -14,7 +14,7 @@ namespace Ubiquity.NET.Llvm.Types
         , ITypeHandleOwner
     {
         /// <inheritdoc/>
-        bool IEquatable<ITypeRef>.Equals( ITypeRef? other ) => other is ITypeHandleOwner tho && tho.Equals( (ITypeHandleOwner)this );
+        bool IEquatable<ITypeRef>.Equals( ITypeRef? other ) => other is ITypeHandleOwner tho && tho.Equals( this );
 
         public bool Equals( ITypeHandleOwner? other ) => other is not null && Handle.Equals( other.Handle );
 
