@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm.UT
         public void GetPointerTypeForTest( )
         {
             using var context = new Context();
-            var int8PtrType = context.GetPointerTypeFor( context.Int8Type );
+            var int8PtrType = context.Int8Type.CreatePointerType();
             Assert.IsNotNull( int8PtrType );
             Assert.AreEqual( context, int8PtrType.Context );
 

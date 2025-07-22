@@ -37,7 +37,8 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
         public bool IsDisposed => Handle is not null && Handle.IsClosed;
 
-        /// <inheritdoc/>
+        /// <summary>Gets a string representation of the error message</summary>
+        /// <returns>String representation of the error message or an empty string if none</returns>
         public override string ToString( )
         {
             ObjectDisposedException.ThrowIf( IsDisposed, typeof( ErrorInfo ) );

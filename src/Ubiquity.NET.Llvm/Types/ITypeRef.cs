@@ -75,6 +75,18 @@ namespace Ubiquity.NET.Llvm.Types
     }
 
     /// <summary>Interface for a Type in LLVM</summary>
+    /// <remarks>
+    /// <note type="important">
+    /// The <see cref="IEquatable{T}"/> on this type ONLY deals with the native reference equality. That is,
+    /// any reference type uses reference equality by default, but <see cref="IEquatable{T}.Equals"/> uses what
+    /// is implemented or a default of reference equality for reference types. In this case it determines if
+    /// the type refers to the exact same type instance. (Not an equivalent but different type). This is normally
+    /// valid as LLVM underneath is uniqueing types within a context. As an example a managed implementation of
+    /// <see cref="ITypeRef"/> `A` is a wrapper around an LLVM handle `H` that refers to an native LLVM type `T`.
+    /// If there is also a <see cref="ITypeRef"/> `B`, then `A.Equals(B)` is true ONLY if `B` also wraps an LLVM
+    /// handle that refers to native type `T`.
+    /// </note>
+    /// </remarks>
     public interface ITypeRef
         : IEquatable<ITypeRef>
     {

@@ -110,6 +110,47 @@ namespace Ubiquity.NET.Llvm
         public Function CreateFunction( LazyEncodedString name, IFunctionType signature ) => Impl.CreateFunction( name, signature );
 
         /// <inheritdoc/>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , DIScope? scope
+                                      , LazyEncodedString name
+                                      , LazyEncodedString? linkageName
+                                      , DIFile? file
+                                      , uint line
+                                      , DebugFunctionType signature
+                                      , bool isLocalToUnit
+                                      , bool isDefinition
+                                      , uint scopeLine
+                                      , DebugInfoFlags debugFlags
+                                      , bool isOptimized
+                                      )
+         {
+            return Impl.CreateFunction( diBuilder
+                                      , scope
+                                      , name
+                                      , linkageName
+                                      , file
+                                      , line
+                                      , signature
+                                      , isLocalToUnit
+                                      , isDefinition
+                                      , scopeLine
+                                      , debugFlags
+                                      , isOptimized
+                                      );
+         }
+
+        /// <inheritdoc/>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , LazyEncodedString name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , params IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                      )
+        {
+            return Impl.CreateFunction( diBuilder, name, isVarArg, returnType, argumentTypes );
+        }
+
+        /// <inheritdoc/>
         public void WriteToFile( string path ) => Impl.WriteToFile( path );
 
         /// <inheritdoc/>
@@ -162,18 +203,6 @@ namespace Ubiquity.NET.Llvm
 
         /// <inheritdoc/>
         public void AddVersionIdentMetadata( LazyEncodedString version ) => Impl.AddVersionIdentMetadata( version );
-
-        /// <inheritdoc/>
-        public Function CreateFunction( IDIBuilder diBuilder, DIScope? scope, LazyEncodedString name, LazyEncodedString? linkageName, DIFile? file, uint line, DebugFunctionType signature, bool isLocalToUnit, bool isDefinition, uint scopeLine, DebugInfoFlags debugFlags, bool isOptimized )
-            => Impl.CreateFunction( diBuilder, scope, name, linkageName, file, line, signature, isLocalToUnit, isDefinition, scopeLine, debugFlags, isOptimized );
-
-        /// <inheritdoc/>
-        public Function CreateFunction( IDIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes )
-            => Impl.CreateFunction( diBuilder, name, isVarArg, returnType, argumentTypes );
-
-        /// <inheritdoc/>
-        public Function CreateFunction( IDIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType<ITypeRef, DIType> returnType, params IDebugType<ITypeRef, DIType>[] argumentTypes )
-            => Impl.CreateFunction( diBuilder, name, isVarArg, returnType, argumentTypes );
 
         /// <inheritdoc/>
         public Function GetIntrinsicDeclaration( LazyEncodedString name, params ITypeRef[] args ) => Impl.GetIntrinsicDeclaration( name, args );

@@ -82,9 +82,6 @@ namespace Ubiquity.NET.Llvm
         public void SetDiagnosticHandler( DiagnosticInfoCallbackAction handler ) => Impl.SetDiagnosticHandler( handler );
 
         /// <inheritdoc/>
-        public IPointerType GetPointerTypeFor( ITypeRef elementType ) => Impl.GetPointerTypeFor( elementType );
-
-        /// <inheritdoc/>
         public ITypeRef GetIntType( uint bitWidth ) => Impl.GetIntType( bitWidth );
 
         /// <inheritdoc/>

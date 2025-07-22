@@ -333,18 +333,48 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
-        public CallInstruction Call( Function func, params Value[] args ) => Call( func, (IReadOnlyList<Value>)args );
+        /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
+        public CallInstruction Call( Function func, params IEnumerable<Value> args ) => Call( func, args.ToList().AsReadOnly() );
 
         /// <summary>Creates a call function</summary>
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
+        /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
         public CallInstruction Call( Function func, IReadOnlyList<Value> args )
         {
-            ArgumentNullException.ThrowIfNull( func );
+            return Call(func.Signature, func, args);
+        }
+
+        /// <summary>Creates a call instruction</summary>
+        /// <param name="signature">Function signature of the target</param>
+        /// <param name="target">Target of the function call (Must be invocable as <paramref name="signature"/>)</param>
+        /// <param name="args">Arguments to the function call (Must match types and number of <paramref name="signature"/>)</param>
+        /// <returns>Instruction created</returns>
+        /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
+        public CallInstruction Call( IFunctionType signature, Value target, params IEnumerable<Value> args )
+            => Call(signature, target, args.ToList().AsReadOnly() );
+
+        /// <summary>Creates a call instruction</summary>
+        /// <param name="signature">Function signature of the target</param>
+        /// <param name="target">Target of the function call (Must be invocable as <paramref name="signature"/>)</param>
+        /// <param name="args">Arguments to the function call (Must match types and number of <paramref name="signature"/>)</param>
+        /// <returns>Instruction created</returns>
+        /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
+        public CallInstruction Call( IFunctionType signature, Value target, IReadOnlyList<Value> args )
+        {
+            ArgumentNullException.ThrowIfNull( signature );
+            ArgumentNullException.ThrowIfNull( target );
             ArgumentNullException.ThrowIfNull( args );
 
-            LLVMValueRef hCall = BuildCall( func, args ).ThrowIfInvalid();
+            // NOTE: This only checks that the signatures refer to the same native value
+            //       (That is, it is native reference equality).
+            if(target is Function f && !f.Signature.Equals(signature))
+            {
+                throw new ArgumentException("Function and signature mismatch");
+            }
+
+            LLVMValueRef hCall = BuildCall(signature, target, args ).ThrowIfInvalid();
             return Value.FromHandle<CallInstruction>( hCall )!;
         }
 
@@ -361,13 +391,13 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( then );
             ArgumentNullException.ThrowIfNull( catchBlock );
 
-            ValidateCallArgs( func, args );
+            ValidateCallArgs( func.Signature, args );
             ArgumentNullException.ThrowIfNull( then );
             ArgumentNullException.ThrowIfNull( catchBlock );
 
             LLVMValueRef[ ] llvmArgs = [ .. args.Select( v => v.Handle ) ];
             LLVMValueRef invoke = LLVMBuildInvoke2( Handle
-                                                  , func.NativeType.GetTypeRef( ) // TODO: Is this legit with opaque pointers?
+                                                  , func.Signature.GetTypeRef( )
                                                   , func.Handle
                                                   , llvmArgs
                                                   , then.BlockHandle
@@ -1310,8 +1340,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             IModule module = GetModuleOrThrow( );
             var func = module.GetIntrinsicDeclaration( "llvm.donothing" );
-            var hCall = BuildCall( func );
-            return Value.FromHandle<CallInstruction>( hCall.ThrowIfInvalid() )!;
+            return Call(func);
         }
 
         /// <summary>Creates a llvm.debugtrap call</summary>
@@ -1320,7 +1349,6 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             var module = GetModuleOrThrow( );
             var func = module.GetIntrinsicDeclaration( "llvm.debugtrap" );
-
             return Call( func );
         }
 
@@ -1330,7 +1358,6 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             var module = GetModuleOrThrow( );
             var func = module.GetIntrinsicDeclaration( "llvm.trap" );
-
             return Call( func );
         }
 
@@ -1382,7 +1409,8 @@ namespace Ubiquity.NET.Llvm.Instructions
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memcpy.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
-            var call = BuildCall( func
+            var call = BuildCall( func.Signature
+                                , func
                                 , destination
                                 , source
                                 , len
@@ -1439,7 +1467,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             // find the name of the appropriate overloaded form
             var func = module.GetIntrinsicDeclaration( "llvm.memmove.p.p.i", dstPtrType, srcPtrType, len.NativeType );
 
-            var call = BuildCall( func, destination, source, len, module.Context.CreateConstant( isVolatile ) );
+            var call = BuildCall( func.Signature, func, destination, source, len, module.Context.CreateConstant( isVolatile ) );
             return Value.FromHandle( call.ThrowIfInvalid() )!;
         }
 
@@ -1486,7 +1514,8 @@ namespace Ubiquity.NET.Llvm.Instructions
             // find the appropriate overloaded form of the function
             var func = module.GetIntrinsicDeclaration( "llvm.memset.p.i", dstPtrType, value.NativeType );
 
-            var call = BuildCall( func
+            var call = BuildCall( func.Signature
+                                , func
                                 , destination
                                 , value
                                 , len
@@ -1694,10 +1723,8 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Value.FromHandle<AtomicRMW>( handle.ThrowIfInvalid() )!;
         }
 
-        private static IFunctionType ValidateCallArgs( Function func, IReadOnlyList<Value> args )
+        private static void ValidateCallArgs( IFunctionType signatureType, IReadOnlyList<Value> args )
         {
-            IFunctionType signatureType = func.Signature;
-
             // validate arg count; too few or too many (unless the signature supports varargs) is an error
             if(args.Count < signatureType.ParameterTypes.Count
                 || (args.Count > signatureType.ParameterTypes.Count && !signatureType.IsVarArg)
@@ -1710,23 +1737,27 @@ namespace Ubiquity.NET.Llvm.Instructions
             {
                 if(!args[ i ].NativeType.Equals( signatureType.ParameterTypes[ i ] ))
                 {
-                    string msg = string.Format( CultureInfo.CurrentCulture, Resources.Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3, func, i, args[ i ].NativeType, signatureType.ParameterTypes[ i ] );
+                    string msg = string.Format( CultureInfo.CurrentCulture
+                                              , Resources.Call_site_argument_type_mismatch_for_function_0_at_index_1_argType_equals_2_signatureType_equals_3
+                                              , signatureType.ToString()
+                                              , i
+                                              , args[ i ].NativeType
+                                              , signatureType.ParameterTypes[ i ]
+                                              );
                     throw new ArgumentException( msg, nameof( args ) );
                 }
             }
-
-            return signatureType;
         }
 
-        private LLVMValueRef BuildCall( Function func, params Value[] args ) => BuildCall( func, (IReadOnlyList<Value>)args );
+        private LLVMValueRef BuildCall( IFunctionType sig, Value target, params Value[] args ) => BuildCall( sig, target, (IReadOnlyList<Value>)args );
 
-        private LLVMValueRef BuildCall( Function func ) => BuildCall( func, new List<Value>() );
+        private LLVMValueRef BuildCall( IFunctionType sig, Value target ) => BuildCall( sig, target, new List<Value>() );
 
-        private LLVMValueRef BuildCall( Function func, IReadOnlyList<Value> args )
+        private LLVMValueRef BuildCall( IFunctionType sig, Value target, IReadOnlyList<Value> args )
         {
-            IFunctionType sig = ValidateCallArgs( func, args );
+            ValidateCallArgs( sig, args );
             LLVMValueRef[ ] llvmArgs = [ .. args.Select( v => v.Handle ) ];
-            return LLVMBuildCall2( Handle, sig.GetTypeRef(), func.Handle, llvmArgs, (uint)llvmArgs.Length, LazyEncodedString.Empty );
+            return LLVMBuildCall2( Handle, sig.GetTypeRef(), target.Handle, llvmArgs, (uint)llvmArgs.Length, LazyEncodedString.Empty );
         }
 
         private LLVMBuilderRef Handle { get; }
