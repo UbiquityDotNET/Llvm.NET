@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_IModule" data-uid="Ubiquity.NET.Llvm.IModule" class="text-break">
-Interface IModule  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/IModule.cs/#L27"><i class="bi bi-code-slash"></i></a>
+Interface IModule  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/IModule.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -292,21 +292,16 @@ caller owns. Others are references to a module owned by the container)</p>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IModule.CreateFunction.html#Ubiquity_NET_Llvm_IModule_CreateFunction_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Types_IFunctionType_">CreateFunction(LazyEncodedString, IFunctionType)</a></dt>
-    <dd><p>Gets an existing function with the specified signature to the module or creates a new one if it doesn't exist</p>
+    <dd><p>Gets an existing function with the specified signature in the module or creates a new one if it doesn't exist</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.IModule.CreateFunction.html#Ubiquity_NET_Llvm_IModule_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunction(ref readonly DIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IModule.CreateFunction.html#Ubiquity_NET_Llvm_IModule_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunction(IDIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
     <dd><p>Creates a function</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.IModule.CreateFunction.html#Ubiquity_NET_Llvm_IModule_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType____">CreateFunction(ref readonly DIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IDebugType&lt;ITypeRef, DIType&gt;[])</a></dt>
-    <dd><p>Creates a function</p>
-</dd>
-  </dl>
-  <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.IModule.CreateFunction.html#Ubiquity_NET_Llvm_IModule_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_">CreateFunction(ref readonly DIBuilder, DIScope?, LazyEncodedString, LazyEncodedString?, DIFile?, uint, DebugFunctionType, bool, bool, uint, DebugInfoFlags, bool)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.IModule.CreateFunction.html#Ubiquity_NET_Llvm_IModule_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_">CreateFunction(IDIBuilder, DIScope?, LazyEncodedString, LazyEncodedString?, DIFile?, uint, DebugFunctionType, bool, bool, uint, DebugInfoFlags, bool)</a></dt>
     <dd><p>Creates a Function definition with Debug information</p>
 </dd>
   </dl>
@@ -401,7 +396,7 @@ caller owns. Others are references to a module owned by the container)</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/IModule.cs/#L27" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/IModule.cs/#L27" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -417,7 +412,7 @@ caller owns. Others are references to a module owned by the container)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

@@ -243,10 +243,10 @@ to expose types in a consistent fashion. Ubiquity.NET.Llvm provides a set of cla
 This sample uses the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DebugBasicType.html">DebugBasicType</a>. To define the basic types
 used in the generated code with appropriate debug information.</p>
 <pre><code class="lang-csharp" name="Main">// Create basic types used in this compilation
-var i32 = new DebugBasicType( module.Context.Int32Type, in diBuilder, &quot;int&quot;, DiTypeKind.Signed );
-var f32 = new DebugBasicType( module.Context.FloatType, in diBuilder, &quot;float&quot;, DiTypeKind.Float );
+var i32 = new DebugBasicType( module.Context.Int32Type, diBuilder, &quot;int&quot;, DiTypeKind.Signed );
+var f32 = new DebugBasicType( module.Context.FloatType, diBuilder, &quot;float&quot;, DiTypeKind.Float );
 var voidType = DebugType.Create( module.Context.VoidType, (DIType?)null );
-var i32Array_0_32 = i32.CreateArrayType( in diBuilder, 0, 32 );
+var i32Array_0_32 = i32.CreateArrayType( diBuilder, 0, 32 );
 </code></pre>
 <p>This constructs several basic types and assigns them to variables:</p>
 <table>
@@ -286,7 +286,7 @@ The sample needs a pointer to a const instance of the struct foo. A qualified ty
 created first, then a pointer type is created for the const type.</p>
 <pre><code class="lang-csharp" name="Main">// create types for function args
 var constFoo = diBuilder.CreateQualifiedType( fooType.DebugInfoType, QualifiedTypeTag.Const );
-var fooPtr = new DebugPointerType( fooType, in diBuilder );
+var fooPtr = new DebugPointerType( fooType, diBuilder );
 </code></pre><h2 id="creating-structure-types">Creating structure types</h2>
 <p>As previously mentioned, the LLVM types only contain basic layout information and not full source
 level debugging information. Thus, for types there are two distinct descriptions, one for the LLVM
@@ -305,7 +305,7 @@ var fooBody = new DebugMemberInfo[ ]
         new( 2, &quot;c&quot;, diFile, 5, i32Array_0_32 ),
     };
 
-var fooType = new DebugStructType( in diBuilder, &quot;struct.foo&quot;, compilationUnit, &quot;foo&quot;, diFile, 1, DebugInfoFlags.None, fooBody );
+var fooType = new DebugStructType( diBuilder, &quot;struct.foo&quot;, compilationUnit, &quot;foo&quot;, diFile, 1, DebugInfoFlags.None, fooBody );
 </code></pre><h2 id="creating-module-metadata-and-global-variables">Creating module metadata and global variables</h2>
 <p>The sample code contains two global instances of <code>struct foo</code> <code>bar</code> and <code>baz</code>. Furthermore, bar
 is initialized with constant data. The sample starts by constructing the const array data that
@@ -406,16 +406,16 @@ registers). For the two processors this sample supports Clang only uses this for
 calls the TargetDetails.AddABIAttributesForByValueStructure) to add the appropriate attributes for the target
 as needed.</p>
 <pre><code class="lang-csharp" name="Main">private static Function DeclareDoCopyFunc(
-    ref readonly DIBuilder diBuilder,
+    DIBuilder diBuilder,
     DIFile diFile,
     IDebugType&lt;ITypeRef, DIType&gt; voidType,
     IEnumerable&lt;AttributeValue&gt; abiAttributes
     )
 {
     var module = diBuilder.OwningModule;
-    var doCopySig = module.Context.CreateFunctionType( in diBuilder, voidType );
+    var doCopySig = module.Context.CreateFunctionType( diBuilder, voidType );
 
-    var doCopyFunc = module.CreateFunction( in diBuilder
+    var doCopyFunc = module.CreateFunction( diBuilder
                                           , scope: diFile
                                           , name: &quot;DoCopy&quot;
                                           , linkageName: null
@@ -433,7 +433,7 @@ as needed.</p>
 }
 
 private static Function DeclareCopyFunc( ITargetABI abi
-                                       , ref readonly DIBuilder diBuilder
+                                       , DIBuilder diBuilder
                                        , DIFile diFile
                                        , IDebugType&lt;ITypeRef, DIType&gt; voidType
                                        , DIDerivedType constFoo
@@ -451,13 +451,13 @@ private static Function DeclareCopyFunc( ITargetABI abi
     // To get the correct debug info signature this inserts an
     // explicit DebugType&lt;&gt; that overrides the default behavior
     // to pair the LLVM pointer type with the original source type.
-    var copySig = module.Context.CreateFunctionType( in diBuilder
+    var copySig = module.Context.CreateFunctionType( diBuilder
                                                    , voidType
                                                    , DebugType.Create( fooPtr, constFoo )
                                                    , fooPtr
                                                    );
 
-    var copyFunc = module.CreateFunction( in diBuilder
+    var copyFunc = module.CreateFunction( diBuilder
                                         , scope: diFile
                                         , name: &quot;copy&quot;
                                         , linkageName: null
@@ -611,7 +611,7 @@ attributes #2 = { argmemonly nounwind }
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

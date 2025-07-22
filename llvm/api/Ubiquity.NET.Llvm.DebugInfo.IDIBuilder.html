@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IDIBuilder | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IDIBuilder | Ubiquity.NET ">
+      
+      <meta name="description" content="DIBuilder is a factory class for creating DebugInformation for an LLVM">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_DebugInfo_IDIBuilder.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.DebugInfo.IDIBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder" class="text-break">
+Interface IDIBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.html">DebugInfo</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>DIBuilder is a factory class for creating DebugInformation for an LLVM <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a></p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDIBuilder : IEquatable&lt;IDIBuilder&gt;</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">IEquatable&lt;IDIBuilder&gt;.Equals(IDIBuilder)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Many Debug information metadata nodes are created with unresolved references to additional
+metadata. To ensure such metadata is resolved applications should call the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.Finish.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Finish">Finish()</a>
+method to resolve and finalize the metadata. After this point only fully resolved nodes may
+be added to ensure that the data remains valid.</p>
+<p>This type is a 'byref like type' to prevent storing it as a member anywhere. It is NOT
+a member of <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> but has one associated with it. Generally, at most one <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a>
+is associated with a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>. If creating a function
+(via <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateFunction.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DISubroutineType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_Ubiquity_NET_Llvm_Values_Function_">CreateFunction(DIScope?, LazyEncodedString, LazyEncodedString, DIFile?, uint, DISubroutineType?, bool, bool, uint, DebugInfoFlags, bool, Function)</a>),
+then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a> is required.</p>
+</div>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CompileUnit.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CompileUnit">CompileUnit</a></dt>
+    <dd><p>Gets the compile unit created by this builder [If any]</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.OwningModule.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_OwningModule">OwningModule</a></dt>
+    <dd><p>Gets the module associated with this builder</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateArgument.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateArgument_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_UInt16_">CreateArgument(DIScope?, LazyEncodedString, DIFile?, uint, DIType?, bool, DebugInfoFlags, ushort)</a></dt>
+    <dd><p>Creates an argument for a function as a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateArrayType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateArrayType_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__">CreateArrayType(ulong, uint, DIType, IEnumerable&lt;DINode&gt;)</a></dt>
+    <dd><p>Creates debug information for an array type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateArrayType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateArrayType_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_DINodeArray_">CreateArrayType(ulong, uint, DIType, DINodeArray)</a></dt>
+    <dd><p>Creates debug information for an array type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateArrayType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateArrayType_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_DINode___">CreateArrayType(ulong, uint, DIType, params DINode[])</a></dt>
+    <dd><p>Creates debug information for an array type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateBasicType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateBasicType_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt64_Ubiquity_NET_Llvm_DebugInfo_DiTypeKind_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_">CreateBasicType(LazyEncodedString, ulong, DiTypeKind, DebugInfoFlags)</a></dt>
+    <dd><p>Construct debug information for a basic type (a.k.a. primitive type)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateCompileUnit.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateCompileUnit_Ubiquity_NET_Llvm_DebugInfo_SourceLanguage_System_String_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt32_">CreateCompileUnit(SourceLanguage, string, LazyEncodedString?, bool, LazyEncodedString?, uint)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateCompileUnit.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateCompileUnit_Ubiquity_NET_Llvm_DebugInfo_SourceLanguage_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt32_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateCompileUnit(SourceLanguage, LazyEncodedString, LazyEncodedString, LazyEncodedString?, bool, LazyEncodedString?, uint, LazyEncodedString?, LazyEncodedString?)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateConstantValueExpression.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateConstantValueExpression_System_UInt64_">CreateConstantValueExpression(ulong)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIExpression.html">DIExpression</a> for a constant value</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateEnumerationType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateEnumerationType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIEnumerator__Ubiquity_NET_Llvm_DebugInfo_DIType_">CreateEnumerationType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, IEnumerable&lt;DIEnumerator&gt;, DIType?)</a></dt>
+    <dd><p>Creates an enumeration type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateEnumeratorValue.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateEnumeratorValue_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Int64_System_Boolean_">CreateEnumeratorValue(LazyEncodedString, long, bool)</a></dt>
+    <dd><p>Creates a value for an enumeration</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateExpression.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateExpression_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_ExpressionOp__">CreateExpression(params IEnumerable&lt;ExpressionOp&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIExpression.html">DIExpression</a> from the provided <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.ExpressionOp.html">ExpressionOp</a>s</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateFile.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateFile_System_String_">CreateFile(string?)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIFile.html">DIFile</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateFile.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateFile_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateFile(LazyEncodedString?, LazyEncodedString?)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIFile.html">DIFile</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateFunction.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DISubroutineType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_Ubiquity_NET_Llvm_Values_Function_">CreateFunction(DIScope?, LazyEncodedString, LazyEncodedString, DIFile?, uint, DISubroutineType?, bool, bool, uint, DebugInfoFlags, bool, Function)</a></dt>
+    <dd><p>Factory method to create a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a> with debug information</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateGlobalVariableExpression.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateGlobalVariableExpression_Ubiquity_NET_Llvm_DebugInfo_DINode_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DINode_System_UInt32_">CreateGlobalVariableExpression(DINode?, LazyEncodedString, LazyEncodedString, DIFile?, uint, DIType?, bool, DIExpression?, DINode?, uint)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIGlobalVariableExpression.html">DIGlobalVariableExpression</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateLexicalBlock.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateLexicalBlock_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt32_">CreateLexicalBlock(DIScope?, DIFile?, uint, uint)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILexicalBlock.html">DILexicalBlock</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateLexicalBlockFile.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateLexicalBlockFile_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_">CreateLexicalBlockFile(DIScope?, DIFile?, uint)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILexicalBlockFile.html">DILexicalBlockFile</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateLocalVariable.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateLocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_UInt32_">CreateLocalVariable(DIScope?, LazyEncodedString, DIFile?, uint, DIType?, bool, DebugInfoFlags, uint)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a> for a given scope</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateMacro.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateMacro_Ubiquity_NET_Llvm_DebugInfo_DIMacroFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_MacroKind_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateMacro(DIMacroFile?, uint, MacroKind, LazyEncodedString, LazyEncodedString)</a></dt>
+    <dd><p>Create a macro</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateMemberType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateMemberType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_System_UInt64_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_">CreateMemberType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, ulong, DebugInfoFlags, DIType?)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIDerivedType.html">DIDerivedType</a> for a member of a type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateNamespace.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateNamespace_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_">CreateNamespace(DIScope?, LazyEncodedString, bool)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DINamespace.html">DINamespace</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreatePointerType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreatePointerType_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_UInt64_System_UInt32_System_UInt32_">CreatePointerType(DIType?, LazyEncodedString?, ulong, uint, uint)</a></dt>
+    <dd><p>Creates a pointer type with debug information</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateQualifiedType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateQualifiedType_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_QualifiedTypeTag_">CreateQualifiedType(DIType?, QualifiedTypeTag)</a></dt>
+    <dd><p>Creates a qualified type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateReplaceableCompositeType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateReplaceableCompositeType_Ubiquity_NET_Llvm_DebugInfo_Tag_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateReplaceableCompositeType(Tag, LazyEncodedString, DIScope?, DIFile?, uint, uint, ulong, uint, DebugInfoFlags, LazyEncodedString?)</a></dt>
+    <dd><p>Creates a replaceable composite type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateStructType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateStructType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateStructType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, DebugInfoFlags, DIType?, IEnumerable&lt;DINode&gt;, uint, DIType?, LazyEncodedString?)</a></dt>
+    <dd><p>Creates debug description of a structure type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateStructType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateStructType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_DINode___">CreateStructType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, DebugInfoFlags, DIType?, params DINode[])</a></dt>
+    <dd><p>Creates debug description of a structure type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateSubRange.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateSubRange_System_Int64_System_Int64_">CreateSubRange(long, long)</a></dt>
+    <dd><p>Creates a new <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubRange.html">DISubRange</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateSubroutineType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateSubroutineType_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_">CreateSubroutineType(DebugInfoFlags)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a> to provide debug information for a function/procedure signature</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateSubroutineType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateSubroutineType_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIType__">CreateSubroutineType(DebugInfoFlags, IEnumerable&lt;DIType?&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a> to provide debug information for a function/procedure signature</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateSubroutineType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateSubroutineType_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIType__">CreateSubroutineType(DebugInfoFlags, DIType?, IEnumerable&lt;DIType?&gt;)</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a> to provide debug information for a function/procedure signature</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateSubroutineType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateSubroutineType_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateSubroutineType(DebugInfoFlags, params DIType?[])</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubroutineType.html">DISubroutineType</a> to provide debug information for a function/procedure signature</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateTempMacroFile.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateTempMacroFile_Ubiquity_NET_Llvm_DebugInfo_DIMacroFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIFile_">CreateTempMacroFile(DIMacroFile?, uint, DIFile?)</a></dt>
+    <dd><p>Creates a debugging information temporary entry for a macro file</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateTypeArray_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIType__">CreateTypeArray(IEnumerable&lt;DIType?&gt;)</a></dt>
+    <dd><p>Create a debug metadata array of debug types</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateTypeArray_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateTypeArray(params DIType?[])</a></dt>
+    <dd><p>Create a debug metadata array of debug types</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateTypedef.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateTypedef_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DINode_System_UInt32_">CreateTypedef(DIType?, LazyEncodedString, DIFile?, uint, DINode?, uint)</a></dt>
+    <dd><p>Creates debug information for a type definition (e.g. type alias)</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateUnionType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateUnionType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__System_UInt32_Ubiquity_NET_InteropHelpers_LazyEncodedString_">CreateUnionType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, DebugInfoFlags, IEnumerable&lt;DINode&gt;, uint, LazyEncodedString?)</a></dt>
+    <dd><p>Creates debug description of a union type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateUnionType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateUnionType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DINodeArray_">CreateUnionType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, DebugInfoFlags, DINodeArray)</a></dt>
+    <dd><p>Creates debug description of a union type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateUnionType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateUnionType_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_Ubiquity_NET_Llvm_DebugInfo_DINode___">CreateUnionType(DIScope?, LazyEncodedString, DIFile?, uint, ulong, uint, DebugInfoFlags, params DINode[])</a></dt>
+    <dd><p>Creates debug description of a union type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateVectorType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateVectorType_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__">CreateVectorType(ulong, uint, DIType, IEnumerable&lt;DINode&gt;)</a></dt>
+    <dd><p>Creates debug information for a vector type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateVectorType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateVectorType_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_DINodeArray_">CreateVectorType(ulong, uint, DIType, DINodeArray)</a></dt>
+    <dd><p>Creates debug information for a vector type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.CreateVectorType.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_CreateVectorType_System_UInt64_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_Llvm_DebugInfo_DINode___">CreateVectorType(ulong, uint, DIType, params DINode[])</a></dt>
+    <dd><p>Creates debug information for a vector type</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.Finish.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Finish">Finish()</a></dt>
+    <dd><p>Finalizes debug information for all items built by this builder</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.Finish.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Finish_Ubiquity_NET_Llvm_DebugInfo_DISubProgram_">Finish(DISubProgram)</a></dt>
+    <dd><p>Finalizes debug information for a single <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DISubProgram.html">DISubProgram</a></p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.ForwardDeclareFunction.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_ForwardDeclareFunction_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DISubroutineType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_">ForwardDeclareFunction(DIScope?, LazyEncodedString, LazyEncodedString, DIFile?, uint, DISubroutineType, bool, bool, uint, DebugInfoFlags, bool)</a></dt>
+    <dd><p>Creates a new forward declaration to a function</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.GetOrCreateArray.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_GetOrCreateArray_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__">GetOrCreateArray(IEnumerable&lt;DINode&gt;)</a></dt>
+    <dd><p>Gets or creates a node array with the specified elements</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.GetOrCreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_GetOrCreateTypeArray_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIType__">GetOrCreateTypeArray(params IEnumerable&lt;DIType&gt;)</a></dt>
+    <dd><p>Gets or creates a Type array with the specified types</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_">InsertDeclare(Value, DILocalVariable, DIExpression, DILocation, Instruction)</a></dt>
+    <dd><p>Inserts an llvm.dbg.declare instruction before the given instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_">InsertDeclare(Value, DILocalVariable, DIExpression, DILocation, BasicBlock)</a></dt>
+    <dd><p>Inserts a debug record before the given instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_">InsertDeclare(Value, DILocalVariable, DILocation, Instruction)</a></dt>
+    <dd><p>Inserts an declare debug record for the given instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_">InsertDeclare(Value, DILocalVariable, DILocation, BasicBlock)</a></dt>
+    <dd><p>Inserts a DebugRecord before the given instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertValue.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertValue_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_">InsertValue(Value, DILocalVariable, DIExpression?, DILocation, Instruction)</a></dt>
+    <dd><p>Inserts a call to the llvm.dbg.value intrinsic before the specified instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertValue.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertValue_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_">InsertValue(Value, DILocalVariable, DIExpression?, DILocation, BasicBlock)</a></dt>
+    <dd><p>Inserts a DebugRecord at the end of a basic block</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertValue.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertValue_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_">InsertValue(Value, DILocalVariable, DILocation, Instruction)</a></dt>
+    <dd><p>Inserts a debug record before the specified instruction</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertValue.html#Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertValue_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_">InsertValue(Value, DILocalVariable, DILocation, BasicBlock)</a></dt>
+    <dd><p>Inserts a call to the llvm.dbg.value intrinsic at the end of a basic block</p>
+</dd>
+  </dl>
+
+
+  <h2 id="seealso">See Also</h2>
+  <div class="seealso">
+      <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html">LLVM Source Level Debugging</a></span></div>
+  </div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L44" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha.0.2
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

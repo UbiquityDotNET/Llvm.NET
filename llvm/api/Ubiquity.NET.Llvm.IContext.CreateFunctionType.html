@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType*" class="text-break">
-Method CreateFunctionType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/IContext.cs/#L180"><i class="bi bi-code-slash"></i></a>
+Method CreateFunctionType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/IContext.cs/#L175"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Method CreateFunctionType  <a class="header-action link-secondary" title="View s
 
 <a id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})">
-  CreateFunctionType(ref readonly DIBuilder, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/IContext.cs/#L180"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})">
+  CreateFunctionType(IDIBuilder, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/IContext.cs/#L175"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a FunctionType with Debug information</p>
@@ -124,12 +124,12 @@ Method CreateFunctionType  <a class="header-action link-secondary" title="View s
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">DebugFunctionType CreateFunctionType(ref readonly DIBuilder diBuilder, IDebugType&lt;ITypeRef, DIType&gt; retType, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argTypes)</code></pre>
+  <pre><code class="lang-csharp hljs">DebugFunctionType CreateFunctionType(IDIBuilder diBuilder, IDebugType&lt;ITypeRef, DIType&gt; retType, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argTypes)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>to use to create the debug information</p>
 </dd>
   <dt><code>retType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a>&gt;</dt>
@@ -159,9 +159,9 @@ Method CreateFunctionType  <a class="header-action link-secondary" title="View s
 
 <a id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})">
-  CreateFunctionType(ref readonly DIBuilder, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/IContext.cs/#L191"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_IContext_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___" data-uid="Ubiquity.NET.Llvm.IContext.CreateFunctionType(Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})">
+  CreateFunctionType(IDIBuilder, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/IContext.cs/#L186"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a FunctionType with Debug information</p>
@@ -169,12 +169,12 @@ Method CreateFunctionType  <a class="header-action link-secondary" title="View s
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">DebugFunctionType CreateFunctionType(ref readonly DIBuilder diBuilder, bool isVarArg, IDebugType&lt;ITypeRef, DIType&gt; retType, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argTypes)</code></pre>
+  <pre><code class="lang-csharp hljs">DebugFunctionType CreateFunctionType(IDIBuilder diBuilder, bool isVarArg, IDebugType&lt;ITypeRef, DIType&gt; retType, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argTypes)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>to use to create the debug information</p>
 </dd>
   <dt><code>isVarArg</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
@@ -208,7 +208,7 @@ Method CreateFunctionType  <a class="header-action link-secondary" title="View s
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/IContext.cs/#L180" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/IContext.cs/#L175" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -224,7 +224,7 @@ Method CreateFunctionType  <a class="header-action link-secondary" title="View s
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

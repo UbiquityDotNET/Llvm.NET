@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor*" class="text-break">
-Constructor DebugPointerType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L21"><i class="bi bi-code-slash"></i></a>
+Constructor DebugPointerType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L21"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 
 <a id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_String_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.String,System.UInt32)">
-  DebugPointerType(IDebugType&lt;ITypeRef, DIType&gt;, ref readonly DIBuilder, uint, string?, uint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L21"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_System_UInt32_System_String_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,System.UInt32,System.String,System.UInt32)">
+  DebugPointerType(IDebugType&lt;ITypeRef, DIType&gt;, IDIBuilder, uint, string?, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L21"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.html">DebugPointerType</a> class.</p>
@@ -124,7 +124,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DebugPointerType(IDebugType&lt;ITypeRef, DIType&gt; debugElementType, ref readonly DIBuilder diBuilder, uint addressSpace = 0, string? name = null, uint alignment = 0)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugPointerType(IDebugType&lt;ITypeRef, DIType&gt; debugElementType, IDIBuilder diBuilder, uint addressSpace = 0, string? name = null, uint alignment = 0)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -132,7 +132,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
   <dt><code>debugElementType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a>&gt;</dt>
   <dd><p>Debug type of the pointee</p>
 </dd>
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p>Debug information builder to use in creating this instance</p>
 </dd>
   <dt><code>addressSpace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
@@ -159,9 +159,9 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 
 <a id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DIType_System_UInt32_System_String_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.String,System.UInt32)">
-  DebugPointerType(ITypeRef, ref readonly DIBuilder, DIType?, uint, string?, uint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L40"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_DIType_System_UInt32_System_String_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.String,System.UInt32)">
+  DebugPointerType(ITypeRef, IDIBuilder, DIType?, uint, string?, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L40"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.html">DebugPointerType</a> class.</p>
@@ -169,7 +169,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DebugPointerType(ITypeRef llvmElementType, ref readonly DIBuilder diBuilder, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugPointerType(ITypeRef llvmElementType, IDIBuilder diBuilder, DIType? elementType, uint addressSpace = 0, string? name = null, uint alignment = 0)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -177,7 +177,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
   <dt><code>llvmElementType</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a></dt>
   <dd><p>Native type of the pointee</p>
 </dd>
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p>Debug information builder to use in creating this instance</p>
 </dd>
   <dt><code>elementType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a></dt>
@@ -207,9 +207,9 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 
 <a id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_IPointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DIType_System_String_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.Types.IPointerType,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.String,System.UInt32)">
-  DebugPointerType(IPointerType, ref readonly DIBuilder, DIType?, string?, uint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L62"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_IPointerType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_DIType_System_String_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.Types.IPointerType,Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,Ubiquity.NET.Llvm.DebugInfo.DIType,System.String,System.UInt32)">
+  DebugPointerType(IPointerType, IDIBuilder, DIType?, string?, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L62"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.html">DebugPointerType</a> class to bind with an existing pointer type</p>
@@ -217,7 +217,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DebugPointerType(IPointerType llvmPtrType, ref readonly DIBuilder diBuilder, DIType? elementType, string? name = null, uint alignment = 0)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugPointerType(IPointerType llvmPtrType, IDIBuilder diBuilder, DIType? elementType, string? name = null, uint alignment = 0)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -225,7 +225,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
   <dt><code>llvmPtrType</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.IPointerType.html">IPointerType</a></dt>
   <dd><p>Native type of the pointer</p>
 </dd>
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p>Debug information builder to use in creating this instance</p>
 </dd>
   <dt><code>elementType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a></dt>
@@ -246,7 +246,7 @@ Constructor DebugPointerType  <a class="header-action link-secondary" title="Vie
 
 
 
-<h4 class="section" id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_IPointerType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DIType_System_String_System_UInt32__remarks">Remarks</h4>
+<h4 class="section" id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_IPointerType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_DIType_System_String_System_UInt32__remarks">Remarks</h4>
 <div class="markdown level1 remarks"><p>Due to the move to opaque pointers in LLVM, this form has a <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>
 <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ElementType.html#Ubiquity_NET_Llvm_DebugInfo_DebugPointerType_ElementType">ElementType</a> property as the elements the pointer refers to are
 unknown.</p>
@@ -259,7 +259,7 @@ unknown.</p>
 
 <h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugPointerType__ctor_Ubiquity_NET_Llvm_Types_IPointerType_Ubiquity_NET_Llvm_DebugInfo_DIType_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.#ctor(Ubiquity.NET.Llvm.Types.IPointerType,Ubiquity.NET.Llvm.DebugInfo.DIType)">
   DebugPointerType(IPointerType, DIType)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L83"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.html">DebugPointerType</a> class to bind with an existing pointer type</p>
@@ -301,7 +301,7 @@ namespace)</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L21" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugPointerType.cs/#L21" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -317,7 +317,7 @@ namespace)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

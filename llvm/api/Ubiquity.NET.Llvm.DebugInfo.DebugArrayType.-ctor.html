@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*" class="text-break">
-Constructor DebugArrayType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L22"><i class="bi bi-code-slash"></i></a>
+Constructor DebugArrayType  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L22"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 
 <a id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_Types_IArrayType_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32,System.UInt32)">
-  DebugArrayType(IArrayType, IDebugType&lt;ITypeRef, DIType&gt;, ref readonly DIBuilder, uint, uint, uint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L22"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_Types_IArrayType_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_System_UInt32_System_UInt32_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,System.UInt32,System.UInt32,System.UInt32)">
+  DebugArrayType(IArrayType, IDebugType&lt;ITypeRef, DIType&gt;, IDIBuilder, uint, uint, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L22"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html">DebugArrayType</a> class</p>
@@ -124,7 +124,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DebugArrayType(IArrayType llvmType, IDebugType&lt;ITypeRef, DIType&gt; elementType, ref readonly DIBuilder diBuilder, uint count, uint lowerBound = 0, uint alignment = 0)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugArrayType(IArrayType llvmType, IDebugType&lt;ITypeRef, DIType&gt; elementType, IDIBuilder diBuilder, uint count, uint lowerBound = 0, uint alignment = 0)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -135,7 +135,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
   <dt><code>elementType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a>&gt;</dt>
   <dd><p>Array element type with debug information</p>
 </dd>
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p>Debug Information builder to use to build the information for this type</p>
 </dd>
   <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
@@ -162,9 +162,9 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 
 <a id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_DIBuilder__System_UInt32_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,System.UInt32,System.UInt32)">
-  DebugArrayType(IDebugType&lt;ITypeRef, DIType&gt;, ref readonly DIBuilder, uint, uint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L42"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_System_UInt32_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,System.UInt32,System.UInt32)">
+  DebugArrayType(IDebugType&lt;ITypeRef, DIType&gt;, IDIBuilder, uint, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L42"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html">DebugArrayType</a> class.</p>
@@ -172,7 +172,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DebugArrayType(IDebugType&lt;ITypeRef, DIType&gt; elementType, ref readonly DIBuilder diBuilder, uint count, uint lowerBound = 0)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugArrayType(IDebugType&lt;ITypeRef, DIType&gt; elementType, IDIBuilder diBuilder, uint count, uint lowerBound = 0)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -180,7 +180,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
   <dt><code>elementType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDebugType-2.html">IDebugType</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>, <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a>&gt;</dt>
   <dd><p>Type of elements in the array</p>
 </dd>
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p>Debug Information builder to use to build the information for this type</p>
 </dd>
   <dt><code>count</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
@@ -204,9 +204,9 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 
 <a id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_Types_IArrayType_Ubiquity_NET_Llvm_DebugInfo_DIBuilder__Ubiquity_NET_Llvm_DebugInfo_DIType_System_UInt32_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.DIBuilder@,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.UInt32)">
-  DebugArrayType(IArrayType, ref readonly DIBuilder, DIType, uint, uint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L58"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugArrayType__ctor_Ubiquity_NET_Llvm_Types_IArrayType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_DIType_System_UInt32_System_UInt32_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.#ctor(Ubiquity.NET.Llvm.Types.IArrayType,Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,Ubiquity.NET.Llvm.DebugInfo.DIType,System.UInt32,System.UInt32)">
+  DebugArrayType(IArrayType, IDIBuilder, DIType, uint, uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L58"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugArrayType.html">DebugArrayType</a> class.</p>
@@ -214,7 +214,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DebugArrayType(IArrayType llvmType, ref readonly DIBuilder diBuilder, DIType elementType, uint count, uint lowerBound = 0)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugArrayType(IArrayType llvmType, IDIBuilder diBuilder, DIType elementType, uint count, uint lowerBound = 0)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -222,7 +222,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
   <dt><code>llvmType</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.IArrayType.html">IArrayType</a></dt>
   <dd><p>Native LLVM type for the elements</p>
 </dd>
-  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a></dt>
+  <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p>Debug Information builder to use to build the information for this type</p>
 </dd>
   <dt><code>elementType</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIType.html">DIType</a></dt>
@@ -250,7 +250,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L22" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DebugArrayType.cs/#L22" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -266,7 +266,7 @@ Constructor DebugArrayType  <a class="header-action link-secondary" title="View 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Method InsertDeclare | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Method InsertDeclare | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*">
+
+
+
+
+
+<h1 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*" class="text-break">
+Method InsertDeclare  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L634"><i class="bi bi-code-slash"></i></a>
+</h1>
+
+<div class="facts text-secondary">
+  <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.html">DebugInfo</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+</div>
+
+<div class="markdown summary"></div>
+<div class="markdown conceptual"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*"></a>
+
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Instructions.Instruction)">
+  InsertDeclare(Value, DILocalVariable, DILocation, Instruction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L634"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Inserts an declare debug record for the given instruction</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>storage</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>Value the declaration is bound to</p>
+</dd>
+  <dt><code>varInfo</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a> for <code class="paramref">storage</code></p>
+</dd>
+  <dt><code>location</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a>for the variable</p>
+</dd>
+  <dt><code>insertBefore</code> <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.html">Instruction</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.html">Instruction</a> to insert the declaration before</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugRecord.html">DebugRecord</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.html">CallInstruction</a> for the call to llvm.dbg.declare</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<h4 class="section" id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction__remarks">Remarks</h4>
+<div class="markdown level1 remarks"><p>This adds a call to the <a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">llvm.dbg.declare</a> intrinsic.
+The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
+selection. Instead this provides a means to bind the LLVM Debug information metadata to a particular LLVM <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>
+that allows the transformation and optimization passes to track the debug information. Thus, even with optimized code
+the actual debug information is retained.</p>
+</div>
+
+
+<dl class="typelist seealso">
+  <dt>See Also</dt>
+  <dd>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">LLVM: llvm.dbg.declare</a></span></div>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+  </dd>
+</dl>
+
+
+<a id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*"></a>
+
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DIExpression,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Instructions.Instruction)">
+  InsertDeclare(Value, DILocalVariable, DIExpression, DILocation, Instruction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L652"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Inserts an llvm.dbg.declare instruction before the given instruction</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>storage</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>Value the declaration is bound to</p>
+</dd>
+  <dt><code>varInfo</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a> for <code class="paramref">storage</code></p>
+</dd>
+  <dt><code>expression</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIExpression.html">DIExpression</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIExpression.html">DIExpression</a> for a debugger to use when extracting the value</p>
+</dd>
+  <dt><code>location</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a>for the variable</p>
+</dd>
+  <dt><code>insertBefore</code> <a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.html">Instruction</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Instruction.html">Instruction</a> to insert the declaration before</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugRecord.html">DebugRecord</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.html">CallInstruction</a> for the call to llvm.dbg.declare</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<h4 class="section" id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction__remarks">Remarks</h4>
+<div class="markdown level1 remarks"><p>This adds a call to the <a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">llvm.dbg.declare</a> intrinsic.
+The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
+selection. Instead this provides a means to bind the LLVM Debug information metadata to a particular LLVM <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>
+that allows the transformation and optimization passes to track the debug information. Thus, even with optimized code
+the actual debug information is retained.</p>
+</div>
+
+
+<dl class="typelist seealso">
+  <dt>See Also</dt>
+  <dd>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">LLVM: llvm.dbg.declare</a></span></div>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+  </dd>
+</dl>
+
+
+<a id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*"></a>
+
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Values.BasicBlock)">
+  InsertDeclare(Value, DILocalVariable, DILocation, BasicBlock)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L674"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Inserts a DebugRecord before the given instruction</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>storage</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>Value the declaration is bound to</p>
+</dd>
+  <dt><code>varInfo</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a> for <code class="paramref">storage</code></p>
+</dd>
+  <dt><code>location</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a>for the variable</p>
+</dd>
+  <dt><code>insertAtEnd</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a> to insert the declaration at the end of</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugRecord.html">DebugRecord</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.html">CallInstruction</a> for the call to llvm.dbg.declare</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<h4 class="section" id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock__remarks">Remarks</h4>
+<div class="markdown level1 remarks"><p>This adds a call to the <a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">llvm.dbg.declare</a> intrinsic.
+The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
+selection. Instead this provides a means to bind the LLVM Debug information metadata to a particular LLVM <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>
+that allows the transformation and optimization passes to track the debug information. Thus, even with optimized code
+the actual debug information is retained.</p>
+</div>
+
+
+<dl class="typelist seealso">
+  <dt>See Also</dt>
+  <dd>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">LLVM: llvm.dbg.declare</a></span></div>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+  </dd>
+</dl>
+
+
+<a id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare*"></a>
+
+<h3 id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_" data-uid="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DIExpression,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Values.BasicBlock)">
+  InsertDeclare(Value, DILocalVariable, DIExpression, DILocation, BasicBlock)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L694"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Inserts a debug record before the given instruction</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>storage</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>Value the declaration is bound to</p>
+</dd>
+  <dt><code>varInfo</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a> for <code class="paramref">storage</code></p>
+</dd>
+  <dt><code>expression</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIExpression.html">DIExpression</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIExpression.html">DIExpression</a> for a debugger to use when extracting the value</p>
+</dd>
+  <dt><code>location</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocation.html">DILocation</a>for the variable</p>
+</dd>
+  <dt><code>insertAtEnd</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Values.BasicBlock.html">BasicBlock</a> to insert the declaration at the end of</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugRecord.html">DebugRecord</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.html">CallInstruction</a> for the call to llvm.dbg.declare</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<h4 class="section" id="Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock__remarks">Remarks</h4>
+<div class="markdown level1 remarks"><p>This adds a call to the <a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">llvm.dbg.declare</a> intrinsic.</p>
+<div class="NOTE"><h5>note</h5><p>
+The call has no impact on the actual machine code generated, as it is removed or ignored for actual target instruction
+selection. Instead this provides a means to bind the LLVM Debug information metadata to a particular LLVM <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>
+that allows the transformation and optimization passes to track the debug information. Thus, even with optimized code
+the actual debug information is retained.
+</p></div>
+</div>
+
+
+<dl class="typelist seealso">
+  <dt>See Also</dt>
+  <dd>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#lvm-dbg-declare">LLVM: llvm.dbg.declare</a></span></div>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/SourceLevelDebugging.html#source-level-debugging-with-llvm">LLVM: Source Level Debugging with LLVM</a></span></div>
+  </dd>
+</dl>
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/IDIBuilder.cs/#L634" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-alpha.0.2
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

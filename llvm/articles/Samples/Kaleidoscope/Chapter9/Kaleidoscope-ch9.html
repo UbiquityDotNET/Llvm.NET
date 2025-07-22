@@ -142,14 +142,16 @@ completing code generation for the module.</p>
     ArgumentNullException.ThrowIfNull( ast );
 
     using var diBuilder = new DIBuilder(Module);
+    CurrentDIBuilder = diBuilder.AsAlias(); // This gets the underlying unowned resource...
+
     var cu = diBuilder.CreateCompileUnit(SourceLanguage.C, SourcePath, &quot;Kaleidoscope Compiler&quot;);
 
     Debug.Assert( cu != null, &quot;Expected non null compile unit&quot; );
     Debug.Assert( cu.File != null, &quot;Expected non-null file for compile unit&quot; );
-    DoubleType = new DebugBasicType( Context.DoubleType, in diBuilder, &quot;double&quot;, DiTypeKind.Float );
+    DoubleType = new DebugBasicType( Context.DoubleType, diBuilder, &quot;double&quot;, DiTypeKind.Float );
 
     // use this instance and the DIBuilder to visit the AST
-    ast.Accept( this, in diBuilder );
+    ast.Accept( this );
 
     if(AnonymousFunctions.Count &gt; 0)
     {
@@ -180,8 +182,10 @@ intern the file definition so that it won't actually end up with duplicates.</p>
 <pre><code class="lang-csharp" name="GetIrDeclareFunction">
 // Retrieves a Function for a prototype from the current module if it exists,
 // otherwise declares the function and returns the newly declared function.
-private Function GetOrDeclareFunction( Prototype prototype, ref readonly DIBuilder diBuilder )
+private Function GetOrDeclareFunction( Prototype prototype )
 {
+    Debug.Assert( CurrentDIBuilder is not null, &quot;Internal error CurrentDIBuilder should be set in Generate already&quot; );
+
     if(Module is null)
     {
         throw new InvalidOperationException( &quot;ICE: Can't get or declare a function without an active module&quot; );
@@ -204,12 +208,12 @@ private Function GetOrDeclareFunction( Prototype prototype, ref readonly DIBuild
         var parameters = prototype.Parameters;
 
         // DICompileUnit and File are checked for null in constructor
-        var debugFile = diBuilder.CreateFile( diBuilder.CompileUnit!.File!.FileName, diBuilder.CompileUnit!.File.Directory );
-        var signature = Context.CreateFunctionType( in diBuilder, DoubleType!, prototype.Parameters.Select( _ =&gt; DoubleType! ) );
+        var debugFile = CurrentDIBuilder.CreateFile( CurrentDIBuilder.CompileUnit!.File!.FileName, CurrentDIBuilder.CompileUnit!.File.Directory );
+        var signature = Context.CreateFunctionType(CurrentDIBuilder, DoubleType!, prototype.Parameters.Select( _ =&gt; DoubleType! ) );
         var lastParamLocation = parameters.Count &gt; 0 ? parameters[ parameters.Count - 1 ].Location : prototype.Location;
 
-        retVal = Module.CreateFunction( in diBuilder
-                                      , scope: diBuilder.CompileUnit
+        retVal = Module.CreateFunction( CurrentDIBuilder
+                                      , scope: CurrentDIBuilder.CompileUnit
                                       , name: prototype.Name
                                       , linkageName: null
                                       , file: debugFile
@@ -269,12 +273,13 @@ the builder to set up all the parameter variables with alloca, as before. Additi
 information for each parameter is constructed. After the function is fully generated the debug information
 for the function is finalized, this is needed to allow for any optimizations to occur at the function
 level.</p>
-<pre><code class="lang-csharp" name="DefineFunction">public override Value? Visit( FunctionDefinition definition, ref readonly DIBuilder diBuilder )
+<pre><code class="lang-csharp" name="DefineFunction">public override Value? Visit( FunctionDefinition definition )
 {
     ArgumentNullException.ThrowIfNull( definition );
     Debug.Assert( InstructionBuilder is not null, &quot;Internal error Instruction builder should be set in Generate already&quot; );
+    Debug.Assert( CurrentDIBuilder is not null, &quot;Internal error CurrentDIBuilder should be set in Generate already&quot; );
 
-    var function = GetOrDeclareFunction( definition.Signature, in diBuilder );
+    var function = GetOrDeclareFunction( definition.Signature );
     if(!function.IsDeclaration)
     {
         throw new CodeGeneratorException( $&quot;Function {function.Name} cannot be redefined in the same module&quot; );
@@ -298,7 +303,7 @@ level.</p>
             {
                 var argSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                 .RegisterName( param.Name );
-                AddDebugInfoForAlloca( argSlot, function, param, in diBuilder );
+                AddDebugInfoForAlloca( argSlot, function, param );
                 InstructionBuilder.Store( function.Parameters[ param.Index ], argSlot );
                 NamedValues[ param.Name ] = argSlot;
             }
@@ -307,15 +312,15 @@ level.</p>
             {
                 var localSlot = InstructionBuilder.Alloca( function.Context.DoubleType )
                                                   .RegisterName( local.Name );
-                AddDebugInfoForAlloca( localSlot, function, local, in diBuilder );
+                AddDebugInfoForAlloca( localSlot, function, local );
                 NamedValues[ local.Name ] = localSlot;
             }
 
             EmitBranchToNewBlock( &quot;body&quot; );
 
-            var funcReturn = definition.Body.Accept( this, in diBuilder ) ?? throw new CodeGeneratorException( ExpectValidFunc );
+            var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
             InstructionBuilder.Return( funcReturn );
-            diBuilder.Finish( function.DISubProgram );
+            CurrentDIBuilder.Finish( function.DISubProgram );
             function.Verify();
 
             if(definition.IsAnonymous)
@@ -339,8 +344,10 @@ level.</p>
 <p>Debug information for parameters and local variables is similar but not quite identical. Thus, two new
 overloaded helper methods <code>AddDebugInfoForAlloca</code> handle attaching the correct debug information for
 parameters and local variables.</p>
-<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param, ref readonly DIBuilder diBuilder )
+<pre><code class="lang-csharp" name="CreateEntryBlockAlloca">private void AddDebugInfoForAlloca( Alloca argSlot, Function function, ParameterDeclaration param)
 {
+    Debug.Assert( CurrentDIBuilder is not null, &quot;Internal error CurrentDIBuilder should be set in Generate already&quot; );
+
     uint line = ( uint )param.Location.StartLine;
     uint col = ( uint )param.Location.StartColumn;
 
@@ -351,24 +358,26 @@ parameters and local variables.</p>
     Debug.Assert( function.DISubProgram.File != null, &quot;expected function with a non-null DISubProgram.File&quot; );
     Debug.Assert( InstructionBuilder.InsertBlock != null, &quot;expected Instruction builder with non-null insertion block&quot; );
 
-    DILocalVariable debugVar = diBuilder.CreateArgument( scope: function.DISubProgram
-                                                       , name: param.Name
-                                                       , file: function.DISubProgram.File
-                                                       , line
-                                                       , type: DoubleType!
-                                                       , alwaysPreserve: true
-                                                       , debugFlags: DebugInfoFlags.None
-                                                       , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
-                                                       );
-    diBuilder.InsertDeclare( storage: argSlot
-                           , varInfo: debugVar
-                           , location: new DILocation( Context, line, col, function.DISubProgram )
-                           , insertAtEnd: InstructionBuilder.InsertBlock
-                           );
+    DILocalVariable debugVar = CurrentDIBuilder.CreateArgument( scope: function.DISubProgram
+                                                              , name: param.Name
+                                                              , file: function.DISubProgram.File
+                                                              , line
+                                                              , type: DoubleType!
+                                                              , alwaysPreserve: true
+                                                              , debugFlags: DebugInfoFlags.None
+                                                              , argNo: checked(( ushort )( param.Index + 1 )) // Debug index starts at 1!
+                                                              );
+    CurrentDIBuilder.InsertDeclare( storage: argSlot
+                                  , varInfo: debugVar
+                                  , location: new DILocation( Context, line, col, function.DISubProgram )
+                                  , insertAtEnd: InstructionBuilder.InsertBlock
+                                  );
 }
 
-private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar, ref readonly DIBuilder diBuilder )
+private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVariableDeclaration localVar )
 {
+    Debug.Assert( CurrentDIBuilder is not null, &quot;Internal error CurrentDIBuilder should be set in Generate already&quot; );
+
     uint line = ( uint )localVar.Location.StartLine;
     uint col = ( uint )localVar.Location.StartColumn;
 
@@ -379,19 +388,19 @@ private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVari
     Debug.Assert( function.DISubProgram.File != null, &quot;expected function with non-null DISubProgram.File&quot; );
     Debug.Assert( InstructionBuilder.InsertBlock != null, &quot;expected Instruction builder with non-null insertion block&quot; );
 
-    DILocalVariable debugVar = diBuilder.CreateLocalVariable( scope: function.DISubProgram
-                                                            , name: localVar.Name
-                                                            , file: function.DISubProgram.File
-                                                            , line
-                                                            , type: DoubleType!
-                                                            , alwaysPreserve: false
-                                                            , debugFlags: DebugInfoFlags.None
-                                                            );
-    diBuilder.InsertDeclare( storage: argSlot
-                           , varInfo: debugVar
-                           , location: new DILocation( Context, line, col, function.DISubProgram )
-                           , insertAtEnd: InstructionBuilder.InsertBlock
-                           );
+    DILocalVariable debugVar = CurrentDIBuilder.CreateLocalVariable( scope: function.DISubProgram
+                                                                   , name: localVar.Name
+                                                                   , file: function.DISubProgram.File
+                                                                   , line
+                                                                   , type: DoubleType!
+                                                                   , alwaysPreserve: false
+                                                                   , debugFlags: DebugInfoFlags.None
+                                                                   );
+    CurrentDIBuilder.InsertDeclare( storage: argSlot
+                                  , varInfo: debugVar
+                                  , location: new DILocation( Context, line, col, function.DISubProgram )
+                                  , insertAtEnd: InstructionBuilder.InsertBlock
+                                  );
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Adding debugging information in LLVM IR is rather straight forward. The bulk of the problem is in tracking
@@ -421,7 +430,7 @@ correct ownership semantics for a DIBuilder but that is generally enforced by th
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

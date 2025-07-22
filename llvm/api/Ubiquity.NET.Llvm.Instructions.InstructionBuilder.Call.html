@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call*" class="text-break">
-Method Call  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L336"><i class="bi bi-code-slash"></i></a>
+Method Call  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L337"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
 
 <a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Values_Function_Ubiquity_NET_Llvm_Values_Value___" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call(Ubiquity.NET.Llvm.Values.Function,Ubiquity.NET.Llvm.Values.Value[])">
-  Call(Function, params Value[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L336"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Values_Function_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call(Ubiquity.NET.Llvm.Values.Function,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Value})">
+  Call(Function, params IEnumerable&lt;Value&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L337"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a call function</p>
@@ -124,7 +124,7 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public CallInstruction Call(Function func, params Value[] args)</code></pre>
+  <pre><code class="lang-csharp hljs">public CallInstruction Call(Function func, params IEnumerable&lt;Value&gt; args)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -132,7 +132,7 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
   <dt><code>func</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Function.html">Function</a></dt>
   <dd><p>Function to call</p>
 </dd>
-  <dt><code>args</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>[]</dt>
+  <dt><code>args</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>&gt;</dt>
   <dd><p>Arguments to pass to the function</p>
 </dd>
 </dl>
@@ -151,6 +151,12 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
 
 
 
+<h4 class="section">Exceptions</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+  <dd><p>One of the parameters to this function is invalid</p>
+</dd>
+</dl>
 
 
 
@@ -158,7 +164,7 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
 
 <h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Values_Function_System_Collections_Generic_IReadOnlyList_Ubiquity_NET_Llvm_Values_Value__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call(Ubiquity.NET.Llvm.Values.Function,System.Collections.Generic.IReadOnlyList{Ubiquity.NET.Llvm.Values.Value})">
   Call(Function, IReadOnlyList&lt;Value&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L342"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L344"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a call function</p>
@@ -193,13 +199,121 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
 
 
 
+<h4 class="section">Exceptions</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+  <dd><p>One of the parameters to this function is invalid</p>
+</dd>
+</dl>
+
+
+
+<a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call*"></a>
+
+<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Types_IFunctionType_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call(Ubiquity.NET.Llvm.Types.IFunctionType,Ubiquity.NET.Llvm.Values.Value,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Value})">
+  Call(IFunctionType, Value, params IEnumerable&lt;Value&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L355"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Creates a call instruction</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">public CallInstruction Call(IFunctionType signature, Value target, params IEnumerable&lt;Value&gt; args)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>signature</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a></dt>
+  <dd><p>Function signature of the target</p>
+</dd>
+  <dt><code>target</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>Target of the function call (Must be invocable as <code class="paramref">signature</code>)</p>
+</dd>
+  <dt><code>args</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>&gt;</dt>
+  <dd><p>Arguments to the function call (Must match types and number of <code class="paramref">signature</code>)</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.html">CallInstruction</a></dt>
+  <dd><p>Instruction created</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+
+<h4 class="section">Exceptions</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+  <dd><p>One of the parameters to this function is invalid</p>
+</dd>
+</dl>
+
+
+
+<a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call*"></a>
+
+<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Call_Ubiquity_NET_Llvm_Types_IFunctionType_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IReadOnlyList_Ubiquity_NET_Llvm_Values_Value__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Call(Ubiquity.NET.Llvm.Types.IFunctionType,Ubiquity.NET.Llvm.Values.Value,System.Collections.Generic.IReadOnlyList{Ubiquity.NET.Llvm.Values.Value})">
+  Call(IFunctionType, Value, IReadOnlyList&lt;Value&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L364"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Creates a call instruction</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">public CallInstruction Call(IFunctionType signature, Value target, IReadOnlyList&lt;Value&gt; args)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>signature</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a></dt>
+  <dd><p>Function signature of the target</p>
+</dd>
+  <dt><code>target</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>Target of the function call (Must be invocable as <code class="paramref">signature</code>)</p>
+</dd>
+  <dt><code>args</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>&gt;</dt>
+  <dd><p>Arguments to the function call (Must match types and number of <code class="paramref">signature</code>)</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.CallInstruction.html">CallInstruction</a></dt>
+  <dd><p>Instruction created</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+
+<h4 class="section">Exceptions</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+  <dd><p>One of the parameters to this function is invalid</p>
+</dd>
+</dl>
 
 
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L336" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L337" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -215,7 +329,7 @@ Method Call  <a class="header-action link-secondary" title="View source" href="h
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

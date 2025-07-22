@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_Types_ITypeRef" data-uid="Ubiquity.NET.Llvm.Types.ITypeRef" class="text-break">
-Interface ITypeRef  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/Types/ITypeRef.cs/#L78"><i class="bi bi-code-slash"></i></a>
+Interface ITypeRef  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Types/ITypeRef.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -117,6 +117,18 @@ Interface ITypeRef  <a class="header-action link-secondary" title="View source" 
 
 
 
+  <h2 id="Ubiquity_NET_Llvm_Types_ITypeRef_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><div class="IMPORTANT"><h5>important</h5><p>
+The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a> on this type ONLY deals with the native reference equality. That is,
+any reference type uses reference equality by default, but <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">Equals(T)</a> uses what
+is implemented or a default of reference equality for reference types. In this case it determines if
+the type refers to the exact same type instance. (Not an equivalent but different type). This is normally
+valid as LLVM underneath is uniqueing types within a context. As an example a managed implementation of
+<a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a> `A` is a wrapper around an LLVM handle `H` that refers to an native LLVM type `T`.
+If there is also a <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a> `B`, then `A.Equals(B)` is true ONLY if `B` also wraps an LLVM
+handle that refers to native type `T`.
+</p></div>
+</div>
 
   <h2 class="section" id="properties">Properties
 </h2>
@@ -211,7 +223,7 @@ Interface ITypeRef  <a class="header-action link-secondary" title="View source" 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/Types/ITypeRef.cs/#L78" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/Types/ITypeRef.cs/#L90" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -227,7 +239,7 @@ Interface ITypeRef  <a class="header-action link-secondary" title="View source" 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

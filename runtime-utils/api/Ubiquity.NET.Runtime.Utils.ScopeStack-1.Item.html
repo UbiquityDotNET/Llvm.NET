@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_Item_" data-uid="Ubiquity.NET.Runtime.Utils.ScopeStack`1.Item*" class="text-break">
-Property this  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L65"><i class="bi bi-code-slash"></i></a>
+Property this  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L66"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Property this  <a class="header-action link-secondary" title="View source" href=
 
 <a id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_Item_" data-uid="Ubiquity.NET.Runtime.Utils.ScopeStack`1.Item*"></a>
 
-<h3 id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_Item_System_String_" data-uid="Ubiquity.NET.Runtime.Utils.ScopeStack`1.Item(System.String)">
-  this[string]
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L65"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_Item_Ubiquity_NET_InteropHelpers_LazyEncodedString_" data-uid="Ubiquity.NET.Runtime.Utils.ScopeStack`1.Item(Ubiquity.NET.InteropHelpers.LazyEncodedString)">
+  this[LazyEncodedString]
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L66"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Gets or sets the value of a symbol in scope</p>
@@ -124,12 +124,12 @@ Property this  <a class="header-action link-secondary" title="View source" href=
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public T this[string name] { get; set; }</code></pre>
+  <pre><code class="lang-csharp hljs">public T this[LazyEncodedString name] { get; set; }</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
-  <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+  <dt><code>name</code> <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></dt>
   <dd><p>name of the symbol</p>
 </dd>
 </dl>
@@ -147,7 +147,7 @@ Property this  <a class="header-action link-secondary" title="View source" href=
 
 
 
-<h4 class="section" id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_Item_System_String__remarks">Remarks</h4>
+<h4 class="section" id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_Item_Ubiquity_NET_InteropHelpers_LazyEncodedString__remarks">Remarks</h4>
 <div class="markdown level1 remarks"><p>Getting a symbol value searches all scopes, starting with the current scope.
 Setting a symbol value will only set the value in the current scope. (e.g.
 if the value does not exist in the current scope a new entry is made for it
@@ -166,7 +166,7 @@ in the current scope, even if some outer scope has the same name.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L65" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L66" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -182,7 +182,7 @@ in the current scope, even if some outer scope has the same name.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

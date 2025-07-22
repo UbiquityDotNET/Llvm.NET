@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Struct DIBuilder | Ubiquity.NET </title>
+      <title>Class DIBuilder | Ubiquity.NET </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct DIBuilder | Ubiquity.NET ">
+      <meta name="title" content="Class DIBuilder | Ubiquity.NET ">
       
       <meta name="description" content="DIBuilder is a factory class for creating DebugInformation for an LLVM">
       <link rel="icon" href="../../favicon.ico">
@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_DebugInfo_DIBuilder" data-uid="Ubiquity.NET.Llvm.DebugInfo.DIBuilder" class="text-break">
-Struct DIBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L47"><i class="bi bi-code-slash"></i></a>
+Class DIBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,27 +97,34 @@ Struct DIBuilder  <a class="header-action link-secondary" title="View source" hr
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ref struct DIBuilder</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class DIBuilder : IDIBuilder, IEquatable&lt;IDIBuilder&gt;, IDisposable, IEquatable&lt;DIBuilder&gt;</code></pre>
   </div>
 
 
 
 
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">DIBuilder</span></div>
+    </dd>
+  </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>&gt;</div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
-    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
     </div>
@@ -126,6 +133,9 @@ Struct DIBuilder  <a class="header-action link-secondary" title="View source" hr
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
     </div>
   </dd></dl>
 
@@ -137,19 +147,23 @@ Struct DIBuilder  <a class="header-action link-secondary" title="View source" hr
 metadata. To ensure such metadata is resolved applications should call the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Finish.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_Finish">Finish()</a>
 method to resolve and finalize the metadata. After this point only fully resolved nodes may
 be added to ensure that the data remains valid.</p>
-<p>This type is a 'byref like type' to prevent storing it as a member anywhere. It is NOT
-a member of <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> but has one associated with it. Generally, at most one <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a>
+<p>This type is a class to allow storing it as a member anywhere. It is NOT a member of
+<a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> but has one associated with it. Generally, at most one <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a>
 is associated with a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>. If creating a function
 (via <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateFunction.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DISubroutineType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_Ubiquity_NET_Llvm_Values_Function_">CreateFunction(DIScope?, LazyEncodedString, LazyEncodedString, DIFile?, uint, DISubroutineType?, bool, bool, uint, DebugInfoFlags, bool, Function)</a>),
 then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a> is required.</p>
+<p>
+As this type implements <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> it OWNS the underlying native resource and callers must call <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Dispose.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_Dispose">Dispose()</a>
+to free the underlying native resource.
+</p>
 </div>
 
   <h2 class="section" id="constructors">Constructors
 </h2>
 
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.-ctor.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder__ctor_Ubiquity_NET_Llvm_Module_">DIBuilder(Module)</a></dt>
-    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a> struct.</p>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.-ctor.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder__ctor_Ubiquity_NET_Llvm_IModule_">DIBuilder(IModule)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a> class.</p>
 </dd>
   </dl>
 
@@ -158,18 +172,28 @@ then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompi
 
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CompileUnit.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_CompileUnit">CompileUnit</a></dt>
-    <dd><p>Gets the compile unit created by this builder</p>
+    <dd><p>Gets the compile unit created by this builder [If any]</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.IsDisposed.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_IsDisposed">IsDisposed</a></dt>
+    <dd><p>Gets a value indicating whether this instance is already disposed</p>
 </dd>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.OwningModule.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_OwningModule">OwningModule</a></dt>
-    <dd><p>Gets the module that owns this builder</p>
+    <dd><p>Gets the module associated with this builder</p>
 </dd>
   </dl>
 
   <h2 class="section" id="methods">Methods
 </h2>
 
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.AsAlias.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_AsAlias">AsAlias()</a></dt>
+    <dd><p>Gets an alias interface for this instance</p>
+</dd>
+  </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateArgument.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_CreateArgument_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DIType_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_UInt16_">CreateArgument(DIScope?, LazyEncodedString, DIFile?, uint, DIType?, bool, DebugInfoFlags, ushort)</a></dt>
     <dd><p>Creates an argument for a function as a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DILocalVariable.html">DILocalVariable</a></p>
@@ -336,11 +360,6 @@ then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompi
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_CreateTypeArray_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateTypeArray(params DIType?[])</a></dt>
-    <dd><p>Create a debug metadata array of debug types</p>
-</dd>
-  </dl>
-  <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.CreateTypedef.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_CreateTypedef_Ubiquity_NET_Llvm_DebugInfo_DIType_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DINode_System_UInt32_">CreateTypedef(DIType?, LazyEncodedString, DIFile?, uint, DINode?, uint)</a></dt>
     <dd><p>Creates debug information for a type definition (e.g. type alias)</p>
 </dd>
@@ -377,7 +396,22 @@ then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompi
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Dispose.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_Dispose">Dispose()</a></dt>
-    <dd><p>Dispose this builder instance</p>
+    <dd><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Equals.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_Equals_System_Object_">Equals(object?)</a></dt>
+    <dd><p>Determines whether the specified object is equal to the current object.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Equals.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_Equals_Ubiquity_NET_Llvm_DebugInfo_DIBuilder_">Equals(DIBuilder?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.Equals.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_Equals_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_">Equals(IDIBuilder?)</a></dt>
+    <dd><p>Indicates whether the current object is equal to another object of the same type.</p>
 </dd>
   </dl>
   <dl class="jumplist">
@@ -396,17 +430,17 @@ then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompi
 </dd>
   </dl>
   <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.GetHashCode.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_GetHashCode">GetHashCode()</a></dt>
+    <dd><p>Serves as the default hash function.</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.GetOrCreateArray.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_GetOrCreateArray_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DINode__">GetOrCreateArray(IEnumerable&lt;DINode&gt;)</a></dt>
     <dd><p>Gets or creates a node array with the specified elements</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.GetOrCreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_GetOrCreateTypeArray_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIType__">GetOrCreateTypeArray(IEnumerable&lt;DIType&gt;)</a></dt>
-    <dd><p>Gets or creates a Type array with the specified types</p>
-</dd>
-  </dl>
-  <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.GetOrCreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_GetOrCreateTypeArray_Ubiquity_NET_Llvm_DebugInfo_DIType___">GetOrCreateTypeArray(params DIType[])</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.GetOrCreateTypeArray.html#Ubiquity_NET_Llvm_DebugInfo_DIBuilder_GetOrCreateTypeArray_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_DIType__">GetOrCreateTypeArray(params IEnumerable&lt;DIType&gt;)</a></dt>
     <dd><p>Gets or creates a Type array with the specified types</p>
 </dd>
   </dl>
@@ -460,7 +494,7 @@ then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompi
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L47" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L28" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -476,7 +510,7 @@ then the creation of a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompi
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>

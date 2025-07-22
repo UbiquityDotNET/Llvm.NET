@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_DebugInfo_DIBuilder_InsertDeclare_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare*" class="text-break">
-Method InsertDeclare  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L1157"><i class="bi bi-code-slash"></i></a>
+Method InsertDeclare  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L333"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Method InsertDeclare  <a class="header-action link-secondary" title="View source
 
 <h3 id="Ubiquity_NET_Llvm_DebugInfo_DIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Instructions.Instruction)">
   InsertDeclare(Value, DILocalVariable, DILocation, Instruction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L1157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L333"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Inserts an declare debug record for the given instruction</p>
@@ -124,7 +124,7 @@ Method InsertDeclare  <a class="header-action link-secondary" title="View source
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public readonly DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -178,7 +178,7 @@ the actual debug information is retained.</p>
 
 <h3 id="Ubiquity_NET_Llvm_DebugInfo_DIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Instructions_Instruction_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DIExpression,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Instructions.Instruction)">
   InsertDeclare(Value, DILocalVariable, DIExpression, DILocation, Instruction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L1178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L339"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Inserts an llvm.dbg.declare instruction before the given instruction</p>
@@ -186,7 +186,7 @@ the actual debug information is retained.</p>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public readonly DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, Instruction insertBefore)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -243,7 +243,7 @@ the actual debug information is retained.</p>
 
 <h3 id="Ubiquity_NET_Llvm_DebugInfo_DIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Values.BasicBlock)">
   InsertDeclare(Value, DILocalVariable, DILocation, BasicBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L1217"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L345"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Inserts a DebugRecord before the given instruction</p>
@@ -251,7 +251,7 @@ the actual debug information is retained.</p>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public readonly DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -305,7 +305,7 @@ the actual debug information is retained.</p>
 
 <h3 id="Ubiquity_NET_Llvm_DebugInfo_DIBuilder_InsertDeclare_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_DebugInfo_DILocalVariable_Ubiquity_NET_Llvm_DebugInfo_DIExpression_Ubiquity_NET_Llvm_DebugInfo_DILocation_Ubiquity_NET_Llvm_Values_BasicBlock_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.DebugInfo.DILocalVariable,Ubiquity.NET.Llvm.DebugInfo.DIExpression,Ubiquity.NET.Llvm.DebugInfo.DILocation,Ubiquity.NET.Llvm.Values.BasicBlock)">
   InsertDeclare(Value, DILocalVariable, DIExpression, DILocation, BasicBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L1240"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L351"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Inserts a debug record before the given instruction</p>
@@ -313,7 +313,7 @@ the actual debug information is retained.</p>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public readonly DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd)</code></pre>
+  <pre><code class="lang-csharp hljs">public DebugRecord InsertDeclare(Value storage, DILocalVariable varInfo, DIExpression expression, DILocation location, BasicBlock insertAtEnd)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -371,7 +371,7 @@ the actual debug information is retained.
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.1/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L1157" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-alpha.0.2/src/Ubiquity.NET.Llvm/DebugInfo/DIBuilder.cs/#L333" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -387,7 +387,7 @@ the actual debug information is retained.
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.1
+          - Build: 20.1.8-alpha.0.2
         </div>
       </div>
     </footer>
