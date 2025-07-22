@@ -18,5 +18,5 @@ PreReleaseFix
     BuildPatch = "8"
     PreReleaseName = "alpha"
     PreReleaseNumber ="0"
-    PreReleaseFix ="1"
+    PreReleaseFix ="2"
 />
