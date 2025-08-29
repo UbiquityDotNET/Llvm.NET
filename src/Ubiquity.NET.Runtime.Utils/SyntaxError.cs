@@ -31,7 +31,7 @@ namespace Ubiquity.NET.Runtime.Utils
             string sourceFile,
             int id,
             string symbol,
-            SourceLocation location,
+            SourceRange location,
             string message,
             Exception? exception
             )
@@ -62,7 +62,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public int Id { get; }
 
         /// <summary>Gets the source location of the error in <see cref="SourceFile"/></summary>
-        public SourceLocation Location { get; }
+        public SourceRange Location { get; }
 
         /// <summary>Gets the message for this error</summary>
         public string Message { get; }

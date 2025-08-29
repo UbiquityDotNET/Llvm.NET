@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ConstantExpression( SourceLocation location, double value )
+        public ConstantExpression( SourceRange location, double value )
             : base( location )
         {
             Value = value;

@@ -34,7 +34,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <exception cref="ArgumentException">An argument is null</exception>
         public MsBuildMessageInfo(
             string origin,
-            SourceLocation? location,
+            SourceRange? location,
             string? subcategory,
             MsgCategory category,
             string? code,
@@ -76,6 +76,6 @@ namespace Ubiquity.NET.Runtime.Utils
         private readonly MsgCategory Category;
         private readonly string? Code;
         private readonly string Text;
-        private readonly SourceLocation? Location;
+        private readonly SourceRange? Location;
     }
 }

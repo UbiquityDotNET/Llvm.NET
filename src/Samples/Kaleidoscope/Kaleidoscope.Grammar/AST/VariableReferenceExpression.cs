@@ -11,7 +11,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public VariableReferenceExpression( SourceLocation location, IVariableDeclaration declaration )
+        public VariableReferenceExpression( SourceRange location, IVariableDeclaration declaration )
             : base( location )
         {
             Declaration = declaration;

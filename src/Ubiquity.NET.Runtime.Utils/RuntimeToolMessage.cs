@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <returns>string formatted to the patterns defined by the current runtime</returns>
         public static string Format(
             string origin,
-            SourceLocation? location,
+            SourceRange? location,
             string? subcategory,
             MsgCategory category,
             string? code,
@@ -67,7 +67,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <seealso href="https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-diagnostic-format-for-tasks?view=vs-2022"/>
         public static string FormatMSBuild(
             string origin,
-            SourceLocation? location,
+            SourceRange? location,
             string? subcategory,
             MsgCategory category,
             string? code,

@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Runtime.Utils
     public interface IAstNode
     {
         /// <summary>Gets the source location covering the original source for the node</summary>
-        SourceLocation Location { get; }
+        SourceRange Location { get; }
 
         /// <summary>Gets a collection of children for the node</summary>
         IEnumerable<IAstNode> Children { get; }
