@@ -8,6 +8,7 @@ using Ubiquity.NET.Llvm.Types;
 
 // warning SA1500: Braces for multi-line statements must not share line
 #pragma warning disable SA1500
+#pragma warning disable IDE0130 // Namespace does not match folder structure
 
 namespace Ubiquity.NET.Llvm.UT
 {
@@ -85,6 +86,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( 0U, union.IntegerBitWidth );
         }
 
+#pragma warning disable CA1506
         [TestMethod]
         public void DebugUnionTypeTest2( )
         {
@@ -180,5 +182,6 @@ namespace Ubiquity.NET.Llvm.UT
                 Assert.AreEqual( members[ i ].DebugType.DebugInfoType, memberType.BaseType );
             }
         }
+#pragma warning restore CA1506
     }
 }
