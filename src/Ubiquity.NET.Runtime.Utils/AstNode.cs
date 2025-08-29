@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Runtime.Utils
         : IAstNode
     {
         /// <inheritdoc/>
-        public SourceLocation Location { get; }
+        public SourceRange Location { get; }
 
         /// <inheritdoc/>
         public abstract IEnumerable<IAstNode> Children { get; }
@@ -32,7 +32,7 @@ namespace Ubiquity.NET.Runtime.Utils
 
         /// <summary>Initializes a new instance of the <see cref="AstNode"/> class</summary>
         /// <param name="location">Location in the source this node represents</param>
-        protected AstNode( SourceLocation location )
+        protected AstNode( SourceRange location )
         {
             Location = location;
         }

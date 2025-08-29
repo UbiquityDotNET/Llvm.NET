@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <summary>Initializes a new instance of the <see cref="ErrorNode"/> class</summary>
         /// <param name="location">Original location of the error in source</param>
         /// <param name="err">Error message for the error</param>
-        public ErrorNode( SourceLocation location, string err )
+        public ErrorNode( SourceRange location, string err )
         {
             ArgumentNullException.ThrowIfNull( err );
 
@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Runtime.Utils
         }
 
         /// <summary>Gets the source location for this error</summary>
-        public SourceLocation Location { get; }
+        public SourceRange Location { get; }
 
         /// <summary>Gets the string message for this error</summary>
         public string Error { get; }

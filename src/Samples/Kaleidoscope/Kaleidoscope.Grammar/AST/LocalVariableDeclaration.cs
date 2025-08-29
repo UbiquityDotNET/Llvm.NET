@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IVariableDeclaration
     {
-        public LocalVariableDeclaration( SourceLocation location, string name, IExpression? initializer, bool compilerGenerated = false )
+        public LocalVariableDeclaration( SourceRange location, string name, IExpression? initializer, bool compilerGenerated = false )
             : base( location )
         {
             Name = name;

@@ -13,8 +13,8 @@ namespace Kaleidoscope.Grammar.ANTLR
         // base type for all prototypes (technically abstract, but the generator doesn't apply that)
         internal partial class PrototypeContext
         {
-            public virtual IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
-                => Enumerable.Empty<(string, int, SourceLocation)>();
+            public virtual IEnumerable<(string Name, int Index, SourceRange Span)> Parameters
+                => Enumerable.Empty<(string, int, SourceRange)>();
 
             public virtual string Name => string.Empty;
         }

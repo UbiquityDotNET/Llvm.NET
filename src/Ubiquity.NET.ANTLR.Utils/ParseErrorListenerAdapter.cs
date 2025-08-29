@@ -37,7 +37,7 @@ namespace Ubiquity.NET.ANTLR.Utils
                                                       , recognizer.InputStream.SourceName
                                                       , recognizer.State
                                                       , string.Empty
-                                                      , new SourceLocation( line, charPositionInLine, line, charPositionInLine )
+                                                      , new SourcePosition(line, charPositionInLine, recognizer.InputStream.Index)
                                                       , msg
                                                       , e
                                                       )
@@ -58,7 +58,7 @@ namespace Ubiquity.NET.ANTLR.Utils
                                                       , recognizer.InputStream.SourceName
                                                       , recognizer.State
                                                       , offendingSymbol.Text
-                                                      , new SourceLocation( line, charPositionInLine, line, charPositionInLine )
+                                                      , new SourcePosition(line, charPositionInLine, recognizer.InputStream.Index)
                                                       , msg
                                                       , e
                                                       )

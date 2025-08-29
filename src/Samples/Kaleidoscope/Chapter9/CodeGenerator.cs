@@ -512,8 +512,8 @@ namespace Kaleidoscope.Chapter9
             if(scope != null)
             {
                 loc = new DILocation( InstructionBuilder.Context
-                                    , (uint)(node?.Location.StartLine ?? 0)
-                                    , (uint)(node?.Location.StartColumn ?? 0)
+                                    , (uint)(node?.Location.Start.Line ?? 0)
+                                    , (uint)(node?.Location.Start.Column ?? 0)
                                     , scope
                                     );
             }
@@ -561,11 +561,11 @@ namespace Kaleidoscope.Chapter9
                                               , name: prototype.Name
                                               , linkageName: null
                                               , file: debugFile
-                                              , line: (uint)prototype.Location.StartLine
+                                              , line: (uint)prototype.Location.Start.Line
                                               , signature
                                               , isLocalToUnit: false
                                               , isDefinition: true
-                                              , scopeLine: (uint)lastParamLocation.EndLine
+                                              , scopeLine: (uint)lastParamLocation.End.Line
                                               , debugFlags: prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
                                               , isOptimized: false
                                               );
@@ -590,8 +590,8 @@ namespace Kaleidoscope.Chapter9
         {
             Debug.Assert( CurrentDIBuilder is not null, "Internal error CurrentDIBuilder should be set in Generate already" );
 
-            uint line = ( uint )param.Location.StartLine;
-            uint col = ( uint )param.Location.StartColumn;
+            uint line = ( uint )param.Location.Start.Line;
+            uint col = ( uint )param.Location.Start.Column;
 
             // Keep compiler happy on null checks by asserting on expectations
             // The items were created in this file with all necessary info so
@@ -620,8 +620,8 @@ namespace Kaleidoscope.Chapter9
         {
             Debug.Assert( CurrentDIBuilder is not null, "Internal error CurrentDIBuilder should be set in Generate already" );
 
-            uint line = ( uint )localVar.Location.StartLine;
-            uint col = ( uint )localVar.Location.StartColumn;
+            uint line = ( uint )localVar.Location.Start.Line;
+            uint col = ( uint )localVar.Location.Start.Column;
 
             // Keep compiler happy on null checks by asserting on expectations
             // The items were created in this file with all necessary info so

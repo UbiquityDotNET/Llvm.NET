@@ -20,8 +20,8 @@ namespace Kaleidoscope.Grammar.ANTLR
         {
             public IToken OpToken => userdefinedop().Start;
 
-            public override IEnumerable<(string Name, int Index, SourceLocation Span)> Parameters
-                => Identifier().Select( ( id, i ) => (id.GetText(), i, id.GetSourceLocation()) );
+            public override IEnumerable<(string Name, int Index, SourceRange Span)> Parameters
+                => Identifier().Select( ( id, i ) => (id.GetText(), i, id.GetSourceRange()) );
 
             public int Precedence => (int)double.Parse( Number().GetText(), CultureInfo.InvariantCulture );
         }

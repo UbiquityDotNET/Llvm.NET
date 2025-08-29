@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Runtime.Utils
         : IAstNode
     {
         /// <inheritdoc/>
-        public SourceLocation Location { get; } = default;
+        public SourceRange Location { get; } = default;
 
         /// <inheritdoc/>
         public IEnumerable<IAstNode> Children { get; } = [];

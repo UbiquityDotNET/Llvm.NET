@@ -11,7 +11,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IVariableDeclaration
     {
-        public ParameterDeclaration( SourceLocation location, string name, int index )
+        public ParameterDeclaration( SourceRange location, string name, int index )
             : base( location )
         {
             Name = name;
