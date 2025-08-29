@@ -32,7 +32,7 @@
         },
         "documentationRules":
         {
-            "companyName": "Ubiquity.NET Contributors",
+            "companyName": "Ubiquity.NET",
             "headerDecoration": "-----------------------------------------------------------------------",
             "copyrightText": "Copyright (c) {companyName} Contributors. All rights reserved.\nLicensed under the {licenseName} license. See the {licenseFile} file in the project root for full license information.",
             "variables": {

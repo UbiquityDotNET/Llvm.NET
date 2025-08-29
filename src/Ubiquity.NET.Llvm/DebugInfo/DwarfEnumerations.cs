@@ -1,6 +1,5 @@
-﻿// Copyright (c) Ubiquity.NET Contributors Contributors. All rights reserved.
+﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
-
 // The names describe what they are, further details are available in the DWARF specs
 #pragma warning disable CS1591, SA1600, SA1602 // Enumeration items must be documented
 
