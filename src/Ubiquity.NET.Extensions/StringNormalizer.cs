@@ -1,8 +1,6 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="StringNormalizer.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
+
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -50,7 +48,8 @@ namespace Ubiquity.NET.Extensions
         /// <param name="txt">input string to convert</param>
         /// <param name="dstKind">destination kind of string to convert</param>
         /// <returns>Normalized string; If dstKind matches the current system environment then this returns <paramref name="txt"/> un-modified</returns>
-        public static string? NormalizeLineEndings( this string txt, LineEndingKind dstKind )
+        [return: NotNullIfNotNull(nameof(txt))]
+        public static string? NormalizeLineEndings( this string? txt, LineEndingKind dstKind )
         {
             return txt.NormalizeLineEndings( SystemLineEndings, dstKind );
         }
@@ -60,13 +59,14 @@ namespace Ubiquity.NET.Extensions
         /// <param name="srcKind">Line ending kind for the source (<paramref name="txt"/>)</param>
         /// <param name="dstKind">Line ending kind for the destination (return string)</param>
         /// <returns>Normalized string; If the <paramref name="srcKind"/> is the same as <paramref name="dstKind"/> this is returns <paramref name="txt"/> un-modified</returns>
-        public static string? NormalizeLineEndings( this string txt, LineEndingKind srcKind, LineEndingKind dstKind )
+        [return: NotNullIfNotNull(nameof(txt))]
+        public static string? NormalizeLineEndings( this string? txt, LineEndingKind srcKind, LineEndingKind dstKind )
         {
             // shortcut optimization for environments that match the ABI assumption
             // as well as any null or empty strings
             return string.IsNullOrEmpty( txt ) || srcKind == dstKind
                 ? txt
-                : txt.Replace( srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
+                : txt!.Replace( srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
         }
 
         // simplifies consistency of exception in face of unknown environment configuration

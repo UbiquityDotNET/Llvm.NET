@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ValidationExtensions.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
 using System.ComponentModel;
@@ -56,7 +53,7 @@ namespace Ubiquity.NET.Extensions
         /// <param name="self">Value to test</param>
         /// <param name="exp">Name or expression of the value in <paramref name="self"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="self"/></returns>
-        /// <exception cref="ArgumentOutOfRangeException">The enumerated value is not defined</exception>
+        /// <exception cref="InvalidEnumArgumentException">The enumerated value is not defined</exception>
         /// <remarks>
         /// This is useful to prevent callers from playing tricks with casts, etc... to land with a value
         /// that is otherwise undefined. Note: This is mostly useless on an enumeration marked with
@@ -66,7 +63,11 @@ namespace Ubiquity.NET.Extensions
         public static T ThrowIfNotDefined<T>( this T self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, Enum
         {
+#if NET5_0_OR_GREATER
             return Enum.IsDefined<T>( self ) ? self : throw new InvalidEnumArgumentException( exp );
+#else
+            return Enum.IsDefined(typeof(T), self) ? self : throw new InvalidEnumArgumentException( exp );
+#endif
         }
     }
 }

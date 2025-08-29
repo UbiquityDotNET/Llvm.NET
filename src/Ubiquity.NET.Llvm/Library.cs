@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Library.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 /*
 This is mostly a simple wrapper around the interop code. It exists here to aid in isolating consumers
