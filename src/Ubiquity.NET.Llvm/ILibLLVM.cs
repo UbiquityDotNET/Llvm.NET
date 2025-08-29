@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ILibLLVM.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 // This is cribbed from the interop library to prevent the need for applications to take a direct dependency on the interop library
 using System.Collections.Immutable;

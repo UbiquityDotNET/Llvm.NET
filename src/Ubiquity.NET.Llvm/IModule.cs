@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IModule.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 // until compiler bug [#40325](https://github.com/dotnet/roslyn/issues/40325) is resolved disable this
 // as adding the parameter would result in 'warning: Duplicate parameter 'passes' found in comments, the latter one is ignored.'

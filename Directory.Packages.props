@@ -24,18 +24,17 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.14.0" />
     <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.2" />
-    <PackageVersion Include="System.IO.Hashing" Version="9.0.7" />
-
+    <PackageVersion Include="PolySharp" Version="1.15.0" />
+    <PackageVersion Include="System.Collections.Immutable" Version="9.0.8" />
+    <PackageVersion Include="System.IO.Hashing" Version="9.0.8" />
     <!-- Workaround(2): https://github.com/dotnet/roslyn-sdk/issues/1191 -->
     <PackageVersion Include="System.Formats.Asn1" Version="9.0.7" />
-
     <!-- Common packages for solution -->
     <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
     <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.1" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.10.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
-
     <!-- Tests all use the same framework versions -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="MSTest.TestAdapter" Version="3.9.3" />
@@ -44,6 +43,5 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing" Version="1.1.2" />
-
   </ItemGroup>
 </Project>

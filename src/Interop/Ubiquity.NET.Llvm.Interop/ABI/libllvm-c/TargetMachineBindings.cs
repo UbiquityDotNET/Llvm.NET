@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="TargetMachineBindings.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 // Usually ordering applies, however in this case the ordering is by method name
 // and sometimes contains a wrapper method on the low level to make use easier.

@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IOrcJit.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 // They are order by access, unfortunately this analyzer has stupid built-in defaults that
 // puts internal as higher priority than protected and no way to override it.

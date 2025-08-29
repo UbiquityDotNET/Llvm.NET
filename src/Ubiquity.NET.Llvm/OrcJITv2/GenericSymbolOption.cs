@@ -1,8 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="GenericSymbolOption.cs" company="Ubiquity.NET Contributors">
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿// Copyright (c) Ubiquity.NET Contributors Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 // shut up tooling for no docs on things that are 1:1 renames/aliasing of LLVM values and not entirely clear
 #pragma warning disable CS1591 // Disable warning: "Missing XML comment for publicly visible type or member"
