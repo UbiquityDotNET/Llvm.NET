@@ -33,7 +33,11 @@ namespace Ubiquity.NET.Llvm
     /// an effective NOP.
     /// </remarks>
     [SuppressMessage( "Style", "IDE0250:Make struct 'readonly'", Justification = "NO, it can't be, the Kind setter is NOT readonly" )]
+#if NET9_0_OR_GREATER
     public readonly ref struct Comdat
+#else
+    public readonly struct Comdat
+#endif
         : IEquatable<Comdat>
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
@@ -46,6 +50,24 @@ namespace Ubiquity.NET.Llvm
 
         /// <inheritdoc/>
         public override int GetHashCode( ) => Handle.GetHashCode();
+
+        /// <inheritdoc/>
+        public override bool Equals( object? obj )
+        {
+            return obj is Comdat comdat && Equals( comdat );
+        }
+
+        /// <summary>Compare two instances for equality</summary>
+        /// <param name="left">Left side of comparison</param>
+        /// <param name="right">Right side of comparison</param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/></returns>
+        public static bool operator ==( Comdat left, Comdat right ) => left.Equals( right );
+
+        /// <summary>Compare two instances for equality</summary>
+        /// <param name="left">Left side of comparison</param>
+        /// <param name="right">Right side of comparison</param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/></returns>
+        public static bool operator !=( Comdat left, Comdat right ) => !(left == right);
         #endregion
 
         /// <summary>Gets a value indicating whether this instance represents a NULL/Invalid <see cref="Comdat"/></summary>

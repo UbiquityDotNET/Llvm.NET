@@ -3,6 +3,8 @@
 
 using Antlr4.Runtime;
 
+using Kaleidoscope.Grammar.AST;
+
 using Ubiquity.NET.ANTLR.Utils;
 using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
@@ -13,11 +15,11 @@ namespace Kaleidoscope.Grammar.ANTLR
     // on language features enabled.
     internal partial class KaleidoscopeLexer
     {
-        public KaleidoscopeLexer( char[] input, LanguageLevel languageLevel, IParseErrorListener errorListener )
+        public KaleidoscopeLexer( char[] input, LanguageLevel languageLevel, IParseErrorListener<DiagnosticCode> errorListener )
             : this( new AntlrInputStream( input.ThrowIfNull(), input.Length ) )
         {
             LanguageLevel = languageLevel;
-            AddErrorListener( new ParseErrorListenerAdapter( errorListener ) );
+            AddErrorListener( new AntlrParseErrorListenerAdapter<DiagnosticCode>( errorListener ) );
         }
 
         public LanguageLevel LanguageLevel { get; }

@@ -73,4 +73,5 @@
   <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
   <Project Path="Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj" />
   <Project Path="Ubiquity.NET.Runtime.Utils/Ubiquity.NET.Runtime.Utils.csproj" />
+  <Project Path="Ubiquity.NET.TextUX/Ubiquity.NET.TextUX.csproj" Id="0c58feb7-2b42-431a-9a37-43a8b263add9" />
 </Solution>

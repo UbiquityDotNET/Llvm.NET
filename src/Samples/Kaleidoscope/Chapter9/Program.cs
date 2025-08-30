@@ -6,9 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 using static Ubiquity.NET.Llvm.Library;
 
@@ -49,7 +51,7 @@ namespace Kaleidoscope.Chapter9
             Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
             Console.WriteLine( "Compiling {0}", sourceFilePath );
 
-            var errorLogger = new ColoredConsoleParseErrorReporter( sourceFilePath );
+            var errorLogger = new ParseErrorDiagnosticAdapter<DiagnosticCode>(new ColoredConsoleReporter(), "KLS", new Uri(sourceFilePath) );
 
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );

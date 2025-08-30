@@ -16,14 +16,16 @@ namespace Ubiquity.NET.Runtime.Utils
     public static class AstNodeExtensions
     {
         /// <summary>Gets the complete collection of errors for this node and children</summary>
+        /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
         /// <param name="node">Node to traverse for errors</param>
         /// <remarks>Traverses the node hierarchy to find all error nodes at any depth</remarks>
         /// <returns>Collection of errors found</returns>
-        public static ImmutableArray<ErrorNode> CollectErrors( this IAstNode node )
+        public static ImmutableArray<ErrorNode<T>> CollectErrors<T>( this IAstNode node )
+            where T : struct, Enum
         {
             ArgumentNullException.ThrowIfNull( node );
 
-            var collector = new ErrorNodeCollector();
+            var collector = new ErrorNodeCollector<T>();
             return node.Accept( collector );
         }
     }

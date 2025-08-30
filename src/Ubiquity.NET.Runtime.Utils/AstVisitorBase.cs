@@ -143,7 +143,11 @@ namespace Ubiquity.NET.Runtime.Utils
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Related Generic - split file names is just confusing" )]
     public class AstVisitorBase<TResult, TArg>
         : IAstVisitor<TResult, TArg>
+#if NET9_0_OR_GREATER
         where TArg : struct, allows ref struct
+#else
+        where TArg : struct
+#endif
     {
         /// <summary>Visit a node and all of it's children</summary>
         /// <param name="node">The node to visit</param>

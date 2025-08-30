@@ -18,6 +18,7 @@
   -->
   <ItemGroup>
     <!-- Roslyn Analyzers ***MUST*** target older framework -->
+    <PackageVersion Include="AnsiCodes" Version="0.2.1" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis" Version="4.14.0" />
@@ -31,7 +32,7 @@
     <PackageVersion Include="System.Formats.Asn1" Version="9.0.7" />
     <!-- Common packages for solution -->
     <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
-    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.1" />
+    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2-beta" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.10.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />

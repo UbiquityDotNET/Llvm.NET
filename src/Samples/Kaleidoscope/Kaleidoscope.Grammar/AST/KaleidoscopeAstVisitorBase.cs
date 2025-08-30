@@ -19,7 +19,7 @@ namespace Kaleidoscope.Grammar.AST
             return node switch
             {
                 RootNode n => Visit( n ),
-                ErrorNode n => Visit( n ),
+                ErrorNode<DiagnosticCode> n => Visit( n ),
                 Prototype n => Visit( n ),
                 FunctionDefinition n => Visit( n ),
                 ConstantExpression n => Visit( n ),
@@ -37,7 +37,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public virtual TResult? Visit( RootNode root ) => VisitChildren( root );
 
-        public virtual TResult? Visit( ErrorNode errorNode ) => default;
+        public virtual TResult? Visit( ErrorNode<DiagnosticCode> errorNode ) => default;
 
         public virtual TResult? Visit( Prototype prototype ) => VisitChildren( prototype );
 
@@ -90,7 +90,11 @@ namespace Kaleidoscope.Grammar.AST
     public class KaleidoscopeAstVisitorBase<TResult, TArg>
         : IKaleidoscopeAstVisitor<TResult, TArg>
         , IAstVisitor<TResult, TArg>
+#if NET9_0_OR_GREATER
         where TArg : struct, allows ref struct
+#else
+        where TArg : struct
+#endif
     {
         public TResult? Visit( IAstNode node, ref readonly TArg arg )
         {
@@ -98,7 +102,7 @@ namespace Kaleidoscope.Grammar.AST
             return node switch
             {
                 RootNode n => Visit( n, in arg ),
-                ErrorNode n => Visit( n, in arg ),
+                ErrorNode<DiagnosticCode> n => Visit( n, in arg ),
                 Prototype n => Visit( n, in arg ),
                 FunctionDefinition n => Visit( n, in arg ),
                 ConstantExpression n => Visit( n, in arg ),
@@ -116,7 +120,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public virtual TResult? Visit( RootNode root, ref readonly TArg arg ) => VisitChildren( root, in arg );
 
-        public virtual TResult? Visit( ErrorNode errorNode, ref readonly TArg arg ) => default;
+        public virtual TResult? Visit( ErrorNode<DiagnosticCode> errorNode, ref readonly TArg arg ) => default;
 
         public virtual TResult? Visit( Prototype prototype, ref readonly TArg arg ) => VisitChildren( prototype, in arg );
 

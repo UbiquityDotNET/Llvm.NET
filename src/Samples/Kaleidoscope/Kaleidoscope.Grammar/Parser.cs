@@ -28,7 +28,7 @@ namespace Kaleidoscope.Grammar
     {
         /// <summary>Initializes a new instance of the <see cref="Parser"/> class.</summary>
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
-        /// <param name="diagnostics">Diagnostic representations to generate when parsing</param>
+        /// <param name="visualizer">Visualizer to use for the parse (Includes possible error nodes)</param>
         public Parser( LanguageLevel level, IVisualizer? visualizer = null )
             : this( new DynamicRuntimeState( level ), visualizer )
         {
@@ -36,15 +36,15 @@ namespace Kaleidoscope.Grammar
 
         /// <summary>Initializes a new instance of the <see cref="Parser"/> class.</summary>
         /// <param name="globalState"><see cref="DynamicRuntimeState"/> for the parse</param>
-        /// <param name="visualizers">Diagnostic representations to generate when parsing</param>
+        /// <param name="visualizer">Visualizer to use for the parse (Includes possible error nodes)</param>
         public Parser( DynamicRuntimeState globalState
-                     , IVisualizer? visualizers = null
+                     , IVisualizer? visualizer = null
                      )
         {
             ArgumentNullException.ThrowIfNull( globalState );
 
             GlobalState = globalState;
-            Visualizer = visualizers;
+            Visualizer = visualizer;
         }
 
         /// <summary>Gets or sets the language level for this parser</summary>
@@ -84,7 +84,7 @@ namespace Kaleidoscope.Grammar
         {
             try
             {
-                var errCollector = new ParseErrorCollector();
+                var errCollector = new ParseErrorCollector<DiagnosticCode>();
 
                 (KaleidoscopeParser antlrParser, IParseTree parseTree) = CoreParse( input, mode, errCollector );
 
@@ -131,11 +131,11 @@ namespace Kaleidoscope.Grammar
             }
             catch(ParseCanceledException)
             {
-                return new RootNode( default, new ErrorNode( default, "Parse canceled" ) );
+                return new RootNode( default, new ErrorNode<DiagnosticCode>( default, DiagnosticCode.ParseCanceled, "Parse canceled" ) );
             }
         }
 
-        private (KaleidoscopeParser Op, IParseTree RHS) CoreParse( char[] input, ParseMode mode, ParseErrorCollector errCollector )
+        private (KaleidoscopeParser Op, IParseTree RHS) CoreParse( char[] input, ParseMode mode, ParseErrorCollector<DiagnosticCode> errCollector )
         {
             var lexer = new KaleidoscopeLexer( input, GlobalState.LanguageLevel, errCollector );
 

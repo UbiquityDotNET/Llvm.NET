@@ -1,23 +1,33 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+#pragma warning disable IDE0005 // Using directive is unnecessary.
+#pragma warning disable SA1649 // File name should match first type name
+
 using System;
 
-namespace Ubiquity.NET.Runtime.Utils
+namespace Ubiquity.NET.TextUX
 {
     /// <summary>Tool Message category</summary>
-    public enum MsgCategory
+    public enum MsgLevel
     {
-        /// <summary>Message is an error</summary>
-        Error,
+        /// <summary>All channels off</summary>
+        None = 0,
 
-        /// <summary>Message is a warning</summary>
-        Warning,
+        /// <summary>Verbose messages (or higher) are enabled</summary>
+        Verbose = 1,
 
-        /// <summary>Message is informational</summary>
-        Information,
+        /// <summary>Informational messages (or higher) are enabled.</summary>
+        Information = 2,
+
+        /// <summary>Warning messages (or higher) are enabled. [This is the default value]</summary>
+        Warning = 3, // Default level is warning & error only
+
+        /// <summary>Error messages (or higher) are enabled.</summary>
+        Error = 4,
     }
 
+#if USE_RUNTIME_TOOL_MESSAGE
     /// <summary>Static utility class to provide formatting for various runtime tool messaging</summary>
     /// <remarks>
     /// Each runtime environment uses different formats for message strings. This abstracts the differences
@@ -38,21 +48,14 @@ namespace Ubiquity.NET.Runtime.Utils
             string origin,
             SourceRange? location,
             string? subcategory,
-            MsgCategory category,
+            MsgLevel category,
             string? code,
             string msgText,
             IFormatProvider? formatProvider = null
         )
         {
-            if(OperatingSystem.IsWindows())
-            {
-                return FormatMSBuild( origin, location, subcategory, category, code, msgText, null );
-            }
-            else
-            {
-                // TODO: Determine common/standard format(s) for other runtimes...
-                return msgText;
-            }
+            var msgInfo = new DiagnosticMessage(origin, location, subcategory, category, code, msgText);
+            return msgInfo.ToString("G", formatProvider);
         }
 
         /// <summary>Format a message in the MSBUILD style</summary>
@@ -69,14 +72,15 @@ namespace Ubiquity.NET.Runtime.Utils
             string origin,
             SourceRange? location,
             string? subcategory,
-            MsgCategory category,
+            MsgLevel category,
             string? code,
             string msgText,
             IFormatProvider? formatProvider = null
         )
         {
-            var msgInfo = new MsBuildMessageInfo(origin, location, subcategory, category, code, msgText);
-            return msgInfo.ToString();
+            var msgInfo = new DiagnosticMessage(origin, location, subcategory, category, code, msgText);
+            return msgInfo.ToString("B", formatProvider);
         }
     }
+#endif
 }

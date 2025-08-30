@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.TextUX;
+
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Root interface for nodes in the Abstract Syntax Tree</summary>
@@ -27,6 +29,10 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="arg">Argument to pass to the concrete type as a readonly ref</param>
         /// <returns>Result of visiting this node</returns>
         TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TArg : struct, allows ref struct;
+#if NET9_0_OR_GREATER
+        where TArg : struct, allows ref struct;
+#else
+        where TArg : struct;
+#endif
     }
 }

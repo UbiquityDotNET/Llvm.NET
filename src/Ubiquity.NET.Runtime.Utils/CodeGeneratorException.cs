@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Runtime.Utils
     /// <remarks>
     /// This is used to indicate exceptions in the process of transforming an AST into
     /// an intermediate representation or some other form of native code. Errors in parsing
-    /// are mostly handled as instances of the <see cref="ErrorNode"/> class or a parse
+    /// are mostly handled as instances of the <see cref="ErrorNode{T}"/> class or a parse
     /// technology specific exception.
     /// </remarks>
     [Serializable]

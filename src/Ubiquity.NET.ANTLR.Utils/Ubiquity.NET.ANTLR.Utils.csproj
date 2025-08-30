@@ -1,36 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <IsAotCompatible>True</IsAotCompatible>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>13</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsAotCompatible>True</IsAotCompatible>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
-    <!--NuGet packaging support -->
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <MinClientVersion>4.9.0</MinClientVersion>
-    <Authors>.NET Foundation,Ubiquity.NET</Authors>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>General use .NET extensions and utilities</Description>
-    <PackageTags>Extensions,.NET,Ubiquity.NET</PackageTags>
-    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
+        <!--NuGet packaging support -->
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <MinClientVersion>4.9.0</MinClientVersion>
+        <Authors>.NET Foundation,Ubiquity.NET</Authors>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>General use .NET extensions and utilities</Description>
+        <PackageTags>Extensions,.NET,Ubiquity.NET</PackageTags>
+        <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Antlr4.Runtime.Standard" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Include="ReadMe.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="ReadMe.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -6,21 +6,23 @@ using System.Collections.Immutable;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
-    /// <summary>Implementation of <see cref="IParseErrorListener"/> to collect any errors that occur during a parse</summary>
-    public class ParseErrorCollector
-        : IParseErrorListener
+    /// <summary>Implementation of <see cref="IParseErrorListener{T}"/> to collect any errors that occur during a parse</summary>
+    /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
+    public class ParseErrorCollector<T>
+        : IParseErrorListener<T>
+        where T : struct, Enum
     {
         /// <inheritdoc/>
         /// <remarks>
         /// This will collect every <see cref="SyntaxError"/> reported during a parse
         /// </remarks>
-        public void SyntaxError( SyntaxError syntaxError )
+        public void SyntaxError( SyntaxError<T> syntaxError )
         {
             ArgumentNullException.ThrowIfNull( syntaxError );
-            ErrorNodes = ErrorNodes.Add( new ErrorNode( syntaxError.Location, syntaxError.ToString() ) );
+            ErrorNodes = ErrorNodes.Add( new ErrorNode<T>( syntaxError.Location, syntaxError.Id, syntaxError.ToString() ) );
         }
 
         /// <summary>Gets the error nodes found by this listener</summary>
-        public ImmutableArray<ErrorNode> ErrorNodes { get; private set; } = [];
+        public ImmutableArray<ErrorNode<T>> ErrorNodes { get; private set; } = [];
     }
 }

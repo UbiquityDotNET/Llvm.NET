@@ -1,60 +1,62 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>portable</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <SignAssembly>False</SignAssembly>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
-    <IsAotCompatible>True</IsAotCompatible>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>13</LangVersion>
+        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <SignAssembly>False</SignAssembly>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
+        <IsAotCompatible>True</IsAotCompatible>
 
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <MinClientVersion>4.9.0</MinClientVersion>
-    <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM [$(LlvmVersion)]. Direct use of this low level API is **STRONGLY** discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
-    <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
-    <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
-    <IncludeSymbols Condition="'$(Configuration)'=='Release'">true</IncludeSymbols>
-    <EmbedUntrackedSources>false</EmbedUntrackedSources>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <!-- This is an internal undocumented package ignore the analysis that complains about a missing ReadMe -->
-    <NoPackageAnalysis>true</NoPackageAnalysis>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <MinClientVersion>4.9.0</MinClientVersion>
+        <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>.NET Low Level Interop Bindings for Ubiquity.LibLLVM [$(LlvmVersion)]. Direct use of this low level API is **STRONGLY** discouraged, instead you should use the Ubiquity.NET.Llvm package, which provides a full C# object model projection of the LLVM APIs on top of this library.</Description>
+        <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
+        <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+        <IncludeSymbols Condition="'$(Configuration)'=='Release'">true</IncludeSymbols>
+        <EmbedUntrackedSources>false</EmbedUntrackedSources>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-    <!--
-    workaround: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3882
-    Only known solution to prevent complier Null check issues is to disable the rule
-    -->
-    <NoWarn>$(NoWarn);SA1135</NoWarn>
+        <!-- This is an internal undocumented package ignore the analysis that complains about a missing ReadMe -->
+        <NoPackageAnalysis>true</NoPackageAnalysis>
 
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
-    <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" />
-    <PackageReference Include="Ubiquity.NET.Llvm.Interop.Handles" VersionOverride="20.1.*-*" />
-    <PackageReference Include="Ubiquity.NET.Versioning" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+        <!--
+        workaround: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3882
+        Only known solution to prevent complier Null check issues is to disable the rule
+        -->
+        <NoWarn>$(NoWarn);SA1135</NoWarn>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
-    <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
-  </ItemGroup>
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
+        <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" />
+        <PackageReference Include="Ubiquity.NET.Llvm.Interop.Handles" VersionOverride="20.1.*-*" />
+        <PackageReference Include="Ubiquity.NET.Versioning" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
+        <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
+    </ItemGroup>
 </Project>

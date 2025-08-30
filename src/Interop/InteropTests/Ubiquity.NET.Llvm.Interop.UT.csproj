@@ -1,24 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-      <TargetFramework>net9.0</TargetFramework>
-      <IsPackable>false</IsPackable>
-      <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
-    <ProjectReference Include="..\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj">
-        <Name>Ubiquity.NET.Llvm.Interop</Name>
-        <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-      <PackageReference Include="Microsoft.NET.Test.Sdk" />
-      <PackageReference Include="MSTest.TestFramework" />
-      <PackageReference Include="MSTest.TestAdapter" />
-      <PackageReference Include="Tmds.ExecFunction" />
-      <PackageReference Include="Ubiquity.NET.Versioning" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageVersion Update="EnvDTE" Version="17.14.40260" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>13</LangVersion>
+        <IsPackable>false</IsPackable>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
+        <ProjectReference Include="..\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj">
+            <Name>Ubiquity.NET.Llvm.Interop</Name>
+            <Private>true</Private>
+        </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="MSTest.TestFramework" />
+        <PackageReference Include="MSTest.TestAdapter" />
+        <PackageReference Include="Tmds.ExecFunction" />
+        <PackageReference Include="Ubiquity.NET.Versioning" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageVersion Update="EnvDTE" Version="17.14.40260" />
+    </ItemGroup>
 </Project>
