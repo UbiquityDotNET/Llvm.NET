@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -9,8 +10,10 @@ using System.Threading.Tasks;
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Common core implementation of a Read, Evaluate, Print Loop (REPL)</summary>
-    /// <typeparam name="T">Type of values produce by the evaluation stage</typeparam>
-    public abstract class REPLBase<T>
+    /// <typeparam name="T">Type of values produced by the evaluation stage</typeparam>
+    /// <typeparam name="TDiagnosticEnum">Type of the enum for diagnostic IDs</typeparam>
+    public abstract class REPLBase<T, TDiagnosticEnum>
+        where TDiagnosticEnum : struct, Enum
     {
         /// <summary>Shows a prompt appropriate for the runtime and current state</summary>
         /// <param name="state">Ready state for the REPL</param>
@@ -21,7 +24,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public abstract void ProcessResults( T resultValue );
 
         /// <summary>Gets the error logger to use for logging any parse errors</summary>
-        public IParseErrorReporter ErrorLogger { get; }
+        public IParseErrorReporter<TDiagnosticEnum> ErrorLogger { get; }
 
         /// <summary>Asynchronously runs the REPL loop on the input reader</summary>
         /// <param name="input">Reader to process the input for</param>
@@ -52,22 +55,16 @@ namespace Ubiquity.NET.Runtime.Utils
                 catch(CodeGeneratorException ex)
                 {
                     // This is an internal error that is not recoverable.
-                    // Show the error and stop additional processing
+                    // Report the error and stop additional processing
                     ErrorLogger.ReportError( ex.ToString() );
                     break;
                 }
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="REPLBase{T}"/> class</summary>
-        protected REPLBase( )
-            : this( new ColoredConsoleParseErrorReporter() )
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="REPLBase{T}"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="REPLBase{T, TDiagnosticEnum}"/> class</summary>
         /// <param name="logger">Logger to use for reporting any errors during parse</param>
-        protected REPLBase( IParseErrorReporter logger )
+        protected REPLBase( IParseErrorReporter<TDiagnosticEnum> logger )
         {
             ErrorLogger = logger;
         }

@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>13</LangVersion>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <ForceAntlr4GeneratedCodeInternal>true</ForceAntlr4GeneratedCodeInternal>
         <IsAotCompatible>True</IsAotCompatible>
     </PropertyGroup>
     <ItemGroup>
-      <None Remove="ANTLR\Kaleidoscope.g4" />
+        <None Remove="ANTLR\Kaleidoscope.g4" />
     </ItemGroup>
     <ItemGroup>
-      <Antlr4 Include="ANTLR\Kaleidoscope.g4">
-        <Package>Kaleidoscope.Grammar.ANTLR</Package>
-      </Antlr4>
+        <Antlr4 Include="ANTLR\Kaleidoscope.g4">
+            <Package>Kaleidoscope.Grammar.ANTLR</Package>
+        </Antlr4>
     </ItemGroup>
 
     <ItemGroup>
@@ -21,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Ubiquity.NET.ANTLR.Utils\Ubiquity.NET.ANTLR.Utils.csproj" />
-      <ProjectReference Include="..\..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
-      <ProjectReference Include="..\..\..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
+        <ProjectReference Include="..\..\..\Ubiquity.NET.ANTLR.Utils\Ubiquity.NET.ANTLR.Utils.csproj" />
+        <ProjectReference Include="..\..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
+        <ProjectReference Include="..\..\..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
     </ItemGroup>
 </Project>

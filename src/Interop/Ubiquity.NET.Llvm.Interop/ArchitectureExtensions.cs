@@ -22,7 +22,9 @@ namespace Ubiquity.NET.Llvm.Interop
                 Architecture.Wasm => LibLLVMCodeGenTarget.CodeGenTarget_WebAssembly,
                 Architecture.LoongArch64 => LibLLVMCodeGenTarget.CodeGenTarget_LoongArch,
                 Architecture.Ppc64le => LibLLVMCodeGenTarget.CodeGenTarget_PowerPC,
+#if NET9_0_OR_GREATER
                 Architecture.RiscV64 => LibLLVMCodeGenTarget.CodeGenTarget_RISCV, // 64 vs 32 bit distinction is a CPU/Feature of the target
+#endif
                 Architecture.S390x => LibLLVMCodeGenTarget.CodeGenTarget_SystemZ,
                 _ => throw new NotSupportedException( "Native code gen target is unknown" )
             };

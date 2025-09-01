@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -116,7 +117,7 @@ namespace Kaleidoscope.Tests
 
             await foreach(IAstNode node in replSeq)
             {
-                var errors = node.CollectErrors();
+                var errors = node.CollectErrors<DiagnosticCode>();
                 Assert.AreEqual( 0, errors.Length );
 
                 var result = generator.Generate( node );

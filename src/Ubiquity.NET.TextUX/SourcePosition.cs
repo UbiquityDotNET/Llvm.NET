@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Ubiquity.NET.Runtime.Utils
+namespace Ubiquity.NET.TextUX
 {
     /// <summary>Represents a single point position in a source input</summary>
     /// <remarks>

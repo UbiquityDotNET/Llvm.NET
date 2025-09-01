@@ -21,7 +21,9 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_ARM, Architecture.Armv6.AsLLVMTarget() );
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_LoongArch, Architecture.LoongArch64.AsLLVMTarget() );
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_PowerPC, Architecture.Ppc64le.AsLLVMTarget() );
+#if NET9_0_OR_GREATER
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_RISCV, Architecture.RiscV64.AsLLVMTarget() );
+#endif
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_SystemZ, Architecture.S390x.AsLLVMTarget() );
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_WebAssembly, Architecture.Wasm.AsLLVMTarget() );
             Assert.AreEqual( LibLLVMCodeGenTarget.CodeGenTarget_X86, Architecture.X64.AsLLVMTarget() );

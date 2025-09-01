@@ -25,7 +25,11 @@ namespace Ubiquity.NET.Runtime.Utils
     /// may NOT be stored on the heap and MUST be passed via `ref readonly`.</para>
     /// </remarks>
     public interface IAstVisitor<out TResult, TArg>
+#if NET9_0_OR_GREATER
         where TArg : struct, allows ref struct
+#else
+        where TArg : struct
+#endif
     {
         /// <summary>Visits a given node to produce a result</summary>
         /// <param name="node">Node to visit</param>

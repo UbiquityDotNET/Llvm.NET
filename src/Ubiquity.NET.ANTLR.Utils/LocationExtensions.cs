@@ -7,6 +7,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Ubiquity.NET.ANTLR.Utils
 {

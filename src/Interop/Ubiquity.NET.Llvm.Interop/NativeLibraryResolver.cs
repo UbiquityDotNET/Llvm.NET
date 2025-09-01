@@ -19,11 +19,17 @@ namespace Ubiquity.NET.Llvm.Interop
             // has the module and the address of the symbol it replaces the P/Invoke in the same way that
             // native code replaces the thunk for a dllimport. That is, once the address of the exported symbol
             // is known, no further resolution is used.
+#if NET9_0_OR_GREATER
             if(Interlocked.CompareExchange( ref ResolverApplied, true, false ))
             {
                 return false;
             }
-
+#else
+            if(Interlocked.CompareExchange( ref ResolverAppliedObject, 1, 0 ) == 1)
+            {
+                return false;
+            }
+#endif
             NativeLibrary.SetDllImportResolver( Assembly.GetExecutingAssembly(), NativeLibResolver );
             return true;
         }
@@ -74,6 +80,14 @@ namespace Ubiquity.NET.Llvm.Interop
         }
 
         private static NativeLibraryHandle NativeLibHandle = new();
-        private static bool ResolverApplied = false;
+
+// .NET 9 adds support for Interlocked.CompareExchange() for a bool
+#if NET9_0_OR_GREATER
+        private static bool ResolverApplied;
+#else
+        private static bool ResolverApplied => ResolverAppliedObject != 0;
+
+        private static int ResolverAppliedObject = 0;
+#endif
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace Ubiquity.NET.Runtime.Utils
+namespace Ubiquity.NET.TextUX
 {
     // Line number of the starting line [1..n][0 = uninitialized/unknown]
     // Column position of the location [0..n-1]
@@ -46,14 +46,14 @@ namespace Ubiquity.NET.Runtime.Utils
         public override string ToString( )
         {
             // use runtime default formatting
-            return ToString("R", CultureInfo.CurrentCulture);
+            return ToString("G", CultureInfo.CurrentCulture);
         }
 
         /// <inheritdoc/>
         /// <remarks>
         /// Accepted format strings are:
         /// "B" for MSBuild format used for Windows build tools.
-        /// "R" for runtime specific [default "B" for Windows]
+        /// "G" for runtime specific (For Windows, this is the MSBuild format)
         /// [Format strings for other runtimes TBD]
         /// </remarks>
         public string ToString( string? format, IFormatProvider? formatProvider )
@@ -61,8 +61,8 @@ namespace Ubiquity.NET.Runtime.Utils
             formatProvider ??= CultureInfo.CurrentCulture;
             return format switch
             {
-                "B" => FormatMsBuild( formatProvider ),
-                "R" => FormatRuntime( formatProvider ),
+                "M" => FormatMsBuild( formatProvider ),
+                "G" => FormatRuntime( formatProvider ),
                 _ => ToString()
             };
         }

@@ -9,7 +9,7 @@ namespace Kaleidoscope.Grammar.AST
     {
         TResult? Visit( RootNode root );
 
-        TResult? Visit( ErrorNode errorNode );
+        TResult? Visit( ErrorNode<DiagnosticCode> errorNode );
 
         TResult? Visit( Prototype prototype );
 
@@ -35,11 +35,15 @@ namespace Kaleidoscope.Grammar.AST
     }
 
     public interface IKaleidoscopeAstVisitor<out TResult, TArg>
+#if NET9_0_OR_GREATER
         where TArg : struct, allows ref struct
+#else
+        where TArg : struct
+#endif
     {
         TResult? Visit( RootNode root, ref readonly TArg arg );
 
-        TResult? Visit( ErrorNode errorNode, ref readonly TArg arg );
+        TResult? Visit( ErrorNode<DiagnosticCode> errorNode, ref readonly TArg arg );
 
         TResult? Visit( Prototype prototype, ref readonly TArg arg );
 

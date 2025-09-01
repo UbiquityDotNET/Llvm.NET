@@ -2,9 +2,8 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
-using System.Linq;
 
-using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {
@@ -14,7 +13,7 @@ namespace Kaleidoscope.Grammar.ANTLR
         internal partial class PrototypeContext
         {
             public virtual IEnumerable<(string Name, int Index, SourceRange Span)> Parameters
-                => Enumerable.Empty<(string, int, SourceRange)>();
+                => [];
 
             public virtual string Name => string.Empty;
         }

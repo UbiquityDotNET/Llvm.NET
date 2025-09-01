@@ -21,7 +21,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// </remarks>
     public sealed class SymbolStringPoolEntry
         : IEquatable<SymbolStringPoolEntry>
+#if NET9_0_OR_GREATER
         , IEquatable<ReadOnlySpan<byte>>
+#endif
         , IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class from another entry (Add ref construction)</summary>

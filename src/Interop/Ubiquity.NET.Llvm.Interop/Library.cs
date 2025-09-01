@@ -56,6 +56,11 @@ namespace Ubiquity.NET.Llvm.Interop
 
             // Verify the version of LibLLVM.
             var libVersion = SemVer.Parse(LibLLVMGetVersion()?.ToString() ?? string.Empty, SemVerFormatProvider.CaseInsensitive);
+            if( libVersion is CSemVerCI semVerCI)
+            {
+                libVersion = semVerCI.BaseBuild;
+            }
+
             if( libVersion.Major != SupportedVersion.Major
              || libVersion.Minor != SupportedVersion.Minor
              || libVersion.Patch != SupportedVersion.Patch

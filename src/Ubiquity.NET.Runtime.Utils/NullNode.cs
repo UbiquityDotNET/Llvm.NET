@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
+using Ubiquity.NET.TextUX;
+
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Null Object pattern implementation for AST Nodes</summary>
@@ -25,7 +27,11 @@ namespace Ubiquity.NET.Runtime.Utils
 
         /// <inheritdoc/>
         public virtual TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TArg : struct, allows ref struct
+#if NET9_0_OR_GREATER
+        where TArg : struct, allows ref struct
+#else
+        where TArg : struct
+#endif
         {
             ArgumentNullException.ThrowIfNull( visitor );
             return default;

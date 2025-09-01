@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {

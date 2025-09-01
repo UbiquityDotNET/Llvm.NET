@@ -3,6 +3,8 @@
 
 using System;
 
+using Ubiquity.NET.TextUX;
+
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Enumeration to indicate the source of an error during parse</summary>
@@ -16,9 +18,11 @@ namespace Ubiquity.NET.Runtime.Utils
     }
 
     /// <summary>Parse technology independent abstraction of a syntax error from the lexer or parser</summary>
-    public class SyntaxError
+    /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
+    public class SyntaxError<T>
+        where T : struct, Enum
     {
-        /// <summary>Initializes a new instance of the <see cref="SyntaxError"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="SyntaxError{T}"/> class</summary>
         /// <param name="source">Source of the error</param>
         /// <param name="sourceFile">Source file this error was found in</param>
         /// <param name="id">ID of the error</param>
@@ -29,7 +33,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public SyntaxError(
             ParseErrorSource source,
             string sourceFile,
-            int id,
+            T id,
             string symbol,
             SourceRange location,
             string message,
@@ -59,7 +63,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public string Symbol { get; }
 
         /// <summary>Gets the ID of the error</summary>
-        public int Id { get; }
+        public T Id { get; }
 
         /// <summary>Gets the source location of the error in <see cref="SourceFile"/></summary>
         public SourceRange Location { get; }
@@ -73,7 +77,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <inheritdoc/>
         public override string ToString( )
         {
-            return $"{SourceFile}({Location}): error: {Source}{Id:D04} {Message}";
+            return $"{SourceFile}({Location}): error: {Source}{Id} {Message}";
         }
     }
 }

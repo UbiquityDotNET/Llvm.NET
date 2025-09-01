@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Ubiquity.NET.ANTLR.Utils;
-using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {

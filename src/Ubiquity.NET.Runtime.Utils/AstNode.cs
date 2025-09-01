@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.TextUX;
+
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Common abstract base implementation of <see cref="IAstNode"/></summary>
@@ -28,7 +30,11 @@ namespace Ubiquity.NET.Runtime.Utils
 
         /// <inheritdoc/>
         public abstract TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
-            where TArg : struct, allows ref struct;
+#if NET9_0_OR_GREATER
+        where TArg : struct, allows ref struct;
+#else
+        where TArg : struct;
+#endif
 
         /// <summary>Initializes a new instance of the <see cref="AstNode"/> class</summary>
         /// <param name="location">Location in the source this node represents</param>

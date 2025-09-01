@@ -7,13 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
+using Kaleidoscope.Grammar.AST;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Runtime
 {
     public abstract class KaleidoscopeReadEvaluatePrintLoopBase<T>
-        : REPLBase<T>
+        : REPLBase<T, DiagnosticCode>
     {
         public LanguageLevel LanguageFeatureLevel { get; }
 
@@ -39,12 +41,11 @@ namespace Kaleidoscope.Runtime
         }
 
         protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level )
-            : base()
+            : this(level, new ParseErrorDiagnosticAdapter<DiagnosticCode>(new ColoredConsoleReporter(), "KLS"))
         {
-            LanguageFeatureLevel = level;
         }
 
-        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
+        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter<DiagnosticCode> logger )
             : base( logger )
         {
             LanguageFeatureLevel = level;

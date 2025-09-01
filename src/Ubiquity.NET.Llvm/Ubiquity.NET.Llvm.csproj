@@ -1,59 +1,60 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>portable</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
-    <SignAssembly>False</SignAssembly>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <IsAotCompatible>True</IsAotCompatible>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>13</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
+        <SignAssembly>False</SignAssembly>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+        <IsAotCompatible>True</IsAotCompatible>
 
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <MinClientVersion>4.0</MinClientVersion>
-    <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>.NET Bindings for LLVM</Description>
-    <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
-    <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
-    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-  </PropertyGroup>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <MinClientVersion>4.0</MinClientVersion>
+        <Authors>.NET Foundation,LLVM.org,Ubiquity.NET</Authors>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>.NET Bindings for LLVM</Description>
+        <PackageTags>LLVM,Compiler,JIT,Ubiquity.NET</PackageTags>
+        <PackageProjectUrl>https://github.com/UbiquityDotNET/Llvm.NET</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/UbiquityDotNET/Llvm.NET.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
+        <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="ReadMe.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="ReadMe.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Transforms\InterproceduralTransforms.cs" />
-    <Compile Remove="Transforms\Sanitizers.cs" />
-    <Compile Remove="Transforms\ScalarTransforms.cs" />
-    <Compile Remove="Transforms\VectorTransforms.cs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Transforms\InterproceduralTransforms.cs" />
+        <Compile Remove="Transforms\Sanitizers.cs" />
+        <Compile Remove="Transforms\ScalarTransforms.cs" />
+        <Compile Remove="Transforms\VectorTransforms.cs" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
-    <ProjectReference Include="..\ReferenceEqualityVerifier\ReferenceEqualityVerifier\ReferenceEqualityVerifier.csproj">
-        <PrivateAssets>all</PrivateAssets>
-        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-        <OutputItemType>Analyzer</OutputItemType>
-    </ProjectReference>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
+        <ProjectReference Include="..\ReferenceEqualityVerifier\ReferenceEqualityVerifier\ReferenceEqualityVerifier.csproj">
+            <PrivateAssets>all</PrivateAssets>
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+            <OutputItemType>Analyzer</OutputItemType>
+        </ProjectReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 </Project>

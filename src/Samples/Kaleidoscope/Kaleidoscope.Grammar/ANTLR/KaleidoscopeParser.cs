@@ -5,6 +5,8 @@ using System;
 
 using Antlr4.Runtime;
 
+using Kaleidoscope.Grammar.AST;
+
 using Ubiquity.NET.ANTLR.Utils;
 using Ubiquity.NET.Runtime.Utils;
 
@@ -15,7 +17,12 @@ namespace Kaleidoscope.Grammar.ANTLR
     // so that labels in the grammar are unnecessary.
     internal partial class KaleidoscopeParser
     {
-        public KaleidoscopeParser( ITokenStream tokenStream, DynamicRuntimeState globalState, IParseErrorListener? errorListener, bool useDiagnosticListener = false )
+        public KaleidoscopeParser(
+            ITokenStream tokenStream,
+            DynamicRuntimeState globalState,
+            IParseErrorListener<DiagnosticCode>? errorListener,
+            bool useDiagnosticListener = false
+            )
             : this( tokenStream )
         {
             ArgumentNullException.ThrowIfNull( globalState );
@@ -24,7 +31,7 @@ namespace Kaleidoscope.Grammar.ANTLR
             if(errorListener != null)
             {
                 RemoveErrorListeners();
-                AddErrorListener( new ParseErrorListenerAdapter( errorListener ) );
+                AddErrorListener( new AntlrParseErrorListenerAdapter<DiagnosticCode>( errorListener ) );
             }
 
             if(globalState.LanguageLevel >= LanguageLevel.UserDefinedOperators)

@@ -23,15 +23,29 @@ namespace Ubiquity.NET.Llvm
         [SuppressMessage( "Design", "CA1063:Implement IDisposable Correctly", Justification = "This guarantees dispose is idempotent, and therefore superior to the official pattern" )]
         public void Dispose( )
         {
+#if NET9_0_OR_GREATER
             if(!Interlocked.Exchange( ref IsDisposed_, true ))
             {
                 Dispose( true );
                 GC.SuppressFinalize( this );
             }
+#else
+            if(Interlocked.CompareExchange( ref IsDisposed_, 1, 0 ) == 0)
+            {
+                Dispose( true );
+                GC.SuppressFinalize( this );
+            }
+#endif
         }
 
+// .NET 9 adds support for Interlocked.CompareExchange() for a bool
+#if NET9_0_OR_GREATER
         /// <summary>Gets a value indicating whether the object is disposed or not</summary>
         public bool IsDisposed => IsDisposed_;
+#else
+        /// <summary>Gets a value indicating whether the object is disposed or not</summary>
+        public bool IsDisposed => IsDisposed_ != 0;
+#endif
 
         /// <summary>Abstract method that is implemented by derived types to perform the dispose operation</summary>
         /// <param name="disposing">Indicates if this is a dispose or finalize operation</param>
@@ -45,8 +59,16 @@ namespace Ubiquity.NET.Llvm
         {
         }
 
+// .NET 9 adds support for Interlocked.CompareExchange() for a bool
+#if NET9_0_OR_GREATER
         // do not write directly to this field, it should only be done with interlocked calls in Dispose() to ensure correct behavior
         [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Indicates the field should never be directly written to" )]
+        [SuppressMessage( "Style", "IDE0044:Add readonly modifier", Justification = "Modified by Interlocked expression" )]
         private bool IsDisposed_;
+#else
+        [SuppressMessage( "StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Indicates the field should never be directly written to" )]
+        [SuppressMessage( "Style", "IDE0044:Add readonly modifier", Justification = "Modified by Interlocked expression" )]
+        private int IsDisposed_ = 0;
+#endif
     }
 }
