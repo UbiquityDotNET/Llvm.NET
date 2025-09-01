@@ -47,18 +47,20 @@ try
 
     # ensure the samples run - output not validated but they need to compile and run without crashing
     Write-Information 'Running sample apps for .NET Core'
-    Push-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\CodeGenWithDebugInfo\Release\net9.0')
+    $sampleTFM = "net8.0"
+    Push-Location (Join-path $buildInfo['BuildOutputPath'] 'bin' 'CodeGenWithDebugInfo' 'Release' $sampleTFM)
     try
     {
         $testGenOutputPath = Join-Path $buildInfo['TestResultsPath'] 'M3'
-        Write-Information "CodeGenWithDebugInfo M3 'Support Files\test.c' $testGenOutputPath"
-        Invoke-External dotnet CodeGenWithDebugInfo.dll M3 'Support Files\test.c' $testGenOutputPath
+        $testFileRelativePath = Join-Path 'Support Files' 'test.c'
+        Write-Information "CodeGenWithDebugInfo M3 '$testFileRelativePath' $testGenOutputPath"
+        Invoke-External dotnet CodeGenWithDebugInfo.dll M3 $testFileRelativePath $testGenOutputPath
 
         $testGenOutputPath = Join-Path $buildInfo['TestResultsPath'] 'X64'
-        Write-Information "CodeGenWithDebugInfo X64 'Support Files\test.c' $testGenOutputPath"
-        Invoke-External dotnet CodeGenWithDebugInfo.dll X64 'Support Files\test.c' $testGenOutputPath
+        Write-Information "CodeGenWithDebugInfo X64 '$testFileRelativePath' $testGenOutputPath"
+        Invoke-External dotnet CodeGenWithDebugInfo.dll X64 $testFileRelativePath $testGenOutputPath
 
-        Set-Location (Join-path $buildInfo['BuildOutputPath'] 'bin\OrcV2VeryLazy\Release\net9.0')
+        Set-Location (Join-path $buildInfo['BuildOutputPath'] 'bin' 'OrcV2VeryLazy' 'Release' $sampleTFM)
         Invoke-External dotnet OrcV2VeryLazy.dll
     }
     finally

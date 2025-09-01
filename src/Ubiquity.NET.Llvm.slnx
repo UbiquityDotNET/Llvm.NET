@@ -23,7 +23,7 @@
     <File Path="../global.json" />
     <File Path="../GOVERNANCE.md" />
     <File Path="../IgnoredWords.dic" />
-    <File Path="../Invoke-UnitTests.ps1" />
+    <File Path="../Invoke-Tests.ps1" />
     <File Path="../LICENSE.md" />
     <File Path="../NuGet.Config" />
     <File Path="../README.md" />
