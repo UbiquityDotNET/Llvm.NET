@@ -11,7 +11,7 @@ multiple other Ubiquity.NET projects.
 * MustUseReturnValueAttribute that is compatible with the [MustUseRetVal](https://github.com/mykolav/must-use-ret-val-fs)
   package.
 * StringNormalizer extensions to support converting line endings of strings
-  for interoperability.
+  for interoperability across OS platforms and compatibility with "on disk" representations.
 * A custom ValidatedNotNullAttribute to allow compiler to assume a parameter
   value is validated as not null.
 * Fluent style parameter value validation extensions.
@@ -20,9 +20,9 @@ multiple other Ubiquity.NET projects.
       expressions to validate input parameters.
 * DictionaryBuilder to enable dictionary initializer style initialization of
   `ImmutableDictionary<TKey, TValue>` with significantly reduced overhead.
-    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build the dictionary.
-      When the `ToImmutable()` method is called the builder is converted to the immutable state without any
-      overhead of a copy or re-construction of hash tables etc...
+    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build the
+      dictionary. When the `ToImmutable()` method is called the builder is converted to the
+      immutable state without any overhead of a copy or re-construction of hash tables etc...
 * KvpArrayBuilder to enable array initializer style initialization of
   `ImmutableArray<KeyValuePair<TKey, TValue>>` with significantly reduced overhead.
     - This leverages an `ImmutableArray<T>.Builder` under the hood to build the array directly.
@@ -30,3 +30,17 @@ multiple other Ubiquity.NET projects.
       overhead of a copy.
     - Since this is an array and not a dictionary there is no overhead for allocating, initializing or copying
       any hash mapping for the keys.
+
+## Fluent Validation
+The library includes extensions that support fluent validation to allow use in property
+accessors and constructors that forward values to a base or another constructor. This is
+normally used when the value itself isn't passed on but some transformed value is.
+
+* `ThrowIfNull()`
+* `ThrowIfOutOfRange()`
+* `ThrowIfNotDefined()`
+
+## PolyFill
+|Fully Qualified Name| Framework requirements |
+|--------------------|-------------|
+|System.Diagnostics.CodeAnalysis.StringSyntaxAttribute`| Target framework is .NET 7 or less. |

@@ -3,10 +3,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
 {
     /// <summary>Interpolated string handler for an <see cref="IDiagnosticReporter"/></summary>
     /// <remarks>
@@ -16,7 +17,7 @@ namespace Ubiquity.NET.TextUX
     /// one [Limit of how Handlers work in .NET]). The limitation of the first is further restricted to the
     /// first "thing" interpolated including a string literal. Thus, the parameterized elements are not generated
     /// if the channel isn't enabled unless the element is the first thing in the interpolated string. In that
-    /// case only the first entry is evaluated.</para>
+    /// case only, the first entry is evaluated.</para>
     /// <note type="important">
     /// Apps should NOT depend on the subtleties of interpolated parameter evaluation to guarantee invocation
     /// (or not) of side effects. This is a "best-effort" optimization. In particular, apps should assume that
@@ -35,13 +36,28 @@ namespace Ubiquity.NET.TextUX
         /// <param name="formattedCount">Sadly .NET doesn't document this, or much else in relation to interpolated string handlers</param>
         /// <param name="reporter">"this" reference for the reporter. (Mapped via InterpolatedStringHandlerArgument applied to method)</param>
         /// <param name="level">Reporting level parameter to report for. (Mapped via InterpolatedStringHandlerArgument applied to method)</param>
-        public DiagnosticReporterInterpolatedStringHandler( int literalLength, int formattedCount, IDiagnosticReporter reporter, MsgLevel level )
+        /// <param name="formatProvider">Format provider</param>
+        /// <remarks>
+        /// The <paramref name="reporter"/> may not have the level enabled. This is used to ONLY process the interpolated string
+        /// if the reporter has the level enabled. Thus, it may produce NO message at all if not enabled.
+        /// </remarks>
+        public DiagnosticReporterInterpolatedStringHandler(
+            int literalLength,
+            int formattedCount,
+            IDiagnosticReporter reporter,
+            MsgLevel level,
+            IFormatProvider? formatProvider = null
+            )
         {
+            FormatProvider = formatProvider ?? CultureInfo.CurrentCulture;
             Builder = reporter.IsEnabled( level ) ? new( literalLength ) : null;
         }
 
         /// <summary>Gets a value indicating whether this handler is enabled</summary>
         public bool IsEnabled => Builder is not null;
+
+        /// <summary>Gets the format provider used by this interpolated string handler</summary>
+        public IFormatProvider FormatProvider { get; }
 
         /// <summary>Appends a literal value to the results of interpolating a string</summary>
         /// <param name="s">literal value to append</param>
@@ -97,7 +113,7 @@ namespace Ubiquity.NET.TextUX
                 return false;
             }
 
-            Builder?.Append( t?.ToString( format, null ) );
+            Builder?.Append( t?.ToString( format, FormatProvider ) );
             return true;
         }
 

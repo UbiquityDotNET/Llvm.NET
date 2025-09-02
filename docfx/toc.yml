@@ -21,3 +21,5 @@
       href: TextUX/index.md
     - name: Interop Helpers
       href: interop-helpers/index.md
+    - name: CommandLine Parsing
+      href: CommandLine/index.md

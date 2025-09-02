@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+        <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
+        <LangVersion>preview</LangVersion>
         <Nullable>enable</Nullable>
-        <LangVersion>13</LangVersion>
+
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <SignAssembly>False</SignAssembly>
         <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
