@@ -25,7 +25,6 @@ namespace Ubiquity.NET.Extensions
         /// <returns><paramref name="obj"/></returns>
         /// <exception cref="ArgumentNullException"><paramref name="obj"/> is <see langword="null"/></exception>
         public static T ThrowIfNull<T>( [NotNull] this T? obj, [CallerArgumentExpression( nameof( obj ) )] string? exp = null )
-            where T : class
         {
             ArgumentNullException.ThrowIfNull( obj, exp );
 
@@ -63,11 +62,7 @@ namespace Ubiquity.NET.Extensions
         public static T ThrowIfNotDefined<T>( this T self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, Enum
         {
-#if NET5_0_OR_GREATER
             return Enum.IsDefined<T>( self ) ? self : throw new InvalidEnumArgumentException( exp );
-#else
-            return Enum.IsDefined(typeof(T), self) ? self : throw new InvalidEnumArgumentException( exp );
-#endif
         }
     }
 }

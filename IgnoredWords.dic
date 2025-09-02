@@ -58,6 +58,7 @@ Enums
 env
 exe
 facepalm
+fallback
 finalizer
 finalizers
 foo
@@ -74,6 +75,7 @@ inline
 inlined
 inlining
 Interop
+ints
 jit
 len
 Lexer
@@ -105,6 +107,8 @@ pages
 paren
 perf
 pointee
+polyfills
+pragma
 pragmas
 Pre
 proj
@@ -149,6 +153,7 @@ userdefinedop
 Users
 usings
 utils
+validator
 varargs
 variadic
 vcxproj

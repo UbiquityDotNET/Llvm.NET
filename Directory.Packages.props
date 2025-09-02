@@ -26,7 +26,9 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.14.0" />
     <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.2" />
     <PackageVersion Include="PolySharp" Version="1.15.0" />
+    <PackageVersion Include="System.Buffers" Version="4.6.1" />
     <PackageVersion Include="System.Collections.Immutable" Version="9.0.8" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.0-beta7.25380.108" />
     <PackageVersion Include="System.IO.Hashing" Version="9.0.8" />
     <!-- Workaround(2): https://github.com/dotnet/roslyn-sdk/issues/1191 -->
     <PackageVersion Include="System.Formats.Asn1" Version="9.0.7" />

@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+using Ubiquity.NET.TextUX.InterpolatedStringHandlers;
+
 namespace Ubiquity.NET.TextUX
 {
     /// <summary>Interface for UX message reporting</summary>

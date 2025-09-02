@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\Ubiquity.NET.CommandLine\Ubiquity.NET.CommandLine.csproj" />
         <ProjectReference Include="..\Kaleidoscope.Grammar\Kaleidoscope.Grammar.csproj" />
         <ProjectReference Include="..\Kaleidoscope.Runtime\Kaleidoscope.Runtime.csproj" />
     </ItemGroup>

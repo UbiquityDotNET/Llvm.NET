@@ -8,6 +8,7 @@ using System.IO;
 using Kaleidoscope.Grammar;
 using Kaleidoscope.Grammar.AST;
 
+using Ubiquity.NET.CommandLine;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Runtime.Utils;
 using Ubiquity.NET.TextUX;
@@ -29,11 +30,15 @@ namespace Kaleidoscope.Chapter9
         [SuppressMessage( "Design", "CA1062:Validate arguments of public methods", Justification = "Provided by Platform" )]
         public static int Main( string[] args )
         {
-            (string sourceFilePath, int exitCode) = ProcessArgs( args );
-            if(exitCode != 0)
+            var reporter = new ColoredConsoleReporter(MsgLevel.Information);
+            if(!ArgsParsing.TryParse<Options>( args, reporter, out Options? options, out int exitCode ))
             {
                 return exitCode;
             }
+
+            // TODO: Reset Command line option to support reporting level from command line (if different)
+
+            string sourceFilePath = options.SourcePath.FullName;
 
             string objFilePath = Path.ChangeExtension( sourceFilePath, ".o" );
             string irFilePath = Path.ChangeExtension( sourceFilePath, ".ll" );
@@ -51,7 +56,8 @@ namespace Kaleidoscope.Chapter9
             Console.WriteLine( "Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}", parser.LanguageLevel );
             Console.WriteLine( "Compiling {0}", sourceFilePath );
 
-            var errorLogger = new ParseErrorDiagnosticAdapter<DiagnosticCode>(new ColoredConsoleReporter(), "KLS", new Uri(sourceFilePath) );
+            // Create adapter to route parse messages for the Kaleidoscope language to the command line reporter for this app
+            var errorLogger = new ParseErrorDiagnosticAdapter<DiagnosticCode>(reporter, "KLS", new Uri(sourceFilePath) );
 
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );
@@ -89,38 +95,6 @@ namespace Kaleidoscope.Chapter9
             }
 
             return 0;
-        }
-        #endregion
-
-        #region ProcessArgs
-
-        // really simple command line handling, just loops through the input arguments
-        private static (string SourceFilePath, int ExitCode) ProcessArgs( string[] args )
-        {
-            string sourceFilePath = string.Empty;
-            foreach(string arg in args)
-            {
-                if(!string.IsNullOrWhiteSpace( sourceFilePath ))
-                {
-                    Console.Error.WriteLine( "Source path already provided, unrecognized option: '{0}'", arg );
-                }
-
-                sourceFilePath = Path.GetFullPath( arg );
-            }
-
-            if(string.IsNullOrWhiteSpace( sourceFilePath ))
-            {
-                Console.Error.WriteLine( "Missing source file name!" );
-                return (string.Empty, -1);
-            }
-
-            if(!File.Exists( sourceFilePath ))
-            {
-                Console.Error.WriteLine( "Source file '{0}' - not found!", sourceFilePath );
-                return (string.Empty, -2);
-            }
-
-            return (sourceFilePath, 0);
         }
         #endregion
     }
