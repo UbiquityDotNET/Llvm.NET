@@ -63,6 +63,18 @@
                 }
             ],
             "dest": "interop-helpers/api"
+        },
+        {
+            // TextUX  library
+            "memberLayout":"separatePages",
+            "namespaceLayout":"nested",
+            "src": [
+                {
+                    "src": "../src/Ubiquity.NET.TextUX",
+                    "files": ["**.csproj"]
+                }
+            ],
+            "dest": "TextUX/api"
         }
     ],
     "build": {
@@ -148,6 +160,18 @@
                 // InteropHelpers project additional content, Includes the generated metadata API folder
                 "files": [
                     "interop-helpers/**.{md,yml}"
+                ],
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // TextUX project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "TextUX/**.{md,yml}"
                 ],
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [

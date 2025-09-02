@@ -18,6 +18,17 @@ namespace Ubiquity.NET.TextUX
         {
         }
 
+        /// <remarks>
+        /// This implementation will apply ANSI color code sequences to each message based on <paramref name="level"/>.
+        /// The colors are:
+        /// <list type="table">
+        /// <listheader><term>Level</term><description>Description</description></listheader>
+        /// <item><term><see cref="MsgLevel.Verbose"/></term><description> Default console color</description></item>
+        /// <item><term><see cref="MsgLevel.Information"/></term><description> Blue</description></item>
+        /// <item><term><see cref="MsgLevel.Warning"/></term><description> Yellow</description></item>
+        /// <item><term><see cref="MsgLevel.Error"/></term><description> Red</description></item>
+        /// </list>
+        /// </remarks>
         /// <inheritdoc/>
         protected override void ReportMessage( MsgLevel level, string msg )
         {
