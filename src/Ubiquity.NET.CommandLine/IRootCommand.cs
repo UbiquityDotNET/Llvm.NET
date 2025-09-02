@@ -18,7 +18,7 @@ namespace Ubiquity.NET.CommandLine
         /// <summary>Binds the results of the parse to a new instance of <typeparamref name="T"/></summary>
         /// <param name="parseResult">Results of the parse to bind</param>
         /// <returns>Newly constructed instance of <typeparamref name="T"/> with properties bound from <paramref name="parseResult"/></returns>
-        /// <exception cref="InvalidOperationException">Thrown when required argument or option was not parsed or has no default value configured.</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown when required argument or option was not parsed or has no default value configured.</exception>
         public static abstract T Bind( ParseResult parseResult );
 
         /// <summary>Builds a new <see cref="AppControlledDefaultsRootCommand"/> for parsing the command line</summary>

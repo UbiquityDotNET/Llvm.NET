@@ -64,7 +64,7 @@ namespace Ubiquity.NET.CommandLine
         /// <param name="self">Option to add the validation to</param>
         /// <returns><paramref name="self"/> for fluent use</returns>
         /// <remarks>
-        /// This is similar to <see cref="ArgumentValidation.AcceptExistingOnly{T}(Option{T})"/>
+        /// This is similar to <see cref="ArgumentValidation.AcceptExistingOnly{T}(Argument{T})"/>
         /// but it is constrained to specifically files AND enhances the error message to
         /// provide more details to aid user in correcting the problem.
         /// </remarks>

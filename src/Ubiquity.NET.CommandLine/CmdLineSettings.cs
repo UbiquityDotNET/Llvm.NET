@@ -35,7 +35,7 @@ namespace Ubiquity.NET.CommandLine
         /// <summary>Include support for <see cref="DiagramDirective"/></summary>
         Diagram,
 
-        /// <summary>Include support for <see cref="EnvironmentVariablesDirective"</summary>
+        /// <summary>Include support for <see cref="EnvironmentVariablesDirective"/></summary>
         EnvironmentVariables,
     }
 

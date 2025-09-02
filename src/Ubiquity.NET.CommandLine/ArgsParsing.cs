@@ -75,8 +75,8 @@ namespace Ubiquity.NET.CommandLine
                 // Find the options and only invoke the results action if it is one of the option's.
                 // Sadly, there is no other way to provide the invocation configuration besides the
                 // Invoke method on the results type.
-                var helpOption = parseResult.HelpOption;
-                var versionOption = parseResult.VersionOption;
+                var helpOption = parseResult.GetHelpOption();
+                var versionOption = parseResult.GetVersionOption();
                 if((helpOption?.Action != null && parseResult.Action == helpOption.Action)
                  || (versionOption?.Action != null && parseResult.Action == versionOption.Action)
                  )
@@ -98,7 +98,7 @@ namespace Ubiquity.NET.CommandLine
         /// <returns><see langword="true"/> if errors found and <see langword="false"/> if not</returns>
         public static bool ReportErrors( this ParseResult parseResult, IDiagnosticReporter diagnosticReporter )
         {
-            if(parseResult.HasErrors)
+            if(parseResult.HasErrors())
             {
                 foreach(var err in parseResult.Errors)
                 {
