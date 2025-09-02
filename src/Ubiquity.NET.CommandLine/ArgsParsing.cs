@@ -185,21 +185,21 @@ namespace Ubiquity.NET.CommandLine
             return true;
         }
 
-        /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T)"/>
+        /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)"/>
         public static bool TryParse<T>( string[] args, CmdLineSettings settings, [MaybeNullWhen( false )] out T boundValue, out int exitCode )
             where T : IRootCommand<T>
         {
             return TryParse<T>( args, settings, new ConsoleReporter( MsgLevel.Information ), out boundValue, out exitCode );
         }
 
-        /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T)"/>
+        /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)"/>
         public static bool TryParse<T>( string[] args, [MaybeNullWhen( false )] out T boundValue, out int exitCode )
             where T : IRootCommand<T>
         {
             return TryParse<T>( args, settings: null, new ConsoleReporter( MsgLevel.Information ), out boundValue, out exitCode );
         }
 
-        /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T)"/>
+        /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)"/>
         public static bool TryParse<T>( string[] args, IDiagnosticReporter diagnosticReporter, [MaybeNullWhen( false )] out T boundValue, out int exitCode )
             where T : IRootCommand<T>
         {
