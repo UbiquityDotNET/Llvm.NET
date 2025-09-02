@@ -55,6 +55,12 @@
     <!-- Explicitly call out the non-generated files in the API folder-->
     <None Include="interop-helpers/api/index.md" />
   </ItemGroup>
+  <ItemGroup>
+    <!--Everything in the TextUX sub-folders except the API folder as that contains generated files -->
+    <None Include="TextUX/**" Exclude="TextUX/api/**" />
+    <!-- Explicitly call out the non-generated files in the API folder-->
+    <None Include="TextUX/api/index.md" />
+  </ItemGroup>
   <Target Name="AlwaysRun" BeforeTargets="AfterBuild">
     <Message Importance="High" Text="NOTE: Building $(MSBuildProjectFile) does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files" />
   </Target>

@@ -14,4 +14,5 @@ included.
 | [Ubiquity.NET.Runtime.Utils](runtime-utils/index.md) | This library contains common support for DSL runtime and language implementors |
 | [Ubiquity.NET.Extensions](extensions/index.md) | This library contains general extensions and helpers for many scenarios using .NET |
 | [Ubiquity.NET.Antlr.Utils](antlr-utils/index.md) | This library contains extensions and helpers for using ANTLR with .NET |
+| [Ubiquity.NET.TextUX](TextUX/index.md) | This library contains extensions and helpers for Text User eXperience (UX) applications (console) |
 | [Ubiquity.NET.InteropHelpers](interop-helpers/index.md) | This library contains extensions and helpers for implementing interop support for native libraries |

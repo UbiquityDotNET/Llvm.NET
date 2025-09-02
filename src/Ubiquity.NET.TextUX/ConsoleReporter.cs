@@ -2,15 +2,14 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
-using System.Globalization;
 using System.Text;
 
 namespace Ubiquity.NET.TextUX
 {
     /// <summary>Implementation of <see cref="IDiagnosticReporter"/> that reports messages to <see cref="Console"/></summary>
     /// <remarks>
-    /// <see cref="MsgLevel.Error"/> is reported to <see cref="Console.Error"/> while other levels, if
-    /// enabled, are reported to <see cref="Console.Out"/>
+    /// Messages with a <see cref="DiagnosticMessage.Level"/> of <see cref="MsgLevel.Error"/> are reported to the console's <see cref="Console.Error"/>
+    /// writer, while other levels, if enabled, are reported to the console's <see cref="Console.Out"/> writer.
     /// </remarks>
     public class ConsoleReporter
         : IDiagnosticReporter
@@ -34,7 +33,9 @@ namespace Ubiquity.NET.TextUX
 
         /// <inheritdoc/>
         /// <remarks>
-        /// This implementation currently ignores the source of any diagnostics
+        /// This implementation will test if the <see cref="DiagnosticMessage.Level"/> of the
+        /// message is enabled. If so, then a call is made to the virtual <see cref="ReportMessage(MsgLevel, string)"/>
+        /// with the results of <see cref="DiagnosticMessage.ToString()"/> as the message text.
         /// </remarks>
         public void Report( DiagnosticMessage diagnostic )
         {
@@ -43,7 +44,7 @@ namespace Ubiquity.NET.TextUX
                 return;
             }
 
-            ReportMessage(diagnostic.Level, diagnostic.ToString("G", CultureInfo.CurrentCulture));
+            ReportMessage(diagnostic.Level, diagnostic.ToString());
         }
 
         /// <summary>Virtual method to report a message formatted as a string</summary>
@@ -51,8 +52,8 @@ namespace Ubiquity.NET.TextUX
         /// <param name="msg">Message formatted as a string</param>
         /// <remarks>
         /// The default base implementation will simply redirect messages based on <paramref name="level"/> to
-        /// <see cref="Console.Error"/> if <paramref name="level"/> == <see cref="MsgLevel.Error"/> or <see cref="Console.Out"/>
-        /// for any other levels.
+        /// the console's <see cref="Console.Error"/> writer if <paramref name="level"/> == <see cref="MsgLevel.Error"/>
+        /// otherwise the <see cref="Console.Out"/> writer is used.
         /// </remarks>
         /// <exception cref="InvalidOperationException">Invalid/Unknown level - should never hit this, internal error if it does.</exception>
         protected virtual void ReportMessage(MsgLevel level, string msg)

@@ -35,7 +35,7 @@ namespace Ubiquity.NET.TextUX
         public required SourcePosition End { get; init; }
 
         /// <summary>Gets a value indicating whether this instance can slice an input</summary>
-        /// <remarks>Attempts to slice an input when this is <see langword="false"/></remarks>
+        /// <remarks>Attempts to slice an input when this is <see langword="false"/> result in an empty string.</remarks>
         public bool CanSlice => Start.Index.HasValue && End.Index.HasValue;
 
         /// <summary>Gets the length of the range in characters if available</summary>
@@ -72,7 +72,10 @@ namespace Ubiquity.NET.TextUX
         /// <returns>slice representing the characters of this range</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the start or end of the range is not in range of the input source (&lt;0 or &gt;=Length)</exception>
         /// <remarks>
-        /// If <see cref="CanSlice"/> is <see langword="false"/> then this returns an empty span. (i.e., does not throw)
+        /// If <see cref="CanSlice"/> is <see langword="false"/> then this returns an empty span. (i.e., does not throw).
+        /// Slicing is only possible if BOTH the <see cref="Start"/> and <see cref="End"/> have an <see cref="SourcePosition.Index"/> value as
+        /// it is the index that is used to mark the start and end of the slice. Since various text sources track line positions uniquely
+        /// they are not reliable for slicing the source.
         /// </remarks>
         public ReadOnlySpan<char> Slice(ReadOnlySpan<char> source)
         {
