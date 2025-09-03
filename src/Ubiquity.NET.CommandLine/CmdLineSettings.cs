@@ -53,8 +53,14 @@ namespace Ubiquity.NET.CommandLine
     /// </remarks>
     public class CmdLineSettings
     {
+        /// <summary>Gets a value indicating whether errors reported should also show the help message [Default: <see langword="true"/>]</summary>
+        public bool ShowHelpOnErrors { get; init; } = true;
+
+        /// <summary>Gets a value indicating whether errors reported should also show Typo corrections [Default: <see langword="true"/>]</summary>
+        public bool ShowTypoCorrections { get; init; } = true;
+
         /// <inheritdoc cref="ParserConfiguration.EnablePosixBundling"/>
-        public bool EnablePosixBundling { get; set; } = true;
+        public bool EnablePosixBundling { get; init; } = true;
 
         /// <summary>Gets a value that indicates the default options to include</summary>
         /// <remarks>

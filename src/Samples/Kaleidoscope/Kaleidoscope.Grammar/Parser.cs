@@ -58,13 +58,13 @@ namespace Kaleidoscope.Grammar
         public DynamicRuntimeState GlobalState { get; }
 
         /// <inheritdoc/>
-        public IAstNode Parse( string txt )
+        public IAstNode? Parse( string txt )
         {
             return Parse( (txt ?? string.Empty).ToCharArray(), ParseMode.ReplLoop );
         }
 
         /// <inheritdoc/>
-        public IAstNode Parse( TextReader reader )
+        public IAstNode? Parse( TextReader reader )
         {
             ArgumentNullException.ThrowIfNull( reader );
             return Parse( reader.ReadToEnd().ToCharArray(), ParseMode.FullSource );
@@ -80,7 +80,7 @@ namespace Kaleidoscope.Grammar
             FullSource
         }
 
-        private IAstNode Parse( char[] input, ParseMode mode )
+        private IAstNode? Parse( char[] input, ParseMode mode )
         {
             try
             {

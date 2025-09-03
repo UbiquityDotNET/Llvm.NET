@@ -3,7 +3,7 @@
 
 using System.IO;
 
-namespace Kaleidoscope
+namespace Kaleidoscope.Chapter8
 {
     /// <summary>Command line options for this application</summary>
     internal partial class Options
