@@ -15,6 +15,10 @@ using Ubiquity.NET.TextUX;
 
 using static Ubiquity.NET.Llvm.Library;
 
+// error CA1506: 'Main' is coupled with '41' different types from '15' different namespaces...
+// Total BS. Maybe at the IL level, but hardly true at the source level
+#pragma warning disable CA1506
+
 namespace Kaleidoscope.Chapter8
 {
     public static class Program
@@ -44,7 +48,6 @@ namespace Kaleidoscope.Chapter8
             string irFilePath = Path.ChangeExtension( sourceFilePath, ".ll" );
             string asmPath = Path.ChangeExtension( sourceFilePath, ".s" );
 
-            using var rdr = File.OpenText( sourceFilePath );
             using var libLLVM = InitializeLLVM( );
             libLLVM.RegisterTarget( CodeGenTarget.Native );
 
@@ -61,7 +64,7 @@ namespace Kaleidoscope.Chapter8
 
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );
-            var ast = parser.Parse( rdr );
+            var ast = parser.ParseFrom( sourceFilePath );
             if(!errorLogger.CheckAndReportParseErrors( ast ))
             {
                 Module? module = generator.Generate( ast );

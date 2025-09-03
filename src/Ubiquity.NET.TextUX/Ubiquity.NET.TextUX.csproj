@@ -32,4 +32,8 @@
         <PackageReference Include="AnsiCodes" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -54,7 +54,7 @@ namespace Ubiquity.NET.TextUX
             get;
             init
             {
-                ArgumentException.ThrowIfNullOrWhiteSpace( value );
+                ArgumentNullException.ThrowIfNull( value );
                 field = value;
             }
         }
@@ -87,6 +87,11 @@ namespace Ubiquity.NET.TextUX
 
         private string FormatMsBuild(IFormatProvider formatProvider)
         {
+            if(Origin is null || string.IsNullOrWhiteSpace(Origin.AbsoluteUri))
+            {
+                return Text;
+            }
+
             string locString = string.Empty;
             if(Location is not null)
             {

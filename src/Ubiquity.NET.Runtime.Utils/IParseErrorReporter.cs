@@ -2,6 +2,7 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
@@ -33,10 +34,15 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <param name="self">Reporter to use for any errors found</param>
         /// <param name="node">Node to find errors from</param>
         /// <returns><see langword="true"/> if any errors were found; <see langword="false"/> if not</returns>
-        public static bool CheckAndReportParseErrors<T>( this IParseErrorReporter<T> self, IAstNode node )
+        public static bool CheckAndReportParseErrors<T>( this IParseErrorReporter<T> self, [NotNullWhen(false)] IAstNode? node )
             where T : struct, Enum
         {
             ArgumentNullException.ThrowIfNull( self );
+
+            if(node is null)
+            {
+                return true;
+            }
 
             var errors = node.CollectErrors<T>( );
             if(errors.Length == 0)

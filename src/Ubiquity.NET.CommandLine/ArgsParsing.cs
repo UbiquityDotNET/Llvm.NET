@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
 using System.CommandLine;
 using System.CommandLine.Help;
+using System.CommandLine.Invocation;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -21,7 +21,7 @@ namespace Ubiquity.NET.CommandLine
     public static class ArgsParsing
     {
         /// <summary>Parses the command line</summary>
-        /// <typeparam name="T">Type of value to bind the results to [Must implement <see cref="IRootCommand{T}"/>]</typeparam>
+        /// <typeparam name="T">Type of value to bind the results to [Must implement <see cref="ICommandLineOptions{T}"/>]</typeparam>
         /// <param name="args">args array for the command line</param>
         /// <param name="settings">Settings for the parse</param>
         /// <returns>Results of the parse</returns>
@@ -55,7 +55,7 @@ namespace Ubiquity.NET.CommandLine
         /// </remarks>
         /// <seealso href="https://github.com/dotnet/command-line-api/issues/2659"/>
         public static ParseResult Parse<T>( string[] args, CmdLineSettings? settings = null )
-            where T : IRootCommand<T>
+            where T : ICommandLineOptions<T>
         {
             settings ??= new CmdLineSettings();
             RootCommand rootCommand = T.BuildRootCommand(settings);
@@ -66,8 +66,18 @@ namespace Ubiquity.NET.CommandLine
         /// <param name="parseResult">Result of parse</param>
         /// <param name="settings">settings to determine if enabled (optimizes implementation to a skip if none set)</param>
         /// <param name="diagnosticReporter">Reporter to use to report any diagnostics (Including the "output" of the option)</param>
-        /// <returns>Results of the invocation</returns>
-        public static DefaultHandlerInvocationResult InvokeDefaultOptions( this ParseResult parseResult, CmdLineSettings settings, IDiagnosticReporter diagnosticReporter )
+        /// <returns>Results of the invocation (see remarks for details).</returns>
+        /// <remarks>
+        /// The results of invoking defaults is a tuple of a flag indicating if the app should exit - default command handled,
+        /// and the exit code for the application. The exit code is undefined if the flag indicates the app should not exit (e.g., not
+        /// handled). If it is defined, then that is what the app should return. It may be 0 if the command had no errors. But if there
+        /// was an error with the execution of the default option
+        /// </remarks>
+        public static DefaultHandlerInvocationResult InvokeDefaultOptions(
+            this ParseResult parseResult,
+            CmdLineSettings settings,
+            IDiagnosticReporter diagnosticReporter
+            )
         {
             // OPTIMIZATION: skip this if not selected by settings
             if(settings.DefaultOptions.HasFlag( DefaultOption.Help ) || settings.DefaultOptions.HasFlag( DefaultOption.Version ))
@@ -118,7 +128,7 @@ namespace Ubiquity.NET.CommandLine
         /// <param name="settings">settings to use for the parse</param>
         /// <param name="diagnosticReporter">Reporter to use for diagnostic reporting</param>
         /// <param name="boundValue">Resulting value if parsed successfully</param>
-        /// <param name="exitCode">Exit code for the process (only valid when return is <see langword="false"/></param>
+        /// <param name="exitCode">Exit code for the process (only valid when return is <see langword="false"/> (see remarks)</param>
         /// <returns><see langword="true"/> if the app should continue and <see langword="false"/> if not</returns>
         /// <remarks>
         /// <para>
@@ -138,8 +148,11 @@ namespace Ubiquity.NET.CommandLine
         /// <item><see cref="Parse{T}(string[], CmdLineSettings?)"/></item>
         /// <item><see cref="ReportErrors(ParseResult, IDiagnosticReporter)"/></item>
         /// <item><see cref="InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)"/></item>
-        /// <item><see cref="IRootCommand{T}.Bind(ParseResult)"/></item>
+        /// <item><see cref="ICommandLineOptions{T}.Bind(ParseResult)"/></item>
         /// </list>
+        /// </para>
+        /// <para>
+        /// The <paramref name="exitCode"/> is set to the exit code of the app on failures
         /// </para>
         /// </remarks>
         public static bool TryParse<T>(
@@ -149,59 +162,53 @@ namespace Ubiquity.NET.CommandLine
             [MaybeNullWhen( false )] out T boundValue,
             out int exitCode
             )
-            where T : IRootCommand<T>
+            where T : ICommandLineOptions<T>
         {
-            try
-            {
-                settings ??= new CmdLineSettings();
-                boundValue = default;
-                var parseResult = Parse<T>( args, settings );
-                if(parseResult.ReportErrors( diagnosticReporter ))
-                {
-                    exitCode = -1;
-                    return false;
-                }
+            settings ??= new CmdLineSettings();
+            boundValue = default;
+            RootCommand rootCommand = T.BuildRootCommand(settings);
+            ParseResult parseResult = rootCommand.Parse( args, settings );
 
-                // special case the default options
-                var invokeResults = parseResult.InvokeDefaultOptions(settings, diagnosticReporter);
-                if(invokeResults.ShouldExit)
-                {
-                    exitCode = invokeResults.ExitCode;
-                    return false;
-                }
-
-                boundValue = T.Bind( parseResult );
-                exitCode = 0;
-            }
-            catch(InvalidOperationException ex)
+            // Special case the default options (Help/Version) before checking for reported errors
+            // as errors about missing required params when the defaults are used is actually "normal"
+            // (Ridiculously stupid, but considered normal by owners of System.CommandLine [sigh...])
+            var invokeResults = parseResult.InvokeDefaultOptions(settings, diagnosticReporter);
+            if(invokeResults.ShouldExit)
             {
-                // Binding errors; missing required argument/option
-                exitCode = -2;
-                diagnosticReporter.Error(ex);
-                boundValue = default;
+                exitCode = invokeResults.ExitCode;
                 return false;
             }
 
+            if(parseResult.Action is ParseErrorAction pea)
+            {
+                pea.ShowHelp = settings.ShowHelpOnErrors;
+                pea.ShowTypoCorrections = settings.ShowTypoCorrections;
+                exitCode = pea.Invoke(parseResult);
+                return false;
+            }
+
+            boundValue = T.Bind( parseResult );
+            exitCode = 0;
             return true;
         }
 
         /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)"/>
         public static bool TryParse<T>( string[] args, CmdLineSettings settings, [MaybeNullWhen( false )] out T boundValue, out int exitCode )
-            where T : IRootCommand<T>
+            where T : ICommandLineOptions<T>
         {
             return TryParse<T>( args, settings, new ConsoleReporter( MsgLevel.Information ), out boundValue, out exitCode );
         }
 
         /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)"/>
         public static bool TryParse<T>( string[] args, [MaybeNullWhen( false )] out T boundValue, out int exitCode )
-            where T : IRootCommand<T>
+            where T : ICommandLineOptions<T>
         {
             return TryParse<T>( args, settings: null, new ConsoleReporter( MsgLevel.Information ), out boundValue, out exitCode );
         }
 
         /// <inheritdoc cref="TryParse{T}(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)"/>
         public static bool TryParse<T>( string[] args, IDiagnosticReporter diagnosticReporter, [MaybeNullWhen( false )] out T boundValue, out int exitCode )
-            where T : IRootCommand<T>
+            where T : ICommandLineOptions<T>
         {
             return TryParse<T>( args, settings: null, diagnosticReporter, out boundValue, out exitCode );
         }

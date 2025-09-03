@@ -64,7 +64,7 @@ namespace Ubiquity.NET.TextUX
                 _ => Console.Out
             };
 
-            writer.WriteLine(msg.ToString());
+            writer.WriteLine(msg);
         }
     }
 }

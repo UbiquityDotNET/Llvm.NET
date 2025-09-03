@@ -64,6 +64,9 @@
                 <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
                 <EnableNETAnalyzers>true</EnableNETAnalyzers>
                 <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+                <!-- Disable RUDE OPT-OUT breaking change for entire repo -->
+                <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+
                 <!--
                 DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't
                 support it or uses a different version. Not to mention hiding the actual namespaces involved, making resolving conflicts HARDER.

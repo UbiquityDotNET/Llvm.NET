@@ -44,6 +44,18 @@ namespace Ubiquity.NET.CommandLine
 
         public MsgLevel MsgLevel { get; }
 
+        public override void Write(string? value)
+        {
+            if (value == Environment.NewLine)
+            {
+                WriteLine();
+            }
+            else
+            {
+                base.Write(value);
+            }
+        }
+
         public override void WriteLine( )
         {
             Reporter.Report( MsgLevel, Builder.ToString() );
