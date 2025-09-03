@@ -78,7 +78,15 @@
                     "files": ["**.csproj"]
                 }
             ],
-            "dest": "runtime-utils/api"
+            "dest": "runtime-utils/api",
+            "properties": {
+                // use .NET 8.0 for the TFM as it is multi-targeting
+                // Sadly, DocFX can't find the dependent project builds if this is .NET 9.0
+                // and then generates warnings as a result. (DocFX metadata generation is
+                // pretty well borked and needs replacement as there are a LOT of workarounds
+                // in this project let alone all the ones found on-line.)
+                "TargetFramework": "net8.0"
+            }
         },
         {
             // TextUX  library
@@ -90,10 +98,7 @@
                     "files": ["**.csproj"]
                 }
             ],
-            "dest": "TextUX/api",
-            "properties": {
-                "DefineConstants": "DOCFX_BUILD"
-            }
+            "dest": "TextUX/api"
         }
     ],
     "build": {
