@@ -217,11 +217,11 @@ private Function GetOrDeclareFunction( Prototype prototype )
                                       , name: prototype.Name
                                       , linkageName: null
                                       , file: debugFile
-                                      , line: (uint)prototype.Location.StartLine
+                                      , line: (uint)prototype.Location.Start.Line
                                       , signature
                                       , isLocalToUnit: false
                                       , isDefinition: true
-                                      , scopeLine: (uint)lastParamLocation.EndLine
+                                      , scopeLine: (uint)lastParamLocation.End.Line
                                       , debugFlags: prototype.IsCompilerGenerated ? DebugInfoFlags.Artificial : DebugInfoFlags.Prototyped
                                       , isOptimized: false
                                       );
@@ -257,8 +257,8 @@ manually adding the location on every instruction.</p>
     if(scope != null)
     {
         loc = new DILocation( InstructionBuilder.Context
-                            , (uint)(node?.Location.StartLine ?? 0)
-                            , (uint)(node?.Location.StartColumn ?? 0)
+                            , (uint)(node?.Location.Start.Line ?? 0)
+                            , (uint)(node?.Location.Start.Column ?? 0)
                             , scope
                             );
     }
@@ -348,8 +348,8 @@ parameters and local variables.</p>
 {
     Debug.Assert( CurrentDIBuilder is not null, &quot;Internal error CurrentDIBuilder should be set in Generate already&quot; );
 
-    uint line = ( uint )param.Location.StartLine;
-    uint col = ( uint )param.Location.StartColumn;
+    uint line = ( uint )param.Location.Start.Line;
+    uint col = ( uint )param.Location.Start.Column;
 
     // Keep compiler happy on null checks by asserting on expectations
     // The items were created in this file with all necessary info so
@@ -378,8 +378,8 @@ private void AddDebugInfoForAlloca( Alloca argSlot, Function function, LocalVari
 {
     Debug.Assert( CurrentDIBuilder is not null, &quot;Internal error CurrentDIBuilder should be set in Generate already&quot; );
 
-    uint line = ( uint )localVar.Location.StartLine;
-    uint col = ( uint )localVar.Location.StartColumn;
+    uint line = ( uint )localVar.Location.Start.Line;
+    uint col = ( uint )localVar.Location.Start.Column;
 
     // Keep compiler happy on null checks by asserting on expectations
     // The items were created in this file with all necessary info so
@@ -430,7 +430,7 @@ correct ownership semantics for a DIBuilder but that is generally enforced by th
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.2
+          - Build: 20.1.8-beta
         </div>
       </div>
     </footer>

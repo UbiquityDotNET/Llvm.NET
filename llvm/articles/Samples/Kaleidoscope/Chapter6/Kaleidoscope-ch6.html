@@ -225,11 +225,9 @@ ANTLR generated parser called a &quot;Parse Listener&quot;. A parse listener is 
 monitors the entire parsing process. For the user operators, the listener will listen for the specific case
 of a complete definition of a user operator. When it detects such a case it will update the runtime table to
 include the operator.</p>
-<pre><code class="lang-csharp" name="UserOperatorListener">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;KaleidoscopeUserOperatorListener.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="UserOperatorListener">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
+
 using Kaleidoscope.Grammar.ANTLR;
 
 namespace Kaleidoscope.Grammar
@@ -296,14 +294,14 @@ call for the function that actually implements the behavior for the operator.</p
     var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
     if(opKind != OperatorKind.InfixLeftAssociative &amp;&amp; opKind != OperatorKind.InfixRightAssociative)
     {
-        return new ErrorNode( op.GetSourceLocation(), $&quot;Invalid binary operator '{op.OpToken.Text}'&quot; );
+        return new ErrorNode&lt;DiagnosticCode&gt;( op.GetSourceRange(), DiagnosticCode.InvalidBinaryOp, $&quot;Invalid binary operator '{op.OpToken.Text}'&quot; );
     }
 
     string calleeName = CreateBinaryFunctionName( op.OpToken );
     Prototype? callTarget = FindCallTarget( calleeName );
     return callTarget is null
-        ? new ErrorNode( op.GetSourceLocation(), $&quot;Unary operator function '{calleeName}' not found&quot; )
-        : new FunctionCallExpression( op.GetSourceLocation(), callTarget, lhs, rhs );
+        ? new ErrorNode&lt;DiagnosticCode&gt;( op.GetSourceRange(), DiagnosticCode.UnaryOpNotFound, $&quot;Unary operator function '{calleeName}' not found&quot; )
+        : new FunctionCallExpression( op.GetSourceRange(), callTarget, lhs, rhs );
 }
 </code></pre><pre><code class="lang-csharp" name="UnaryOpExpression">public override IAstNode VisitUnaryOpExpression( UnaryOpExpressionContext context )
 {
@@ -311,18 +309,18 @@ call for the function that actually implements the behavior for the operator.</p
     var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
     if(opKind == OperatorKind.None)
     {
-        return new ErrorNode( context.GetSourceLocation(), $&quot;invalid unary operator {context.Op}&quot; );
+        return new ErrorNode&lt;DiagnosticCode&gt;( context.GetSourceRange(), DiagnosticCode.InvalidUnaryOp, $&quot;invalid unary operator {context.Op}&quot; );
     }
 
     string calleeName = CreateUnaryFunctionName( context.OpToken );
     var function = FindCallTarget( calleeName );
     if(function == null)
     {
-        return new ErrorNode( context.GetSourceLocation(), $&quot;reference to unknown unary operator function {calleeName}&quot; );
+        return new ErrorNode&lt;DiagnosticCode&gt;( context.GetSourceRange(), DiagnosticCode.InvalidUnaryOpRef, $&quot;reference to unknown unary operator function {calleeName}&quot; );
     }
 
     var arg = context.Rhs.Accept( this );
-    return arg is not IExpression exp ? arg : new FunctionCallExpression( context.GetSourceLocation(), function, exp );
+    return arg is not IExpression exp ? arg : new FunctionCallExpression( context.GetSourceRange(), function, exp );
 }
 </code></pre>
 <p>Thus, after AST transformation completes, the user defined operators, and any issues of precedence no longer
@@ -489,7 +487,7 @@ which is covered in <a class="xref" href="../Chapter7.1/Kaleidoscope-ch7.1.html"
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.2
+          - Build: 20.1.8-beta
         </div>
       </div>
     </footer>

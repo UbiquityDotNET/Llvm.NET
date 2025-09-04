@@ -138,11 +138,8 @@ foundation of the Kaleidoscope samples outer generation loop. Subsequent, chapte
 will focus on additional functionality including JIT compilation, Debugging
 information, and Native Module generation. Processing the results for this chapter,
 is pretty simple, it just prints out a textual form of the generated LLVM IR.</p>
-<pre><code class="lang-csharp" name="Main">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ReplEngine.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Main">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
 
@@ -272,17 +269,15 @@ function for that kind of node.</p>
 <p>Function declarations don't actually generate any code. Instead they are captured
 and added to a collection of declarations used in validating subsequent function
 calls when generating the AST for function definitions.</p>
-<pre><code class="lang-csharp" name="Main">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ProtoType.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Main">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -299,7 +294,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
         /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
-        public Prototype( SourceLocation location, string name, params ParameterDeclaration[] parameters )
+        public Prototype( SourceRange location, string name, params ParameterDeclaration[] parameters )
             : this( location, name, false, false, parameters )
         {
         }
@@ -308,7 +303,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
         /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
-        public Prototype( SourceLocation location, string name, IEnumerable&lt;ParameterDeclaration&gt; parameters )
+        public Prototype( SourceRange location, string name, IEnumerable&lt;ParameterDeclaration&gt; parameters )
             : this( location, name, false, false, parameters )
         {
         }
@@ -329,7 +324,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
         /// &lt;param name=&quot;name&quot;&gt;name of the function&lt;/param&gt;
         /// &lt;param name=&quot;isCompilerGenerated&quot;&gt;Indicates if this is a compiler generated prototype&lt;/param&gt;
-        public Prototype( SourceLocation location, string name, bool isCompilerGenerated )
+        public Prototype( SourceRange location, string name, bool isCompilerGenerated )
             : this( location, name, isCompilerGenerated, false, [] )
         {
         }
@@ -341,7 +336,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;isExtern&quot;&gt;Indicates if this is an external prototype&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;names of each parameter&lt;/param&gt;
         public Prototype(
-            SourceLocation location,
+            SourceRange location,
             string name,
             bool isCompilerGenerated,
             bool isExtern,
@@ -511,16 +506,14 @@ expression comes in the next chapter)</p>
 <p>In Kaleidoscope all values are floating point and constants are represented in LLVM
 IR as <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Values.ConstantFP.html">ConstantFP</a>. The AST provides the
 value of the constant as a C# <code>double</code>.</p>
-<pre><code class="lang-csharp" name="Main">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ConstantExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Main">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Globalization;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -528,7 +521,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ConstantExpression( SourceLocation location, double value )
+        public ConstantExpression( SourceRange location, double value )
             : base( location )
         {
             Value = value;
@@ -605,11 +598,8 @@ exception if the variable doesn't exist.</p>
 for an expression is a simple empty &quot;tagging&quot; interface. Since the interface also
 requires the IAstNode interface it contains support for walking the chain of
 operators that form an expression in left to right order, accounting for precedence.</p>
-<pre><code class="lang-csharp" name="Main">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;IExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Main">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using Ubiquity.NET.Runtime.Utils;
 
@@ -781,7 +771,7 @@ Ready&gt;
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.2
+          - Build: 20.1.8-beta
         </div>
       </div>
     </footer>

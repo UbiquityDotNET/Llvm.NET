@@ -454,11 +454,8 @@ applications.</p>
 <p>While each chapter is a bit different from the others. Many of the chapters are
 virtually identical for the driver. In particular Chapters 3-7 only really differ
 in the name of the app and window title etc...</p>
-<pre><code class="lang-csharp" name="Program.cs">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;Program.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Program.cs">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
 using System.Reflection;
@@ -504,11 +501,8 @@ the input reader into a sequence of statements, and parsing them into AST nodes.
 The nodes are provided to an application provided generator that produces the
 output result. The REPL engine base uses the abstract ShowResults method to
 actually show the results.</p>
-<pre><code class="lang-csharp" name="Program.cs">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ReplEngine.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Program.cs">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
 
@@ -558,11 +552,8 @@ node it was given as the app doesn't actually use LLVM (it focuses on parsing th
 infrastructure). This, helps to keep the samples consistent and as similar as possible to allow direct file
 comparisons to show the changes for a particular feature. The separation of concerns also aids in making the
 grammar, runtime and code generation unit-testable without the driver application.</p>
-<pre><code class="lang-csharp" name="ShowResults">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;CodeGenerator.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="ShowResults">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using Ubiquity.NET.Runtime.Utils;
 
@@ -619,7 +610,7 @@ a simple introductory example and a tool for use when doing more advanced langua
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.2
+          - Build: 20.1.8-beta
         </div>
       </div>
     </footer>

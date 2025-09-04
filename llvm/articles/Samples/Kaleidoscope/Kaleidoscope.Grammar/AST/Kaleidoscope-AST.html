@@ -119,16 +119,14 @@ basic categories of nodes:</p>
 <h2 id="root-node">Root Node</h2>
 <p>The AstNode class forms the common base for all AST nodes, it provides the common location
 support for all nodes.</p>
-<pre><code class="lang-csharp" name="RootNode">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;RootNode.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="RootNode">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -136,12 +134,12 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IAstNode
     {
-        public RootNode( SourceLocation location, IAstNode child )
+        public RootNode( SourceRange location, IAstNode child )
             : this( location, [ child ] )
         {
         }
 
-        public RootNode( SourceLocation location, IEnumerable&lt;IAstNode&gt; children )
+        public RootNode( SourceRange location, IEnumerable&lt;IAstNode&gt; children )
             : base( location )
         {
             ChildNodes = [ .. children ];
@@ -176,16 +174,14 @@ namespace Kaleidoscope.Grammar.AST
 </code></pre><h2 id="function-definition">Function Definition</h2>
 <p>FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
 and the full body of the function.</p>
-<pre><code class="lang-csharp" name="FunctionDefinition">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;FunctionDefinition.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="FunctionDefinition">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -198,7 +194,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IAstNode
     {
-        public FunctionDefinition( SourceLocation location
+        public FunctionDefinition( SourceRange location
                                  , Prototype signature
                                  , IExpression body
                                  , bool isAnonymous = false
@@ -207,7 +203,7 @@ namespace Kaleidoscope.Grammar.AST
         {
         }
 
-        public FunctionDefinition( SourceLocation location
+        public FunctionDefinition( SourceRange location
                                  , Prototype signature
                                  , IExpression body
                                  , IImmutableList&lt;LocalVariableDeclaration&gt; localVariables
@@ -269,17 +265,15 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h2 id="function-declaration">Function Declaration</h2>
-<pre><code class="lang-csharp" name="Function Signatures (Prototype)">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ProtoType.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Function Signatures (Prototype)">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -296,7 +290,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
         /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
-        public Prototype( SourceLocation location, string name, params ParameterDeclaration[] parameters )
+        public Prototype( SourceRange location, string name, params ParameterDeclaration[] parameters )
             : this( location, name, false, false, parameters )
         {
         }
@@ -305,7 +299,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
         /// &lt;param name=&quot;name&quot;&gt;&lt;see cref=&quot;Name&quot;/&gt; containing the name of the function&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;Collection of &lt;see cref=&quot;Name&quot;/&gt;s for the names of each parameter&lt;/param&gt;
-        public Prototype( SourceLocation location, string name, IEnumerable&lt;ParameterDeclaration&gt; parameters )
+        public Prototype( SourceRange location, string name, IEnumerable&lt;ParameterDeclaration&gt; parameters )
             : this( location, name, false, false, parameters )
         {
         }
@@ -326,7 +320,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;location&quot;&gt;Source location covering the complete signature&lt;/param&gt;
         /// &lt;param name=&quot;name&quot;&gt;name of the function&lt;/param&gt;
         /// &lt;param name=&quot;isCompilerGenerated&quot;&gt;Indicates if this is a compiler generated prototype&lt;/param&gt;
-        public Prototype( SourceLocation location, string name, bool isCompilerGenerated )
+        public Prototype( SourceRange location, string name, bool isCompilerGenerated )
             : this( location, name, isCompilerGenerated, false, [] )
         {
         }
@@ -338,7 +332,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;isExtern&quot;&gt;Indicates if this is an external prototype&lt;/param&gt;
         /// &lt;param name=&quot;parameters&quot;&gt;names of each parameter&lt;/param&gt;
         public Prototype(
-            SourceLocation location,
+            SourceRange location,
             string name,
             bool isCompilerGenerated,
             bool isExtern,
@@ -414,11 +408,8 @@ namespace Kaleidoscope.Grammar.AST
 interface abstracts the differences between the two types of variable declarations for most common
 cases. Most code generation or AST consumers don't care about the differences (i.e. Parameters have
 an index but locals don't)</p>
-<pre><code class="lang-csharp" name="IVariableDeclaration">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;IVariableDeclaration.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="IVariableDeclaration">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using Ubiquity.NET.Runtime.Utils;
 
@@ -433,16 +424,14 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h3 id="local-variable">Local Variable</h3>
-<pre><code class="lang-csharp" name="Local Variable Declarations">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;LocalVariableDeclaration.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Local Variable Declarations">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Text;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -450,7 +439,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IVariableDeclaration
     {
-        public LocalVariableDeclaration( SourceLocation location, string name, IExpression? initializer, bool compilerGenerated = false )
+        public LocalVariableDeclaration( SourceRange location, string name, IExpression? initializer, bool compilerGenerated = false )
             : base( location )
         {
             Name = name;
@@ -513,15 +502,13 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h3 id="function-parameter">Function Parameter</h3>
-<pre><code class="lang-csharp" name="Parameter declarations">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ParameterDeclaration.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="Parameter declarations">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -529,7 +516,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IVariableDeclaration
     {
-        public ParameterDeclaration( SourceLocation location, string name, int index )
+        public ParameterDeclaration( SourceRange location, string name, int index )
             : base( location )
         {
             Name = name;
@@ -570,11 +557,8 @@ namespace Kaleidoscope.Grammar.AST
 <p>Kaleidoscope is a functional language, all expressions produce a value, even if it is always zero. There
 are no statements in the language. Expressions form the core of the language and the bulk of the AST.</p>
 <p>The IExpression interface forms the common interface for all AST expression nodes</p>
-<pre><code class="lang-csharp" name="IExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;IExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="IExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using Ubiquity.NET.Runtime.Utils;
 
@@ -603,15 +587,13 @@ additional node types are needed for unary operators in the AST.</p>
 <h3 id="binary-operator">Binary Operator</h3>
 <p>BinaryOperatorExpression covers the built-in operators, any user defined binary operators are transformed
 to a function declaration/definition</p>
-<pre><code class="lang-csharp" name="BinaryOperatorExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;BinaryOperatorExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="BinaryOperatorExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -637,7 +619,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;param name=&quot;lhs&quot;&gt;Left hand side expression for the operator&lt;/param&gt;
         /// &lt;param name=&quot;op&quot;&gt;Operator type&lt;/param&gt;
         /// &lt;param name=&quot;rhs&quot;&gt;Right hand side expression for the operator&lt;/param&gt;
-        public BinaryOperatorExpression( SourceLocation location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
+        public BinaryOperatorExpression( SourceRange location, IExpression lhs, BuiltInOperatorKind op, IExpression rhs )
             : base( location )
         {
             Left = lhs;
@@ -709,16 +691,14 @@ the value to.</p>
 <p>Calls to functions (extern, user defined operators, or user defined functions) are represented in the AST as a
 FunctionCallExpression. The FunctionCallExpression contains the declaration of the function to call along with
 expressions for all of the arguments to the function.</p>
-<pre><code class="lang-csharp" name="FunctionCallExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;FunctionCallExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="FunctionCallExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Linq;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -726,7 +706,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public FunctionCallExpression( SourceLocation location, Prototype functionPrototype, params IEnumerable&lt;IExpression&gt; args )
+        public FunctionCallExpression( SourceRange location, Prototype functionPrototype, params IEnumerable&lt;IExpression&gt; args )
             : base( location )
         {
             FunctionPrototype = functionPrototype;
@@ -772,15 +752,13 @@ namespace Kaleidoscope.Grammar.AST
 </code></pre><h3 id="variable-reference">Variable Reference</h3>
 <p>A variable reference is used to refer to a variable. In most cases this represents implicit &quot;load&quot; semantics for a
 variable. However, when used as the left hand side of an assignment operator, it has &quot;store&quot; semantics.</p>
-<pre><code class="lang-csharp" name="VariableReferenceExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;VariableReferenceExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="VariableReferenceExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -788,7 +766,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public VariableReferenceExpression( SourceLocation location, IVariableDeclaration declaration )
+        public VariableReferenceExpression( SourceRange location, IVariableDeclaration declaration )
             : base( location )
         {
             Declaration = declaration;
@@ -831,15 +809,13 @@ namespace Kaleidoscope.Grammar.AST
 </code></pre><h3 id="conditional">Conditional</h3>
 <p>In Kaleidoscope conditional expressions follow the familiar if/then/else form, even though they are really more
 like the ternary operator expression <code>( x ? y : z )</code> in C and related languages.</p>
-<pre><code class="lang-csharp" name="ConditionalExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ConditionalExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="ConditionalExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -847,7 +823,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ConditionalExpression( SourceLocation location
+        public ConditionalExpression( SourceRange location
                                     , IExpression condition
                                     , IExpression thenExpression
                                     , IExpression elseExpression
@@ -908,15 +884,13 @@ namespace Kaleidoscope.Grammar.AST
 }
 </code></pre><h3 id="for-in">For-In</h3>
 <p>The for in expression is used to implement loops in Kaleidoscope.</p>
-<pre><code class="lang-csharp" name="ForInExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;ForInExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="ForInExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -924,7 +898,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public ForInExpression( SourceLocation location
+        public ForInExpression( SourceRange location
                               , LocalVariableDeclaration loopVariable
                               , IExpression condition
                               , IExpression step
@@ -981,16 +955,14 @@ namespace Kaleidoscope.Grammar.AST
 }
 </code></pre><h3 id="var-in">Var-In</h3>
 <p>Var-In Expression is used to provide, potentially nested, local scopes for variables</p>
-<pre><code class="lang-csharp" name="VarInExpression">// -----------------------------------------------------------------------
-// &lt;copyright file=&quot;VarInExpression.cs&quot; company=&quot;Ubiquity.NET Contributors&quot;&gt;
-// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
-// &lt;/copyright&gt;
-// -----------------------------------------------------------------------
+<pre><code class="lang-csharp" name="VarInExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Text;
 
 using Ubiquity.NET.Runtime.Utils;
+using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -998,7 +970,7 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
-        public VarInExpression( SourceLocation location, IEnumerable&lt;LocalVariableDeclaration&gt; localVariables, IExpression body )
+        public VarInExpression( SourceRange location, IEnumerable&lt;LocalVariableDeclaration&gt; localVariables, IExpression body )
             : base( location )
         {
             LocalVariables = localVariables;
@@ -1070,7 +1042,7 @@ namespace Kaleidoscope.Grammar.AST
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.2
+          - Build: 20.1.8-beta
         </div>
       </div>
     </footer>

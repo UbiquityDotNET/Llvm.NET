@@ -243,36 +243,7 @@ fall into two general categories:</p>
 <p>To allow providing a file like a traditional compiler the driver app needs to have some basic
 command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary 😁 )
 Generally this just gets a viable file path to use for the source code.</p>
-<pre><code class="lang-csharp" name="ProcessArgs">
-// really simple command line handling, just loops through the input arguments
-private static (string SourceFilePath, int ExitCode) ProcessArgs( string[] args )
-{
-    string sourceFilePath = string.Empty;
-    foreach(string arg in args)
-    {
-        if(!string.IsNullOrWhiteSpace( sourceFilePath ))
-        {
-            Console.Error.WriteLine( &quot;Source path already provided, unrecognized option: '{0}'&quot;, arg );
-        }
-
-        sourceFilePath = Path.GetFullPath( arg );
-    }
-
-    if(string.IsNullOrWhiteSpace( sourceFilePath ))
-    {
-        Console.Error.WriteLine( &quot;Missing source file name!&quot; );
-        return (string.Empty, -1);
-    }
-
-    if(!File.Exists( sourceFilePath ))
-    {
-        Console.Error.WriteLine( &quot;Source file '{0}' - not found!&quot;, sourceFilePath );
-        return (string.Empty, -2);
-    }
-
-    return (sourceFilePath, 0);
-}
-</code></pre><h3 id="update-main">Update Main()</h3>
+<pre><code class="lang-csharp" name="ProcessArgs"></code></pre><h3 id="update-main">Update Main()</h3>
 <p>The real work comes in the Main application driver, though there isn't a lot of additional code
 here either. The general plan is:</p>
 <ol>
@@ -295,17 +266,20 @@ here either. The general plan is:</p>
 [SuppressMessage( &quot;Design&quot;, &quot;CA1062:Validate arguments of public methods&quot;, Justification = &quot;Provided by Platform&quot; )]
 public static int Main( string[] args )
 {
-    (string sourceFilePath, int exitCode) = ProcessArgs( args );
-    if(exitCode != 0)
+    var reporter = new ColoredConsoleReporter(MsgLevel.Information);
+    if(!ArgsParsing.TryParse&lt;Options&gt;( args, reporter, out Options? options, out int exitCode ))
     {
         return exitCode;
     }
+
+    // TODO: Reset Command line option to support reporting level from command line (if different)
+
+    string sourceFilePath = options.SourcePath.FullName;
 
     string objFilePath = Path.ChangeExtension( sourceFilePath, &quot;.o&quot; );
     string irFilePath = Path.ChangeExtension( sourceFilePath, &quot;.ll&quot; );
     string asmPath = Path.ChangeExtension( sourceFilePath, &quot;.s&quot; );
 
-    using var rdr = File.OpenText( sourceFilePath );
     using var libLLVM = InitializeLLVM( );
     libLLVM.RegisterTarget( CodeGenTarget.Native );
 
@@ -317,11 +291,12 @@ public static int Main( string[] args )
     Console.WriteLine( &quot;Ubiquity.NET.Llvm Kaleidoscope Compiler - {0}&quot;, parser.LanguageLevel );
     Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
 
-    var errorLogger = new ColoredConsoleParseErrorReporter( sourceFilePath );
+    // Create adapter to route parse messages for the Kaleidoscope language to the command line reporter for this app
+    var errorLogger = new ParseErrorDiagnosticAdapter&lt;DiagnosticCode&gt;(reporter, &quot;KLS&quot;, new Uri(sourceFilePath) );
 
     // time the parse and code generation
     var timer = System.Diagnostics.Stopwatch.StartNew( );
-    var ast = parser.Parse( rdr );
+    var ast = parser.ParseFrom( sourceFilePath );
     if(!errorLogger.CheckAndReportParseErrors( ast ))
     {
         Module? module = generator.Generate( ast );
@@ -382,7 +357,7 @@ this feature is &quot;left as an exercise for the reader&quot; 😉)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-alpha.0.2
+          - Build: 20.1.8-beta
         </div>
       </div>
     </footer>
