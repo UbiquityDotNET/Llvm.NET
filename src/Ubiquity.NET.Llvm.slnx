@@ -64,14 +64,17 @@
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope.Runtime.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Ubiquity.NET.CommandLine.UT/Ubiquity.NET.CommandLine.UT.csproj" />
+    <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
+    <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
+  </Folder>
   <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
   <Project Path="../PsModules/RepoBuild/RepoBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="118e4d2b-5adb-4f7c-9395-b4ceeee3d2e1" />
   <Project Path="Ubiquity.NET.ANTLR.Utils/Ubiquity.NET.ANTLR.Utils.csproj" />
   <Project Path="Ubiquity.NET.CommandLine/Ubiquity.NET.CommandLine.csproj" Id="3dae7afd-0d33-4805-855b-c1283237b58a" />
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
-  <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
-  <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
   <Project Path="Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj" />
   <Project Path="Ubiquity.NET.Runtime.Utils/Ubiquity.NET.Runtime.Utils.csproj" />
   <Project Path="Ubiquity.NET.TextUX/Ubiquity.NET.TextUX.csproj" Id="0c58feb7-2b42-431a-9a37-43a8b263add9" />
