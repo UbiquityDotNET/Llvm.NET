@@ -41,6 +41,10 @@ normally used when the value itself isn't passed on but some transformed value i
 * `ThrowIfNotDefined()`
 
 ## PolyFill
-|Fully Qualified Name| Framework requirements |
-|--------------------|-------------|
-|System.Diagnostics.CodeAnalysis.StringSyntaxAttribute`| Target framework is .NET 7 or less. |
+While it isn't `impossible` to make polyfill this to work on .NET standard 2.0 it is a HUGE
+amount of effort to do so and there's no compelling reason to do so. Roslyn extensions/VSIX
+extensions are the most likely candidates left. VS extensions are shifting to external
+processes for extensions for this reason, leaving Roslyn generators. The bottom line is
+that too much of MODERN .NET and C# is incompatible with .NET Standard 2.0 that a distinct
+PolyFill library can only cover some of it. (Even the PolySharp generator covers only
+some of the missing functionality)

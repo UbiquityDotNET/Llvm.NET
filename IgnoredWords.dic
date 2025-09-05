@@ -1,5 +1,6 @@
 ABI
 Accessor
+accessors
 Addr
 addref
 alloca
@@ -72,6 +73,7 @@ Globalization
 Hashtable
 Identifier
 Impl
+initializer
 inline
 inlined
 inlining
