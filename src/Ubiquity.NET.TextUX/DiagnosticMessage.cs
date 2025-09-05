@@ -8,6 +8,25 @@ using System.Linq;
 
 namespace Ubiquity.NET.TextUX
 {
+    /// <summary>Tool Message category</summary>
+    public enum MsgLevel
+    {
+        /// <summary>All channels off</summary>
+        None = 0,
+
+        /// <summary>Verbose messages (or higher) are enabled</summary>
+        Verbose = 1,
+
+        /// <summary>Informational messages (or higher) are enabled.</summary>
+        Information = 2,
+
+        /// <summary>Warning messages (or higher) are enabled. [This is the default value]</summary>
+        Warning = 3, // Default level is warning & error only
+
+        /// <summary>Error messages (or higher) are enabled.</summary>
+        Error = 4,
+    }
+
     /// <summary>Diagnostic message for reporting diagnostics as part of end-user facing experience (UX)</summary>
     /// <remarks>
     /// <see cref="Code"/> must NOT be localized. It is required to universally identify a
@@ -54,7 +73,7 @@ namespace Ubiquity.NET.TextUX
             get;
             init
             {
-                ArgumentNullException.ThrowIfNull( value );
+                ArgumentNullException.ThrowIfNull(value);
                 field = value;
             }
         }

@@ -29,8 +29,5 @@
         <None Include="ReadMe.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="System.IO.Hashing" />
-    </ItemGroup>
 
 </Project>

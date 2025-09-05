@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -16,14 +17,18 @@ namespace Ubiquity.NET.Extensions
     /// They also serve to provide validation when using body expressions for property
     /// method implementations etc...
     /// </remarks>
-    public static class ValidationExtensions
+    public static class FluentValidationExtensions
     {
+        // NOTE: These DO NOT use the new `extension` keyword syntax as it is not clear
+        //       how CallerArgumentExpression is supposed to be used for those...
+
         /// <summary>Throws an exception if <paramref name="obj"/> is <see langword="null"/></summary>
         /// <typeparam name="T">Type of reference parameter to test for</typeparam>
         /// <param name="obj">Instance to test</param>
         /// <param name="exp">Name or expression of the value in <paramref name="obj"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="obj"/></returns>
         /// <exception cref="ArgumentNullException"><paramref name="obj"/> is <see langword="null"/></exception>
+        [DebuggerStepThrough]
         public static T ThrowIfNull<T>( [NotNull] this T? obj, [CallerArgumentExpression( nameof( obj ) )] string? exp = null )
         {
             ArgumentNullException.ThrowIfNull( obj, exp );
@@ -38,9 +43,11 @@ namespace Ubiquity.NET.Extensions
         /// <param name="max">Maximum value allowed for <paramref name="self"/></param>
         /// <param name="exp">Name or expression of the value in <paramref name="self"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="self"/></returns>
+        [DebuggerStepThrough]
         public static T ThrowIfOutOfRange<T>( this T self, T min, T max, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, IComparable<T>
         {
+            ArgumentNullException.ThrowIfNull(self, exp);
             ArgumentOutOfRangeException.ThrowIfLessThan( self, min, exp );
             ArgumentOutOfRangeException.ThrowIfGreaterThan( self, max, exp );
 
@@ -59,10 +66,12 @@ namespace Ubiquity.NET.Extensions
         /// <see cref="FlagsAttribute"/> as a legit value that is a combination of flags does not have
         /// a defined value (Only single bit values do)
         /// </remarks>
+        [DebuggerStepThrough]
         public static T ThrowIfNotDefined<T>( this T self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, Enum
         {
-            return Enum.IsDefined<T>( self ) ? self : throw new InvalidEnumArgumentException( exp );
+            ArgumentNullException.ThrowIfNull(self, exp);
+            return Enum.IsDefined( typeof(T), self ) ? self : throw new InvalidEnumArgumentException( exp );
         }
     }
 }
