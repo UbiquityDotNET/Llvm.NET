@@ -4,9 +4,7 @@
     <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier/ReferenceEqualityVerifier.csproj" Id="e8f42c47-8cd5-4987-8402-0dcd97ac8b60" />
   </Folder>
   <Folder Name="/Interop/">
-    <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
-    <Project Path="Ubiquity.NET.InteropHelpers.UT/Ubiquity.NET.InteropHelpers.UT.csproj" />
     <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
   </Folder>
   <Folder Name="/Repo Items/">
@@ -62,12 +60,15 @@
     <Project Path="Samples/Kaleidoscope/Chapter9/Chapter9.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Grammar/Kaleidoscope.Grammar.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Runtime/Kaleidoscope.Runtime.csproj" />
-    <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
   </Folder>
   <Folder Name="/Tests/">
+    <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
+    <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
     <Project Path="Ubiquity.NET.CommandLine.UT/Ubiquity.NET.CommandLine.UT.csproj" />
+    <Project Path="Ubiquity.NET.InteropHelpers.UT/Ubiquity.NET.InteropHelpers.UT.csproj" />
     <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
     <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
+    <Project Path="Ubiquity.NET.TextUX.UT/Ubiquity.NET.TextUX.UT.csproj" Id="c8c0c9b6-8056-44d6-9d16-c149b14afd3c" />
   </Folder>
   <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />

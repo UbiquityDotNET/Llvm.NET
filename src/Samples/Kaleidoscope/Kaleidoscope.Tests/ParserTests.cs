@@ -5,11 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml.Linq;
 
+using Kaleidoscope.Grammar;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Runtime.Utils;
 
-namespace Kaleidoscope.Grammar.Tests
+namespace Kaleidoscope.Tests
 {
     [TestClass]
     public class ParserTests

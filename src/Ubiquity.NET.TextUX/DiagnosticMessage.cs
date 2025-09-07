@@ -15,16 +15,16 @@ namespace Ubiquity.NET.TextUX
         None = 0,
 
         /// <summary>Verbose messages (or higher) are enabled</summary>
-        Verbose = 1,
+        Verbose = 100,
 
         /// <summary>Informational messages (or higher) are enabled.</summary>
-        Information = 2,
+        Information = 200,
 
         /// <summary>Warning messages (or higher) are enabled. [This is the default value]</summary>
-        Warning = 3, // Default level is warning & error only
+        Warning = 300, // Default level is warning & error only
 
         /// <summary>Error messages (or higher) are enabled.</summary>
-        Error = 4,
+        Error = 400,
     }
 
     /// <summary>Diagnostic message for reporting diagnostics as part of end-user facing experience (UX)</summary>
@@ -120,8 +120,8 @@ namespace Ubiquity.NET.TextUX
             // account for optional values with leading space.
             string subCat = Subcategory is not null ? $" {Subcategory}" : string.Empty;
             string code = Code is not null ? $" {Code}" : string.Empty;
-
-            return $"{Origin}{locString} :{subCat} {Level}{code} : {Text}";
+            string origin = Origin.IsFile ? Origin.LocalPath : Origin.ToString();
+            return $"{origin}{locString} :{subCat} {Level}{code} : {Text}";
         }
 
         [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Place holder for future work" )]
