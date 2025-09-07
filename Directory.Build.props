@@ -64,8 +64,17 @@
                 <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
                 <EnableNETAnalyzers>true</EnableNETAnalyzers>
                 <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
                 <!-- Disable RUDE OPT-OUT breaking change for entire repo -->
                 <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+
+                <!--
+                Really have no idea what this is for, there's no docs, but it removes the auto-referencing for
+                the EnvDTE package from the imported targets file. It is VERY confusing to chase down the source
+                of a package dependency when it is manually applied like that.
+                see: https://github.com/tmds/Tmds.ExecFunction/issues/16
+                -->
+                <EnableExecFunctionVsDebugging>false</EnableExecFunctionVsDebugging>
 
                 <!--
                 DO NOT ALLOW Implicit using msbuild feature - EVIL; causes mass issues and frustration moving code between projects when one doesn't

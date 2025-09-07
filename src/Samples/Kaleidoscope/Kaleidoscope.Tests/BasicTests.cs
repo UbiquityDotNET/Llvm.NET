@@ -36,7 +36,7 @@ namespace Kaleidoscope.Tests
             var parser = new Parser( LanguageLevel.MutableVariables );
 
             // Create sequence of parsed AST nodes to feed the loop
-            var nodes = from stmt in rdr.ToStatements( _=>{ } )
+            var nodes = from stmt in rdr.ToStatements( _=>{ }, RuntimeContext.CancellationTokenSource.Token )
                         select parser.Parse( stmt );
 
             // Read, Parse, Print loop
@@ -112,13 +112,13 @@ namespace Kaleidoscope.Tests
             using var generator = generatorFactory( parser.GlobalState, outputWriter );
 
             // Create sequence of parsed AST RootNodes to feed the 'REPL' loop
-            var replSeq = from stmt in input.ToStatements( _=>{ } )
+            var replSeq = from stmt in input.ToStatements( _=>{ }, RuntimeContext.CancellationTokenSource.Token )
                           select parser.Parse( stmt );
 
             await foreach(IAstNode node in replSeq)
             {
                 var errors = node.CollectErrors<DiagnosticCode>();
-                Assert.AreEqual( 0, errors.Length );
+                Assert.IsEmpty( errors );
 
                 var result = generator.Generate( node );
 
