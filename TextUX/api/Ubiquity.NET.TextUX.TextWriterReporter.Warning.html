@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Method ComputeHashCode | Ubiquity.NET </title>
+      <title>Property Warning | Ubiquity.NET </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Method ComputeHashCode | Ubiquity.NET ">
+      <meta name="title" content="Property Warning | Ubiquity.NET ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Extensions_ByteSpanHelpers_ComputeHashCode_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode*%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_TextUX_TextWriterReporter_Warning_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.TextUX.TextWriterReporter.Warning*%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -79,19 +79,19 @@
 
         </div>
 
-        <article data-uid="Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode*">
+        <article data-uid="Ubiquity.NET.TextUX.TextWriterReporter.Warning*">
 
 
 
 
 
-<h1 id="Ubiquity_NET_Extensions_ByteSpanHelpers_ComputeHashCode_" data-uid="Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode*" class="text-break">
-Method ComputeHashCode  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/ByteSpanHelpers.cs/#L15"><i class="bi bi-code-slash"></i></a>
+<h1 id="Ubiquity_NET_TextUX_TextWriterReporter_Warning_" data-uid="Ubiquity.NET.TextUX.TextWriterReporter.Warning*" class="text-break">
+Property Warning  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/TextWriterReporter.cs/#L52"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
-  <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Extensions.html">Extensions</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Extensions.dll</dd></dl>
+  <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.TextUX.html">TextUX</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.TextUX.dll</dd></dl>
 </div>
 
 <div class="markdown summary"></div>
@@ -112,37 +112,30 @@ Method ComputeHashCode  <a class="header-action link-secondary" title="View sour
 
 
 
-<a id="Ubiquity_NET_Extensions_ByteSpanHelpers_ComputeHashCode_" data-uid="Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode*"></a>
+<a id="Ubiquity_NET_TextUX_TextWriterReporter_Warning_" data-uid="Ubiquity.NET.TextUX.TextWriterReporter.Warning*"></a>
 
-<h3 id="Ubiquity_NET_Extensions_ByteSpanHelpers_ComputeHashCode_System_ReadOnlySpan_System_Byte__" data-uid="Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode(System.ReadOnlySpan{System.Byte})">
-  ComputeHashCode(ReadOnlySpan&lt;byte&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/ByteSpanHelpers.cs/#L15"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_TextUX_TextWriterReporter_Warning" data-uid="Ubiquity.NET.TextUX.TextWriterReporter.Warning">
+  Warning
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/TextWriterReporter.cs/#L52"><i class="bi bi-code-slash"></i></a>
 </h3>
 
-<div class="markdown level1 summary"><p>Computes the hash code of the contents for a span of bytes</p>
+<div class="markdown level1 summary"><p>Gets the warning writer for this reporter</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static int ComputeHashCode(this ReadOnlySpan&lt;byte&gt; span)</code></pre>
+  <pre><code class="lang-csharp hljs">public TextWriter Warning { get; init; }</code></pre>
 </div>
 
-<h4 class="section">Parameters</h4>
+
+
+
+
+<h4 class="section">Property Value</h4>
 <dl class="parameters">
-  <dt><code>span</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</dt>
-  <dd><p>Span of bytes to compute a hash code for</p>
-</dd>
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.textwriter">TextWriter</a></dt>
+  <dd></dd>
 </dl>
-
-<h4 class="section">Returns</h4>
-<dl class="parameters">
-  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-  <dd><p>Hash code value for the span</p>
-</dd>
-</dl>
-
-
-
 
 
 
@@ -154,7 +147,7 @@ Method ComputeHashCode  <a class="header-action link-secondary" title="View sour
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/ByteSpanHelpers.cs/#L15" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/TextWriterReporter.cs/#L52" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -170,7 +163,7 @@ Method ComputeHashCode  <a class="header-action link-secondary" title="View sour
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-beta
+          - Build: 20.1.8-delta
         </div>
       </div>
     </footer>

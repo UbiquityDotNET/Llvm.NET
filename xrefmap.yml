@@ -816,6 +816,33 @@ references:
   fullName.vb: Ubiquity.NET.CommandLine.SymbolValidationExtensions.AddValidator(Of T)(T, System.Action(Of System.CommandLine.Parsing.OptionResult))
   nameWithType: SymbolValidationExtensions.AddValidator<T>(T, Action<OptionResult>)
   nameWithType.vb: SymbolValidationExtensions.AddValidator(Of T)(T, Action(Of OptionResult))
+- uid: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder(System.CommandLine.Option{System.IO.DirectoryInfo})
+  name: EnsureFolder(Option<DirectoryInfo>)
+  href: CommandLine/api/Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder.html#Ubiquity_NET_CommandLine_SymbolValidationExtensions_EnsureFolder_System_CommandLine_Option_System_IO_DirectoryInfo__
+  commentId: M:Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder(System.CommandLine.Option{System.IO.DirectoryInfo})
+  name.vb: EnsureFolder(Option(Of DirectoryInfo))
+  fullName: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder(System.CommandLine.Option<System.IO.DirectoryInfo>)
+  fullName.vb: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder(System.CommandLine.Option(Of System.IO.DirectoryInfo))
+  nameWithType: SymbolValidationExtensions.EnsureFolder(Option<DirectoryInfo>)
+  nameWithType.vb: SymbolValidationExtensions.EnsureFolder(Option(Of DirectoryInfo))
+- uid: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder*
+  name: EnsureFolder
+  href: CommandLine/api/Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder.html
+  commentId: Overload:Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder
+  fullName: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolder
+  nameWithType: SymbolValidationExtensions.EnsureFolder
+- uid: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists(System.CommandLine.Parsing.OptionResult)
+  name: EnsureFolderExists(OptionResult)
+  href: CommandLine/api/Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists.html#Ubiquity_NET_CommandLine_SymbolValidationExtensions_EnsureFolderExists_System_CommandLine_Parsing_OptionResult_
+  commentId: M:Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists(System.CommandLine.Parsing.OptionResult)
+  fullName: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists(System.CommandLine.Parsing.OptionResult)
+  nameWithType: SymbolValidationExtensions.EnsureFolderExists(OptionResult)
+- uid: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists*
+  name: EnsureFolderExists
+  href: CommandLine/api/Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists.html
+  commentId: Overload:Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists
+  fullName: Ubiquity.NET.CommandLine.SymbolValidationExtensions.EnsureFolderExists
+  nameWithType: SymbolValidationExtensions.EnsureFolderExists
 - uid: Ubiquity.NET.CommandLine.SymbolValidationExtensions.ValidateFileExists(System.CommandLine.Parsing.ArgumentResult)
   name: ValidateFileExists(ArgumentResult)
   href: CommandLine/api/Ubiquity.NET.CommandLine.SymbolValidationExtensions.ValidateFileExists.html#Ubiquity_NET_CommandLine_SymbolValidationExtensions_ValidateFileExists_System_CommandLine_Parsing_ArgumentResult_
@@ -852,27 +879,6 @@ references:
   commentId: N:Ubiquity.NET.Extensions
   fullName: Ubiquity.NET.Extensions
   nameWithType: Ubiquity.NET.Extensions
-- uid: Ubiquity.NET.Extensions.ByteSpanHelpers
-  name: ByteSpanHelpers
-  href: extensions/api/Ubiquity.NET.Extensions.ByteSpanHelpers.html
-  commentId: T:Ubiquity.NET.Extensions.ByteSpanHelpers
-  fullName: Ubiquity.NET.Extensions.ByteSpanHelpers
-  nameWithType: ByteSpanHelpers
-- uid: Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode(System.ReadOnlySpan{System.Byte})
-  name: ComputeHashCode(ReadOnlySpan<byte>)
-  href: extensions/api/Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode.html#Ubiquity_NET_Extensions_ByteSpanHelpers_ComputeHashCode_System_ReadOnlySpan_System_Byte__
-  commentId: M:Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode(System.ReadOnlySpan{System.Byte})
-  name.vb: ComputeHashCode(ReadOnlySpan(Of Byte))
-  fullName: Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode(System.ReadOnlySpan<byte>)
-  fullName.vb: Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode(System.ReadOnlySpan(Of Byte))
-  nameWithType: ByteSpanHelpers.ComputeHashCode(ReadOnlySpan<byte>)
-  nameWithType.vb: ByteSpanHelpers.ComputeHashCode(ReadOnlySpan(Of Byte))
-- uid: Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode*
-  name: ComputeHashCode
-  href: extensions/api/Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode.html
-  commentId: Overload:Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode
-  fullName: Ubiquity.NET.Extensions.ByteSpanHelpers.ComputeHashCode
-  nameWithType: ByteSpanHelpers.ComputeHashCode
 - uid: Ubiquity.NET.Extensions.DictionaryBuilder`2
   name: DictionaryBuilder<TKey, TValue>
   href: extensions/api/Ubiquity.NET.Extensions.DictionaryBuilder-2.html
@@ -1002,6 +1008,57 @@ references:
   commentId: Overload:Ubiquity.NET.Extensions.DisposableAction.Dispose
   fullName: Ubiquity.NET.Extensions.DisposableAction.Dispose
   nameWithType: DisposableAction.Dispose
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions
+  name: FluentValidationExtensions
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.html
+  commentId: T:Ubiquity.NET.Extensions.FluentValidationExtensions
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions
+  nameWithType: FluentValidationExtensions
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined*
+  name: ThrowIfNotDefined
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined.html
+  commentId: Overload:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined
+  nameWithType: FluentValidationExtensions.ThrowIfNotDefined
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
+  name: ThrowIfNotDefined<T>(T, string?)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNotDefined__1___0_System_String_
+  commentId: M:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
+  name.vb: ThrowIfNotDefined(Of T)(T, String)
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined<T>(T, string?)
+  fullName.vb: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
+  nameWithType: FluentValidationExtensions.ThrowIfNotDefined<T>(T, string?)
+  nameWithType.vb: FluentValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull*
+  name: ThrowIfNull
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html
+  commentId: Overload:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull
+  nameWithType: FluentValidationExtensions.ThrowIfNull
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull``1(``0,System.String)
+  name: ThrowIfNull<T>(T?, string?)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNull__1___0_System_String_
+  commentId: M:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull``1(``0,System.String)
+  name.vb: ThrowIfNull(Of T)(T, String)
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull<T>(T?, string?)
+  fullName.vb: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull(Of T)(T, String)
+  nameWithType: FluentValidationExtensions.ThrowIfNull<T>(T?, string?)
+  nameWithType.vb: FluentValidationExtensions.ThrowIfNull(Of T)(T, String)
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange*
+  name: ThrowIfOutOfRange
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange.html
+  commentId: Overload:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange
+  nameWithType: FluentValidationExtensions.ThrowIfOutOfRange
+- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
+  name: ThrowIfOutOfRange<T>(T, T, T, string?)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfOutOfRange__1___0___0___0_System_String_
+  commentId: M:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
+  name.vb: ThrowIfOutOfRange(Of T)(T, T, T, String)
+  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
+  fullName.vb: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
+  nameWithType: FluentValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
+  nameWithType.vb: FluentValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
 - uid: Ubiquity.NET.Extensions.KvpArrayBuilder`2
   name: KvpArrayBuilder<TKey, TValue>
   href: extensions/api/Ubiquity.NET.Extensions.KvpArrayBuilder-2.html
@@ -1179,57 +1236,6 @@ references:
   commentId: Overload:Ubiquity.NET.Extensions.StringNormalizer.SystemLineEndings
   fullName: Ubiquity.NET.Extensions.StringNormalizer.SystemLineEndings
   nameWithType: StringNormalizer.SystemLineEndings
-- uid: Ubiquity.NET.Extensions.ValidationExtensions
-  name: ValidationExtensions
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.html
-  commentId: T:Ubiquity.NET.Extensions.ValidationExtensions
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions
-  nameWithType: ValidationExtensions
-- uid: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined*
-  name: ThrowIfNotDefined
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined.html
-  commentId: Overload:Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined
-  nameWithType: ValidationExtensions.ThrowIfNotDefined
-- uid: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
-  name: ThrowIfNotDefined<T>(T, string?)
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined.html#Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfNotDefined__1___0_System_String_
-  commentId: M:Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
-  name.vb: ThrowIfNotDefined(Of T)(T, String)
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined<T>(T, string?)
-  fullName.vb: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
-  nameWithType: ValidationExtensions.ThrowIfNotDefined<T>(T, string?)
-  nameWithType.vb: ValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
-- uid: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull*
-  name: ThrowIfNull
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull.html
-  commentId: Overload:Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull
-  nameWithType: ValidationExtensions.ThrowIfNull
-- uid: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull``1(``0,System.String)
-  name: ThrowIfNull<T>(T?, string?)
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfNull__1___0_System_String_
-  commentId: M:Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull``1(``0,System.String)
-  name.vb: ThrowIfNull(Of T)(T, String)
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull<T>(T?, string?)
-  fullName.vb: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull(Of T)(T, String)
-  nameWithType: ValidationExtensions.ThrowIfNull<T>(T?, string?)
-  nameWithType.vb: ValidationExtensions.ThrowIfNull(Of T)(T, String)
-- uid: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange*
-  name: ThrowIfOutOfRange
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange.html
-  commentId: Overload:Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange
-  nameWithType: ValidationExtensions.ThrowIfOutOfRange
-- uid: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
-  name: ThrowIfOutOfRange<T>(T, T, T, string?)
-  href: extensions/api/Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange.html#Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfOutOfRange__1___0___0___0_System_String_
-  commentId: M:Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
-  name.vb: ThrowIfOutOfRange(Of T)(T, T, T, String)
-  fullName: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
-  fullName.vb: Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
-  nameWithType: ValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
-  nameWithType.vb: ValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
 - uid: Ubiquity.NET.InteropHelpers
   name: Ubiquity.NET.InteropHelpers
   href: interop-helpers/api/Ubiquity.NET.InteropHelpers.html
@@ -27395,18 +27401,30 @@ references:
   fullName.vb: Ubiquity.NET.TextUX.ColoredConsoleReporter.New
   nameWithType: ColoredConsoleReporter.ColoredConsoleReporter
   nameWithType.vb: ColoredConsoleReporter.New
-- uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap
-  name: CodeMap
-  href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_CodeMap
-  commentId: P:Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap
-  fullName: Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap
-  nameWithType: ColoredConsoleReporter.CodeMap
-- uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap*
-  name: CodeMap
-  href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap.html
-  commentId: Overload:Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap
-  fullName: Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap
-  nameWithType: ColoredConsoleReporter.CodeMap
+- uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap
+  name: ColorMap
+  href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap
+  commentId: P:Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap
+  fullName: Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap
+  nameWithType: ColoredConsoleReporter.ColorMap
+- uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap*
+  name: ColorMap
+  href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap.html
+  commentId: Overload:Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap
+  fullName: Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap
+  nameWithType: ColoredConsoleReporter.ColorMap
+- uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap
+  name: DefaultColorMap
+  href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_DefaultColorMap
+  commentId: P:Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap
+  fullName: Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap
+  nameWithType: ColoredConsoleReporter.DefaultColorMap
+- uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap*
+  name: DefaultColorMap
+  href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap.html
+  commentId: Overload:Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap
+  fullName: Ubiquity.NET.TextUX.ColoredConsoleReporter.DefaultColorMap
+  nameWithType: ColoredConsoleReporter.DefaultColorMap
 - uid: Ubiquity.NET.TextUX.ColoredConsoleReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel,System.String)
   name: ReportMessage(MsgLevel, string)
   href: TextUX/api/Ubiquity.NET.TextUX.ColoredConsoleReporter.ReportMessage.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_ReportMessage_Ubiquity_NET_TextUX_MsgLevel_System_String_
@@ -27446,57 +27464,6 @@ references:
   fullName.vb: Ubiquity.NET.TextUX.ConsoleReporter.New
   nameWithType: ConsoleReporter.ConsoleReporter
   nameWithType.vb: ConsoleReporter.New
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.Encoding
-  name: Encoding
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.Encoding.html#Ubiquity_NET_TextUX_ConsoleReporter_Encoding
-  commentId: P:Ubiquity.NET.TextUX.ConsoleReporter.Encoding
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.Encoding
-  nameWithType: ConsoleReporter.Encoding
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.Encoding*
-  name: Encoding
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.Encoding.html
-  commentId: Overload:Ubiquity.NET.TextUX.ConsoleReporter.Encoding
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.Encoding
-  nameWithType: ConsoleReporter.Encoding
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.Level
-  name: Level
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.Level.html#Ubiquity_NET_TextUX_ConsoleReporter_Level
-  commentId: P:Ubiquity.NET.TextUX.ConsoleReporter.Level
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.Level
-  nameWithType: ConsoleReporter.Level
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.Level*
-  name: Level
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.Level.html
-  commentId: Overload:Ubiquity.NET.TextUX.ConsoleReporter.Level
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.Level
-  nameWithType: ConsoleReporter.Level
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.Report(Ubiquity.NET.TextUX.DiagnosticMessage)
-  name: Report(DiagnosticMessage)
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.Report.html#Ubiquity_NET_TextUX_ConsoleReporter_Report_Ubiquity_NET_TextUX_DiagnosticMessage_
-  commentId: M:Ubiquity.NET.TextUX.ConsoleReporter.Report(Ubiquity.NET.TextUX.DiagnosticMessage)
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.Report(Ubiquity.NET.TextUX.DiagnosticMessage)
-  nameWithType: ConsoleReporter.Report(DiagnosticMessage)
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.Report*
-  name: Report
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.Report.html
-  commentId: Overload:Ubiquity.NET.TextUX.ConsoleReporter.Report
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.Report
-  nameWithType: ConsoleReporter.Report
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel,System.String)
-  name: ReportMessage(MsgLevel, string)
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage.html#Ubiquity_NET_TextUX_ConsoleReporter_ReportMessage_Ubiquity_NET_TextUX_MsgLevel_System_String_
-  commentId: M:Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel,System.String)
-  name.vb: ReportMessage(MsgLevel, String)
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel, string)
-  fullName.vb: Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel, String)
-  nameWithType: ConsoleReporter.ReportMessage(MsgLevel, string)
-  nameWithType.vb: ConsoleReporter.ReportMessage(MsgLevel, String)
-- uid: Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage*
-  name: ReportMessage
-  href: TextUX/api/Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage.html
-  commentId: Overload:Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage
-  fullName: Ubiquity.NET.TextUX.ConsoleReporter.ReportMessage
-  nameWithType: ConsoleReporter.ReportMessage
 - uid: Ubiquity.NET.TextUX.DiagnosticMessage
   name: DiagnosticMessage
   href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticMessage.html
@@ -27815,6 +27782,81 @@ references:
   commentId: Overload:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Information
   fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Information
   nameWithType: DiagnosticReporterExtensions.Information
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel)
+  name: IsEnabled(IDiagnosticReporter, MsgLevel)
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_IsEnabled_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel)
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel)
+  nameWithType: DiagnosticReporterExtensions.IsEnabled(IDiagnosticReporter, MsgLevel)
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled*
+  name: IsEnabled
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled.html
+  commentId: Overload:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.IsEnabled
+  nameWithType: DiagnosticReporterExtensions.IsEnabled
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,System.Collections.Generic.IEnumerable{Ubiquity.NET.TextUX.DiagnosticMessage})
+  name: Report(IDiagnosticReporter, params IEnumerable<DiagnosticMessage>)
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_System_Collections_Generic_IEnumerable_Ubiquity_NET_TextUX_DiagnosticMessage__
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,System.Collections.Generic.IEnumerable{Ubiquity.NET.TextUX.DiagnosticMessage})
+  name.vb: Report(IDiagnosticReporter, IEnumerable(Of DiagnosticMessage))
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, params System.Collections.Generic.IEnumerable<Ubiquity.NET.TextUX.DiagnosticMessage>)
+  fullName.vb: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.TextUX.DiagnosticMessage))
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, params IEnumerable<DiagnosticMessage>)
+  nameWithType.vb: DiagnosticReporterExtensions.Report(IDiagnosticReporter, IEnumerable(Of DiagnosticMessage))
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.String)
+  name: Report(IDiagnosticReporter, MsgLevel, string)
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_System_String_
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.String)
+  name.vb: Report(IDiagnosticReporter, MsgLevel, String)
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, string)
+  fullName.vb: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, String)
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, string)
+  nameWithType.vb: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, String)
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.Uri,Ubiquity.NET.TextUX.SourceRange,System.String,System.Object[])
+  name: Report(IDiagnosticReporter, MsgLevel, Uri?, SourceRange, string, params object[])
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_System_Uri_Ubiquity_NET_TextUX_SourceRange_System_String_System_Object___
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.Uri,Ubiquity.NET.TextUX.SourceRange,System.String,System.Object[])
+  name.vb: Report(IDiagnosticReporter, MsgLevel, Uri, SourceRange, String, ParamArray Object())
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, System.Uri?, Ubiquity.NET.TextUX.SourceRange, string, params object[])
+  fullName.vb: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, System.Uri, Ubiquity.NET.TextUX.SourceRange, String, ParamArray Object())
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, Uri?, SourceRange, string, params object[])
+  nameWithType.vb: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, Uri, SourceRange, String, ParamArray Object())
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.Uri,Ubiquity.NET.TextUX.SourceRange,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  name: Report(IDiagnosticReporter, MsgLevel, Uri?, SourceRange, DiagnosticReporterInterpolatedStringHandler)
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_System_Uri_Ubiquity_NET_TextUX_SourceRange_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.Uri,Ubiquity.NET.TextUX.SourceRange,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  name.vb: Report(IDiagnosticReporter, MsgLevel, Uri, SourceRange, DiagnosticReporterInterpolatedStringHandler)
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, System.Uri?, Ubiquity.NET.TextUX.SourceRange, Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  fullName.vb: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, System.Uri, Ubiquity.NET.TextUX.SourceRange, Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, Uri?, SourceRange, DiagnosticReporterInterpolatedStringHandler)
+  nameWithType.vb: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, Uri, SourceRange, DiagnosticReporterInterpolatedStringHandler)
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  name: Report(IDiagnosticReporter, MsgLevel, DiagnosticReporterInterpolatedStringHandler)
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, DiagnosticReporterInterpolatedStringHandler)
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,System.String,System.Object[])
+  name: Report(IDiagnosticReporter, MsgLevel, SourceRange, string, params object[])
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_SourceRange_System_String_System_Object___
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,System.String,System.Object[])
+  name.vb: Report(IDiagnosticReporter, MsgLevel, SourceRange, String, ParamArray Object())
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.SourceRange, string, params object[])
+  fullName.vb: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.SourceRange, String, ParamArray Object())
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, SourceRange, string, params object[])
+  nameWithType.vb: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, SourceRange, String, ParamArray Object())
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  name: Report(IDiagnosticReporter, MsgLevel, SourceRange, DiagnosticReporterInterpolatedStringHandler)
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_SourceRange_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_
+  commentId: M:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.SourceRange, Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
+  nameWithType: DiagnosticReporterExtensions.Report(IDiagnosticReporter, MsgLevel, SourceRange, DiagnosticReporterInterpolatedStringHandler)
+- uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report*
+  name: Report
+  href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report.html
+  commentId: Overload:Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report
+  fullName: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Report
+  nameWithType: DiagnosticReporterExtensions.Report
 - uid: Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Verbose(Ubiquity.NET.TextUX.IDiagnosticReporter,System.IFormatProvider,System.String,System.Object[])
   name: Verbose(IDiagnosticReporter, IFormatProvider?, string, params object[])
   href: TextUX/api/Ubiquity.NET.TextUX.DiagnosticReporterExtensions.Verbose.html#Ubiquity_NET_TextUX_DiagnosticReporterExtensions_Verbose_Ubiquity_NET_TextUX_IDiagnosticReporter_System_IFormatProvider_System_String_System_Object___
@@ -27965,69 +28007,6 @@ references:
   commentId: Overload:Ubiquity.NET.TextUX.IDiagnosticReporter.Report
   fullName: Ubiquity.NET.TextUX.IDiagnosticReporter.Report
   nameWithType: IDiagnosticReporter.Report
-- uid: Ubiquity.NET.TextUX.IReporterExtensions
-  name: IReporterExtensions
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.html
-  commentId: T:Ubiquity.NET.TextUX.IReporterExtensions
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions
-  nameWithType: IReporterExtensions
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel)
-  name: IsEnabled(IDiagnosticReporter, MsgLevel)
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled.html#Ubiquity_NET_TextUX_IReporterExtensions_IsEnabled_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_
-  commentId: M:Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel)
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel)
-  nameWithType: IReporterExtensions.IsEnabled(IDiagnosticReporter, MsgLevel)
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled*
-  name: IsEnabled
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled.html
-  commentId: Overload:Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled
-  nameWithType: IReporterExtensions.IsEnabled
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,System.Collections.Generic.IEnumerable{Ubiquity.NET.TextUX.DiagnosticMessage})
-  name: Report(IDiagnosticReporter, params IEnumerable<DiagnosticMessage>)
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_System_Collections_Generic_IEnumerable_Ubiquity_NET_TextUX_DiagnosticMessage__
-  commentId: M:Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,System.Collections.Generic.IEnumerable{Ubiquity.NET.TextUX.DiagnosticMessage})
-  name.vb: Report(IDiagnosticReporter, IEnumerable(Of DiagnosticMessage))
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, params System.Collections.Generic.IEnumerable<Ubiquity.NET.TextUX.DiagnosticMessage>)
-  fullName.vb: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.TextUX.DiagnosticMessage))
-  nameWithType: IReporterExtensions.Report(IDiagnosticReporter, params IEnumerable<DiagnosticMessage>)
-  nameWithType.vb: IReporterExtensions.Report(IDiagnosticReporter, IEnumerable(Of DiagnosticMessage))
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.String)
-  name: Report(IDiagnosticReporter, MsgLevel, string)
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_System_String_
-  commentId: M:Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,System.String)
-  name.vb: Report(IDiagnosticReporter, MsgLevel, String)
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, string)
-  fullName.vb: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, String)
-  nameWithType: IReporterExtensions.Report(IDiagnosticReporter, MsgLevel, string)
-  nameWithType.vb: IReporterExtensions.Report(IDiagnosticReporter, MsgLevel, String)
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
-  name: Report(IDiagnosticReporter, MsgLevel, DiagnosticReporterInterpolatedStringHandler)
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_
-  commentId: M:Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
-  nameWithType: IReporterExtensions.Report(IDiagnosticReporter, MsgLevel, DiagnosticReporterInterpolatedStringHandler)
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,System.String,System.Object[])
-  name: Report(IDiagnosticReporter, MsgLevel, SourceRange, string, params object[])
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_SourceRange_System_String_System_Object___
-  commentId: M:Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,System.String,System.Object[])
-  name.vb: Report(IDiagnosticReporter, MsgLevel, SourceRange, String, ParamArray Object())
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.SourceRange, string, params object[])
-  fullName.vb: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.SourceRange, String, ParamArray Object())
-  nameWithType: IReporterExtensions.Report(IDiagnosticReporter, MsgLevel, SourceRange, string, params object[])
-  nameWithType.vb: IReporterExtensions.Report(IDiagnosticReporter, MsgLevel, SourceRange, String, ParamArray Object())
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
-  name: Report(IDiagnosticReporter, MsgLevel, SourceRange, DiagnosticReporterInterpolatedStringHandler)
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_SourceRange_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_
-  commentId: M:Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter,Ubiquity.NET.TextUX.MsgLevel,Ubiquity.NET.TextUX.SourceRange,Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.Report(Ubiquity.NET.TextUX.IDiagnosticReporter, Ubiquity.NET.TextUX.MsgLevel, Ubiquity.NET.TextUX.SourceRange, Ubiquity.NET.TextUX.InterpolatedStringHandlers.DiagnosticReporterInterpolatedStringHandler)
-  nameWithType: IReporterExtensions.Report(IDiagnosticReporter, MsgLevel, SourceRange, DiagnosticReporterInterpolatedStringHandler)
-- uid: Ubiquity.NET.TextUX.IReporterExtensions.Report*
-  name: Report
-  href: TextUX/api/Ubiquity.NET.TextUX.IReporterExtensions.Report.html
-  commentId: Overload:Ubiquity.NET.TextUX.IReporterExtensions.Report
-  fullName: Ubiquity.NET.TextUX.IReporterExtensions.Report
-  nameWithType: IReporterExtensions.Report
 - uid: Ubiquity.NET.TextUX.InterpolatedStringHandlers
   name: Ubiquity.NET.TextUX.InterpolatedStringHandlers
   href: TextUX/api/Ubiquity.NET.TextUX.InterpolatedStringHandlers.html
@@ -28757,6 +28736,129 @@ references:
   fullName.vb: Ubiquity.NET.TextUX.SourceRange.CType
   nameWithType: SourceRange.implicit operator
   nameWithType.vb: SourceRange.CType
+- uid: Ubiquity.NET.TextUX.TextWriterReporter
+  name: TextWriterReporter
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.html
+  commentId: T:Ubiquity.NET.TextUX.TextWriterReporter
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter
+  nameWithType: TextWriterReporter
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.#ctor(Ubiquity.NET.TextUX.MsgLevel,System.IO.TextWriter,System.IO.TextWriter,System.IO.TextWriter,System.IO.TextWriter)
+  name: TextWriterReporter(MsgLevel, TextWriter?, TextWriter?, TextWriter?, TextWriter?)
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.-ctor.html#Ubiquity_NET_TextUX_TextWriterReporter__ctor_Ubiquity_NET_TextUX_MsgLevel_System_IO_TextWriter_System_IO_TextWriter_System_IO_TextWriter_System_IO_TextWriter_
+  commentId: M:Ubiquity.NET.TextUX.TextWriterReporter.#ctor(Ubiquity.NET.TextUX.MsgLevel,System.IO.TextWriter,System.IO.TextWriter,System.IO.TextWriter,System.IO.TextWriter)
+  name.vb: New(MsgLevel, TextWriter, TextWriter, TextWriter, TextWriter)
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.TextWriterReporter(Ubiquity.NET.TextUX.MsgLevel, System.IO.TextWriter?, System.IO.TextWriter?, System.IO.TextWriter?, System.IO.TextWriter?)
+  fullName.vb: Ubiquity.NET.TextUX.TextWriterReporter.New(Ubiquity.NET.TextUX.MsgLevel, System.IO.TextWriter, System.IO.TextWriter, System.IO.TextWriter, System.IO.TextWriter)
+  nameWithType: TextWriterReporter.TextWriterReporter(MsgLevel, TextWriter?, TextWriter?, TextWriter?, TextWriter?)
+  nameWithType.vb: TextWriterReporter.New(MsgLevel, TextWriter, TextWriter, TextWriter, TextWriter)
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.#ctor*
+  name: TextWriterReporter
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.-ctor.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.#ctor
+  name.vb: New
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.TextWriterReporter
+  fullName.vb: Ubiquity.NET.TextUX.TextWriterReporter.New
+  nameWithType: TextWriterReporter.TextWriterReporter
+  nameWithType.vb: TextWriterReporter.New
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Encoding
+  name: Encoding
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Encoding.html#Ubiquity_NET_TextUX_TextWriterReporter_Encoding
+  commentId: P:Ubiquity.NET.TextUX.TextWriterReporter.Encoding
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Encoding
+  nameWithType: TextWriterReporter.Encoding
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Encoding*
+  name: Encoding
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Encoding.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Encoding
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Encoding
+  nameWithType: TextWriterReporter.Encoding
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Error
+  name: Error
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Error.html#Ubiquity_NET_TextUX_TextWriterReporter_Error
+  commentId: P:Ubiquity.NET.TextUX.TextWriterReporter.Error
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Error
+  nameWithType: TextWriterReporter.Error
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Error*
+  name: Error
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Error.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Error
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Error
+  nameWithType: TextWriterReporter.Error
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Information
+  name: Information
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Information.html#Ubiquity_NET_TextUX_TextWriterReporter_Information
+  commentId: P:Ubiquity.NET.TextUX.TextWriterReporter.Information
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Information
+  nameWithType: TextWriterReporter.Information
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Information*
+  name: Information
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Information.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Information
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Information
+  nameWithType: TextWriterReporter.Information
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Level
+  name: Level
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Level.html#Ubiquity_NET_TextUX_TextWriterReporter_Level
+  commentId: P:Ubiquity.NET.TextUX.TextWriterReporter.Level
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Level
+  nameWithType: TextWriterReporter.Level
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Level*
+  name: Level
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Level.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Level
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Level
+  nameWithType: TextWriterReporter.Level
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Report(Ubiquity.NET.TextUX.DiagnosticMessage)
+  name: Report(DiagnosticMessage)
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Report.html#Ubiquity_NET_TextUX_TextWriterReporter_Report_Ubiquity_NET_TextUX_DiagnosticMessage_
+  commentId: M:Ubiquity.NET.TextUX.TextWriterReporter.Report(Ubiquity.NET.TextUX.DiagnosticMessage)
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Report(Ubiquity.NET.TextUX.DiagnosticMessage)
+  nameWithType: TextWriterReporter.Report(DiagnosticMessage)
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Report*
+  name: Report
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Report.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Report
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Report
+  nameWithType: TextWriterReporter.Report
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel,System.String)
+  name: ReportMessage(MsgLevel, string)
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage.html#Ubiquity_NET_TextUX_TextWriterReporter_ReportMessage_Ubiquity_NET_TextUX_MsgLevel_System_String_
+  commentId: M:Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel,System.String)
+  name.vb: ReportMessage(MsgLevel, String)
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel, string)
+  fullName.vb: Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage(Ubiquity.NET.TextUX.MsgLevel, String)
+  nameWithType: TextWriterReporter.ReportMessage(MsgLevel, string)
+  nameWithType.vb: TextWriterReporter.ReportMessage(MsgLevel, String)
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage*
+  name: ReportMessage
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.ReportMessage
+  nameWithType: TextWriterReporter.ReportMessage
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Verbose
+  name: Verbose
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Verbose.html#Ubiquity_NET_TextUX_TextWriterReporter_Verbose
+  commentId: P:Ubiquity.NET.TextUX.TextWriterReporter.Verbose
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Verbose
+  nameWithType: TextWriterReporter.Verbose
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Verbose*
+  name: Verbose
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Verbose.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Verbose
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Verbose
+  nameWithType: TextWriterReporter.Verbose
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Warning
+  name: Warning
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Warning.html#Ubiquity_NET_TextUX_TextWriterReporter_Warning
+  commentId: P:Ubiquity.NET.TextUX.TextWriterReporter.Warning
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Warning
+  nameWithType: TextWriterReporter.Warning
+- uid: Ubiquity.NET.TextUX.TextWriterReporter.Warning*
+  name: Warning
+  href: TextUX/api/Ubiquity.NET.TextUX.TextWriterReporter.Warning.html
+  commentId: Overload:Ubiquity.NET.TextUX.TextWriterReporter.Warning
+  fullName: Ubiquity.NET.TextUX.TextWriterReporter.Warning
+  nameWithType: TextWriterReporter.Warning
 - uid: code-generation-with-debug-info
   name: CodeGenWithDebugInfo
   href: llvm/articles/Samples/CodeGenWithDebugInfo/codegeneration.html

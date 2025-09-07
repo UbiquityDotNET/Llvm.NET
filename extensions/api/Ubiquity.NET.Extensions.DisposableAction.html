@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Struct DisposableAction | Ubiquity.NET </title>
+      <title>Class DisposableAction | Ubiquity.NET </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct DisposableAction | Ubiquity.NET ">
+      <meta name="title" content="Class DisposableAction | Ubiquity.NET ">
       
       <meta name="description" content="Disposable type that runs a specified action on dispose">
       <link rel="icon" href="../../favicon.ico">
@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Extensions_DisposableAction" data-uid="Ubiquity.NET.Extensions.DisposableAction" class="text-break">
-Struct DisposableAction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L14"><i class="bi bi-code-slash"></i></a>
+Class DisposableAction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,18 +97,24 @@ Struct DisposableAction  <a class="header-action link-secondary" title="View sou
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly record struct DisposableAction : IDisposable, IEquatable&lt;DisposableAction&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class DisposableAction : IDisposable</code></pre>
   </div>
 
 
 
 
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">DisposableAction</span></div>
+    </dd>
+  </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.html">DisposableAction</a>&gt;</div>
     </dd>
   </dl>
 
@@ -117,16 +123,13 @@ Struct DisposableAction  <a class="header-action link-secondary" title="View sou
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
@@ -134,13 +137,16 @@ Struct DisposableAction  <a class="header-action link-secondary" title="View sou
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
     </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
   </dd></dl>
 
   <dl class="typelist extensionMethods">
     <dt>Extension Methods</dt>
     <dd>
   <div>
-      <a class="xref" href="Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfNull__1___0_System_String_">ValidationExtensions.ThrowIfNull&lt;T&gt;(T?, string?)</a>
+      <a class="xref" href="Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNull__1___0_System_String_">FluentValidationExtensions.ThrowIfNull&lt;T&gt;(T?, string?)</a>
   </div>
   </dd></dl>
 
@@ -157,7 +163,7 @@ valuable when the scope extends beyond a single function (as a return of
 
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.-ctor.html#Ubiquity_NET_Extensions_DisposableAction__ctor_System_Action_">DisposableAction(Action)</a></dt>
-    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.html">DisposableAction</a> struct.</p>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.html">DisposableAction</a> class.</p>
 </dd>
   </dl>
 
@@ -166,7 +172,7 @@ valuable when the scope extends beyond a single function (as a return of
 
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.Dispose.html#Ubiquity_NET_Extensions_DisposableAction_Dispose">Dispose()</a></dt>
-    <dd><p>Runs the action provided in the constructor (<a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.-ctor.html#Ubiquity_NET_Extensions_DisposableAction__ctor_System_Action_">DisposableAction(Action)</a></p>
+    <dd><p>Runs the action provided in the constructor (<a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.-ctor.html#Ubiquity_NET_Extensions_DisposableAction__ctor_System_Action_">DisposableAction(Action)</a>)</p>
 </dd>
   </dl>
 
@@ -175,7 +181,7 @@ valuable when the scope extends beyond a single function (as a return of
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L14" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L15" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -191,7 +197,7 @@ valuable when the scope extends beyond a single function (as a return of
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-beta
+          - Build: 20.1.8-delta
         </div>
       </div>
     </footer>

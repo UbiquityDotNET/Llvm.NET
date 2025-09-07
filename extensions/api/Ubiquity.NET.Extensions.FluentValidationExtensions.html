@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class IReporterExtensions | Ubiquity.NET </title>
+      <title>Class FluentValidationExtensions | Ubiquity.NET </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class IReporterExtensions | Ubiquity.NET ">
+      <meta name="title" content="Class FluentValidationExtensions | Ubiquity.NET ">
       
-      <meta name="description" content="Extension for">
+      <meta name="description" content="Extension class to provide Fluent validation of arguments">
       <link rel="icon" href="../../favicon.ico">
       <link rel="stylesheet" href="../../public/docfx.min.css">
       <link rel="stylesheet" href="../../public/main.css">
@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_TextUX_IReporterExtensions.md&amp;value=---%0Auid%3A%20Ubiquity.NET.TextUX.IReporterExtensions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Extensions_FluentValidationExtensions.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Extensions.FluentValidationExtensions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -79,25 +79,25 @@
 
         </div>
 
-        <article data-uid="Ubiquity.NET.TextUX.IReporterExtensions">
+        <article data-uid="Ubiquity.NET.Extensions.FluentValidationExtensions">
 
 
 
-  <h1 id="Ubiquity_NET_TextUX_IReporterExtensions" data-uid="Ubiquity.NET.TextUX.IReporterExtensions" class="text-break">
-Class IReporterExtensions  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.TextUX/IDiagnosticReporter.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Ubiquity_NET_Extensions_FluentValidationExtensions" data-uid="Ubiquity.NET.Extensions.FluentValidationExtensions" class="text-break">
+Class FluentValidationExtensions  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Extensions/FluentValidationExtensions.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.TextUX.html">TextUX</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>Ubiquity.NET.TextUX.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Extensions.html">Extensions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Extensions.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Extension for <a class="xref" href="Ubiquity.NET.TextUX.IDiagnosticReporter.html">IDiagnosticReporter</a></p>
+  <div class="markdown summary"><p>Extension class to provide Fluent validation of arguments</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class IReporterExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">public static class FluentValidationExtensions</code></pre>
   </div>
 
 
@@ -107,7 +107,7 @@ Class IReporterExtensions  <a class="header-action link-secondary" title="View s
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><span class="xref">IReporterExtensions</span></div>
+      <div><span class="xref">FluentValidationExtensions</span></div>
     </dd>
   </dl>
 
@@ -142,38 +142,30 @@ Class IReporterExtensions  <a class="header-action link-secondary" title="View s
 
 
 
+  <h2 id="Ubiquity_NET_Extensions_FluentValidationExtensions_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>These are similar to many of the built-in support checks except that
+they use a `Fluent' style to allow validation of parameters used as inputs
+to other functions that ultimately produce parameters for a base constructor.
+They also serve to provide validation when using body expressions for property
+method implementations etc...</p>
+</div>
 
   <h2 class="section" id="methods">Methods
 </h2>
 
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.TextUX.IReporterExtensions.IsEnabled.html#Ubiquity_NET_TextUX_IReporterExtensions_IsEnabled_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_">IsEnabled(IDiagnosticReporter, MsgLevel)</a></dt>
-    <dd><p>Gets a value indicating whether the specified level (and higher) messages are enabled</p>
+    <dt><a class="xref" href="Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNotDefined__1___0_System_String_">ThrowIfNotDefined&lt;T&gt;(T, string?)</a></dt>
+    <dd><p>Tests if an enum is defined or not</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_System_Collections_Generic_IEnumerable_Ubiquity_NET_TextUX_DiagnosticMessage__">Report(IDiagnosticReporter, params IEnumerable&lt;DiagnosticMessage&gt;)</a></dt>
-    <dd><p>Reports multiple diagnostics to the reporter</p>
+    <dt><a class="xref" href="Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNull__1___0_System_String_">ThrowIfNull&lt;T&gt;(T?, string?)</a></dt>
+    <dd><p>Throws an exception if <code class="paramref">obj</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a></p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_System_String_">Report(IDiagnosticReporter, MsgLevel, string)</a></dt>
-    <dd><p>Reports a message</p>
-</dd>
-  </dl>
-  <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_">Report(IDiagnosticReporter, MsgLevel, DiagnosticReporterInterpolatedStringHandler)</a></dt>
-    <dd><p>Reports a message using an interpolated string</p>
-</dd>
-  </dl>
-  <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_SourceRange_System_String_System_Object___">Report(IDiagnosticReporter, MsgLevel, SourceRange, string, params object[])</a></dt>
-    <dd><p>Reports a message using classic string formatting</p>
-</dd>
-  </dl>
-  <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.TextUX.IReporterExtensions.Report.html#Ubiquity_NET_TextUX_IReporterExtensions_Report_Ubiquity_NET_TextUX_IDiagnosticReporter_Ubiquity_NET_TextUX_MsgLevel_Ubiquity_NET_TextUX_SourceRange_Ubiquity_NET_TextUX_InterpolatedStringHandlers_DiagnosticReporterInterpolatedStringHandler_">Report(IDiagnosticReporter, MsgLevel, SourceRange, DiagnosticReporterInterpolatedStringHandler)</a></dt>
-    <dd><p>Reports a message using an interpolated string</p>
+    <dt><a class="xref" href="Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfOutOfRange__1___0___0___0_System_String_">ThrowIfOutOfRange&lt;T&gt;(T, T, T, string?)</a></dt>
+    <dd><p>Throws an exception if an argument is outside of a given (Inclusive) range</p>
 </dd>
   </dl>
 
@@ -182,7 +174,7 @@ Class IReporterExtensions  <a class="header-action link-secondary" title="View s
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.TextUX/IDiagnosticReporter.cs/#L37" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Extensions/FluentValidationExtensions.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -198,7 +190,7 @@ Class IReporterExtensions  <a class="header-action link-secondary" title="View s
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-beta
+          - Build: 20.1.8-delta
         </div>
       </div>
     </footer>

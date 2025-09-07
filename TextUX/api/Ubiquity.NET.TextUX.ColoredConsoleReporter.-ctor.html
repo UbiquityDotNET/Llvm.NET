@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_TextUX_ColoredConsoleReporter__ctor_" data-uid="Ubiquity.NET.TextUX.ColoredConsoleReporter.#ctor*" class="text-break">
-Constructor ColoredConsoleReporter  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L34"><i class="bi bi-code-slash"></i></a>
+Constructor ColoredConsoleReporter  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L36"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Constructor ColoredConsoleReporter  <a class="header-action link-secondary" titl
 
 <h3 id="Ubiquity_NET_TextUX_ColoredConsoleReporter__ctor_Ubiquity_NET_TextUX_MsgLevel_System_Collections_Immutable_ImmutableDictionary_Ubiquity_NET_TextUX_MsgLevel_AnsiCodes_AnsiCode__" data-uid="Ubiquity.NET.TextUX.ColoredConsoleReporter.#ctor(Ubiquity.NET.TextUX.MsgLevel,System.Collections.Immutable.ImmutableDictionary{Ubiquity.NET.TextUX.MsgLevel,AnsiCodes.AnsiCode})">
   ColoredConsoleReporter(MsgLevel, ImmutableDictionary&lt;MsgLevel, AnsiCode&gt;?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L36"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporter.html">ColoredConsoleReporter</a> class</p>
@@ -124,7 +124,7 @@ Constructor ColoredConsoleReporter  <a class="header-action link-secondary" titl
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public ColoredConsoleReporter(MsgLevel level = MsgLevel.Information, ImmutableDictionary&lt;MsgLevel, AnsiCode&gt;? mapping = null)</code></pre>
+  <pre><code class="lang-csharp hljs">public ColoredConsoleReporter(MsgLevel level = MsgLevel.Information, ImmutableDictionary&lt;MsgLevel, AnsiCode&gt;? colorMapping = null)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -132,8 +132,8 @@ Constructor ColoredConsoleReporter  <a class="header-action link-secondary" titl
   <dt><code>level</code> <a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html">MsgLevel</a></dt>
   <dd><p>Level of messages to enable for this reporter [Default: <a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html#Ubiquity_NET_TextUX_MsgLevel_Information">Information</a></p>
 </dd>
-  <dt><code>mapping</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2">ImmutableDictionary</a>&lt;<a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html">MsgLevel</a>, <span class="xref">AnsiCode</span>&gt;</dt>
-  <dd><p>Provides the mapping for the message levels this reporter will use (see remarks)</p>
+  <dt><code>colorMapping</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2">ImmutableDictionary</a>&lt;<a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html">MsgLevel</a>, <span class="xref">AnsiCode</span>&gt;</dt>
+  <dd><p>Provides the color mapping for the message levels this reporter will use (see remarks)</p>
 </dd>
 </dl>
 
@@ -145,12 +145,12 @@ Constructor ColoredConsoleReporter  <a class="header-action link-secondary" titl
 
 
 <h4 class="section" id="Ubiquity_NET_TextUX_ColoredConsoleReporter__ctor_Ubiquity_NET_TextUX_MsgLevel_System_Collections_Immutable_ImmutableDictionary_Ubiquity_NET_TextUX_MsgLevel_AnsiCodes_AnsiCode___remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p><code class="paramref">mapping</code> (or a default if <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>) is set as the <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_CodeMap">CodeMap</a> property.</p>
+<div class="markdown level1 remarks"><p><code class="paramref">colorMapping</code> (or a default if <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>) is set as the <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap">ColorMap</a> property.</p>
 <p>
-The default colors, if not provided via <code class="paramref">mapping</code>, are:
+The default colors, if not provided via <code class="paramref">colorMapping</code>, are:
 <table><thead><tr><th class="term">Level</th><th class="description">Description</th></tr></thead><tbody><tr><td class="term"><a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html#Ubiquity_NET_TextUX_MsgLevel_Verbose">Verbose</a></td><td class="description"> <span class="xref">AnsiCodes.Color.LtBlue</span></td></tr><tr><td class="term"><a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html#Ubiquity_NET_TextUX_MsgLevel_Information">Information</a></td><td class="description"> <span class="xref">AnsiCodes.Color.Default</span></td></tr><tr><td class="term"><a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html#Ubiquity_NET_TextUX_MsgLevel_Warning">Warning</a></td><td class="description"> <span class="xref">AnsiCodes.Color.LtYellow</span></td></tr><tr><td class="term"><a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html#Ubiquity_NET_TextUX_MsgLevel_Error">Error</a></td><td class="description"> <span class="xref">AnsiCodes.Color.LtRed</span></td></tr></tbody></table>
 <p>
-Any level not in <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporter.CodeMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_CodeMap">CodeMap</a> is reported using <span class="xref">AnsiCodes.Color.Default</span>.
+Any level not in <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap.html#Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap">ColorMap</a> is reported using <span class="xref">AnsiCodes.Color.Default</span>.
 </p>
 </div>
 
@@ -160,7 +160,7 @@ Any level not in <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporte
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L34" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L36" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -176,7 +176,7 @@ Any level not in <a class="xref" href="Ubiquity.NET.TextUX.ColoredConsoleReporte
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-beta
+          - Build: 20.1.8-delta
         </div>
       </div>
     </footer>

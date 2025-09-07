@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Method ThrowIfOutOfRange | Ubiquity.NET </title>
+      <title>Property ColorMap | Ubiquity.NET </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Method ThrowIfOutOfRange | Ubiquity.NET ">
+      <meta name="title" content="Property ColorMap | Ubiquity.NET ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfOutOfRange_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange*%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap_.md&amp;value=---%0Auid%3A%20Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap*%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -79,19 +79,19 @@
 
         </div>
 
-        <article data-uid="Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange*">
+        <article data-uid="Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap*">
 
 
 
 
 
-<h1 id="Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfOutOfRange_" data-uid="Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange*" class="text-break">
-Method ThrowIfOutOfRange  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/ValidationExtensions.cs/#L41"><i class="bi bi-code-slash"></i></a>
+<h1 id="Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap_" data-uid="Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap*" class="text-break">
+Property ColorMap  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L44"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
-  <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Extensions.html">Extensions</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Extensions.dll</dd></dl>
+  <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.TextUX.html">TextUX</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.TextUX.dll</dd></dl>
 </div>
 
 <div class="markdown summary"></div>
@@ -112,52 +112,30 @@ Method ThrowIfOutOfRange  <a class="header-action link-secondary" title="View so
 
 
 
-<a id="Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfOutOfRange_" data-uid="Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange*"></a>
+<a id="Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap_" data-uid="Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap*"></a>
 
-<h3 id="Ubiquity_NET_Extensions_ValidationExtensions_ThrowIfOutOfRange__1___0___0___0_System_String_" data-uid="Ubiquity.NET.Extensions.ValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)">
-  ThrowIfOutOfRange&lt;T&gt;(T, T, T, string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/ValidationExtensions.cs/#L41"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_TextUX_ColoredConsoleReporter_ColorMap" data-uid="Ubiquity.NET.TextUX.ColoredConsoleReporter.ColorMap">
+  ColorMap
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L44"><i class="bi bi-code-slash"></i></a>
 </h3>
 
-<div class="markdown level1 summary"><p>Throws an exception if an argument is outside of a given (Inclusive) range</p>
+<div class="markdown level1 summary"><p>Gets the <a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html">MsgLevel</a> to <span class="xref">AnsiCodes.AnsiCode</span> colorMapping used for coloring</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static T ThrowIfOutOfRange&lt;T&gt;(this T self, T min, T max, string? exp = null) where T : struct, IComparable&lt;T&gt;</code></pre>
+  <pre><code class="lang-csharp hljs">public ImmutableDictionary&lt;MsgLevel, AnsiCode&gt; ColorMap { get; init; }</code></pre>
 </div>
 
-<h4 class="section">Parameters</h4>
+
+
+
+
+<h4 class="section">Property Value</h4>
 <dl class="parameters">
-  <dt><code>self</code> <span class="xref">T</span></dt>
-  <dd><p>Value to test</p>
-</dd>
-  <dt><code>min</code> <span class="xref">T</span></dt>
-  <dd><p>Minimum value allowed for <code class="paramref">self</code></p>
-</dd>
-  <dt><code>max</code> <span class="xref">T</span></dt>
-  <dd><p>Maximum value allowed for <code class="paramref">self</code></p>
-</dd>
-  <dt><code>exp</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-  <dd><p>Name or expression of the value in <code class="paramref">self</code> [Default: provided by compiler]</p>
-</dd>
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutabledictionary-2">ImmutableDictionary</a>&lt;<a class="xref" href="Ubiquity.NET.TextUX.MsgLevel.html">MsgLevel</a>, <span class="xref">AnsiCode</span>&gt;</dt>
+  <dd></dd>
 </dl>
-
-<h4 class="section">Returns</h4>
-<dl class="parameters">
-  <dt><span class="xref">T</span></dt>
-  <dd><p><code class="paramref">self</code></p>
-</dd>
-</dl>
-
-<h4 class="section">Type Parameters</h4>
-<dl class="parameters">
-  <dt><code>T</code></dt>
-  <dd><p>Type of value to test</p>
-</dd>
-</dl>
-
-
 
 
 
@@ -169,7 +147,7 @@ Method ThrowIfOutOfRange  <a class="header-action link-secondary" title="View so
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-beta/src/Ubiquity.NET.Extensions/ValidationExtensions.cs/#L41" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.TextUX/ColoredConsoleReporter.cs/#L44" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -185,7 +163,7 @@ Method ThrowIfOutOfRange  <a class="header-action link-secondary" title="View so
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-beta
+          - Build: 20.1.8-delta
         </div>
       </div>
     </footer>
