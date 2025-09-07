@@ -119,7 +119,7 @@ namespace Ubiquity.NET.CommandLine
             }
         }
 
-        /// <summary>Extension method to add the <see cref="ValidateFolderExists(OptionResult)"/></summary>
+        /// <summary>Extension method to add the <see cref="ValidateFolderExists(OptionResult)"/> validator</summary>
         /// <param name="self">Option to add the validator for</param>
         /// <returns><paramref name="self"/> for fluent use</returns>
         public static Option<DirectoryInfo> AcceptExistingFolderOnly( this Option<DirectoryInfo> self )
@@ -148,6 +148,56 @@ namespace Ubiquity.NET.CommandLine
                     return;
                 }
             }
+        }
+
+        /// <summary>Extension method to add the <see cref="EnsureFolderExists(OptionResult)"/> validator</summary>
+        /// <param name="self">Option to add the validator for</param>
+        /// <returns><paramref name="self"/> for fluent use</returns>
+        public static Option<DirectoryInfo> EnsureFolder( this Option<DirectoryInfo> self )
+        {
+            self.AddValidator(EnsureFolderExists);
+            return self;
+        }
+
+        /// <summary>Option validator for an Option's tokens that ensures each Folder exists (creates it if not present)</summary>
+        /// <param name="result">result to validate</param>
+        /// <remarks>
+        /// This is a parse validation that will create a directory that does not exist. It is explicitly NOT a security
+        /// check/test!. Apps MUST NOT assume anything about the folder beyond the fact that it existed AT THE TIME this
+        /// validation ran. It might not exist when needed, might have been replaced since, or may exist as or been
+        /// replaced by a link to something else later or even deleted later. None of those scenarios is verified or
+        /// prevented by this.
+        /// </remarks>
+        public static void EnsureFolderExists( OptionResult result )
+        {
+            string value = result.Option.HelpName ?? result.Option.Name;
+            foreach (Token token in result.Tokens)
+            {
+                if (!Directory.Exists(token.Value))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(token.Value);
+                    }
+                    catch(Exception ex) when (IsDirectoryException(ex))
+                    {
+                        result.AddError($"Attempt to create directory '{token.Value}' resulted in {ex.Message}");
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        // returns true if the exception is one of the documented types for Directory.CreateDirectory().
+        private static bool IsDirectoryException(Exception ex)
+        {
+            return ex is IOException or
+                   UnauthorizedAccessException or
+                   ArgumentException or
+                   PathTooLongException or
+                   DirectoryNotFoundException or
+                   NotSupportedException;
         }
     }
 }
