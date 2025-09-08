@@ -26,7 +26,7 @@ namespace Kaleidoscope.Grammar.AST
 
         public override IAstNode VisitErrorNode( IErrorNode node )
         {
-            return new ErrorNode<DiagnosticCode>( node.GetSourceRange(), DiagnosticCode.SyntaxError, $"Syntax Error: {node}" );
+            return new ErrorNode( node.GetSourceRange(), (int)DiagnosticCode.SyntaxError, $"Syntax Error: {node}" );
         }
 
         public override IAstNode VisitParenExpression( ParenExpressionContext context )
@@ -44,7 +44,7 @@ namespace Kaleidoscope.Grammar.AST
             string varName = context.Name;
             return NamedValues.TryGetValue( varName, out IVariableDeclaration? declaration )
                 ? new VariableReferenceExpression( context.GetSourceRange(), declaration )
-                : new ErrorNode<DiagnosticCode>( context.GetSourceRange(), DiagnosticCode.UnknownVariable, $"Unknown variable name: {varName}" );
+                : new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.UnknownVariable, $"Unknown variable name: {varName}" );
         }
 
         public override IAstNode VisitFunctionCallExpression( FunctionCallExpressionContext context )
@@ -52,7 +52,7 @@ namespace Kaleidoscope.Grammar.AST
             Prototype? function = FindCallTarget( context.CaleeName );
             if(function is null)
             {
-                return new ErrorNode<DiagnosticCode>( context.GetSourceRange(), DiagnosticCode.InvokeUnknownFunction, $"Call to unknown function '{context.CaleeName}'" );
+                return new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.InvokeUnknownFunction, $"Call to unknown function '{context.CaleeName}'" );
             }
 
             var argNodes = ( from expCtx in context.expression( )
@@ -98,7 +98,7 @@ namespace Kaleidoscope.Grammar.AST
         public override IAstNode VisitExternalDeclaration( ExternalDeclarationContext context )
         {
             var retVal = ( Prototype )context.Signature.Accept( this );
-            var errors = retVal.CollectErrors<DiagnosticCode>( );
+            var errors = retVal.CollectErrors( );
             if(errors.Length == 0)
             {
                 RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );
@@ -118,7 +118,7 @@ namespace Kaleidoscope.Grammar.AST
             }
 
             var body = context.BodyExpression.Accept( this );
-            var errors = body.CollectErrors<DiagnosticCode>( );
+            var errors = body.CollectErrors( );
 
             // test for a non-expression (ErrorNode)
             if(body is not IExpression exp)
@@ -152,7 +152,7 @@ namespace Kaleidoscope.Grammar.AST
             BeginFunctionDefinition();
             var sig = new Prototype( context.GetSourceRange( ), RuntimeState.GenerateAnonymousName( ), true );
             var bodyNode = context.expression( ).Accept( this );
-            var errors = bodyNode.CollectErrors<DiagnosticCode>();
+            var errors = bodyNode.CollectErrors();
 
             // only add valid definitions to the runtime state.
             if(errors.Length > 0 || bodyNode is not IExpression bodyExp)
@@ -172,14 +172,14 @@ namespace Kaleidoscope.Grammar.AST
             var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
             if(opKind == OperatorKind.None)
             {
-                return new ErrorNode<DiagnosticCode>( context.GetSourceRange(), DiagnosticCode.InvalidUnaryOp, $"invalid unary operator {context.Op}" );
+                return new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.InvalidUnaryOp, $"invalid unary operator {context.Op}" );
             }
 
             string calleeName = CreateUnaryFunctionName( context.OpToken );
             var function = FindCallTarget( calleeName );
             if(function == null)
             {
-                return new ErrorNode<DiagnosticCode>( context.GetSourceRange(), DiagnosticCode.InvalidUnaryOpRef, $"reference to unknown unary operator function {calleeName}" );
+                return new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.InvalidUnaryOpRef, $"reference to unknown unary operator function {calleeName}" );
             }
 
             var arg = context.Rhs.Accept( this );
@@ -355,13 +355,13 @@ namespace Kaleidoscope.Grammar.AST
                 var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
                 if(opKind != OperatorKind.InfixLeftAssociative && opKind != OperatorKind.InfixRightAssociative)
                 {
-                    return new ErrorNode<DiagnosticCode>( op.GetSourceRange(), DiagnosticCode.InvalidBinaryOp, $"Invalid binary operator '{op.OpToken.Text}'" );
+                    return new ErrorNode( op.GetSourceRange(), (int)DiagnosticCode.InvalidBinaryOp, $"Invalid binary operator '{op.OpToken.Text}'" );
                 }
 
                 string calleeName = CreateBinaryFunctionName( op.OpToken );
                 Prototype? callTarget = FindCallTarget( calleeName );
                 return callTarget is null
-                    ? new ErrorNode<DiagnosticCode>( op.GetSourceRange(), DiagnosticCode.UnaryOpNotFound, $"Unary operator function '{calleeName}' not found" )
+                    ? new ErrorNode( op.GetSourceRange(), (int)DiagnosticCode.UnaryOpNotFound, $"Unary operator function '{calleeName}' not found" )
                     : new FunctionCallExpression( op.GetSourceRange(), callTarget, lhs, rhs );
             }
             #endregion
@@ -397,11 +397,11 @@ namespace Kaleidoscope.Grammar.AST
             {
                 if(existingPrototype.Parameters.Count != retVal.Parameters.Count)
                 {
-                    return new ErrorNode<DiagnosticCode>( context.GetSourceRange(), DiagnosticCode.IncompatibleRedclaration, "Declaration incompatible with previous declaration" );
+                    return new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.IncompatibleRedclaration, "Declaration incompatible with previous declaration" );
                 }
             }
 
-            var errors = retVal.CollectErrors<DiagnosticCode>( );
+            var errors = retVal.CollectErrors( );
             if(errors.Length == 0)
             {
                 RuntimeState.FunctionDeclarations.AddOrReplaceItem( retVal );

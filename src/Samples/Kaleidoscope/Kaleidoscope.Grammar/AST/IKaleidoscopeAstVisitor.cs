@@ -9,7 +9,7 @@ namespace Kaleidoscope.Grammar.AST
     {
         TResult? Visit( RootNode root );
 
-        TResult? Visit( ErrorNode<DiagnosticCode> errorNode );
+        TResult? Visit( ErrorNode errorNode );
 
         TResult? Visit( Prototype prototype );
 
@@ -43,7 +43,7 @@ namespace Kaleidoscope.Grammar.AST
     {
         TResult? Visit( RootNode root, ref readonly TArg arg );
 
-        TResult? Visit( ErrorNode<DiagnosticCode> errorNode, ref readonly TArg arg );
+        TResult? Visit( ErrorNode errorNode, ref readonly TArg arg );
 
         TResult? Visit( Prototype prototype, ref readonly TArg arg );
 

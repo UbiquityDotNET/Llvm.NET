@@ -11,9 +11,7 @@ namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Common core implementation of a Read, Evaluate, Print Loop (REPL)</summary>
     /// <typeparam name="T">Type of values produced by the evaluation stage</typeparam>
-    /// <typeparam name="TDiagnosticEnum">Type of the enum for diagnostic IDs</typeparam>
-    public abstract class REPLBase<T, TDiagnosticEnum>
-        where TDiagnosticEnum : struct, Enum
+    public abstract class REPLBase<T>
     {
         /// <summary>Shows a prompt appropriate for the runtime and current state</summary>
         /// <param name="state">Ready state for the REPL</param>
@@ -24,7 +22,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public abstract void ProcessResults( T resultValue );
 
         /// <summary>Gets the error logger to use for logging any parse errors</summary>
-        public IParseErrorReporter<TDiagnosticEnum> ErrorLogger { get; }
+        public IParseErrorReporter ErrorLogger { get; }
 
         /// <summary>Asynchronously runs the REPL loop on the input reader</summary>
         /// <param name="input">Reader to process the input for</param>
@@ -62,9 +60,9 @@ namespace Ubiquity.NET.Runtime.Utils
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="REPLBase{T, TDiagnosticEnum}"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="REPLBase{T}"/> class</summary>
         /// <param name="logger">Logger to use for reporting any errors during parse</param>
-        protected REPLBase( IParseErrorReporter<TDiagnosticEnum> logger )
+        protected REPLBase( IParseErrorReporter logger )
         {
             ErrorLogger = logger;
         }

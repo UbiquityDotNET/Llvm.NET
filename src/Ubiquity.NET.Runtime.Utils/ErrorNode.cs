@@ -9,23 +9,21 @@ using Ubiquity.NET.TextUX;
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Represents an IAstNode where an error occurred in the parse</summary>
-    /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
     /// <remarks>
     /// The error may represent a syntax or semantic error but is used to mark the node
     /// where the error occurred. This allows for AST generation and consumers to "recover"
     /// from the error, but still report it as well as report multiple errors that might
     /// occur.
     /// </remarks>
-    public class ErrorNode<T>
+    public class ErrorNode
         : IAstNode
-        where T : struct, Enum
     {
-        /// <summary>Initializes a new instance of the <see cref="ErrorNode{T}"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="ErrorNode"/> class</summary>
         /// <param name="location">Original location of the error in source</param>
         /// <param name="code">Identifier code for the error</param>
         /// <param name="err">Error message for the error</param>
         /// <param name="level">Message level [default: <see cref="MsgLevel.Error"/>]</param>
-        public ErrorNode( SourceRange location, T code, string err, MsgLevel level = MsgLevel.Error )
+        public ErrorNode( SourceRange location, int code, string err, MsgLevel level = MsgLevel.Error )
         {
             ArgumentNullException.ThrowIfNull( err );
 
@@ -39,7 +37,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public SourceRange Location { get; }
 
         /// <summary>Gets the code for the error</summary>
-        public T Code { get; }
+        public int Code { get; }
 
         /// <summary>Gets the message level of this node</summary>
         public MsgLevel Level { get; }

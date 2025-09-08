@@ -8,9 +8,9 @@ namespace Ubiquity.NET.CommandLine
     /// <summary>Interface for a root command in command line parsing</summary>
     /// <typeparam name="T">Type of the command (CRTP)</typeparam>
     /// <remarks>
-    /// This only contains a static interface and thus requires that feature of the runtime. (.NET 7 or later)
-    /// It is used to constrain methods to work with only types that are specifically designed
-    /// for command line parsing.
+    /// This only contains a static interface and thus requires the static abstract feature of the runtime.
+    /// (.NET 7 or later) It is used to constrain methods to those that have static methods that are specifically
+    /// designed for command line parsing.
     /// </remarks>
     public interface ICommandLineOptions<T>
         where T : ICommandLineOptions<T>

@@ -21,7 +21,7 @@ namespace Ubiquity.NET.Runtime.Utils
         /// implementing <see cref="IParser"/>.
         /// <note type="important">
         /// If the parse succeeds, but creation of the AST fails, then the result is
-        /// an AST tree with some nodes as <see cref="ErrorNode{T}"/>
+        /// an AST tree with some nodes as <see cref="ErrorNode"/>
         /// </note>
         /// </remarks>
         IAstNode? Parse( string txt );

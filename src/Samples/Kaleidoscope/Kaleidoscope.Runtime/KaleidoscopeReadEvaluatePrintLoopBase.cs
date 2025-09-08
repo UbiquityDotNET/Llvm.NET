@@ -15,7 +15,7 @@ using Ubiquity.NET.TextUX;
 namespace Kaleidoscope.Runtime
 {
     public abstract class KaleidoscopeReadEvaluatePrintLoopBase<T>
-        : REPLBase<T, DiagnosticCode>
+        : REPLBase<T>
     {
         public LanguageLevel LanguageFeatureLevel { get; }
 
@@ -41,11 +41,11 @@ namespace Kaleidoscope.Runtime
         }
 
         protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level )
-            : this(level, new ParseErrorDiagnosticAdapter<DiagnosticCode>(new ColoredConsoleReporter(), "KLS"))
+            : this(level, new ParseErrorDiagnosticAdapter(new ColoredConsoleReporter(), "KLS"))
         {
         }
 
-        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter<DiagnosticCode> logger )
+        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
             : base( logger )
         {
             LanguageFeatureLevel = level;

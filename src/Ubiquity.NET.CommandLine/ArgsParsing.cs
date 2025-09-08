@@ -80,25 +80,26 @@ namespace Ubiquity.NET.CommandLine
             )
         {
             // OPTIMIZATION: skip this if not selected by settings
-            if(settings.DefaultOptions.HasFlag( DefaultOption.Help ) || settings.DefaultOptions.HasFlag( DefaultOption.Version ))
+            if(!settings.DefaultOptions.HasFlag( DefaultOption.Help ) && !settings.DefaultOptions.HasFlag( DefaultOption.Version ))
             {
-                // Find the options and only invoke the results action if it is one of the option's.
-                // Sadly, there is no other way to provide the invocation configuration besides the
-                // Invoke method on the results type.
-                var helpOption = parseResult.GetHelpOption();
-                var versionOption = parseResult.GetVersionOption();
-                if((helpOption?.Action != null && parseResult.Action == helpOption.Action)
-                 || (versionOption?.Action != null && parseResult.Action == versionOption.Action)
-                 )
-                {
-                    int exitCode = parseResult.Invoke(diagnosticReporter.CreateConfig());
-                    return new( true, exitCode );
-                }
-
-                // options not present or action doesn't match; fall through to "no-app-exit"
-                // Action won't match if it is for parse errors...
+                return new( false, 0 );
             }
 
+            // Find the options and only invoke the results action if it is one of the option's.
+            // Sadly, there is no other way to provide the invocation configuration besides the
+            // Invoke method on the results type.
+            var helpOption = parseResult.GetHelpOption();
+            var versionOption = parseResult.GetVersionOption();
+            if((helpOption?.Action != null && parseResult.Action == helpOption.Action)
+             || (versionOption?.Action != null && parseResult.Action == versionOption.Action)
+             )
+            {
+                int exitCode = parseResult.Invoke(diagnosticReporter.CreateConfig());
+                return new( true, exitCode );
+            }
+
+            // action doesn't match; "no-app-exit"
+            // NOTE: Action won't match if it is for parse errors...
             return new( false, 0 );
         }
 
