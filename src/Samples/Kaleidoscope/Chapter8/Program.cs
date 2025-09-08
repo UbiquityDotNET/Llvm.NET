@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
 
 using Ubiquity.NET.CommandLine;
 using Ubiquity.NET.Llvm;
@@ -60,7 +59,7 @@ namespace Kaleidoscope.Chapter8
             Console.WriteLine( "Compiling {0}", sourceFilePath );
 
             // Create adapter to route parse messages for the Kaleidoscope language to the command line reporter for this app
-            var errorLogger = new ParseErrorDiagnosticAdapter<DiagnosticCode>(reporter, "KLS", new Uri(sourceFilePath) );
+            var errorLogger = new ParseErrorDiagnosticAdapter(reporter, "KLS", new Uri(sourceFilePath) );
 
             // time the parse and code generation
             var timer = System.Diagnostics.Stopwatch.StartNew( );

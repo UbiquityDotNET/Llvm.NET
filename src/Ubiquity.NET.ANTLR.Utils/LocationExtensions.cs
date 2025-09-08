@@ -19,6 +19,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         public static SourceRange GetSourceRange( this ParserRuleContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
+
             return new SourceRange( new(ctx.Start.Line, ctx.Start.Column, ctx.Start.StartIndex)
                                   , new(ctx.Stop.Line, ctx.Stop.Column, ctx.Stop.StopIndex)
                                   );
@@ -36,6 +37,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         public static SourceRange GetSourceRange( this RuleContext ctx )
         {
             ArgumentNullException.ThrowIfNull( ctx );
+
             if(ctx is ParserRuleContext ruleCtx)
             {
                 ruleCtx.GetSourceRange();
@@ -52,6 +54,7 @@ namespace Ubiquity.NET.ANTLR.Utils
         public static SourceRange GetSourceRange( this ITerminalNode node )
         {
             ArgumentNullException.ThrowIfNull( node );
+
             return node.Symbol.GetSourceRange();
         }
 

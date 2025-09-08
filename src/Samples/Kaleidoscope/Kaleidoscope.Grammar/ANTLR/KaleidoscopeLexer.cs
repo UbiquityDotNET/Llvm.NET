@@ -15,11 +15,11 @@ namespace Kaleidoscope.Grammar.ANTLR
     // on language features enabled.
     internal partial class KaleidoscopeLexer
     {
-        public KaleidoscopeLexer( char[] input, LanguageLevel languageLevel, IParseErrorListener<DiagnosticCode> errorListener )
+        public KaleidoscopeLexer( char[] input, LanguageLevel languageLevel, IParseErrorListener errorListener )
             : this( new AntlrInputStream( input.ThrowIfNull(), input.Length ) )
         {
             LanguageLevel = languageLevel;
-            AddErrorListener( new AntlrParseErrorListenerAdapter<DiagnosticCode>( errorListener ) );
+            AddErrorListener( new AntlrParseErrorListenerAdapter( errorListener ) );
         }
 
         public LanguageLevel LanguageLevel { get; }

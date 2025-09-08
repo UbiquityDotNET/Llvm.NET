@@ -84,7 +84,7 @@ namespace Kaleidoscope.Grammar
         {
             try
             {
-                var errCollector = new ParseErrorCollector<DiagnosticCode>();
+                var errCollector = new ParseErrorCollector();
 
                 (KaleidoscopeParser antlrParser, IParseTree parseTree) = CoreParse( input, mode, errCollector );
 
@@ -131,11 +131,11 @@ namespace Kaleidoscope.Grammar
             }
             catch(ParseCanceledException)
             {
-                return new RootNode( default, new ErrorNode<DiagnosticCode>( default, DiagnosticCode.ParseCanceled, "Parse canceled" ) );
+                return new RootNode( default, new ErrorNode( default, (int)DiagnosticCode.ParseCanceled, "Parse canceled" ) );
             }
         }
 
-        private (KaleidoscopeParser Op, IParseTree RHS) CoreParse( char[] input, ParseMode mode, ParseErrorCollector<DiagnosticCode> errCollector )
+        private (KaleidoscopeParser Op, IParseTree RHS) CoreParse( char[] input, ParseMode mode, ParseErrorCollector errCollector )
         {
             var lexer = new KaleidoscopeLexer( input, GlobalState.LanguageLevel, errCollector );
 

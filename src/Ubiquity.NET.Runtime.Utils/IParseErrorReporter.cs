@@ -7,13 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Interface for a logger of parse errors</summary>
-    /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
-    public interface IParseErrorReporter<T>
-        where T : struct, Enum
+    public interface IParseErrorReporter
     {
         /// <summary>Log errors for a given error node</summary>
         /// <param name="node">Node containing error information to log</param>
-        void ReportError( ErrorNode<T> node );
+        void ReportError( ErrorNode node );
 
         /// <summary>Log an error message for the parse</summary>
         /// <param name="msg">Message to log for the error</param>
@@ -26,16 +24,14 @@ namespace Ubiquity.NET.Runtime.Utils
         void ReportError( string msg );
     }
 
-    /// <summary>Utility class to provide extension methods for <see cref="IParseErrorReporter{T}"/></summary>
+    /// <summary>Utility class to provide extension methods for <see cref="IParseErrorReporter"/></summary>
     public static class ParseErrorReporterExtensions
     {
         /// <summary>Collects and reports all errors in an <see cref="IAstNode"/></summary>
-        /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
         /// <param name="self">Reporter to use for any errors found</param>
         /// <param name="node">Node to find errors from</param>
         /// <returns><see langword="true"/> if any errors were found; <see langword="false"/> if not</returns>
-        public static bool CheckAndReportParseErrors<T>( this IParseErrorReporter<T> self, [NotNullWhen(false)] IAstNode? node )
-            where T : struct, Enum
+        public static bool CheckAndReportParseErrors( this IParseErrorReporter self, [NotNullWhen(false)] IAstNode? node )
         {
             ArgumentNullException.ThrowIfNull( self );
 
@@ -44,7 +40,7 @@ namespace Ubiquity.NET.Runtime.Utils
                 return true;
             }
 
-            var errors = node.CollectErrors<T>( );
+            var errors = node.CollectErrors( );
             if(errors.Length == 0)
             {
                 return false;

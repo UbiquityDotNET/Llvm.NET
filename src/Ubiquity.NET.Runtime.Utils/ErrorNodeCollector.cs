@@ -7,12 +7,10 @@ using System.Collections.Immutable;
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>AST visitor that collects all errors for a given node</summary>
-    /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
-    public class ErrorNodeCollector<T>
-        : AstVisitorBase<ImmutableArray<ErrorNode<T>>>
-        where T : struct, Enum
+    public class ErrorNodeCollector
+        : AstVisitorBase<ImmutableArray<ErrorNode>>
     {
-        /// <summary>Initializes a new instance of the <see cref="ErrorNodeCollector{T}"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="ErrorNodeCollector"/> class</summary>
         public ErrorNodeCollector( )
             : base( [] )
         {
@@ -21,21 +19,21 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <inheritdoc/>
         /// <remarks>
         /// This implementation will aggregate the node to the results of errors if it is an
-        /// <see cref="ErrorNode{T}"/> before visiting all children of the node, which will, in
-        /// turn, add any <see cref="ErrorNode{T}"/>s to the collected results. Thus resulting
+        /// <see cref="ErrorNode"/> before visiting all children of the node, which will, in
+        /// turn, add any <see cref="ErrorNode"/>s to the collected results. Thus resulting
         /// in a final array of errors.
         /// </remarks>
-        public override ImmutableArray<ErrorNode<T>> Visit( IAstNode node )
+        public override ImmutableArray<ErrorNode> Visit( IAstNode node )
         {
-            return node is ErrorNode<T> errNode
+            return node is ErrorNode errNode
                  ? AggregateResult( [ errNode ], base.Visit( node ) )
                  : base.Visit( node );
         }
 
         /// <inheritdoc/>
-        protected override ImmutableArray<ErrorNode<T>> AggregateResult(
-            ImmutableArray<ErrorNode<T>> aggregate,
-            ImmutableArray<ErrorNode<T>> newResult
+        protected override ImmutableArray<ErrorNode> AggregateResult(
+            ImmutableArray<ErrorNode> aggregate,
+            ImmutableArray<ErrorNode> newResult
             )
         {
             return aggregate.AddRange( newResult );

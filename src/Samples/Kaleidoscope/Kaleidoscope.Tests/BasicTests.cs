@@ -117,7 +117,7 @@ namespace Kaleidoscope.Tests
 
             await foreach(IAstNode node in replSeq)
             {
-                var errors = node.CollectErrors<DiagnosticCode>();
+                var errors = node.CollectErrors();
                 Assert.IsEmpty( errors );
 
                 var result = generator.Generate( node );

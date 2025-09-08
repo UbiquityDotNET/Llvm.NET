@@ -18,6 +18,7 @@ namespace Ubiquity.NET.CommandLine
         public static InvocationConfiguration CreateConfig( this IDiagnosticReporter self )
         {
             ArgumentNullException.ThrowIfNull( self );
+
             return new()
             {
                 EnableDefaultExceptionHandler = false,

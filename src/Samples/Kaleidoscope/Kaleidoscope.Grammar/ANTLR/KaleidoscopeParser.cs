@@ -20,7 +20,7 @@ namespace Kaleidoscope.Grammar.ANTLR
         public KaleidoscopeParser(
             ITokenStream tokenStream,
             DynamicRuntimeState globalState,
-            IParseErrorListener<DiagnosticCode>? errorListener,
+            IParseErrorListener? errorListener,
             bool useDiagnosticListener = false
             )
             : this( tokenStream )
@@ -31,7 +31,7 @@ namespace Kaleidoscope.Grammar.ANTLR
             if(errorListener != null)
             {
                 RemoveErrorListeners();
-                AddErrorListener( new AntlrParseErrorListenerAdapter<DiagnosticCode>( errorListener ) );
+                AddErrorListener( new AntlrParseErrorListenerAdapter( errorListener ) );
             }
 
             if(globalState.LanguageLevel >= LanguageLevel.UserDefinedOperators)

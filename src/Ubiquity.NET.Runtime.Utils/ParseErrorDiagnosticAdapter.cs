@@ -8,13 +8,11 @@ using Ubiquity.NET.TextUX;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
-    /// <summary>Adapter to redirect calls to <see cref="IParseErrorReporter{T}"/> to a given <see cref="IDiagnosticReporter"/></summary>
-    /// <typeparam name="T">Type of the enum for diagnostic IDs</typeparam>
-    public class ParseErrorDiagnosticAdapter<T>
-        : IParseErrorReporter<T>
-        where T : struct, Enum
+    /// <summary>Adapter to redirect calls to <see cref="IParseErrorReporter"/> to a given <see cref="IDiagnosticReporter"/></summary>
+    public class ParseErrorDiagnosticAdapter
+        : IParseErrorReporter
     {
-        /// <summary>Initializes a new instance of the <see cref="ParseErrorDiagnosticAdapter{T}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ParseErrorDiagnosticAdapter"/> class.</summary>
         /// <param name="targetReporter">reporter that this instance adapts errors to</param>
         /// <param name="diagnosticCodePrefix">Prefix used for all codes</param>
         /// <param name="origin">Origin of the diagnostics reported by this adapter (default is an in memory string [string:memory])</param>
@@ -35,7 +33,7 @@ namespace Ubiquity.NET.Runtime.Utils
         public IDiagnosticReporter TargetReporter { get; }
 
         /// <inheritdoc/>
-        public void ReportError( ErrorNode<T> node )
+        public void ReportError( ErrorNode node )
         {
             var diagnostic = new DiagnosticMessage()
             {
