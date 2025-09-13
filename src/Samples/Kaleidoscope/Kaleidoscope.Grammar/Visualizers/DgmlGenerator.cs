@@ -14,7 +14,7 @@ using Ubiquity.NET.ANTLR.Utils;
 
 using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
-namespace Kaleidoscope.Grammar
+namespace Kaleidoscope.Grammar.Visualizers
 {
     /// <summary>Parse tree listener to generate a DGML Graph of the parsed syntax</summary>
     /// <remarks>

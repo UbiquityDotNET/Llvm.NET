@@ -11,7 +11,7 @@ using Kaleidoscope.Grammar.ANTLR;
 
 using Ubiquity.NET.ANTLR.Utils;
 
-namespace Kaleidoscope.Grammar
+namespace Kaleidoscope.Grammar.Visualizers
 {
     /// <summary>Parse listener that, when used with <see cref="ParseTreeWalker"/> generates an XML representation of the parse tree</summary>
     internal class XDocumentListener

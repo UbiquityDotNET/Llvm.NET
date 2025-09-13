@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kaleidoscope.Grammar
 {
-    public enum OperatorKind
+    internal enum OperatorKind
     {
         None,
         InfixLeftAssociative,

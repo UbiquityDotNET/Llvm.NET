@@ -7,7 +7,7 @@ using System.IO;
 
 using OpenSoftware.DgmlTools.Model;
 
-namespace Kaleidoscope.Grammar
+namespace Kaleidoscope.Grammar.Visualizers
 {
     /// <summary>Extension class to generate a blockdiag file from a DGML <see cref="DirectedGraph"/></summary>
     /// <remarks>
@@ -22,7 +22,7 @@ namespace Kaleidoscope.Grammar
     /// </para>
     /// </remarks>
     /// <seealso href="http://blockdiag.com"/>
-    public static class BlockDiagGenerator
+    internal static class BlockDiagGenerator
     {
         public static void WriteAsBlockDiag( this DirectedGraph graph, TextWriter writer )
         {
