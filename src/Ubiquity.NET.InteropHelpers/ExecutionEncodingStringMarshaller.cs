@@ -31,7 +31,7 @@ namespace Ubiquity.NET.InteropHelpers
         ///
         /// <note type="note">Even as well documented and well thought out as LLVM is, it remains silent on this point.
         /// Spelunking the build system generated for LLVM itself by CMake there is NOTHING to set either the source or
-        /// execution encodings for Windows, MSVC or any other tool-set that I can see so they seem to be left at defaults.
+        /// execution encoding for Windows, MSVC or any other tool-set that I can see so they seem to be left at defaults.
         /// (LLVM is just an example as it was where this library began, but it is not limited to that.)
         /// </note>
         ///

@@ -22,12 +22,14 @@ namespace Kaleidoscope.Grammar
     /// <para>
     /// This provides storage and support methods for the runtime global state.
     /// The state includes:
-    /// * The language level to use for parsing
-    /// * The current set of operators, including any user defined operators so the
+    /// <list type="bullet">
+    /// <item>The language level to use for parsing</item>
+    /// <item>The current set of operators, including any user defined operators so the
     ///   parser knows how to resolve complex expressions with user defined operators
-    ///   and precedence.
-    /// * The current set of external declarations
-    /// * The current set of defined functions
+    ///   and precedence.</item>
+    /// <item>The current set of external declarations</item>
+    /// <item>The current set of defined functions</item>
+    /// </list>
     /// </para>
     /// </remarks>
     public class DynamicRuntimeState

@@ -3,13 +3,15 @@
 
 using System.Collections.Generic;
 
+using Kaleidoscope.Grammar.AST;
+
 using OpenSoftware.DgmlTools.Model;
 
 using Ubiquity.NET.Runtime.Utils;
 
-namespace Kaleidoscope.Grammar.AST
+namespace Kaleidoscope.Grammar.Visualizers
 {
-    public class AstGraphGenerator
+    internal class AstGraphGenerator
         : KaleidoscopeAstVisitorBase<object>
     {
         public AstGraphGenerator( )
