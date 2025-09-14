@@ -16,6 +16,7 @@ attrib
 Attribs
 AttributeSet
 Attrs
+automatable
 baz
 binaryop
 binlogs
@@ -136,6 +137,7 @@ structs
 Subrange
 Sym
 telliam
+templated
 tl
 trx
 typdef

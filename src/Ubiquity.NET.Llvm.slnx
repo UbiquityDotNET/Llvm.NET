@@ -4,6 +4,7 @@
     <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier/ReferenceEqualityVerifier.csproj" Id="e8f42c47-8cd5-4987-8402-0dcd97ac8b60" />
   </Folder>
   <Folder Name="/Interop/">
+    <Project Path="Interop/LlvmBindingsGenerator/LlvmBindingsGenerator.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
     <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
   </Folder>
