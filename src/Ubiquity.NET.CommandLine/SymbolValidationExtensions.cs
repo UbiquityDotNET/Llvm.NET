@@ -144,7 +144,7 @@ namespace Ubiquity.NET.CommandLine
             {
                 if(!Directory.Exists( token.Value ))
                 {
-                    result.AddError( $"File '{token.Value}' specified for '{optionName}' does not exist" );
+                    result.AddError( $"Folder '{token.Value}' specified for '{optionName}' does not exist" );
                     return;
                 }
             }
@@ -179,7 +179,7 @@ namespace Ubiquity.NET.CommandLine
                     {
                         Directory.CreateDirectory(token.Value);
                     }
-                    catch(Exception ex) when (IsDirectoryException(ex))
+                    catch(Exception ex) when (IsDirectoryCreationException(ex))
                     {
                         result.AddError($"Attempt to create directory '{token.Value}' resulted in {ex.Message}");
                     }
@@ -190,7 +190,7 @@ namespace Ubiquity.NET.CommandLine
         }
 
         // returns true if the exception is one of the documented types for Directory.CreateDirectory().
-        private static bool IsDirectoryException(Exception ex)
+        private static bool IsDirectoryCreationException(Exception ex)
         {
             return ex is IOException or
                    UnauthorizedAccessException or

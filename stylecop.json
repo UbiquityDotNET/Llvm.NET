@@ -40,8 +40,10 @@
                 "licenseFile": "LICENSE.md"
             },
             "xmlHeader": false,
+            // The use of these two values is just plain weird and IMNSHO broken but it does the job of requiring documentation
+            // on public interfaces and ignoring internal ones. See: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3100
             "documentExposedElements": true,
-            "documentInterfaces": true,
+            "documentInterfaces": false,  // since the above settings is true, this applies to non-exposed interfaces
             "documentInternalElements": false,
             "documentPrivateElements": false,
             "documentPrivateFields": false,

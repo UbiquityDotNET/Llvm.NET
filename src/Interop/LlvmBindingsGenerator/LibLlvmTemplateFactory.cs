@@ -31,32 +31,29 @@ namespace LlvmBindingsGenerator
             bindingContext.TranslationUnitPasses.AddPass( new CheckAbiParameters( ) );
         }
 
-        public IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext, Options options )
+        public IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext, CmdLineArgs options )
         {
-            if(options.GenerateHandles)
+            // filter out known handle types with non-templated implementations
+            // LLVMErrorRef is rather unique with disposal and requires a distinct
+            // implementation. (If the message is retrieved, the handle is destroyed,
+            // and it is destroyed if "consumed" without getting the message.)
+            var handles = from handle in bindingContext.ASTContext.GetHandleTypeDefs( )
+                            where handle.Name != "LLVMErrorRef"
+                            select handle;
+
+            foreach( var handle in handles )
             {
-                // filter out known handle types with non-templated implementations
-                // LLVMErrorRef is rather unique with disposal and requires a distinct
-                // implementation. (If the message is retrieved, the handle is destroyed,
-                // and it is destroyed if "consumed" without getting the message.)
-                var handles = from handle in bindingContext.ASTContext.GetHandleTypeDefs( )
-                              where handle.Name != "LLVMErrorRef"
-                              select handle;
-
-                foreach( var handle in handles )
+                bool templatesFound = false;
+                foreach(IHandleCodeTemplate template in HandleToTemplateMap[handle.Name])
                 {
-                    bool templatesFound = false;
-                    foreach(IHandleCodeTemplate template in HandleToTemplateMap[handle.Name])
-                    {
-                        yield return new TemplateCodeGenerator( template.HandleName, options.HandleOutputPath, template );
-                        templatesFound = true;
-                    }
+                    yield return new TemplateCodeGenerator( template.HandleName, options.HandleOutputPath.FullName, template );
+                    templatesFound = true;
+                }
 
-                    if(!templatesFound)
-                    {
-                        // Generate an error for any handle types parsed from native headers not accounted for in the YAML configuration.
-                        Diagnostics.Error( "No Mapping for handle type {0} - {1}@{2}", handle.Name, handle.TranslationUnit.FileRelativePath, handle.LineNumberStart );
-                    }
+                if(!templatesFound)
+                {
+                    // Generate an error for any handle types parsed from native headers not accounted for in the YAML configuration.
+                    Diagnostics.Error( "No Mapping for handle type {0} - {1}@{2}", handle.Name, handle.TranslationUnit.FileRelativePath, handle.LineNumberStart );
                 }
             }
         }

@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>13</LangVersion>
+        <!-- TODO: additional RIDs as supported in native library -->
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -65,10 +66,6 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
-
-        <Compile Include="$(BaseBuildOutputPath)Generated\Handles\*.cs">
-            <Link>Generated\Handles\%(FileName)%(Extension)</Link>
-        </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -85,23 +82,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- Ensure the generator builds before this project so it can be used in the target below -->
-        <ProjectReference Include="..\..\..\..\Llvm.Libs\src\LlvmBindingsGenerator\LlvmBindingsGenerator.csproj">
-          <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
-          <PrivateAssets>all</PrivateAssets>
-        </ProjectReference>
         <ProjectReference Include="..\..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
         <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
     </ItemGroup>
-
-    <Target Name="GenerateHandleSources" BeforeTargets="BeforeCompile">
-        <PropertyGroup>
-            <__LlvmBindingsGeneratorBin>$(BaseBuildOutputBinPath)LLvmBindingsGenerator\$(Configuration)\net8.0\LlvmBindingsGenerator.dll</__LlvmBindingsGeneratorBin>
-            <__LLvmInc>$(PkgUbiquity_NET_LibLLVM)\Content\native</__LLvmInc>
-            <__LibLLVMInc>$(PkgUbiquity_NET_LibLLVM)\Content\native</__LibLLVMInc>
-            <__GeneratedPath>$(BaseBuildOutputPath)Generated\Handles</__GeneratedPath>
-        </PropertyGroup>
-        <Exec Command='dotnet $(__LlvmBindingsGeneratorBin) -l "$(__LLvmInc)" -e "$(__LibLLVMInc)" -h "$(__GeneratedPath)"' StandardOutputImportance="High">
-        </Exec>
-    </Target>
 </Project>

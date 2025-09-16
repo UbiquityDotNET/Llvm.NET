@@ -8,7 +8,7 @@ namespace LlvmBindingsGenerator
 {
     internal interface ICodeGeneratorTemplateFactory
     {
-        IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext, Options options );
+        IEnumerable<ICodeGenerator> CreateTemplates( BindingContext bindingContext, CmdLineArgs options );
 
         void SetupPasses( BindingContext bindingContext );
     }

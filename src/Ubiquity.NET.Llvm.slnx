@@ -4,6 +4,7 @@
     <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier/ReferenceEqualityVerifier.csproj" Id="e8f42c47-8cd5-4987-8402-0dcd97ac8b60" />
   </Folder>
   <Folder Name="/Interop/">
+    <File Path="Interop/readme-first.md" />
     <Project Path="Interop/LlvmBindingsGenerator/LlvmBindingsGenerator.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
     <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
@@ -28,6 +29,7 @@
     <File Path="../README.md" />
     <File Path="../Show-Docs.ps1" />
     <File Path="../stylecop.json" />
+    <File Path="Generate-HandleWrappers.ps1" />
     <File Path="x64.runsettings" />
   </Folder>
   <Folder Name="/Repo Items/GitHub/" />

@@ -21,17 +21,17 @@ namespace LlvmBindingsGenerator
     {
         /// <summary>Initializes a new instance of the <see cref="LibLlvmGeneratorLibrary"/> class.</summary>
         /// <param name="options">Command line options to use</param>
-        public LibLlvmGeneratorLibrary( Options options )
+        public LibLlvmGeneratorLibrary( CmdLineArgs options )
         {
             CmdLineOptions = options;
 
-            CommonInclude = Path.Combine( options.LlvmRoot, "include" );
+            CommonInclude = Path.Combine( options.LlvmRoot.FullName, "include" );
 
             // NOTE: The target specific LLVMInitializeXXX APIs are included in CMAKE generated headers
             // This is OK as they should NOT appear in the set of APIs exported from the library anyway
             // Instead LibLLVM handles all target registration in an extended abstract API LibLLVMRegisterTarget(...)
-            // that handles the behavior for the supported targets of that binaries build.
-            ExtensionsInclude = Path.Combine( options.ExtensionsRoot, "include" );
+            // that handles the behavior for the supported targets of that binary's build.
+            ExtensionsInclude = Path.Combine( options.ExtensionsRoot.FullName, "include" );
 
             InternalTypePrinter = new LibLLVMTypePrinter();
 
@@ -111,6 +111,6 @@ namespace LlvmBindingsGenerator
 
         private readonly string CommonInclude;
         private readonly string ExtensionsInclude;
-        private readonly Options CmdLineOptions;
+        private readonly CmdLineArgs CmdLineOptions;
     }
 }

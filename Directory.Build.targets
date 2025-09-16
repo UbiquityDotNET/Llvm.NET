@@ -1,9 +1,9 @@
-<Project InitialTargets="VerifyProjectSettings;ShowBuildParameters">
+<Project InitialTargets="VerifyProjectSettings;ShowBuildParameters;EnsureBuildOutputPaths">
     <!--
     Since Nuget.config is configured to include the build output location this
     will ensure the folder exists during restore so that it won't fail.
     -->
-    <Target Name="EnsureBuildOutputPaths" BeforeTargets="Restore;Build;Rebuild">
+    <Target Name="EnsureBuildOutputPaths" Condition="!Exists($(PackageOutputPath))">
         <MakeDir Directories="$(PackageOutputPath)"/>
     </Target>
 
