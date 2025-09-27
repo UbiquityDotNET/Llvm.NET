@@ -18,7 +18,7 @@ internal class Program
         // Using JIT so the only target of relevance is the native machine
         libLLVM.RegisterTarget( CodeGenTarget.Native );
 
-        using var jit = new LlJIT();
+        using var jit = new LLJit();
 
         var triple = jit.TripleString;
         using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");

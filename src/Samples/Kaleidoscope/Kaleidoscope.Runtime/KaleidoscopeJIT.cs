@@ -16,7 +16,7 @@ namespace Kaleidoscope.Runtime
 {
     /// <summary>JIT engine for Kaleidoscope language</summary>
     /// <remarks>
-    /// This engine uses the <see cref="Ubiquity.NET.Llvm.OrcJITv2.LlJIT"/> engine to support lazy
+    /// This engine uses the <see cref="Ubiquity.NET.Llvm.OrcJITv2.LLJit"/> engine to support lazy
     /// compilation of LLVM IR modules added to the JIT.
     /// </remarks>
     public sealed class KaleidoscopeJIT
@@ -127,7 +127,7 @@ namespace Kaleidoscope.Runtime
         // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged
         // for any serious production use.
         private readonly LazyEncodedString[] OptimizationPasses;
-        private readonly LlJIT ComposedJIT;
+        private readonly LLJit ComposedJIT;
 
         // Cleaner workaround for ugly compiler casting requirements
         // The & operator officially has no type and MUST be cast to

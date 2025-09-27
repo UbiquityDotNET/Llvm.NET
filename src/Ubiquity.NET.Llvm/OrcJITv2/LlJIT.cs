@@ -10,14 +10,14 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJITUtils;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
-    /// <summary>ORC v2 LLJIT instance</summary>
-    public sealed class LlJIT
+    /// <summary>ORC v2 LLJit instance</summary>
+    public sealed class LLJit
         : IDisposable
         , IOrcJit
     {
-        /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LLJit"/> class.</summary>
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is held in this instance" )]
-        public LlJIT( )
+        public LLJit( )
             : this( CreateDefaultWithoutBuilder() )
         {
         }
@@ -165,7 +165,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Handle.Dispose();
         }
 
-        internal LlJIT( LLVMOrcLLJITRef h )
+        internal LLJit( LLVMOrcLLJITRef h )
         {
             Handle = h.Move();
         }

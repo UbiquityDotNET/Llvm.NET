@@ -72,7 +72,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// Thus, after this method is called, it is not valid to use this instance except to
         /// call <see cref="Dispose"/>, which is a NOP.
         /// </remarks>
-        public LlJIT CreateJit( )
+        public LLJit CreateJit( )
         {
             ObjectDisposedException.ThrowIf( Handle.IsInvalid || Handle.IsClosed, this );
             using LLVMErrorRef err = LLVMOrcCreateLLJIT(Handle, out LLVMOrcLLJITRef jitHandle);
