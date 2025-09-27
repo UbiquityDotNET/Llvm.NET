@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
 
 using Ubiquity.NET.Runtime.Utils;
 using Ubiquity.NET.TextUX;
