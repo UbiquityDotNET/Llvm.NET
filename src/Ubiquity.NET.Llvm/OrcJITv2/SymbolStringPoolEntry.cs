@@ -18,6 +18,19 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// and used as needed. Thus, the overhead of marshalling the string is realized only the
     /// first time it is needed.
     /// </note>
+    /// <note type="important">
+    /// The ref count nature of an Entry is NOT consistent across LLVM APIs and requires the
+    /// caller to know the behavior of the API with respect to the ref count:
+    /// <list type="number">
+    /// <item>Simple Reference. [Temporary] ownership remains with the caller</item>
+    /// <item>API takes ownership. [Move] ownership is transferred to native implementation</item>
+    /// <item>API performs an addref. [Native 'Clone'] ownership of original Entry remains with caller</item>
+    /// </list>
+    /// This can make use very problematic. To simplify this and keep things consistent, the implementation
+    /// of the wrappers handles the special case of "Move" semantics, effectively converting it to a "Native
+    /// Clone" scenario. Thus, the caller owns the ref count of any entries and the odd and inconsistent
+    /// use of "move" semantics is handled internally so callers need not deal with that case directly.
+    /// </note>
     /// </remarks>
     public sealed class SymbolStringPoolEntry
         : IEquatable<SymbolStringPoolEntry>
@@ -26,21 +39,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 #endif
         , IDisposable
     {
-        /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class from another entry (Add ref construction)</summary>
-        /// <param name="other">Other string to make a new entry from</param>
-        /// <remarks>
-        /// In LLVM a <see cref="SymbolStringPoolEntry"/> is a pointer to a reference counted string. This constructor will create a new
-        /// entry that "owns" a ref count bump (AddRefHandle) on a source string (<paramref name="other"/>). Callers must dispose of the new
-        /// instance the same as the original one or the ref count is never reduced and the native memory never reclaimed (That is, it leaks!)
-        /// </remarks>
-        public SymbolStringPoolEntry( SymbolStringPoolEntry other )
-#pragma warning disable CA2000 // Dispose objects before losing scope
-            : this( other.Validate().AddRefHandle() )
-#pragma warning restore CA2000 // Dispose objects before losing scope
-        {
-            // TODO: optimize this to use any lazy evaluated values available in other
-        }
-
         /// <summary>Gets the managed string form of the native string</summary>
         /// <returns>managed string for this handle</returns>
         public override string? ToString( )
@@ -55,6 +53,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <inheritdoc/>
         public override bool Equals( object? obj )
         {
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
+
             return obj is SymbolStringPoolEntry other && Equals( other );
         }
 
@@ -69,8 +69,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// </remarks>
         public bool Equals( SymbolStringPoolEntry? other )
         {
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
+
             return other is not null
-                && (Handle.Equals( other.Handle ) || Equals( other.ReadOnlySpan ));
+                && (Handle!.Equals( other.Handle ) || Equals( other.ReadOnlySpan ));
         }
 
         /// <summary>Tests if the span of characters for this string is identical to the provided span</summary>
@@ -98,11 +100,23 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
         #endregion
 
-        /// <summary>Release the reference to the string</summary>
-        public void Dispose( )
-        {
-            Handle.Dispose();
-        }
+        /// <summary>Gets the name of this symbol</summary>
+        public LazyEncodedString Name => DeferredInitSymbolString.Value;
+
+#if DEBUG
+        /// <summary>Gets the current ref count for this entry</summary>
+        /// <remarks>
+        /// <note type="important">
+        /// The ref count is inherently an unreliable value as it is an atomic count that
+        /// can change from ANY thread. Thus, it is limited to only debug scenarios for
+        /// diagnosis of incorrect ref count handling. (which is sadly, rather easy, given
+        /// the inconsistent API usage where it sometimes assumes the ref count (MOVE semantics)
+        /// and other cases does it's own AddRef) <em><b>This requires a debug build of the Interop
+        /// library to get the underlying reference count.</b></em>
+        /// </note>
+        /// </remarks>
+        public nuint RefCount => Handle?.GetRefCount() ?? 0;
+#endif
 
         /// <summary>Gets a readonly span for the data in this string</summary>
         /// <returns>Span of the native characters in this string (as byte)</returns>
@@ -123,69 +137,77 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             }
         }
 
-        internal LLVMOrcSymbolStringPoolEntryRefAlias ToABI( )
+        /// <summary>Release the reference to the string</summary>
+        public void Dispose( )
+        {
+            if(!IsDisposed && Handle.IsOwned)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
+        }
+
+        /// <summary>Adds a reference count for the symbol resulting in a distinct managed instance with it's own ref count (released via <see cref="Dispose"/>)</summary>
+        /// <returns>New managed wrapper instance with it's own ref count to control the lifetime of the underlying symbol</returns>
+        /// <exception cref="ObjectDisposedException">Object is already disposed and therefore has no reference count</exception>
+        [MustUseReturnValue]
+        public SymbolStringPoolEntry AddRef()
+        {
+           ObjectDisposedException.ThrowIf(IsDisposed, this);
+
+           return new SymbolStringPoolEntry(Handle, addRef: true);
+        }
+
+        internal LLVMOrcSymbolStringPoolEntryRef MoveToNative()
         {
             ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            DangerousAddRef();
-            return LLVMOrcSymbolStringPoolEntryRefAlias.FromABI( Handle.DangerousGetHandle() );
+            return Handle.NativeAddRef();
         }
 
-        internal SymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef h )
+        /// <summary>This gets the underlying ABI handle</summary>
+        /// <param name="addRef">indicates if this operation should include a native addref on the underlying handle</param>
+        /// <returns>Underlying ABI handle</returns>
+        /// <remarks>
+        /// This is considered a "Dangerous" API as it gets at the underlying handle. If <paramref Name="addRef"/> is set
+        /// then the returned handle requires disposal.
+        /// </remarks>
+        [MustUseReturnValue]
+        internal LLVMOrcSymbolStringPoolEntryRef DangerousGetHandle( bool addRef = false )
         {
-            if(h.IsInvalid || h.IsClosed)
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
+
+            return addRef ? Handle.NativeAddRef() : Handle;
+        }
+
+        internal SymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef h, bool addRef = false )
+        {
+            if(h is null || h.IsInvalid || h.IsClosed)
             {
                 throw new ArgumentNullException( nameof( h ) );
             }
 
-            Handle = h.Move();
+            Handle = addRef && h.IsOwned ? h.NativeAddRef() : new(h.DangerousGetHandle(), h.IsOwned);
             DeferredInitSymbolString = new(()=>LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.PublicationOnly);
         }
 
+        /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class.</summary>
+        /// <param name="abiHandle">Native ABI handle</param>
+        /// <param name="alias">Flag to indicate whether this handle is an owned alias</param>
+        /// <remarks>Wraps a native ABI handle in a managed projected type</remarks>
         internal SymbolStringPoolEntry( nint abiHandle, bool alias = false )
         {
             Handle = new( abiHandle, !alias );
             DeferredInitSymbolString = new(()=>LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.PublicationOnly);
         }
 
-        internal LLVMOrcSymbolStringPoolEntryRef Handle { get; }
+        private LLVMOrcSymbolStringPoolEntryRef? Handle { get; set; }
 
-        /// <summary>Increases the ref count on this instance</summary>
-        /// <remarks>
-        /// This is generally only safe to do on an instance to pass into native code
-        /// that takes ownership of the new ref count BUT the managed caller still
-        /// needs to retain a reference to the string.
-        /// </remarks>
-        internal void DangerousAddRef( )
-        {
-            ObjectDisposedException.ThrowIf( IsDisposed, this );
-
-            LLVMOrcRetainSymbolStringPoolEntry( Handle );
-        }
-
-        /// <summary>Decreases the ref count on this instance</summary>
-        /// <remarks>
-        /// This is generally only safe to do in a catch handler to release
-        /// and AddRef if an exception occurs in an attempt to transfer ownership
-        /// into native code.
-        /// </remarks>
-        internal void DangerousRelease( )
-        {
-            ObjectDisposedException.ThrowIf( IsDisposed, this );
-
-            LLVMOrcReleaseSymbolStringPoolEntry( Handle );
-        }
-
+        [MemberNotNullWhen(false, nameof(Handle))]
         internal bool IsDisposed => Handle is null || Handle.IsClosed || Handle.IsInvalid;
 
-        private LLVMOrcSymbolStringPoolEntryRef AddRefHandle( )
-        {
-            DangerousAddRef();
-            return new( Handle.DangerousGetHandle(), owner: true );
-        }
-
         // Callers might never need the contents of the string so it is lazily
-        // initialize when needed. String pool entries are interned and thus are immutable, like a .NET string
+        // initialized when needed. String pool entries are interned and thus are immutable, like a .NET string
         private readonly Lazy<LazyEncodedString> DeferredInitSymbolString;
     }
 
@@ -193,7 +215,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "It's file scoped - where else is it supposed to go!?" )]
     file static class ValidationExtensions
     {
-        internal static SymbolStringPoolEntry Validate( this SymbolStringPoolEntry self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
+        internal static SymbolStringPoolEntry Validate( [NotNull] this SymbolStringPoolEntry self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
         {
             ArgumentNullException.ThrowIfNull( self, exp );
             ObjectDisposedException.ThrowIf( self.IsDisposed, self );

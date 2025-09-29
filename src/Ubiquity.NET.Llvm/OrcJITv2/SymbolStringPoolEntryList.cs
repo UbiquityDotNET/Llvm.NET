@@ -16,11 +16,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="index">Index of the entry to retrieve</param>
         /// <returns>Entry for this list</returns>
         /// <remarks>
-        /// The returned <see cref="SymbolStringPoolEntry"/> is an 'alias' to the actual entry
+        /// The returned <see cref="SymbolStringPoolEntry"/> is an 'alias' to the actual Entry
         /// there is NO ownership implied. Therefore the instance MUST not be stored anywhere.
         /// If an instance that outlives the underlying native owner is desired then you can
-        /// use the <see cref="SymbolStringPoolEntry.SymbolStringPoolEntry(SymbolStringPoolEntry)"/>
-        /// "add ref constructor" to gain ownership of the instance.
+        /// use the <see cref="SymbolStringPoolEntry.AddRef"/> method to gain ownership of
+        /// the instance.
         /// </remarks>
         public readonly SymbolStringPoolEntry this[ UInt64 index ] => GetItemAt( index );
 
@@ -58,7 +58,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             unsafe
             {
                 nint abiHandle = *(NativeArrayPtr + index);
-                return new( abiHandle );
+                return new( abiHandle, alias: true );
             }
         }
 

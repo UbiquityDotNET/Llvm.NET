@@ -8,5 +8,14 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMErrorRef LibLLVMExecutionSessionRemoveDyLib( LLVMOrcExecutionSessionRef session, LLVMOrcJITDylibRef lib );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static unsafe partial bool LibLLVMOrcSymbolStringPoolIsEmpty(LLVMOrcSymbolStringPoolRef ssp);
+
+        [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( DisposeMessageMarshaller ) )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial LazyEncodedString LibLLVMOrcSymbolStringPoolGetDiagnosticRepresentation( LLVMOrcSymbolStringPoolRef ssp );
     }
 }

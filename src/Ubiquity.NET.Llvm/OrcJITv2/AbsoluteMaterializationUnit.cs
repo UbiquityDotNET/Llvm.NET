@@ -20,12 +20,23 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             // make a native usable version of the array
             using IMemoryOwner<LLVMOrcCSymbolMapPair> nativeArrayOwner = absoluteSymbols.InitializeNativeCopy( );
-
-            // pin the memory and call the native API
-            using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
-            unsafe
+            try
             {
-                return LLVMOrcAbsoluteSymbols( (LLVMOrcCSymbolMapPair*)nativeMemHandle.Pointer, checked((nuint)absoluteSymbols.Count) );
+                // pin the memory and call the native API
+                using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
+                unsafe
+                {
+                    return LLVMOrcAbsoluteSymbols( (LLVMOrcCSymbolMapPair*)nativeMemHandle.Pointer, checked((nuint)absoluteSymbols.Count) );
+                }
+            }
+            catch
+            {
+                foreach( var pair in nativeArrayOwner.Memory.Span)
+                {
+                    pair.Name.NativeRelease();
+                }
+
+                throw;
             }
         }
     }

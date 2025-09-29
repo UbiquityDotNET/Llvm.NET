@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using System.Collections.Immutable;
+
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
@@ -39,7 +41,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public CustomMaterializationUnit(
             LazyEncodedString name,
             MaterializationAction materializeAction,
-            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
+            ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
             SymbolStringPoolEntry? initSymbol = null
             )
             : base( MakeHandle( name, symbols, materializeAction, null, initSymbol ) )
@@ -54,15 +56,21 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="initSymbol">Symbol of static initializer (if any)</param>
         /// <remarks>
         /// This implementation will maintain the lifetime of the provided delegates via an internally allocated disposable
-        /// until the materialization is completed or abandoned. If <paramref name="materializeAction"/> is not called, then
-        /// the <paramref name="discardAction"/> is. This allows for cases where the data used by the <paramref name="materializeAction"/>
+        /// until the materialization is completed or abandoned. If <paramref Name="materializeAction"/> is not called, then
+        /// the <paramref Name="discardAction"/> is. This allows for cases where the data used by the <paramref Name="materializeAction"/>
         /// is not held by the action itself or needs to support early disposal instead of remaining at the whims of the GC.
+        /// <note type="important">
+        /// If <paramref Name="initSymbol"/> is not <see langword="null"/> it <b><em>MUST</em></b> have
+        /// <see cref="SymbolGenericOption.MaterializationSideEffectsOnly"/> set AND this implementation takes ownership of
+        /// the ref count for this symbol (Move semantics). If callers want access to the string beyond this call they must
+        /// increment the ref count <b><em>before</em></b> calling this function.
+        /// </note>
         /// </remarks>
         public CustomMaterializationUnit(
             LazyEncodedString name,
             MaterializationAction materializeAction,
             DiscardAction? discardAction,
-            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
+            ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
             SymbolStringPoolEntry? initSymbol = null
             )
             : base( MakeHandle( name, symbols, materializeAction, discardAction, initSymbol ) )
@@ -72,7 +80,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         // Provides construction of a materialization unit handle for the base type
         private static LLVMOrcMaterializationUnitRef MakeHandle(
             LazyEncodedString name,
-            IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
+            ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols,
             MaterializationAction materializeAction,
             DiscardAction? discardAction,
             SymbolStringPoolEntry? initSymbol = null
@@ -80,38 +88,54 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             ArgumentNullException.ThrowIfNull( name );
             ArgumentNullException.ThrowIfNull( materializeAction );
+            ValidateInitSym(initSymbol, symbols);
+            LLVMOrcMaterializationUnitRef retVal;
 
             // This will internally manage the lifetime
-            using var materializer = new CustomMaterializer(materializeAction, discardAction);
-            unsafe
+#pragma warning disable IDE0063 // Use simple 'using' statement
+            using( var materializer = new CustomMaterializer(materializeAction, discardAction))
             {
-                using var nativeSyms = symbols.InitializeNativeCopy();
-                using var pinnedSyms = nativeSyms.Memory.Pin();
+                using(IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> nativeSyms = symbols.InitializeNativeCopy())
+                {
+                    nint nativeContext = materializer.AddRefAndGetNativeContext();
 
-                // Bump ref count for the native code to "own", it does NOT do this on it's
-                // own and instead assumes caller owns and "moves" the ref count responsibility.
-                initSymbol?.DangerousAddRef();
-                nint nativeContext = materializer.AddRefAndGetNativeContext();
-                try
-                {
-                    return LLVMOrcCreateCustomMaterializationUnit(
-                        name,
-                        (void*)nativeContext,
-                        (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
-                        checked((nuint)symbols.Count),
-                        initSymbol?.Handle ?? LLVMOrcSymbolStringPoolEntryRef.Zero,
-                        &NativeCallbacks.Materialize,
-                        materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,
-                        &NativeCallbacks.Destroy
-                        );
+                    // using expression ensures cleanup in case of exceptions...
+                    using var nativeInitSym = initSymbol?.DangerousGetHandle(addRef: true) ?? LLVMOrcSymbolStringPoolEntryRef.Zero;
+
+                    unsafe
+                    {
+                        using var pinnedSyms = nativeSyms.Memory.Pin();
+                        retVal = LLVMOrcCreateCustomMaterializationUnit(
+                            name,
+                            (void*)nativeContext,
+                            (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
+                            checked((nuint)symbols.Length),
+                            nativeInitSym,
+                            &NativeCallbacks.Materialize,
+                            materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,
+                            &NativeCallbacks.Destroy
+                            );
+
+                        // ownership of this symbol was moved to native, mark transfer so auto clean up (for exceptional cases)
+                        // does NOT kick in.
+                        nativeInitSym.SetHandleAsInvalid();
+                    }
                 }
-                catch
-                {
-                    // in the unlikely event of an exception; restore the ref count so it doesn't leak
-                    initSymbol?.DangerousRelease();
-                    materializer.Dispose();
-                    throw;
-                }
+            }
+#pragma warning restore IDE0063 // Use simple 'using' statement
+
+            return retVal;
+        }
+
+        [Conditional( "DEBUG" )]
+        private static void ValidateInitSym(
+            SymbolStringPoolEntry? initSym,
+            ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>> symbols
+            )
+        {
+            if(initSym is not null && !initSym.IsDisposed && symbols.Any( kvp => kvp.Key.Name.Equals( initSym.Name ) ))
+            {
+                throw new KeyNotFoundException($"Symbol '{initSym.Name} not found in '{nameof(symbols)}'");
             }
         }
 

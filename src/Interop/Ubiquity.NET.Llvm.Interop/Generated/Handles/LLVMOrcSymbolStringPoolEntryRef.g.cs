@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.Interop
         public override int GetHashCode() => handle.GetHashCode();
 
         /// <summary>Gets a Zero (<see langword="null"/>) value handle</summary>
-        public static LLVMOrcSymbolStringPoolEntryRef Zero { get; } = new LLVMOrcSymbolStringPoolEntryRef(nint.Zero, false);
+        public static LLVMOrcSymbolStringPoolEntryRef Zero => new LLVMOrcSymbolStringPoolEntryRef(nint.Zero, false);
 
         // Implicitly cast to an alias - still owned by this instance
         public static implicit operator LLVMOrcSymbolStringPoolEntryRefAlias(LLVMOrcSymbolStringPoolEntryRef self)

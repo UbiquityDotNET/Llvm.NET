@@ -3,10 +3,10 @@
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
-    // NOTE the overloads of ToABI() and InitializeNativeCopy() are all VERY similar (source identical but NOT IL identical).
-    // They are NOT generic as that would require some sort of generic interface for the ToABI() support and a factory
+    // NOTE the overloads of InitializeNativeCopy() are all VERY similar.
+    // They are NOT generic as that would require some sort of generic interface for the DangerousGetHandle() support and a factory
     // for the resulting pair. That would require either exposing raw interop types as part of the documented API surface
-    // of this library an explicit interface implementation, which would require boxing to get at the method... OR require
+    // of this library, an explicit interface implementation, which would require boxing to get at the method... OR require
     // specifying all the type requirements as generic parameters at the call site...
     //
     // Obviously, attempting to generalize this gets complicated for the implementation AND the call sites. So simple
@@ -15,21 +15,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     // TODO: Make projected structs layout compat with native so a copy isn't needed
     internal static class KvpMapExtensions
     {
-        internal static LLVMOrcCSymbolAliasMapPair ToABI( this KeyValuePair<SymbolStringPoolEntry, SymbolAliasMapEntry> pair )
-        {
-            return new( pair.Key.ToABI(), pair.Value.ToABI() );
-        }
-
-        internal static LLVMOrcCSymbolMapPair ToABI( this KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol> pair )
-        {
-            return new( pair.Key.ToABI(), pair.Value.ToABI() );
-        }
-
-        internal static LLVMOrcCSymbolFlagsMapPair ToABI( this KeyValuePair<SymbolStringPoolEntry, SymbolFlags> pair )
-        {
-            return new( pair.Key.ToABI(), pair.Value.ToABI() );
-        }
-
         // TODO: Make projected structs layout compat with native so a copy isn't needed
         internal static IMemoryOwner<LLVMOrcCSymbolMapPair> InitializeNativeCopy(
             [NotNull] this IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, EvaluatedSymbol>> symbols
@@ -41,15 +26,21 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             var nativeSpan = nativeArrayOwner.Memory.Span;
             int i = 0;
             using var enumerator = symbols.GetEnumerator();
+
             try
             {
                 for(; i < symbols.Count; ++i)
                 {
                     enumerator.MoveNext();
+                    var pair = enumerator.Current;
+                    if(pair.Key.IsDisposed)
+                    {
+                        throw new ArgumentException( "invalid string value", $"{nameof( symbols )}[{i}]" );
+                    }
 
-                    // NOTE: This will AddRef the handle for the name (Key)
-                    //       As the native code will assume ownership of the name
-                    nativeSpan[ i ] = enumerator.Current.ToABI();
+#pragma warning disable IDISP004 // Don't ignore created IDisposable; new Ref count is "moved" to native (recovered below on exception)
+                    nativeSpan[ i ] = new( pair.Key.DangerousGetHandle(addRef: true) , pair.Value.ToABI() );
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
             }
             catch
@@ -59,7 +50,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
-                    enumerator.Current.Key.DangerousRelease();
+                    using LLVMOrcSymbolStringPoolEntryRef h = enumerator.Current.Key.DangerousGetHandle();
                 }
 
                 throw;
@@ -79,15 +70,21 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             var nativeSpan = nativeArrayOwner.Memory.Span;
             int i = 0;
             using var enumerator = symbols.GetEnumerator();
+
             try
             {
                 for(; i < symbols.Count; ++i)
                 {
                     enumerator.MoveNext();
+                    var pair = enumerator.Current;
+                    if(pair.Key.IsDisposed)
+                    {
+                        throw new ArgumentException( "invalid string value", $"{nameof( symbols )}[{i}]" );
+                    }
 
-                    // NOTE: This will AddRef the handle for the name (Key)
-                    //       As the native code will assume ownership of the name
-                    nativeSpan[ i ] = enumerator.Current.ToABI();
+#pragma warning disable IDISP004 // Don't ignore created IDisposable; new Ref count is "moved" to native (recovered below on exception)
+                    nativeSpan[ i ] = new( pair.Key.DangerousGetHandle(addRef: true) , pair.Value.DangerousGetHandle( addRef: true) );
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
             }
             catch
@@ -97,7 +94,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
-                    enumerator.Current.Key.DangerousRelease();
+                    using var h = enumerator.Current.Key.DangerousGetHandle();
+
+                    // Not injected - whole point of this handler is to prevent dangling refs in face of exception
+                    #pragma warning disable IDISP007 // Don't dispose injected
+                        enumerator.Current.Value.Dispose();
+                    #pragma warning restore IDISP007 // Don't dispose injected
                 }
 
                 throw;
@@ -123,10 +125,15 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i < symbols.Count; ++i)
                 {
                     enumerator.MoveNext();
+                    var pair = enumerator.Current;
+                    if(pair.Key.IsDisposed)
+                    {
+                        throw new ArgumentException( "invalid string value", $"{nameof( symbols )}[{i}]" );
+                    }
 
-                    // NOTE: This will AddRef the handle for the name (Key)
-                    //       As the native code will assume ownership of the name
-                    nativeSpan[ i ] = enumerator.Current.ToABI();
+#pragma warning disable IDISP004 // Don't ignore created IDisposable; new Ref count is "moved" to native (recovered below on exception)
+                    nativeSpan[ i ] = new( pair.Key.DangerousGetHandle(addRef: true) , pair.Value.ToABI() );
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
             }
             catch
@@ -136,7 +143,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
-                    enumerator.Current.Key.DangerousRelease();
+                    using var h = enumerator.Current.Key.DangerousGetHandle();
                 }
 
                 throw;

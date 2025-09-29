@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull( name );
 
             // Deal with bad API design, converting errors to an exception and returning the result.
-            using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, name);
+            using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, name, out UInt64 retVal);
             errorRef.ThrowIfFailed();
             return retVal;
         }
