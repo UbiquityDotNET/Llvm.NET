@@ -62,7 +62,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
         }
 
-        private static IEnumerable<Constant> ZeroFill( ITypeRef elementType, int len, IList<Constant> values )
+        private static IEnumerable<Constant> ZeroFill( ITypeRef elementType, int len, Constant[] values )
         {
             foreach(var value in values)
             {
@@ -70,7 +70,7 @@ namespace Ubiquity.NET.Llvm.Values
             }
 
             var zeroVal = elementType.GetNullValue( );
-            for(int i = values.Count; i < len; ++i)
+            for(int i = values.Length; i < len; ++i)
             {
                 yield return zeroVal;
             }

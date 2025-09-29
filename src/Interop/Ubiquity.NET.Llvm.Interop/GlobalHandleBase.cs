@@ -139,7 +139,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// an extension method ensures type matching on the handle types AND improves readability
         /// and maintainability by declaring intent in a "self documenting" fashion.
         /// </remarks>
-        public static T CloneWithAddRef<T>( this T self )
+        public static T CloneWithManagedAddRef<T>( this T self )
             where T : GlobalHandleBase, new()
         {
             ArgumentNullException.ThrowIfNull( self );

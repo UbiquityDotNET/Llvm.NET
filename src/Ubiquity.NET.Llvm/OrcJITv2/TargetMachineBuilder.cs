@@ -47,7 +47,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         )
         {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            // Ownership transfered to return value.
+            // Ownership transferred to return value.
             return new( TargetMachine.HostMachine( optLevel, relocationMode, codeModel ) );
 #pragma warning restore CA2000 // Dispose objects before losing scope
             /*

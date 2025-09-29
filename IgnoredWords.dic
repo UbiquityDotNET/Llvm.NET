@@ -91,6 +91,7 @@ LValue
 malloc
 marshallers
 marshalling
+materializer
 memcopy
 memcpy
 metadata
@@ -154,6 +155,7 @@ Unhandled
 uniqued
 uniqueing
 unmarshal
+unreferenced
 Unshipped
 userdefinedop
 Users

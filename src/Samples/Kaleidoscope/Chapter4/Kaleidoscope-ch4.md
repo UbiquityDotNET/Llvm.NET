@@ -24,7 +24,7 @@ why that is a ConstantFP value.
 
 ### Code Generator
 The code generation needs an update to support using a JIT engine to generate and
-execute the Kaleidescope code provided by the user.
+execute the Kaleidoscope code provided by the user.
 
 #### Generator fields
 To begin with, the generator needs some additional members, including the JIT
@@ -70,7 +70,7 @@ to create a derived type using a builder.
 
 [!code-csharp[Kaleidoscope JIT](../../../Samples/Kaleidoscope/Kaleidoscope.Runtime/KaleidoscopeJIT.cs)]
 
-[LlJIT](xref:Ubiquity.NET.Llvm.OrcJITv2.LlJIT) provides support for declaring
+[LLJit](xref:Ubiquity.NET.Llvm.OrcJITv2.LLJit) provides support for declaring
 functions that are external to the JIT that the JIT'd module code can call (
 Absolutes). For Kaleidoscope, two such functions are defined directly in
 `KaleidoscopeJIT` (`putchard` and `printd`), which is consistent with the same 
@@ -127,7 +127,7 @@ check for the nullability of a module.
 
 #### Function Definitions
 Visiting a function definition needs to remove the previously added manual step of
-running the optimization passes. That is now handled by the Kaleidescope JIT as a
+running the optimization passes. That is now handled by the Kaleidoscope JIT as a
 transformation layer. Before final target code generation is performed on a symbol
 the transforms are run to perform any modifications desired. This makes the
 optimization process a lazy operation as well as the final target machine native

@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                                             out LLVMOrcLazyCallThroughManagerRef resultHandle
                                             );
 
-            // ownership is transferred to return, this handles release on exception
+            // ownership is transferred to return, this using scope handles release on exception
             using(resultHandle)
             {
                 errRef.ThrowIfFailed();

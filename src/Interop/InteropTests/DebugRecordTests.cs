@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using System;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
@@ -60,6 +62,24 @@ namespace Ubiquity.NET.Llvm.Interop.UT
             // Now attach debug records to the malloc.
             // first create the information to attach (It's a lot...)
             using LLVMDIBuilderRef diBuilder = LLVMCreateDIBuilder(module);
+            LLVMMetadataRef diFile = LLVMDIBuilderCreateFile(diBuilder, "testfile.cs"u8, Environment.CurrentDirectory);
+            LLVMMetadataRef diCU = LLVMDIBuilderCreateCompileUnit(
+                    diBuilder,
+                    LLVMDWARFSourceLanguage.LLVMDWARFSourceLanguageC_sharp,
+                    diFile,
+                    Producer: null,
+                    isOptimized: false,
+                    Flags: null,
+                    RuntimeVer: 0,
+                    SplitName: null,
+                    LLVMDWARFEmissionKind.LLVMDWARFEmissionFull,
+                    DWOId: 0,
+                    SplitDebugInlining: false,
+                    DebugInfoForProfiling: false,
+                    SysRoot: null,
+                    SDK: null
+                    );
+
             LLVMMetadataRef int32DiType = LLVMDIBuilderCreateBasicType(
                 diBuilder,
                 "int32_t"u8,
@@ -76,7 +96,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 Scope: default,
                 Name: "TestFunc"u8,
                 LinkageName: "_TestFunc"u8,
-                File: default,
+                File: diFile,
                 LineNo: 0,
                 Ty: diFuncType,
                 IsLocalToUnit: true,
@@ -85,11 +105,23 @@ namespace Ubiquity.NET.Llvm.Interop.UT
                 LLVMDIFlags.LLVMDIFlagPrivate,
                 IsOptimized: false
             );
+
+            var diLocalVar = LLVMDIBuilderCreateAutoVariable(
+                diBuilder,
+                scope,
+                Name: string.Empty,
+                File: diFile,
+                LineNo: 0,
+                int32PtrDiType,
+                AlwaysPreserve: false,
+                LLVMDIFlags.LLVMDIFlagArtificial,
+                4);
+
             LLVMMetadataRef diLocation = LLVMDIBuilderCreateDebugLocation(ctx, 123,4, scope, default);
 
             // Now attach the record to the result of the malloc call
             // and retest the status as it should be different now
-            LLVMDbgRecordRef dbgRecord = LLVMDIBuilderInsertDbgValueRecordBefore(diBuilder, mallocInst, int32PtrDiType, emptyExpression, diLocation, mallocInst);
+            LLVMDbgRecordRef dbgRecord = LLVMDIBuilderInsertDbgValueRecordBefore(diBuilder, mallocInst, diLocalVar, emptyExpression, diLocation, mallocInst);
             Assert.IsTrue( LibLLVMHasDbgRecords( mallocInst ) );
 
             // this should not crash now... [It shouldn't ever but that's another story...]

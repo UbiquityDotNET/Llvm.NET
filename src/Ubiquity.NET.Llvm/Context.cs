@@ -269,7 +269,7 @@ namespace Ubiquity.NET.Llvm
             NativeHandle = h.Move();
 
             // Create the implementation from this handle
-            AliasImpl = new( NativeHandle );
+            Impl = new( NativeHandle );
         }
 
         /// <inheritdoc/>
@@ -284,11 +284,10 @@ namespace Ubiquity.NET.Llvm
             get
             {
                 ObjectDisposedException.ThrowIf( IsDisposed, this );
-                return AliasImpl;
+                return field;
             }
         }
 
-        private readonly ContextAlias AliasImpl;
         private readonly LLVMContextRef NativeHandle;
     }
 }
