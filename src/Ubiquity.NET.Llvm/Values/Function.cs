@@ -55,7 +55,7 @@ namespace Ubiquity.NET.Llvm.Values
         {
             get => !LLVMHasPersonalityFn( Handle ) ? null : FromHandle<Function>( LLVMGetPersonalityFn( Handle.ThrowIfInvalid() ) )!;
 
-            set => LLVMSetPersonalityFn( Handle, value?.Handle ?? LLVMValueRef.Zero );
+            set => LLVMSetPersonalityFn( Handle, value?.Handle ?? default );
         }
 
         /// <summary>Gets or sets the debug information for this function</summary>
@@ -237,7 +237,7 @@ namespace Ubiquity.NET.Llvm.Values
 
             // While not explicitly documented either way, the PassBuilder used under the hood is capable
             // of handling a NULL target machine.
-            return new( LLVMRunPassesOnFunction( Handle, LazyEncodedString.Join( ',', passes ), LLVMTargetMachineRef.Zero, options.Handle ) );
+            return new( LLVMRunPassesOnFunction( Handle, LazyEncodedString.Join( ',', passes ), default, options.Handle ) );
         }
 
         /// <inheritdoc cref="TryRunPasses(LazyEncodedString[])"/>

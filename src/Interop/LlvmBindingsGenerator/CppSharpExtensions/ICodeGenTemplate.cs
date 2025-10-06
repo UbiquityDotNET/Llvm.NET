@@ -6,7 +6,7 @@
 //
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace LlvmBindingsGenerator.Templates
+namespace LlvmBindingsGenerator.CppSharpExtensions
 {
     internal interface ICodeGenTemplate
     {

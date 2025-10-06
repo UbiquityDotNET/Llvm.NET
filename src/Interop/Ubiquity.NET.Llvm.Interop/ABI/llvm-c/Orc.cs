@@ -172,7 +172,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         /// </remarks>
         public LLVMOrcCLookupSetElement( LLVMOrcSymbolStringPoolEntryRef name, LLVMOrcSymbolLookupFlags flags )
         {
-            ArgumentNullException.ThrowIfNull( name );
+            if(name.IsNull)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             // Responsibility for disposal moved to native or catch handler on exception before handing to native.
             Name = name.AddRefToNative();
@@ -386,18 +389,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
             LLVMOrcMaterializationResponsibilityRef MR,
             LLVMOrcSymbolStringPoolEntryRef[] Symbols,
-            /*[MaybeNullIfFailed]*/out LLVMOrcMaterializationResponsibilityRef? Result
+            /*[MaybeNullIfFailed]*/out LLVMOrcMaterializationResponsibilityRef Result
             )
         {
-            // Workaround for language limits
-            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/lambda-expression-errors?f1url=%3FappId%3Droslyn%26k%3Dk(CS1628)#syntax-limitations-in-lambda-expressions
-            LLVMOrcMaterializationResponsibilityRef? result2 = null;
-            var retVal = RefHandleMarshaller.WithNativePointer(
-                Symbols,
-                ( p, s ) => LLVMOrcMaterializationResponsibilityDelegate( MR, p, checked((nuint)s), out result2 )
-            );
-            Result = result2;
-            return retVal;
+            return LLVMOrcMaterializationResponsibilityDelegate(MR, Symbols, (uint)Symbols.Length, out Result);
         }
 
         // NOTE: The normal ArrayMarshaller and SafeHandleMarshaller are NOT capable of handling arrays of references to safe handles,
@@ -407,9 +402,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
             LLVMOrcMaterializationResponsibilityRef MR,
-            /*[In] LLVMOrcSymbolStringPoolEntryRef[]*/ nint* Symbols,
+            [In] LLVMOrcSymbolStringPoolEntryRef[] Symbols,
             nuint NumSymbols,
-            out LLVMOrcMaterializationResponsibilityRef Result
+            /*[MaybeNullIfFailed]*/ out LLVMOrcMaterializationResponsibilityRef Result
             );
 
         [LibraryImport( LibraryName )]

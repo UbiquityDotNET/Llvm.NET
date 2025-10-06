@@ -30,6 +30,17 @@ namespace Ubiquity.NET.Extensions
             disposeOp!();
         }
 
+        /// <summary>Creates the an implementation of <see cref="IDisposable"/> that does nothing for the "Null Object" pattern</summary>
+        /// <returns>The <see cref="IDisposable"/> that does nothing on <see cref="IDisposable.Dispose"/></returns>
+        /// <remarks>
+        /// The instance returned is allocated from the managed heap to ensure that <see cref="IDisposable.Dispose"/> is
+        /// called only once (any additional call results in an <see cref="ObjectDisposedException"/>).
+        /// </remarks>
+        public static IDisposable CreateNOP()
+        {
+            return new DisposableAction(()=> { });
+        }
+
         private Action? OnDispose;
     }
 }

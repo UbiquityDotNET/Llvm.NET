@@ -30,8 +30,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             LLVMOrcIRTransformLayerEmit( Handle, r.Handle, tsm.Handle );
 
             // transfer of ownership complete, mark them as such now.
-            tsm.Handle.SetHandleAsInvalid();
-            r.Handle.SetHandleAsInvalid();
+            tsm.InvalidateAfterMove();
+            r.InvalidateAfterMove();
         }
 
         /// <summary>Sets the transform function for the transform layer</summary>
@@ -53,7 +53,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Handle = h;
         }
 
-        internal LLVMOrcIRTransformLayerRef Handle { get; init; }
+        internal LLVMOrcIRTransformLayerRef Handle { get; }
 
         // internal keep alive holder for a native call back as a delegate
         private sealed class TransformCallback
@@ -117,7 +117,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 #pragma warning restore IDISP001 // Dispose created
                     if(replacedMod is not null)
                     {
-                        *modInOut = replacedMod.Handle.MoveToNative();
+                        *modInOut = replacedMod.Move();
                     }
 
                     // default LLVMErrorRef is 0 which indicates success.

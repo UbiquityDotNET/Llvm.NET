@@ -27,24 +27,24 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     public sealed class Context
         : IContext
-        , IGlobalHandleOwner<LLVMContextRef>
+        , IDisposable
         , IEquatable<Context>
     {
         #region IEquatable<T>
 
         /// <inheritdoc/>
-        public bool Equals( IContext? other ) => other is not null && ((LLVMContextRefAlias)NativeHandle).Equals( other.GetUnownedHandle() );
+        public bool Equals( IContext? other ) => other is not null && ((LLVMContextRefAlias)Handle).Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals( Context? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
+        public bool Equals( Context? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override bool Equals( object? obj ) => obj is Context owner
-                                                  ? Equals( owner )
-                                                  : Equals( obj as IContext );
+                                                      ? Equals( owner )
+                                                      : Equals( obj as IContext );
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
 
         #endregion
 
@@ -64,7 +64,6 @@ namespace Ubiquity.NET.Llvm
         /// the call stack of the creator of any owned handle is captured to make it easier to find
         /// the cause of such things.)
         /// </remarks>
-        /// <seealso cref="Ubiquity.NET.Llvm.Interop.GlobalHandleBase"/>
         public Context( )
             : this( LLVMContextCreate() )
         {
@@ -256,28 +255,35 @@ namespace Ubiquity.NET.Llvm
         #endregion
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
-        public bool IsDisposed => NativeHandle is null || NativeHandle.IsInvalid || NativeHandle.IsClosed;
+        public bool IsDisposed => Handle.IsNull;
 
         /// <inheritdoc/>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
         public void Dispose( )
         {
-            NativeHandle.Dispose();
+            if(Handle != nint.Zero)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
         }
 
         internal Context( LLVMContextRef h )
         {
-            NativeHandle = h.Move();
+            Handle = h;
 
             // Create the implementation from this handle
-            Impl = new( NativeHandle );
+            Impl = new( LLVMContextRef.FromABI(Handle ) );
         }
 
-        /// <inheritdoc/>
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]
-        LLVMContextRef IGlobalHandleOwner<LLVMContextRef>.OwnedHandle => NativeHandle;
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Constructor uses move semantics")]
+        internal LLVMContextRef Handle { get; private set; }
 
-        /// <inheritdoc/>
-        void IGlobalHandleOwner<LLVMContextRef>.InvalidateFromMove( ) => NativeHandle.SetHandleAsInvalid();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
 
         private ContextAlias Impl
         {
@@ -287,7 +293,5 @@ namespace Ubiquity.NET.Llvm
                 return field;
             }
         }
-
-        private readonly LLVMContextRef NativeHandle;
     }
 }

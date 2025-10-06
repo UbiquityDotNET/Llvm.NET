@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Values
                 return handle == default ? null : FromHandle<Constant>( handle );
             }
 
-            set => LLVMSetInitializer( Handle, value?.Handle ?? LLVMValueRef.Zero );
+            set => LLVMSetInitializer( Handle, value?.Handle ?? default );
         }
 
         /// <summary>Adds a <see cref="DIGlobalVariableExpression"/> for a <see cref="GlobalVariable"/></summary>

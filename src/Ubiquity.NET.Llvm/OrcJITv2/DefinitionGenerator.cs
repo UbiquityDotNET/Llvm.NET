@@ -8,22 +8,30 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : DisposableObject
     {
         /// <inheritdoc/>
+        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "OWNED by this class; Constructor has move semantics" )]
         protected override void Dispose( bool disposing )
         {
-            if(disposing)
+            if(disposing && !Handle.IsNull)
             {
                 Handle.Dispose();
+                InvalidateAfterMove();
             }
 
             base.Dispose( disposing );
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
+
         [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Ordering is correct, analyzer is too rigid to allow customization" )]
         internal DefinitionGenerator( LLVMOrcDefinitionGeneratorRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        internal LLVMOrcDefinitionGeneratorRef Handle { get; }
+        internal LLVMOrcDefinitionGeneratorRef Handle { get; private set; }
     }
 }

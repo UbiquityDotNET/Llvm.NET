@@ -12,24 +12,28 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Initializes a new instance of the <see cref="LocalIndirectStubsManager"/> class.</summary>
         /// <param name="triple">Triple string for the manager</param>
         public LocalIndirectStubsManager( LazyEncodedString triple )
-            : this( MakeHandle( triple ) )
         {
+            triple.ThrowIfNullOrWhiteSpace( );
+            Handle = LLVMOrcCreateLocalIndirectStubsManager( triple );
         }
 
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
+        }
 
         internal LocalIndirectStubsManager( LLVMOrcIndirectStubsManagerRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        internal LLVMOrcIndirectStubsManagerRef Handle { get; }
-
-        private static LLVMOrcIndirectStubsManagerRef MakeHandle( LazyEncodedString triple, [CallerArgumentExpression( nameof( triple ) )] string? exp = null )
-        {
-            triple.ThrowIfNullOrWhiteSpace( exp );
-            return LLVMOrcCreateLocalIndirectStubsManager( triple );
-        }
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Constructor uses move semantics")]
+        internal LLVMOrcIndirectStubsManagerRef Handle { get; private set; }
     }
 }

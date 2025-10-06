@@ -106,7 +106,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             using LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle);
             errRef.ThrowIfFailed();
-            module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
+            module.InvalidateAfterMove(); // transfer to native complete, handle is no longer usable
         }
 
         /// <summary>Adds a module to the JIT</summary>
@@ -130,7 +130,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             using LLVMErrorRef errorRef = LLVMOrcLLJITAddLLVMIRModuleWithRT(Handle, tracker.Handle, module.Handle);
             errorRef.ThrowIfFailed();
-            module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
+            module.InvalidateAfterMove(); // transfer to native complete, handle is no longer usable
         }
 
         /// <summary>Mangles and interns a symbol in the JIT's symbol pool</summary>
@@ -160,21 +160,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <inheritdoc/>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
         }
 
         internal LLJit( LLVMOrcLLJITRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        private readonly LLVMOrcLLJITRef Handle;
+        internal LLVMOrcLLJITRef Handle { get; private set; }
 
         private static LLVMOrcLLJITRef CreateDefaultWithoutBuilder( )
         {
-            using var errorRef = LLVMOrcCreateLLJIT(LLVMOrcLLJITBuilderRef.Zero, out LLVMOrcLLJITRef retVal);
+            using var errorRef = LLVMOrcCreateLLJIT(default, out LLVMOrcLLJITRef retVal);
             errorRef.ThrowIfFailed();
             return retVal;
         }

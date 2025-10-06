@@ -26,7 +26,7 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             nint abiHandle = self.DangerousGetHandle();
             LLVMOrcRetainSymbolStringPoolEntry(abiHandle);
-            return new(abiHandle, owner: true);
+            return LLVMOrcSymbolStringPoolEntryRef.FromABI(abiHandle);
         }
 
         /// <summary>Performs a decrement of the ref count (Release) on the native instance</summary>
@@ -61,7 +61,7 @@ namespace Ubiquity.NET.Llvm.Interop
         {
             nint abiHandle = self.DangerousGetHandle();
             LLVMOrcRetainSymbolStringPoolEntry(abiHandle);
-            return new(abiHandle, owner: true);
+            return LLVMOrcSymbolStringPoolEntryRef.FromABI(abiHandle);
         }
 
         /// <summary>Performs a decrement of the ref count (Release) on the native instance</summary>

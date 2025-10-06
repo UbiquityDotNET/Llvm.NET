@@ -41,25 +41,24 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     public sealed class Module
         : IModule
-        , IGlobalHandleOwner<LLVMModuleRef>
         , IDisposable
         , IEquatable<Module>
     {
         #region IEquatable<>
 
         /// <inheritdoc/>
-        public bool Equals( IModule? other ) => other is not null && ((LLVMModuleRefAlias)NativeHandle).Equals( other.GetUnownedHandle() );
+        public bool Equals( IModule? other ) => other is not null && ((LLVMModuleRefAlias)Handle).Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals( Module? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
+        public bool Equals( Module? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override bool Equals( object? obj ) => obj is Module owner
-                                                  ? Equals( owner )
-                                                  : Equals( obj as IModule );
+                                                      ? Equals( owner )
+                                                      : Equals( obj as IModule );
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
         #endregion
 
         /// <summary>Name of the Debug Version information module flag</summary>
@@ -69,10 +68,18 @@ namespace Ubiquity.NET.Llvm
         public static readonly LazyEncodedString DwarfVersionValue = "Dwarf Version"u8;
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
-        public bool IsDisposed => NativeHandle is null || NativeHandle.IsInvalid || NativeHandle.IsClosed;
+        public bool IsDisposed => Handle == nint.Zero;
 
         /// <inheritdoc/>
-        public void Dispose( ) => NativeHandle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected",  Justification = "This instance is the owner")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
+        }
 
         #region IModule (via Impl)
 
@@ -300,38 +307,41 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( buffer );
             ArgumentNullException.ThrowIfNull( context );
 
-#pragma warning disable CA2000 // Dispose objects before losing scope
-
             // modRef is invalid on failed conditions and transferred to new module on success; Dispose not needed
             return LLVMParseBitcodeInContext2( context.GetUnownedHandle(), buffer.Handle, out LLVMModuleRef modRef ).Failed
                 ? throw new InternalCodeGeneratorException( Resources.Could_not_parse_bit_code_from_buffer )
                 : new( modRef );
-#pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
         internal Module( LLVMModuleRef h )
         {
-            NativeHandle = h.Move();
-            AliasImpl = new( NativeHandle );
+            Handle = h;
+            Impl = new(LLVMModuleRefAlias.FromABI(Handle));
         }
 
-        /// <inheritdoc/>
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]
-        LLVMModuleRef IGlobalHandleOwner<LLVMModuleRef>.OwnedHandle => NativeHandle;
+        internal LLVMModuleRef Handle { get; set; }
 
-        /// <inheritdoc/>
-        void IGlobalHandleOwner<LLVMModuleRef>.InvalidateFromMove( ) => NativeHandle.SetHandleAsInvalid();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
+
+        internal LLVMModuleRef Move( )
+        {
+            var retVal = Handle;
+            InvalidateAfterMove();
+            return retVal;
+        }
 
         private ModuleAlias Impl
         {
             get
             {
                 ObjectDisposedException.ThrowIf( IsDisposed, this );
-                return AliasImpl;
+                return field;
             }
+            set;
         }
-
-        private readonly ModuleAlias AliasImpl;
-        private readonly LLVMModuleRef NativeHandle;
     }
 }

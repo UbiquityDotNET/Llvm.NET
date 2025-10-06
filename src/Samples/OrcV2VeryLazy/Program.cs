@@ -107,7 +107,10 @@ internal class Program
 
                 // Not a known symbol - fail the materialization request.
                 r.Fail();
+#pragma warning disable IDISP007 // Don't dispose injected
+                // ABI requires disposal in this case
                 r.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                 return;
             }
 

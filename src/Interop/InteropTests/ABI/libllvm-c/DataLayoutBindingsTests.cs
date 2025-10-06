@@ -4,8 +4,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
 
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DataLayoutBindings;
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;
 
 namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
 {
@@ -15,11 +17,15 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
         [TestMethod]
         public void LibLLVMParseDataLayoutTest( )
         {
-            using(var errorRef = LibLLVMParseDataLayout( "badlayout"u8, out LLVMTargetDataRef retVal ))
-            using(retVal)
+            using(LLVMErrorRef errorRef = LibLLVMParseDataLayout( "badlayout"u8, out LLVMTargetDataRef retVal ))
             {
-                Assert.IsTrue( retVal.IsInvalid );
+                Assert.IsTrue( retVal.IsNull );
                 Assert.IsTrue( errorRef.Failed );
+                Assert.IsFalse( errorRef.Success);
+                Assert.IsFalse( errorRef.IsNull );
+                Assert.IsTrue( errorRef.IsString );
+                Assert.AreEqual(LLVMGetStringErrorTypeId(), errorRef.TypeId);
+                Assert.AreNotEqual( 0, errorRef.DangerousGetHandle() );
                 string errMsg = errorRef.ToString();
                 Assert.IsFalse( string.IsNullOrWhiteSpace( errMsg ), "Failure should have an error message" );
             }
@@ -31,7 +37,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
             {
                 Assert.IsFalse( errorRef.Failed );
                 Assert.IsTrue( errorRef.Success );
-                Assert.IsFalse( retVal.IsInvalid );
+                Assert.IsFalse( retVal.IsNull );
                 string errMsg = errorRef.ToString();
                 Assert.IsTrue( string.IsNullOrWhiteSpace( errMsg ), "Valid layout should NOT have an error message" );
             }

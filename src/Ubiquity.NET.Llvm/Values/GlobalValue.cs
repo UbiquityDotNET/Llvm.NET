@@ -133,6 +133,7 @@ namespace Ubiquity.NET.Llvm.Values
         public bool IsDeclaration => LLVMIsDeclaration( Handle );
 
         /// <summary>Gets the ModuleHandle containing this global value</summary>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP004:Don't ignore created IDisposable", Justification = "Move semantics")]
         public IModule ParentModule => new ModuleAlias( LLVMGetGlobalParent( Handle ) );
 
         /// <summary>Gets the Value Type of this global value instance</summary>

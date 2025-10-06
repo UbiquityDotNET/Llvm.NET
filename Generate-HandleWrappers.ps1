@@ -8,7 +8,15 @@
     that only supports the X64 architecture. Automated builds may (at some point in the future)
     run on any architecture supported by .NET so cannot generate the sources at build time. A developer
     machine generating the wrappers is assumed X64 (Windows, Linux, or Mac)
+
+.PARAMETER SkipRun
+    This parameter is used for inner loop testing to generate the response file so the paths
+    match the actual version of the package used. It skips actually building/running the
+    generator so that a developer can debug the run of that stage.
 #>
+Param(
+    [switch]$SkipRun
+)
 
 Push-Location $PSScriptRoot
 $oldPath = $env:Path
@@ -21,8 +29,11 @@ try
     Write-Information "Generating response file: $rspPath via GenerateResponseFile target in $generatorProj"
     dotnet msbuild -restore -target:GenerateResponseFile -property:HandleGeneratorResponeFilePath=`""$rspPath"`" $generatorProj
 
-    Write-Information 'Generating Handle wrapper source...'
-    dotnet run --no-restore --project $generatorProj -- @$rspPath
+    if(!$SkipRun)
+    {
+        Write-Information 'Generating Handle wrapper source...'
+        dotnet run --no-restore --project $generatorProj -- @$rspPath
+    }
 }
 catch
 {

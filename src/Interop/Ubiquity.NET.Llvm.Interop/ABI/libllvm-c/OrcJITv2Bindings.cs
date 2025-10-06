@@ -17,5 +17,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [LibraryImport( LibraryName, StringMarshallingCustomType = typeof( DisposeMessageMarshaller ) )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LazyEncodedString LibLLVMOrcSymbolStringPoolGetDiagnosticRepresentation( LLVMOrcSymbolStringPoolRef ssp );
+
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        public static unsafe partial void LibLLVMOrcSymbolStringPoolWriteDebugRepresentation(LLVMOrcSymbolStringPoolRef SSP);
     }
 }

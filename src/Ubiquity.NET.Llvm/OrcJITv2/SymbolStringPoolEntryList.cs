@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// The entries in this list are NOT owned by this implementation. The <see cref="Dispose"/>
     /// method will dispose this list but NOT the individual strings themselves.
     /// </remarks>
-    public ref struct SymbolStringPoolEntryList
+    public readonly ref struct SymbolStringPoolEntryList
     {
         /// <summary>Gets a single entry from the list</summary>
         /// <param name="index">Index of the entry to retrieve</param>
@@ -22,10 +22,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// use the <see cref="SymbolStringPoolEntry.AddRef"/> method to gain ownership of
         /// the instance.
         /// </remarks>
-        public readonly SymbolStringPoolEntry this[ UInt64 index ] => GetItemAt( index );
+        public SymbolStringPoolEntry this[ UInt64 index ] => GetItemAt( index );
 
         /// <summary>Gets the number of elements in this list</summary>
-        public readonly UInt64 Count { get; }
+        public UInt64 Count { get; }
 
         /// <summary>Disposes of this array of entries</summary>
         /// <remarks>
@@ -36,11 +36,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             unsafe
             {
-                if(NativeArrayPtr is not null)
-                {
-                    LLVMOrcDisposeSymbols( NativeArrayPtr );
-                    NativeArrayPtr = null;
-                }
+                LLVMOrcDisposeSymbols( NativeArrayPtr );
             }
         }
 
@@ -50,8 +46,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Count = len;
         }
 
-        // CONSIDER: This should return a dedicated ref struct type so that the rules of ownership are enforced by compiler instead of documentation...
-        private readonly SymbolStringPoolEntry GetItemAt( UInt64 index )
+        private SymbolStringPoolEntry GetItemAt( UInt64 index )
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan( index, Count );
 
@@ -62,6 +57,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             }
         }
 
-        private unsafe nint* NativeArrayPtr;
+        private readonly unsafe nint* NativeArrayPtr;
     }
 }

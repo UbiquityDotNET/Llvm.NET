@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm.Interop
         /// details. This is an unfortunate state of affairs as knowing the count is an important
         /// diagnostic for detection of when the count is off (extra decrement or dangling references)</note>
         /// </remarks>
-        public static ImmutableArray<SymbolEntryInfo> GetSymbolsInPool(this LLVMOrcSymbolStringPoolRef h)
+        public static ImmutableArray<SymbolEntryInfo> GetSymbolsInPool( this LLVMOrcSymbolStringPoolRef h )
         {
             // CAUTION:
             // This is a bit dodgy in that it depends on undocumented behavior.
@@ -49,10 +49,19 @@ namespace Ubiquity.NET.Llvm.Interop
             string fullString = LibLLVMOrcSymbolStringPoolGetDiagnosticRepresentation(h);
             var q = from entry in fullString.Split('\n')
                     where !string.IsNullOrWhiteSpace(entry)
-                    let x = entry.Split(':')
+                    let x = SplitEntry(entry)
                     select new SymbolEntryInfo(x[0], int.Parse(x[1], CultureInfo.InvariantCulture));
 
             return [ .. q ];
+        }
+
+        private static string[] SplitEntry( string entry )
+        {
+            // handle symbols with ':' in name by searching in reverse to find first one
+            int pos = entry.LastIndexOf(':');
+            return pos >= 0
+                   ? [ entry[ ..pos ], entry[ (pos + 1).. ] ]
+                   : throw new InvalidDataException( "Unknown entry format" );
         }
     }
 }

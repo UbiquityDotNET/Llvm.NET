@@ -18,7 +18,6 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     public sealed class DataLayout
         : IDataLayout
-        , IGlobalHandleOwner<LLVMTargetDataRef>
         , IDisposable
         , IEquatable<DataLayout>
         , IEquatable<IDataLayout>
@@ -105,12 +104,17 @@ namespace Ubiquity.NET.Llvm
         #endregion
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
-        public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
+        public bool IsDisposed => Handle.IsNull;
 
         /// <inheritdoc/>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected",  Justification = "This instance is the owner")]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
         }
 
         /// <summary>Parses a data layout from a textual representation</summary>
@@ -118,16 +122,12 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Parsed <see cref="DataLayout"/></returns>
         public static DataLayout Parse( LazyEncodedString text )
         {
-#pragma warning disable IDISP007 // Don't dispose injected
-            // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
-            // nativeRef is NOT injected, it's an OUT param and owned by this call site
             using var errRef = LibLLVMParseDataLayout(text, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
             {
                 errRef.ThrowIfFailed();
                 return new( nativeRef );
             }
-#pragma warning restore IDISP007 // Don't dispose injected
         }
 
         /// <summary>Tries to parse a <see cref="DataLayout"/> from a string representation</summary>
@@ -138,9 +138,6 @@ namespace Ubiquity.NET.Llvm
         {
             result = null;
 
-#pragma warning disable IDISP007 // Don't dispose injected
-            // see: https://github.com/DotNetAnalyzers/IDisposableAnalyzers/issues/580
-            // nativeRef is NOT injected, it's an OUT param and owned by this call site
             using var errRef = LibLLVMParseDataLayout(txt, out LLVMTargetDataRef nativeRef);
             using(nativeRef)
             {
@@ -152,42 +149,40 @@ namespace Ubiquity.NET.Llvm
                 result = new( nativeRef );
                 return true;
             }
-#pragma warning restore IDISP007 // Don't dispose injected
         }
 
+        // MOVE semantics for the handle, this instance takes on the responsibility of disposal
         internal DataLayout( LLVMTargetDataRef targetDataHandle, [CallerArgumentExpression( nameof( targetDataHandle ) )] string? exp = null )
         {
-            if(targetDataHandle is null || targetDataHandle.IsInvalid || targetDataHandle.IsClosed)
+            if(targetDataHandle.IsNull)
             {
                 throw new ArgumentException( "Invalid handle", exp );
             }
 
-            Handle = targetDataHandle.Move();
+            Handle = targetDataHandle;
 
             // Implementation is an alias handle, which is a value type that is
             // essentially a "typedef" for the opaque handle [nint, (void*)]
-            AliasImpl__ = new( Handle );
+            Impl = new( Handle );
         }
 
-        /// <inheritdoc/>
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]
-        LLVMTargetDataRef IGlobalHandleOwner<LLVMTargetDataRef>.OwnedHandle => Handle;
+        internal LLVMTargetDataRef Handle { get; private set; }
 
-        /// <inheritdoc/>
-        void IGlobalHandleOwner<LLVMTargetDataRef>.InvalidateFromMove( ) => Handle.SetHandleAsInvalid();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
 
-        private readonly LLVMTargetDataRef Handle;
-
-        // TODO: In C#14 convert this to using "field" keyword.
         private DataLayoutAlias Impl
         {
             get
             {
                 ObjectDisposedException.ThrowIf( IsDisposed, this );
-                return AliasImpl__;
+                return field;
             }
-        }
 
-        private readonly DataLayoutAlias AliasImpl__;
+            set;
+        }
     }
 }

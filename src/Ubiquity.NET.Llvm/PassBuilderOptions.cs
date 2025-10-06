@@ -8,7 +8,7 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.PassBuilder;
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Class to hold options for an LLVM pass builder</summary>
-    public readonly ref struct PassBuilderOptions
+    public ref struct PassBuilderOptions
     {
         /// <summary>Initializes a new instance of the <see cref="PassBuilderOptions"/> struct.</summary>
         public PassBuilderOptions( )
@@ -26,6 +26,7 @@ namespace Ubiquity.NET.Llvm
         /// The verifier pass ensures that all functions in the module are valid. This
         /// is especially useful during debugging and IR generation development.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool VerifyEach
         {
             get => LibLLVMPassBuilderOptionsGetVerifyEach( Handle );
@@ -33,6 +34,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets or Sets a value indicating whether debug logging is used when running passes</summary>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool DebugLogging
         {
             get => LibLLVMPassBuilderOptionsGetDebugLogging( Handle );
@@ -43,6 +45,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool LoopInterleaving
         {
             get => LibLLVMPassBuilderOptionsGetLoopInterleaving( Handle );
@@ -53,6 +56,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool LoopVectorization
         {
             get => LibLLVMPassBuilderOptionsGetLoopVectorization( Handle );
@@ -63,6 +67,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool SLPVectorization
         {
             get => LibLLVMPassBuilderOptionsGetSLPVectorization( Handle );
@@ -73,6 +78,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool LoopUnrolling
         {
             get => LibLLVMPassBuilderOptionsGetLoopUnrolling( Handle );
@@ -83,6 +89,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool ForgetAllSCEVInLoopUnroll
         {
             get => LibLLVMPassBuilderOptionsGetForgetAllSCEVInLoopUnroll( Handle );
@@ -93,6 +100,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool CallGraphProfile
         {
             get => LibLLVMPassBuilderOptionsGetCallGraphProfile( Handle );
@@ -103,6 +111,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public bool MergeFunctions
         {
             get => LibLLVMPassBuilderOptionsGetMergeFunctions( Handle );
@@ -110,6 +119,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets or sets a value for a custom Alias Analysis pipeline</summary>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public string AliasAnalysisPipeline
         {
             get => LibLLVMPassBuilderOptionsGetAAPipeline( Handle ) ?? string.Empty;
@@ -120,6 +130,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public uint LicmMssaOptCap
         {
             get => LibLLVMPassBuilderOptionsGetLicmMssaOptCap( Handle );
@@ -130,6 +141,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public uint LicmMssaNoAccForPromotionCap
         {
             get => LibLLVMPassBuilderOptionsGetLicmMssaNoAccForPromotionCap( Handle );
@@ -140,6 +152,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// LLVM-C APIs are lacking documentation on this, so the information is sadly vague.
         /// </remarks>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public int InlinerThreshold
         {
             get => LibLLVMPassBuilderOptionsGetInlinerThreshold( Handle );
@@ -147,16 +160,22 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Disposes the underlying LLVM handle</summary>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics - not readonly" )]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
         }
 
-        internal LLVMPassBuilderOptionsRef Handle { get; init; }
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Constructor uses move semantics")]
+        internal LLVMPassBuilderOptionsRef Handle { get; private set; }
 
-        private PassBuilderOptions( LLVMPassBuilderOptionsRef handle )
+        private PassBuilderOptions( LLVMPassBuilderOptionsRef h )
         {
-            Handle = handle.Move();
+            Handle = h;
         }
     }
 }

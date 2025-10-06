@@ -12,16 +12,15 @@ namespace Ubiquity.NET.Llvm
     // internal type for an unowned (alias) context
     internal sealed class ContextAlias
         : IContext
-        , IHandleWrapper<LLVMContextRefAlias>
         , IEquatable<ContextAlias>
     {
         #region IEquatable<T>
 
         /// <inheritdoc/>
-        public bool Equals( IContext? other ) => other is not null && NativeHandle.Equals( other.GetUnownedHandle() );
+        public bool Equals( IContext? other ) => other is not null && Handle.Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals( ContextAlias? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
+        public bool Equals( ContextAlias? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override bool Equals( object? obj ) => obj is ContextAlias alias
@@ -29,39 +28,39 @@ namespace Ubiquity.NET.Llvm
                                                   : Equals( obj as IContext );
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
 
         #endregion
 
-        public ITypeRef VoidType => LLVMVoidTypeInContext( NativeHandle ).CreateType();
+        public ITypeRef VoidType => LLVMVoidTypeInContext( Handle ).CreateType();
 
-        public ITypeRef BoolType => LLVMInt1TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef BoolType => LLVMInt1TypeInContext( Handle ).CreateType();
 
-        public ITypeRef Int8Type => LLVMInt8TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef Int8Type => LLVMInt8TypeInContext( Handle ).CreateType();
 
-        public ITypeRef Int16Type => LLVMInt16TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef Int16Type => LLVMInt16TypeInContext( Handle ).CreateType();
 
-        public ITypeRef Int32Type => LLVMInt32TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef Int32Type => LLVMInt32TypeInContext( Handle ).CreateType();
 
-        public ITypeRef Int64Type => LLVMInt64TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef Int64Type => LLVMInt64TypeInContext( Handle ).CreateType();
 
-        public ITypeRef Int128Type => LLVMInt128TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef Int128Type => LLVMInt128TypeInContext( Handle ).CreateType();
 
-        public ITypeRef HalfFloatType => LLVMHalfTypeInContext( NativeHandle ).CreateType();
+        public ITypeRef HalfFloatType => LLVMHalfTypeInContext( Handle ).CreateType();
 
-        public ITypeRef FloatType => LLVMFloatTypeInContext( NativeHandle ).CreateType();
+        public ITypeRef FloatType => LLVMFloatTypeInContext( Handle ).CreateType();
 
-        public ITypeRef DoubleType => LLVMDoubleTypeInContext( NativeHandle ).CreateType();
+        public ITypeRef DoubleType => LLVMDoubleTypeInContext( Handle ).CreateType();
 
-        public ITypeRef TokenType => LLVMTokenTypeInContext( NativeHandle ).CreateType();
+        public ITypeRef TokenType => LLVMTokenTypeInContext( Handle ).CreateType();
 
-        public ITypeRef MetadataType => LLVMMetadataTypeInContext( NativeHandle ).CreateType();
+        public ITypeRef MetadataType => LLVMMetadataTypeInContext( Handle ).CreateType();
 
-        public ITypeRef X86Float80Type => LLVMX86FP80TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef X86Float80Type => LLVMX86FP80TypeInContext( Handle ).CreateType();
 
-        public ITypeRef Float128Type => LLVMFP128TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef Float128Type => LLVMFP128TypeInContext( Handle ).CreateType();
 
-        public ITypeRef PpcFloat128Type => LLVMPPCFP128TypeInContext( NativeHandle ).CreateType();
+        public ITypeRef PpcFloat128Type => LLVMPPCFP128TypeInContext( Handle ).CreateType();
 
 #if HAVE_API_TO_ENUMERATE_METADATA
         // Underlying LLVM has no mechanism to access the metadata in a context.
@@ -88,7 +87,7 @@ namespace Ubiquity.NET.Llvm
                 ThrowAttributeRequiresArg( attribInfo, name );
             }
 
-            return new( LLVMCreateEnumAttribute( NativeHandle, attribInfo.ID, 0u ) );
+            return new( LLVMCreateEnumAttribute( Handle, attribInfo.ID, 0u ) );
         }
 
         public AttributeValue CreateAttribute( LazyEncodedString name, ulong value )
@@ -101,7 +100,7 @@ namespace Ubiquity.NET.Llvm
                 ThrowAttributeRequiresArg( attribInfo, name );
             }
 
-            return new( LLVMCreateEnumAttribute( NativeHandle, attribInfo.ID, value ) );
+            return new( LLVMCreateEnumAttribute( Handle, attribInfo.ID, value ) );
         }
 
         public AttributeValue CreateAttribute( LazyEncodedString name, ITypeRef value )
@@ -114,7 +113,7 @@ namespace Ubiquity.NET.Llvm
                 ThrowAttributeRequiresArg( attribInfo, name );
             }
 
-            return new( LLVMCreateTypeAttribute( NativeHandle, attribInfo.ID, value.GetTypeRef() ) );
+            return new( LLVMCreateTypeAttribute( Handle, attribInfo.ID, value.GetTypeRef() ) );
         }
 
         public AttributeValue CreateAttribute( LazyEncodedString name, uint numBits, ulong[] lowWords, ulong[] upperWords )
@@ -127,7 +126,7 @@ namespace Ubiquity.NET.Llvm
                 ThrowAttributeRequiresArg( attribInfo, name );
             }
 
-            return new( LLVMCreateConstantRangeAttribute( NativeHandle, attribInfo.ID, numBits, lowWords, upperWords ) );
+            return new( LLVMCreateConstantRangeAttribute( Handle, attribInfo.ID, numBits, lowWords, upperWords ) );
         }
 
         public AttributeValue CreateAttribute( LazyEncodedString name, LazyEncodedString? value = null )
@@ -148,7 +147,7 @@ namespace Ubiquity.NET.Llvm
             using var callBack = new DiagnosticCallbackHolder(handler);
             unsafe
             {
-                LLVMContextSetDiagnosticHandler( NativeHandle, &DiagnosticCallbackHolder.DiagnosticHandler, callBack.AddRefAndGetNativeContext() );
+                LLVMContextSetDiagnosticHandler( Handle, &DiagnosticCallbackHolder.DiagnosticHandler, callBack.AddRefAndGetNativeContext() );
             }
         }
 
@@ -164,7 +163,7 @@ namespace Ubiquity.NET.Llvm
                 32 => Int32Type,
                 64 => Int64Type,
                 128 => Int128Type,
-                _ => LLVMIntTypeInContext( NativeHandle, bitWidth ).CreateType(),
+                _ => LLVMIntTypeInContext( Handle, bitWidth ).CreateType(),
             };
         }
 
@@ -266,7 +265,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( values );
 
             var valueHandles = values.Select( v => v.Handle ).ToArray( );
-            var handle = LLVMConstStructInContext( NativeHandle, valueHandles, ( uint )valueHandles.Length, packed );
+            var handle = LLVMConstStructInContext( Handle, valueHandles, ( uint )valueHandles.Length, packed );
             return Value.FromHandle<Constant>( handle.ThrowIfInvalid() )!;
         }
 
@@ -320,7 +319,7 @@ namespace Ubiquity.NET.Llvm
         public IStructType CreateStructType( LazyEncodedString name )
         {
             ArgumentNullException.ThrowIfNull( name );
-            var handle = LLVMStructCreateNamed( NativeHandle, name );
+            var handle = LLVMStructCreateNamed( Handle, name );
             return (IStructType)handle.CreateType();
         }
 
@@ -329,7 +328,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( elements );
 
             LLVMTypeRef[ ] llvmArgs = [ .. elements.Select( e => e.GetTypeRef() ) ];
-            var handle = LLVMStructTypeInContext( NativeHandle, llvmArgs, ( uint )llvmArgs.Length, packed );
+            var handle = LLVMStructTypeInContext( Handle, llvmArgs, ( uint )llvmArgs.Length, packed );
             return (IStructType)handle.CreateType();
         }
 
@@ -338,7 +337,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( name );
             ArgumentNullException.ThrowIfNull( elements );
 
-            var retVal = (IStructType)LLVMStructCreateNamed( NativeHandle, name ).CreateType();
+            var retVal = (IStructType)LLVMStructCreateNamed( Handle, name ).CreateType();
             retVal.SetBody( packed, elements );
 
             return retVal;
@@ -346,7 +345,7 @@ namespace Ubiquity.NET.Llvm
 
         public MDString CreateMetadataString( LazyEncodedString? value )
         {
-            var handle = LLVMMDStringInContext2( NativeHandle, value ?? LazyEncodedString.Empty );
+            var handle = LLVMMDStringInContext2( Handle, value ?? LazyEncodedString.Empty );
             return new MDString( handle );
         }
 
@@ -354,7 +353,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( value );
             var elements = new[ ] { CreateMetadataString( value ).Handle };
-            var hNode = LLVMMDNodeInContext2( NativeHandle, elements, ( uint )elements.Length );
+            var hNode = LLVMMDNodeInContext2( Handle, elements, ( uint )elements.Length );
             return (MDNode)hNode.ThrowIfInvalid().CreateMetadata()!;
         }
 
@@ -363,7 +362,7 @@ namespace Ubiquity.NET.Llvm
         public ConstantDataArray CreateConstantString( LazyEncodedString value, bool nullTerminate )
         {
             ArgumentNullException.ThrowIfNull( value );
-            var handle = LLVMConstStringInContext( NativeHandle, value, !nullTerminate );
+            var handle = LLVMConstStringInContext( Handle, value, !nullTerminate );
             return Value.FromHandle<ConstantDataArray>( handle.ThrowIfInvalid() )!;
         }
 
@@ -456,7 +455,7 @@ namespace Ubiquity.NET.Llvm
 
         public BasicBlock CreateBasicBlock( LazyEncodedString name )
         {
-            return BasicBlock.FromHandle( LLVMCreateBasicBlockInContext( NativeHandle, name ).ThrowIfInvalid() )!;
+            return BasicBlock.FromHandle( LLVMCreateBasicBlockInContext( Handle, name ).ThrowIfInvalid() )!;
         }
 
         public Module CreateBitcodeModule( )
@@ -469,7 +468,7 @@ namespace Ubiquity.NET.Llvm
             // empty string is OK.
             ArgumentNullException.ThrowIfNull( moduleId );
 
-            return new( LLVMModuleCreateWithNameInContext( moduleId, NativeHandle ) );
+            return new( LLVMModuleCreateWithNameInContext( moduleId, Handle ) );
         }
 
         public Module ParseModule( LazyEncodedString src, LazyEncodedString name )
@@ -482,7 +481,7 @@ namespace Ubiquity.NET.Llvm
                 using var nativeSrcHandle = src.Pin();
                 using var mb = new MemoryBuffer((byte*)nativeSrcHandle.Pointer, src.NativeLength, name, requiresNullTerminator: true);
 
-                LLVMStatus result = LLVMParseIRInContext(NativeHandle, mb.Handle, out LLVMModuleRef? moduleRef, out string? errMsg);
+                LLVMStatus result = LLVMParseIRInContext(Handle, mb.Handle, out LLVMModuleRef moduleRef, out string? errMsg);
                 if(result.Failed)
                 {
                     Debug.Assert( errMsg is not null, "Internal Error - Got a failed status but NULL message!" );
@@ -491,30 +490,36 @@ namespace Ubiquity.NET.Llvm
 
                 Debug.Assert( errMsg is null, "Internal Error - Got a success status but a valid message!" );
 
-                if(moduleRef is null || moduleRef.IsInvalid)
+                if(moduleRef.IsNull)
                 {
                     throw new LlvmException( "Internal Error - Got a null or invalid moduleRef for a success!" );
                 }
 
-                using(moduleRef) // cleanup in case of exceptions (Otherwise, moved to return)
+                try
                 {
                     // successfully completed ownership transfer to/from native code
                     // NOTE: Ownership transfer of the buffer is NOT documented, but in reality - does happen!
-                    mb.Handle.SetHandleAsInvalid();
-                    return new( moduleRef.Move() );
+                    mb.InvalidateAfterMove();
+                    return new Module( moduleRef );
+                }
+                catch
+                {
+                    // cleanup in case of exceptions (Otherwise, moved to return)
+                    moduleRef.Dispose();
+                    throw;
                 }
             }
         }
 
         public uint GetMDKindId( LazyEncodedString? name )
         {
-            return LLVMGetMDKindIDInContext( NativeHandle, name ?? LazyEncodedString.Empty );
+            return LLVMGetMDKindIDInContext( Handle, name ?? LazyEncodedString.Empty );
         }
 
         public bool OdrUniqueDebugTypes
         {
-            get => LibLLVMContextGetIsODRUniquingDebugTypes( NativeHandle );
-            set => LibLLVMContextSetIsODRUniquingDebugTypes( NativeHandle, value );
+            get => LibLLVMContextGetIsODRUniquingDebugTypes( Handle );
+            set => LibLLVMContextSetIsODRUniquingDebugTypes( Handle, value );
         }
 
         public TargetBinary OpenBinary( LazyEncodedString path )
@@ -528,11 +533,11 @@ namespace Ubiquity.NET.Llvm
 
         public bool DiscardValueNames
         {
-            get => LLVMContextShouldDiscardValueNames( NativeHandle );
-            set => LLVMContextSetDiscardValueNames( NativeHandle, value );
+            get => LLVMContextShouldDiscardValueNames( Handle );
+            set => LLVMContextSetDiscardValueNames( Handle, value );
         }
 
-        LLVMContextRefAlias IHandleWrapper<LLVMContextRefAlias>.Handle => NativeHandle;
+        internal LLVMContextRefAlias Handle { get; set; }
 
         internal ContextAlias( LLVMContextRefAlias nativeHandle )
         {
@@ -541,14 +546,14 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( "Invalid handle value", nameof( nativeHandle ) );
             }
 
-            NativeHandle = nativeHandle;
+            Handle = nativeHandle;
         }
 
         private AttributeValue InternalCreateStringAttribute( LazyEncodedString name, LazyEncodedString? value = null )
         {
             // if no value provided, use an empty string so native API doesn't crash.
             value ??= LazyEncodedString.Empty;
-            return new( LLVMCreateStringAttribute( NativeHandle, name, value ) );
+            return new( LLVMCreateStringAttribute( Handle, name, value ) );
         }
 
         // TODO: Move this to the extensions support it is useful on it's own in other contexts
@@ -572,7 +577,5 @@ namespace Ubiquity.NET.Llvm
         public unsigned GetOperandBundleTagId(string name) {...}
         public IEnumerable<string> OperandBundleTagIds { get; }
         */
-
-        private readonly LLVMContextRefAlias NativeHandle;
     }
 }

@@ -10,8 +10,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     {
         // ReSharper disable IdentifierTypo
         /* TODO: non-operand properties
-        public DebugInfoFlags => LLVMDILocalVariableGetFlags( NativeHandle );
-        public UInt16 ArgIndex => LLVMDILocalVariableGetArg( NativeHandle );
+        public DebugInfoFlags => LLVMDILocalVariableGetFlags( Handle );
+        public UInt16 ArgIndex => LLVMDILocalVariableGetArg( Handle );
         public bool IsParameter => ArgIndex != 0;
         */
 

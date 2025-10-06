@@ -22,7 +22,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             using LLVMErrorRef errorRef = LLVMOrcObjectLayerAddObjectFile(Handle, jitDyLib.Handle, objBuffer.Handle);
 
             // Even if an error occurred, ownership is transferred
-            objBuffer.Handle.SetHandleAsInvalid();
+            objBuffer.InvalidateAfterMove();
             errorRef.ThrowIfFailed();
         }
 
@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             using LLVMErrorRef errorRef = LLVMOrcObjectLayerAddObjectFileWithRT(Handle, rt.Handle, objBuffer.Handle);
 
             // Even if an error occurred, ownership is transferred
-            objBuffer.Handle.SetHandleAsInvalid();
+            objBuffer.InvalidateAfterMove();
             errorRef.ThrowIfFailed();
         }
 
@@ -54,18 +54,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public void Emit( MaterializationResponsibility resp, MemoryBuffer objBuffer )
         {
             LLVMOrcObjectLayerEmit( Handle, resp.Handle, objBuffer.Handle );
-            resp.Handle.SetHandleAsInvalid();
-            objBuffer.Handle.SetHandleAsInvalid();
+            resp.InvalidateAfterMove();
+            objBuffer.InvalidateAfterMove();
         }
 
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
+        }
 
         internal ObjectLayer( LLVMOrcObjectLayerRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        internal LLVMOrcObjectLayerRef Handle { get; init; }
+        internal LLVMOrcObjectLayerRef Handle { get; private set; }
     }
 }

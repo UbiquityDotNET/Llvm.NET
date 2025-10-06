@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
+using LlvmBindingsGenerator.CppSharpExtensions;
 using LlvmBindingsGenerator.Templates;
 
 namespace LlvmBindingsGenerator.Configuration
@@ -47,23 +48,14 @@ namespace LlvmBindingsGenerator.Configuration
 
         private static IEnumerable<IHandleCodeTemplate> Transforms( HandleDetails h )
         {
-            if(string.IsNullOrWhiteSpace(h.Disposer))
-            {
-                yield return new ContextHandleTemplate( h.Name );
-            }
-            else
-            {
-                yield return new GlobalHandleTemplate( h.Name, h.Disposer, h.Alias );
+            yield return new WrappedHandleTemplate( h );
 
-                // for aliases treat them like a context handle as they are
-                // not owned by the managed code and only reference the native
-                // handle via a simple nint. Context Handle template creates
-                // a type safe wrapper around the raw 'nint' (as a value type) that
-                // does NOT implement IDisposable. (Unlike a SafeHandle)
-                if(h.Alias)
-                {
-                    yield return new ContextHandleTemplate( $"{h.Name}Alias" );
-                }
+            // for aliases treat them like a context handle as they are
+            // not owned by the managed code and only reference the native
+            // handle via a simple nint.
+            if(h.Alias)
+            {
+                yield return new WrappedHandleTemplate( h, isAlias: true );
             }
         }
     }

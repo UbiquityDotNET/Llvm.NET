@@ -385,36 +385,23 @@ namespace Ubiquity.NET.Llvm
     // the two.
     internal static class ModuleExtensions
     {
+        // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMModuleRefAlias GetUnownedHandle( this IModule self )
         {
-            if(self is IHandleWrapper<LLVMModuleRefAlias> wrapper)
+            if(self is ModuleAlias alias)
             {
-                return wrapper.Handle;
+                return alias.Handle;
             }
-            else if(self is IGlobalHandleOwner<LLVMModuleRef> owner)
+            else if(self is Module module)
             {
                 // implicitly cast to the unowned alias handle
                 // ownership is retained by "self"
-                return owner.OwnedHandle;
+                return module.Handle;
             }
             else
             {
                 throw new ArgumentException( "Internal Error - Unknown module type!", nameof( self ) );
             }
-        }
-
-        // Convenience accessor extension method to resolve ugly casting
-        // to generic interface and make semantic intent clear.
-        internal static LLVMModuleRef GetOwnedHandle( this IGlobalHandleOwner<LLVMModuleRef> owner )
-        {
-            return owner.OwnedHandle;
-        }
-
-        // Convenience accessor extension method to resolve ugly casting
-        // to generic interface and make semantic intent clear.
-        internal static void InvalidateFromMove( this IGlobalHandleOwner<LLVMModuleRef> owner )
-        {
-            owner.InvalidateFromMove();
         }
     }
 }

@@ -28,9 +28,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             NameField.Dispose();
         }
 
-#pragma warning disable IDISP004 // Don't ignore created IDisposable; Unless addRef is specified it's an "alias"
-        internal LLVMOrcCSymbolAliasMapEntry DangerousGetHandle( bool addRef = false ) => new( NameField.DangerousGetHandle(addRef), Flags.ToABI() );
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
+        internal LLVMOrcCSymbolAliasMapEntry ToABI( )
+        {
+            return new( NameField.DangerousGetHandle(), Flags.ToABI() );
+        }
 
         private readonly SymbolStringPoolEntry NameField;
     }

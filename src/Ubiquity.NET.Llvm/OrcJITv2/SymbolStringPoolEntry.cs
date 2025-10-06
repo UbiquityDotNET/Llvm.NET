@@ -115,7 +115,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// library to get the underlying reference count.</b></em>
         /// </note>
         /// </remarks>
-        public nuint RefCount => Handle?.GetRefCount() ?? 0;
+        public nuint RefCount => IsDisposed ? 0 : Handle.GetRefCount();
 #endif
 
         /// <summary>Gets a readonly span for the data in this string</summary>
@@ -140,9 +140,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Release the reference to the string</summary>
         public void Dispose( )
         {
-            if(!IsDisposed && Handle.IsOwned)
+            if(!IsDisposed && IsOwned)
             {
+#pragma warning disable IDISP007 // Don't dispose injected; This instance owns it.
                 Handle.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                 Handle = default;
             }
         }
@@ -161,60 +163,72 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         internal LLVMOrcSymbolStringPoolEntryRef MoveToNative()
         {
             ObjectDisposedException.ThrowIf( IsDisposed, this );
+            var retVal = Handle;
+            Handle = default;
+            return retVal.NativeAddRef();
+        }
 
+        internal LLVMOrcSymbolStringPoolEntryRef AddRefForNative()
+        {
+            ObjectDisposedException.ThrowIf( IsDisposed, this );
             return Handle.NativeAddRef();
         }
 
         /// <summary>This gets the underlying ABI handle</summary>
-        /// <param name="addRef">indicates if this operation should include a native addref on the underlying handle</param>
         /// <returns>Underlying ABI handle</returns>
         /// <remarks>
-        /// This is considered a "Dangerous" API as it gets at the underlying handle. If <paramref Name="addRef"/> is set
-        /// then the returned handle requires disposal.
+        /// This is considered a "Dangerous" API as it gets at the underlying handle AS-IS without
+        /// any addref. The name is borrowed from the <see cref="SafeHandle.DangerousGetHandle"/>
+        /// method for clarity and ease of porting to a value type. Since this returns an <see cref="LLVMOrcSymbolStringPoolEntryRefAlias"/>
+        /// that isn't owned, it isn't inherently unsafe other than it does NOT control the lifetime
+        /// of the underlying entry. This is normally only used for calling native ABI functions
+        /// that do NOT take ownership of the current ref count.
         /// </remarks>
         [MustUseReturnValue]
-        internal LLVMOrcSymbolStringPoolEntryRef DangerousGetHandle( bool addRef = false )
+        internal LLVMOrcSymbolStringPoolEntryRefAlias DangerousGetHandle( )
         {
             ObjectDisposedException.ThrowIf( IsDisposed, this );
 
-            return addRef ? Handle.NativeAddRef() : Handle;
+            return Handle;
         }
 
         internal SymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef h, bool addRef = false )
         {
-            if(h is null || h.IsInvalid || h.IsClosed)
+            if(h.IsNull)
             {
                 throw new ArgumentNullException( nameof( h ) );
             }
 
-            Handle = addRef && h.IsOwned ? h.NativeAddRef() : new(h.DangerousGetHandle(), h.IsOwned);
+            Handle = addRef ? h.NativeAddRef() : h;
             DeferredInitSymbolString = new(()=>LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.PublicationOnly);
+            IsOwned = true;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class.</summary>
         /// <param name="abiHandle">Native ABI handle</param>
-        /// <param name="alias">Flag to indicate whether this handle is an owned alias</param>
+        /// <param name="alias">Indicates whether this is an aliased (unowned) representation</param>
         /// <remarks>Wraps a native ABI handle in a managed projected type</remarks>
         internal SymbolStringPoolEntry( nint abiHandle, bool alias = false )
         {
-            Handle = new( abiHandle, !alias );
+            Handle = LLVMOrcSymbolStringPoolEntryRef.FromABI(abiHandle);
+            IsOwned = !alias;
             DeferredInitSymbolString = new(()=>LLVMOrcSymbolStringPoolEntryStr( Handle ), LazyThreadSafetyMode.PublicationOnly);
         }
 
-        private LLVMOrcSymbolStringPoolEntryRef? Handle { get; set; }
-
-        [MemberNotNullWhen(false, nameof(Handle))]
-        internal bool IsDisposed => Handle is null || Handle.IsClosed || Handle.IsInvalid;
+        internal bool IsDisposed => Handle.IsNull;
 
         // Callers might never need the contents of the string so it is lazily
         // initialized when needed. String pool entries are interned and thus are immutable, like a .NET string
         private readonly Lazy<LazyEncodedString> DeferredInitSymbolString;
+        private LLVMOrcSymbolStringPoolEntryRef Handle;
+        private readonly bool IsOwned;
     }
 
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1400:Access modifier should be declared", Justification = "'file' is an accessibility" )]
     [SuppressMessage( "StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "It's file scoped - where else is it supposed to go!?" )]
     file static class ValidationExtensions
     {
+        // This is an extension method to allow access to the caller expression for "this", including passing it as a parameter
         internal static SymbolStringPoolEntry Validate( [NotNull] this SymbolStringPoolEntry self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
         {
             ArgumentNullException.ThrowIfNull( self, exp );

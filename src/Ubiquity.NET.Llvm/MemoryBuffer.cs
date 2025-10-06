@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm
         : IDisposable
     {
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
-        public bool IsDisposed => Handle is null || Handle.IsClosed || Handle.IsInvalid;
+        public bool IsDisposed => Handle.IsNull;
 
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class from a file</summary>
         /// <param name="path">Path of the file to load</param>
@@ -41,7 +41,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( data );
 
             Handle = LLVMCreateMemoryBufferWithMemoryRangeCopy( data, name ?? LazyEncodedString.Empty )
-                          .ThrowIfInvalid();
+                     .ThrowIfInvalid();
         }
 
         /// <summary>Initializes a new instance of the <see cref="MemoryBuffer"/> class to wrap an existing memory region</summary>
@@ -56,14 +56,29 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( name );
 
             Handle = LLVMCreateMemoryBufferWithMemoryRange( data, len, name, requiresNullTerminator )
-                           .ThrowIfInvalid();
+                     .ThrowIfInvalid();
         }
 
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!IsDisposed)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
+        }
 
         /// <summary>Gets the size of the buffer</summary>
-        public int Size => IsDisposed ? 0 : (int)LLVMGetBufferSize( Handle );
+        public int Size
+        {
+            get
+            {
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
+                return IsDisposed ? 0 : (int)LLVMGetBufferSize( Handle );
+            }
+        }
 
         /// <summary>Gets an array of bytes from the buffer</summary>
         /// <returns>Array of bytes copied from the buffer</returns>
@@ -112,12 +127,27 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
+        internal LLVMMemoryBufferRef Move()
+        {
+            var retVal = Handle;
+            Handle = default;
+            return retVal;
+        }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Move Semantics in constructor")]
+        internal LLVMMemoryBufferRef Handle { get; private set; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
+
+        // MOVE semantics, responsibility for disposal transferred to this instance
         internal MemoryBuffer( LLVMMemoryBufferRef bufferHandle )
         {
             bufferHandle.ThrowIfInvalid();
-            Handle = bufferHandle.Move();
+            Handle = bufferHandle;
         }
-
-        internal LLVMMemoryBufferRef Handle { get; private set; }
     }
 }

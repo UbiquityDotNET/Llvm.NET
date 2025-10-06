@@ -50,8 +50,8 @@ namespace Kaleidoscope.Runtime
             // callers via an "extern" declaration.
             unsafe
             {
-                using var putchardName = MangleAndIntern("putchard"u8);
-                using var printdName = MangleAndIntern("printd"u8);
+                using SymbolStringPoolEntry putchardName = MangleAndIntern("putchard"u8);
+                using SymbolStringPoolEntry printdName = MangleAndIntern("printd"u8);
 
                 var absoluteSymbols = new KvpArrayBuilder<SymbolStringPoolEntry, EvaluatedSymbol>
                 {
@@ -83,7 +83,9 @@ namespace Kaleidoscope.Runtime
         public ExecutionSession Session => ComposedJIT.Session;
 
         public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default )
-            => ComposedJIT.AddWithTracking( ctx, module, lib );
+        {
+            return ComposedJIT.AddWithTracking( ctx, module, lib );
+        }
 
         public ulong Lookup( LazyEncodedString name ) => ComposedJIT.Lookup( name );
 

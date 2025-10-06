@@ -194,7 +194,7 @@ namespace LlvmBindingsGenerator
                 return;
             }
 
-            Diagnostics.Message( "Parsing code..." );
+            Diagnostics.Message( "Parsing Source..." );
             if( !driver.ParseCode() )
             {
                 Diagnostics.Error( "Encountered one or more errors while parsing source code - no code generation performed." );
@@ -244,6 +244,7 @@ namespace LlvmBindingsGenerator
                                  from module in Options.Modules
                                  where library.Dependencies.Intersect( module.Libraries ).Any( )
                                  select module ).ToList( );
+
             if( m != Options.SystemModule )
             {
                 m.Dependencies.Add( Options.SystemModule );

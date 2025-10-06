@@ -3378,41 +3378,35 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString Name
             )
         {
-            unsafe
-            {
-                return RefHandleMarshaller.WithNativePointer(
-                            bundles,
-                            ( p, size ) => LLVMBuildCallBr(
-                                               builder,
-                                               typeRef,
-                                               functionValue,
-                                               defaultDest,
-                                               indirectDest,
-                                               checked((uint)indirectDest.Length),
-                                               args,
-                                               checked((uint)args.Length),
-                                               p,
-                                               checked((uint)size),
-                                               Name
-                                               )
-                       );
-            }
+            return LLVMBuildCallBr(
+                                  builder,
+                                  typeRef,
+                                  functionValue,
+                                  defaultDest,
+                                  indirectDest,
+                                  checked((uint)indirectDest.Length),
+                                  args,
+                                  checked((uint)args.Length),
+                                  bundles,
+                                  checked((uint)bundles.Length),
+                                  Name
+                                  );
         }
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial LLVMValueRef LLVMBuildCallBr(
-            LLVMBuilderRef B,
-            LLVMTypeRef Ty,
-            LLVMValueRef Fn,
-            LLVMBasicBlockRef DefaultDest,
+            LLVMBuilderRef builder,
+            LLVMTypeRef typeRef,
+            LLVMValueRef functionValue,
+            LLVMBasicBlockRef defaultDest,
             [In] LLVMBasicBlockRef[] IndirectDests, // The length of this array MUST be at least NumIndirectDests
             uint NumIndirectDests,
             [In] LLVMValueRef[] Args, // the length of this array MUST be at least NumArgs
             uint NumArgs,
             /* No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
                Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these */
-            /*[In] LLVMOperandBundleRef[]*/ nint* Bundles,
+            [In] LLVMOperandBundleRef[] Bundles,
             uint NumBundles,
             LazyEncodedString Name
             );
@@ -3462,24 +3456,18 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString name
             )
         {
-            unsafe
-            {
-                return RefHandleMarshaller.WithNativePointer(
-                            bundles,
-                            ( p, size ) => LLVMBuildInvokeWithOperandBundles(
-                                               builder,
-                                               typeRef,
-                                               functionValue,
-                                               args,
-                                               checked((uint)args.Length),
-                                               @then,
-                                               @catch,
-                                               p,
-                                               checked((uint)size),
-                                               name
-                                               )
-                       );
-            }
+            return LLVMBuildInvokeWithOperandBundles(
+                                                    builder,
+                                                    typeRef,
+                                                    functionValue,
+                                                    args,
+                                                    checked((uint)args.Length),
+                                                    @then,
+                                                    @catch,
+                                                    bundles,
+                                                    checked((uint)bundles.Length),
+                                                    name
+                                                    );
         }
 
         [LibraryImport( LibraryName )]
@@ -3488,16 +3476,11 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMBuilderRef B,
             LLVMTypeRef Ty,
             LLVMValueRef Fn,
-
-            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
-            [In] LLVMValueRef[] Args,
+            [In] LLVMValueRef[] Args, // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
             uint NumArgs,
             LLVMBasicBlockRef Then,
             LLVMBasicBlockRef Catch,
-
-            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
-            // Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these
-            /*[In] LLVMOperandBundleRef[]*/ nint* Bundles,
+            [In] LLVMOperandBundleRef[] Bundles, // No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
             uint NumBundles,
             LazyEncodedString Name
             );
@@ -4065,30 +4048,24 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe partial LLVMValueRef LLVMBuildCall2( LLVMBuilderRef B, LLVMTypeRef _1, LLVMValueRef Fn, [In] LLVMValueRef[] Args, uint NumArgs, LazyEncodedString Name );
 
         public static LLVMValueRef LLVMBuildCallWithOperandBundles(
-            LLVMBuilderRef B,
-            LLVMTypeRef _1,
-            LLVMValueRef Fn,
-            LLVMValueRef[] Args,
-            LLVMOperandBundleRef[] Bundles,
-            LazyEncodedString Name
+            LLVMBuilderRef builder,
+            LLVMTypeRef type,
+            LLVMValueRef function,
+            LLVMValueRef[] args,
+            LLVMOperandBundleRef[] bundles,
+            LazyEncodedString name
             )
         {
-            unsafe
-            {
-                return RefHandleMarshaller.WithNativePointer(
-                            Bundles,
-                            ( p, size ) => LLVMBuildCallWithOperandBundles(
-                                               B,
-                                               _1,
-                                               Fn,
-                                               Args,
-                                               checked((uint)Args.Length),
-                                               p,
-                                               checked((uint)size),
-                                               Name
-                                               )
-                       );
-            }
+            return LLVMBuildCallWithOperandBundles(
+                                builder,
+                                type,
+                                function,
+                                args,
+                                checked((uint)args.Length),
+                                bundles,
+                                checked((uint)bundles.Length),
+                                name
+                                );
         }
 
         [LibraryImport( LibraryName )]
@@ -4097,14 +4074,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMBuilderRef B,
             LLVMTypeRef _1,
             LLVMValueRef Fn,
-
-            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumArgs
             [In] LLVMValueRef[] Args,
             uint NumArgs,
-
-            // No marshalling attribute exists to set the length, the length of this array MUST be at least NumBundles
-            // Marshalling of safe handle arrays is not supported by generated interop. Use RefHandleMarshaller for these
-            /*[In] LLVMOperandBundleRef[]*/ nint* Bundles,
+            [In] LLVMOperandBundleRef[] Bundles,
             uint NumBundles,
             LazyEncodedString Name
             );

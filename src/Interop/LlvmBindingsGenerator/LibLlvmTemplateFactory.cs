@@ -9,7 +9,7 @@ using CppSharp.Generators;
 using CppSharp.Passes;
 
 using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.Templates;
+using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator
 {

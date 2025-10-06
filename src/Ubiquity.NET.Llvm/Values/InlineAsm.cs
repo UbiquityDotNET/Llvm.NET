@@ -23,8 +23,8 @@ namespace Ubiquity.NET.Llvm.Values
         {
         }
 
-        // bool HasSideEffects => NativeMethods.LLVMHasSideEffects( NativeHandle );
-        // bool IsAlignStack => LLVMNative.IsAlignStack( NativeHandle );
-        // AsmDialect Dialect => LLVMNative.GetAsmDialect( NativeHandle );
+        // bool HasSideEffects => NativeMethods.LLVMHasSideEffects( Handle );
+        // bool IsAlignStack => LLVMNative.IsAlignStack( Handle );
+        // AsmDialect Dialect => LLVMNative.GetAsmDialect( Handle );
     }
 }

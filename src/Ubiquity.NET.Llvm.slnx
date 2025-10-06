@@ -20,6 +20,7 @@
     <File Path="../Directory.Build.props" />
     <File Path="../Directory.Build.targets" />
     <File Path="../Directory.Packages.props" />
+    <File Path="../Generate-HandleWrappers.ps1" />
     <File Path="../global.json" />
     <File Path="../GOVERNANCE.md" />
     <File Path="../IgnoredWords.dic" />
@@ -29,7 +30,6 @@
     <File Path="../README.md" />
     <File Path="../Show-Docs.ps1" />
     <File Path="../stylecop.json" />
-    <File Path="Generate-HandleWrappers.ps1" />
     <File Path="x64.runsettings" />
   </Folder>
   <Folder Name="/Repo Items/GitHub/" />
@@ -81,5 +81,6 @@
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
   <Project Path="Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj" />
   <Project Path="Ubiquity.NET.Runtime.Utils/Ubiquity.NET.Runtime.Utils.csproj" />
+  <Project Path="Ubiquity.NET.SrcGeneration/Ubiquity.NET.SrcGeneration.csproj" />
   <Project Path="Ubiquity.NET.TextUX/Ubiquity.NET.TextUX.csproj" Id="0c58feb7-2b42-431a-9a37-43a8b263add9" />
 </Solution>

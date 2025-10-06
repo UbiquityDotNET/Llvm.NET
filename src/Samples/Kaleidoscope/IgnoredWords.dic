@@ -38,6 +38,7 @@ lookups
 loopcond
 mandel
 mandelconverger
+materializer
 multmp
 nextvar
 nobuiltin

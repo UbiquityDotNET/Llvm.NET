@@ -38,9 +38,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                         throw new ArgumentException( "invalid string value", $"{nameof( symbols )}[{i}]" );
                     }
 
-#pragma warning disable IDISP004 // Don't ignore created IDisposable; new Ref count is "moved" to native (recovered below on exception)
-                    nativeSpan[ i ] = new( pair.Key.DangerousGetHandle(addRef: true) , pair.Value.ToABI() );
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
+                    nativeSpan[ i ] = new( pair.Key.AddRefForNative() , pair.Value.ToABI() );
                 }
             }
             catch
@@ -50,7 +48,11 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
-                    using LLVMOrcSymbolStringPoolEntryRef h = enumerator.Current.Key.DangerousGetHandle();
+
+                    // Not injected - whole point of this handler is to prevent dangling refs in face of exception
+                    #pragma warning disable IDISP007 // Don't dispose injected; Exception cleanup
+                        enumerator.Current.Key.Dispose();
+                    #pragma warning restore IDISP007 // Don't dispose injected
                 }
 
                 throw;
@@ -82,9 +84,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                         throw new ArgumentException( "invalid string value", $"{nameof( symbols )}[{i}]" );
                     }
 
-#pragma warning disable IDISP004 // Don't ignore created IDisposable; new Ref count is "moved" to native (recovered below on exception)
-                    nativeSpan[ i ] = new( pair.Key.DangerousGetHandle(addRef: true) , pair.Value.DangerousGetHandle( addRef: true) );
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
+                    nativeSpan[ i ] = new( pair.Key.AddRefForNative() , pair.Value.ToABI() );
                 }
             }
             catch
@@ -94,11 +94,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
-                    using var h = enumerator.Current.Key.DangerousGetHandle();
 
                     // Not injected - whole point of this handler is to prevent dangling refs in face of exception
-                    #pragma warning disable IDISP007 // Don't dispose injected
-                        enumerator.Current.Value.Dispose();
+                    #pragma warning disable IDISP007 // Don't dispose injected; Exception cleanup
+                        enumerator.Current.Key.Dispose();
                     #pragma warning restore IDISP007 // Don't dispose injected
                 }
 
@@ -132,7 +131,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     }
 
 #pragma warning disable IDISP004 // Don't ignore created IDisposable; new Ref count is "moved" to native (recovered below on exception)
-                    nativeSpan[ i ] = new( pair.Key.DangerousGetHandle(addRef: true) , pair.Value.ToABI() );
+                    nativeSpan[ i ] = new( pair.Key.AddRefForNative() , pair.Value.ToABI() );
 #pragma warning restore IDISP004 // Don't ignore created IDisposable
                 }
             }
@@ -143,7 +142,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 for(; i >= 0; --i)
                 {
                     enumerator.MoveNext();
-                    using var h = enumerator.Current.Key.DangerousGetHandle();
+
+                    // Not injected - whole point of this handler is to prevent dangling refs in face of exception
+                    #pragma warning disable IDISP007 // Don't dispose injected; Exception cleanup
+                        enumerator.Current.Key.Dispose();
+                    #pragma warning restore IDISP007 // Don't dispose injected
+
                 }
 
                 throw;

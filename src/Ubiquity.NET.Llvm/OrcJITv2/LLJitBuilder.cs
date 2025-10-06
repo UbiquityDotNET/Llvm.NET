@@ -29,8 +29,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <inheritdoc/>
         public void Dispose( )
         {
-            Handle.Dispose();
-            MoveToNative();
+            // ensure move semantics work by making this Idempotent.
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
         }
 
         /// <summary>Sets the target machine builder for this JIT builder</summary>
@@ -41,7 +45,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             LLVMOrcLLJITBuilderSetJITTargetMachineBuilder( Handle, targetMachineBuilder.Handle );
 
             // Ownership transferred to native code.
-            targetMachineBuilder.Handle.SetHandleAsInvalid();
+            targetMachineBuilder.InvalidateAfterMove();
         }
 
         /// <summary>Sets the object linking layer factory for this builder</summary>
@@ -74,17 +78,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// </remarks>
         public LLJit CreateJit( )
         {
-            ObjectDisposedException.ThrowIf( Handle.IsInvalid || Handle.IsClosed, this );
+            ObjectDisposedException.ThrowIf( Handle.IsNull, this );
             using LLVMErrorRef err = LLVMOrcCreateLLJIT(Handle, out LLVMOrcLLJITRef jitHandle);
 
             // calls Dispose in case something goes wrong before it is moved to return
             // NOTE: This is also a NOP if the call failed and jitHandle is NULL.
-            using(jitHandle)
+            try
             {
-                // failed or not, transfer happened...
-                MoveToNative();
+                // failed or not, transfer of builder happened...
+                InvalidateAfterMove();
                 err.ThrowIfFailed();
-                return new( jitHandle ); // internally "moves" the handle so Dispose is a NOP
+                return new( jitHandle ); // internally "moves" the handle so no dispose needed
+            }
+            catch
+            {
+                if(!jitHandle.IsNull)
+                {
+                    jitHandle.Dispose();
+                }
+
+                throw;
             }
         }
 
@@ -105,11 +118,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 #pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
-        internal LLVMOrcLLJITBuilderRef Handle { get; }
+        internal LLVMOrcLLJITBuilderRef Handle { get; private set; }
 
-        private void MoveToNative( )
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning", Justification = "Move already occurred")]
+        private void InvalidateAfterMove( )
         {
-            Handle.SetHandleAsInvalid();
+            Handle = default;
 
             // If the callback context handle exists and is allocated then free it now.
             // The handle for this builder itself is already closed so LLVM should not
@@ -147,7 +161,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     using var managedTriple = new Triple(LazyEncodedString.FromUnmanaged(triple));
 
                     // caller takes ownership of the resulting handle; Don't Dispose it
-                    return self.InternalObjectLayerFactory( new ExecutionSession( sessionRef ), managedTriple ).Handle.MoveToNative();
+                    var factory = self.InternalObjectLayerFactory( new ExecutionSession( sessionRef ), managedTriple );
+                    return factory.Handle;
                 }
 
                 // TODO: How/Can this report an error? Internally the result is (via a C++ lambda) that returns an "llvm::expected"

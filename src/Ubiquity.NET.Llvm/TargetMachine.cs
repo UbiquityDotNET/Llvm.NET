@@ -14,7 +14,15 @@ namespace Ubiquity.NET.Llvm
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="TargetMachine"/> class.</summary>
         /// <param name="triple">Triple for the target machine</param>
@@ -203,14 +211,20 @@ namespace Ubiquity.NET.Llvm
             return target.CreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
         }
 
-        internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
         {
-            ArgumentNullException.ThrowIfNull( targetMachineHandle );
-            targetMachineHandle.ThrowIfInvalid();
-
-            Handle = targetMachineHandle.Move();
+            Handle = default;
         }
 
-        internal LLVMTargetMachineRef Handle { get; }
+        internal TargetMachine( LLVMTargetMachineRef targetMachineHandle )
+        {
+            targetMachineHandle.ThrowIfInvalid();
+
+            Handle = targetMachineHandle;
+        }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Move Semantics in constructor")]
+        internal LLVMTargetMachineRef Handle { get; private set; }
     }
 }

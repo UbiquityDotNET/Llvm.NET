@@ -8,7 +8,7 @@ namespace Ubiquity.NET.Llvm
     /// In addition to the <see cref="Success"/> and <see cref="Failed"/> states this also tracks
     /// any error messages in the event of a failure.
     /// </remarks>
-    public readonly ref struct ErrorInfo
+    public ref struct ErrorInfo
     {
         /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct</summary>
         /// <param name="msg">Message for the error</param>
@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets a value indicating whether this instance represents success</summary>
-        public bool Success
+        public readonly bool Success
         {
             get
             {
@@ -29,17 +29,18 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Gets a value indicating whether this instance represents a failure</summary>
-        public bool Failed => !Success;
+        public readonly bool Failed => !Success;
 
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
-        public bool IsDisposed => Handle is not null && Handle.IsClosed;
+        [MemberNotNullWhen(false, nameof(Handle))]
+        public readonly bool IsDisposed => Handle is null; // NOT testing IsNull as that's the same as `Success`
 
         /// <summary>Gets a string representation of the error message</summary>
         /// <returns>String representation of the error message or an empty string if none</returns>
-        public override string ToString( )
+        public readonly override string ToString( )
         {
             ObjectDisposedException.ThrowIf( IsDisposed, typeof( ErrorInfo ) );
-            return Handle.ToString();
+            return Handle.IsNull ? string.Empty : Handle.ToString();
         }
 
         /// <summary>Throws an exception if this instance is a failure result (<see cref="Failed"/> is <see langword="true"/>)</summary>
@@ -47,7 +48,7 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// The <see cref="Exception.Message"/> is set to the text of this error result.
         /// </remarks>
-        public void ThrowIfFailed( )
+        public readonly void ThrowIfFailed( )
         {
             ObjectDisposedException.ThrowIf( IsDisposed, typeof( ErrorInfo ) );
 
@@ -58,9 +59,14 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <summary>Releases the underlying LLVM handle</summary>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "This instance owns the handle")]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!IsDisposed)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
         }
 
         /// <summary>This provides `move` semantics when transferring ownership of the resources represented by the handle to native code</summary>
@@ -75,13 +81,16 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         internal nint MoveToNative( )
         {
-            return Handle?.MoveToNative() ?? 0;
+            nint retVal = Handle?.DangerousGetHandle() ?? 0;
+            Handle = default;
+            return retVal;
         }
 
+        // MOVE Semantics, this instance takes over responsibility to dispose it
         internal ErrorInfo( LLVMErrorRef h )
         {
             ArgumentNullException.ThrowIfNull( h );
-            Handle = h.Move();
+            Handle = h;
         }
 
         /// <summary>Initializes a new instance of the <see cref="ErrorInfo"/> struct from a native handle</summary>
@@ -89,12 +98,12 @@ namespace Ubiquity.NET.Llvm
         /// <remarks>
         /// This is generally used in unmanaged callbacks to simplify creation of the projection from the raw handle.
         /// </remarks>
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "It is 'moved' to this type; dispose not needed" )]
-        internal ErrorInfo( nint h )
-            : this( new LLVMErrorRef( h ) )
+        internal static ErrorInfo FromABI( nint h )
         {
+            return new( new LLVMErrorRef( h ) );
         }
 
-        private readonly LLVMErrorRef Handle;
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Move semantics in constructor")]
+        private LLVMErrorRef? Handle;
     }
 }

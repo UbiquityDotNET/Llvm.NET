@@ -99,26 +99,36 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 {
                     nint nativeContext = materializer.AddRefAndGetNativeContext();
 
-                    // using expression ensures cleanup in case of exceptions...
-                    using var nativeInitSym = initSymbol?.DangerousGetHandle(addRef: true) ?? LLVMOrcSymbolStringPoolEntryRef.Zero;
-
-                    unsafe
+                    // using expression ensures cleanup of addref in case of exceptions...
+                    // But since it is an immutable Value type that isn't viable here and try/finally is used
+                    LLVMOrcSymbolStringPoolEntryRef nativeInitSym = initSymbol?.AddRefForNative() ?? default;
+                    try
                     {
-                        using var pinnedSyms = nativeSyms.Memory.Pin();
-                        retVal = LLVMOrcCreateCustomMaterializationUnit(
-                            name,
-                            (void*)nativeContext,
-                            (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
-                            checked((nuint)symbols.Length),
-                            nativeInitSym,
-                            &NativeCallbacks.Materialize,
-                            materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,
-                            &NativeCallbacks.Destroy
-                            );
+                        unsafe
+                        {
+                            using var pinnedSyms = nativeSyms.Memory.Pin();
+                            retVal = LLVMOrcCreateCustomMaterializationUnit(
+                                name,
+                                (void*)nativeContext,
+                                (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
+                                checked((nuint)symbols.Length),
+                                nativeInitSym,
+                                &NativeCallbacks.Materialize,
+                                materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,
+                                &NativeCallbacks.Destroy
+                                );
 
-                        // ownership of this symbol was moved to native, mark transfer so auto clean up (for exceptional cases)
-                        // does NOT kick in.
-                        nativeInitSym.SetHandleAsInvalid();
+                            // ownership of this symbol was moved to native, mark transfer so auto clean up (for exceptional cases)
+                            // does NOT kick in.
+                            nativeInitSym = default;
+                        }
+                    }
+                    finally
+                    {
+                        if(!nativeInitSym.IsNull)
+                        {
+                            nativeInitSym.Dispose();
+                        }
                     }
                 }
             }

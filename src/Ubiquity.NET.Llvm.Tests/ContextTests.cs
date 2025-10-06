@@ -162,7 +162,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.AreEqual( TypeKind.Function, funcSig.Kind );
             Assert.AreEqual( context.Int16Type, funcSig.ReturnType );
-            Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
+            Assert.HasCount( 2, funcSig.ParameterTypes );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, funcSig.IntegerBitWidth );

@@ -14,6 +14,14 @@ namespace Ubiquity.NET.Llvm.Values
     /// </remarks>
     public static class ValueExtensions
     {
+        private const LibLLVMValueKind ConstantFirstValKind = LibLLVMValueKind.FunctionKind;
+        private const LibLLVMValueKind ConstantLastValKind = LibLLVMValueKind.ConstantTokenNoneKind;
+
+        //private const LibLLVMValueKind ConstantDataFirstValKind = LibLLVMValueKind.UndefValueKind;
+        //private const LibLLVMValueKind ConstantDataLastValKind = LibLLVMValueKind.ConstantTokenNoneKind;
+        //private const LibLLVMValueKind ConstantAggregateFirstValKind = LibLLVMValueKind.ConstantArrayKind;
+        //private const LibLLVMValueKind ConstantAggregateLastValKind = LibLLVMValueKind.ConstantVectorKind;
+
         /// <summary>Sets the virtual register name for a value</summary>
         /// <typeparam name="T"> Type of the value to set the name for</typeparam>
         /// <param name="value">Value to set register name for</param>
@@ -286,7 +294,7 @@ namespace Ubiquity.NET.Llvm.Values
 
             // Default to constant, Instruction or generic base Value
             default:
-                if(kind >= LibLLVMValueKind.ConstantFirstValKind && kind <= LibLLVMValueKind.ConstantLastValKind)
+                if(kind >= ConstantFirstValKind && kind <= ConstantLastValKind)
                 {
                     return new Constant( handle );
                 }

@@ -8,23 +8,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     // NOTE: This seems "ill named" at best but this is the naming LLVM is using...
 
     /// <summary>LLVM ORC JIT v2 MaterializationResponsibility</summary>
-    public readonly ref struct MaterializationResponsibility
+    /// <remarks>Since this is a "moveable" type, it is mutable and therefore is a class.</remarks>
+    public sealed class MaterializationResponsibility
+        : IDisposable
     {
         /// <summary>Gets the library associated with thee current materialization</summary>
-        public readonly JITDyLib TargetDyLib => new( LLVMOrcMaterializationResponsibilityGetTargetDylib( Handle ) );
+        public JITDyLib TargetDyLib => new( LLVMOrcMaterializationResponsibilityGetTargetDylib( Handle ) );
 
         /// <summary>Gets the session associated with thee current materialization</summary>
-        public readonly ExecutionSession Session => new( LLVMOrcMaterializationResponsibilityGetExecutionSession( Handle ) );
+        public ExecutionSession Session => new( LLVMOrcMaterializationResponsibilityGetExecutionSession( Handle ) );
 
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
-        public readonly bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
+        public bool IsDisposed => Handle.IsNull;
 
         /// <summary>Throws an <see cref="ObjectDisposedException"/> if <see cref="IsDisposed"/> is <see langword="true"/></summary>
-        public readonly void ThrowIfIDisposed( ) => ObjectDisposedException.ThrowIf( IsDisposed, typeof( MaterializationResponsibility ) );
+        public void ThrowIfIDisposed( ) => ObjectDisposedException.ThrowIf( IsDisposed, typeof( MaterializationResponsibility ) );
 
         /// <summary>Transfers responsibility of all symbols defined by <paramref name="unit"/> to it</summary>
         /// <param name="unit">Unit to transfer responsibility for</param>
         /// <returns>Error information about the attempt to perform the replace</returns>
+        [SuppressMessage( "Style", "IDE0251:Make member 'readonly'", Justification = "Semantics => not readonly" )]
         public ErrorInfo Replace( MaterializationUnit unit )
         {
             return new( LLVMOrcMaterializationResponsibilityReplace( Handle, unit.Handle ) );
@@ -32,7 +35,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <summary>Gets the symbols associated with this request</summary>
         /// <returns>Array of symbols</returns>
-        public readonly SymbolStringPoolEntryList GetRequestedSymbols( )
+        public SymbolStringPoolEntryList GetRequestedSymbols( )
         {
             ThrowIfIDisposed();
 
@@ -46,7 +49,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <summary>Indicates to the JIT that this materialization unit has failed</summary>
-        public readonly void Fail( )
+        public void Fail( )
         {
             ThrowIfIDisposed();
 
@@ -54,13 +57,19 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <summary>Disposes of this instance</summary>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull & !Alias)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
         }
 
         /// <summary>Gets the pseudo-symbol name of the initializer for this responsibility, if any</summary>
         /// <returns>Static Initializer or <see langword="null"/> if none exists</returns>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "Move semantics applied for non-null values")]
         public SymbolStringPoolEntry? GetInitializerSymbol( )
         {
             var h = LLVMOrcMaterializationResponsibilityGetInitializerSymbol(Handle);
@@ -98,16 +107,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
+
         internal MaterializationResponsibility( LLVMOrcMaterializationResponsibilityRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
         internal MaterializationResponsibility( nint h, bool alias = false )
         {
-            Handle = new( h, !alias );
+            Handle = LLVMOrcMaterializationResponsibilityRef.FromABI( h );
+            Alias = alias;
         }
 
-        internal LLVMOrcMaterializationResponsibilityRef Handle { get; }
+        internal LLVMOrcMaterializationResponsibilityRef Handle { get; private set; }
+
+        private readonly bool Alias;
     }
 }

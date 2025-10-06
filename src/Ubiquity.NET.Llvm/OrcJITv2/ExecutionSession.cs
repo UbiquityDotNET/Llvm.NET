@@ -36,11 +36,20 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                                             out LLVMOrcLazyCallThroughManagerRef resultHandle
                                             );
 
-            // ownership is transferred to return, this using scope handles release on exception
-            using(resultHandle)
+            // ownership is transferred to return, this handles release on exception
+            try
             {
                 errRef.ThrowIfFailed();
                 return new( resultHandle );
+            }
+            catch
+            {
+                if(!resultHandle.IsNull)
+                {
+                    resultHandle.Dispose();
+                }
+
+                throw;
             }
         }
 
@@ -271,7 +280,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                     // is found otherwise, then it is corrected once for all. [Thus the `ref readonly`
                     // declaration of the parameter in the delegate]
                     // Ownership is "moved" to the ErrorInfo instance created
-                    using var errInfo = new ErrorInfo(abiErrorRef);
+                    using var errInfo = ErrorInfo.FromABI(abiErrorRef);
                     self( in errInfo );
                 }
             }

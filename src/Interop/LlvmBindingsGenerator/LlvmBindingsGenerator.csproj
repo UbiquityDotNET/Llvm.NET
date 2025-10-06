@@ -34,28 +34,18 @@
 
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
-        <None Update="Templates\T4\ContextHandleTemplate.tt">
+        <None Update="Templates\T4\WrappedHandleTemplate.tt">
             <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>ContextHandleTemplate.cs</LastGenOutput>
-            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
-        </None>
-        <None Update="Templates\T4\GlobalHandleTemplate.tt">
-            <Generator>TextTemplatingFilePreprocessor</Generator>
-            <LastGenOutput>GlobalHandleTemplate.cs</LastGenOutput>
+            <LastGenOutput>WrappedHandleTemplate.cs</LastGenOutput>
             <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
         </None>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Templates\T4\ContextHandleTemplate.cs">
+        <Compile Update="Templates\T4\WrappedHandleTemplate.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
-            <DependentUpon>ContextHandleTemplate.tt</DependentUpon>
-        </Compile>
-        <Compile Update="Templates\T4\GlobalHandleTemplate.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>GlobalHandleTemplate.tt</DependentUpon>
+            <DependentUpon>WrappedHandleTemplate.tt</DependentUpon>
         </Compile>
     </ItemGroup>
 
@@ -78,14 +68,10 @@
             <__GeneratedSourcePath>$([MSBuild]::NormalizeDirectory('..\..\interop\Ubiquity.NET.LLvm.Interop\Generated\Handles'))</__GeneratedSourcePath>
         </PropertyGroup>
         <ItemGroup>
-            <__RspContent Include="-l $(PkgUbiquity_NET_LibLLVM)\Content\native"/>
-            <__RspContent Include="-e $(PkgUbiquity_NET_LibLLVM)\Content\native"/>
-            <__RspContent Include="-o $(__GeneratedSourcePath)"/>
+            <__RspContent Include="-l $(PkgUbiquity_NET_LibLLVM)\Content\native" />
+            <__RspContent Include="-e $(PkgUbiquity_NET_LibLLVM)\Content\native" />
+            <__RspContent Include="-o $(__GeneratedSourcePath)" />
         </ItemGroup>
-        <WriteLinesToFile
-            File="$(HandleGeneratorResponeFilePath)"
-            Lines="@(__RspContent)"
-            Overwrite="true"
-            />
+        <WriteLinesToFile File="$(HandleGeneratorResponeFilePath)" Lines="@(__RspContent)" Overwrite="true" />
     </Target>
 </Project>

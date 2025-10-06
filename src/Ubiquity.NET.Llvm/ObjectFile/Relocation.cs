@@ -41,17 +41,19 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="Relocation"/> struct.</summary>
+        /// <param name="owningSection">owningSection for this relocation</param>
+        /// <param name="iterator">iterator to represent this section</param>
+        /// <param name="clone">Indicates whether the iterator is cloned (<see langword="true"/>) or subsumed ((<see langword="false"/>) Ownership transfer with 'Move' semantics)</param>
         internal Relocation( Section owningSection, LLVMRelocationIteratorRef iterator, bool clone )
         {
             Section = owningSection;
-            IteratorRef = clone ? LibLLVMRelocationIteratorClone( iterator ) : iterator.Move();
+            IteratorRef = clone ? LibLLVMRelocationIteratorClone( iterator ) : iterator;
         }
-
-#pragma warning disable IDISP006 // Implement IDisposable
 
         // Can't dispose the iterator, this is just a reference to one element
         // the enumerator that produces these owns the native iterator.
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "See Comments")]
         internal LLVMRelocationIteratorRef IteratorRef { get; }
-#pragma warning restore IDISP006 // Implement IDisposable
     }
 }

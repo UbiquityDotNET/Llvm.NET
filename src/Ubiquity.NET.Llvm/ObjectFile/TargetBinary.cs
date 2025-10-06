@@ -120,9 +120,9 @@ namespace Ubiquity.NET.Llvm.ObjectFile
             ArgumentNullException.ThrowIfNull( buffer );
             ArgumentNullException.ThrowIfNull( context );
 
-            BackingBuffer = new( buffer.Handle.Move() );
+            BackingBuffer = new( buffer.Move() );
             Handle = LLVMCreateBinary( BackingBuffer.Handle, context.GetUnownedHandle(), out string? errMsg );
-            if(Handle.IsInvalid)
+            if(Handle.IsNull)
             {
                 throw new InternalCodeGeneratorException( errMsg?.ToString() ?? string.Empty );
             }

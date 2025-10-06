@@ -256,10 +256,12 @@ namespace Kaleidoscope.Chapter71
 
                     var funcReturn = definition.Body.Accept( this ) ?? throw new CodeGeneratorException( ExpectValidFunc );
                     InstructionBuilder.Return( funcReturn );
-                    function.Verify();
-
-                    return function;
                 }
+
+                Debug.Assert(NamedValues.Depth == 1, "Scope stack of named values should be at global scope after completing function definition");
+                Debug.Assert(NamedValues.Peek().Count == 0, "Named values for global scope should be empty");
+                function.Verify();
+                return function;
             }
             catch(CodeGeneratorException)
             {
@@ -549,7 +551,7 @@ namespace Kaleidoscope.Chapter71
                 using var symbols = r.GetRequestedSymbols();
                 Debug.Assert( symbols.Count == 1, "Unexpected number of symbols!" );
 
-                using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
+                using SymbolStringPoolEntry mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
 
                 ThreadSafeModule tsm;
                 if(symbols[ 0 ].Equals( mangledBodyName ))
@@ -576,7 +578,10 @@ namespace Kaleidoscope.Chapter71
 
                     // Not a known symbol - fail the materialization request.
                     r.Fail();
+#pragma warning disable IDISP007 // Don't dispose injected
+                    // ABI requires disposal in this case
                     r.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                     return;
                 }
 

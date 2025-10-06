@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-        <LangVersion>13</LangVersion>
         <Nullable>enable</Nullable>
         <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
         <LangVersion>preview</LangVersion>
@@ -35,6 +34,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
         <ProjectReference Include="..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
+        <ProjectReference Include="..\Ubiquity.NET.SrcGeneration\Ubiquity.NET.SrcGeneration.csproj" />
         <ProjectReference Include="..\Ubiquity.NET.TextUX\Ubiquity.NET.TextUX.csproj" />
     </ItemGroup>
 

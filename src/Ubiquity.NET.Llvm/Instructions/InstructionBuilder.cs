@@ -18,7 +18,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="InstructionBuilder"/> class for a given <see cref="Ubiquity.NET.Llvm.ContextAlias"/></summary>
         /// <param name="context">ContextAlias used for creating instructions</param>
@@ -412,7 +418,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             LLVMValueRef landingPad = LLVMBuildLandingPad( Handle
                                                          , resultType.GetTypeRef( )
-                                                         , LLVMValueRef.Zero // personality function no longer part of instruction
+                                                         , default // personality function no longer part of instruction
                                                          , 0
                                                          , string.Empty
                                                          );
@@ -1657,6 +1663,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 : llvmArgs;
         }
 
+        #pragma warning disable IDE0060
         // TODO: Either validate parameter 'index' or remove it...
         private static void ValidateStructGepArgs( Value pointer, uint index )
         {
@@ -1667,6 +1674,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Pointer_value_expected, nameof( pointer ) );
             }
         }
+        #pragma warning restore IDE0060
 
         private IModule GetModuleOrThrow( )
         {

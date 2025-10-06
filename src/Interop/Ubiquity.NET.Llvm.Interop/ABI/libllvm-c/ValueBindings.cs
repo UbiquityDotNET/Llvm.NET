@@ -107,12 +107,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         InsertValueKind = 94,
         LandingPadKind = 95,
         FreezeKind = 96,
-        ConstantFirstValKind = FunctionKind,
-        ConstantLastValKind = ConstantTokenNoneKind,
-        ConstantDataFirstValKind = UndefValueKind,
-        ConstantDataLastValKind = ConstantTokenNoneKind,
-        ConstantAggregateFirstValKind = ConstantArrayKind,
-        ConstantAggregateLastValKind = ConstantVectorKind,
     }
 
     public static partial class ValueBindings

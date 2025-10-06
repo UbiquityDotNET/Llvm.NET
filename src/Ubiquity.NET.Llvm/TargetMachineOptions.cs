@@ -7,7 +7,8 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.TargetMachine;
 namespace Ubiquity.NET.Llvm
 {
     /// <summary>Options for creating a <see cref="TargetMachine"/></summary>
-    public class TargetMachineOptions
+    public sealed class TargetMachineOptions
+        : IDisposable
     {
         /// <summary>Gets or sets the CPU name for the machine</summary>
         public LazyEncodedString Cpu
@@ -51,11 +52,22 @@ namespace Ubiquity.NET.Llvm
             set => LLVMTargetMachineOptionsSetABI( Handle, value.ThrowIfNull() );
         }
 
-        internal TargetMachineOptions( LLVMTargetMachineOptionsRef h )
+        /// <inheritdoc/>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose()
         {
-            Handle = h.Move();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
         }
 
-        internal LLVMTargetMachineOptionsRef Handle { get; }
+        internal TargetMachineOptions( LLVMTargetMachineOptionsRef h )
+        {
+            Handle = h;
+        }
+
+        internal LLVMTargetMachineOptionsRef Handle { get; private set; }
     }
 }

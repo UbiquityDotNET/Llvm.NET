@@ -13,19 +13,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
-            if(disposing)
+            if(disposing && !Handle.IsNull)
             {
                 Handle.Dispose();
+                InvalidateAfterMove();
             }
 
             base.Dispose( disposing );
         }
 
-        internal LLVMOrcMaterializationUnitRef Handle { get; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
+
+        internal LLVMOrcMaterializationUnitRef Handle { get; private set; }
 
         private protected MaterializationUnit( LLVMOrcMaterializationUnitRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
     }
 }

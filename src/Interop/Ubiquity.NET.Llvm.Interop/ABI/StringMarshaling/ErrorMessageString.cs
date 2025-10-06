@@ -6,27 +6,50 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
     // Internal handle type for an LLVM Error message
     // See: LLVMErrorRef for more details of the oddities
     // of LLVM error message ownership
-    internal class ErrorMessageString
-        : CStringHandle
+    internal readonly record struct ErrorMessageString
+        : IWrappedHandle<ErrorMessageString>
+        , IDisposable
     {
-        /// <summary>Default constructor is required for marshalling</summary>
+        /// <summary>Initializes a new instance of the <see cref="ErrorMessageString"/> struct.</summary>
+        /// <remarks>Default constructor is required for marshalling</remarks>
         public ErrorMessageString( )
         {
         }
 
         public ErrorMessageString( nint hABI )
-            : base( hABI )
         {
+            Handle = hABI;
         }
 
-        protected override bool ReleaseHandle( )
+        public bool IsNull => Handle == nint.Zero;
+
+        public void Dispose( )
         {
-            LLVMDisposeErrorMessage( handle );
-            return true;
+            LLVMDisposeErrorMessage( Handle );
 
             [DllImport( LibraryName )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static extern void LLVMDisposeErrorMessage( nint p );
         }
+
+        public LazyEncodedString ToManaged()
+        {
+            unsafe
+            {
+                return LazyEncodedString.FromUnmanaged((byte*)Handle.ToPointer());
+            }
+        }
+
+        public readonly nint DangerousGetHandle( )
+        {
+            return Handle;
+        }
+
+        public static ErrorMessageString FromABI( nint abiValue )
+        {
+            return new(abiValue);
+        }
+
+        private readonly nint Handle; // char*
     }
 }
