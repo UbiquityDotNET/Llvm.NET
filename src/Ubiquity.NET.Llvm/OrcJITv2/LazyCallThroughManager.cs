@@ -8,16 +8,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <inheritdoc/>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
         }
 
+        // MOVE semantics constructor, this instance will own disposal
         internal LazyCallThroughManager( LLVMOrcLazyCallThroughManagerRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        internal LLVMOrcLazyCallThroughManagerRef Handle { get; init; }
+        internal LLVMOrcLazyCallThroughManagerRef Handle { get; private set; }
     }
 }

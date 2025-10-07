@@ -168,8 +168,8 @@ unsurprising to use from upper layers of managed code.
 >[!IMPORTANT]
 > It is worth stressing the point here that there is NO WAY to know which string type
 > to use based on only the header files and API signatures they contain. One ***MUST***
-> read the documentation for the API to know (and occasionally dig into the source code)
-> as it often isn't documented what the requirements are!. This is one of the greatest
+> read the documentation for the API to know (and occasionally dig into the source code,
+> as it often isn't documented what the requirements are!). This is one of the greatest
 > problems with any form of automated interop code generator. It can only scan the
 > headers and knows nothing about the documentation or intended semantics. This is why,
 > previously this was all done in a custom YAML file. But as this library and LLVM

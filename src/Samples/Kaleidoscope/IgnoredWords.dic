@@ -34,9 +34,11 @@ impl
 inline
 inlined
 lexer
+lookups
 loopcond
 mandel
 mandelconverger
+materializer
 multmp
 nextvar
 nobuiltin

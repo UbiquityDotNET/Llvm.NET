@@ -43,7 +43,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             // The call operator RETURNS the unique_ptr holding the object
             // buffer pointer via another std::move(), but ONLY on success.
             // Thus, "moving" the ownership responsibility back to the caller.
-            // The C wrapper then re-assigns the objBuffer to the dereferenced
+            // The C wrapper then re-assigns the objBuffer to the de-referenced
             // pointer parameter UNLESS the dump produced an error. If it did,
             // the buffer pointer is set to null and an error is returned...
             //
@@ -56,10 +56,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             // invalid handle) if it is destroyed.
             var bufHandle = objBuffer.Handle;
             using LLVMErrorRef errRef = LLVMOrcDumpObjects_CallOperator(Handle, ref bufHandle);
-            if(bufHandle is null || bufHandle.IsInvalid)
+            if(bufHandle.IsNull)
             {
                 // Buffer was released internally by native call
-                objBuffer.Handle.SetHandleAsInvalid();
+                objBuffer.InvalidateAfterMove();
             }
 
             errRef.ThrowIfFailed();

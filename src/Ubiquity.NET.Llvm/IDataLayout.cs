@@ -185,16 +185,17 @@ namespace Ubiquity.NET.Llvm
 
     internal static class DataLayoutExtensions
     {
+        // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMTargetDataRefAlias GetUnownedHandle( this IDataLayout self )
         {
-            if(self is IHandleWrapper<LLVMTargetDataRefAlias> wrapper)
+            if(self is DataLayoutAlias alias)
             {
-                return wrapper.Handle;
+                return alias.Handle;
             }
-            else if(self is IGlobalHandleOwner<LLVMTargetDataRef> owner)
+            else if(self is DataLayout owner)
             {
                 // implicitly cast to the alias handle
-                return owner.OwnedHandle;
+                return owner.Handle;
             }
             else
             {

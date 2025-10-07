@@ -3,8 +3,6 @@
 
 using System;
 
-using Kaleidoscope.Grammar.AST;
-
 using OpenSoftware.DgmlTools.Model;
 
 using Ubiquity.NET.Runtime.Utils;

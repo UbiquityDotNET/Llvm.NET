@@ -9,9 +9,9 @@ namespace Ubiquity.NET.Llvm.Interop
     /// as no LLVM objects own a DIBuilder, but many consumers will. This allows for
     /// consistency in the ownership consideration of a given DIBuilder instance.
     /// </remarks>
-    [NativeMarshalling(typeof(ContextHandleMarshaller<LLVMDIBuilderRefAlias>))]
+    [NativeMarshalling(typeof(WrappedHandleMarshaller<LLVMDIBuilderRefAlias>))]
     public readonly record struct LLVMDIBuilderRefAlias
-        : IContextHandle<LLVMDIBuilderRefAlias>
+        : IWrappedHandle<LLVMDIBuilderRefAlias>
     {
         /// <summary>Gets a value indicating whether this handle is a <see langword="null"/> value</summary>
         public bool IsNull => Handle == nint.Zero;

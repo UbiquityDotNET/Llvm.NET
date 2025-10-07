@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
 
 using Ubiquity.NET.Runtime.Utils;
 using Ubiquity.NET.TextUX;
@@ -36,7 +35,7 @@ namespace Kaleidoscope.Runtime
         public async Task Run( TextReader input, IVisualizer? visualizer, CancellationToken cancelToken = default )
         {
             var parser = new Kaleidoscope.Grammar.Parser(LanguageFeatureLevel, visualizer);
-            ICodeGenerator<T> generator = CreateGenerator( parser.GlobalState );
+            using ICodeGenerator<T> generator = CreateGenerator( parser.GlobalState );
             await Run( input, parser, generator, cancelToken );
         }
 

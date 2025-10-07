@@ -151,7 +151,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( "srcModule", ex.ParamName );
 
             // full message includes the name of the parameter, but that's .NET functionality not tested
-            Assert.IsTrue( ex.Message.StartsWith( "Linking modules from different contexts is not allowed" ) );
+            Assert.StartsWith( "Linking modules from different contexts is not allowed", ex.Message );
         }
 
         [TestMethod]
@@ -401,7 +401,7 @@ namespace Ubiquity.NET.Llvm.UT
             module.AddModuleFlag( ModuleFlagBehavior.Error, "min_enum_size", 4 );
             module.AddVersionIdentMetadata( "unit-tests 1.0" );
 
-            Assert.AreEqual( 4, module.ModuleFlags.Count );
+            Assert.HasCount( 4, module.ModuleFlags );
             Assert.IsTrue( module.ModuleFlags.ContainsKey( Module.DwarfVersionValue ) );
             Assert.IsTrue( module.ModuleFlags.ContainsKey( Module.DebugVersionValue ) );
             Assert.IsTrue( module.ModuleFlags.ContainsKey( "wchar_size" ) );

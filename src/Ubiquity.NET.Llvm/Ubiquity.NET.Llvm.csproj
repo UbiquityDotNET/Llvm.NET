@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>13</LangVersion>
+        <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
+        <LangVersion>preview</LangVersion>
+        <Nullable>enable</Nullable>
+
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <DebugType>portable</DebugType>
         <DebugSymbols>true</DebugSymbols>

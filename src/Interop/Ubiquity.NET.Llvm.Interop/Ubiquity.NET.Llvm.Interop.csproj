@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>13</LangVersion>
+        <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
+        <LangVersion>preview</LangVersion>
+        <Nullable>enable</Nullable>
+
+        <!-- TODO: additional RIDs as supported in native library -->
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <DebugType>portable</DebugType>
-        <DebugSymbols>true</DebugSymbols>
         <SignAssembly>False</SignAssembly>
-        <GenerateDocumentationFile>False</GenerateDocumentationFile>
-        <DocumentationFile>$(BaseIntermediateOutputPath)$(MSBuildProjectName).xml</DocumentationFile>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
         <IsAotCompatible>True</IsAotCompatible>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <MinClientVersion>4.9.0</MinClientVersion>
@@ -30,29 +33,55 @@
 
         <!--
         workaround: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3882
-        Only known solution to prevent complier Null check issues is to disable the rule
+        Only known solution to prevent compiler Null check issues is to disable the rule
         -->
         <NoWarn>$(NoWarn);SA1135</NoWarn>
 
     </PropertyGroup>
+
+    <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
     <ItemGroup>
-        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
-        <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" />
-        <PackageReference Include="Ubiquity.NET.Llvm.Interop.Handles" VersionOverride="20.1.*-*" />
-        <PackageReference Include="Ubiquity.NET.Versioning" />
+        <None Update="Templates\T4\ContextHandle.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ExportsTemplate.cs</LastGenOutput>
+            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+        </None>
+        <None Update="Templates\T4\GlobalHandle.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ExportsTemplate.cs</LastGenOutput>
+            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+        </None>
     </ItemGroup>
+
     <ItemGroup>
+       <Compile Update="Templates\T4\ContextHandleTemplate.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ContextHandleTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Templates\T4\GlobalHandleTemplate.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>GlobalHandleTemplate.tt</DependentUpon>
+        </Compile>
         <Compile Update="Properties\Resources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
     </ItemGroup>
+
     <ItemGroup>
         <EmbeddedResource Update="Properties\Resources.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
+        <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" />
+        <PackageReference Include="Ubiquity.NET.Versioning" />
     </ItemGroup>
 
     <ItemGroup>

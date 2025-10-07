@@ -4,6 +4,8 @@
     <Project Path="ReferenceEqualityVerifier/ReferenceEqualityVerifier/ReferenceEqualityVerifier.csproj" Id="e8f42c47-8cd5-4987-8402-0dcd97ac8b60" />
   </Folder>
   <Folder Name="/Interop/">
+    <File Path="Interop/readme-first.md" />
+    <Project Path="Interop/LlvmBindingsGenerator/LlvmBindingsGenerator.csproj" />
     <Project Path="Interop/Ubiquity.NET.Llvm.Interop/Ubiquity.NET.Llvm.Interop.csproj" />
     <Project Path="Ubiquity.NET.InteropHelpers/Ubiquity.NET.InteropHelpers.csproj" />
   </Folder>
@@ -18,6 +20,7 @@
     <File Path="../Directory.Build.props" />
     <File Path="../Directory.Build.targets" />
     <File Path="../Directory.Packages.props" />
+    <File Path="../Generate-HandleWrappers.ps1" />
     <File Path="../global.json" />
     <File Path="../GOVERNANCE.md" />
     <File Path="../IgnoredWords.dic" />
@@ -78,5 +81,6 @@
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
   <Project Path="Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj" />
   <Project Path="Ubiquity.NET.Runtime.Utils/Ubiquity.NET.Runtime.Utils.csproj" />
+  <Project Path="Ubiquity.NET.SrcGeneration/Ubiquity.NET.SrcGeneration.csproj" />
   <Project Path="Ubiquity.NET.TextUX/Ubiquity.NET.TextUX.csproj" Id="0c58feb7-2b42-431a-9a37-43a8b263add9" />
 </Solution>

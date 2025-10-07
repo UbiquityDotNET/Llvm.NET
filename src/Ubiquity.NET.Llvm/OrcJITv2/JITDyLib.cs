@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             LLVMOrcJITDylibAddGenerator( Handle, generator.Handle );
 
             // ownership transfer complete, mark it as such so Dispose becomes a NOP.
-            generator.Handle.SetHandleAsInvalid();
+            generator.InvalidateAfterMove();
         }
 
         /// <summary>Defines (Adds) the materialization unit to this library</summary>
@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             errorRef.ThrowIfFailed();
 
             // successfully transferred ownership to native code, mark it as such
-            materializationUnit.Handle.SetHandleAsInvalid();
+            materializationUnit.InvalidateAfterMove();
         }
 
         /// <summary>Creates a <see cref="ResourceTracker"/> associated with this library</summary>

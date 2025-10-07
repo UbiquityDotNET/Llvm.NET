@@ -33,17 +33,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public ThreadSafeModule AddModule( Module perThreadModule )
         {
             ArgumentNullException.ThrowIfNull( perThreadModule );
-            ObjectDisposedException.ThrowIf( Handle.IsClosed || Handle.IsInvalid, this );
-            using var moduleRef = perThreadModule.GetOwnedHandle();
-            var retVal = new ThreadSafeModule(LLVMOrcCreateNewThreadSafeModule(moduleRef, Handle).ThrowIfInvalid());
-            moduleRef.SetHandleAsInvalid(); // transfer to native complete.
+            ObjectDisposedException.ThrowIf( Handle.IsNull, this );
+
+            //  Transfer (Move) to native for module will happen on success
+            var retVal = new ThreadSafeModule(LLVMOrcCreateNewThreadSafeModule(perThreadModule.Handle, Handle).ThrowIfInvalid());
+            perThreadModule.InvalidateAfterMove(); // transfer to native complete.
             return retVal;
         }
 
         /// <inheritdoc/>
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
         }
 
         /// <summary>Gets the PerThreadContext for this instance</summary>
@@ -51,12 +56,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             get
             {
-                ObjectDisposedException.ThrowIf( Handle.IsClosed || Handle.IsInvalid, this );
+                ObjectDisposedException.ThrowIf( Handle.IsNull, this );
 
                 return new ContextAlias( LLVMOrcThreadSafeContextGetContext( Handle ) );
             }
         }
 
-        internal LLVMOrcThreadSafeContextRef Handle { get; }
+        internal LLVMOrcThreadSafeContextRef Handle { get; private set; }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning", Justification = "Move already occurred")]
+        internal void InvalidateAfterMove()
+        {
+            Handle = default;
+        }
     }
 }

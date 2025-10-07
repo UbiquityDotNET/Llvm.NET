@@ -50,7 +50,7 @@ namespace Ubiquity.NET.InteropHelpers
         public override bool IsInvalid => handle == 0;
 
         /// <summary>Adds a ref count to this handle AND converts the allocated <see cref="GCHandle"/> for use in native code</summary>
-        /// <returns>context value for us in native code to refer to the <see cref="GCHandle"/> held by this instance</returns>
+        /// <returns>context value for use in native code to refer to the <see cref="GCHandle"/> held by this instance</returns>
         /// <remarks>
         /// A native call back that receives the returned context can reconstitute the <see cref="GCHandle"/> via <see cref="GCHandle.FromIntPtr(nint)"/>
         /// and from that it can get the original instance the handle refers to via <see cref="GCHandle.Target"/>

@@ -10,10 +10,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull && !Alias)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
+        }
 
         /// <summary>Gets a value indicating whether this instance is disposed</summary>
-        public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
+        public bool IsDisposed => Handle.IsNull;
 
         /// <summary>Throws an <see cref="ObjectDisposedException"/> if <see cref="IsDisposed"/> is <see langword="true"/></summary>
         public void ThrowIfIDisposed( ) => ObjectDisposedException.ThrowIf( IsDisposed, this );
@@ -65,34 +73,48 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public ThreadSafeModule( ThreadSafeContext context, Module module )
             : this( MakeHandle( context, module ) )
         {
-            module.InvalidateFromMove();
         }
 
         internal ThreadSafeModule( nint h, bool alias = false )
         {
-            Handle = new( h, !alias );
+            Handle = LLVMOrcThreadSafeModuleRef.FromABI( h );
+            Alias = alias;
         }
 
         internal ThreadSafeModule( LLVMOrcThreadSafeModuleRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        internal LLVMOrcThreadSafeModuleRef Handle { get; init; }
+        internal LLVMOrcThreadSafeModuleRef Move()
+        {
+            var retVal = Handle;
+            InvalidateAfterMove();
+            return retVal;
+        }
+
+        internal void InvalidateAfterMove()
+        {
+            Handle = default;
+        }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Constructor uses move semantics")]
+        internal LLVMOrcThreadSafeModuleRef Handle { get; private set; }
+
+        private readonly bool Alias;
 
         private static LLVMOrcThreadSafeModuleRef MakeHandle( ThreadSafeContext context, Module module )
         {
             ArgumentNullException.ThrowIfNull( context );
             ArgumentNullException.ThrowIfNull( module );
 
-            LLVMOrcThreadSafeModuleRef retVal = LLVMOrcCreateNewThreadSafeModule(module.GetOwnedHandle(), context.Handle);
-            module.InvalidateFromMove();
+            LLVMOrcThreadSafeModuleRef retVal = LLVMOrcCreateNewThreadSafeModule(module.Handle, context.Handle);
+            module.InvalidateAfterMove();
             return retVal;
         }
 
         [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
-        [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "All instances are created as an alias or 'moved' to native Dispose() not needed" )]
         private static unsafe /*LLVMErrorRef*/ nint NativePerThreadModuleCallback( void* context, LLVMModuleRefAlias moduleHandle )
         {
             try

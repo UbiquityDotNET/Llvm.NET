@@ -435,7 +435,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public DILocation? Location
         {
             get => (DILocation?)LLVMInstructionGetDebugLoc( Handle ).CreateMetadata();
-            set => LLVMInstructionSetDebugLoc( Handle, value?.Handle ?? LLVMMetadataRef.Zero );
+            set => LLVMInstructionSetDebugLoc( Handle, value?.Handle ?? default );
         }
 
         /// <summary>Gets a value indicating whether the opcode is for a memory access (<see cref="Alloca"/>, <see cref="Load"/>, <see cref="Store"/>)</summary>

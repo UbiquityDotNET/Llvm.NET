@@ -370,12 +370,12 @@ namespace Kaleidoscope.Grammar.AST
 
         private static string CreateUnaryFunctionName( IToken opToken )
         {
-            return $"$unary${opToken.Text}";
+            return $"unary-op${opToken.Text}";
         }
 
         private static string CreateBinaryFunctionName( IToken opToken )
         {
-            return $"$binary${opToken.Text}";
+            return $"binary-op${opToken.Text}";
         }
 
         private IAstNode BuildPrototype( PrototypeContext context, string name )

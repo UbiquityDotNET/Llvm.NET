@@ -154,7 +154,7 @@ namespace Ubiquity.NET.Llvm
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
+            LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
@@ -174,7 +174,7 @@ namespace Ubiquity.NET.Llvm
                                                 , CodeModel codeModel = CodeModel.Default
                                                 )
         {
-            using LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
+            LLVMTargetMachineRef targetMachineHandle = InternalCreateTargetMachine( triple, cpu, features, optLevel, relocationMode, codeModel );
             return new TargetMachine( targetMachineHandle );
         }
 
@@ -231,15 +231,14 @@ namespace Ubiquity.NET.Llvm
             relocationMode.ThrowIfNotDefined();
             codeModel.ThrowIfNotDefined();
 
-            var targetMachineHandle = LLVMCreateTargetMachine( Handle
-                                                             , triple
-                                                             , cpu ?? LazyEncodedString.Empty
-                                                             , features ?? LazyEncodedString.Empty
-                                                             , ( LLVMCodeGenOptLevel )optLevel
-                                                             , ( LLVMRelocMode )relocationMode
-                                                             , ( LLVMCodeModel )codeModel
-                                                             );
-            return targetMachineHandle;
+            return LLVMCreateTargetMachine( Handle
+                                          , triple
+                                          , cpu ?? LazyEncodedString.Empty
+                                          , features ?? LazyEncodedString.Empty
+                                          , ( LLVMCodeGenOptLevel )optLevel
+                                          , ( LLVMRelocMode )relocationMode
+                                          , ( LLVMCodeModel )codeModel
+                                          );
         }
     }
 }

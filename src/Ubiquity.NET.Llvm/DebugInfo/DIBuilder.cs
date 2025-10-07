@@ -25,7 +25,6 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     public sealed class DIBuilder
         : IDIBuilder
         , IDisposable
-        , IGlobalHandleOwner<LLVMDIBuilderRef>
         , IEquatable<DIBuilder>
     {
         /// <summary>Initializes a new instance of the <see cref="DIBuilder"/> class.</summary>
@@ -38,16 +37,20 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public void Dispose( )
         {
-            NativeHandle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
         }
 
         #region IEquatable<T>
 
         /// <inheritdoc/>
-        public bool Equals( IDIBuilder? other ) => other is not null && ((LLVMDIBuilderRefAlias)NativeHandle).Equals( other.GetUnownedHandle() );
+        public bool Equals( IDIBuilder? other ) => other is not null && ((LLVMDIBuilderRefAlias)Handle).Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals( DIBuilder? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
+        public bool Equals( DIBuilder? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override bool Equals( object? obj ) => obj is Context owner
@@ -55,7 +58,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                   : Equals( obj as IContext );
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
 
         #endregion
 
@@ -394,41 +397,41 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         #endregion
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
-        public bool IsDisposed => NativeHandle is null || NativeHandle.IsInvalid || NativeHandle.IsClosed;
+        public bool IsDisposed => Handle.IsNull;
 
         // keeping this private for now as there doesn't seem to be a good reason to support
         // allowUnresolved == false
         private DIBuilder( IModule owningModule, bool allowUnresolved )
         {
             ArgumentNullException.ThrowIfNull( owningModule );
-            var unownedModuleHandle = owningModule.GetUnownedHandle();
-            NativeHandle = allowUnresolved
-                ? LLVMCreateDIBuilder( unownedModuleHandle )
-                : LLVMCreateDIBuilderDisallowUnresolved( unownedModuleHandle );
 
-            AliasImpl = new(NativeHandle, owningModule);
+            LLVMModuleRefAlias unownedModuleHandle = owningModule.GetUnownedHandle();
+            Handle = allowUnresolved
+                   ? LLVMCreateDIBuilder( unownedModuleHandle )
+                   : LLVMCreateDIBuilderDisallowUnresolved( unownedModuleHandle );
+
+            Impl = new(Handle, owningModule);
         }
 
         #region IGlobalHandleOwner<LLVMDIBuilderRef> (Pattern)
 
-        /// <inheritdoc/>
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface" )]
-        LLVMDIBuilderRef IGlobalHandleOwner<LLVMDIBuilderRef>.OwnedHandle => NativeHandle;
+        internal LLVMDIBuilderRef Handle { get; private set; }
 
-        /// <inheritdoc/>
-        void IGlobalHandleOwner<LLVMDIBuilderRef>.InvalidateFromMove( ) => NativeHandle.SetHandleAsInvalid();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning", Justification = "Move semantics already occurred")]
+        internal void InvalidateAfterMove( )
+        {
+            Handle = default;
+        }
 
         private DIBuilderAlias Impl
         {
             get
             {
                 ObjectDisposedException.ThrowIf( IsDisposed, this );
-                return AliasImpl;
+                return field;
             }
         }
-
-        private readonly DIBuilderAlias AliasImpl;
-        private readonly LLVMDIBuilderRef NativeHandle;
         #endregion
     }
 }

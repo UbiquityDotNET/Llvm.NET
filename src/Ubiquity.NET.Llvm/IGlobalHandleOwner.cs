@@ -1,11 +1,15 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
+#if USE_HANDLE_INTERFACES
 
 namespace Ubiquity.NET.Llvm
 {
+    /// <summary>Internal interface to define common mechanism to get at the underlying interop handle for Aliased and Context handle wrapper types</summary>
+    /// <typeparam name="THandle">Type of the interop handle</typeparam>
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related interfaces" )]
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal Interface" )]
     internal interface IHandleWrapper<THandle>
+        where THandle : struct, IWrappedHandle<THandle>
     {
         /// <summary>Gets the handle for this wrapper</summary>
         /// <returns>ABI handle value for this implementation</returns>
@@ -20,7 +24,7 @@ namespace Ubiquity.NET.Llvm
     [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal Interface" )]
     internal interface IGlobalHandleOwner<THandle>
         : IDisposable
-        where THandle : GlobalHandleBase
+        where THandle : struct, IWrappedHandle<THandle>, IDisposable
     {
         /// <summary>Gets the handle owned by this instance</summary>
         /// <remarks>
@@ -38,6 +42,7 @@ namespace Ubiquity.NET.Llvm
         /// handle in a manner that makes disposal a NOP. (Callers should NOT care about this and still call Dispose()
         /// in case there was an exception and they still own it!)
         /// </remarks>
-        internal void InvalidateFromMove( );
+        internal void InvalidateAfterMove( );
     }
 }
+#endif

@@ -11,7 +11,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
         [TestMethod]
         public void ConvertToManagedTest( )
         {
-            var handle = ContextHandleMarshaller<LibLLVMMDOperandRef>.ConvertToManaged(NativeABIValue);
+            var handle = WrappedHandleMarshaller<LibLLVMMDOperandRef>.ConvertToManaged(NativeABIValue);
             Assert.IsFalse( handle.IsNull );
             Assert.AreEqual( NativeABIValue, handle.DangerousGetHandle() );
             Assert.AreEqual( NativeABIValue, (nint)handle );
@@ -24,7 +24,7 @@ namespace Ubiquity.NET.Llvm.Interop.UT
 
             // Validate FromABI() method AND verify assumptions made in subsequent asserts...
             Assert.AreEqual( NativeABIValue, handle.DangerousGetHandle() );
-            nint abiHandleVal = ContextHandleMarshaller<LibLLVMMDOperandRef>.ConvertToUnmanaged(handle);
+            nint abiHandleVal = WrappedHandleMarshaller<LibLLVMMDOperandRef>.ConvertToUnmanaged(handle);
             Assert.AreEqual( NativeABIValue, abiHandleVal );
         }
 

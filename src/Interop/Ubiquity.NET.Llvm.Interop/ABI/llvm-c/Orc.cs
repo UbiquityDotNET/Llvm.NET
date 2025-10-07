@@ -98,7 +98,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     public readonly record struct LLVMOrcCSymbolAliasMapEntry( LLVMOrcSymbolStringPoolEntryRefAlias Name, LLVMJITSymbolFlags Flags );
 
     [StructLayout( LayoutKind.Sequential )]
-    public readonly record struct LLVMOrcCSymbolAliasMapPair( LLVMOrcSymbolStringPoolEntryRefAlias name, LLVMOrcCSymbolAliasMapEntry entry );
+    public readonly record struct LLVMOrcCSymbolAliasMapPair( LLVMOrcSymbolStringPoolEntryRefAlias Name, LLVMOrcCSymbolAliasMapEntry Entry );
 
     [StructLayout( LayoutKind.Sequential )]
     public readonly /*record*/ struct LLVMOrcCSymbolsList
@@ -162,11 +162,23 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
     [StructLayout( LayoutKind.Sequential )]
     public readonly record struct LLVMOrcCLookupSetElement
     {
+        /// <summary>Initializes a new instance of the <see cref="LLVMOrcCLookupSetElement"/> struct.</summary>
+        /// <param name="name">Name of the element</param>
+        /// <param name="flags">flags for the element</param>
+        /// <remarks>
+        /// This has AddRef semantics in that the <paramref name="name"/> is AddRef'd for the native code. Thus the
+        /// resulting <see cref="Name"/> member has a ref count where the native code or an exception handler owns
+        /// responsibility for releasing it.
+        /// </remarks>
         public LLVMOrcCLookupSetElement( LLVMOrcSymbolStringPoolEntryRef name, LLVMOrcSymbolLookupFlags flags )
         {
-            ArgumentNullException.ThrowIfNull( name );
+            if(name.IsNull)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            Name = name.DangerousGetHandle();
+            // Responsibility for disposal moved to native or catch handler on exception before handing to native.
+            Name = name.AddRefToNative();
             LookupFlags = flags;
         }
 
@@ -211,6 +223,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [Experimental("LLVMEXP001")]
         private static unsafe partial void LLVMOrcExecutionSessionLookup(
             LLVMOrcExecutionSessionRef ES,
             LLVMOrcLookupKind K,
@@ -222,15 +235,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcRetainSymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRef S );
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMOrcReleaseSymbolStringPoolEntry( LLVMOrcSymbolStringPoolEntryRefAlias S );
-
-        [LibraryImport( LibraryName )]
-        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LazyEncodedString LLVMOrcSymbolStringPoolEntryStr( LLVMOrcSymbolStringPoolEntryRef S );
+        public static unsafe partial LazyEncodedString LLVMOrcSymbolStringPoolEntryStr( LLVMOrcSymbolStringPoolEntryRefAlias S );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -253,6 +258,8 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe partial void LLVMOrcDisposeMaterializationUnit( LLVMOrcMaterializationUnitRef MU );
 
         // special overload to allow calling this with a re-interpret cast of a layout compatible struct
+        // Refcount for InitSym is moved to native for this call. It should have a ref count of at least 2
+        // [+1 for entry in syms, +1 for InitSym itself]
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMOrcMaterializationUnitRef LLVMOrcCreateCustomMaterializationUnit(
@@ -382,18 +389,10 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         public static unsafe LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
             LLVMOrcMaterializationResponsibilityRef MR,
             LLVMOrcSymbolStringPoolEntryRef[] Symbols,
-            /*[MaybeNullIfFailed]*/out LLVMOrcMaterializationResponsibilityRef? Result
+            /*[MaybeNullIfFailed]*/out LLVMOrcMaterializationResponsibilityRef Result
             )
         {
-            // Workaround for language limits
-            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/lambda-expression-errors?f1url=%3FappId%3Droslyn%26k%3Dk(CS1628)#syntax-limitations-in-lambda-expressions
-            LLVMOrcMaterializationResponsibilityRef? result2 = null;
-            var retVal = RefHandleMarshaller.WithNativePointer(
-                Symbols,
-                ( p, s ) => LLVMOrcMaterializationResponsibilityDelegate( MR, p, checked((nuint)s), out result2 )
-            );
-            Result = result2;
-            return retVal;
+            return LLVMOrcMaterializationResponsibilityDelegate(MR, Symbols, (uint)Symbols.Length, out Result);
         }
 
         // NOTE: The normal ArrayMarshaller and SafeHandleMarshaller are NOT capable of handling arrays of references to safe handles,
@@ -403,9 +402,9 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         private static unsafe partial LLVMErrorRef LLVMOrcMaterializationResponsibilityDelegate(
             LLVMOrcMaterializationResponsibilityRef MR,
-            /*[In] LLVMOrcSymbolStringPoolEntryRef[]*/ nint* Symbols,
+            [In] LLVMOrcSymbolStringPoolEntryRef[] Symbols,
             nuint NumSymbols,
-            out LLVMOrcMaterializationResponsibilityRef Result
+            /*[MaybeNullIfFailed]*/ out LLVMOrcMaterializationResponsibilityRef Result
             );
 
         [LibraryImport( LibraryName )]

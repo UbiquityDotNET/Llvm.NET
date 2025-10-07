@@ -19,7 +19,7 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         /// <summary>Gets the <see cref="TargetBinary"/> this section belongs to</summary>
         public TargetBinary ContainingBinary { get; }
 
-        /// <summary>Gets the Relocations in this <see cref="TargetBinary"/></summary>
+        /// <summary>Gets the <see cref="Relocation"/>s in this <see cref="TargetBinary"/></summary>
         public IEnumerable<Relocation> Relocations
         {
             get
@@ -66,17 +66,19 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="Section"/> struct.</summary>
+        /// <param name="objFile">object file for this section</param>
+        /// <param name="iterator">iterator to represent this section</param>
+        /// <param name="clone">Indicates whether the iterator is cloned (<see langword="true"/>) or subsumed ((<see langword="false"/>) Ownership transfer with 'Move' semantics)</param>
         internal Section( TargetBinary objFile, LLVMSectionIteratorRef iterator, bool clone )
         {
             ContainingBinary = objFile;
-            IteratorRef = clone ? LibLLVMSectionIteratorClone( iterator ) : iterator.Move();
+            IteratorRef = clone ? LibLLVMSectionIteratorClone( iterator ) : iterator;
         }
-
-#pragma warning disable IDISP006 // Implement IDisposable
 
         // Can't dispose the iterator, this is just a reference to one element
         // the enumerator that produces these owns the native iterator.
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "See Comments")]
         internal LLVMSectionIteratorRef IteratorRef { get; }
-#pragma warning restore IDISP006 // Implement IDisposable
     }
 }

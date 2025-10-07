@@ -12,7 +12,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// ORC JIT instances are created through a builder, which makes derived types
     /// impossible. Instead composition is used with this interface as the means of
     /// generalizing the distinction. Custom runtime JITs will implement this interface
-    /// and generally forward calls to an internal <see cref="LlJIT"/> instance it created
+    /// and generally forward calls to an internal <see cref="LLJit"/> instance it created
     /// via a builder.
     /// </remarks>
     public interface IOrcJit

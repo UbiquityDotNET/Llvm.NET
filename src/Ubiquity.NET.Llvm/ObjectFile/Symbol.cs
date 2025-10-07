@@ -64,14 +64,9 @@ namespace Ubiquity.NET.Llvm.ObjectFile
         public bool Equals( Symbol other ) => IteratorRef.Equals( other.IteratorRef );
 
         internal Symbol( TargetBinary objFile, LLVMSymbolIteratorRef iterator )
-            : this( objFile, iterator, true )
         {
-        }
-
-        internal Symbol( TargetBinary binary, LLVMSymbolIteratorRef iterator, bool clone )
-        {
-            IteratorRef = clone ? LibLLVMSymbolIteratorClone( iterator ) : iterator.Move();
-            ContainingBinary = binary;
+            IteratorRef = LibLLVMSymbolIteratorClone( iterator );
+            ContainingBinary = objFile;
         }
 
 #pragma warning disable IDISP006 // Implement IDisposable

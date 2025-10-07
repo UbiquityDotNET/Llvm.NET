@@ -826,16 +826,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
     internal static class IDIBuilderExtensions
     {
+        // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMDIBuilderRefAlias GetUnownedHandle( this IDIBuilder self )
         {
-            if(self is IHandleWrapper<LLVMDIBuilderRefAlias> wrapper)
+            if(self is DIBuilderAlias alias)
             {
-                return wrapper.Handle;
+                return alias.Handle;
             }
-            else if(self is IGlobalHandleOwner<LLVMDIBuilderRef> owner)
+            else if(self is DIBuilder builder)
             {
                 // implicitly cast to the alias handle
-                return owner.OwnedHandle;
+                return builder.Handle;
             }
             else
             {

@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <summary>Gets a value indicating whether this instance is disposed or not</summary>
-        public bool IsDisposed => Handle is null || Handle.IsInvalid || Handle.IsClosed;
+        public bool IsDisposed => Handle.IsNull;
 
         /// <summary>Throws an <see cref="ObjectDisposedException"/> if this instance is already disposed</summary>
         public void ThrowIfDisposed( ) => ObjectDisposedException.ThrowIf( IsDisposed, this );
@@ -33,13 +33,21 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
+        }
 
         internal ResourceTracker( LLVMOrcResourceTrackerRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        internal LLVMOrcResourceTrackerRef Handle { get; }
+        internal LLVMOrcResourceTrackerRef Handle { get; private set; }
     }
 }

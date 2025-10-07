@@ -395,16 +395,17 @@ namespace Ubiquity.NET.Llvm
 
     internal static class ContextExtensions
     {
+        // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMContextRefAlias GetUnownedHandle( this IContext self )
         {
-            if(self is IHandleWrapper<LLVMContextRefAlias> wrapper)
+            if(self is ContextAlias alias)
             {
-                return wrapper.Handle;
+                return alias.Handle;
             }
-            else if(self is IGlobalHandleOwner<LLVMContextRef> owner)
+            else if(self is Context ctx)
             {
                 // implicitly cast to the alias handle
-                return owner.OwnedHandle;
+                return ctx.Handle;
             }
             else
             {

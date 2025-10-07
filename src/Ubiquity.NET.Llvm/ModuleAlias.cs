@@ -15,38 +15,39 @@ namespace Ubiquity.NET.Llvm
 {
     internal sealed class ModuleAlias
         : IModule
-        , IHandleWrapper<LLVMModuleRefAlias>
         , IEquatable<ModuleAlias>
     {
         #region IEquatable<>
 
         /// <inheritdoc/>
-        public bool Equals( IModule? other ) => other is not null && NativeHandle.Equals( other.GetUnownedHandle() );
+        public bool Equals( IModule? other ) => other is not null && Handle.Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals( ModuleAlias? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
+        public bool Equals( ModuleAlias? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override bool Equals( object? obj ) => obj is ModuleAlias alias
-                                                  ? Equals( alias )
-                                                  : Equals( obj as IModule );
+                                                      ? Equals( alias )
+                                                      : Equals( obj as IModule );
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
         #endregion
+
+        #region IModule
 
         /// <inheritdoc/>
         public LazyEncodedString SourceFileName
         {
-            get => LibLLVMGetModuleSourceFileName( NativeHandle ) ?? LazyEncodedString.Empty;
-            set => LibLLVMSetModuleSourceFileName( NativeHandle, value );
+            get => LibLLVMGetModuleSourceFileName( Handle ) ?? LazyEncodedString.Empty;
+            set => LibLLVMSetModuleSourceFileName( Handle, value );
         }
 
         /// <inheritdoc/>
         public ComdatCollection Comdats => new( this );
 
         /// <inheritdoc/>
-        public IContext Context => new ContextAlias( LLVMGetModuleContext( NativeHandle ) );
+        public IContext Context => new ContextAlias( LLVMGetModuleContext( Handle ) );
 
         /// <inheritdoc/>
         public IReadOnlyDictionary<LazyEncodedString, ModuleFlag> ModuleFlags
@@ -54,7 +55,7 @@ namespace Ubiquity.NET.Llvm
             get
             {
                 var retVal = new Dictionary<LazyEncodedString, ModuleFlag>( );
-                using LLVMModuleFlagEntry flags = LLVMCopyModuleFlagsMetadata( NativeHandle, out nuint len );
+                using LLVMModuleFlagEntry flags = LLVMCopyModuleFlagsMetadata( Handle, out nuint len );
                 for(uint i = 0; i < len; ++i)
                 {
                     var behavior = LLVMModuleFlagEntriesGetFlagBehavior( flags, i );
@@ -84,21 +85,22 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                var dataLayout = new DataLayoutAlias(LLVMGetModuleDataLayout( NativeHandle ));
+                var dataLayout = new DataLayoutAlias(LLVMGetModuleDataLayout( Handle ));
                 return dataLayout.ToLazyEncodedString();
             }
 
             set
             {
                 ArgumentNullException.ThrowIfNull( value );
-                LLVMSetDataLayout( NativeHandle, value );
+                LLVMSetDataLayout( Handle, value );
             }
         }
 
         /// <inheritdoc/>
         public IDataLayout Layout
         {
-            get => new DataLayoutAlias( LLVMGetModuleDataLayout( NativeHandle ) );
+            [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP004:Don't ignore created IDisposable", Justification = "Move semantics")]
+            get => new DataLayoutAlias( LLVMGetModuleDataLayout( Handle ) );
 
             set
             {
@@ -110,9 +112,9 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public LazyEncodedString TargetTriple
         {
-            get => LLVMGetTarget( NativeHandle ) ?? LazyEncodedString.Empty;
+            get => LLVMGetTarget( Handle ) ?? LazyEncodedString.Empty;
 
-            set => LLVMSetTarget( NativeHandle, value );
+            set => LLVMSetTarget( Handle, value );
         }
 
         /// <inheritdoc/>
@@ -120,7 +122,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                var current = LLVMGetFirstGlobal( NativeHandle );
+                var current = LLVMGetFirstGlobal( Handle );
                 while(current != default)
                 {
                     yield return Value.FromHandle<GlobalVariable>( current )!;
@@ -134,7 +136,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                var current = LLVMGetFirstFunction( NativeHandle );
+                var current = LLVMGetFirstFunction( Handle );
                 while(current != default)
                 {
                     yield return Value.FromHandle<Function>( current )!;
@@ -148,7 +150,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                var current = LibLLVMModuleGetFirstGlobalAlias( NativeHandle );
+                var current = LibLLVMModuleGetFirstGlobalAlias( Handle );
                 while(current != default)
                 {
                     yield return Value.FromHandle<GlobalAlias>( current )!;
@@ -162,7 +164,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                var current = LLVMGetFirstNamedMetadata( NativeHandle );
+                var current = LLVMGetFirstNamedMetadata( Handle );
                 while(current != default)
                 {
                     yield return new NamedMDNode( current );
@@ -176,7 +178,7 @@ namespace Ubiquity.NET.Llvm
         {
             get
             {
-                var current = LLVMGetFirstGlobalIFunc( NativeHandle );
+                var current = LLVMGetFirstGlobalIFunc( Handle );
                 while(current != default)
                 {
                     yield return Value.FromHandle<GlobalIFunc>( current )!;
@@ -186,23 +188,23 @@ namespace Ubiquity.NET.Llvm
         }
 
         /// <inheritdoc/>
-        public LazyEncodedString Name => LibLLVMGetModuleName( NativeHandle ) ?? LazyEncodedString.Empty;
+        public LazyEncodedString Name => LibLLVMGetModuleName( Handle ) ?? LazyEncodedString.Empty;
 
         /// <inheritdoc/>
         [DisallowNull]
         public LazyEncodedString ModuleInlineAsm
         {
-            get => LLVMGetModuleInlineAsm( NativeHandle ) ?? LazyEncodedString.Empty;
-            set => LLVMSetModuleInlineAsm2( NativeHandle, value.ThrowIfNull() );
+            get => LLVMGetModuleInlineAsm( Handle ) ?? LazyEncodedString.Empty;
+            set => LLVMSetModuleInlineAsm2( Handle, value.ThrowIfNull() );
         }
 
         /// <inheritdoc/>
-        public uint DebugMetadataVersion => LLVMGetModuleDebugMetadataVersion(NativeHandle);
+        public uint DebugMetadataVersion => LLVMGetModuleDebugMetadataVersion(Handle);
 
         /// <inheritdoc/>
         public void AppendInlineAsm( LazyEncodedString asm )
         {
-            LLVMAppendModuleInlineAsm( NativeHandle, asm );
+            LLVMAppendModuleInlineAsm( Handle, asm );
         }
 
         /// <inheritdoc/>
@@ -220,7 +222,7 @@ namespace Ubiquity.NET.Llvm
 
             // While not explicitly documented either way, the PassBuilder used under the hood is capable
             // of handling a NULL target machine.
-            return new( LLVMRunPasses( NativeHandle, LazyEncodedString.Join( ',', passes ), LLVMTargetMachineRef.Zero, options.Handle ) );
+            return new( LLVMRunPasses( Handle, LazyEncodedString.Join( ',', passes ), default, options.Handle ) );
         }
 
         /// <inheritdoc/>
@@ -230,7 +232,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( passes );
             ArgumentOutOfRangeException.ThrowIfLessThan( passes.Length, 1 );
 
-            return new( LLVMRunPasses( NativeHandle, LazyEncodedString.Join( ',', passes ), targetMachine.Handle, options.Handle ) );
+            return new( LLVMRunPasses( Handle, LazyEncodedString.Join( ',', passes ), targetMachine.Handle, options.Handle ) );
         }
 
         /// <inheritdoc/>
@@ -243,19 +245,19 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( Resources.Linking_modules_from_different_contexts_is_not_allowed, nameof( srcModule ) );
             }
 
-            if(!LLVMLinkModules2( NativeHandle, srcModule.GetOwnedHandle() ).Succeeded)
+            if(!LLVMLinkModules2( Handle, srcModule.Handle ).Succeeded)
             {
                 throw new InternalCodeGeneratorException( Resources.Module_link_error );
             }
 
             // The native source module was already destroyed mark it as no longer usable.
-            srcModule.InvalidateFromMove();
+            srcModule.InvalidateAfterMove();
         }
 
         /// <inheritdoc/>
         public bool Verify( out string errorMessage )
         {
-            return LLVMVerifyModule( NativeHandle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errorMessage ).Succeeded;
+            return LLVMVerifyModule( Handle, LLVMVerifierFailureAction.LLVMReturnStatusAction, out errorMessage ).Succeeded;
         }
 
         /// <inheritdoc/>
@@ -263,7 +265,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var funcRef = LLVMGetNamedFunction( NativeHandle, name );
+            var funcRef = LLVMGetNamedFunction( Handle, name );
             if(funcRef == default)
             {
                 function = null;
@@ -281,7 +283,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( type );
             ArgumentNullException.ThrowIfNull( resolver );
 
-            var handle = LLVMAddGlobalIFunc( NativeHandle, name, type.GetTypeRef( ), addressSpace, resolver.Handle );
+            var handle = LLVMAddGlobalIFunc( Handle, name, type.GetTypeRef( ), addressSpace, resolver.Handle );
             return Value.FromHandle<GlobalIFunc>( handle.ThrowIfInvalid() )!;
         }
 
@@ -290,7 +292,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            LLVMValueRef funcRef = LLVMGetNamedGlobalIFunc( NativeHandle, name );
+            LLVMValueRef funcRef = LLVMGetNamedGlobalIFunc( Handle, name );
             if(funcRef.Equals( default ))
             {
                 function = null;
@@ -307,10 +309,10 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
             ArgumentNullException.ThrowIfNull( signature );
 
-            LLVMValueRef function = LLVMGetNamedFunctionWithLength(NativeHandle, name);
+            LLVMValueRef function = LLVMGetNamedFunctionWithLength(Handle, name);
             if(function.IsNull)
             {
-                function = LLVMAddFunction( NativeHandle, name, signature.GetTypeRef() );
+                function = LLVMAddFunction( Handle, name, signature.GetTypeRef() );
             }
 
             return Value.FromHandle<Function>( function.ThrowIfInvalid() )!;
@@ -321,7 +323,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
-            LLVMStatus status = LLVMWriteBitcodeToFile( NativeHandle, path );
+            LLVMStatus status = LLVMWriteBitcodeToFile( Handle, path );
             if(status.Failed)
             {
                 throw new IOException( string.Format( CultureInfo.CurrentCulture, Resources.Error_writing_bit_code_file_0, path ), status.ErrorCode );
@@ -333,19 +335,19 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( path );
 
-            return LLVMPrintModuleToFile( NativeHandle, path, out errMsg ).Succeeded;
+            return LLVMPrintModuleToFile( Handle, path, out errMsg ).Succeeded;
         }
 
         /// <inheritdoc/>
         public string? WriteToString( )
         {
-            return LLVMPrintModuleToString( NativeHandle );
+            return LLVMPrintModuleToString( Handle );
         }
 
         /// <inheritdoc/>
         public MemoryBuffer WriteToBuffer( )
         {
-            return new MemoryBuffer( LLVMWriteBitcodeToMemoryBuffer( NativeHandle ) );
+            return new MemoryBuffer( LLVMWriteBitcodeToMemoryBuffer( Handle ) );
         }
 
         /// <inheritdoc/>
@@ -354,7 +356,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( aliasee );
             ArgumentException.ThrowIfNullOrWhiteSpace( aliasName );
 
-            var handle = LLVMAddAlias2( NativeHandle, aliasee.NativeType.GetTypeRef( ), addressSpace, aliasee.Handle, aliasName );
+            var handle = LLVMAddAlias2( Handle, aliasee.NativeType.GetTypeRef( ), addressSpace, aliasee.Handle, aliasName );
             return Value.FromHandle<GlobalAlias>( handle.ThrowIfInvalid() )!;
         }
 
@@ -363,7 +365,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var handle = LibLLVMGetGlobalAlias( NativeHandle, name );
+            var handle = LibLLVMGetGlobalAlias( Handle, name );
             return Value.FromHandle<GlobalAlias>( handle );
         }
 
@@ -373,7 +375,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( typeRef );
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var handle = LLVMAddGlobalInAddressSpace( NativeHandle, typeRef.GetTypeRef( ), name, addressSpace );
+            var handle = LLVMAddGlobalInAddressSpace( Handle, typeRef.GetTypeRef( ), name, addressSpace );
             return Value.FromHandle<GlobalVariable>( handle.ThrowIfInvalid() )!;
         }
 
@@ -408,7 +410,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( typeRef );
             ArgumentNullException.ThrowIfNull( name );
 
-            var handle = LLVMAddGlobal( NativeHandle, typeRef.GetTypeRef( ), name );
+            var handle = LLVMAddGlobal( Handle, typeRef.GetTypeRef( ), name );
             return Value.FromHandle<GlobalVariable>( handle.ThrowIfInvalid() )!;
         }
 
@@ -442,7 +444,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            LLVMTypeRef hType = LLVMGetTypeByName( NativeHandle, name );
+            LLVMTypeRef hType = LLVMGetTypeByName( Handle, name );
             return hType == default ? null : hType.CreateType();
         }
 
@@ -451,7 +453,7 @@ namespace Ubiquity.NET.Llvm
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var hGlobal = LLVMGetNamedGlobal( NativeHandle, name );
+            var hGlobal = LLVMGetNamedGlobal( Handle, name );
             return hGlobal == default ? null : Value.FromHandle<GlobalVariable>( hGlobal );
         }
 
@@ -462,7 +464,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var metadata = Context.CreateConstant( value ).ToMetadata();
-            LLVMAddModuleFlag( NativeHandle, (LLVMModuleFlagBehavior)behavior, name, metadata.Handle );
+            LLVMAddModuleFlag( Handle, (LLVMModuleFlagBehavior)behavior, name, metadata.Handle );
         }
 
         /// <inheritdoc/>
@@ -472,7 +474,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( value );
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            LLVMAddModuleFlag( NativeHandle, (LLVMModuleFlagBehavior)behavior, name, value.Handle );
+            LLVMAddModuleFlag( Handle, (LLVMModuleFlagBehavior)behavior, name, value.Handle );
         }
 
         /// <inheritdoc/>
@@ -481,7 +483,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentNullException.ThrowIfNull( value );
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            LibLLVMAddNamedMetadataOperand2( NativeHandle, name, value?.Handle ?? default );
+            LibLLVMAddNamedMetadataOperand2( Handle, name, value?.Handle ?? default );
         }
 
         /// <inheritdoc/>
@@ -490,7 +492,7 @@ namespace Ubiquity.NET.Llvm
             ArgumentException.ThrowIfNullOrWhiteSpace( version );
 
             var stringNode = Context.CreateMDNode( version );
-            LibLLVMAddNamedMetadataOperand2( NativeHandle, "llvm.ident", stringNode.Handle );
+            LibLLVMAddNamedMetadataOperand2( Handle, "llvm.ident", stringNode.Handle );
         }
 
         /// <inheritdoc/>
@@ -577,14 +579,14 @@ namespace Ubiquity.NET.Llvm
             }
 
             LLVMTypeRef[ ] llvmArgs = [ .. args.Select( a => a.GetTypeRef( ) ) ];
-            LLVMValueRef valueRef = LLVMGetIntrinsicDeclaration( NativeHandle, id, llvmArgs );
+            LLVMValueRef valueRef = LLVMGetIntrinsicDeclaration( Handle, id, llvmArgs );
             return (Function)Value.FromHandle( valueRef.ThrowIfInvalid() )!;
         }
 
         /// <inheritdoc/>
         public Module Clone( )
         {
-            return new( LLVMCloneModule( NativeHandle ).ThrowIfInvalid() );
+            return new( LLVMCloneModule( Handle ).ThrowIfInvalid() );
         }
 
         /// <inheritdoc/>
@@ -609,21 +611,18 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public bool StripDebugInformation()
         {
-            return LLVMStripModuleDebugInfo(NativeHandle);
+            return LLVMStripModuleDebugInfo(Handle);
         }
+        #endregion
 
         internal ModuleAlias( LLVMModuleRefAlias handle )
         {
             handle.ThrowIfInvalid();
-            NativeHandle = handle;
+            Handle = handle;
         }
 
         [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Interface is not public" )]
         [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Again, NOT public!" )]
-        LLVMModuleRefAlias IHandleWrapper<LLVMModuleRefAlias>.Handle => NativeHandle;
-
-        // must use a distinct field so that it is useful as an "in" parameter
-        // to implementations of IEnumerable<T> where T is a ref struct
-        private readonly LLVMModuleRefAlias NativeHandle;
+        internal LLVMModuleRefAlias Handle { get; private set; }
     }
 }

@@ -3,19 +3,19 @@
 
 namespace Ubiquity.NET.Llvm.Interop
 {
-    /// <summary>Interface to provide support for <see cref="ContextHandleMarshaller{T}"/></summary>
-    /// <typeparam name="THandle">Type of the handle reference</typeparam>
+    /// <summary>Interface to provide support for <see cref="WrappedHandleMarshaller{T}"/></summary>
+    /// <typeparam name="T">Type of the handle reference</typeparam>
     /// <remarks>
     /// <para>LLVM "C" API makes heavy use of Opaque pointers and typedefs to them to hide implementation
     /// details. This is used to build the managed wrapper (essentially a typdef but stronger) this
     /// allows managed callers to build APIs that use or return a specific type of handle ONLY
     /// and they are NOT interchangeable.</para>
     /// <para>This interface is used to require types to implement the members. However, it is only used
-    /// for marshalling (via <see cref="ContextHandleMarshaller{T}"/> and the concrete type <typeparamref name="THandle"/>
+    /// for marshalling (via <see cref="WrappedHandleMarshaller{T}"/> and the concrete type <typeparamref name="T"/>
     /// is known at such a call site. Thus, this "marshalling" can occur without boxing to this interface.</para>
     /// </remarks>
-    public interface IContextHandle<THandle>
-        where THandle : struct, IContextHandle<THandle>
+    public interface IWrappedHandle<T>
+        where T : struct, IWrappedHandle<T>/*, allows ref struct*/
     {
         /// <summary>Gets the handle as an <see cref="nint"/> suitable for passing to native code</summary>
         /// <returns>The handle as an <see cref="nint"/></returns>
@@ -25,9 +25,9 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <param name="abiValue">ABI value of the handle (xxxRef in LLVM terminology)</param>
         /// <returns>Type specific handle for managed code use</returns>
         /// <remarks>
-        /// This is a static abstract "factory" method to allow <see cref="ContextHandleMarshaller{T}"/>
+        /// This is a static abstract "factory" method to allow <see cref="WrappedHandleMarshaller{T}"/>
         /// to construct instances with non-default constructor.
         /// </remarks>
-        static abstract THandle FromABI( nint abiValue );
+        static abstract T FromABI( nint abiValue );
     }
 }

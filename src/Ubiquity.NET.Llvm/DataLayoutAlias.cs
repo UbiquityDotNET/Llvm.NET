@@ -67,7 +67,6 @@ namespace Ubiquity.NET.Llvm
     internal sealed class DataLayoutAlias
         : IDataLayout
         , IEquatable<IDataLayout>
-        , IHandleWrapper<LLVMTargetDataRefAlias>
     {
         #region IEquatable<IDataLayout>
 
@@ -225,7 +224,7 @@ namespace Ubiquity.NET.Llvm
             // LLVM-C has this variant but it requires allocation in native and then dispose from
             // managed which is overhead that isn't needed, so use the lower overhead form and
             // force the full encoding here.
-            // return LLVMCopyStringRepOfTargetData( NativeHandle );
+            // return LLVMCopyStringRepOfTargetData( Handle );
             return ToLazyEncodedString()?.ToString();
         }
 
@@ -242,6 +241,8 @@ namespace Ubiquity.NET.Llvm
             Handle = targetDataHandle;
         }
 
+        internal LLVMTargetDataRefAlias Handle { get; set; }
+
         private static void VerifySized( ITypeRef type, string name )
         {
             if(type == null)
@@ -254,8 +255,5 @@ namespace Ubiquity.NET.Llvm
                 throw new ArgumentException( Resources.Type_must_be_sized_to_get_target_size_information, name );
             }
         }
-
-        [SuppressMessage( "StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "internal interface; NOT PUBLIC" )]
-        public LLVMTargetDataRefAlias Handle { get; }
     }
 }

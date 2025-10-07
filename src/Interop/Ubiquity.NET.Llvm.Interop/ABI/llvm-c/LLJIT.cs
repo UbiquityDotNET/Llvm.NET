@@ -104,10 +104,16 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LLVMOrcThreadSafeModuleRef TSM
             );
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LLVMErrorRef LLVMOrcLLJITLookup( LLVMOrcLLJITRef J, LazyEncodedString Name, out UInt64 Result )
+        {
+            return LLVMOrcLLJITLookup(J, out Result, Name);
+        }
+
         // BAD API design, out result should be last parameter... but isn't.
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial LLVMErrorRef LLVMOrcLLJITLookup( LLVMOrcLLJITRef J, out UInt64 Result, LazyEncodedString Name );
+        private static unsafe partial LLVMErrorRef LLVMOrcLLJITLookup( LLVMOrcLLJITRef J, out UInt64 Result, LazyEncodedString Name );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

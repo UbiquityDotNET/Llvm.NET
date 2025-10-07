@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,32 +11,66 @@ using Ubiquity.NET.Extensions;
 using Ubiquity.NET.InteropHelpers;
 using Ubiquity.NET.Llvm.OrcJITv2;
 
-namespace Ubiquity.NET.Llvm.Tests
+namespace Ubiquity.NET.Llvm.JIT.Tests
 {
     [TestClass]
     public class OrcJitTests
     {
-        private const string FooBodySymbolName = "foo_body";
-        private const string BarBodySymbolName = "bar_body";
+        private static readonly LazyEncodedString FooBodySymbolName = "foo_body"u8;
+        private static readonly LazyEncodedString BarBodySymbolName = "bar_body"u8;
+
+        [TestMethod]
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP017:Prefer using", Justification = "Unit test, explicit control intended")]
+        public void TestStringPool_Dispose_leaves_0_refcount( )
+        {
+#if !DEBUG
+            Assert.Inconclusive("Not applicable to release builds");
+#else
+            using var jit = new LLJit();
+
+            // This is a bit dodgy in that it depends on undocumented behavior
+            // the format of the result string is NOT guaranteed stable.
+            var initSyms = jit.Session.SymbolStringPool.GetSymbolsInPool();
+
+#pragma warning disable IDE0063 // Use simple 'using' statement; Explicit scoping helps clarify tests and make debugging it easier
+            using(SymbolStringPoolEntry entry = jit.MangleAndIntern(FooBodySymbolName))
+            {
+                using(SymbolStringPoolEntry entry2 = entry.AddRef())
+                {
+                    var activeSyms = jit.Session.SymbolStringPool.GetSymbolsInPool();
+                    Assert.AreEqual(initSyms.Length + 1, activeSyms.Length);
+                } // end of using scope should decrement ref count (once)
+            } // end of using scope should decrement ref count (once)
+#pragma warning restore IDE0063 // Use simple 'using' statement
+
+            // clear entries with 0 ref count; Should include the two just destroyed
+            jit.Session.SymbolStringPool.ClearDeadEntries();
+            var postSyms = jit.Session.SymbolStringPool.GetSymbolsInPool();
+            Assert.IsTrue(postSyms.SequenceEqual(initSyms), "Should have initial symbol count");
+#endif
+        }
 
         [TestMethod]
         public void TestVeryLazyJIT( )
         {
-            using var jit = new LlJIT();
+            using var jit = new LLJit();
 
             var triple = jit.TripleString;
-            using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
+            using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod"u8);
 
             // Place the generated module in the JIT
             jit.Add( jit.MainLib, mainMod );
             SymbolFlags flags = new(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
-            using var mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
+            using SymbolStringPoolEntry mangledFooBodySymName = jit.MangleAndIntern(FooBodySymbolName);
 
             var fooSym = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolFlags>
             {
                 [mangledFooBodySymName] = flags,
             }.ToImmutable();
+
+            using var fooMu = new CustomMaterializationUnit("FooMU"u8, Materialize, fooSym);
+            jit.MainLib.Define( fooMu );
 
             using var mangledBarBodySymName = jit.MangleAndIntern(BarBodySymbolName);
 
@@ -44,15 +79,12 @@ namespace Ubiquity.NET.Llvm.Tests
                 [mangledBarBodySymName] = flags,
             }.ToImmutable();
 
-            using var fooMu = new CustomMaterializationUnit("FooMU", Materialize, fooSym);
-            using var barMu = new CustomMaterializationUnit("BarMU", Materialize, barSym);
-
-            jit.MainLib.Define( fooMu );
+            using var barMu = new CustomMaterializationUnit("BarMU"u8, Materialize, barSym);
             jit.MainLib.Define( barMu );
 
             using var callThruMgr = jit.Session.CreateLazyCallThroughManager(triple);
-            using var mangledFoo = jit.MangleAndIntern("foo");
-            using var mangledBar = jit.MangleAndIntern("bar");
+            using var mangledFoo = jit.MangleAndIntern("foo"u8);
+            using var mangledBar = jit.MangleAndIntern("bar"u8);
 
             var reexports = new KvpArrayBuilder<SymbolStringPoolEntry, SymbolAliasMapEntry>
             {
@@ -64,11 +96,11 @@ namespace Ubiquity.NET.Llvm.Tests
             using var lazyReExports = new LazyReExportsMaterializationUnit(callThruMgr, ism, jit.MainLib, reexports);
             jit.MainLib.Define( lazyReExports );
 
-            UInt64 address = jit.Lookup("entry");
+            ulong address = jit.Lookup("entry"u8);
 
             unsafe
             {
-                var entry = (delegate* unmanaged[Cdecl]<Int32, Int32>)address;
+                var entry = (delegate* unmanaged[Cdecl]<int, int>)address;
                 int result = entry(1); // Conditionally calls "foo" with lazy materialization
                 Assert.AreEqual( 1, result );
 
@@ -76,10 +108,10 @@ namespace Ubiquity.NET.Llvm.Tests
                 Assert.AreEqual( 2, result );
             }
 
-            // Local function to handle materializing the very lazy symbols
+            // Local function to handle materializing the very lazy symbols (foo|bar)
             // This function captures "jit" and therefore the materializer instance
             // above must remain valid until the JIT is destroyed or the materialization
-            // occurs.
+            // occurs. This is guaranteed by language use of `using`.
             void Materialize( MaterializationResponsibility r )
             {
                 // symbol strings returned are NOT owned by this function so Dispose() isn't needed (Though it is an allowed NOP)
@@ -106,7 +138,10 @@ namespace Ubiquity.NET.Llvm.Tests
 
                     // Not a known symbol - fail the materialization request.
                     r.Fail();
+#pragma warning disable IDISP007 // Don't dispose injected
+                    // ABI requires disposal in this case
                     r.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                     return;
                 }
 

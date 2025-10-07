@@ -33,17 +33,30 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull( stubsMgr );
 
             // make a native usable version of the input list, pin it and call the native API
-            using var nativeArrayOwner = symbols.InitializeNativeCopy( );
-            using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
-            unsafe
+            using IMemoryOwner<LLVMOrcCSymbolAliasMapPair> nativeArrayOwner = symbols.InitializeNativeCopy( );
+            try
             {
-                return LLVMOrcLazyReexports(
-                    callThruMgr.Handle,
-                    stubsMgr.Handle,
-                    srcLib.Handle,
-                    (LLVMOrcCSymbolAliasMapPair*)nativeMemHandle.Pointer,
-                    checked((nuint)symbols.Count)
-                );
+                using var nativeMemHandle = nativeArrayOwner.Memory.Pin();
+                unsafe
+                {
+                    return LLVMOrcLazyReexports(
+                        callThruMgr.Handle,
+                        stubsMgr.Handle,
+                        srcLib.Handle,
+                        (LLVMOrcCSymbolAliasMapPair*)nativeMemHandle.Pointer,
+                        checked((nuint)symbols.Count)
+                    );
+                }
+            }
+            catch
+            {
+                foreach( var pair in nativeArrayOwner.Memory.Span)
+                {
+                    pair.Name.NativeRelease();
+                    pair.Entry.Name.NativeRelease();
+                }
+
+                throw;
             }
         }
     }

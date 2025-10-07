@@ -1,0 +1,52 @@
+﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+
+using CppSharp;
+
+using Ubiquity.NET.CommandLine;
+using Ubiquity.NET.TextUX;
+
+namespace LlvmBindingsGenerator
+{
+    internal static partial class Program
+    {
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "MAin function blocks general exceptions from bubbling up, reports them consistently before exiting" )]
+        public static int Main( string[ ] args )
+        {
+            var reporter = new ColoredConsoleReporter(MsgLevel.Information);
+
+            var settings = new CmdLineSettings()
+            {
+                ShowHelpOnErrors = false,
+            };
+
+            if(!ArgsParsing.TryParse<CmdLineArgs>( args, settings, reporter, out CmdLineArgs? options, out int exitCode ))
+            {
+                return exitCode;
+            }
+
+            // TODO: Reset Command line option to support reporting level from command line (if different)
+
+            var diagnostics = new ErrorTrackingDiagnostics( )
+            {
+                Level = options.Diagnostics
+            };
+
+            Diagnostics.Implementation = diagnostics;
+            try
+            {
+                var library = new LibLlvmGeneratorLibrary( options );
+                Driver.Run( library );
+            }
+            catch(Exception ex)
+            {
+                Diagnostics.Error( ex.Message );
+            }
+
+            return diagnostics.ErrorCount;
+        }
+    }
+}

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
-using Kaleidoscope.Grammar.AST;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

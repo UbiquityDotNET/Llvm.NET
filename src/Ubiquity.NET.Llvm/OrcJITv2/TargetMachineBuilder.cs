@@ -10,7 +10,15 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                InvalidateAfterMove();
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="TargetMachineBuilder"/> class</summary>
         /// <param name="template"><see cref="TargetMachine"/> to use as a template</param>
@@ -24,7 +32,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Handle = LLVMOrcJITTargetMachineBuilderCreateFromTargetMachine( template.Handle );
 
             // transfer complete mark it as invalid now
-            template.Handle.SetHandleAsInvalid();
+            template.InvalidateAfterMove();
         }
 
         /// <summary>Gets or sets the Triple for this builder as a string</summary>
@@ -47,7 +55,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         )
         {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            // Ownership transfered to return value.
+            // Ownership transferred to return value.
             return new( TargetMachine.HostMachine( optLevel, relocationMode, codeModel ) );
 #pragma warning restore CA2000 // Dispose objects before losing scope
             /*
@@ -61,11 +69,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             */
         }
 
-        internal TargetMachineBuilder( LLVMOrcJITTargetMachineBuilderRef h )
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void InvalidateAfterMove( )
         {
-            Handle = h.Move();
+            Handle = default;
         }
 
-        internal LLVMOrcJITTargetMachineBuilderRef Handle { get; }
+        internal TargetMachineBuilder( LLVMOrcJITTargetMachineBuilderRef h )
+        {
+            Handle = h;
+        }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Constructor uses move semantics")]
+        internal LLVMOrcJITTargetMachineBuilderRef Handle { get; private set; }
     }
 }

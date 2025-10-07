@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DIScope
     {
         /* TODO: non-operand properties
-        public bool ExportSymbols => LLVMDINamespaceGetExportSymbols( NativeHandle );
+        public bool ExportSymbols => LLVMDINamespaceGetExportSymbols( Handle );
         */
 
         /// <inheritdoc/>

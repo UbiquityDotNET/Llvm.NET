@@ -628,7 +628,14 @@ namespace Ubiquity.NET.Llvm
         , IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        public void Dispose( )
+        {
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="Triple"/> class from a triple string</summary>
         /// <param name="tripleTxt">Triple string to parse</param>
@@ -768,9 +775,9 @@ namespace Ubiquity.NET.Llvm
 
         private Triple( LibLLVMTripleRef handle )
         {
-            Handle = handle.Move();
+            Handle = handle;
         }
 
-        private readonly LibLLVMTripleRef Handle;
+        internal LibLLVMTripleRef Handle { get; private set; }
     }
 }

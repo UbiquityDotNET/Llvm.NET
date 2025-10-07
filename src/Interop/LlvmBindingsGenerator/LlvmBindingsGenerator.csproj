@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <IsPublishable>False</IsPublishable>
+        <!-- Dependent library (CppSharp) ONLY supports x64 targets -->
+        <PlatformTarget>x64</PlatformTarget>
+        <TargetFramework>net8.0</TargetFramework>
+        <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
+        <LangVersion>preview</LangVersion>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+        <SignAssembly>False</SignAssembly>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+
+        <!-- Don't build docs for public facing internal tool -->
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CppSharp" PrivateAssets="all" />
+        <PackageReference Include="System.CodeDom" PrivateAssets="all" />
+
+        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
+        <!--
+        NOTE: This isn't directly used by this project as it contains nothing consumable. However, it allows for scripts
+        to restore this and guarantee the package is available when restored.
+        -->
+        <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Ubiquity.NET.CommandLine\Ubiquity.NET.CommandLine.csproj" />
+    </ItemGroup>
+
+    <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
+    <ItemGroup>
+        <None Update="Templates\T4\WrappedHandleTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>WrappedHandleTemplate.cs</LastGenOutput>
+            <CustomToolNamespace>LlvmBindingsGenerator.Templates</CustomToolNamespace>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Templates\T4\WrappedHandleTemplate.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>WrappedHandleTemplate.tt</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
+
+    <!--
+    This target is triggered externally to generate the response file for an invocation of the generator.
+    The response file provides the paths for the headers based on the location of the package used by
+    the build. Restoring this project will download and cache the package. This target allows creation
+    of the response file to use for involving the application built by this project so that it has the
+    actual headers from the package as input to the generator. This is all automated by the developer
+    facing script to generate the headers.
+    SEE: Generate-HandleWrappers.ps1
+    -->
+    <Target Name="GenerateResponseFile">
+        <PropertyGroup>
+            <HandleGeneratorResponeFilePath Condition="'$(HandleGeneratorResponeFilePath)'==''">LlvmBindingsGenerator.rsp</HandleGeneratorResponeFilePath>
+            <__GeneratedSourcePath>$([MSBuild]::NormalizeDirectory('..\..\interop\Ubiquity.NET.LLvm.Interop\Generated\Handles'))</__GeneratedSourcePath>
+        </PropertyGroup>
+        <ItemGroup>
+            <__RspContent Include="-l $(PkgUbiquity_NET_LibLLVM)\Content\native" />
+            <__RspContent Include="-e $(PkgUbiquity_NET_LibLLVM)\Content\native" />
+            <__RspContent Include="-o $(__GeneratedSourcePath)" />
+        </ItemGroup>
+        <WriteLinesToFile File="$(HandleGeneratorResponeFilePath)" Lines="@(__RspContent)" Overwrite="true" />
+    </Target>
+</Project>

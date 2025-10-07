@@ -2,22 +2,27 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Text;
 
 using Ubiquity.NET.Extensions;
 using Ubiquity.NET.InteropHelpers;
+using Ubiquity.NET.SrcGeneration.CSharp;
 
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Simple implementation of common Variable scoping</summary>
     /// <typeparam name="T">Type of the values to associate with the symbol name</typeparam>
     /// <remarks>
-    /// <para>In essence, this is a stack of Dictionaries that is intended for use in code generation.
-    /// Most languages have some sort of notion of symbol scopes and name lookups. This implements
-    /// the common case of nested scopes where a new 'local scope' may override some of the symbols
-    /// in a parent scope. Any values in any parent not overridden by the child are visible to the
-    /// child scope.</para>
+    /// <para>In essence, this is a stack of Dictionaries of symbol names to <typeparamref name="T"/>
+    /// values that is most commonly used in code generation. Most languages have some sort of notion
+    /// of symbol scopes and name lookups. This implements the common case of nested scopes where a
+    /// new 'local scope' may override some of the symbols in a parent scope. Any values in any parent
+    /// not overridden by the child are visible to the child scope.</para>
     /// </remarks>
     [SuppressMessage( "Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "Semantically this type *is* a Stack" )]
     public class ScopeStack<T>
@@ -37,17 +42,11 @@ namespace Ubiquity.NET.Runtime.Utils
         /// <remarks>The depth starts as 1 since the stack starts at the global scope.</remarks>
         public int Depth => Scopes.Count;
 
-        /// <summary>Starts a new scope</summary>
-        /// <returns><see cref="IDisposable"/> to enable automatic restore of the scope in RAII style patterns</returns>
-        /// <remarks>
-        /// A new scope is pushed on the stack and remains active until the <see cref="IDisposable.Dispose"/> method
-        /// of the return is called. Normally, code generation does this with a language provided means of ensuring the
-        /// Dispose method is called even when an exception occurs. (i.e. C# 'using' or try/finally)
-        /// </remarks>
-        public IDisposable EnterScope( )
+        /// <summary>Gets the dictionary at the top of the stack</summary>
+        /// <returns>Dictionary at top of stack</returns>
+        public IDictionary<LazyEncodedString, T> Peek()
         {
-            Scopes.Push( new Dictionary<LazyEncodedString, T>() );
-            return new DisposableAction( ( ) => Scopes.Pop() );
+            return Scopes.Peek();
         }
 
         /// <summary>Gets or sets the value of a symbol in scope</summary>
@@ -67,13 +66,57 @@ namespace Ubiquity.NET.Runtime.Utils
             set => Scopes.Peek()[ name ] = value;
         }
 
+        /// <summary>Starts a new scope</summary>
+        /// <returns><see cref="IDisposable"/> to enable automatic restore of the scope in RAII style patterns</returns>
+        /// <remarks>
+        /// A new scope is pushed on the stack and remains active until the <see cref="IDisposable.Dispose"/> method
+        /// of the return is called. Normally, code generation does this with a language provided means of ensuring the
+        /// Dispose method is called even when an exception occurs. (i.e. C# 'using' or try/finally)
+        /// </remarks>
+        public IDisposable EnterScope( )
+        {
+            Scopes.Push( new Dictionary<LazyEncodedString, T>() );
+            return new DisposableAction( ( ) => Scopes.Pop() );
+        }
+
+        /// <summary>Generates a string representation of the full scope stack</summary>
+        /// <returns>String representation fo the scope stack</returns>
+        public override string ToString( )
+        {
+            var bldr = new StringBuilder("Depth:")
+                          .Append(Depth)
+                          .AppendLine();
+
+            using var innerWriter = new StringWriter(bldr, CultureInfo.CurrentCulture);
+
+            // NOTE: unless writer.Close is called the innerWriter is NOT disposed.
+            // Technically, Dispose of an IndentedTextWriter is a NOP, but keeps
+            // the compiler happy and meets the API requirements of the base `TextWriter`
+            // Sadly, this behavior is NOT documented nor clarified in any way.
+            using var writer = new IndentedTextWriter(innerWriter, "    ");
+
+            var disposableScopeStack = new Stack<IDisposable>();
+            foreach(IDictionary<LazyEncodedString, T> scope in Scopes)
+            {
+                // add each scope to a stack so they nest in the formatted string
+                disposableScopeStack.Push(WriteScope(writer, scope));
+            }
+
+            foreach(var disp in disposableScopeStack)
+            {
+                disp.Dispose();
+            }
+
+            return bldr.ToString();
+        }
+
         /// <summary>Attempts to retrieve a value from the stack</summary>
         /// <param name="name">Name of the value</param>
         /// <param name="value">Value</param>
         /// <returns><see langword="true"/> if the symbol was found from a search of the scopes</returns>
         public bool TryGetValue( LazyEncodedString name, [MaybeNullWhen( false )] out T value )
         {
-            value = default!;
+            value = default;
             foreach(var scope in Scopes)
             {
                 if(scope.TryGetValue( name, out value ))
@@ -83,6 +126,27 @@ namespace Ubiquity.NET.Runtime.Utils
             }
 
             return false;
+        }
+
+        private static IDisposable WriteScope(IndentedTextWriter writer, IDictionary<LazyEncodedString, T> scope)
+        {
+            var txtScope = writer.Scope("Scope");
+            try
+            {
+                foreach(var kvp in scope)
+                {
+                    writer.Write(kvp.Key);
+                    writer.Write(" = ");
+                    writer.Write(kvp.Value);
+                }
+            }
+            catch
+            {
+                txtScope.Dispose();
+                throw;
+            }
+
+            return txtScope;
         }
 
         private readonly Stack<IDictionary<LazyEncodedString, T>> Scopes = new();

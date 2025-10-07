@@ -18,7 +18,7 @@ internal class Program
         // Using JIT so the only target of relevance is the native machine
         libLLVM.RegisterTarget( CodeGenTarget.Native );
 
-        using var jit = new LlJIT();
+        using var jit = new LLJit();
 
         var triple = jit.TripleString;
         using ThreadSafeModule mainMod = ParseTestModule(MainModuleSource.NormalizeLineEndings(LineEndingKind.LineFeed)!, "main-mod");
@@ -107,7 +107,10 @@ internal class Program
 
                 // Not a known symbol - fail the materialization request.
                 r.Fail();
+#pragma warning disable IDISP007 // Don't dispose injected
+                // ABI requires disposal in this case
                 r.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                 return;
             }
 

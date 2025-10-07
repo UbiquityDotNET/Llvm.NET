@@ -10,14 +10,14 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.LLJITUtils;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
-    /// <summary>ORC v2 LLJIT instance</summary>
-    public sealed class LlJIT
+    /// <summary>ORC v2 LLJit instance</summary>
+    public sealed class LLJit
         : IDisposable
         , IOrcJit
     {
-        /// <summary>Initializes a new instance of the <see cref="LlJIT"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LLJit"/> class.</summary>
         [SuppressMessage( "Reliability", "CA2000:Dispose objects before losing scope", Justification = "Ownership is held in this instance" )]
-        public LlJIT( )
+        public LLJit( )
             : this( CreateDefaultWithoutBuilder() )
         {
         }
@@ -81,7 +81,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ArgumentNullException.ThrowIfNull( name );
 
             // Deal with bad API design, converting errors to an exception and returning the result.
-            using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, out UInt64 retVal, name);
+            using LLVMErrorRef errorRef = LLVMOrcLLJITLookup(Handle, name, out UInt64 retVal);
             errorRef.ThrowIfFailed();
             return retVal;
         }
@@ -106,7 +106,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             using LLVMErrorRef errRef = LLVMOrcLLJITAddLLVMIRModule(Handle, lib.Handle, module.Handle);
             errRef.ThrowIfFailed();
-            module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
+            module.InvalidateAfterMove(); // transfer to native complete, handle is no longer usable
         }
 
         /// <summary>Adds a module to the JIT</summary>
@@ -130,7 +130,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
             using LLVMErrorRef errorRef = LLVMOrcLLJITAddLLVMIRModuleWithRT(Handle, tracker.Handle, module.Handle);
             errorRef.ThrowIfFailed();
-            module.Handle.SetHandleAsInvalid(); // transfer to native complete, handle is no longer usable
+            module.InvalidateAfterMove(); // transfer to native complete, handle is no longer usable
         }
 
         /// <summary>Mangles and interns a symbol in the JIT's symbol pool</summary>
@@ -160,21 +160,26 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <inheritdoc/>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
         public void Dispose( )
         {
-            Handle.Dispose();
+            if(!Handle.IsNull)
+            {
+                Handle.Dispose();
+                Handle = default;
+            }
         }
 
-        internal LlJIT( LLVMOrcLLJITRef h )
+        internal LLJit( LLVMOrcLLJITRef h )
         {
-            Handle = h.Move();
+            Handle = h;
         }
 
-        private readonly LLVMOrcLLJITRef Handle;
+        internal LLVMOrcLLJITRef Handle { get; private set; }
 
         private static LLVMOrcLLJITRef CreateDefaultWithoutBuilder( )
         {
-            using var errorRef = LLVMOrcCreateLLJIT(LLVMOrcLLJITBuilderRef.Zero, out LLVMOrcLLJITRef retVal);
+            using var errorRef = LLVMOrcCreateLLJIT(default, out LLVMOrcLLJITRef retVal);
             errorRef.ThrowIfFailed();
             return retVal;
         }

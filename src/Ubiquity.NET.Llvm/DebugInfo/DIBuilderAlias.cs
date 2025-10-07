@@ -21,16 +21,15 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// <seealso href="xref:llvm_sourceleveldebugging">LLVM Source Level Debugging</seealso>
     internal sealed class DIBuilderAlias
         : IDIBuilder
-        , IHandleWrapper<LLVMDIBuilderRefAlias>
         , IEquatable<DIBuilderAlias>
     {
         #region IEquatable<T>
 
         /// <inheritdoc/>
-        public bool Equals( IDIBuilder? other ) => other is not null && NativeHandle.Equals( other.GetUnownedHandle() );
+        public bool Equals( IDIBuilder? other ) => other is not null && Handle.Equals( other.GetUnownedHandle() );
 
         /// <inheritdoc/>
-        public bool Equals( DIBuilderAlias? other ) => other is not null && NativeHandle.Equals( other.NativeHandle );
+        public bool Equals( DIBuilderAlias? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override bool Equals( object? obj ) => obj is ContextAlias alias
@@ -38,7 +37,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                   : Equals( obj as IContext );
 
         /// <inheritdoc/>
-        public override int GetHashCode( ) => NativeHandle.GetHashCode();
+        public override int GetHashCode( ) => Handle.GetHashCode();
 
         #endregion
 
@@ -96,7 +95,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             }
 
             var file = CreateFile( fileName, fileDirectory );
-            var handle = LLVMDIBuilderCreateCompileUnit( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateCompileUnit( Handle.ThrowIfInvalid()
                                                        , ( LLVMDWARFSourceLanguage )language
                                                        , file.Handle
                                                        , producer
@@ -119,10 +118,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public DIMacroFile CreateTempMacroFile( DIMacroFile? parent, uint line, DIFile? file )
         {
-            var handle = LLVMDIBuilderCreateTempMacroFile( NativeHandle.ThrowIfInvalid()
-                                                         , parent?.Handle ?? LLVMMetadataRef.Zero
+            var handle = LLVMDIBuilderCreateTempMacroFile( Handle.ThrowIfInvalid()
+                                                         , parent?.Handle ?? default
                                                          , line
-                                                         , file?.Handle ?? LLVMMetadataRef.Zero
+                                                         , file?.Handle ?? default
                                                          );
 
             return (DIMacroFile)handle.ThrowIfInvalid().CreateMetadata()!;
@@ -145,8 +144,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new NotSupportedException( "LLVM currently only supports MacroKind.Define and MacroKind.Undefine" );
             }
 
-            var handle = LLVMDIBuilderCreateMacro( NativeHandle.ThrowIfInvalid()
-                                                 , parentFile?.Handle ?? LLVMMetadataRef.Zero
+            var handle = LLVMDIBuilderCreateMacro( Handle.ThrowIfInvalid()
+                                                 , parentFile?.Handle ?? default
                                                  , line
                                                  , ( LLVMDWARFMacinfoRecordType )kind
                                                  , name
@@ -162,7 +161,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var handle = LLVMDIBuilderCreateNameSpace( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateNameSpace( Handle.ThrowIfInvalid()
                                                      , scope?.Handle ?? default
                                                      , name
                                                      , exportSymbols
@@ -183,7 +182,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public DIFile CreateFile( LazyEncodedString? fileName, LazyEncodedString? directory )
         {
-            var handle = LLVMDIBuilderCreateFile( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateFile( Handle.ThrowIfInvalid()
                                                 , fileName ?? LazyEncodedString.Empty
                                                 , directory ?? LazyEncodedString.Empty
                                                 );
@@ -197,7 +196,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILexicalBlock CreateLexicalBlock( DIScope? scope, DIFile? file, uint line, uint column )
         {
-            var handle = LLVMDIBuilderCreateLexicalBlock( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateLexicalBlock( Handle.ThrowIfInvalid()
                                                         , scope?.Handle ?? default
                                                         , file?.Handle ?? default
                                                         , line
@@ -211,7 +210,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DILexicalBlockFile CreateLexicalBlockFile( DIScope? scope, DIFile? file, uint discriminator )
         {
-            var handle = LLVMDIBuilderCreateLexicalBlockFile( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateLexicalBlockFile( Handle.ThrowIfInvalid()
                                                             , scope?.Handle ?? default
                                                             , file?.Handle ?? default
                                                             , discriminator
@@ -250,7 +249,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 mangledName = LazyEncodedString.Empty;
             }
 
-            var handle = LLVMDIBuilderCreateFunction( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateFunction( Handle.ThrowIfInvalid()
                                                     , scope?.Handle ?? default
                                                     , name
                                                     , mangledName
@@ -300,7 +299,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 mangledName = LazyEncodedString.Empty;
             }
 
-            var handle = LibLLVMDIBuilderCreateTempFunctionFwdDecl( NativeHandle.ThrowIfInvalid()
+            var handle = LibLLVMDIBuilderCreateTempFunctionFwdDecl( Handle.ThrowIfInvalid()
                                                                   , scope?.Handle ?? default
                                                                   , name
                                                                   , mangledName
@@ -331,7 +330,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var handle = LLVMDIBuilderCreateAutoVariable( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateAutoVariable( Handle.ThrowIfInvalid()
                                                         , scope?.Handle ?? default
                                                         , name
                                                         , file?.Handle ?? default
@@ -359,7 +358,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var handle = LLVMDIBuilderCreateParameterVariable( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateParameterVariable( Handle.ThrowIfInvalid()
                                                              , scope?.Handle ?? default
                                                              , name
                                                              , argNo
@@ -383,7 +382,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
             var handle = LLVMDIBuilderCreateBasicType(
-                            NativeHandle.ThrowIfInvalid(),
+                            Handle.ThrowIfInvalid(),
                             name,
                             bitSize,
                             ( uint )encoding,
@@ -402,7 +401,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                               )
         {
             var handle = LLVMDIBuilderCreatePointerType(
-                            NativeHandle.ThrowIfInvalid(),
+                            Handle.ThrowIfInvalid(),
                             pointeeType?.Handle ?? default,
                             bitSize,
                             bitAlign,
@@ -416,7 +415,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
         public DIDerivedType CreateQualifiedType( DIType? baseType, QualifiedTypeTag tag )
         {
-            var handle = LLVMDIBuilderCreateQualifiedType( NativeHandle.ThrowIfInvalid(), ( uint )tag, baseType?.Handle ?? default );
+            var handle = LLVMDIBuilderCreateQualifiedType( Handle.ThrowIfInvalid(), ( uint )tag, baseType?.Handle ?? default );
             return (DIDerivedType)handle.ThrowIfInvalid().CreateMetadata()!;
         }
 
@@ -427,7 +426,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DITypeArray CreateTypeArray( IEnumerable<DIType?> types )
         {
             var handles = types.Select( t => t?.Handle ?? default ).ToArray( );
-            var handle = LLVMDIBuilderGetOrCreateTypeArray( NativeHandle.ThrowIfInvalid(), handles );
+            var handle = LLVMDIBuilderGetOrCreateTypeArray( Handle.ThrowIfInvalid(), handles );
             return new DITypeArray( (MDTuple)handle.ThrowIfInvalid().CreateMetadata()! );
         }
 
@@ -443,8 +442,8 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( types );
 
             var handles = types.Select( t => t?.Handle ?? default ).ToArray( );
-            var handle = LLVMDIBuilderCreateSubroutineType( NativeHandle.ThrowIfInvalid()
-                                                          , LLVMMetadataRef.Zero
+            var handle = LLVMDIBuilderCreateSubroutineType( Handle.ThrowIfInvalid()
+                                                          , default
                                                           , handles
                                                           , ( LLVMDIFlags )debugFlags
                                                           );
@@ -499,7 +498,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
             var elementHandles = elements.Select( e => e.Handle ).ToArray( );
             var handle = LLVMDIBuilderCreateStructType(
-                            NativeHandle.ThrowIfInvalid(),
+                            Handle.ThrowIfInvalid(),
                             scope?.Handle ?? default,
                             name,
                             file?.Handle ?? default,
@@ -572,7 +571,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( elements );
 
             var elementHandles = elements.Select( e => e.Handle ).ToArray( );
-            var handle = LLVMDIBuilderCreateUnionType( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateUnionType( Handle.ThrowIfInvalid()
                                                      , scope?.Handle ?? default
                                                      , name
                                                      , file?.Handle ?? default
@@ -603,7 +602,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentNullException.ThrowIfNull( name );
 
-            var handle = LLVMDIBuilderCreateMemberType( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateMemberType( Handle.ThrowIfInvalid()
                                                       , scope?.Handle ?? default
                                                       , name
                                                       , file?.Handle ?? default
@@ -639,7 +638,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
             var subScriptHandles = subscripts.Select( s => s.Handle ).ToArray( );
             var handle = LLVMDIBuilderCreateArrayType(
-                            NativeHandle.ThrowIfInvalid(),
+                            Handle.ThrowIfInvalid(),
                             bitSize,
                             bitAlign,
                             elementType.Handle,
@@ -670,7 +669,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
 
             var subScriptHandles = subscripts.Select( s => s.Handle ).ToArray( );
             var handle = LLVMDIBuilderCreateVectorType(
-                            NativeHandle.ThrowIfInvalid(),
+                            Handle.ThrowIfInvalid(),
                             bitSize,
                             bitAlign,
                             elementType.Handle,
@@ -686,7 +685,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
 
-            var handle = LLVMDIBuilderCreateTypedef( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateTypedef( Handle.ThrowIfInvalid()
                                                    , type?.Handle ?? default
                                                    , name
                                                    , file?.Handle ?? default
@@ -701,7 +700,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public DISubRange CreateSubRange( long lowerBound, long count )
         {
-            var handle = LLVMDIBuilderGetOrCreateSubrange( NativeHandle.ThrowIfInvalid(), lowerBound, count );
+            var handle = LLVMDIBuilderGetOrCreateSubrange( Handle.ThrowIfInvalid(), lowerBound, count );
             return (DISubRange)handle.ThrowIfInvalid().CreateMetadata()!;
         }
 
@@ -711,7 +710,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var buf = elements.Select( d => d?.Handle ?? default ).ToArray( );
             long actualLen = buf.LongLength;
 
-            var handle = LLVMDIBuilderGetOrCreateArray( NativeHandle.ThrowIfInvalid(), buf ).ThrowIfInvalid();
+            var handle = LLVMDIBuilderGetOrCreateArray( Handle.ThrowIfInvalid(), buf ).ThrowIfInvalid();
 
             // assume wrapped tuple is not null since underlying handle is already checked.
             var tuple = (MDTuple) handle.CreateMetadata()!;
@@ -722,7 +721,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DITypeArray GetOrCreateTypeArray( params IEnumerable<DIType> types )
         {
             var buf = types.Select( t => t?.Handle ?? default ).ToArray( );
-            var handle = LLVMDIBuilderGetOrCreateTypeArray( NativeHandle.ThrowIfInvalid(), buf );
+            var handle = LLVMDIBuilderGetOrCreateTypeArray( Handle.ThrowIfInvalid(), buf );
             return new DITypeArray( (MDTuple)handle.ThrowIfInvalid().CreateMetadata()! );
         }
 
@@ -730,7 +729,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DIEnumerator CreateEnumeratorValue( LazyEncodedString name, long value, bool isUnsigned = false )
         {
             ArgumentException.ThrowIfNullOrWhiteSpace( name );
-            var handle = LLVMDIBuilderCreateEnumerator( NativeHandle.ThrowIfInvalid(), name, value, isUnsigned );
+            var handle = LLVMDIBuilderCreateEnumerator( Handle.ThrowIfInvalid(), name, value, isUnsigned );
             return (DIEnumerator)handle.ThrowIfInvalid().CreateMetadata()!;
         }
 
@@ -749,7 +748,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( name );
 
             var elementHandles = elements.Select( e => e.Handle ).ToArray( );
-            var handle = LLVMDIBuilderCreateEnumerationType( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateEnumerationType( Handle.ThrowIfInvalid()
                                                            , scope?.Handle ?? default
                                                            , name
                                                            , file?.Handle ?? default
@@ -784,7 +783,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 linkageName = name;
             }
 
-            var handle = LLVMDIBuilderCreateGlobalVariableExpression( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateGlobalVariableExpression( Handle.ThrowIfInvalid()
                                                                     , scope?.Handle ?? default
                                                                     , name
                                                                     , linkageName
@@ -803,7 +802,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public void Finish( DISubProgram subProgram )
         {
             ArgumentNullException.ThrowIfNull( subProgram );
-            LLVMDIBuilderFinalizeSubprogram( NativeHandle.ThrowIfInvalid(), subProgram.Handle );
+            LLVMDIBuilderFinalizeSubprogram( Handle.ThrowIfInvalid(), subProgram.Handle );
         }
 
         /// <inheritdoc/>
@@ -837,7 +836,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new InvalidOperationException( bldr.ToString( ) );
             }
 #endif
-            LLVMDIBuilderFinalize( NativeHandle.ThrowIfInvalid() );
+            LLVMDIBuilderFinalize( Handle.ThrowIfInvalid() );
         }
 
         /// <inheritdoc/>
@@ -860,7 +859,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( location );
             ArgumentNullException.ThrowIfNull( insertBefore );
 
-            var handle = LLVMDIBuilderInsertDeclareRecordBefore( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderInsertDeclareRecordBefore( Handle.ThrowIfInvalid()
                                                                , storage.Handle
                                                                , varInfo.Handle
                                                                , expression.Handle
@@ -892,7 +891,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( Resources.Mismatched_scopes_for_location_and_variable );
             }
 
-            var handle = LLVMDIBuilderInsertDeclareRecordAtEnd( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderInsertDeclareRecordAtEnd( Handle.ThrowIfInvalid()
                                                               , storage.Handle
                                                               , varInfo.Handle
                                                               , expression.Handle
@@ -927,7 +926,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             ArgumentNullException.ThrowIfNull( location );
             ArgumentNullException.ThrowIfNull( insertBefore );
 
-            var handle = LLVMDIBuilderInsertDbgValueRecordBefore( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderInsertDbgValueRecordBefore( Handle.ThrowIfInvalid()
                                                                 , value.Handle
                                                                 , varInfo.Handle
                                                                 , expression?.Handle ?? CreateExpression( ).Handle
@@ -972,7 +971,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( Resources.Location_does_not_describe_the_specified_block_s_containing_function );
             }
 
-            var handle = LLVMDIBuilderInsertDeclareRecordAtEnd( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderInsertDeclareRecordAtEnd( Handle.ThrowIfInvalid()
                                                               , value.Handle
                                                               , varInfo.Handle
                                                               , expression?.Handle ?? CreateExpression( ).Handle
@@ -987,14 +986,14 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         public DIExpression CreateExpression( params IEnumerable<ExpressionOp> operations )
         {
             UInt64[ ] args = [ .. operations.Cast<UInt64>( ) ];
-            var handle = LLVMDIBuilderCreateExpression( NativeHandle.ThrowIfInvalid(), args );
+            var handle = LLVMDIBuilderCreateExpression( Handle.ThrowIfInvalid(), args );
             return (DIExpression)handle.ThrowIfInvalid().CreateMetadata()!;
         }
 
         /// <inheritdoc/>
         public DIExpression CreateConstantValueExpression( UInt64 value )
         {
-            LLVMMetadataRef handle = LLVMDIBuilderCreateConstantValueExpression( NativeHandle.ThrowIfInvalid(), value );
+            LLVMMetadataRef handle = LLVMDIBuilderCreateConstantValueExpression( Handle.ThrowIfInvalid(), value );
             return (DIExpression)handle.ThrowIfInvalid().CreateMetadata()!;
         }
 
@@ -1017,7 +1016,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             uniqueId ??= string.Empty;
 
             // TODO: validate that `tag` is really valid for a composite type or document the result if it isn't (as long as LLVM won't crash at least)
-            var handle = LLVMDIBuilderCreateReplaceableCompositeType( NativeHandle.ThrowIfInvalid()
+            var handle = LLVMDIBuilderCreateReplaceableCompositeType( Handle.ThrowIfInvalid()
                                                                     , ( uint )tag
                                                                     , name
                                                                     , scope?.Handle ?? default
@@ -1032,7 +1031,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             return (DICompositeType)handle.ThrowIfInvalid().CreateMetadata()!;
         }
 
-        LLVMDIBuilderRefAlias IHandleWrapper<LLVMDIBuilderRefAlias>.Handle => NativeHandle;
+        internal LLVMDIBuilderRefAlias Handle { get; set; }
 
         internal DIBuilderAlias( LLVMDIBuilderRefAlias nativeHandle, IModule owningModule )
         {
@@ -1041,11 +1040,9 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 throw new ArgumentException( "Invalid handle value", nameof( nativeHandle ) );
             }
 
-            NativeHandle = nativeHandle;
+            Handle = nativeHandle;
             OwningModule = owningModule;
         }
-
-        private readonly LLVMDIBuilderRefAlias NativeHandle;
 
         private static void SanityCheck( DISubProgram retVal, bool isDefinition )
         {
