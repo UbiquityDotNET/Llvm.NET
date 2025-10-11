@@ -105,7 +105,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
             ArgumentNullException.ThrowIfNull( self );
 
             return KeyWords.Contains( self )
-                    ? $"@{self}" // isn't this language specific?
+                    ? $"@{self}"
                     : self.Replace( " ", "_", StringComparison.Ordinal );
         }
     }

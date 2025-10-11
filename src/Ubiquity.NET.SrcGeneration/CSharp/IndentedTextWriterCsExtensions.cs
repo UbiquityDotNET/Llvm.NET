@@ -12,7 +12,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
     [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "extension" )]
     public static class IndentedTextWriterCsExtensions
     {
-        /// <summary>Writes a standard <c>auto-generated</c> comment</summary>
+        /// <summary>Writes a standard <c>auto-generated</c> comment block</summary>
         /// <param name="self">Writer to apply extension method to</param>
         /// <param name="toolName">Name of the generating tool (included in comment)</param>
         /// <param name="toolVersion">Version of the tool (included in comment)</param>
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
             }
         }
 
-        /// <summary>Writes a standard <c>auto-generated</c> comment returning the scope for additional contents</summary>
+        /// <summary>Writes a standard <c>auto-generated</c> comment block returning the scope for additional contents</summary>
         /// <param name="self">Writer to apply extension method to</param>
         /// <param name="toolName">Name of the generating tool (included in comment)</param>
         /// <param name="toolVersion">Version of the tool (included in comment)</param>

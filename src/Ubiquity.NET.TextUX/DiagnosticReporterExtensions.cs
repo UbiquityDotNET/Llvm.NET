@@ -256,7 +256,7 @@ namespace Ubiquity.NET.TextUX
         /// <param name="handler">Interpolated string for the message (processed via <see cref="VerboseReportingInterpolatedStringHandler"/>)</param>
         /// <remarks>
         /// The reporter (<paramref name="self"/>) may filter out any messages reported for this level. The
-        /// <paramref name="handler"/> is NOT applied to format the final message the level for the message is
+        /// <paramref name="handler"/> is NOT applied to format the final message unless the level for the message is
         /// enabled. This helps reduce the overhead of producing the final formatted string if it is ignored anyway.
         /// </remarks>
         public static void Error(

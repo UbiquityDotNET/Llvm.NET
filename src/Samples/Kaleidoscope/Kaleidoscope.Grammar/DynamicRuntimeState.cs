@@ -11,7 +11,7 @@ namespace Kaleidoscope.Grammar
 {
     /// <summary>Class to hold dynamic runtime global state</summary>
     /// <remarks>
-    /// <para>Generally speaking the parser is the wrong place to store any
+    /// <para>Generally speaking, the parser is the wrong place to store any
     /// sort of global state. Furthermore, the actual underlying ANTLR parser
     /// is destroyed and re-created for each REPL input string to ensure
     /// there isn't any internal parsing state carry over between parses of partial

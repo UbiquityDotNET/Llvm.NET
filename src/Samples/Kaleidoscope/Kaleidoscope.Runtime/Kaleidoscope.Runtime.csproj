@@ -4,6 +4,7 @@
         <LangVersion>13</LangVersion>
         <IsAotCompatible>True</IsAotCompatible>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

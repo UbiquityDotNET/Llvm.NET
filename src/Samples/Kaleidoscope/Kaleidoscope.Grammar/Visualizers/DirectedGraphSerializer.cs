@@ -9,7 +9,7 @@ using OpenSoftware.DgmlTools.Model;
 
 namespace Kaleidoscope.Grammar.Visualizers
 {
-    // XML Serialization of DirectedGraph  (and child nodes) via the extension method WriteToFile()
+    // XML Serialization of DirectedGraph (and child nodes) via the extension method WriteToFile()
     // uses reflection which is antithetical to AOT scenarios. So this rolls it out manually without
     // need of reflection.
     internal static class DirectedGraphSerializer

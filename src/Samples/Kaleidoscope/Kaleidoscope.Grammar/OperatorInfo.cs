@@ -6,11 +6,19 @@ using System.Linq;
 
 namespace Kaleidoscope.Grammar
 {
+    /// <summary>Enumeration to define the kind of an operator</summary>
     internal enum OperatorKind
     {
+        /// <summary>Default invalidate `None` value</summary>
         None,
+
+        /// <summary>Infix operator that is left associative</summary>
         InfixLeftAssociative,
+
+        /// <summary>Infix operator that is right associative</summary>
         InfixRightAssociative,
+
+        /// <summary>Prefix operator</summary>
         PreFix
     }
 

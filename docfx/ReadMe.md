@@ -5,15 +5,15 @@
 > have great memories or are otherwise easily confused. :nerd_face:)
 
 DocFX is used to generate the documentation for this library. There is confusion on
-what the "statictoc" template means and requires. It is ***LITERALLY*** that the
-Table of Contents (TOC) is statically generated. So that the entire site is servable
-from file path. This ***DOES NOT*** mean that the default+modern template is
+what the "statictoc" template means and requires. It is ***LITERALLY*** that, the
+Table of Contents (TOC) is statically generated such that the entire site is servable
+from a file path. This ***DOES NOT*** mean that the default+modern template is
 unusable for hosted static site scenarios like 'gh-pages' in GitHub. It only means
 that the TOC support will ***require*** a hosted site to provide the contents needed
 by the generated TOC client side scripting. That's it. Don't fear the built-in
 templates (Despite the lack of decent docs explaining the details [Yeah, this
-project previously fell into those gaps and even constructed a custom template to
-deal with it... Sigh, what a waste of time... :facepalm: ])
+project previously fell into those gaps and even constructed a complete custom template
+to deal with it... Sigh, what a waste of time... :facepalm: ])
 
 ## Changes Over Time
 DocFX has obsoleted the `docfxconsole` NuGet package that was used to run docfx for

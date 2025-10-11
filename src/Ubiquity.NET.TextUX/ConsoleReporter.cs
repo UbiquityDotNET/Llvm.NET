@@ -17,8 +17,12 @@ namespace Ubiquity.NET.TextUX
         /// <summary>Initializes a new instance of the <see cref="ConsoleReporter"/> class.</summary>
         /// <param name="level">Level of messages to enable for this reporter [Default: <see cref="MsgLevel.Information"/></param>
         /// <remarks>
-        /// Any message reported with a level that is greater than or equal to <paramref name="level"/>
-        /// is enabled, and thus reported.
+        /// <para>Any message reported with a level that is greater than or equal to <paramref name="level"/>
+        /// is enabled, and thus reported.</para>
+        /// <para>
+        /// The <see cref="Console.Error"/> stream is used for <see cref="MsgLevel.Error"/>. Any other message level
+        /// goes to <see cref="Console.Out"/>.
+        /// </para>
         /// </remarks>
         [SetsRequiredMembers]
         public ConsoleReporter( MsgLevel level = MsgLevel.Information)

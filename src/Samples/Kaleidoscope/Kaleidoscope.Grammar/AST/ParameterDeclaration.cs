@@ -8,10 +8,15 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// <summary>AST Node for a parameter declaration</summary>
     public sealed class ParameterDeclaration
         : AstNode
         , IVariableDeclaration
     {
+        /// <summary>Initializes a new instance of the <see cref="ParameterDeclaration"/> class.</summary>
+        /// <param name="location">Location of the source of the node in the input</param>
+        /// <param name="name">Name of the parameter</param>
+        /// <param name="index">Index of the parameter in the function signature</param>
         public ParameterDeclaration( SourceRange location, string name, int index )
             : base( location )
         {
@@ -19,12 +24,16 @@ namespace Kaleidoscope.Grammar.AST
             Index = index;
         }
 
+        /// <inheritdoc/>
         public string Name { get; }
 
+        /// <summary>Gets the index of the parameter in the parameter list it belongs too.</summary>
         public int Index { get; }
 
+        /// <inheritdoc/>
         public bool CompilerGenerated => false;
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})"/>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -33,6 +42,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -41,8 +51,10 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IAstNode> Children => [];
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             return Name;

@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar.Visualizers
     /// <summary>Extension class to generate a blockdiag file from a DGML <see cref="DirectedGraph"/></summary>
     /// <remarks>
     /// <para>This isn't a generator in the same sense that the <see cref="DgmlGenerator"/> and
-    /// <see cref="XDocumentListener"/> are. Rather it is an extension class that allows
+    /// <see cref="XDocumentListener"/> are. Rather, it is an extension class that allows
     /// generating a blockdiag diagram, from the directed graph created by the DgmlGenerator.
     /// The resulting ".diag" file is convertible to SVG form for documentation.</para>
     /// <para>
@@ -24,6 +24,9 @@ namespace Kaleidoscope.Grammar.Visualizers
     /// <seealso href="http://blockdiag.com"/>
     internal static class BlockDiagGenerator
     {
+        /// <summary>Writes a <see cref="DirectedGraph"/> to a <see cref="TextWriter"/> as a BlockDiag</summary>
+        /// <param name="graph">Directed graph to convert to block diag</param>
+        /// <param name="writer">Writer to output the graph text to</param>
         public static void WriteAsBlockDiag( this DirectedGraph graph, TextWriter writer )
         {
             ArgumentNullException.ThrowIfNull( graph );

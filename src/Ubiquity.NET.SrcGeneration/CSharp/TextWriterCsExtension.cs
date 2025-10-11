@@ -122,7 +122,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
             }
         }
 
-        /// <summary>Writes a C# using directive</summary>
+        /// <summary>Writes a C# using directive (namespace reference)</summary>
         /// <param name="self">The writer to write to</param>
         /// <param name="namespaceName">Namespace for the using directive</param>
         public static void WriteUsingDirective(this TextWriter self, string namespaceName )

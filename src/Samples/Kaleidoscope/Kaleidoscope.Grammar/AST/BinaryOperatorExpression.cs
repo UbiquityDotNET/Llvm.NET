@@ -8,15 +8,31 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// <summary>Identifier for the kinds of built-in operators</summary>
     public enum BuiltInOperatorKind
     {
+        /// <summary>Default value (Invalid)</summary>
         Invalid,
+
+        /// <summary>Assignment operator</summary>
         Assign,
+
+        /// <summary>Addition operator</summary>
         Add,
+
+        /// <summary>Subtraction operator</summary>
         Subtract,
+
+        /// <summary>Multiplication operator</summary>
         Multiply,
+
+        /// <summary>Division operator</summary>
         Divide,
+
+        /// <summary>Comparison operator (less)</summary>
         Less,
+
+        /// <summary>Exponentiation operator</summary>
         Pow
     }
 
@@ -60,6 +76,10 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// <summary>Visitor pattern 'Accept' of a visitors that don't need a parameter</summary>
+        /// <typeparam name="TResult">Type of the result from the visitor</typeparam>
+        /// <param name="visitor">Visitor to apply for each node in this expression</param>
+        /// <returns>Result of visiting this expression</returns>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -68,6 +88,12 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <summary>Visitor pattern 'Accept' of a visitors that need a parameter</summary>
+        /// <typeparam name="TResult">Type of the result from the visitor</typeparam>
+        /// <typeparam name="TArg">Type of the argument for the visit</typeparam>
+        /// <param name="visitor">Visitor to apply for each node in this expression</param>
+        /// <param name="arg">Argument to pass to each method of the visit</param>
+        /// <returns>Result of visiting this expression</returns>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {

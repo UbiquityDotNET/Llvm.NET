@@ -5,18 +5,23 @@ using Kaleidoscope.Grammar.ANTLR;
 
 namespace Kaleidoscope.Grammar
 {
-    // Parse listener to handle updating runtime state upon successfully parsing a user defined
-    // operator definition.
+    /// <summary>ANTLR4 listener to handle adding user operator definitions parsed to the runtime state for future parsing to use</summary>
     internal class KaleidoscopeUserOperatorListener
         : KaleidoscopeBaseListener
     {
+        /// <summary>Initializes a new instance of the <see cref="KaleidoscopeUserOperatorListener"/> class.</summary>
+        /// <param name="state">Dynamic runtime state of the parse</param>
         public KaleidoscopeUserOperatorListener( DynamicRuntimeState state )
         {
             RuntimeState = state;
         }
 
-        // upon successful parse of a function definition check if it is a user defined operator
-        // and update the RuntimeState accordingly, if it is.
+        /// <summary>Handles successfully parsed function definitions</summary>
+        /// <param name="context">Context parse node for the parsed function</param>
+        /// <remarks>
+        /// Upon successful parse of a function definition this check if it is a user defined operator
+        /// and updates the RuntimeState accordingly, if it is.
+        /// </remarks>
         public override void ExitFunctionDefinition( KaleidoscopeParser.FunctionDefinitionContext context )
         {
             switch(context.Signature)
