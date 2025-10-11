@@ -292,7 +292,7 @@ public static int Main( string[] args )
     Console.WriteLine( &quot;Compiling {0}&quot;, sourceFilePath );
 
     // Create adapter to route parse messages for the Kaleidoscope language to the command line reporter for this app
-    var errorLogger = new ParseErrorDiagnosticAdapter&lt;DiagnosticCode&gt;(reporter, &quot;KLS&quot;, new Uri(sourceFilePath) );
+    var errorLogger = new ParseErrorDiagnosticAdapter(reporter, &quot;KLS&quot;, new Uri(sourceFilePath) );
 
     // time the parse and code generation
     var timer = System.Diagnostics.Stopwatch.StartNew( );
@@ -357,7 +357,7 @@ this feature is &quot;left as an exercise for the reader&quot; 😉)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

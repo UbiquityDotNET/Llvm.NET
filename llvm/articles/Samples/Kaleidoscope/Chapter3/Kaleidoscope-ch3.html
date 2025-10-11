@@ -362,6 +362,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;summary&gt;Gets the parameters for the function&lt;/summary&gt;
         public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -370,6 +371,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -517,18 +519,24 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Kaleidoscope AST node for a constant&lt;/summary&gt;
     public sealed class ConstantExpression
         : AstNode
         , IExpression
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;ConstantExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the expression in the original source&lt;/param&gt;
+        /// &lt;param name=&quot;value&quot;&gt;Value of the constant&lt;/param&gt;
         public ConstantExpression( SourceRange location, double value )
             : base( location )
         {
             Value = value;
         }
 
+        /// &lt;summary&gt;Gets the value of this constant expression&lt;/summary&gt;
         public double Value { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -537,6 +545,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -545,8 +554,10 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children =&gt; [];
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return Value.ToString( CultureInfo.CurrentCulture );
@@ -771,7 +782,7 @@ Ready&gt;
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

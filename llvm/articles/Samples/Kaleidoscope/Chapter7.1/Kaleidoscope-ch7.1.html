@@ -276,93 +276,96 @@ the support there to provide a materializer that can convert the AST into an LLV
 it provides an LLVM module for a symbol (the body implementation name). The JIT couldn't care
 less about the AST. The materializer will generate the IR for a given symbol by processing the
 AST into a module and providing that to the JIT.</p>
-<pre><code class="lang-csharp" name="AddLazyMaterializer">private void AddLazyMaterializer( FunctionDefinition definition )
-{
-    FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
-
-    var dyLib = KlsJIT.MainLib;
-    using var mangledName = KlsJIT.MangleAndIntern(definition.Name);
-    using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
-    var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
-
-    var symbols = new KvpArrayBuilder&lt;SymbolStringPoolEntry, SymbolFlags&gt;
-    {
-        [mangledBodyName] = commonSymbolFlags,
-    }.ToImmutable();
-
-    using var materializer = new CustomMaterializationUnit($&quot;{definition.Name}MU&quot;, Materialize, symbols);
-    dyLib.Define( materializer );
-
-    var reexports = new KvpArrayBuilder&lt;SymbolStringPoolEntry, SymbolAliasMapEntry&gt;
-    {
-        [mangledName] = new(mangledBodyName, commonSymbolFlags)
-    }.ToImmutable();
-
-    using var lazyReExports = new LazyReExportsMaterializationUnit(JitLCTM, JitISM, dyLib, reexports);
-    dyLib.Define( lazyReExports );
-    return;
-
-    // Local function to materialize the IR for the AST in implDefinition.
-    // This is a local function to enable it to &quot;capture&quot; the AST and any
-    // other values needed. The GC considers these &quot;live&quot; until either the
-    // JIT is destroyed, the materializer is removed from the JIT, or the
-    // symbol is looked up and the materializer runs.
-    // NOTE: This function is called by the JIT asynchronously when the
-    // symbol is resolved to an address in the JIT the first time. Thus,
-    // it MUST not capture any IDisposable objects such as the mangled
-    // symbol names as they are most likely already disposed by the time
-    // this is called.
-    void Materialize( MaterializationResponsibility r )
-    {
-        // symbol strings returned are NOT owned by this function so Dispose() isn't needed
-        // (Though it is an allowed NOP that silences compiler/analyzer warnings)
-        using var symbols = r.GetRequestedSymbols();
-        Debug.Assert( symbols.Count == 1, &quot;Unexpected number of symbols!&quot; );
-
-        using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
-
-        ThreadSafeModule tsm;
-        if(symbols[ 0 ].Equals( mangledBodyName ))
+<pre><code class="lang-csharp" name="AddLazyMaterializer">        private void AddLazyMaterializer( FunctionDefinition definition )
         {
-            Debug.WriteLine( &quot;Generating code for {0}&quot;, mangledBodyName );
+            FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
 
-            Module?.Dispose();
-            Module = ThreadSafeContext.PerThreadContext.CreateBitcodeModule();
-            try
-            {
-                // generate a function from the AST into the module
-                _ = implDefinition.Accept( this ) ?? throw new CodeGeneratorException( &quot;Failed to lazy generate function - this is an application crash scenario&quot; );
-                tsm = new( ThreadSafeContext, Module );
-            }
-            finally
-            {
-                Module?.Dispose();
-                Module = null;
-            }
-        }
-        else
-        {
-            Debug.WriteLine( &quot;Unknown symbol&quot; );
+            var dyLib = KlsJIT.MainLib;
+            using var mangledName = KlsJIT.MangleAndIntern(definition.Name);
+            using var mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
+            var commonSymbolFlags = new SymbolFlags(SymbolGenericOption.Exported | SymbolGenericOption.Callable);
 
-            // Not a known symbol - fail the materialization request.
-            r.Fail();
-            r.Dispose();
+            var symbols = new KvpArrayBuilder&lt;SymbolStringPoolEntry, SymbolFlags&gt;
+            {
+                [mangledBodyName] = commonSymbolFlags,
+            }.ToImmutable();
+
+            using var materializer = new CustomMaterializationUnit($&quot;{definition.Name}MU&quot;, Materialize, symbols);
+            dyLib.Define( materializer );
+
+            var reexports = new KvpArrayBuilder&lt;SymbolStringPoolEntry, SymbolAliasMapEntry&gt;
+            {
+                [mangledName] = new(mangledBodyName, commonSymbolFlags)
+            }.ToImmutable();
+
+            using var lazyReExports = new LazyReExportsMaterializationUnit(JitLCTM, JitISM, dyLib, reexports);
+            dyLib.Define( lazyReExports );
             return;
-        }
 
-        // In case of an exception clean up the created ThreadSafeModule instance.
-        // Dispose is a NOP once transferred into Native code
-        using(tsm)
-        {
-            // Finally emit the module to the JIT.
-            // This transfers ownership of both the responsibility AND the module
-            // to the native LLVM JIT. The JIT will perform any additional transforms
-            // that are registered (for KLS that includes setting the data layout
-            // and running optimization passes)
-            KlsJIT.TransformLayer.Emit( r, tsm );
+            // Local function to materialize the IR for the AST in implDefinition.
+            // This is a local function to enable it to &quot;capture&quot; the AST and any
+            // other values needed. The GC considers these &quot;live&quot; until either the
+            // JIT is destroyed, the materializer is removed from the JIT, or the
+            // symbol is looked up and the materializer runs.
+            // NOTE: This function is called by the JIT asynchronously when the
+            // symbol is resolved to an address in the JIT the first time. Thus,
+            // it MUST not capture any IDisposable objects such as the mangled
+            // symbol names as they are most likely already disposed by the time
+            // this is called.
+            void Materialize( MaterializationResponsibility r )
+            {
+                // symbol strings returned are NOT owned by this function so Dispose() isn't needed
+                // (Though it is an allowed NOP that silences compiler/analyzer warnings)
+                using var symbols = r.GetRequestedSymbols();
+                Debug.Assert( symbols.Count == 1, &quot;Unexpected number of symbols!&quot; );
+
+                using SymbolStringPoolEntry mangledBodyName = KlsJIT.MangleAndIntern(implDefinition.Name);
+
+                ThreadSafeModule tsm;
+                if(symbols[ 0 ].Equals( mangledBodyName ))
+                {
+                    Debug.WriteLine( &quot;Generating code for {0}&quot;, mangledBodyName );
+
+                    Module?.Dispose();
+                    Module = ThreadSafeContext.PerThreadContext.CreateBitcodeModule();
+                    try
+                    {
+                        // generate a function from the AST into the module
+                        _ = implDefinition.Accept( this ) ?? throw new CodeGeneratorException( &quot;Failed to lazy generate function - this is an application crash scenario&quot; );
+                        tsm = new( ThreadSafeContext, Module );
+                    }
+                    finally
+                    {
+                        Module?.Dispose();
+                        Module = null;
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine( &quot;Unknown symbol&quot; );
+
+                    // Not a known symbol - fail the materialization request.
+                    r.Fail();
+#pragma warning disable IDISP007 // Don't dispose injected
+                    // ABI requires disposal in this case
+                    r.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
+                    return;
+                }
+
+                // In case of an exception clean up the created ThreadSafeModule instance.
+                // Dispose is a NOP once transferred into Native code
+                using(tsm)
+                {
+                    // Finally emit the module to the JIT.
+                    // This transfers ownership of both the responsibility AND the module
+                    // to the native LLVM JIT. The JIT will perform any additional transforms
+                    // that are registered (for KLS that includes setting the data layout
+                    // and running optimization passes)
+                    KlsJIT.TransformLayer.Emit( r, tsm );
+                }
+            }
         }
-    }
-}
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Implementing Lazy JIT support with Ubiquity.NET.Llvm is a bit more complex, but still not
 significant. It took almost as many words to describe then actual lines of code. Efficiently,
@@ -427,7 +430,7 @@ hard 'NO'. This sort of support is best for non-interactive run-times like .NET 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

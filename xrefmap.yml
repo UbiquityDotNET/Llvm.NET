@@ -52,75 +52,66 @@ references:
   commentId: N:Ubiquity.NET.ANTLR.Utils
   fullName: Ubiquity.NET.ANTLR.Utils
   nameWithType: Ubiquity.NET.ANTLR.Utils
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1
-  name: AntlrParseErrorListenerAdapter<T>
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.html
-  commentId: T:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1
-  name.vb: AntlrParseErrorListenerAdapter(Of T)
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T)
-  nameWithType: AntlrParseErrorListenerAdapter<T>
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T)
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorListener{`0},System.Collections.Immutable.ImmutableDictionary{`0,`0})
-  name: AntlrParseErrorListenerAdapter(IParseErrorListener<T>, ImmutableDictionary<T, T>?)
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.-ctor.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_1__ctor_Ubiquity_NET_Runtime_Utils_IParseErrorListener__0__System_Collections_Immutable_ImmutableDictionary__0__0__
-  commentId: M:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorListener{`0},System.Collections.Immutable.ImmutableDictionary{`0,`0})
-  name.vb: New(IParseErrorListener(Of T), ImmutableDictionary(Of T, T))
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.AntlrParseErrorListenerAdapter(Ubiquity.NET.Runtime.Utils.IParseErrorListener<T>, System.Collections.Immutable.ImmutableDictionary<T, T>?)
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).New(Ubiquity.NET.Runtime.Utils.IParseErrorListener(Of T), System.Collections.Immutable.ImmutableDictionary(Of T, T))
-  nameWithType: AntlrParseErrorListenerAdapter<T>.AntlrParseErrorListenerAdapter(IParseErrorListener<T>, ImmutableDictionary<T, T>?)
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).New(IParseErrorListener(Of T), ImmutableDictionary(Of T, T))
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.#ctor*
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter
   name: AntlrParseErrorListenerAdapter
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.-ctor.html
-  commentId: Overload:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.#ctor
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.html
+  commentId: T:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter
+  nameWithType: AntlrParseErrorListenerAdapter
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorListener,System.Collections.Immutable.ImmutableDictionary{System.Int32,System.Int32})
+  name: AntlrParseErrorListenerAdapter(IParseErrorListener, ImmutableDictionary<int, int>?)
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.-ctor.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter__ctor_Ubiquity_NET_Runtime_Utils_IParseErrorListener_System_Collections_Immutable_ImmutableDictionary_System_Int32_System_Int32__
+  commentId: M:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorListener,System.Collections.Immutable.ImmutableDictionary{System.Int32,System.Int32})
+  name.vb: New(IParseErrorListener, ImmutableDictionary(Of Integer, Integer))
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.AntlrParseErrorListenerAdapter(Ubiquity.NET.Runtime.Utils.IParseErrorListener, System.Collections.Immutable.ImmutableDictionary<int, int>?)
+  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.New(Ubiquity.NET.Runtime.Utils.IParseErrorListener, System.Collections.Immutable.ImmutableDictionary(Of Integer, Integer))
+  nameWithType: AntlrParseErrorListenerAdapter.AntlrParseErrorListenerAdapter(IParseErrorListener, ImmutableDictionary<int, int>?)
+  nameWithType.vb: AntlrParseErrorListenerAdapter.New(IParseErrorListener, ImmutableDictionary(Of Integer, Integer))
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.#ctor*
+  name: AntlrParseErrorListenerAdapter
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.-ctor.html
+  commentId: Overload:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.#ctor
   name.vb: New
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.AntlrParseErrorListenerAdapter
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).New
-  nameWithType: AntlrParseErrorListenerAdapter<T>.AntlrParseErrorListenerAdapter
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).New
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.IdentifierMap
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.AntlrParseErrorListenerAdapter
+  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.New
+  nameWithType: AntlrParseErrorListenerAdapter.AntlrParseErrorListenerAdapter
+  nameWithType.vb: AntlrParseErrorListenerAdapter.New
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap
   name: IdentifierMap
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.IdentifierMap.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_1_IdentifierMap
-  commentId: P:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.IdentifierMap
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.IdentifierMap
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).IdentifierMap
-  nameWithType: AntlrParseErrorListenerAdapter<T>.IdentifierMap
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).IdentifierMap
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.IdentifierMap*
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_IdentifierMap
+  commentId: P:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap
+  nameWithType: AntlrParseErrorListenerAdapter.IdentifierMap
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap*
   name: IdentifierMap
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.IdentifierMap.html
-  commentId: Overload:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.IdentifierMap
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.IdentifierMap
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).IdentifierMap
-  nameWithType: AntlrParseErrorListenerAdapter<T>.IdentifierMap
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).IdentifierMap
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,Antlr4.Runtime.IToken,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap.html
+  commentId: Overload:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.IdentifierMap
+  nameWithType: AntlrParseErrorListenerAdapter.IdentifierMap
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,Antlr4.Runtime.IToken,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
   name: SyntaxError(TextWriter, IRecognizer, IToken, int, int, string, RecognitionException)
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.SyntaxError.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_1_SyntaxError_System_IO_TextWriter_Antlr4_Runtime_IRecognizer_Antlr4_Runtime_IToken_System_Int32_System_Int32_System_String_Antlr4_Runtime_RecognitionException_
-  commentId: M:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,Antlr4.Runtime.IToken,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_SyntaxError_System_IO_TextWriter_Antlr4_Runtime_IRecognizer_Antlr4_Runtime_IToken_System_Int32_System_Int32_System_String_Antlr4_Runtime_RecognitionException_
+  commentId: M:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,Antlr4.Runtime.IToken,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
   name.vb: SyntaxError(TextWriter, IRecognizer, IToken, Integer, Integer, String, RecognitionException)
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, Antlr4.Runtime.IToken, int, int, string, Antlr4.Runtime.RecognitionException)
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, Antlr4.Runtime.IToken, Integer, Integer, String, Antlr4.Runtime.RecognitionException)
-  nameWithType: AntlrParseErrorListenerAdapter<T>.SyntaxError(TextWriter, IRecognizer, IToken, int, int, string, RecognitionException)
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).SyntaxError(TextWriter, IRecognizer, IToken, Integer, Integer, String, RecognitionException)
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,System.Int32,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, Antlr4.Runtime.IToken, int, int, string, Antlr4.Runtime.RecognitionException)
+  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, Antlr4.Runtime.IToken, Integer, Integer, String, Antlr4.Runtime.RecognitionException)
+  nameWithType: AntlrParseErrorListenerAdapter.SyntaxError(TextWriter, IRecognizer, IToken, int, int, string, RecognitionException)
+  nameWithType.vb: AntlrParseErrorListenerAdapter.SyntaxError(TextWriter, IRecognizer, IToken, Integer, Integer, String, RecognitionException)
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,System.Int32,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
   name: SyntaxError(TextWriter, IRecognizer, int, int, int, string, RecognitionException)
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.SyntaxError.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_1_SyntaxError_System_IO_TextWriter_Antlr4_Runtime_IRecognizer_System_Int32_System_Int32_System_Int32_System_String_Antlr4_Runtime_RecognitionException_
-  commentId: M:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,System.Int32,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError.html#Ubiquity_NET_ANTLR_Utils_AntlrParseErrorListenerAdapter_SyntaxError_System_IO_TextWriter_Antlr4_Runtime_IRecognizer_System_Int32_System_Int32_System_Int32_System_String_Antlr4_Runtime_RecognitionException_
+  commentId: M:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter,Antlr4.Runtime.IRecognizer,System.Int32,System.Int32,System.Int32,System.String,Antlr4.Runtime.RecognitionException)
   name.vb: SyntaxError(TextWriter, IRecognizer, Integer, Integer, Integer, String, RecognitionException)
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, int, int, int, string, Antlr4.Runtime.RecognitionException)
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, Integer, Integer, Integer, String, Antlr4.Runtime.RecognitionException)
-  nameWithType: AntlrParseErrorListenerAdapter<T>.SyntaxError(TextWriter, IRecognizer, int, int, int, string, RecognitionException)
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).SyntaxError(TextWriter, IRecognizer, Integer, Integer, Integer, String, RecognitionException)
-- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.SyntaxError*
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, int, int, int, string, Antlr4.Runtime.RecognitionException)
+  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError(System.IO.TextWriter, Antlr4.Runtime.IRecognizer, Integer, Integer, Integer, String, Antlr4.Runtime.RecognitionException)
+  nameWithType: AntlrParseErrorListenerAdapter.SyntaxError(TextWriter, IRecognizer, int, int, int, string, RecognitionException)
+  nameWithType.vb: AntlrParseErrorListenerAdapter.SyntaxError(TextWriter, IRecognizer, Integer, Integer, Integer, String, RecognitionException)
+- uid: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError*
   name: SyntaxError
-  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter-1.SyntaxError.html
-  commentId: Overload:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter`1.SyntaxError
-  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter<T>.SyntaxError
-  fullName.vb: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter(Of T).SyntaxError
-  nameWithType: AntlrParseErrorListenerAdapter<T>.SyntaxError
-  nameWithType.vb: AntlrParseErrorListenerAdapter(Of T).SyntaxError
+  href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError.html
+  commentId: Overload:Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError
+  fullName: Ubiquity.NET.ANTLR.Utils.AntlrParseErrorListenerAdapter.SyntaxError
+  nameWithType: AntlrParseErrorListenerAdapter.SyntaxError
 - uid: Ubiquity.NET.ANTLR.Utils.AntlrUtilities
   name: AntlrUtilities
   href: antlr-utils/api/Ubiquity.NET.ANTLR.Utils.AntlrUtilities.html
@@ -996,6 +987,18 @@ references:
   fullName.vb: Ubiquity.NET.Extensions.DisposableAction.New
   nameWithType: DisposableAction.DisposableAction
   nameWithType.vb: DisposableAction.New
+- uid: Ubiquity.NET.Extensions.DisposableAction.CreateNOP
+  name: CreateNOP()
+  href: extensions/api/Ubiquity.NET.Extensions.DisposableAction.CreateNOP.html#Ubiquity_NET_Extensions_DisposableAction_CreateNOP
+  commentId: M:Ubiquity.NET.Extensions.DisposableAction.CreateNOP
+  fullName: Ubiquity.NET.Extensions.DisposableAction.CreateNOP()
+  nameWithType: DisposableAction.CreateNOP()
+- uid: Ubiquity.NET.Extensions.DisposableAction.CreateNOP*
+  name: CreateNOP
+  href: extensions/api/Ubiquity.NET.Extensions.DisposableAction.CreateNOP.html
+  commentId: Overload:Ubiquity.NET.Extensions.DisposableAction.CreateNOP
+  fullName: Ubiquity.NET.Extensions.DisposableAction.CreateNOP
+  nameWithType: DisposableAction.CreateNOP
 - uid: Ubiquity.NET.Extensions.DisposableAction.Dispose
   name: Dispose()
   href: extensions/api/Ubiquity.NET.Extensions.DisposableAction.Dispose.html#Ubiquity_NET_Extensions_DisposableAction_Dispose
@@ -19020,24 +19023,24 @@ references:
   commentId: T:Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit
   fullName: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit
   nameWithType: CustomMaterializationUnit
-- uid: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  name: CustomMaterializationUnit(LazyEncodedString, MaterializationAction, IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_CustomMaterializationUnit__ctor_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_OrcJITv2_MaterializationAction_System_Collections_Generic_IReadOnlyCollection_System_Collections_Generic_KeyValuePair_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Ubiquity_NET_Llvm_OrcJITv2_SymbolFlags___Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  name.vb: New(LazyEncodedString, MaterializationAction, IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.CustomMaterializationUnit(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags>>, Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry?)
-  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.New(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags)), Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  nameWithType: CustomMaterializationUnit.CustomMaterializationUnit(LazyEncodedString, MaterializationAction, IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
-  nameWithType.vb: CustomMaterializationUnit.New(LazyEncodedString, MaterializationAction, IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,Ubiquity.NET.Llvm.OrcJITv2.DiscardAction,System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  name: CustomMaterializationUnit(LazyEncodedString, MaterializationAction, DiscardAction?, IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_CustomMaterializationUnit__ctor_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_OrcJITv2_MaterializationAction_Ubiquity_NET_Llvm_OrcJITv2_DiscardAction_System_Collections_Generic_IReadOnlyCollection_System_Collections_Generic_KeyValuePair_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Ubiquity_NET_Llvm_OrcJITv2_SymbolFlags___Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,Ubiquity.NET.Llvm.OrcJITv2.DiscardAction,System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  name.vb: New(LazyEncodedString, MaterializationAction, DiscardAction, IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.CustomMaterializationUnit(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, Ubiquity.NET.Llvm.OrcJITv2.DiscardAction?, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags>>, Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry?)
-  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.New(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, Ubiquity.NET.Llvm.OrcJITv2.DiscardAction, System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags)), Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  nameWithType: CustomMaterializationUnit.CustomMaterializationUnit(LazyEncodedString, MaterializationAction, DiscardAction?, IReadOnlyCollection<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
-  nameWithType.vb: CustomMaterializationUnit.New(LazyEncodedString, MaterializationAction, DiscardAction, IReadOnlyCollection(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,System.Collections.Immutable.ImmutableArray{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
+  name: CustomMaterializationUnit(LazyEncodedString, MaterializationAction, ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_CustomMaterializationUnit__ctor_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_OrcJITv2_MaterializationAction_System_Collections_Immutable_ImmutableArray_System_Collections_Generic_KeyValuePair_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Ubiquity_NET_Llvm_OrcJITv2_SymbolFlags___Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,System.Collections.Immutable.ImmutableArray{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
+  name.vb: New(LazyEncodedString, MaterializationAction, ImmutableArray(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.CustomMaterializationUnit(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, System.Collections.Immutable.ImmutableArray<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags>>, Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry?)
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.New(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, System.Collections.Immutable.ImmutableArray(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags)), Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
+  nameWithType: CustomMaterializationUnit.CustomMaterializationUnit(LazyEncodedString, MaterializationAction, ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
+  nameWithType.vb: CustomMaterializationUnit.New(LazyEncodedString, MaterializationAction, ImmutableArray(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,Ubiquity.NET.Llvm.OrcJITv2.DiscardAction,System.Collections.Immutable.ImmutableArray{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
+  name: CustomMaterializationUnit(LazyEncodedString, MaterializationAction, DiscardAction?, ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_CustomMaterializationUnit__ctor_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_OrcJITv2_MaterializationAction_Ubiquity_NET_Llvm_OrcJITv2_DiscardAction_System_Collections_Immutable_ImmutableArray_System_Collections_Generic_KeyValuePair_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Ubiquity_NET_Llvm_OrcJITv2_SymbolFlags___Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction,Ubiquity.NET.Llvm.OrcJITv2.DiscardAction,System.Collections.Immutable.ImmutableArray{System.Collections.Generic.KeyValuePair{Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry,Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags}},Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
+  name.vb: New(LazyEncodedString, MaterializationAction, DiscardAction, ImmutableArray(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.CustomMaterializationUnit(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, Ubiquity.NET.Llvm.OrcJITv2.DiscardAction?, System.Collections.Immutable.ImmutableArray<System.Collections.Generic.KeyValuePair<Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags>>, Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry?)
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.New(Ubiquity.NET.InteropHelpers.LazyEncodedString, Ubiquity.NET.Llvm.OrcJITv2.MaterializationAction, Ubiquity.NET.Llvm.OrcJITv2.DiscardAction, System.Collections.Immutable.ImmutableArray(Of System.Collections.Generic.KeyValuePair(Of Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry, Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags)), Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
+  nameWithType: CustomMaterializationUnit.CustomMaterializationUnit(LazyEncodedString, MaterializationAction, DiscardAction?, ImmutableArray<KeyValuePair<SymbolStringPoolEntry, SymbolFlags>>, SymbolStringPoolEntry?)
+  nameWithType.vb: CustomMaterializationUnit.New(LazyEncodedString, MaterializationAction, DiscardAction, ImmutableArray(Of KeyValuePair(Of SymbolStringPoolEntry, SymbolFlags)), SymbolStringPoolEntry)
 - uid: Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.#ctor*
   name: CustomMaterializationUnit
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.-ctor.html
@@ -19542,6 +19545,180 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.JITDyLib.GetDefaultTracker
   fullName: Ubiquity.NET.Llvm.OrcJITv2.JITDyLib.GetDefaultTracker
   nameWithType: JITDyLib.GetDefaultTracker
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit
+  name: LLJit
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.html
+  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.LLJit
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit
+  nameWithType: LLJit
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.#ctor
+  name: LLJit()
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit__ctor
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.#ctor
+  name.vb: New()
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.LLJit()
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LLJit.New()
+  nameWithType: LLJit.LLJit()
+  nameWithType.vb: LLJit.New()
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.#ctor*
+  name: LLJit
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.-ctor.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.#ctor
+  name.vb: New
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.LLJit
+  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LLJit.New
+  nameWithType: LLJit.LLJit
+  nameWithType.vb: LLJit.New
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  name: Add(JITDyLib, ThreadSafeModule)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_Add_Ubiquity_NET_Llvm_OrcJITv2_JITDyLib_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib, Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  nameWithType: LLJit.Add(JITDyLib, ThreadSafeModule)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  name: Add(ResourceTracker, ThreadSafeModule)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_Add_Ubiquity_NET_Llvm_OrcJITv2_ResourceTracker_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker, Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
+  nameWithType: LLJit.Add(ResourceTracker, ThreadSafeModule)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add*
+  name: Add
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Add
+  nameWithType: LLJit.Add
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module,Ubiquity.NET.Llvm.OrcJITv2.JITDyLib)
+  name: AddWithTracking(ThreadSafeContext, Module, JITDyLib)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_AddWithTracking_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeContext_Ubiquity_NET_Llvm_Module_Ubiquity_NET_Llvm_OrcJITv2_JITDyLib_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module,Ubiquity.NET.Llvm.OrcJITv2.JITDyLib)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext, Ubiquity.NET.Llvm.Module, Ubiquity.NET.Llvm.OrcJITv2.JITDyLib)
+  nameWithType: LLJit.AddWithTracking(ThreadSafeContext, Module, JITDyLib)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking*
+  name: AddWithTracking
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.AddWithTracking
+  nameWithType: LLJit.AddWithTracking
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString
+  name: DataLayoutString
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_DataLayoutString
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString
+  nameWithType: LLJit.DataLayoutString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString*
+  name: DataLayoutString
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.DataLayoutString
+  nameWithType: LLJit.DataLayoutString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose
+  name: Dispose()
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_Dispose
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose()
+  nameWithType: LLJit.Dispose()
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose*
+  name: Dispose
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Dispose
+  nameWithType: LLJit.Dispose
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport
+  name: EnableDebugSupport()
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_EnableDebugSupport
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport()
+  nameWithType: LLJit.EnableDebugSupport()
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport*
+  name: EnableDebugSupport
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.EnableDebugSupport
+  nameWithType: LLJit.EnableDebugSupport
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix
+  name: GlobalPrefix
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_GlobalPrefix
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix
+  nameWithType: LLJit.GlobalPrefix
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix*
+  name: GlobalPrefix
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.GlobalPrefix
+  nameWithType: LLJit.GlobalPrefix
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  name: Lookup(LazyEncodedString)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_Lookup_Ubiquity_NET_InteropHelpers_LazyEncodedString_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  nameWithType: LLJit.Lookup(LazyEncodedString)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup*
+  name: Lookup
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Lookup
+  nameWithType: LLJit.Lookup
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib
+  name: MainLib
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_MainLib
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib
+  nameWithType: LLJit.MainLib
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib*
+  name: MainLib
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MainLib
+  nameWithType: LLJit.MainLib
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  name: MangleAndIntern(LazyEncodedString)
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_MangleAndIntern_Ubiquity_NET_InteropHelpers_LazyEncodedString_
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
+  nameWithType: LLJit.MangleAndIntern(LazyEncodedString)
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern*
+  name: MangleAndIntern
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.MangleAndIntern
+  nameWithType: LLJit.MangleAndIntern
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session
+  name: Session
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_Session
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session
+  nameWithType: LLJit.Session
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session*
+  name: Session
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.Session
+  nameWithType: LLJit.Session
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer
+  name: TransformLayer
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_TransformLayer
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer
+  nameWithType: LLJit.TransformLayer
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer*
+  name: TransformLayer
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TransformLayer
+  nameWithType: LLJit.TransformLayer
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString
+  name: TripleString
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString.html#Ubiquity_NET_Llvm_OrcJITv2_LLJit_TripleString
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString
+  nameWithType: LLJit.TripleString
+- uid: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString*
+  name: TripleString
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.LLJit.TripleString
+  nameWithType: LLJit.TripleString
 - uid: Ubiquity.NET.Llvm.OrcJITv2.LLJitBuilder
   name: LLJitBuilder
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LLJitBuilder.html
@@ -19668,180 +19845,6 @@ references:
   fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LazyReExportsMaterializationUnit.New
   nameWithType: LazyReExportsMaterializationUnit.LazyReExportsMaterializationUnit
   nameWithType.vb: LazyReExportsMaterializationUnit.New
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
-  name: LlJIT
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html
-  commentId: T:Ubiquity.NET.Llvm.OrcJITv2.LlJIT
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT
-  nameWithType: LlJIT
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
-  name: LlJIT()
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT__ctor
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
-  name.vb: New()
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.LlJIT()
-  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.New()
-  nameWithType: LlJIT.LlJIT()
-  nameWithType.vb: LlJIT.New()
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor*
-  name: LlJIT
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.-ctor.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.#ctor
-  name.vb: New
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.LlJIT
-  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.New
-  nameWithType: LlJIT.LlJIT
-  nameWithType.vb: LlJIT.New
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
-  name: Add(JITDyLib, ThreadSafeModule)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Add_Ubiquity_NET_Llvm_OrcJITv2_JITDyLib_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add(Ubiquity.NET.Llvm.OrcJITv2.JITDyLib, Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
-  nameWithType: LlJIT.Add(JITDyLib, ThreadSafeModule)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
-  name: Add(ResourceTracker, ThreadSafeModule)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Add_Ubiquity_NET_Llvm_OrcJITv2_ResourceTracker_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeModule_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker,Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add(Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker, Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeModule)
-  nameWithType: LlJIT.Add(ResourceTracker, ThreadSafeModule)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add*
-  name: Add
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Add
-  nameWithType: LlJIT.Add
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module,Ubiquity.NET.Llvm.OrcJITv2.JITDyLib)
-  name: AddWithTracking(ThreadSafeContext, Module, JITDyLib)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_AddWithTracking_Ubiquity_NET_Llvm_OrcJITv2_ThreadSafeContext_Ubiquity_NET_Llvm_Module_Ubiquity_NET_Llvm_OrcJITv2_JITDyLib_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext,Ubiquity.NET.Llvm.Module,Ubiquity.NET.Llvm.OrcJITv2.JITDyLib)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking(Ubiquity.NET.Llvm.OrcJITv2.ThreadSafeContext, Ubiquity.NET.Llvm.Module, Ubiquity.NET.Llvm.OrcJITv2.JITDyLib)
-  nameWithType: LlJIT.AddWithTracking(ThreadSafeContext, Module, JITDyLib)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking*
-  name: AddWithTracking
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.AddWithTracking
-  nameWithType: LlJIT.AddWithTracking
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
-  name: DataLayoutString
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_DataLayoutString
-  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
-  nameWithType: LlJIT.DataLayoutString
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString*
-  name: DataLayoutString
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.DataLayoutString
-  nameWithType: LlJIT.DataLayoutString
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose
-  name: Dispose()
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Dispose
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose()
-  nameWithType: LlJIT.Dispose()
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose*
-  name: Dispose
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Dispose
-  nameWithType: LlJIT.Dispose
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport
-  name: EnableDebugSupport()
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_EnableDebugSupport
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport()
-  nameWithType: LlJIT.EnableDebugSupport()
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport*
-  name: EnableDebugSupport
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.EnableDebugSupport
-  nameWithType: LlJIT.EnableDebugSupport
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix
-  name: GlobalPrefix
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_GlobalPrefix
-  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix
-  nameWithType: LlJIT.GlobalPrefix
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix*
-  name: GlobalPrefix
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.GlobalPrefix
-  nameWithType: LlJIT.GlobalPrefix
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
-  name: Lookup(LazyEncodedString)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Lookup_Ubiquity_NET_InteropHelpers_LazyEncodedString_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup(Ubiquity.NET.InteropHelpers.LazyEncodedString)
-  nameWithType: LlJIT.Lookup(LazyEncodedString)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup*
-  name: Lookup
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Lookup
-  nameWithType: LlJIT.Lookup
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
-  name: MainLib
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_MainLib
-  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
-  nameWithType: LlJIT.MainLib
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib*
-  name: MainLib
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MainLib
-  nameWithType: LlJIT.MainLib
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
-  name: MangleAndIntern(LazyEncodedString)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_MangleAndIntern_Ubiquity_NET_InteropHelpers_LazyEncodedString_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern(Ubiquity.NET.InteropHelpers.LazyEncodedString)
-  nameWithType: LlJIT.MangleAndIntern(LazyEncodedString)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern*
-  name: MangleAndIntern
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.MangleAndIntern
-  nameWithType: LlJIT.MangleAndIntern
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
-  name: Session
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_Session
-  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
-  nameWithType: LlJIT.Session
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session*
-  name: Session
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.Session
-  nameWithType: LlJIT.Session
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
-  name: TransformLayer
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_TransformLayer
-  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
-  nameWithType: LlJIT.TransformLayer
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer*
-  name: TransformLayer
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TransformLayer
-  nameWithType: LlJIT.TransformLayer
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
-  name: TripleString
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString.html#Ubiquity_NET_Llvm_OrcJITv2_LlJIT_TripleString
-  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
-  nameWithType: LlJIT.TripleString
-- uid: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString*
-  name: TripleString
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.LlJIT.TripleString
-  nameWithType: LlJIT.TripleString
 - uid: Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager
   name: LocalIndirectStubsManager
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.LocalIndirectStubsManager.html
@@ -20202,18 +20205,6 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.Flags
   fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.Flags
   nameWithType: SymbolAliasMapEntry.Flags
-- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName
-  name: GetName()
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolAliasMapEntry_GetName
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName()
-  nameWithType: SymbolAliasMapEntry.GetName()
-- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName*
-  name: GetName
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolAliasMapEntry.GetName
-  nameWithType: SymbolAliasMapEntry.GetName
 - uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags
   name: SymbolFlags
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolFlags.html
@@ -20325,30 +20316,48 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ClearDeadEntries
   fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ClearDeadEntries
   nameWithType: SymbolStringPool.ClearDeadEntries
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty
+  name: IsEmpty
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPool_IsEmpty
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty
+  nameWithType: SymbolStringPool.IsEmpty
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty*
+  name: IsEmpty
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.IsEmpty
+  nameWithType: SymbolStringPool.IsEmpty
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString
+  name: ToString()
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPool_ToString
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString()
+  nameWithType: SymbolStringPool.ToString()
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString*
+  name: ToString
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPool.ToString
+  nameWithType: SymbolStringPool.ToString
 - uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
   name: SymbolStringPoolEntry
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html
   commentId: T:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
   fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry
   nameWithType: SymbolStringPoolEntry
-- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.#ctor(Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  name: SymbolStringPoolEntry(SymbolStringPoolEntry)
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry__ctor_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_
-  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.#ctor(Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  name.vb: New(SymbolStringPoolEntry)
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.SymbolStringPoolEntry(Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.New(Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry)
-  nameWithType: SymbolStringPoolEntry.SymbolStringPoolEntry(SymbolStringPoolEntry)
-  nameWithType.vb: SymbolStringPoolEntry.New(SymbolStringPoolEntry)
-- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.#ctor*
-  name: SymbolStringPoolEntry
-  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-ctor.html
-  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.#ctor
-  name.vb: New
-  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.SymbolStringPoolEntry
-  fullName.vb: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.New
-  nameWithType: SymbolStringPoolEntry.SymbolStringPoolEntry
-  nameWithType.vb: SymbolStringPoolEntry.New
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef
+  name: AddRef()
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_AddRef
+  commentId: M:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef()
+  nameWithType: SymbolStringPoolEntry.AddRef()
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef*
+  name: AddRef
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef
+  nameWithType: SymbolStringPoolEntry.AddRef
 - uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Dispose
   name: Dispose()
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Dispose
@@ -20412,6 +20421,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.GetHashCode
   fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.GetHashCode
   nameWithType: SymbolStringPoolEntry.GetHashCode
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name
+  name: Name
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Name
+  commentId: P:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name
+  nameWithType: SymbolStringPoolEntry.Name
+- uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name*
+  name: Name
+  href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name.html
+  commentId: Overload:Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name
+  fullName: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name
+  nameWithType: SymbolStringPoolEntry.Name
 - uid: Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.ReadOnlySpan
   name: ReadOnlySpan
   href: llvm/api/Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.ReadOnlySpan.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_ReadOnlySpan
@@ -21714,6 +21735,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.TargetMachineOptions.Cpu
   fullName: Ubiquity.NET.Llvm.TargetMachineOptions.Cpu
   nameWithType: TargetMachineOptions.Cpu
+- uid: Ubiquity.NET.Llvm.TargetMachineOptions.Dispose
+  name: Dispose()
+  href: llvm/api/Ubiquity.NET.Llvm.TargetMachineOptions.Dispose.html#Ubiquity_NET_Llvm_TargetMachineOptions_Dispose
+  commentId: M:Ubiquity.NET.Llvm.TargetMachineOptions.Dispose
+  fullName: Ubiquity.NET.Llvm.TargetMachineOptions.Dispose()
+  nameWithType: TargetMachineOptions.Dispose()
+- uid: Ubiquity.NET.Llvm.TargetMachineOptions.Dispose*
+  name: Dispose
+  href: llvm/api/Ubiquity.NET.Llvm.TargetMachineOptions.Dispose.html
+  commentId: Overload:Ubiquity.NET.Llvm.TargetMachineOptions.Dispose
+  fullName: Ubiquity.NET.Llvm.TargetMachineOptions.Dispose
+  nameWithType: TargetMachineOptions.Dispose
 - uid: Ubiquity.NET.Llvm.TargetMachineOptions.Features
   name: Features
   href: llvm/api/Ubiquity.NET.Llvm.TargetMachineOptions.Features.html#Ubiquity_NET_Llvm_TargetMachineOptions_Features
@@ -25821,21 +25854,18 @@ references:
   commentId: T:Ubiquity.NET.Runtime.Utils.AstNodeExtensions
   fullName: Ubiquity.NET.Runtime.Utils.AstNodeExtensions
   nameWithType: AstNodeExtensions
+- uid: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors(Ubiquity.NET.Runtime.Utils.IAstNode)
+  name: CollectErrors(IAstNode)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors.html#Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors_Ubiquity_NET_Runtime_Utils_IAstNode_
+  commentId: M:Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors(Ubiquity.NET.Runtime.Utils.IAstNode)
+  fullName: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors(Ubiquity.NET.Runtime.Utils.IAstNode)
+  nameWithType: AstNodeExtensions.CollectErrors(IAstNode)
 - uid: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors*
   name: CollectErrors
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors.html
   commentId: Overload:Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors
   fullName: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors
   nameWithType: AstNodeExtensions.CollectErrors
-- uid: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors``1(Ubiquity.NET.Runtime.Utils.IAstNode)
-  name: CollectErrors<T>(IAstNode)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors.html#Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors__1_Ubiquity_NET_Runtime_Utils_IAstNode_
-  commentId: M:Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors``1(Ubiquity.NET.Runtime.Utils.IAstNode)
-  name.vb: CollectErrors(Of T)(IAstNode)
-  fullName: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors<T>(Ubiquity.NET.Runtime.Utils.IAstNode)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors(Of T)(Ubiquity.NET.Runtime.Utils.IAstNode)
-  nameWithType: AstNodeExtensions.CollectErrors<T>(IAstNode)
-  nameWithType.vb: AstNodeExtensions.CollectErrors(Of T)(IAstNode)
 - uid: Ubiquity.NET.Runtime.Utils.AstVisitorBase`1
   name: AstVisitorBase<TResult>
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.AstVisitorBase-1.html
@@ -26064,215 +26094,177 @@ references:
   fullName.vb: Ubiquity.NET.Runtime.Utils.CodeGeneratorException.New
   nameWithType: CodeGeneratorException.CodeGeneratorException
   nameWithType.vb: CodeGeneratorException.New
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1
-  name: ErrorNodeCollector<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1
-  name.vb: ErrorNodeCollector(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T)
-  nameWithType: ErrorNodeCollector<T>
-  nameWithType.vb: ErrorNodeCollector(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.#ctor
-  name: ErrorNodeCollector()
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.-ctor.html#Ubiquity_NET_Runtime_Utils_ErrorNodeCollector_1__ctor
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.#ctor
-  name.vb: New()
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>.ErrorNodeCollector()
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T).New()
-  nameWithType: ErrorNodeCollector<T>.ErrorNodeCollector()
-  nameWithType.vb: ErrorNodeCollector(Of T).New()
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.#ctor*
-  name: ErrorNodeCollector
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.-ctor.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.#ctor
-  name.vb: New
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>.ErrorNodeCollector
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T).New
-  nameWithType: ErrorNodeCollector<T>.ErrorNodeCollector
-  nameWithType.vb: ErrorNodeCollector(Of T).New
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.AggregateResult(System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode{`0}},System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode{`0}})
-  name: AggregateResult(ImmutableArray<ErrorNode<T>>, ImmutableArray<ErrorNode<T>>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.AggregateResult.html#Ubiquity_NET_Runtime_Utils_ErrorNodeCollector_1_AggregateResult_System_Collections_Immutable_ImmutableArray_Ubiquity_NET_Runtime_Utils_ErrorNode__0___System_Collections_Immutable_ImmutableArray_Ubiquity_NET_Runtime_Utils_ErrorNode__0___
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.AggregateResult(System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode{`0}},System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode{`0}})
-  name.vb: AggregateResult(ImmutableArray(Of ErrorNode(Of T)), ImmutableArray(Of ErrorNode(Of T)))
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>.AggregateResult(System.Collections.Immutable.ImmutableArray<Ubiquity.NET.Runtime.Utils.ErrorNode<T>>, System.Collections.Immutable.ImmutableArray<Ubiquity.NET.Runtime.Utils.ErrorNode<T>>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T).AggregateResult(System.Collections.Immutable.ImmutableArray(Of Ubiquity.NET.Runtime.Utils.ErrorNode(Of T)), System.Collections.Immutable.ImmutableArray(Of Ubiquity.NET.Runtime.Utils.ErrorNode(Of T)))
-  nameWithType: ErrorNodeCollector<T>.AggregateResult(ImmutableArray<ErrorNode<T>>, ImmutableArray<ErrorNode<T>>)
-  nameWithType.vb: ErrorNodeCollector(Of T).AggregateResult(ImmutableArray(Of ErrorNode(Of T)), ImmutableArray(Of ErrorNode(Of T)))
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.AggregateResult*
-  name: AggregateResult
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.AggregateResult.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.AggregateResult
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>.AggregateResult
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T).AggregateResult
-  nameWithType: ErrorNodeCollector<T>.AggregateResult
-  nameWithType.vb: ErrorNodeCollector(Of T).AggregateResult
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
-  name: Visit(IAstNode)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.Visit.html#Ubiquity_NET_Runtime_Utils_ErrorNodeCollector_1_Visit_Ubiquity_NET_Runtime_Utils_IAstNode_
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>.Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T).Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
-  nameWithType: ErrorNodeCollector<T>.Visit(IAstNode)
-  nameWithType.vb: ErrorNodeCollector(Of T).Visit(IAstNode)
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.Visit*
-  name: Visit
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector-1.Visit.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector`1.Visit
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector<T>.Visit
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector(Of T).Visit
-  nameWithType: ErrorNodeCollector<T>.Visit
-  nameWithType.vb: ErrorNodeCollector(Of T).Visit
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1
-  name: ErrorNode<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.ErrorNode`1
-  name.vb: ErrorNode(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T)
-  nameWithType: ErrorNode<T>
-  nameWithType.vb: ErrorNode(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.#ctor(Ubiquity.NET.TextUX.SourceRange,`0,System.String,Ubiquity.NET.TextUX.MsgLevel)
-  name: ErrorNode(SourceRange, T, string, MsgLevel)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.-ctor.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1__ctor_Ubiquity_NET_TextUX_SourceRange__0_System_String_Ubiquity_NET_TextUX_MsgLevel_
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode`1.#ctor(Ubiquity.NET.TextUX.SourceRange,`0,System.String,Ubiquity.NET.TextUX.MsgLevel)
-  name.vb: New(SourceRange, T, String, MsgLevel)
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.ErrorNode(Ubiquity.NET.TextUX.SourceRange, T, string, Ubiquity.NET.TextUX.MsgLevel)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).New(Ubiquity.NET.TextUX.SourceRange, T, String, Ubiquity.NET.TextUX.MsgLevel)
-  nameWithType: ErrorNode<T>.ErrorNode(SourceRange, T, string, MsgLevel)
-  nameWithType.vb: ErrorNode(Of T).New(SourceRange, T, String, MsgLevel)
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.#ctor*
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode
   name: ErrorNode
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.-ctor.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.#ctor
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.ErrorNode
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode
+  nameWithType: ErrorNode
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.#ctor(Ubiquity.NET.TextUX.SourceRange,System.Int32,System.String,Ubiquity.NET.TextUX.MsgLevel)
+  name: ErrorNode(SourceRange, int, string, MsgLevel)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.-ctor.html#Ubiquity_NET_Runtime_Utils_ErrorNode__ctor_Ubiquity_NET_TextUX_SourceRange_System_Int32_System_String_Ubiquity_NET_TextUX_MsgLevel_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode.#ctor(Ubiquity.NET.TextUX.SourceRange,System.Int32,System.String,Ubiquity.NET.TextUX.MsgLevel)
+  name.vb: New(SourceRange, Integer, String, MsgLevel)
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.ErrorNode(Ubiquity.NET.TextUX.SourceRange, int, string, Ubiquity.NET.TextUX.MsgLevel)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode.New(Ubiquity.NET.TextUX.SourceRange, Integer, String, Ubiquity.NET.TextUX.MsgLevel)
+  nameWithType: ErrorNode.ErrorNode(SourceRange, int, string, MsgLevel)
+  nameWithType.vb: ErrorNode.New(SourceRange, Integer, String, MsgLevel)
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.#ctor*
+  name: ErrorNode
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.-ctor.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.#ctor
   name.vb: New
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.ErrorNode
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).New
-  nameWithType: ErrorNode<T>.ErrorNode
-  nameWithType.vb: ErrorNode(Of T).New
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Accept*
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.ErrorNode
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode.New
+  nameWithType: ErrorNode.ErrorNode
+  nameWithType.vb: ErrorNode.New
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept*
   name: Accept
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Accept.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Accept
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Accept
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Accept
-  nameWithType: ErrorNode<T>.Accept
-  nameWithType.vb: ErrorNode(Of T).Accept
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Accept``1(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0})
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Accept.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.Accept
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept
+  nameWithType: ErrorNode.Accept
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept``1(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0})
   name: Accept<TResult>(IAstVisitor<TResult>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Accept.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Accept__1_Ubiquity_NET_Runtime_Utils_IAstVisitor___0__
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Accept``1(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0})
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Accept.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Accept__1_Ubiquity_NET_Runtime_Utils_IAstVisitor___0__
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode.Accept``1(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0})
   name.vb: Accept(Of TResult)(IAstVisitor(Of TResult))
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Accept<TResult>(Ubiquity.NET.Runtime.Utils.IAstVisitor<TResult>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Accept(Of TResult)(Ubiquity.NET.Runtime.Utils.IAstVisitor(Of TResult))
-  nameWithType: ErrorNode<T>.Accept<TResult>(IAstVisitor<TResult>)
-  nameWithType.vb: ErrorNode(Of T).Accept(Of TResult)(IAstVisitor(Of TResult))
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Accept``2(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0,``1},``1@)
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept<TResult>(Ubiquity.NET.Runtime.Utils.IAstVisitor<TResult>)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept(Of TResult)(Ubiquity.NET.Runtime.Utils.IAstVisitor(Of TResult))
+  nameWithType: ErrorNode.Accept<TResult>(IAstVisitor<TResult>)
+  nameWithType.vb: ErrorNode.Accept(Of TResult)(IAstVisitor(Of TResult))
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept``2(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0,``1},``1@)
   name: Accept<TResult, TArg>(IAstVisitor<TResult, TArg>, ref readonly TArg)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Accept.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Accept__2_Ubiquity_NET_Runtime_Utils_IAstVisitor___0___1____1__
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Accept``2(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0,``1},``1@)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Accept.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Accept__2_Ubiquity_NET_Runtime_Utils_IAstVisitor___0___1____1__
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode.Accept``2(Ubiquity.NET.Runtime.Utils.IAstVisitor{``0,``1},``1@)
   name.vb: Accept(Of TResult, TArg)(IAstVisitor(Of TResult, TArg), TArg)
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Accept<TResult, TArg>(Ubiquity.NET.Runtime.Utils.IAstVisitor<TResult, TArg>, ref readonly TArg)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Accept(Of TResult, TArg)(Ubiquity.NET.Runtime.Utils.IAstVisitor(Of TResult, TArg), TArg)
-  nameWithType: ErrorNode<T>.Accept<TResult, TArg>(IAstVisitor<TResult, TArg>, ref readonly TArg)
-  nameWithType.vb: ErrorNode(Of T).Accept(Of TResult, TArg)(IAstVisitor(Of TResult, TArg), TArg)
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Children
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept<TResult, TArg>(Ubiquity.NET.Runtime.Utils.IAstVisitor<TResult, TArg>, ref readonly TArg)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode.Accept(Of TResult, TArg)(Ubiquity.NET.Runtime.Utils.IAstVisitor(Of TResult, TArg), TArg)
+  nameWithType: ErrorNode.Accept<TResult, TArg>(IAstVisitor<TResult, TArg>, ref readonly TArg)
+  nameWithType.vb: ErrorNode.Accept(Of TResult, TArg)(IAstVisitor(Of TResult, TArg), TArg)
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Children
   name: Children
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Children.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Children
-  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Children
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Children
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Children
-  nameWithType: ErrorNode<T>.Children
-  nameWithType.vb: ErrorNode(Of T).Children
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Children*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Children.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Children
+  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode.Children
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Children
+  nameWithType: ErrorNode.Children
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Children*
   name: Children
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Children.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Children
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Children
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Children
-  nameWithType: ErrorNode<T>.Children
-  nameWithType.vb: ErrorNode(Of T).Children
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Code
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Children.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.Children
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Children
+  nameWithType: ErrorNode.Children
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Code
   name: Code
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Code.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Code
-  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Code
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Code
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Code
-  nameWithType: ErrorNode<T>.Code
-  nameWithType.vb: ErrorNode(Of T).Code
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Code*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Code.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Code
+  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode.Code
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Code
+  nameWithType: ErrorNode.Code
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Code*
   name: Code
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Code.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Code
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Code
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Code
-  nameWithType: ErrorNode<T>.Code
-  nameWithType.vb: ErrorNode(Of T).Code
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Level
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Code.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.Code
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Code
+  nameWithType: ErrorNode.Code
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Level
   name: Level
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Level.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Level
-  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Level
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Level
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Level
-  nameWithType: ErrorNode<T>.Level
-  nameWithType.vb: ErrorNode(Of T).Level
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Level*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Level.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Level
+  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode.Level
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Level
+  nameWithType: ErrorNode.Level
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Level*
   name: Level
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Level.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Level
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Level
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Level
-  nameWithType: ErrorNode<T>.Level
-  nameWithType.vb: ErrorNode(Of T).Level
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Location
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Level.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.Level
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Level
+  nameWithType: ErrorNode.Level
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Location
   name: Location
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Location.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Location
-  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Location
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Location
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Location
-  nameWithType: ErrorNode<T>.Location
-  nameWithType.vb: ErrorNode(Of T).Location
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Location*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Location.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Location
+  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode.Location
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Location
+  nameWithType: ErrorNode.Location
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Location*
   name: Location
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Location.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Location
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Location
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Location
-  nameWithType: ErrorNode<T>.Location
-  nameWithType.vb: ErrorNode(Of T).Location
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Message
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Location.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.Location
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Location
+  nameWithType: ErrorNode.Location
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Message
   name: Message
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Message.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_Message
-  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Message
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Message
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Message
-  nameWithType: ErrorNode<T>.Message
-  nameWithType.vb: ErrorNode(Of T).Message
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.Message*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Message.html#Ubiquity_NET_Runtime_Utils_ErrorNode_Message
+  commentId: P:Ubiquity.NET.Runtime.Utils.ErrorNode.Message
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Message
+  nameWithType: ErrorNode.Message
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.Message*
   name: Message
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.Message.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.Message
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.Message
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).Message
-  nameWithType: ErrorNode<T>.Message
-  nameWithType.vb: ErrorNode(Of T).Message
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.ToString
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.Message.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.Message
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.Message
+  nameWithType: ErrorNode.Message
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.ToString
   name: ToString()
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.ToString.html#Ubiquity_NET_Runtime_Utils_ErrorNode_1_ToString
-  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode`1.ToString
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.ToString()
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).ToString()
-  nameWithType: ErrorNode<T>.ToString()
-  nameWithType.vb: ErrorNode(Of T).ToString()
-- uid: Ubiquity.NET.Runtime.Utils.ErrorNode`1.ToString*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.ToString.html#Ubiquity_NET_Runtime_Utils_ErrorNode_ToString
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNode.ToString
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.ToString()
+  nameWithType: ErrorNode.ToString()
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNode.ToString*
   name: ToString
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode-1.ToString.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode`1.ToString
-  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode<T>.ToString
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNode(Of T).ToString
-  nameWithType: ErrorNode<T>.ToString
-  nameWithType.vb: ErrorNode(Of T).ToString
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNode.ToString.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNode.ToString
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNode.ToString
+  nameWithType: ErrorNode.ToString
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector
+  name: ErrorNodeCollector
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector
+  nameWithType: ErrorNodeCollector
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.#ctor
+  name: ErrorNodeCollector()
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.-ctor.html#Ubiquity_NET_Runtime_Utils_ErrorNodeCollector__ctor
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.#ctor
+  name.vb: New()
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.ErrorNodeCollector()
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.New()
+  nameWithType: ErrorNodeCollector.ErrorNodeCollector()
+  nameWithType.vb: ErrorNodeCollector.New()
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.#ctor*
+  name: ErrorNodeCollector
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.-ctor.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.#ctor
+  name.vb: New
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.ErrorNodeCollector
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.New
+  nameWithType: ErrorNodeCollector.ErrorNodeCollector
+  nameWithType.vb: ErrorNodeCollector.New
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult(System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode},System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode})
+  name: AggregateResult(ImmutableArray<ErrorNode>, ImmutableArray<ErrorNode>)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult.html#Ubiquity_NET_Runtime_Utils_ErrorNodeCollector_AggregateResult_System_Collections_Immutable_ImmutableArray_Ubiquity_NET_Runtime_Utils_ErrorNode__System_Collections_Immutable_ImmutableArray_Ubiquity_NET_Runtime_Utils_ErrorNode__
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult(System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode},System.Collections.Immutable.ImmutableArray{Ubiquity.NET.Runtime.Utils.ErrorNode})
+  name.vb: AggregateResult(ImmutableArray(Of ErrorNode), ImmutableArray(Of ErrorNode))
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult(System.Collections.Immutable.ImmutableArray<Ubiquity.NET.Runtime.Utils.ErrorNode>, System.Collections.Immutable.ImmutableArray<Ubiquity.NET.Runtime.Utils.ErrorNode>)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult(System.Collections.Immutable.ImmutableArray(Of Ubiquity.NET.Runtime.Utils.ErrorNode), System.Collections.Immutable.ImmutableArray(Of Ubiquity.NET.Runtime.Utils.ErrorNode))
+  nameWithType: ErrorNodeCollector.AggregateResult(ImmutableArray<ErrorNode>, ImmutableArray<ErrorNode>)
+  nameWithType.vb: ErrorNodeCollector.AggregateResult(ImmutableArray(Of ErrorNode), ImmutableArray(Of ErrorNode))
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult*
+  name: AggregateResult
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.AggregateResult
+  nameWithType: ErrorNodeCollector.AggregateResult
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
+  name: Visit(IAstNode)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit.html#Ubiquity_NET_Runtime_Utils_ErrorNodeCollector_Visit_Ubiquity_NET_Runtime_Utils_IAstNode_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit(Ubiquity.NET.Runtime.Utils.IAstNode)
+  nameWithType: ErrorNodeCollector.Visit(IAstNode)
+- uid: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit*
+  name: Visit
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit
+  fullName: Ubiquity.NET.Runtime.Utils.ErrorNodeCollector.Visit
+  nameWithType: ErrorNodeCollector.Visit
 - uid: Ubiquity.NET.Runtime.Utils.IAstNode
   name: IAstNode
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IAstNode.html
@@ -26403,67 +26395,51 @@ references:
   fullName.vb: Ubiquity.NET.Runtime.Utils.ICodeGenerator(Of TResult).Generate
   nameWithType: ICodeGenerator<TResult>.Generate
   nameWithType.vb: ICodeGenerator(Of TResult).Generate
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorListener`1
-  name: IParseErrorListener<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorListener-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.IParseErrorListener`1
-  name.vb: IParseErrorListener(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorListener<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorListener(Of T)
-  nameWithType: IParseErrorListener<T>
-  nameWithType.vb: IParseErrorListener(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorListener`1.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError{`0})
-  name: SyntaxError(SyntaxError<T>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorListener-1.SyntaxError.html#Ubiquity_NET_Runtime_Utils_IParseErrorListener_1_SyntaxError_Ubiquity_NET_Runtime_Utils_SyntaxError__0__
-  commentId: M:Ubiquity.NET.Runtime.Utils.IParseErrorListener`1.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError{`0})
-  name.vb: SyntaxError(SyntaxError(Of T))
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorListener<T>.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError<T>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorListener(Of T).SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError(Of T))
-  nameWithType: IParseErrorListener<T>.SyntaxError(SyntaxError<T>)
-  nameWithType.vb: IParseErrorListener(Of T).SyntaxError(SyntaxError(Of T))
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorListener`1.SyntaxError*
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorListener
+  name: IParseErrorListener
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorListener.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.IParseErrorListener
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorListener
+  nameWithType: IParseErrorListener
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError)
+  name: SyntaxError(SyntaxError)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError.html#Ubiquity_NET_Runtime_Utils_IParseErrorListener_SyntaxError_Ubiquity_NET_Runtime_Utils_SyntaxError_
+  commentId: M:Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError)
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError)
+  nameWithType: IParseErrorListener.SyntaxError(SyntaxError)
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError*
   name: SyntaxError
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorListener-1.SyntaxError.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.IParseErrorListener`1.SyntaxError
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorListener<T>.SyntaxError
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorListener(Of T).SyntaxError
-  nameWithType: IParseErrorListener<T>.SyntaxError
-  nameWithType.vb: IParseErrorListener(Of T).SyntaxError
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1
-  name: IParseErrorReporter<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1
-  name.vb: IParseErrorReporter(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorReporter(Of T)
-  nameWithType: IParseErrorReporter<T>
-  nameWithType.vb: IParseErrorReporter(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1.ReportError(System.String)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorListener.SyntaxError
+  nameWithType: IParseErrorListener.SyntaxError
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter
+  name: IParseErrorReporter
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.IParseErrorReporter
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter
+  nameWithType: IParseErrorReporter
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(System.String)
   name: ReportError(string)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter-1.ReportError.html#Ubiquity_NET_Runtime_Utils_IParseErrorReporter_1_ReportError_System_String_
-  commentId: M:Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1.ReportError(System.String)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError.html#Ubiquity_NET_Runtime_Utils_IParseErrorReporter_ReportError_System_String_
+  commentId: M:Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(System.String)
   name.vb: ReportError(String)
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter<T>.ReportError(string)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorReporter(Of T).ReportError(String)
-  nameWithType: IParseErrorReporter<T>.ReportError(string)
-  nameWithType.vb: IParseErrorReporter(Of T).ReportError(String)
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode{`0})
-  name: ReportError(ErrorNode<T>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter-1.ReportError.html#Ubiquity_NET_Runtime_Utils_IParseErrorReporter_1_ReportError_Ubiquity_NET_Runtime_Utils_ErrorNode__0__
-  commentId: M:Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode{`0})
-  name.vb: ReportError(ErrorNode(Of T))
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter<T>.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode<T>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorReporter(Of T).ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode(Of T))
-  nameWithType: IParseErrorReporter<T>.ReportError(ErrorNode<T>)
-  nameWithType.vb: IParseErrorReporter(Of T).ReportError(ErrorNode(Of T))
-- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1.ReportError*
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(string)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(String)
+  nameWithType: IParseErrorReporter.ReportError(string)
+  nameWithType.vb: IParseErrorReporter.ReportError(String)
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode)
+  name: ReportError(ErrorNode)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError.html#Ubiquity_NET_Runtime_Utils_IParseErrorReporter_ReportError_Ubiquity_NET_Runtime_Utils_ErrorNode_
+  commentId: M:Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode)
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode)
+  nameWithType: IParseErrorReporter.ReportError(ErrorNode)
+- uid: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError*
   name: ReportError
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter-1.ReportError.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.IParseErrorReporter`1.ReportError
-  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter<T>.ReportError
-  fullName.vb: Ubiquity.NET.Runtime.Utils.IParseErrorReporter(Of T).ReportError
-  nameWithType: IParseErrorReporter<T>.ReportError
-  nameWithType.vb: IParseErrorReporter(Of T).ReportError
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError
+  fullName: Ubiquity.NET.Runtime.Utils.IParseErrorReporter.ReportError
+  nameWithType: IParseErrorReporter.ReportError
 - uid: Ubiquity.NET.Runtime.Utils.IParser
   name: IParser
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.IParser.html
@@ -26614,170 +26590,138 @@ references:
   commentId: Overload:Ubiquity.NET.Runtime.Utils.NullNode.Location
   fullName: Ubiquity.NET.Runtime.Utils.NullNode.Location
   nameWithType: NullNode.Location
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1
-  name: ParseErrorCollector<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1
-  name.vb: ParseErrorCollector(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorCollector(Of T)
-  nameWithType: ParseErrorCollector<T>
-  nameWithType.vb: ParseErrorCollector(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.ErrorNodes
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector
+  name: ParseErrorCollector
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.ParseErrorCollector
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector
+  nameWithType: ParseErrorCollector
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes
   name: ErrorNodes
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector-1.ErrorNodes.html#Ubiquity_NET_Runtime_Utils_ParseErrorCollector_1_ErrorNodes
-  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.ErrorNodes
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector<T>.ErrorNodes
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorCollector(Of T).ErrorNodes
-  nameWithType: ParseErrorCollector<T>.ErrorNodes
-  nameWithType.vb: ParseErrorCollector(Of T).ErrorNodes
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.ErrorNodes*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes.html#Ubiquity_NET_Runtime_Utils_ParseErrorCollector_ErrorNodes
+  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes
+  nameWithType: ParseErrorCollector.ErrorNodes
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes*
   name: ErrorNodes
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector-1.ErrorNodes.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.ErrorNodes
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector<T>.ErrorNodes
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorCollector(Of T).ErrorNodes
-  nameWithType: ParseErrorCollector<T>.ErrorNodes
-  nameWithType.vb: ParseErrorCollector(Of T).ErrorNodes
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError{`0})
-  name: SyntaxError(SyntaxError<T>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector-1.SyntaxError.html#Ubiquity_NET_Runtime_Utils_ParseErrorCollector_1_SyntaxError_Ubiquity_NET_Runtime_Utils_SyntaxError__0__
-  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError{`0})
-  name.vb: SyntaxError(SyntaxError(Of T))
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector<T>.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError<T>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorCollector(Of T).SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError(Of T))
-  nameWithType: ParseErrorCollector<T>.SyntaxError(SyntaxError<T>)
-  nameWithType.vb: ParseErrorCollector(Of T).SyntaxError(SyntaxError(Of T))
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.SyntaxError*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.ErrorNodes
+  nameWithType: ParseErrorCollector.ErrorNodes
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError)
+  name: SyntaxError(SyntaxError)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError.html#Ubiquity_NET_Runtime_Utils_ParseErrorCollector_SyntaxError_Ubiquity_NET_Runtime_Utils_SyntaxError_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError)
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError(Ubiquity.NET.Runtime.Utils.SyntaxError)
+  nameWithType: ParseErrorCollector.SyntaxError(SyntaxError)
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError*
   name: SyntaxError
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector-1.SyntaxError.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorCollector`1.SyntaxError
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector<T>.SyntaxError
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorCollector(Of T).SyntaxError
-  nameWithType: ParseErrorCollector<T>.SyntaxError
-  nameWithType.vb: ParseErrorCollector(Of T).SyntaxError
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1
-  name: ParseErrorDiagnosticAdapter<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1
-  name.vb: ParseErrorDiagnosticAdapter(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T)
-  nameWithType: ParseErrorDiagnosticAdapter<T>
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.#ctor(Ubiquity.NET.TextUX.IDiagnosticReporter,System.String,System.Uri)
-  name: ParseErrorDiagnosticAdapter(IDiagnosticReporter, string, Uri?)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.-ctor.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_1__ctor_Ubiquity_NET_TextUX_IDiagnosticReporter_System_String_System_Uri_
-  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.#ctor(Ubiquity.NET.TextUX.IDiagnosticReporter,System.String,System.Uri)
-  name.vb: New(IDiagnosticReporter, String, Uri)
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.ParseErrorDiagnosticAdapter(Ubiquity.NET.TextUX.IDiagnosticReporter, string, System.Uri?)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).New(Ubiquity.NET.TextUX.IDiagnosticReporter, String, System.Uri)
-  nameWithType: ParseErrorDiagnosticAdapter<T>.ParseErrorDiagnosticAdapter(IDiagnosticReporter, string, Uri?)
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).New(IDiagnosticReporter, String, Uri)
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.#ctor*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorCollector.SyntaxError
+  nameWithType: ParseErrorCollector.SyntaxError
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter
   name: ParseErrorDiagnosticAdapter
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.-ctor.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.#ctor
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter
+  nameWithType: ParseErrorDiagnosticAdapter
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.#ctor(Ubiquity.NET.TextUX.IDiagnosticReporter,System.String,System.Uri)
+  name: ParseErrorDiagnosticAdapter(IDiagnosticReporter, string, Uri?)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.-ctor.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter__ctor_Ubiquity_NET_TextUX_IDiagnosticReporter_System_String_System_Uri_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.#ctor(Ubiquity.NET.TextUX.IDiagnosticReporter,System.String,System.Uri)
+  name.vb: New(IDiagnosticReporter, String, Uri)
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ParseErrorDiagnosticAdapter(Ubiquity.NET.TextUX.IDiagnosticReporter, string, System.Uri?)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.New(Ubiquity.NET.TextUX.IDiagnosticReporter, String, System.Uri)
+  nameWithType: ParseErrorDiagnosticAdapter.ParseErrorDiagnosticAdapter(IDiagnosticReporter, string, Uri?)
+  nameWithType.vb: ParseErrorDiagnosticAdapter.New(IDiagnosticReporter, String, Uri)
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.#ctor*
+  name: ParseErrorDiagnosticAdapter
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.-ctor.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.#ctor
   name.vb: New
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.ParseErrorDiagnosticAdapter
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).New
-  nameWithType: ParseErrorDiagnosticAdapter<T>.ParseErrorDiagnosticAdapter
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).New
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Origin
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ParseErrorDiagnosticAdapter
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.New
+  nameWithType: ParseErrorDiagnosticAdapter.ParseErrorDiagnosticAdapter
+  nameWithType.vb: ParseErrorDiagnosticAdapter.New
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin
   name: Origin
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.Origin.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_1_Origin
-  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Origin
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.Origin
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).Origin
-  nameWithType: ParseErrorDiagnosticAdapter<T>.Origin
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).Origin
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Origin*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_Origin
+  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin
+  nameWithType: ParseErrorDiagnosticAdapter.Origin
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin*
   name: Origin
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.Origin.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Origin
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.Origin
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).Origin
-  nameWithType: ParseErrorDiagnosticAdapter<T>.Origin
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).Origin
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Prefix
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Origin
+  nameWithType: ParseErrorDiagnosticAdapter.Origin
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix
   name: Prefix
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.Prefix.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_1_Prefix
-  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Prefix
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.Prefix
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).Prefix
-  nameWithType: ParseErrorDiagnosticAdapter<T>.Prefix
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).Prefix
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Prefix*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_Prefix
+  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix
+  nameWithType: ParseErrorDiagnosticAdapter.Prefix
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix*
   name: Prefix
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.Prefix.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.Prefix
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.Prefix
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).Prefix
-  nameWithType: ParseErrorDiagnosticAdapter<T>.Prefix
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).Prefix
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.ReportError(System.String)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.Prefix
+  nameWithType: ParseErrorDiagnosticAdapter.Prefix
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(System.String)
   name: ReportError(string)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.ReportError.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_1_ReportError_System_String_
-  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.ReportError(System.String)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_ReportError_System_String_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(System.String)
   name.vb: ReportError(String)
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.ReportError(string)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).ReportError(String)
-  nameWithType: ParseErrorDiagnosticAdapter<T>.ReportError(string)
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).ReportError(String)
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode{`0})
-  name: ReportError(ErrorNode<T>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.ReportError.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_1_ReportError_Ubiquity_NET_Runtime_Utils_ErrorNode__0__
-  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode{`0})
-  name.vb: ReportError(ErrorNode(Of T))
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode<T>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode(Of T))
-  nameWithType: ParseErrorDiagnosticAdapter<T>.ReportError(ErrorNode<T>)
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).ReportError(ErrorNode(Of T))
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.ReportError*
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(string)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(String)
+  nameWithType: ParseErrorDiagnosticAdapter.ReportError(string)
+  nameWithType.vb: ParseErrorDiagnosticAdapter.ReportError(String)
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode)
+  name: ReportError(ErrorNode)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_ReportError_Ubiquity_NET_Runtime_Utils_ErrorNode_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode)
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError(Ubiquity.NET.Runtime.Utils.ErrorNode)
+  nameWithType: ParseErrorDiagnosticAdapter.ReportError(ErrorNode)
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError*
   name: ReportError
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.ReportError.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.ReportError
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.ReportError
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).ReportError
-  nameWithType: ParseErrorDiagnosticAdapter<T>.ReportError
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).ReportError
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.TargetReporter
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.ReportError
+  nameWithType: ParseErrorDiagnosticAdapter.ReportError
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter
   name: TargetReporter
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.TargetReporter.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_1_TargetReporter
-  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.TargetReporter
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.TargetReporter
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).TargetReporter
-  nameWithType: ParseErrorDiagnosticAdapter<T>.TargetReporter
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).TargetReporter
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.TargetReporter*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter.html#Ubiquity_NET_Runtime_Utils_ParseErrorDiagnosticAdapter_TargetReporter
+  commentId: P:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter
+  nameWithType: ParseErrorDiagnosticAdapter.TargetReporter
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter*
   name: TargetReporter
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter-1.TargetReporter.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter`1.TargetReporter
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter<T>.TargetReporter
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter(Of T).TargetReporter
-  nameWithType: ParseErrorDiagnosticAdapter<T>.TargetReporter
-  nameWithType.vb: ParseErrorDiagnosticAdapter(Of T).TargetReporter
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorDiagnosticAdapter.TargetReporter
+  nameWithType: ParseErrorDiagnosticAdapter.TargetReporter
 - uid: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions
   name: ParseErrorReporterExtensions
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.html
   commentId: T:Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions
   fullName: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions
   nameWithType: ParseErrorReporterExtensions
+- uid: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors(Ubiquity.NET.Runtime.Utils.IParseErrorReporter,Ubiquity.NET.Runtime.Utils.IAstNode)
+  name: CheckAndReportParseErrors(IParseErrorReporter, IAstNode?)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors.html#Ubiquity_NET_Runtime_Utils_ParseErrorReporterExtensions_CheckAndReportParseErrors_Ubiquity_NET_Runtime_Utils_IParseErrorReporter_Ubiquity_NET_Runtime_Utils_IAstNode_
+  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors(Ubiquity.NET.Runtime.Utils.IParseErrorReporter,Ubiquity.NET.Runtime.Utils.IAstNode)
+  name.vb: CheckAndReportParseErrors(IParseErrorReporter, IAstNode)
+  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors(Ubiquity.NET.Runtime.Utils.IParseErrorReporter, Ubiquity.NET.Runtime.Utils.IAstNode?)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors(Ubiquity.NET.Runtime.Utils.IParseErrorReporter, Ubiquity.NET.Runtime.Utils.IAstNode)
+  nameWithType: ParseErrorReporterExtensions.CheckAndReportParseErrors(IParseErrorReporter, IAstNode?)
+  nameWithType.vb: ParseErrorReporterExtensions.CheckAndReportParseErrors(IParseErrorReporter, IAstNode)
 - uid: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors*
   name: CheckAndReportParseErrors
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors.html
   commentId: Overload:Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors
   fullName: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors
   nameWithType: ParseErrorReporterExtensions.CheckAndReportParseErrors
-- uid: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors``1(Ubiquity.NET.Runtime.Utils.IParseErrorReporter{``0},Ubiquity.NET.Runtime.Utils.IAstNode)
-  name: CheckAndReportParseErrors<T>(IParseErrorReporter<T>, IAstNode?)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors.html#Ubiquity_NET_Runtime_Utils_ParseErrorReporterExtensions_CheckAndReportParseErrors__1_Ubiquity_NET_Runtime_Utils_IParseErrorReporter___0__Ubiquity_NET_Runtime_Utils_IAstNode_
-  commentId: M:Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors``1(Ubiquity.NET.Runtime.Utils.IParseErrorReporter{``0},Ubiquity.NET.Runtime.Utils.IAstNode)
-  name.vb: CheckAndReportParseErrors(Of T)(IParseErrorReporter(Of T), IAstNode)
-  fullName: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors<T>(Ubiquity.NET.Runtime.Utils.IParseErrorReporter<T>, Ubiquity.NET.Runtime.Utils.IAstNode?)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.ParseErrorReporterExtensions.CheckAndReportParseErrors(Of T)(Ubiquity.NET.Runtime.Utils.IParseErrorReporter(Of T), Ubiquity.NET.Runtime.Utils.IAstNode)
-  nameWithType: ParseErrorReporterExtensions.CheckAndReportParseErrors<T>(IParseErrorReporter<T>, IAstNode?)
-  nameWithType.vb: ParseErrorReporterExtensions.CheckAndReportParseErrors(Of T)(IParseErrorReporter(Of T), IAstNode)
 - uid: Ubiquity.NET.Runtime.Utils.ParseErrorSource
   name: ParseErrorSource
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ParseErrorSource.html
@@ -26817,98 +26761,98 @@ references:
   fullName.vb: Ubiquity.NET.Runtime.Utils.ParserExtensions.ParseFrom(Of T)(T, String)
   nameWithType: ParserExtensions.ParseFrom<T>(T, string)
   nameWithType.vb: ParserExtensions.ParseFrom(Of T)(T, String)
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2
-  name: REPLBase<T, TDiagnosticEnum>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.REPLBase`2
-  name.vb: REPLBase(Of T, TDiagnosticEnum)
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum)
-  nameWithType: REPLBase<T, TDiagnosticEnum>
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum)
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorReporter{`1})
-  name: REPLBase(IParseErrorReporter<TDiagnosticEnum>)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.-ctor.html#Ubiquity_NET_Runtime_Utils_REPLBase_2__ctor_Ubiquity_NET_Runtime_Utils_IParseErrorReporter__1__
-  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`2.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorReporter{`1})
-  name.vb: New(IParseErrorReporter(Of TDiagnosticEnum))
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.REPLBase(Ubiquity.NET.Runtime.Utils.IParseErrorReporter<TDiagnosticEnum>)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).New(Ubiquity.NET.Runtime.Utils.IParseErrorReporter(Of TDiagnosticEnum))
-  nameWithType: REPLBase<T, TDiagnosticEnum>.REPLBase(IParseErrorReporter<TDiagnosticEnum>)
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).New(IParseErrorReporter(Of TDiagnosticEnum))
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.#ctor*
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1
+  name: REPLBase<T>
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.REPLBase`1
+  name.vb: REPLBase(Of T)
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T)
+  nameWithType: REPLBase<T>
+  nameWithType.vb: REPLBase(Of T)
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorReporter)
+  name: REPLBase(IParseErrorReporter)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.-ctor.html#Ubiquity_NET_Runtime_Utils_REPLBase_1__ctor_Ubiquity_NET_Runtime_Utils_IParseErrorReporter_
+  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`1.#ctor(Ubiquity.NET.Runtime.Utils.IParseErrorReporter)
+  name.vb: New(IParseErrorReporter)
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.REPLBase(Ubiquity.NET.Runtime.Utils.IParseErrorReporter)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).New(Ubiquity.NET.Runtime.Utils.IParseErrorReporter)
+  nameWithType: REPLBase<T>.REPLBase(IParseErrorReporter)
+  nameWithType.vb: REPLBase(Of T).New(IParseErrorReporter)
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.#ctor*
   name: REPLBase
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.-ctor.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`2.#ctor
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.-ctor.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`1.#ctor
   name.vb: New
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.REPLBase
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).New
-  nameWithType: REPLBase<T, TDiagnosticEnum>.REPLBase
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).New
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.ErrorLogger
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.REPLBase
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).New
+  nameWithType: REPLBase<T>.REPLBase
+  nameWithType.vb: REPLBase(Of T).New
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.ErrorLogger
   name: ErrorLogger
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.ErrorLogger.html#Ubiquity_NET_Runtime_Utils_REPLBase_2_ErrorLogger
-  commentId: P:Ubiquity.NET.Runtime.Utils.REPLBase`2.ErrorLogger
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.ErrorLogger
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).ErrorLogger
-  nameWithType: REPLBase<T, TDiagnosticEnum>.ErrorLogger
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).ErrorLogger
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.ErrorLogger*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.ErrorLogger.html#Ubiquity_NET_Runtime_Utils_REPLBase_1_ErrorLogger
+  commentId: P:Ubiquity.NET.Runtime.Utils.REPLBase`1.ErrorLogger
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.ErrorLogger
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).ErrorLogger
+  nameWithType: REPLBase<T>.ErrorLogger
+  nameWithType.vb: REPLBase(Of T).ErrorLogger
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.ErrorLogger*
   name: ErrorLogger
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.ErrorLogger.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`2.ErrorLogger
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.ErrorLogger
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).ErrorLogger
-  nameWithType: REPLBase<T, TDiagnosticEnum>.ErrorLogger
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).ErrorLogger
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.ProcessResults(`0)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.ErrorLogger.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`1.ErrorLogger
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.ErrorLogger
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).ErrorLogger
+  nameWithType: REPLBase<T>.ErrorLogger
+  nameWithType.vb: REPLBase(Of T).ErrorLogger
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.ProcessResults(`0)
   name: ProcessResults(T)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.ProcessResults.html#Ubiquity_NET_Runtime_Utils_REPLBase_2_ProcessResults__0_
-  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`2.ProcessResults(`0)
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.ProcessResults(T)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).ProcessResults(T)
-  nameWithType: REPLBase<T, TDiagnosticEnum>.ProcessResults(T)
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).ProcessResults(T)
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.ProcessResults*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.ProcessResults.html#Ubiquity_NET_Runtime_Utils_REPLBase_1_ProcessResults__0_
+  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`1.ProcessResults(`0)
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.ProcessResults(T)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).ProcessResults(T)
+  nameWithType: REPLBase<T>.ProcessResults(T)
+  nameWithType.vb: REPLBase(Of T).ProcessResults(T)
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.ProcessResults*
   name: ProcessResults
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.ProcessResults.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`2.ProcessResults
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.ProcessResults
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).ProcessResults
-  nameWithType: REPLBase<T, TDiagnosticEnum>.ProcessResults
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).ProcessResults
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.Run(System.IO.TextReader,Ubiquity.NET.Runtime.Utils.IParser,Ubiquity.NET.Runtime.Utils.ICodeGenerator{`0},System.Threading.CancellationToken)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.ProcessResults.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`1.ProcessResults
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.ProcessResults
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).ProcessResults
+  nameWithType: REPLBase<T>.ProcessResults
+  nameWithType.vb: REPLBase(Of T).ProcessResults
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.Run(System.IO.TextReader,Ubiquity.NET.Runtime.Utils.IParser,Ubiquity.NET.Runtime.Utils.ICodeGenerator{`0},System.Threading.CancellationToken)
   name: Run(TextReader, IParser, ICodeGenerator<T>, CancellationToken)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.Run.html#Ubiquity_NET_Runtime_Utils_REPLBase_2_Run_System_IO_TextReader_Ubiquity_NET_Runtime_Utils_IParser_Ubiquity_NET_Runtime_Utils_ICodeGenerator__0__System_Threading_CancellationToken_
-  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`2.Run(System.IO.TextReader,Ubiquity.NET.Runtime.Utils.IParser,Ubiquity.NET.Runtime.Utils.ICodeGenerator{`0},System.Threading.CancellationToken)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.Run.html#Ubiquity_NET_Runtime_Utils_REPLBase_1_Run_System_IO_TextReader_Ubiquity_NET_Runtime_Utils_IParser_Ubiquity_NET_Runtime_Utils_ICodeGenerator__0__System_Threading_CancellationToken_
+  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`1.Run(System.IO.TextReader,Ubiquity.NET.Runtime.Utils.IParser,Ubiquity.NET.Runtime.Utils.ICodeGenerator{`0},System.Threading.CancellationToken)
   name.vb: Run(TextReader, IParser, ICodeGenerator(Of T), CancellationToken)
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.Run(System.IO.TextReader, Ubiquity.NET.Runtime.Utils.IParser, Ubiquity.NET.Runtime.Utils.ICodeGenerator<T>, System.Threading.CancellationToken)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).Run(System.IO.TextReader, Ubiquity.NET.Runtime.Utils.IParser, Ubiquity.NET.Runtime.Utils.ICodeGenerator(Of T), System.Threading.CancellationToken)
-  nameWithType: REPLBase<T, TDiagnosticEnum>.Run(TextReader, IParser, ICodeGenerator<T>, CancellationToken)
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).Run(TextReader, IParser, ICodeGenerator(Of T), CancellationToken)
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.Run*
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.Run(System.IO.TextReader, Ubiquity.NET.Runtime.Utils.IParser, Ubiquity.NET.Runtime.Utils.ICodeGenerator<T>, System.Threading.CancellationToken)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).Run(System.IO.TextReader, Ubiquity.NET.Runtime.Utils.IParser, Ubiquity.NET.Runtime.Utils.ICodeGenerator(Of T), System.Threading.CancellationToken)
+  nameWithType: REPLBase<T>.Run(TextReader, IParser, ICodeGenerator<T>, CancellationToken)
+  nameWithType.vb: REPLBase(Of T).Run(TextReader, IParser, ICodeGenerator(Of T), CancellationToken)
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.Run*
   name: Run
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.Run.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`2.Run
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.Run
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).Run
-  nameWithType: REPLBase<T, TDiagnosticEnum>.Run
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).Run
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.Run.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`1.Run
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.Run
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).Run
+  nameWithType: REPLBase<T>.Run
+  nameWithType.vb: REPLBase(Of T).Run
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
   name: ShowPrompt(ReadyState)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.ShowPrompt.html#Ubiquity_NET_Runtime_Utils_REPLBase_2_ShowPrompt_Ubiquity_NET_Runtime_Utils_ReadyState_
-  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`2.ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
-  nameWithType: REPLBase<T, TDiagnosticEnum>.ShowPrompt(ReadyState)
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).ShowPrompt(ReadyState)
-- uid: Ubiquity.NET.Runtime.Utils.REPLBase`2.ShowPrompt*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.ShowPrompt.html#Ubiquity_NET_Runtime_Utils_REPLBase_1_ShowPrompt_Ubiquity_NET_Runtime_Utils_ReadyState_
+  commentId: M:Ubiquity.NET.Runtime.Utils.REPLBase`1.ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).ShowPrompt(Ubiquity.NET.Runtime.Utils.ReadyState)
+  nameWithType: REPLBase<T>.ShowPrompt(ReadyState)
+  nameWithType.vb: REPLBase(Of T).ShowPrompt(ReadyState)
+- uid: Ubiquity.NET.Runtime.Utils.REPLBase`1.ShowPrompt*
   name: ShowPrompt
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-2.ShowPrompt.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`2.ShowPrompt
-  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T, TDiagnosticEnum>.ShowPrompt
-  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T, TDiagnosticEnum).ShowPrompt
-  nameWithType: REPLBase<T, TDiagnosticEnum>.ShowPrompt
-  nameWithType.vb: REPLBase(Of T, TDiagnosticEnum).ShowPrompt
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.REPLBase-1.ShowPrompt.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.REPLBase`1.ShowPrompt
+  fullName: Ubiquity.NET.Runtime.Utils.REPLBase<T>.ShowPrompt
+  fullName.vb: Ubiquity.NET.Runtime.Utils.REPLBase(Of T).ShowPrompt
+  nameWithType: REPLBase<T>.ShowPrompt
+  nameWithType.vb: REPLBase(Of T).ShowPrompt
 - uid: Ubiquity.NET.Runtime.Utils.ReadyState
   name: ReadyState
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ReadyState.html
@@ -27004,6 +26948,38 @@ references:
   fullName.vb: Ubiquity.NET.Runtime.Utils.ScopeStack(Of T).this[]
   nameWithType: ScopeStack<T>.this
   nameWithType.vb: ScopeStack(Of T).this[]
+- uid: Ubiquity.NET.Runtime.Utils.ScopeStack`1.Peek
+  name: Peek()
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ScopeStack-1.Peek.html#Ubiquity_NET_Runtime_Utils_ScopeStack_1_Peek
+  commentId: M:Ubiquity.NET.Runtime.Utils.ScopeStack`1.Peek
+  fullName: Ubiquity.NET.Runtime.Utils.ScopeStack<T>.Peek()
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ScopeStack(Of T).Peek()
+  nameWithType: ScopeStack<T>.Peek()
+  nameWithType.vb: ScopeStack(Of T).Peek()
+- uid: Ubiquity.NET.Runtime.Utils.ScopeStack`1.Peek*
+  name: Peek
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ScopeStack-1.Peek.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ScopeStack`1.Peek
+  fullName: Ubiquity.NET.Runtime.Utils.ScopeStack<T>.Peek
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ScopeStack(Of T).Peek
+  nameWithType: ScopeStack<T>.Peek
+  nameWithType.vb: ScopeStack(Of T).Peek
+- uid: Ubiquity.NET.Runtime.Utils.ScopeStack`1.ToString
+  name: ToString()
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ScopeStack-1.ToString.html#Ubiquity_NET_Runtime_Utils_ScopeStack_1_ToString
+  commentId: M:Ubiquity.NET.Runtime.Utils.ScopeStack`1.ToString
+  fullName: Ubiquity.NET.Runtime.Utils.ScopeStack<T>.ToString()
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ScopeStack(Of T).ToString()
+  nameWithType: ScopeStack<T>.ToString()
+  nameWithType.vb: ScopeStack(Of T).ToString()
+- uid: Ubiquity.NET.Runtime.Utils.ScopeStack`1.ToString*
+  name: ToString
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ScopeStack-1.ToString.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.ScopeStack`1.ToString
+  fullName: Ubiquity.NET.Runtime.Utils.ScopeStack<T>.ToString
+  fullName.vb: Ubiquity.NET.Runtime.Utils.ScopeStack(Of T).ToString
+  nameWithType: ScopeStack<T>.ToString
+  nameWithType.vb: ScopeStack(Of T).ToString
 - uid: Ubiquity.NET.Runtime.Utils.ScopeStack`1.TryGetValue(Ubiquity.NET.InteropHelpers.LazyEncodedString,`0@)
   name: TryGetValue(LazyEncodedString, out T)
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.ScopeStack-1.TryGetValue.html#Ubiquity_NET_Runtime_Utils_ScopeStack_1_TryGetValue_Ubiquity_NET_InteropHelpers_LazyEncodedString__0__
@@ -27021,161 +26997,126 @@ references:
   fullName.vb: Ubiquity.NET.Runtime.Utils.ScopeStack(Of T).TryGetValue
   nameWithType: ScopeStack<T>.TryGetValue
   nameWithType.vb: ScopeStack(Of T).TryGetValue
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1
-  name: SyntaxError<T>
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.html
-  commentId: T:Ubiquity.NET.Runtime.Utils.SyntaxError`1
-  name.vb: SyntaxError(Of T)
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T)
-  nameWithType: SyntaxError<T>
-  nameWithType.vb: SyntaxError(Of T)
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.#ctor(Ubiquity.NET.Runtime.Utils.ParseErrorSource,System.String,`0,System.String,Ubiquity.NET.TextUX.SourceRange,System.String,System.Exception)
-  name: SyntaxError(ParseErrorSource, string, T, string, SourceRange, string, Exception?)
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.-ctor.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1__ctor_Ubiquity_NET_Runtime_Utils_ParseErrorSource_System_String__0_System_String_Ubiquity_NET_TextUX_SourceRange_System_String_System_Exception_
-  commentId: M:Ubiquity.NET.Runtime.Utils.SyntaxError`1.#ctor(Ubiquity.NET.Runtime.Utils.ParseErrorSource,System.String,`0,System.String,Ubiquity.NET.TextUX.SourceRange,System.String,System.Exception)
-  name.vb: New(ParseErrorSource, String, T, String, SourceRange, String, Exception)
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.SyntaxError(Ubiquity.NET.Runtime.Utils.ParseErrorSource, string, T, string, Ubiquity.NET.TextUX.SourceRange, string, System.Exception?)
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).New(Ubiquity.NET.Runtime.Utils.ParseErrorSource, String, T, String, Ubiquity.NET.TextUX.SourceRange, String, System.Exception)
-  nameWithType: SyntaxError<T>.SyntaxError(ParseErrorSource, string, T, string, SourceRange, string, Exception?)
-  nameWithType.vb: SyntaxError(Of T).New(ParseErrorSource, String, T, String, SourceRange, String, Exception)
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.#ctor*
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError
   name: SyntaxError
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.-ctor.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.#ctor
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.html
+  commentId: T:Ubiquity.NET.Runtime.Utils.SyntaxError
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError
+  nameWithType: SyntaxError
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.#ctor(Ubiquity.NET.Runtime.Utils.ParseErrorSource,System.String,System.Int32,System.String,Ubiquity.NET.TextUX.SourceRange,System.String,System.Exception)
+  name: SyntaxError(ParseErrorSource, string, int, string, SourceRange, string, Exception?)
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.-ctor.html#Ubiquity_NET_Runtime_Utils_SyntaxError__ctor_Ubiquity_NET_Runtime_Utils_ParseErrorSource_System_String_System_Int32_System_String_Ubiquity_NET_TextUX_SourceRange_System_String_System_Exception_
+  commentId: M:Ubiquity.NET.Runtime.Utils.SyntaxError.#ctor(Ubiquity.NET.Runtime.Utils.ParseErrorSource,System.String,System.Int32,System.String,Ubiquity.NET.TextUX.SourceRange,System.String,System.Exception)
+  name.vb: New(ParseErrorSource, String, Integer, String, SourceRange, String, Exception)
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.SyntaxError(Ubiquity.NET.Runtime.Utils.ParseErrorSource, string, int, string, Ubiquity.NET.TextUX.SourceRange, string, System.Exception?)
+  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError.New(Ubiquity.NET.Runtime.Utils.ParseErrorSource, String, Integer, String, Ubiquity.NET.TextUX.SourceRange, String, System.Exception)
+  nameWithType: SyntaxError.SyntaxError(ParseErrorSource, string, int, string, SourceRange, string, Exception?)
+  nameWithType.vb: SyntaxError.New(ParseErrorSource, String, Integer, String, SourceRange, String, Exception)
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.#ctor*
+  name: SyntaxError
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.-ctor.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.#ctor
   name.vb: New
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.SyntaxError
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).New
-  nameWithType: SyntaxError<T>.SyntaxError
-  nameWithType.vb: SyntaxError(Of T).New
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Exception
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.SyntaxError
+  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError.New
+  nameWithType: SyntaxError.SyntaxError
+  nameWithType.vb: SyntaxError.New
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Exception
   name: Exception
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Exception.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_Exception
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Exception
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Exception
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Exception
-  nameWithType: SyntaxError<T>.Exception
-  nameWithType.vb: SyntaxError(Of T).Exception
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Exception*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Exception.html#Ubiquity_NET_Runtime_Utils_SyntaxError_Exception
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.Exception
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Exception
+  nameWithType: SyntaxError.Exception
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Exception*
   name: Exception
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Exception.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Exception
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Exception
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Exception
-  nameWithType: SyntaxError<T>.Exception
-  nameWithType.vb: SyntaxError(Of T).Exception
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Id
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Exception.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.Exception
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Exception
+  nameWithType: SyntaxError.Exception
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Id
   name: Id
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Id.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_Id
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Id
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Id
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Id
-  nameWithType: SyntaxError<T>.Id
-  nameWithType.vb: SyntaxError(Of T).Id
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Id*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Id.html#Ubiquity_NET_Runtime_Utils_SyntaxError_Id
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.Id
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Id
+  nameWithType: SyntaxError.Id
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Id*
   name: Id
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Id.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Id
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Id
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Id
-  nameWithType: SyntaxError<T>.Id
-  nameWithType.vb: SyntaxError(Of T).Id
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Location
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Id.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.Id
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Id
+  nameWithType: SyntaxError.Id
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Location
   name: Location
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Location.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_Location
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Location
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Location
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Location
-  nameWithType: SyntaxError<T>.Location
-  nameWithType.vb: SyntaxError(Of T).Location
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Location*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Location.html#Ubiquity_NET_Runtime_Utils_SyntaxError_Location
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.Location
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Location
+  nameWithType: SyntaxError.Location
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Location*
   name: Location
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Location.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Location
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Location
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Location
-  nameWithType: SyntaxError<T>.Location
-  nameWithType.vb: SyntaxError(Of T).Location
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Message
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Location.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.Location
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Location
+  nameWithType: SyntaxError.Location
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Message
   name: Message
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Message.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_Message
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Message
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Message
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Message
-  nameWithType: SyntaxError<T>.Message
-  nameWithType.vb: SyntaxError(Of T).Message
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Message*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Message.html#Ubiquity_NET_Runtime_Utils_SyntaxError_Message
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.Message
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Message
+  nameWithType: SyntaxError.Message
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Message*
   name: Message
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Message.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Message
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Message
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Message
-  nameWithType: SyntaxError<T>.Message
-  nameWithType.vb: SyntaxError(Of T).Message
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Source
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Message.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.Message
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Message
+  nameWithType: SyntaxError.Message
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Source
   name: Source
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Source.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_Source
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Source
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Source
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Source
-  nameWithType: SyntaxError<T>.Source
-  nameWithType.vb: SyntaxError(Of T).Source
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Source*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Source.html#Ubiquity_NET_Runtime_Utils_SyntaxError_Source
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.Source
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Source
+  nameWithType: SyntaxError.Source
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Source*
   name: Source
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Source.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Source
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Source
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Source
-  nameWithType: SyntaxError<T>.Source
-  nameWithType.vb: SyntaxError(Of T).Source
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.SourceFile
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Source.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.Source
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Source
+  nameWithType: SyntaxError.Source
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile
   name: SourceFile
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.SourceFile.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_SourceFile
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.SourceFile
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.SourceFile
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).SourceFile
-  nameWithType: SyntaxError<T>.SourceFile
-  nameWithType.vb: SyntaxError(Of T).SourceFile
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.SourceFile*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile.html#Ubiquity_NET_Runtime_Utils_SyntaxError_SourceFile
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile
+  nameWithType: SyntaxError.SourceFile
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile*
   name: SourceFile
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.SourceFile.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.SourceFile
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.SourceFile
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).SourceFile
-  nameWithType: SyntaxError<T>.SourceFile
-  nameWithType.vb: SyntaxError(Of T).SourceFile
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Symbol
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.SourceFile
+  nameWithType: SyntaxError.SourceFile
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol
   name: Symbol
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Symbol.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_Symbol
-  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Symbol
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Symbol
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Symbol
-  nameWithType: SyntaxError<T>.Symbol
-  nameWithType.vb: SyntaxError(Of T).Symbol
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.Symbol*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol.html#Ubiquity_NET_Runtime_Utils_SyntaxError_Symbol
+  commentId: P:Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol
+  nameWithType: SyntaxError.Symbol
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol*
   name: Symbol
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.Symbol.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.Symbol
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.Symbol
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).Symbol
-  nameWithType: SyntaxError<T>.Symbol
-  nameWithType.vb: SyntaxError(Of T).Symbol
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.ToString
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.Symbol
+  nameWithType: SyntaxError.Symbol
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.ToString
   name: ToString()
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.ToString.html#Ubiquity_NET_Runtime_Utils_SyntaxError_1_ToString
-  commentId: M:Ubiquity.NET.Runtime.Utils.SyntaxError`1.ToString
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.ToString()
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).ToString()
-  nameWithType: SyntaxError<T>.ToString()
-  nameWithType.vb: SyntaxError(Of T).ToString()
-- uid: Ubiquity.NET.Runtime.Utils.SyntaxError`1.ToString*
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.ToString.html#Ubiquity_NET_Runtime_Utils_SyntaxError_ToString
+  commentId: M:Ubiquity.NET.Runtime.Utils.SyntaxError.ToString
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.ToString()
+  nameWithType: SyntaxError.ToString()
+- uid: Ubiquity.NET.Runtime.Utils.SyntaxError.ToString*
   name: ToString
-  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError-1.ToString.html
-  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError`1.ToString
-  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError<T>.ToString
-  fullName.vb: Ubiquity.NET.Runtime.Utils.SyntaxError(Of T).ToString
-  nameWithType: SyntaxError<T>.ToString
-  nameWithType.vb: SyntaxError(Of T).ToString
+  href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.SyntaxError.ToString.html
+  commentId: Overload:Ubiquity.NET.Runtime.Utils.SyntaxError.ToString
+  fullName: Ubiquity.NET.Runtime.Utils.SyntaxError.ToString
+  nameWithType: SyntaxError.ToString
 - uid: Ubiquity.NET.Runtime.Utils.TextReaderExtensions
   name: TextReaderExtensions
   href: runtime-utils/api/Ubiquity.NET.Runtime.Utils.TextReaderExtensions.html

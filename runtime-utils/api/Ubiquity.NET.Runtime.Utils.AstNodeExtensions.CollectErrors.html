@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors_" data-uid="Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors*" class="text-break">
-Method CollectErrors  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Runtime.Utils/AstNodeExtensions.cs/#L23"><i class="bi bi-code-slash"></i></a>
+Method CollectErrors  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Runtime.Utils/AstNodeExtensions.cs/#L22"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Method CollectErrors  <a class="header-action link-secondary" title="View source
 
 <a id="Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors_" data-uid="Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors*"></a>
 
-<h3 id="Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors__1_Ubiquity_NET_Runtime_Utils_IAstNode_" data-uid="Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors``1(Ubiquity.NET.Runtime.Utils.IAstNode)">
-  CollectErrors&lt;T&gt;(IAstNode)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Runtime.Utils/AstNodeExtensions.cs/#L23"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors_Ubiquity_NET_Runtime_Utils_IAstNode_" data-uid="Ubiquity.NET.Runtime.Utils.AstNodeExtensions.CollectErrors(Ubiquity.NET.Runtime.Utils.IAstNode)">
+  CollectErrors(IAstNode)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Runtime.Utils/AstNodeExtensions.cs/#L22"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Gets the complete collection of errors for this node and children</p>
@@ -124,7 +124,7 @@ Method CollectErrors  <a class="header-action link-secondary" title="View source
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static ImmutableArray&lt;ErrorNode&lt;T&gt;&gt; CollectErrors&lt;T&gt;(this IAstNode node) where T : struct, Enum</code></pre>
+  <pre><code class="lang-csharp hljs">public static ImmutableArray&lt;ErrorNode&gt; CollectErrors(this IAstNode node)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -136,24 +136,18 @@ Method CollectErrors  <a class="header-action link-secondary" title="View source
 
 <h4 class="section">Returns</h4>
 <dl class="parameters">
-  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1">ImmutableArray</a>&lt;<a class="xref" href="Ubiquity.NET.Runtime.Utils.ErrorNode-1.html">ErrorNode</a>&lt;T&gt;&gt;</dt>
+  <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1">ImmutableArray</a>&lt;<a class="xref" href="Ubiquity.NET.Runtime.Utils.ErrorNode.html">ErrorNode</a>&gt;</dt>
   <dd><p>Collection of errors found</p>
 </dd>
 </dl>
 
-<h4 class="section">Type Parameters</h4>
-<dl class="parameters">
-  <dt><code>T</code></dt>
-  <dd><p>Type of the enum for diagnostic IDs</p>
-</dd>
-</dl>
 
 
 
 
 
 
-<h4 class="section" id="Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors__1_Ubiquity_NET_Runtime_Utils_IAstNode__remarks">Remarks</h4>
+<h4 class="section" id="Ubiquity_NET_Runtime_Utils_AstNodeExtensions_CollectErrors_Ubiquity_NET_Runtime_Utils_IAstNode__remarks">Remarks</h4>
 <div class="markdown level1 remarks"><p>Traverses the node hierarchy to find all error nodes at any depth</p>
 </div>
 
@@ -163,7 +157,7 @@ Method CollectErrors  <a class="header-action link-secondary" title="View source
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Runtime.Utils/AstNodeExtensions.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Runtime.Utils/AstNodeExtensions.cs/#L22" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -179,7 +173,7 @@ Method CollectErrors  <a class="header-action link-secondary" title="View source
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

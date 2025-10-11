@@ -100,7 +100,7 @@ floating point value by checking if the generated value is a
 why that is a ConstantFP value.</p>
 <h3 id="code-generator">Code Generator</h3>
 <p>The code generation needs an update to support using a JIT engine to generate and
-execute the Kaleidescope code provided by the user.</p>
+execute the Kaleidoscope code provided by the user.</p>
 <h4 id="generator-fields">Generator fields</h4>
 <p>To begin with, the generator needs some additional members, including the JIT
 engine.</p>
@@ -175,7 +175,7 @@ namespace Kaleidoscope.Runtime
 {
     /// &lt;summary&gt;JIT engine for Kaleidoscope language&lt;/summary&gt;
     /// &lt;remarks&gt;
-    /// This engine uses the &lt;see cref=&quot;Ubiquity.NET.Llvm.OrcJITv2.LlJIT&quot;/&gt; engine to support lazy
+    /// This engine uses the &lt;see cref=&quot;Ubiquity.NET.Llvm.OrcJITv2.LLJit&quot;/&gt; engine to support lazy
     /// compilation of LLVM IR modules added to the JIT.
     /// &lt;/remarks&gt;
     public sealed class KaleidoscopeJIT
@@ -209,8 +209,8 @@ namespace Kaleidoscope.Runtime
             // callers via an &quot;extern&quot; declaration.
             unsafe
             {
-                using var putchardName = MangleAndIntern(&quot;putchard&quot;u8);
-                using var printdName = MangleAndIntern(&quot;printd&quot;u8);
+                using SymbolStringPoolEntry putchardName = MangleAndIntern(&quot;putchard&quot;u8);
+                using SymbolStringPoolEntry printdName = MangleAndIntern(&quot;printd&quot;u8);
 
                 var absoluteSymbols = new KvpArrayBuilder&lt;SymbolStringPoolEntry, EvaluatedSymbol&gt;
                 {
@@ -225,31 +225,45 @@ namespace Kaleidoscope.Runtime
             TransformLayer.SetTransform( ModuleTransformer );
         }
 
+        /// &lt;summary&gt;Dispose this instance (and the composed &lt;see cref=&quot;LLJit&quot;/&gt;&lt;/summary&gt;
         public void Dispose( )
         {
             ComposedJIT.Dispose();
         }
 
         #region IIOrcJit (via ComposedJIT)
+
+        /// &lt;inheritdoc/&gt;
         public JITDyLib MainLib =&gt; ComposedJIT.MainLib;
 
+        /// &lt;inheritdoc/&gt;
         public LazyEncodedString DataLayoutString =&gt; ComposedJIT.DataLayoutString;
 
+        /// &lt;inheritdoc/&gt;
         public LazyEncodedString TripleString =&gt; ComposedJIT.TripleString;
 
+        /// &lt;inheritdoc/&gt;
         public IrTransformLayer TransformLayer =&gt; ComposedJIT.TransformLayer;
 
+        /// &lt;inheritdoc/&gt;
         public ExecutionSession Session =&gt; ComposedJIT.Session;
 
+        /// &lt;inheritdoc/&gt;
         public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default )
-            =&gt; ComposedJIT.AddWithTracking( ctx, module, lib );
+        {
+            return ComposedJIT.AddWithTracking( ctx, module, lib );
+        }
 
+        /// &lt;inheritdoc/&gt;
         public ulong Lookup( LazyEncodedString name ) =&gt; ComposedJIT.Lookup( name );
 
+        /// &lt;inheritdoc/&gt;
         public void Add( JITDyLib lib, ThreadSafeModule module ) =&gt; ComposedJIT.Add( lib, module );
 
+        /// &lt;inheritdoc/&gt;
         public void Add( ResourceTracker tracker, ThreadSafeModule module ) =&gt; ComposedJIT.Add( tracker, module );
 
+        /// &lt;inheritdoc/&gt;
         public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name ) =&gt; ComposedJIT.MangleAndIntern( name );
         #endregion
 
@@ -286,7 +300,7 @@ namespace Kaleidoscope.Runtime
         // the native code and executing it... Exploration with LLVM's `OPT` tool is encouraged
         // for any serious production use.
         private readonly LazyEncodedString[] OptimizationPasses;
-        private readonly LlJIT ComposedJIT;
+        private readonly LLJit ComposedJIT;
 
         // Cleaner workaround for ugly compiler casting requirements
         // The &amp; operator officially has no type and MUST be cast to
@@ -338,7 +352,7 @@ namespace Kaleidoscope.Runtime
     }
 }
 </code></pre>
-<p><a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.LlJIT.html">LlJIT</a> provides support for declaring
+<p><a class="xref" href="../../../../api/Ubiquity.NET.Llvm.OrcJITv2.LLJit.html">LLJit</a> provides support for declaring
 functions that are external to the JIT that the JIT'd module code can call (
 Absolutes). For Kaleidoscope, two such functions are defined directly in
 <code>KaleidoscopeJIT</code> (<code>putchard</code> and <code>printd</code>), which is consistent with the same
@@ -491,7 +505,7 @@ private Function GetOrDeclareFunction( Prototype prototype )
 }
 </code></pre><h4 id="function-definitions">Function Definitions</h4>
 <p>Visiting a function definition needs to remove the previously added manual step of
-running the optimization passes. That is now handled by the Kaleidescope JIT as a
+running the optimization passes. That is now handled by the Kaleidoscope JIT as a
 transformation layer. Before final target code generation is performed on a symbol
 the transforms are run to perform any modifications desired. This makes the
 optimization process a lazy operation as well as the final target machine native
@@ -557,7 +571,7 @@ runtime support for .NET. Very cool, indeed! 🤓</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

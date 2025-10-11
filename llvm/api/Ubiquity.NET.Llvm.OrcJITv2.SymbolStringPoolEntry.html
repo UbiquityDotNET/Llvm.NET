@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry" data-uid="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry" class="text-break">
-Class SymbolStringPoolEntry  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntry.cs/#L22"><i class="bi bi-code-slash"></i></a>
+Class SymbolStringPoolEntry  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntry.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -146,20 +146,25 @@ String conversion is lazy, so that once it is converted the managed string is ca
 and used as needed. Thus, the overhead of marshalling the string is realized only the
 first time it is needed.
 </p></div>
+<div class="IMPORTANT"><h5>important</h5><p>
+The ref count nature of an Entry is NOT consistent across LLVM APIs and requires the
+caller to know the behavior of the API with respect to the ref count:
+<ol><li>Simple Reference. [Temporary] ownership remains with the caller</li><li>API takes ownership. [Move] ownership is transferred to native implementation</li><li>API performs an addref. [Native 'Clone'] ownership of original Entry remains with caller</li></ol>
+This can make use very problematic. To simplify this and keep things consistent, the implementation
+of the wrappers handles the special case of "Move" semantics, effectively converting it to a "Native
+Clone" scenario. Thus, the caller owns the ref count of any entries and the odd and inconsistent
+use of "move" semantics is handled internally so callers need not deal with that case directly.
 </div>
-
-  <h2 class="section" id="constructors">Constructors
-</h2>
-
-  <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry__ctor_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_">SymbolStringPoolEntry(SymbolStringPoolEntry)</a></dt>
-    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html">SymbolStringPoolEntry</a> class from another entry (Add ref construction)</p>
-</dd>
-  </dl>
+</div>
 
   <h2 class="section" id="properties">Properties
 </h2>
 
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Name.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Name">Name</a></dt>
+    <dd><p>Gets the name of this symbol</p>
+</dd>
+  </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.ReadOnlySpan.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_ReadOnlySpan">ReadOnlySpan</a></dt>
     <dd><p>Gets a readonly span for the data in this string</p>
@@ -169,6 +174,11 @@ first time it is needed.
   <h2 class="section" id="methods">Methods
 </h2>
 
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_AddRef">AddRef()</a></dt>
+    <dd><p>Adds a reference count for the symbol resulting in a distinct managed instance with it's own ref count (released via <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Dispose">Dispose()</a>)</p>
+</dd>
+  </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_Dispose">Dispose()</a></dt>
     <dd><p>Release the reference to the string</p>
@@ -210,7 +220,7 @@ first time it is needed.
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntry.cs/#L22" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntry.cs/#L35" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -226,7 +236,7 @@ first time it is needed.
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

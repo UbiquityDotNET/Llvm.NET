@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Runtime_Utils_ScopeStack_1" data-uid="Ubiquity.NET.Runtime.Utils.ScopeStack`1" class="text-break">
-Class ScopeStack&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L22"><i class="bi bi-code-slash"></i></a>
+Class ScopeStack&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -140,20 +140,17 @@ Class ScopeStack&lt;T&gt;  <a class="header-action link-secondary" title="View s
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
     </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
-    </div>
   </dd></dl>
 
 
 
 
   <h2 id="Ubiquity_NET_Runtime_Utils_ScopeStack_1_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>In essence, this is a stack of Dictionaries that is intended for use in code generation.
-Most languages have some sort of notion of symbol scopes and name lookups. This implements
-the common case of nested scopes where a new 'local scope' may override some of the symbols
-in a parent scope. Any values in any parent not overridden by the child are visible to the
-child scope.</p>
+  <div class="markdown level0 remarks"><p>In essence, this is a stack of Dictionaries of symbol names to <code class="typeparamref">T</code>
+values that is most commonly used in code generation. Most languages have some sort of notion
+of symbol scopes and name lookups. This implements the common case of nested scopes where a
+new 'local scope' may override some of the symbols in a parent scope. Any values in any parent
+not overridden by the child are visible to the child scope.</p>
 </div>
 
   <h2 class="section" id="constructors">Constructors
@@ -188,6 +185,16 @@ child scope.</p>
 </dd>
   </dl>
   <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Runtime.Utils.ScopeStack-1.Peek.html#Ubiquity_NET_Runtime_Utils_ScopeStack_1_Peek">Peek()</a></dt>
+    <dd><p>Gets the dictionary at the top of the stack</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Runtime.Utils.ScopeStack-1.ToString.html#Ubiquity_NET_Runtime_Utils_ScopeStack_1_ToString">ToString()</a></dt>
+    <dd><p>Generates a string representation of the full scope stack</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Runtime.Utils.ScopeStack-1.TryGetValue.html#Ubiquity_NET_Runtime_Utils_ScopeStack_1_TryGetValue_Ubiquity_NET_InteropHelpers_LazyEncodedString__0__">TryGetValue(LazyEncodedString, out T)</a></dt>
     <dd><p>Attempts to retrieve a value from the stack</p>
 </dd>
@@ -198,7 +205,7 @@ child scope.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L22" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Runtime.Utils/ScopeStack.cs/#L27" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -214,7 +221,7 @@ child scope.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

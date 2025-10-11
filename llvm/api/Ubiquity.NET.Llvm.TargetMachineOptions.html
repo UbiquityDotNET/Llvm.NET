@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_TargetMachineOptions" data-uid="Ubiquity.NET.Llvm.TargetMachineOptions" class="text-break">
-Class TargetMachineOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/TargetMachineOptions.cs/#L10"><i class="bi bi-code-slash"></i></a>
+Class TargetMachineOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/TargetMachineOptions.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,7 @@ Class TargetMachineOptions  <a class="header-action link-secondary" title="View 
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TargetMachineOptions</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class TargetMachineOptions : IDisposable</code></pre>
   </div>
 
 
@@ -111,6 +111,12 @@ Class TargetMachineOptions  <a class="header-action link-secondary" title="View 
     </dd>
   </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist inheritedMembers">
@@ -127,9 +133,6 @@ Class TargetMachineOptions  <a class="header-action link-secondary" title="View 
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
@@ -177,12 +180,21 @@ Class TargetMachineOptions  <a class="header-action link-secondary" title="View 
 </dd>
   </dl>
 
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.TargetMachineOptions.Dispose.html#Ubiquity_NET_Llvm_TargetMachineOptions_Dispose">Dispose()</a></dt>
+    <dd><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</dd>
+  </dl>
+
 
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/TargetMachineOptions.cs/#L10" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/TargetMachineOptions.cs/#L10" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -198,7 +210,7 @@ Class TargetMachineOptions  <a class="header-action link-secondary" title="View 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

@@ -232,18 +232,23 @@ using Kaleidoscope.Grammar.ANTLR;
 
 namespace Kaleidoscope.Grammar
 {
-    // Parse listener to handle updating runtime state upon successfully parsing a user defined
-    // operator definition.
+    /// &lt;summary&gt;ANTLR4 listener to handle adding user operator definitions parsed to the runtime state for future parsing to use&lt;/summary&gt;
     internal class KaleidoscopeUserOperatorListener
         : KaleidoscopeBaseListener
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;KaleidoscopeUserOperatorListener&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;state&quot;&gt;Dynamic runtime state of the parse&lt;/param&gt;
         public KaleidoscopeUserOperatorListener( DynamicRuntimeState state )
         {
             RuntimeState = state;
         }
 
-        // upon successful parse of a function definition check if it is a user defined operator
-        // and update the RuntimeState accordingly, if it is.
+        /// &lt;summary&gt;Handles successfully parsed function definitions&lt;/summary&gt;
+        /// &lt;param name=&quot;context&quot;&gt;Context parse node for the parsed function&lt;/param&gt;
+        /// &lt;remarks&gt;
+        /// Upon successful parse of a function definition this check if it is a user defined operator
+        /// and updates the RuntimeState accordingly, if it is.
+        /// &lt;/remarks&gt;
         public override void ExitFunctionDefinition( KaleidoscopeParser.FunctionDefinitionContext context )
         {
             switch(context.Signature)
@@ -294,13 +299,13 @@ call for the function that actually implements the behavior for the operator.</p
     var opKind = RuntimeState.GetBinOperatorInfo( op.OpToken.Type ).Kind;
     if(opKind != OperatorKind.InfixLeftAssociative &amp;&amp; opKind != OperatorKind.InfixRightAssociative)
     {
-        return new ErrorNode&lt;DiagnosticCode&gt;( op.GetSourceRange(), DiagnosticCode.InvalidBinaryOp, $&quot;Invalid binary operator '{op.OpToken.Text}'&quot; );
+        return new ErrorNode( op.GetSourceRange(), (int)DiagnosticCode.InvalidBinaryOp, $&quot;Invalid binary operator '{op.OpToken.Text}'&quot; );
     }
 
     string calleeName = CreateBinaryFunctionName( op.OpToken );
     Prototype? callTarget = FindCallTarget( calleeName );
     return callTarget is null
-        ? new ErrorNode&lt;DiagnosticCode&gt;( op.GetSourceRange(), DiagnosticCode.UnaryOpNotFound, $&quot;Unary operator function '{calleeName}' not found&quot; )
+        ? new ErrorNode( op.GetSourceRange(), (int)DiagnosticCode.UnaryOpNotFound, $&quot;Unary operator function '{calleeName}' not found&quot; )
         : new FunctionCallExpression( op.GetSourceRange(), callTarget, lhs, rhs );
 }
 </code></pre><pre><code class="lang-csharp" name="UnaryOpExpression">public override IAstNode VisitUnaryOpExpression( UnaryOpExpressionContext context )
@@ -309,14 +314,14 @@ call for the function that actually implements the behavior for the operator.</p
     var opKind = RuntimeState.GetUnaryOperatorInfo( context.Op ).Kind;
     if(opKind == OperatorKind.None)
     {
-        return new ErrorNode&lt;DiagnosticCode&gt;( context.GetSourceRange(), DiagnosticCode.InvalidUnaryOp, $&quot;invalid unary operator {context.Op}&quot; );
+        return new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.InvalidUnaryOp, $&quot;invalid unary operator {context.Op}&quot; );
     }
 
     string calleeName = CreateUnaryFunctionName( context.OpToken );
     var function = FindCallTarget( calleeName );
     if(function == null)
     {
-        return new ErrorNode&lt;DiagnosticCode&gt;( context.GetSourceRange(), DiagnosticCode.InvalidUnaryOpRef, $&quot;reference to unknown unary operator function {calleeName}&quot; );
+        return new ErrorNode( context.GetSourceRange(), (int)DiagnosticCode.InvalidUnaryOpRef, $&quot;reference to unknown unary operator function {calleeName}&quot; );
     }
 
     var arg = context.Rhs.Accept( this );
@@ -487,7 +492,7 @@ which is covered in <a class="xref" href="../Chapter7.1/Kaleidoscope-ch7.1.html"
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

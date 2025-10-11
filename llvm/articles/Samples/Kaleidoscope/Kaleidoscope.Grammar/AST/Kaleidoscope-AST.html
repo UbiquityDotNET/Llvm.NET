@@ -130,21 +130,29 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Root node for the Kaleidoscope AST&lt;/summary&gt;
     public sealed class RootNode
         : AstNode
         , IAstNode
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;RootNode&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the source input&lt;/param&gt;
+        /// &lt;param name=&quot;child&quot;&gt;Child node&lt;/param&gt;
         public RootNode( SourceRange location, IAstNode child )
             : this( location, [ child ] )
         {
         }
 
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;RootNode&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the source input&lt;/param&gt;
+        /// &lt;param name=&quot;children&quot;&gt;Child nodes of the root&lt;/param&gt;
         public RootNode( SourceRange location, IEnumerable&lt;IAstNode&gt; children )
             : base( location )
         {
             ChildNodes = [ .. children ];
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -153,6 +161,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -161,8 +170,10 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children =&gt; ChildNodes;
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return string.Join( ' ', Children );
@@ -194,6 +205,11 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IAstNode
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;FunctionDefinition&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the input source&lt;/param&gt;
+        /// &lt;param name=&quot;signature&quot;&gt;Signature of the definition&lt;/param&gt;
+        /// &lt;param name=&quot;body&quot;&gt;Expression for the body of the function&lt;/param&gt;
+        /// &lt;param name=&quot;isAnonymous&quot;&gt;Flag to indicate whether this function is anonymous&lt;/param&gt;
         public FunctionDefinition( SourceRange location
                                  , Prototype signature
                                  , IExpression body
@@ -203,6 +219,12 @@ namespace Kaleidoscope.Grammar.AST
         {
         }
 
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;FunctionDefinition&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the input source&lt;/param&gt;
+        /// &lt;param name=&quot;signature&quot;&gt;Signature of the definition&lt;/param&gt;
+        /// &lt;param name=&quot;body&quot;&gt;Expression for the body of the function&lt;/param&gt;
+        /// &lt;param name=&quot;localVariables&quot;&gt;Local variables for this function&lt;/param&gt;
+        /// &lt;param name=&quot;isAnonymous&quot;&gt;Flag to indicate whether this function is anonymous&lt;/param&gt;
         public FunctionDefinition( SourceRange location
                                  , Prototype signature
                                  , IExpression body
@@ -224,15 +246,22 @@ namespace Kaleidoscope.Grammar.AST
         public IExpression Body { get; }
 
         /// &lt;summary&gt;Gets a value indicating whether this function is an anonymous top level expression&lt;/summary&gt;
-        /// &lt;remarks&gt;This is useful during generation as anonymous expressions are discardable once they are generated&lt;/remarks&gt;
+        /// &lt;remarks&gt;
+        /// This is useful during generation as anonymous expressions are discardable once they are generated and invoked
+        /// or inlined/merged in AOT scenarios.
+        /// &lt;/remarks&gt;
         public bool IsAnonymous { get; }
 
+        /// &lt;summary&gt;Gets the name of this function definition&lt;/summary&gt;
         public string Name =&gt; Signature.Name;
 
+        /// &lt;summary&gt;Gets the parameters for this function definition&lt;/summary&gt;
         public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters =&gt; Signature.Parameters;
 
+        /// &lt;summary&gt;Gets the local variables for this function definition&lt;/summary&gt;
         public IReadOnlyList&lt;LocalVariableDeclaration&gt; LocalVariables { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -241,6 +270,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -249,6 +279,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -258,6 +289,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return $&quot;{Signature}{{{Body}}}&quot;;
@@ -358,6 +390,7 @@ namespace Kaleidoscope.Grammar.AST
         /// &lt;summary&gt;Gets the parameters for the function&lt;/summary&gt;
         public IReadOnlyList&lt;ParameterDeclaration&gt; Parameters { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -366,6 +399,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -415,11 +449,18 @@ using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Interface for a variable declaration&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// There are multiple forms of variable declarations (local, parameter, etc...).
+    /// This interface provides the common implementation for any such variables.
+    /// &lt;/remarks&gt;
     public interface IVariableDeclaration
         : IAstNode
     {
+        /// &lt;summary&gt;Gets the name of the variable&lt;/summary&gt;
         string Name { get; }
 
+        /// &lt;summary&gt;Gets a value indicating whether this variable is generated by the compiler/language&lt;/summary&gt;
         bool CompilerGenerated { get; }
     }
 }
@@ -427,6 +468,7 @@ namespace Kaleidoscope.Grammar.AST
 <pre><code class="lang-csharp" name="Local Variable Declarations">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -435,24 +477,36 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Local variable declaration AST node&lt;/summary&gt;
     public sealed class LocalVariableDeclaration
         : AstNode
         , IVariableDeclaration
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;LocalVariableDeclaration&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the input source&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;Name of the variable&lt;/param&gt;
+        /// &lt;param name=&quot;initializer&quot;&gt;initializer for the expression&lt;/param&gt;
+        /// &lt;param name=&quot;compilerGenerated&quot;&gt;flag to indicate if this variable is generated by the parsing of the language&lt;/param&gt;
         public LocalVariableDeclaration( SourceRange location, string name, IExpression? initializer, bool compilerGenerated = false )
             : base( location )
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
             Name = name;
             Initializer = initializer;
             CompilerGenerated = compilerGenerated;
         }
 
+        /// &lt;inheritdoc/&gt;
         public string Name { get; }
 
+        /// &lt;summary&gt;Gets the initializer for this declaration (if any)&lt;/summary&gt;
         public IExpression? Initializer { get; }
 
+        /// &lt;inheritdoc/&gt;
         public bool CompilerGenerated { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -461,6 +515,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -469,6 +524,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -480,6 +536,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             var bldr = new StringBuilder();
@@ -512,10 +569,15 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;AST Node for a parameter declaration&lt;/summary&gt;
     public sealed class ParameterDeclaration
         : AstNode
         , IVariableDeclaration
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;ParameterDeclaration&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the source of the node in the input&lt;/param&gt;
+        /// &lt;param name=&quot;name&quot;&gt;Name of the parameter&lt;/param&gt;
+        /// &lt;param name=&quot;index&quot;&gt;Index of the parameter in the function signature&lt;/param&gt;
         public ParameterDeclaration( SourceRange location, string name, int index )
             : base( location )
         {
@@ -523,12 +585,16 @@ namespace Kaleidoscope.Grammar.AST
             Index = index;
         }
 
+        /// &lt;inheritdoc/&gt;
         public string Name { get; }
 
+        /// &lt;summary&gt;Gets the index of the parameter in the parameter list it belongs too.&lt;/summary&gt;
         public int Index { get; }
 
+        /// &lt;inheritdoc/&gt;
         public bool CompilerGenerated =&gt; false;
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -537,6 +603,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -545,8 +612,10 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children =&gt; [];
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return Name;
@@ -597,15 +666,31 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Identifier for the kinds of built-in operators&lt;/summary&gt;
     public enum BuiltInOperatorKind
     {
+        /// &lt;summary&gt;Default value (Invalid)&lt;/summary&gt;
         Invalid,
+
+        /// &lt;summary&gt;Assignment operator&lt;/summary&gt;
         Assign,
+
+        /// &lt;summary&gt;Addition operator&lt;/summary&gt;
         Add,
+
+        /// &lt;summary&gt;Subtraction operator&lt;/summary&gt;
         Subtract,
+
+        /// &lt;summary&gt;Multiplication operator&lt;/summary&gt;
         Multiply,
+
+        /// &lt;summary&gt;Division operator&lt;/summary&gt;
         Divide,
+
+        /// &lt;summary&gt;Comparison operator (less)&lt;/summary&gt;
         Less,
+
+        /// &lt;summary&gt;Exponentiation operator&lt;/summary&gt;
         Pow
     }
 
@@ -649,6 +734,10 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;summary&gt;Visitor pattern 'Accept' of a visitors that don't need a parameter&lt;/summary&gt;
+        /// &lt;typeparam name=&quot;TResult&quot;&gt;Type of the result from the visitor&lt;/typeparam&gt;
+        /// &lt;param name=&quot;visitor&quot;&gt;Visitor to apply for each node in this expression&lt;/param&gt;
+        /// &lt;returns&gt;Result of visiting this expression&lt;/returns&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -657,6 +746,12 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;summary&gt;Visitor pattern 'Accept' of a visitors that need a parameter&lt;/summary&gt;
+        /// &lt;typeparam name=&quot;TResult&quot;&gt;Type of the result from the visitor&lt;/typeparam&gt;
+        /// &lt;typeparam name=&quot;TArg&quot;&gt;Type of the argument for the visit&lt;/typeparam&gt;
+        /// &lt;param name=&quot;visitor&quot;&gt;Visitor to apply for each node in this expression&lt;/param&gt;
+        /// &lt;param name=&quot;arg&quot;&gt;Argument to pass to each method of the visit&lt;/param&gt;
+        /// &lt;returns&gt;Result of visiting this expression&lt;/returns&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -702,10 +797,15 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Kaleidoscope AST Node for a function call expression&lt;/summary&gt;
     public sealed class FunctionCallExpression
         : AstNode
         , IExpression
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;FunctionCallExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the source input&lt;/param&gt;
+        /// &lt;param name=&quot;functionPrototype&quot;&gt;Prototype of the function to call&lt;/param&gt;
+        /// &lt;param name=&quot;args&quot;&gt;Arguments to provide to the function&lt;/param&gt;
         public FunctionCallExpression( SourceRange location, Prototype functionPrototype, params IEnumerable&lt;IExpression&gt; args )
             : base( location )
         {
@@ -713,10 +813,13 @@ namespace Kaleidoscope.Grammar.AST
             Arguments = [ .. args ];
         }
 
+        /// &lt;summary&gt;Gets the prototype of the function to call&lt;/summary&gt;
         public Prototype FunctionPrototype { get; }
 
+        /// &lt;summary&gt;Gets the arguments to provide to the function&lt;/summary&gt;
         public IReadOnlyList&lt;IExpression&gt; Arguments { get; }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -725,6 +828,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -733,6 +837,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -741,6 +846,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return Arguments.Count == 0
@@ -762,20 +868,27 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Kaleidoscope AST node for a reference to a variable&lt;/summary&gt;
     public sealed class VariableReferenceExpression
         : AstNode
         , IExpression
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;VariableReferenceExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the input source&lt;/param&gt;
+        /// &lt;param name=&quot;declaration&quot;&gt;Declaration of the variable referenced&lt;/param&gt;
         public VariableReferenceExpression( SourceRange location, IVariableDeclaration declaration )
             : base( location )
         {
             Declaration = declaration;
         }
 
+        /// &lt;summary&gt;Gets the declaration this reference refers to&lt;/summary&gt;
         public IVariableDeclaration Declaration { get; }
 
+        /// &lt;summary&gt;Gets the name of the variable referenced&lt;/summary&gt;
         public string Name =&gt; Declaration.Name;
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -784,6 +897,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -792,6 +906,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -800,6 +915,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return $&quot;Load({Name})&quot;;
@@ -819,10 +935,20 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;AST node for a conditional expression&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// A conditional expression is the language equivalent of a conditional operator in most &quot;C&quot; like languages (ternary operator).
+    /// &lt;/remarks&gt;
     public sealed class ConditionalExpression
         : AstNode
         , IExpression
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;ConditionalExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the expression in the source input&lt;/param&gt;
+        /// &lt;param name=&quot;condition&quot;&gt;Expression for the condition&lt;/param&gt;
+        /// &lt;param name=&quot;thenExpression&quot;&gt;Expression for the `then` clause of the conditional expression&lt;/param&gt;
+        /// &lt;param name=&quot;elseExpression&quot;&gt;Expression for the `else` clause of the conditional expression&lt;/param&gt;
+        /// &lt;param name=&quot;resultVar&quot;&gt;&lt;see cref=&quot;LocalVariableDeclaration&quot;/&gt; to represent the results of the expression&lt;/param&gt;
         public ConditionalExpression( SourceRange location
                                     , IExpression condition
                                     , IExpression thenExpression
@@ -837,19 +963,26 @@ namespace Kaleidoscope.Grammar.AST
             ResultVariable = resultVar;
         }
 
+        /// &lt;summary&gt;Gets the expression for the condition&lt;/summary&gt;
         public IExpression Condition { get; }
 
+        /// &lt;summary&gt;Gets the expression for the `then` clause&lt;/summary&gt;
         public IExpression ThenExpression { get; }
 
+        /// &lt;summary&gt;Gets the expression for the `else` clause&lt;/summary&gt;
         public IExpression ElseExpression { get; }
 
-        // Compiler generated result variable supports building conditional
-        // expressions without the need for SSA form in the AST/Code generation
-        // by using mutable variables. The result is assigned a value from both
-        // sides of the branch. In pure SSA form this isn't needed as a PHI node
-        // would be used instead.
+        /// &lt;summary&gt;Gets the result of the expression as a &lt;see cref=&quot;LocalVariableDeclaration&quot;/&gt;&lt;/summary&gt;
+        /// &lt;remarks&gt;
+        /// Compiler generated result variable supports building conditional
+        /// expressions without the need for SSA form in the AST/Code generation
+        /// by using mutable variables. The result is assigned a value from both
+        /// sides of the branch. In pure SSA form this isn't needed as a PHI node
+        /// would be used instead.
+        /// &lt;/remarks&gt;
         public LocalVariableDeclaration ResultVariable { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -858,6 +991,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -866,6 +1000,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -876,6 +1011,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return $&quot;Conditional({Condition}, {ThenExpression}, {ElseExpression})&quot;;
@@ -894,10 +1030,17 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Kaleidoscope AST node for a &lt;c&gt;ForIn&lt;/c&gt; expression&lt;/summary&gt;
     public sealed class ForInExpression
         : AstNode
         , IExpression
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;ForInExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the expression in the source input&lt;/param&gt;
+        /// &lt;param name=&quot;loopVariable&quot;&gt;Declaration of the variable to use for the loop&lt;/param&gt;
+        /// &lt;param name=&quot;condition&quot;&gt;Exit Condition for the loop&lt;/param&gt;
+        /// &lt;param name=&quot;step&quot;&gt;Step value to increment &lt;paramref name=&quot;loopVariable&quot;/&gt; by with each iteration of the loop&lt;/param&gt;
+        /// &lt;param name=&quot;body&quot;&gt;The body of the loop to invoke on each iteration&lt;/param&gt;
         public ForInExpression( SourceRange location
                               , LocalVariableDeclaration loopVariable
                               , IExpression condition
@@ -912,14 +1055,19 @@ namespace Kaleidoscope.Grammar.AST
             Body = body;
         }
 
+        /// &lt;summary&gt;Gets the declaration of the variable to use for the loop&lt;/summary&gt;
         public LocalVariableDeclaration LoopVariable { get; }
 
+        /// &lt;summary&gt;Gets the exit Condition for the loop&lt;/summary&gt;
         public IExpression Condition { get; }
 
+        /// &lt;summary&gt;Gets the step value to increment &lt;see cref=&quot;LoopVariable&quot;/&gt; by with each iteration of the loop&lt;/summary&gt;
         public IExpression Step { get; }
 
+        /// &lt;summary&gt;Gets the body of the loop to invoke on each iteration&lt;/summary&gt;
         public IExpression Body { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -928,6 +1076,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -936,6 +1085,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -947,6 +1097,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             return $&quot;for({LoopVariable}, {Condition}, {Step}, {Body})&quot;;
@@ -966,10 +1117,15 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// &lt;summary&gt;Kaleidoscope AST node for a &lt;c&gt;Var-In&lt;/c&gt; expression&lt;/summary&gt;
     public sealed class VarInExpression
         : AstNode
         , IExpression
     {
+        /// &lt;summary&gt;Initializes a new instance of the &lt;see cref=&quot;VarInExpression&quot;/&gt; class.&lt;/summary&gt;
+        /// &lt;param name=&quot;location&quot;&gt;Location of the node in the input source&lt;/param&gt;
+        /// &lt;param name=&quot;localVariables&quot;&gt;Local variables for the expression&lt;/param&gt;
+        /// &lt;param name=&quot;body&quot;&gt;Body of the expression&lt;/param&gt;
         public VarInExpression( SourceRange location, IEnumerable&lt;LocalVariableDeclaration&gt; localVariables, IExpression body )
             : base( location )
         {
@@ -977,10 +1133,13 @@ namespace Kaleidoscope.Grammar.AST
             Body = body;
         }
 
+        /// &lt;summary&gt;Gets the local variables for the expression&lt;/summary&gt;
         public IEnumerable&lt;LocalVariableDeclaration&gt; LocalVariables { get; }
 
+        /// &lt;summary&gt;Gets the body for the expression&lt;/summary&gt;
         public IExpression Body { get; }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult&gt;( IAstVisitor&lt;TResult&gt; visitor )
             where TResult : default
         {
@@ -989,6 +1148,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// &lt;inheritdoc cref=&quot;BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)&quot;/&gt;
         public override TResult? Accept&lt;TResult, TArg&gt;( IAstVisitor&lt;TResult, TArg&gt; visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -997,6 +1157,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// &lt;inheritdoc/&gt;
         public override IEnumerable&lt;IAstNode&gt; Children
         {
             get
@@ -1010,6 +1171,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// &lt;inheritdoc/&gt;
         public override string ToString( )
         {
             var bldr = new StringBuilder( &quot;VarIn{&quot; );
@@ -1017,6 +1179,7 @@ namespace Kaleidoscope.Grammar.AST
                 .Append( &quot;}(&quot; )
                 .Append( Body )
                 .Append( ')' );
+
             return bldr.ToString();
         }
     }
@@ -1042,7 +1205,7 @@ namespace Kaleidoscope.Grammar.AST
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>

@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntryList_Item_" data-uid="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntryList.Item*" class="text-break">
-Property this  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntryList.cs/#L25"><i class="bi bi-code-slash"></i></a>
+Property this  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntryList.cs/#L25"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Property this  <a class="header-action link-secondary" title="View source" href=
 
 <h3 id="Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntryList_Item_System_UInt64_" data-uid="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntryList.Item(System.UInt64)">
   this[ulong]
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntryList.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntryList.cs/#L25"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Gets a single entry from the list</p>
@@ -124,7 +124,7 @@ Property this  <a class="header-action link-secondary" title="View source" href=
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public readonly SymbolStringPoolEntry this[ulong index] { get; }</code></pre>
+  <pre><code class="lang-csharp hljs">public SymbolStringPoolEntry this[ulong index] { get; }</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -148,11 +148,11 @@ Property this  <a class="header-action link-secondary" title="View source" href=
 
 
 <h4 class="section" id="Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntryList_Item_System_UInt64__remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>The returned <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html">SymbolStringPoolEntry</a> is an 'alias' to the actual entry
+<div class="markdown level1 remarks"><p>The returned <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.html">SymbolStringPoolEntry</a> is an 'alias' to the actual Entry
 there is NO ownership implied. Therefore the instance MUST not be stored anywhere.
 If an instance that outlives the underlying native owner is desired then you can
-use the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry__ctor_Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_">SymbolStringPoolEntry(SymbolStringPoolEntry)</a>
-&quot;add ref constructor&quot; to gain ownership of the instance.</p>
+use the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.AddRef.html#Ubiquity_NET_Llvm_OrcJITv2_SymbolStringPoolEntry_AddRef">AddRef()</a> method to gain ownership of
+the instance.</p>
 </div>
 
 
@@ -161,7 +161,7 @@ use the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-delta/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntryList.cs/#L25" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/SymbolStringPoolEntryList.cs/#L25" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -177,7 +177,7 @@ use the <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SymbolStringPoolEntry.-
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-delta
+          - Build: 20.1.8-epsilon
         </div>
       </div>
     </footer>
