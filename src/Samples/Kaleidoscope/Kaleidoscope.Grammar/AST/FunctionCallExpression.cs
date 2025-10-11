@@ -9,10 +9,15 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// <summary>Kaleidoscope AST Node for a function call expression</summary>
     public sealed class FunctionCallExpression
         : AstNode
         , IExpression
     {
+        /// <summary>Initializes a new instance of the <see cref="FunctionCallExpression"/> class.</summary>
+        /// <param name="location">Location of the node in the source input</param>
+        /// <param name="functionPrototype">Prototype of the function to call</param>
+        /// <param name="args">Arguments to provide to the function</param>
         public FunctionCallExpression( SourceRange location, Prototype functionPrototype, params IEnumerable<IExpression> args )
             : base( location )
         {
@@ -20,10 +25,13 @@ namespace Kaleidoscope.Grammar.AST
             Arguments = [ .. args ];
         }
 
+        /// <summary>Gets the prototype of the function to call</summary>
         public Prototype FunctionPrototype { get; }
 
+        /// <summary>Gets the arguments to provide to the function</summary>
         public IReadOnlyList<IExpression> Arguments { get; }
 
+        /// <inheritdoc/>
         public override IEnumerable<IAstNode> Children
         {
             get
@@ -32,6 +40,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})"/>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -40,6 +49,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -48,6 +58,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             return Arguments.Count == 0

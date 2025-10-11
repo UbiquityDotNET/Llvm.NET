@@ -7,7 +7,7 @@ using Antlr4.Runtime;
 
 namespace Kaleidoscope.Grammar
 {
-    /// <summary>Error handling strategy for REPL scenarios</summary>
+    /// <summary>ANTLR4 Error handling strategy for REPL scenarios</summary>
     /// <remarks>
     /// This strategy handles creating more meaningful messages on feature predicate failures.
     /// </remarks>

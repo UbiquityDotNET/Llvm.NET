@@ -91,6 +91,7 @@ namespace Kaleidoscope.Grammar.AST
         /// <summary>Gets the parameters for the function</summary>
         public IReadOnlyList<ParameterDeclaration> Parameters { get; }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})"/>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -99,6 +100,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {

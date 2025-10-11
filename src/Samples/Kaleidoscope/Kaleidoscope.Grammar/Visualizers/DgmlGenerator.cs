@@ -16,7 +16,7 @@ using static Kaleidoscope.Grammar.ANTLR.KaleidoscopeParser;
 
 namespace Kaleidoscope.Grammar.Visualizers
 {
-    /// <summary>Parse tree listener to generate a DGML Graph of the parsed syntax</summary>
+    /// <summary>ANTLR4 Parse tree listener to generate a DGML Graph of the parsed syntax</summary>
     /// <remarks>
     /// This is similar to the <see cref="XDocumentListener"/> but allows writing to a
     /// DGML file for visualizing in VisualStudio or any available DGML viewer.
@@ -24,6 +24,8 @@ namespace Kaleidoscope.Grammar.Visualizers
     internal class DgmlGenerator
         : KaleidoscopeBaseListener
     {
+        /// <summary>Initializes a new instance of the <see cref="DgmlGenerator"/> class.</summary>
+        /// <param name="recognizer">Parser to listen to for the generation</param>
         public DgmlGenerator( KaleidoscopeParser recognizer )
         {
             Recognizer = recognizer;
@@ -47,16 +49,19 @@ namespace Kaleidoscope.Grammar.Visualizers
             Graph.Styles.Add( style );
         }
 
+        /// <inheritdoc/>
         public override void EnterUnaryOpExpression( UnaryOpExpressionContext context )
         {
             ActiveNode.Properties.Add( "Op", context.Op );
         }
 
+        /// <inheritdoc/>
         public override void EnterExpression( ExpressionContext context )
         {
             ActiveNode.Properties.Add( "Precedence", context._p );
         }
 
+        /// <inheritdoc/>
         public override void VisitTerminal( ITerminalNode node )
         {
             string nodeName = KaleidoscopeLexer.DefaultVocabulary.GetDisplayName( node.Symbol.Type );
@@ -77,6 +82,7 @@ namespace Kaleidoscope.Grammar.Visualizers
             }
         }
 
+        /// <inheritdoc/>
         public override void EnterEveryRule( ParserRuleContext context )
         {
             string typeName = context.GetType( ).Name;
@@ -88,6 +94,7 @@ namespace Kaleidoscope.Grammar.Visualizers
             } );
         }
 
+        /// <inheritdoc/>
         public override void ExitEveryRule( ParserRuleContext context )
         {
             base.ExitEveryRule( context );

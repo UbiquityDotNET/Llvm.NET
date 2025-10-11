@@ -18,6 +18,11 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IAstNode
     {
+        /// <summary>Initializes a new instance of the <see cref="FunctionDefinition"/> class.</summary>
+        /// <param name="location">Location of the node in the input source</param>
+        /// <param name="signature">Signature of the definition</param>
+        /// <param name="body">Expression for the body of the function</param>
+        /// <param name="isAnonymous">Flag to indicate whether this function is anonymous</param>
         public FunctionDefinition( SourceRange location
                                  , Prototype signature
                                  , IExpression body
@@ -27,6 +32,12 @@ namespace Kaleidoscope.Grammar.AST
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="FunctionDefinition"/> class.</summary>
+        /// <param name="location">Location of the node in the input source</param>
+        /// <param name="signature">Signature of the definition</param>
+        /// <param name="body">Expression for the body of the function</param>
+        /// <param name="localVariables">Local variables for this function</param>
+        /// <param name="isAnonymous">Flag to indicate whether this function is anonymous</param>
         public FunctionDefinition( SourceRange location
                                  , Prototype signature
                                  , IExpression body
@@ -48,15 +59,22 @@ namespace Kaleidoscope.Grammar.AST
         public IExpression Body { get; }
 
         /// <summary>Gets a value indicating whether this function is an anonymous top level expression</summary>
-        /// <remarks>This is useful during generation as anonymous expressions are discardable once they are generated</remarks>
+        /// <remarks>
+        /// This is useful during generation as anonymous expressions are discardable once they are generated and invoked
+        /// or inlined/merged in AOT scenarios.
+        /// </remarks>
         public bool IsAnonymous { get; }
 
+        /// <summary>Gets the name of this function definition</summary>
         public string Name => Signature.Name;
 
+        /// <summary>Gets the parameters for this function definition</summary>
         public IReadOnlyList<ParameterDeclaration> Parameters => Signature.Parameters;
 
+        /// <summary>Gets the local variables for this function definition</summary>
         public IReadOnlyList<LocalVariableDeclaration> LocalVariables { get; }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})"/>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -65,6 +83,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -73,6 +92,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IAstNode> Children
         {
             get
@@ -82,6 +102,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             return $"{Signature}{{{Body}}}";

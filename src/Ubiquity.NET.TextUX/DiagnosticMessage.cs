@@ -89,8 +89,8 @@ namespace Ubiquity.NET.TextUX
         /// <inheritdoc/>
         /// <remarks>
         /// Accepted format strings are:
-        /// "M" for MSBuild format used for Windows build tools.
-        /// "G" for runtime specific (For Windows, this is the MSBuild format)
+        /// "M" for MSBuild format (used for Windows/MSBUILD build tools).
+        /// "G" for runtime specific (For Windows, this is the same as the MSBuild format['M'])
         /// [Format strings for other runtimes TBD (L:Linux, A:Apple ... ????)]
         /// </remarks>
         public string ToString( string? format, IFormatProvider? formatProvider )

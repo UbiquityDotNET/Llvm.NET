@@ -9,8 +9,16 @@ using Ubiquity.NET.Runtime.Utils;
 
 namespace Kaleidoscope.Grammar.Visualizers
 {
+    /// <summary>Utility extension class for <see cref="IAstNode"/></summary>
     public static class AstNodeExtensions
     {
+        /// <summary>Create a <see cref="DirectedGraph"/> from a node</summary>
+        /// <param name="node">Node to generate the graph for</param>
+        /// <returns><see cref="DirectedGraph"/> for the node</returns>
+        /// <remarks>
+        /// This is used to aid in documentation for an AST. Usually, <paramref name="node"/>
+        /// is the root node for a parse to show all details but any valid node will do.
+        /// </remarks>
         public static DirectedGraph CreateGraph( this IAstNode node )
         {
             ArgumentNullException.ThrowIfNull( node );

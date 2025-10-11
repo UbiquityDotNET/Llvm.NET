@@ -66,33 +66,45 @@ namespace Kaleidoscope.Runtime
             TransformLayer.SetTransform( ModuleTransformer );
         }
 
+        /// <summary>Dispose this instance (and the composed <see cref="LLJit"/></summary>
         public void Dispose( )
         {
             ComposedJIT.Dispose();
         }
 
         #region IIOrcJit (via ComposedJIT)
+
+        /// <inheritdoc/>
         public JITDyLib MainLib => ComposedJIT.MainLib;
 
+        /// <inheritdoc/>
         public LazyEncodedString DataLayoutString => ComposedJIT.DataLayoutString;
 
+        /// <inheritdoc/>
         public LazyEncodedString TripleString => ComposedJIT.TripleString;
 
+        /// <inheritdoc/>
         public IrTransformLayer TransformLayer => ComposedJIT.TransformLayer;
 
+        /// <inheritdoc/>
         public ExecutionSession Session => ComposedJIT.Session;
 
+        /// <inheritdoc/>
         public ResourceTracker AddWithTracking( ThreadSafeContext ctx, Module module, JITDyLib lib = default )
         {
             return ComposedJIT.AddWithTracking( ctx, module, lib );
         }
 
+        /// <inheritdoc/>
         public ulong Lookup( LazyEncodedString name ) => ComposedJIT.Lookup( name );
 
+        /// <inheritdoc/>
         public void Add( JITDyLib lib, ThreadSafeModule module ) => ComposedJIT.Add( lib, module );
 
+        /// <inheritdoc/>
         public void Add( ResourceTracker tracker, ThreadSafeModule module ) => ComposedJIT.Add( tracker, module );
 
+        /// <inheritdoc/>
         public SymbolStringPoolEntry MangleAndIntern( LazyEncodedString name ) => ComposedJIT.MangleAndIntern( name );
         #endregion
 

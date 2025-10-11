@@ -5,6 +5,7 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <ForceAntlr4GeneratedCodeInternal>true</ForceAntlr4GeneratedCodeInternal>
         <IsAotCompatible>True</IsAotCompatible>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="ANTLR\Kaleidoscope.g4" />

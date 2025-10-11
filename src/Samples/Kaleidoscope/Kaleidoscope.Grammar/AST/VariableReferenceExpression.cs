@@ -8,20 +8,27 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// <summary>Kaleidoscope AST node for a reference to a variable</summary>
     public sealed class VariableReferenceExpression
         : AstNode
         , IExpression
     {
+        /// <summary>Initializes a new instance of the <see cref="VariableReferenceExpression"/> class.</summary>
+        /// <param name="location">Location of the node in the input source</param>
+        /// <param name="declaration">Declaration of the variable referenced</param>
         public VariableReferenceExpression( SourceRange location, IVariableDeclaration declaration )
             : base( location )
         {
             Declaration = declaration;
         }
 
+        /// <summary>Gets the declaration this reference refers to</summary>
         public IVariableDeclaration Declaration { get; }
 
+        /// <summary>Gets the name of the variable referenced</summary>
         public string Name => Declaration.Name;
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -30,6 +37,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -38,6 +46,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IAstNode> Children
         {
             get
@@ -46,6 +55,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             return $"Load({Name})";

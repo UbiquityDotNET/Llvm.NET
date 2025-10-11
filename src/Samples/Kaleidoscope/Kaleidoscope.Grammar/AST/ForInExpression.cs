@@ -8,10 +8,17 @@ using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
+    /// <summary>Kaleidoscope AST node for a <c>ForIn</c> expression</summary>
     public sealed class ForInExpression
         : AstNode
         , IExpression
     {
+        /// <summary>Initializes a new instance of the <see cref="ForInExpression"/> class.</summary>
+        /// <param name="location">Location of the expression in the source input</param>
+        /// <param name="loopVariable">Declaration of the variable to use for the loop</param>
+        /// <param name="condition">Exit Condition for the loop</param>
+        /// <param name="step">Step value to increment <paramref name="loopVariable"/> by with each iteration of the loop</param>
+        /// <param name="body">The body of the loop to invoke on each iteration</param>
         public ForInExpression( SourceRange location
                               , LocalVariableDeclaration loopVariable
                               , IExpression condition
@@ -26,14 +33,19 @@ namespace Kaleidoscope.Grammar.AST
             Body = body;
         }
 
+        /// <summary>Gets the declaration of the variable to use for the loop</summary>
         public LocalVariableDeclaration LoopVariable { get; }
 
+        /// <summary>Gets the exit Condition for the loop</summary>
         public IExpression Condition { get; }
 
+        /// <summary>Gets the step value to increment <see cref="LoopVariable"/> by with each iteration of the loop</summary>
         public IExpression Step { get; }
 
+        /// <summary>Gets the body of the loop to invoke on each iteration</summary>
         public IExpression Body { get; }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult}(IAstVisitor{TResult})"/>
         public override TResult? Accept<TResult>( IAstVisitor<TResult> visitor )
             where TResult : default
         {
@@ -42,6 +54,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this );
         }
 
+        /// <inheritdoc cref="BinaryOperatorExpression.Accept{TResult, TArg}(IAstVisitor{TResult, TArg}, ref readonly TArg)"/>
         public override TResult? Accept<TResult, TArg>( IAstVisitor<TResult, TArg> visitor, ref readonly TArg arg )
             where TResult : default
         {
@@ -50,6 +63,7 @@ namespace Kaleidoscope.Grammar.AST
                    : visitor.Visit( this, in arg );
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IAstNode> Children
         {
             get
@@ -61,6 +75,7 @@ namespace Kaleidoscope.Grammar.AST
             }
         }
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             return $"for({LoopVariable}, {Condition}, {Step}, {Body})";

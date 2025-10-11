@@ -10,9 +10,12 @@ using Ubiquity.NET.Extensions;
 
 namespace Kaleidoscope.Grammar
 {
+    /// <summary>Collection of <see cref="Prototype"/> keyed by it's name (<see cref="Prototype.Name"/>)</summary>
     public sealed class PrototypeCollection
         : KeyedCollection<string, Prototype>
     {
+        /// <summary>Adds or replaces an existing prototype in the collection</summary>
+        /// <param name="info">Prototype to add or replace</param>
         public void AddOrReplaceItem( Prototype info )
         {
             ArgumentNullException.ThrowIfNull( info );
@@ -20,6 +23,9 @@ namespace Kaleidoscope.Grammar
             Add( info );
         }
 
+        /// <summary>Gets the key for a prototype (<see cref="Prototype.Name"/>)</summary>
+        /// <param name="item">Prototype to get the key from</param>
+        /// <returns>Key for the prototype</returns>
         protected override string GetKeyForItem( Prototype item ) => item.ThrowIfNull().Name;
     }
 }

@@ -10,7 +10,11 @@ namespace Ubiquity.NET.TextUX
     [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "BS, extension" )]
     public static class AssemblyExtensions
     {
-#if DOCFX_BUILD_SUPPORTS_EXTENSION_KEYWORD
+// Sadly support for the 'extension' keyword outside of the compiler is
+// spotty at best. Third party tools and analyzers don't know what to do
+// with it. First party analyzers and tools don't yet handle it properly.
+// (Looking at you VS 2026 Insider's preview!) So don't use it yet...
+#if ALL_TOOLS_SUPPORT_EXTENSION_KEYWORD
         /// <summary>Extensions for <see cref="Assembly"/></summary>
         extension(Assembly asm)
         {
