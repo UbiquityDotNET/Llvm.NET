@@ -12,8 +12,6 @@ but not actually part of multiple other Ubiquity.NET projects.
   package.
 * StringNormalizer extensions to support converting line endings of strings
   for interoperability.
-* A custom ValidatedNotNullAttribute to allow compiler to assume a parameter
-  value is validated as not null.
 * Fluent style parameter value validation extensions.
     - These are useful when passing parameters to a function that produces a
       result that is fed to the base constructor. These are also useful in body
