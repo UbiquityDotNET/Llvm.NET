@@ -21,7 +21,7 @@ any code base providing interop support.
       additional data not part of the parameters of the function to work properly. This library
       provides support for such scenarios where a delegate is used to "capture" the data while
       still supporting AOT scenarios. (NOTE: Marshal.GetFunctionPointerForDelegate() must
-      dynamically emit a thunk that contains the proper signature and the captured "this" pointer
-      so is NOT AOT friendly) The support offered in this library, though a bit more tedious,
-      is AOT friendly.
+      dynamically emit a thunk that contains the proper signature and the captured "this"
+      pointer so is NOT AOT friendly) The support offered in this library, though a bit more
+      tedious, is AOT friendly.
 

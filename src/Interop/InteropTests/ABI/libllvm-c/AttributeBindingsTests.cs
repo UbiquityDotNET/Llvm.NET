@@ -47,12 +47,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.UT
                 var actualNames = new LazyEncodedString[len];
                 for(int i = 0; i < len; ++i)
                 {
-                    // https://github.com/microsoft/testfx/issues/5543
-#pragma warning disable MSTEST0037 // Use proper 'Assert' methods
                     Assert.IsTrue( ppData[ i ] is not null );
-#pragma warning restore MSTEST0037 // Use proper 'Assert' methods
-
-                    var les = LazyEncodedString.FromUnmanaged(ppData[i]);
 
                     actualNames[ i ] = LazyEncodedString.FromUnmanaged( ppData[ i ] )!;
                 }

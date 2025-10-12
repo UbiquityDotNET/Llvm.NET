@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace Ubiquity.NET.Extensions
@@ -71,7 +72,9 @@ namespace Ubiquity.NET.Extensions
             where T : struct, Enum
         {
             ArgumentNullException.ThrowIfNull(self, exp);
-            return Enum.IsDefined( typeof(T), self ) ? self : throw new InvalidEnumArgumentException( exp );
+            return Enum.IsDefined( typeof(T), self )
+                   ? self
+                   : throw new InvalidEnumArgumentException(exp);
         }
     }
 }

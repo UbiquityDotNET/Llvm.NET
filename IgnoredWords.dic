@@ -28,11 +28,13 @@ blockdiag
 blog
 bool
 borked
+buf
 buildbinoutput
 buildtransitive
 builtinop
 byref
 byval
+callee
 canonicalization
 castable
 cibuild
@@ -56,6 +58,7 @@ dllimport
 docfx
 docfxconsole
 dotnet
+downcasts
 endian
 endianess
 enum
@@ -97,10 +100,12 @@ malloc
 marshallers
 marshalling
 materializer
+materializers
 memcopy
 memcpy
 memset
 metadata
+minimalistic
 Mips
 msbuild
 msg
@@ -111,6 +116,7 @@ nounwind
 nuint
 nullability
 Nullable
+numerics
 Nvidia
 online
 optimizenone
@@ -147,6 +153,7 @@ Subrange
 Sym
 telliam
 templated
+templating
 tl
 trx
 typdef
@@ -162,6 +169,7 @@ undiscoverable
 Unhandled
 uniqued
 uniqueing
+unmanaged
 unmarshal
 unreferenced
 Unshipped
