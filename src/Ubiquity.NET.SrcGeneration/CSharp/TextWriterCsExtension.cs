@@ -44,7 +44,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// <summary>Writes an XML Doc comment summary</summary>
         /// <param name="self">The writer to write to</param>
         /// <param name="description">Text to include in the summary (Nothing is written if this is <see langword="null"/> </param>
-        public static void WriteOptionalSummary(this TextWriter self, string? description )
+        public static void WriteSummary(this TextWriter self, string? description )
         {
             ArgumentNullException.ThrowIfNull( self );
 

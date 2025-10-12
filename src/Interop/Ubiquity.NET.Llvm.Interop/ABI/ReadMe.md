@@ -58,7 +58,7 @@ Input arrays are generally rather simple to declare and use the form:
 void LLVMSomeApi(LLVMHandleOfSomeSort h, [In] UInt32[] elements, int numElements);
 ```
 
-### Out arrays
+### Arrays as OUT parameters
 Arrays where the implementation is expected to provide a pointer that is allocated and
 filled in by the native code use the following pattern:
 ``` C#
@@ -97,16 +97,18 @@ wrappers to avoid any potential confusion about the size of types between C# and
 native C/C++)
 
 ### Distinction for real LLVMBOOL vs Status
-This library and P/Invoke signatures disambiguates between an actual boolean value
+This library and P/Invoke signatures disambiguate between an actual boolean value
 (`LLVMBool`) and what is really a success or failure status code. As with strings, the
-only way to tell the difference is to read the docs... Thus, for ALL API signatures an
-LLVMStatus is used for any native code signature `LLVMBool` that is documented as
-behaving like a status and NOT a bool. This prevents mass confusion on the intent and
-helps keep the API surface cleaner and more self documenting. (Does a non-zero
-`LLVMBool` mean it succeeded? Or does it mean there was an error?) Thus all APIs need
-a developer to understand the documentation and set the P/Invoke signature to use
+only way to tell the difference is to read the docs, or sometimes the source... Thus,
+for ALL API signatures an `LLVMStatus` is used for any native code signature `LLVMBool`
+that is documented as behaving like a status and NOT a bool. This prevents mass confusion
+on the intent and helps keep the API surface cleaner and more self documenting. (Does a
+non-zero `LLVMBool` mean it succeeded? Or does it mean there was an error?) Thus all APIs
+need a developer to understand the documentation and set the P/Invoke signature to use
 `LLVMStatus` for anything that is really a status code and ***NOT*** a proper boolean
-(true/false) value.
+(true/false) value. This library has done that work and ALL signatures using the native
+`LLVMBool` is manually evaluated and the correct form applied to the managed P/Invoke
+signature.
 
 ## Enumerated value naming
 The normal rules of naming enumerated values are suspended for this low level interop
@@ -118,14 +120,14 @@ documentation for this library focuses ONLY on the interop support provided with
 ## Calling convention
 All of the P/Invoke APIs use an explicit
 `[UnmanagedCallConv(CallConvs=[typeof(CallConvCdecl)])]` to identify that the APIs use
-the standard "C" ABI calling convention.
+the standard "C" ABI calling convention. This is defined by the LLVM-C API.
 
 ### Future optimization
 At some point in the future it might be worth adding the ability to suppress GC
 transitions as an optimization. Application of that requires great care and
 understanding of the GC and native implementation to ensure it is safe to do. This is
 strictly a performance optimization that has NO impact on callers so is left for
-future enhancement.
+future enhancement as applicable.
 
 ## Special handling of strings
 >[!NOTE]
@@ -209,9 +211,9 @@ private static unsafe partial uint LLVMGetSyncScopeID(LLVMContextRefAlias C, Laz
 
 Sometimes an API will return a pointer AND include an out parameter for the length
 of a string. These require great care as they do NOT guarantee that the string is
-terminated! Only that the length is valid. Thus, such APIs follow a similar pattern
-of wrapping that handles the out parameter to produce a `LazyEncodedString` as in the
-following example:
+terminated! Only that the length is valid. Thus, the implementation of wrappers for 
+such APIs follow a pattern of hiding the length out parameter to produce a
+`LazyEncodedString` as in the following example:
 
 ``` C#
 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -241,7 +243,7 @@ private static unsafe partial byte* LLVMGetStringAttributeKind(LLVMAttributeRef 
 > overflows are caught and triggered at the point of the problem. It is unlikely these
 > will ever hit as strings that large are generally unmanageable at runtime anyway.
 
-
+---
 ^1^ While it is plausible to create an ISO `C` compliant compiler implementation and
 OS runtime environment where size_t is larger than a native pointer. Such a compiler
 and runtime would have extremely limited use as most code written or found today,

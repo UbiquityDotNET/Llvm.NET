@@ -8,7 +8,7 @@ The general flow of this tutorial follows that of the official
 [LLVM tutorial](xref:llvm_kaleidoscope_tutorial)
 and many of the samples are lifted directly from that tutorial to make it easier to
 follow along both tutorials to see how the various LLVM concepts are projected in the
-Ubiquity.NET.Llvm library.
+`Ubiquity.NET.Llvm library.`
 
 >[!NOTE]
 > The samples are all setup to include `<PublishAot>True</PublishAot>` and therefore
@@ -28,8 +28,8 @@ It is worth pointing out that this example is not intended as a treatise on comp
 design nor on language parsing. While it contains many aspects of those topics the
 tutorial is, mostly, focused on the use of Ubiquity.NET.Llvm for code generation.
 Furthermore it isn't a trans-literation of the LLVM C++ sample as that would defeat
-one of the major points of Ubiquity.NET.Llvm - to provide a familiar API and use
-pattern to C# developers.
+one of the major points of `Ubiquity.NET.Llvm` - to provide a familiar API and use
+patterns familiar to C# developers.
 
 ## General layout
 The samples are built using common core libraries and patterns. They are explicitly
@@ -72,20 +72,20 @@ There are a few different ways to represent an expression that is long enough to
 warrant splitting it across multiple lines when typing it out.
 
 ##### Expression Continuation Marker
-One mechanism for handling multi-line expressions that is used in most shell scripting
-languages is a line continuation marker. In such cases a special character followed by
-a line-termination char or char sequence indicates that the expression continues on
-the next line (e.g. it isn't complete yet).
+One mechanism for handling multi-line expressions that is used in most shell
+scripting languages is a line continuation marker. In such cases a special character
+followed by a line-termination char or char sequence indicates that the expression
+continues on the next line (e.g. it isn't complete yet).
 
 ##### Expression Complete Marker
-Another approach to handling long expressions spanning multiple lines is basically the
-opposite of line continuation, expression complete markers. This marker indicates the
-end of a potentially multi-line expression. (A variant of this might require a line
-termination following the marker as with the line continuation).
+Another approach to handling long expressions spanning multiple lines is basically
+the opposite of line continuation, expression complete markers. This marker indicates
+the end of a potentially multi-line expression. (A variant of this might require a
+line termination following the marker as with the line continuation).
 
 ##### Kaleidoscope Implementation
-The original LLVM C++ implementation chose the expression completion approach using a
-semicolon as the completion. (So it seems familiar like statements in other C like
+The original LLVM C++ implementation chose the expression completion approach using
+a semicolon as the completion. (So it seems familiar like statements in other C like
 languages) Therefore, the Ubiquity.NET.Llvm tutorial follows the same design.
 [Implementing the line continuation mechanism in Kaleidoscope is left as an exercise
 for the reader - though if you come up with a mechanism to support either that is
@@ -101,8 +101,8 @@ When entered ( or copy/pasted) to the command line Kaleidoscope will print out t
 following:
 
 >[!NOTE]
->This example uses features of the language only enabled/discussed in Chapter 6 of the
->tutorial.The runtime from chapters 3-5 will generate errors trying to parse this
+>This example uses features of the language only enabled/discussed in Chapter 6 of
+>the tutorial.The runtime from chapters 3-5 will generate errors trying to parse this
 >code.
 
 ```shell
@@ -153,9 +153,9 @@ Ready>
 ```
 
 ## Conclusion
-Kaleidoscope is a simple, yet complete, language with a good deal of functionality.
-This serves as a great language to study the use of Ubiquity.NET.Llvm for code
-generation and Domain Specific Languages. While, generally speaking, the functionality
-of the Ubiquity.NET.Llvm version of this tutorial differs only slightly from that of
-the official LLVM version, it serves well as an example of what you can do with
-Ubiquity.NET.Llvm.
+Kaleidoscope is a simple language with a good deal of functionality. This serves as
+a great language to study the use of Ubiquity.NET.Llvm for code generation and
+Domain Specific Languages. While, generally speaking, the functionality of the
+`Ubiquity.NET.Llvm` version of this tutorial differs only slightly from that of the
+official LLVM version, it serves well as an example of what you can do with
+`Ubiquity.NET.Llvm.`

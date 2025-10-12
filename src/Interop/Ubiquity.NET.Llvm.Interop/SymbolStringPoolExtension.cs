@@ -14,14 +14,14 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <summary>Initializes a new instance of the <see cref="SymbolEntryInfo"/> struct.</summary>
         /// <param name="name">Name of the symbol</param>
         /// <param name="refCount">Reference count for the symbol</param>
-        public SymbolEntryInfo( string name, int refCount )
+        public SymbolEntryInfo( LazyEncodedString name, int refCount )
         {
             Name = name;
             RefCount = refCount;
         }
 
         /// <summary>Gets the Name of the symbol</summary>
-        public string Name { get; }
+        public LazyEncodedString Name { get; }
 
         public int RefCount { get; }
     }

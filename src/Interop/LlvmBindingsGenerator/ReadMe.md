@@ -9,7 +9,7 @@ IN C# already as part of P/Invoke generation so there wasn't much point in conti
 that. (Though there is something to be said for use as a starting point...)
 
 ## Split implementation
-This app was subsequently split into to implementations that live in distinct repositories
+This app was subsequently split into to implementations that now exist in distinct repositories
 1) Generates the EXPORTS.g.def for the Windows DLL generation from the LLVM + LIBLLVM headers
     1) This version lives in the [LibllVM repository](https://github.com/UbiquityDotNET/Llvm.Libs)
 2) Generates the "safe handle" C# code from the LLVM + LIBLLVM headers
@@ -18,7 +18,7 @@ This app was subsequently split into to implementations that live in distinct re
 ### Common implementation 
 While there is a common implementation between the implementations (They started as simply the
 same code and commenting out the functionality not desired) they have and will diverge over
-time though anything in the core parsing of headers and general code generation from templates
+time, though anything in the core parsing of headers and general code generation from templates
 is likely to remain. (It may be viable to support a common library for this scenario but this
 is ONLY necessary when the native side of the interop library changes)
 
@@ -26,9 +26,10 @@ is ONLY necessary when the native side of the interop library changes)
 > [!IMPORTANT]
 > This project has a dependency on the `CppSharp` library which ONLY supports the `X64`
 > architecture but the generated wrappers are NOT dependent on a particular architecture.
-> This limits the environments that can be used to generate the sources. To simplify that
+> This limits the environments that can be used to generate the sources. To simplify that,
 > the generated sources are placed into source control but generated off-line by a developer.
-> A developer machine doing this ***MUST*** be X64 or the tool can't run.
+> A developer machine doing this ***MUST*** be X64 or this tool can't run. This is a limitation
+> defined by a dependent library.
 
 `LlvmBindingsGenerator -l <llvmRoot> -e <extensionsRoot> -h <HandleOutputPath> [-Diagnostics <Diagnostic>]`
 
@@ -58,13 +59,13 @@ not used.
 
 #### Roslyn Source Generators - 'There be dragons there!'
 Roslyn allows source generators directly in the compiler making for a feature similar to C++
-template code generation AT compile time. However, there's a couple of BIG issue with that for
+template code generation AT compile time. However, there's a couple of BIG issues with that for
 this particular code base.
 1) Non-deterministic ordering, or more specifically for this app, no way to declare the
    dependency on ***outputs*** of one generator as the ***input*** for another.
 2) Dependencies for project references
-    - As a generator for this is not general purpose they would not be published or produced
-      as a NUGET package. They only would work as a project reference. But that creates a TON
+    - As a generator for this is not general purpose it would not be published or produced
+      as a NUGET package. It would only work as a project reference. But that creates a TON
       of problems for the binary runtime dependencies of source generators, which don't flow
       with them as project references...
 
@@ -114,15 +115,17 @@ how to generate the correct code.
        significant factor.
 
 #### The final choice
-Keep using this library as a generator for the handle types. This used to work, and still does.
+Keep using this app as a generator for the handle types. This used to work, and still does.
 However, this doesn't solve the problem of expressing managed code things in a custom language
 (YAML) but it's at least a rather simplistic expression for the handles. And arguably less
 complicated then all the subtleties of using a Roslyn Source generator for this sort of one off
 specialized code generation.
+
 Solving the problem of expressing P/Invokes is simply to just manage that directly. It seemed
 like a good idea to automate the tedium of generating those. Sadly, there are so many
-subtleties that involve reading the docs (or source code) before you can correctly implement
-it that there's no value in expressing all that subtlety in anything other than C#.
+subtleties of "special cases" that involve reading the docs (or source code) before you can
+correctly implement it. In the end, there's no value in expressing all that subtlety in anything
+other than C#.
 
 This also keeps the door open to use the native AST from within the source generator or an
 analyzer to perform additional checks and ensure the hand written code matches the actual

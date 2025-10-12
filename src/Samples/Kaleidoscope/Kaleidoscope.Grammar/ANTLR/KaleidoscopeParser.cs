@@ -12,7 +12,7 @@ namespace Kaleidoscope.Grammar.ANTLR
 {
     // partial class customization to the ANTLR generated class
     // This extends the individual parse tree context node types
-    // so that labels in the grammar are unnecessary.
+    // so that labels in the grammar are normally unnecessary.
     internal partial class KaleidoscopeParser
     {
         public KaleidoscopeParser(

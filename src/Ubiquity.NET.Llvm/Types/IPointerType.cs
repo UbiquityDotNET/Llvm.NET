@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.Types
         /// <note Type="note">
         /// until C# 14 [.Net 10] is supported this is an extension method. Once C#14 is available
         /// then this can become a property. Default methods on the interface have too many restrictions
-        /// (mostly egregious is the need to "box"/cast to the explicit interface for the lookup to find
+        /// (most egregious is the need to "box"/cast to the explicit interface for the lookup to find
         /// the method).
         /// </note>
         /// </remarks>
