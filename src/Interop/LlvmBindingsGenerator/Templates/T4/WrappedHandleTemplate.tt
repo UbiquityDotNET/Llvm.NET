@@ -67,11 +67,13 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <returns>The handle as an <see cref="nint"/></returns>
         public nint DangerousGetHandle() => Handle;
 
+        /// <inheritdoc/>
         public override string ToString( )
         {
             return Handle.ToString();
         }
 
+        /// <inheritdoc/>
         public string ToString( string? format, IFormatProvider? formatProvider )
         {
             return Handle.ToString(format, formatProvider);
@@ -87,6 +89,11 @@ namespace Ubiquity.NET.Llvm.Interop
         /// <returns>The handle as an <see cref="nint"/></returns>
         public static implicit operator nint(<#=HandleName#> value) => value.Handle;
 <#if(IsDisposable){#>
+
+#if DEBUG
+        /// <summary>Gets creation stack - Debugging aid</summary>
+        public string? CreationStack { get; }
+#endif
 
         /// <remarks>
         /// <em><b>This is NOT an idempotent call.</b></em> Additionally, since this is a struct it does NOT
@@ -115,6 +122,16 @@ namespace Ubiquity.NET.Llvm.Interop
         internal <#=HandleName#>( nint p )
         {
             Handle = p;
+<#if(IsDisposable){#>
+#if DEBUG
+            // In a debug build capture the stack for creation of this instance
+            // that way it is still available if there is an access violation
+            // in the dispose. Usually such a thing indicates the source did NOT
+            // properly apply a using. So it is VERY helpful in debugging of finalizer
+            // failures to locate the source.
+            CreationStack = Environment.StackTrace;
+#endif
+<#}#>
         }
 
         private readonly nint Handle;

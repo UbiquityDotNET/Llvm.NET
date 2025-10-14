@@ -8,6 +8,11 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator.Templates
 {
+    // Manually maintained partial of the T4 Template generated type
+    // This provides the support needed by the "code" in the template.
+    // General idea is to minimize the "logic" in the T4 template to simple conditional
+    // expressions and property accessors. This keeps the template as simple as possible
+    // (they can get unreadable/unmaintainable really fast).
     internal partial class WrappedHandleTemplate
         : IHandleCodeTemplate
     {

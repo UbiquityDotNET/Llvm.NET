@@ -75,7 +75,7 @@ namespace Ubiquity.NET.InteropHelpers
             string ConvertString( ) => NativeBytes.Value.Length > 0 ? Encoding.GetString( NativeBytes.Value[ ..^1 ] ) : string.Empty;
 
             // This incurs the cost of a copy but the lifetime of the span is not known or
-            // guaranteed beyond this call.
+            // guaranteed beyond this call so it has to make a copy.
             static byte[] GetNativeArrayWithTerminator( ReadOnlySpan<byte> span )
             {
                 // If it already has a terminator just use it

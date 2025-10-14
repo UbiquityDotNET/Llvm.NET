@@ -5,6 +5,7 @@ using LlvmBindingsGenerator.CppSharpExtensions;
 
 namespace LlvmBindingsGenerator
 {
+    /// <summary>Adapter class from a <see cref="ICodeGenTemplate"/> generator to a CppSharp ICodeGenerator</summary>
     internal class TemplateCodeGenerator
         : ICodeGenerator
     {

@@ -61,6 +61,7 @@ dotnet
 downcasts
 endian
 endianess
+endif
 enum
 Enums
 env
@@ -171,6 +172,7 @@ uniqued
 uniqueing
 unmanaged
 unmarshal
+unoptimized
 unreferenced
 Unshipped
 userdefinedop

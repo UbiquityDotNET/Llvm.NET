@@ -21,16 +21,15 @@ ABI function pointers are represented as real .NET function pointers with an unm
 signature.
 
 ### special consideration for handles
-LLVM Context handles are  just value types that wrap around a runtime `nint` (basically
+LLVM handles are just value types that wrap around a runtime `nint` (basically
 a strong typedef for a pointer). Therefore, they are blittable value types and don't
-need any significant marshaling support. Global handles, however, are reference types
-derived from `SafeHandle` as they need special release semantics. All LLVM handle
-managed projections **CANNOT** appear in the signature of an unmanaged function pointer
-as there is no way to mark the marshalling behavior for unmanaged pointers.
-Implementations of the "callbacks" MUST handle marshalling of the ABI types manually.
-Normally, they will leverage a `GCHandle` as the "context", perform marshalling, and
-forward the results on to the managed context object. But implementations are free to
-deal with things as they need to (or have to if no context parameter is available).
+need any significant marshaling support. All LLVM handle managed projections **CANNOT**
+appear in the signature of an unmanaged function pointer as there is no way to mark
+the marshalling behavior for unmanaged pointers. Implementations of the "callbacks"
+MUST handle marshalling of the ABI types manually. Normally, they will leverage a
+`GCHandle` as the "context", perform marshalling, and forward the results on to the
+managed context object. But implementations are free to deal with things as they need
+to (or have to if no context parameter is available).
 
 # General patterns for maintenance of P/Invoke signatures
 The general pattern is that the interop APIs now ALL use the built-in interop source
@@ -74,15 +73,16 @@ void LLVMSomeApiThatFillsArray(LLVMHandleOfSomeSort h, out UInt32[] elements, in
 ### Return arrays
 Return arrays are like an out param except that they are the return type. A problem
 with this is that they are **purely** `[Out]` in that the native code must allocate
-the return value and cleanup (if any) of that return is left to the caller to perform. 
+the return value and cleanup (if any) of that allocation is left to the caller to
+perform. 
 
 It is important to note that `[Out] byte[] buf` and `out byte[] buf` are two very
 different declarations and have distinct meanings for the marshalling of these
 parameters. The first expects the **caller** to allocate the memory and it is 'filled
 in' by the callee, the second expects the **callee** to allocate and fill the memory.
 The second implies some form of "contract" on the release of the allocated memory. The
-marshaller has no knowledge of such a thing and does not know how to release it either.
-Thus a custom marshaller is needed for such things.
+normal marshaling has no knowledge of such a thing and does not know how to release it
+either. Thus, a custom marshaller is needed for such things.
 
 #### Special support for SafeHandle arrays
 The built-in marshalling does NOT support arrays of SafeHandles as in parameters
