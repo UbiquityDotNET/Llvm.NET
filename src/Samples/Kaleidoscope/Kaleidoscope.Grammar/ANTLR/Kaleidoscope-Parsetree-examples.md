@@ -13,9 +13,9 @@ uid: Kaleidoscope-Parsetree-examples
 ![Parse Tree](./parsetree-simpleexp-1.svg)
 
 >[!NOTE]
->The small circle in the upper left corner of the Expression nodes is the precedence value at
->the entry to the rule. ANTLR uses a precedence climbing algorithm so this number indicates
->the precedence for the expression in relation to others.
+>The small circle in the upper left corner of the Expression nodes is the precedence
+>value at the entry to the rule. ANTLR uses a precedence climbing algorithm so this number
+>indicates the precedence for the expression in relation to others.
 
 >[!NOTE]
 >The parse tree for the expression has 5 children that are in evaluation order. That is,
