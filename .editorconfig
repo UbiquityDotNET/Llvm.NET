@@ -27,6 +27,11 @@ indent_style = space
 indent_size = 2
 tab_width = 2
 
+[*.md]
+# mark left margion for split screen preview of markdown files
+# requires: https://marketplace.visualstudio.com/items?itemName=PaulHarrington.EditorGuidelinesPreview
+guidelines = 92
+
 # match ISO standard requirement for C/C++
 [*.c,*.h,*.cpp]
 insert_final_newline = true

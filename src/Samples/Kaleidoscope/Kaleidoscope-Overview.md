@@ -13,12 +13,13 @@ follow along both tutorials to see how the various LLVM concepts are projected i
 >[!NOTE]
 > The samples are all setup to include `<PublishAot>True</PublishAot>` and therefore
 > support AOT code generation. To use that you only need to run
-> `dotnet publish <project path> -r win-x64` to build the native standalone version
+> `dotnet publish <project path> -r <RID>` to build the native standalone version
 > of the app. This demonstrates that the libraries are AOT compatible. While this makes
-> things run faster as no JIT used, everything is already native code, it has the
+> things run faster as no JIT is used, everything is already native code, it has the
 > drawback of making the app RID specific. That is, you must AOT build for EVERY
->supported RID target. Thus, every use must make a choice and there is no single
-> "one size fits all" answer.
+> supported RID target. Each usage case must make a choice and there is no single
+> "one size fits all" answer. Thus, the samples and the library itself allow for, but
+> ***Do NOT*** require AOT builds.
 
 ## Overview
 Kaleidoscope is a simple functional language that is used to illustrate numerous real
