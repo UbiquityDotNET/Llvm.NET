@@ -2,6 +2,7 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.CommandLine;
+using System.CommandLine.Help;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -42,6 +43,9 @@ namespace Ubiquity.NET.CommandLine.UT
             };
 
             var result = rootCommand.Parse(["--FooBar", "--help"]);
+            var helpOption = result.GetHelpOption();
+            Assert.IsNotNull(helpOption);
+            Assert.AreEqual(helpOption.Action, result.Action);
             Assert.HasCount( 3, result.Errors, "Errors should account for bogus arg (`--FooBar`), missing required arg (`--option1`), AND that `--version` should be solo" );
         }
 
@@ -77,12 +81,12 @@ namespace Ubiquity.NET.CommandLine.UT
 
             var result = rootCommand.Parse(["--version", "--option1"]);
 
-            // This assert will fail - result.Errors.Count == 3!
+            // Known bug in runtime lib. This assert will fail - result.Errors.Count == 3!
             // result.Errors:
             //    [0]{--version option cannot be combined with other arguments.}
             //    [1]{Required argument missing for option: '--option1'.}
             //    [2]{Required argument missing for option: '--option1'.} // Why is this occurring twice?
-            //Assert.HasCount( 2, result.Errors, "Should be two errors (version not used solo, missing arg)" );
+            Assert.HasCount( 2, result.Errors, "Should be two errors (version not used solo, missing arg)" );
 
             // try with arguments in reversed order (--version is later)
             result = rootCommand.Parse(["--option1", "--version"]);

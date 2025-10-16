@@ -13,17 +13,11 @@ namespace LlvmBindingsGenerator
 {
     internal static partial class Program
     {
-        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "MAin function blocks general exceptions from bubbling up, reports them consistently before exiting" )]
+        [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "Main function blocks general exceptions from bubbling up, reports them consistently before exiting" )]
         public static int Main( string[ ] args )
         {
             var reporter = new ColoredConsoleReporter(MsgLevel.Information);
-
-            var settings = new CmdLineSettings()
-            {
-                ShowHelpOnErrors = false,
-            };
-
-            if(!ArgsParsing.TryParse<CmdLineArgs>( args, settings, reporter, out CmdLineArgs? options, out int exitCode ))
+            if(!ArgsParsing.TryParse<CmdLineArgs>( args, reporter, out CmdLineArgs? options, out int exitCode ))
             {
                 return exitCode;
             }
@@ -35,6 +29,9 @@ namespace LlvmBindingsGenerator
                 Level = options.Diagnostics
             };
 
+            // This is how the CppSharpLibrary handles all diagnostics...
+            // Instead of passing an interface to the types that need one
+            // it uses a static singleton type. [Sigh...]
             Diagnostics.Implementation = diagnostics;
             try
             {

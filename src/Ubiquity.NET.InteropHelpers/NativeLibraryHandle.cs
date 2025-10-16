@@ -26,8 +26,8 @@ namespace Ubiquity.NET.InteropHelpers
             return new( NativeLibrary.Load( libraryName, assembly, searchPath ) );
         }
 
-        /// <inheritdoc cref="NativeLibrary.TryLoad(string, out nint)"/>
         /// <param name="lib">Native library handle.</param>
+        /// <inheritdoc cref="NativeLibrary.TryLoad(string, out nint)"/>
 #pragma warning disable CS1573 // Parameter has no matching param tag in the XML comment (but other parameters do)
         public static bool TryLoad( string libraryPath, [MaybeNullWhen( false )] out NativeLibraryHandle lib )
         {

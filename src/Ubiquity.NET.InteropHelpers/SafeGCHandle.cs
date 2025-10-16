@@ -17,7 +17,7 @@ namespace Ubiquity.NET.InteropHelpers
     ///
     /// <para>This is used as a member of such a holding type so that 'AddRefAndGetNativeContext'
     /// retrieves a marshaled GCHandle for the containing/Controlling instance that is
-    /// then provided as the native "Context" parameter.</para>
+    /// then provided as the native "Context" parameter (usually as a void*).</para>
     ///
     /// <para>It is assumed that instances of this type are held in a disposable type such
     /// that when the containing type is disposed, then this is disposed. Additionally,

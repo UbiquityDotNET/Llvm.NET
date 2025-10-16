@@ -10,12 +10,12 @@ namespace LlvmBindingsGenerator
 {
     internal partial class CmdLineArgs
     {
-        // [Option("-l", Required=true, Description="Root of source with the LLVM headers to parse (Assumes and validates a subfolder 'include')"]
+        // [Option("-l", Required=true, Description="Root of source with the LLVM headers to parse (Assumes and validates a sub-folder 'include')"]
         // [AcceptExistingFolderOnly]
-        // [Validator( 'CmdLineArgs.ValidateIncludeFolder' )]
+        // [Validator( "CmdLineArgs.ValidateIncludeFolder" )]
         public required DirectoryInfo LlvmRoot { get; init; }
 
-        // [Option("-e", Required=true, Description="Root of source with the LibLLVM extension headers to parse (Assumes and validates a subfolder 'include')"]
+        // [Option("-e", Required=true, Description="Root of source with the LibLLVM extension headers to parse (Assumes and validates a sub-folder 'include')"]
         // [AcceptExistingFolderOnly]
         // [Validator( "CmdLineArgs.ValidateIncludeFolder" )]
         public required DirectoryInfo ExtensionsRoot { get; init; }

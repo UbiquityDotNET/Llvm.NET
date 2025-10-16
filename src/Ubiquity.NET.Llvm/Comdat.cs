@@ -34,7 +34,7 @@ namespace Ubiquity.NET.Llvm
     /// </remarks>
     [SuppressMessage( "Style", "IDE0250:Make struct 'readonly'", Justification = "NO, it can't be, the Kind setter is NOT readonly" )]
 #if NET9_0_OR_GREATER
-    public readonly ref struct Comdat
+    public readonly ref struct Comdat // IEquatabe<T> only supports ref struct in .NET 9.0 or greater
 #else
     public readonly struct Comdat
 #endif
