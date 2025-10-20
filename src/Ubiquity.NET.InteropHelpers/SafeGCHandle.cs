@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Ubiquity.NET.InteropHelpers
@@ -25,10 +26,10 @@ namespace Ubiquity.NET.InteropHelpers
     /// should otherwise account for the ref count increase to hold the instance alive. That
     /// is, by holding a <see cref="GCHandle"/> to self, with an AddRef'd handle the instance
     /// would live until the app is terminated! Thus applications using this MUST understand
-    /// the native code use and account for the disposable of any instances with this as a
+    /// the native code use and account for the disposale of any instances with this as a
     /// member. Typically a callback provided to the native code is used to indicate release
-    /// of the resource. That callback will call dispose to decrement the refcount on the
-    /// handle. If the ref count lands at 0, then the object it refers to is subject to
+    /// of the resource. That callback will call dispose to decrement the refcount on this
+    /// GC handle. If the ref count lands at 0, then the object it refers to is subject to
     /// normal GC.</para>
     /// </remarks>
     public sealed class SafeGCHandle
@@ -59,6 +60,7 @@ namespace Ubiquity.NET.InteropHelpers
         {
             bool ignoredButRequired = false;
             DangerousAddRef( ref ignoredButRequired );
+            Debug.Assert(ignoredButRequired, "DangerousAddRef on the GC handle did NOT succeed!");
             return handle;
         }
 

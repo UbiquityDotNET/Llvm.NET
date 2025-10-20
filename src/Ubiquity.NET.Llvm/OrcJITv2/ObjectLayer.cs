@@ -6,8 +6,8 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>ORC JIT v2 Object linking layer</summary>
-    public sealed class ObjectLayer
-        : IDisposable
+    public class ObjectLayer
+        : DisposableObject
     {
         /// <summary>Adds an object file to the specified library</summary>
         /// <param name="jitDyLib">Library to add the object file to</param>
@@ -60,8 +60,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <inheritdoc/>
         [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
-        public void Dispose( )
+        protected override void Dispose( bool disposing )
         {
+            base.Dispose(disposing);
             if(!Handle.IsNull)
             {
                 Handle.Dispose();
@@ -74,6 +75,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             Handle = h;
         }
 
-        internal LLVMOrcObjectLayerRef Handle { get; private set; }
+        internal ObjectLayer()
+        {
+        }
+
+        internal LLVMOrcObjectLayerRef Handle
+        {
+            get;
+
+            // Only accessible from derived types, since the modifier of this property is `internal` that
+            // means `internal` AND `protected`
+            private protected set
+            {
+                if(!field.IsNull)
+                {
+                    throw new InvalidOperationException("INTERNAL: Setting handle multiple times is not allowed!");
+                }
+
+                field = value;
+            }
+        }
     }
 }
