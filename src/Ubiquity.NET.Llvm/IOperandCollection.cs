@@ -29,7 +29,6 @@ namespace Ubiquity.NET.Llvm
         /// <param name="start">Inclusive start index for the slice</param>
         /// <param name="end">Exclusive end index for the slice</param>
         /// <returns>Slice of the collection</returns>
-        [SuppressMessage( "Naming", "CA1716:Identifiers should not match keywords", Justification = "Naming is consistent with System.Range parameters" )]
         IOperandCollection<T> Slice( int start, int end )
         {
             return new OperandCollectionSlice<T>( this, new Range( start, end ) );

@@ -24,6 +24,16 @@ namespace Ubiquity.NET.Llvm.Types
         ITypeRef? ElementType { get; init; }
     }
 
+    // This does NOT use the new C# 14 extension syntax due to several reasons
+    // 1) Code lens does not work https://github.com/dotnet/roslyn/issues/79006 [Sadly marked as "not planned" - e.g., dead-end]
+    // 2) MANY analyzers get things wrong and need to be supressed (CA1000, CA1034, and many others [SAxxxx])
+    // 3) Many tools (like docfx don't support the new syntax yet)
+    // 4) No clear support for Caller* attributes ([CallerArgumentExpression(...)]).
+    //
+    // Bottom line it's a good idea with an incomplete implementation lacking support
+    // in the overall ecosystem. Don't use it unless you absolutely have to until all
+    // of that is sorted out.
+
     /// <summary>Utility class to provide extensions for <see cref="IPointerType"/></summary>
     /// <remarks>
     /// These are useful even in the presence of default property implementations as the properties
@@ -43,12 +53,6 @@ namespace Ubiquity.NET.Llvm.Types
         /// but is not normal for anything that creates or clones the IR. Since the pointer type creation is
         /// done as a method of the thing being pointed to this information is "attached" to the pointer so
         /// that the <see cref="IPointerType.ElementType"/> is not <see langword="null"/>.
-        /// <note Type="note">
-        /// until C# 14 [.Net 10] is supported this is an extension method. Once C#14 is available
-        /// then this can become a property. Default methods on the interface have too many restrictions
-        /// (most egregious is the need to "box"/cast to the explicit interface for the lookup to find
-        /// the method).
-        /// </note>
         /// </remarks>
         public static bool IsOpaque( this IPointerType ptr )
         {

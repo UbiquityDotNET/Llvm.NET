@@ -207,7 +207,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <summary>Initializes a new instance of the <see cref="SymbolStringPoolEntry"/> class.</summary>
         /// <param name="abiHandle">Native ABI handle</param>
         /// <param name="alias">Indicates whether this is an aliased (unowned) representation</param>
-        /// <remarks>Wraps a native ABI handle in a managed projected type</remarks>
+        /// <remarks>Wraps a native ABI handle for an entry in a string pool in a managed type</remarks>
         internal SymbolStringPoolEntry( nint abiHandle, bool alias = false )
         {
             Handle = LLVMOrcSymbolStringPoolEntryRef.FromABI(abiHandle);

@@ -207,7 +207,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
             LazyEncodedString Name
             );
 
-        [Experimental( "LLVM001" )]
+        [Experimental( "LLVMEXP001" )]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe void LLVMOrcExecutionSessionLookup(
             LLVMOrcExecutionSessionRef ES,
@@ -223,7 +223,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        [Experimental("LLVMEXP001")]
+        [Experimental("LLVMEXP002")]
         private static unsafe partial void LLVMOrcExecutionSessionLookup(
             LLVMOrcExecutionSessionRef ES,
             LLVMOrcLookupKind K,

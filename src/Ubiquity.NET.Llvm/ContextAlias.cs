@@ -144,10 +144,19 @@ namespace Ubiquity.NET.Llvm
 
         public void SetDiagnosticHandler( DiagnosticInfoCallbackAction handler )
         {
-            using var callBack = new DiagnosticCallbackHolder(handler);
             unsafe
             {
-                LLVMContextSetDiagnosticHandler( Handle, &DiagnosticCallbackHolder.DiagnosticHandler, callBack.AddRefAndGetNativeContext() );
+                void* ctx = null;
+                try
+                {
+                    ctx = handler.AsNativeContext();
+                    LLVMContextSetDiagnosticHandler( Handle, &DiagnosticCallbacks.DiagnosticHandler, ctx );
+                }
+                catch when (ctx is not null)
+                {
+                    NativeContext.Release(ctx);
+                    throw;
+                }
             }
         }
 

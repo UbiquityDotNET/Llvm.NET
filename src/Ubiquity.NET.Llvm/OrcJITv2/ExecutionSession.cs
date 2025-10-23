@@ -54,7 +54,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /*
-                [Experimental]
+                [Experimental("????")]
                 public void Lookup(LookupKind kind, scoped ReadOnlySpan<SearchOrder> order, scoped ReadOnlySpan<LookupSet> symbols, LookupResultHandler handler)
                 {
                     // validate args...
@@ -264,6 +264,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         internal LLVMOrcExecutionSessionRef Handle { get; init; }
 
+#if FUTURE_DEVELOPMENT_AREA
         /// <summary>Native code callback for error reporting</summary>
         /// <param name="context">The context for the callback is a <see cref="GCHandle"/> with a target of <see cref="ErrorReporter"/></param>
         /// <param name="abiErrorRef">ABI handle for an error ref</param>
@@ -292,5 +293,6 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 Debug.Assert( false, "Exception in native callback!" );
             }
         }
+#endif
     }
 }

@@ -11,6 +11,11 @@ namespace Ubiquity.NET.TextUX
     // Column position of the location [0..n-1]
 
     /// <summary>Abstraction to hold a source location range as a pair of <see cref="SourcePosition"/> values</summary>
+    /// <remarks>
+    /// It is possible that some sources do not provide dual points to make a proper range. This supports such
+    /// "ranges" as a single point that is not sliceable. This allows callers to deal with sources that only
+    /// contain the start point (Looking at you <see cref="System.Xml.IXmlLineInfo"/>!).
+    /// </remarks>
     public readonly record struct SourceRange
         : IFormattable
     {

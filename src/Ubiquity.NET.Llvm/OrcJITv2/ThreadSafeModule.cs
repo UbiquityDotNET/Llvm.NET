@@ -119,14 +119,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             try
             {
-                if(!MarshalGCHandle.TryGet<GenericModuleOperation>( context, out GenericModuleOperation? self ))
+                if(!NativeContext.TryFrom<GenericModuleOperation>(context, out var self ))
                 {
                     return LLVMErrorRef.CreateForNativeOut( "Internal Error: Invalid context provided for native callback"u8 );
                 }
 
                 IModule mod = new ModuleAlias(moduleHandle);
                 return mod is not null
-                    ? self( mod ).MoveToNative()
+                    ? self!( mod ).MoveToNative()
                     : LLVMErrorRef.CreateForNativeOut( "Internal Error: Could not create wrapped module for native method"u8 );
             }
             catch(Exception ex)

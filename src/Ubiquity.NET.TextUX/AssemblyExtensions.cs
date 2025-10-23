@@ -6,33 +6,20 @@ using System.Reflection;
 
 namespace Ubiquity.NET.TextUX
 {
+    // This does NOT use the new C# 14 extension syntax due to several reasons
+    // 1) Code lens does not work https://github.com/dotnet/roslyn/issues/79006 [Sadly marked as "not planned" - e.g., dead-end]
+    // 2) MANY analyzers get things wrong and need to be supressed (CA1000, CA1034, and many others [SAxxxx])
+    // 3) Many tools (like docfx don't support the new syntax yet)
+    // 4) No clear support for Caller* attributes ([CallerArgumentExpression(...)]).
+    //
+    // Bottom line it's a good idea with an incomplete implementation lacking support
+    // in the overall ecosystem. Don't use it unless you absolutely have to until all
+    // of that is sorted out.
+
     /// <summary>Utility class to provide extensions for consumers</summary>
     [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "BS, extension" )]
     public static class AssemblyExtensions
     {
-// Sadly support for the 'extension' keyword outside of the compiler is
-// spotty at best. Third party tools and analyzers don't know what to do
-// with it. First party analyzers and tools don't yet handle it properly.
-// (Looking at you VS 2026 Insider's preview!) So don't use it yet...
-#if ALL_TOOLS_SUPPORT_EXTENSION_KEYWORD
-        /// <summary>Extensions for <see cref="Assembly"/></summary>
-        extension(Assembly asm)
-        {
-            /// <summary>Gets the value of the <see cref="AssemblyInformationalVersionAttribute"/> from an assembly</summary>
-            [SuppressMessage( "Performance", "CA1822:Mark members as static", Justification = "BS, extension" )]
-            public string InformationalVersion
-            {
-                get
-                {
-                    var assemblyVersionAttribute = asm.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-
-                    return assemblyVersionAttribute is not null
-                        ? assemblyVersionAttribute.InformationalVersion
-                        : asm.GetName().Version?.ToString() ?? string.Empty;
-                }
-            }
-        }
-#else
         /// <summary>Gets the value of the <see cref="AssemblyInformationalVersionAttribute"/> from an assembly</summary>
         /// <param name="self">Assembly to get informational version from</param>
         /// <returns>Information version of the assembly or an empty string if not available</returns>
@@ -45,6 +32,5 @@ namespace Ubiquity.NET.TextUX
                 ? assemblyVersionAttribute.InformationalVersion
                 : self.GetName().Version?.ToString() ?? string.Empty;
         }
-#endif
     }
 }

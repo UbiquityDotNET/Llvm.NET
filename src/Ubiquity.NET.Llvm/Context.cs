@@ -263,6 +263,17 @@ namespace Ubiquity.NET.Llvm
         {
             if(Handle != nint.Zero)
             {
+                // remove any diagnostic handler so it the callback's context doesn't leak
+                unsafe
+                {
+                    void* context = LLVMContextGetDiagnosticContext(Handle);
+                    if(context is not null)
+                    {
+                        LLVMContextSetDiagnosticHandler(Handle, null, null);
+                        NativeContext.Release(context);
+                    }
+                }
+
                 Handle.Dispose();
                 InvalidateAfterMove();
             }

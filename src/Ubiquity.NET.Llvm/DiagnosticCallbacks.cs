@@ -18,54 +18,31 @@ namespace Ubiquity.NET.Llvm
     /// </example>
     public delegate void DiagnosticInfoCallbackAction( DiagnosticInfo info );
 
-    internal sealed class DiagnosticCallbackHolder
-        : IDisposable
+    // native callbacks for an LLVM context Diagnostic messages.
+    internal static class DiagnosticCallbacks
     {
-        public DiagnosticCallbackHolder( DiagnosticInfoCallbackAction diagnosticHandler )
-        {
-            Delegate = diagnosticHandler;
-            AllocatedSelf = new( this );
-        }
-
-        public void Dispose( )
-        {
-            if(!AllocatedSelf.IsInvalid && !AllocatedSelf.IsClosed)
-            {
-                // Decrements the ref count on the handle
-                // might not actually destroy anything
-                AllocatedSelf.Dispose();
-            }
-        }
-
-        internal unsafe nint AddRefAndGetNativeContext( )
-        {
-            return AllocatedSelf.AddRefAndGetNativeContext();
-        }
-
         [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
         internal static unsafe void DiagnosticHandler( nint abiInfo, void* context )
         {
             try
             {
-                if(MarshalGCHandle.TryGet<DiagnosticCallbackHolder>( context, out DiagnosticCallbackHolder? self ))
+                if(NativeContext.TryFrom<DiagnosticInfoCallbackAction>(context, out var self ))
                 {
-                    self.Delegate( new( abiInfo ) );
+                    self( new( abiInfo ) );
                 }
             }
             catch
             {
-                // stop in debugger as this is a detected app error.
+                // SAFETY: stop in debugger as this is a detected app error.
                 // Test for attached debugger directly to avoid prompts, WER cruft etc...
-                // End user should NOT be prompted to attach a debugger!
+                // End user should NOT be prompted to attach a debugger, if one is already
+                // attached then stop as the resulting exception is likely an app crash!
                 if(Debugger.IsAttached)
                 {
                     Debugger.Break();
                 }
             }
         }
-
-        private readonly DiagnosticInfoCallbackAction Delegate;
-        private readonly SafeGCHandle AllocatedSelf;
     }
 }

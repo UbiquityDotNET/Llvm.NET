@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-// this file declares and uses the "experimental" interface `IDisassemblerCallbacks`.
-#pragma warning disable LLVM002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Disassembler;
 
 namespace Ubiquity.NET.Llvm
@@ -18,8 +15,8 @@ namespace Ubiquity.NET.Llvm
     /// <see cref="SymbolLookup(ulong, ref ulong, ulong, out LazyEncodedString?)"/> but also applies to the
     /// <see cref="nint"/> `TagBuf` parameter of <see cref="OpInfo(ulong, ulong, ulong, ulong, int, nint)"/>
     /// </remarks>
-    [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related only used here" )]
-    [Experimental( "LLVM002" )]
+    [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Closely related; only used here" )]
+    [Experimental( "LLVMEXP003" )]
     public interface IDisassemblerCallbacks
     {
         /// <summary>Purpose not fully known or well explained in LLVM docs</summary>
@@ -69,11 +66,22 @@ namespace Ubiquity.NET.Llvm
     }
 
     /// <summary>LLVM Disassembler</summary>
+    [Experimental( "LLVMEXP003" )]
     public sealed class Disassembler
         : IDisposable
     {
         /// <inheritdoc/>
-        public void Dispose( ) => Handle.Dispose();
+        public void Dispose( )
+        {
+            Handle.Dispose();
+            unsafe
+            {
+                if(CallbacksHandle is not null)
+                {
+                    NativeContext.Release(ref CallbacksHandle);
+                }
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="Disassembler"/> class.</summary>
         /// <param name="triple">Triple for the instruction set to disassemble</param>
@@ -121,16 +129,24 @@ namespace Ubiquity.NET.Llvm
             unsafe
             {
                 ArgumentNullException.ThrowIfNull( triple );
-                CallBacksHandle = callBacks is null ? null : GCHandle.Alloc( callBacks );
-                Handle = LLVMCreateDisasmCPUFeatures(
-                        triple.ToString() ?? LazyEncodedString.Empty,
-                        cpu,
-                        features,
-                        CallBacksHandle.HasValue ? GCHandle.ToIntPtr( CallBacksHandle.Value ).ToPointer() : null,
-                        tagType,
-                        CallBacksHandle.HasValue ? &NativeInfoCallBack : null,
-                        CallBacksHandle.HasValue ? &NativeSymbolLookupCallback : null
-                        );
+                CallbacksHandle = callBacks is null ? null : callBacks.AsNativeContext();
+                try
+                {
+                    Handle = LLVMCreateDisasmCPUFeatures(
+                            triple.ToString() ?? LazyEncodedString.Empty,
+                            cpu,
+                            features,
+                            CallbacksHandle, // The context provided to callbacks
+                            tagType,
+                            CallbacksHandle is null ? null : &NativeInfoCallBack,
+                            CallbacksHandle is null ? null : &NativeSymbolLookupCallback
+                            );
+                }
+                catch when (CallbacksHandle is not null)
+                {
+                    NativeContext.Release(ref CallbacksHandle);
+                    throw;
+                }
             }
         }
 
@@ -167,7 +183,7 @@ namespace Ubiquity.NET.Llvm
             }
         }
 
-        private readonly GCHandle? CallBacksHandle;
+        private unsafe void* CallbacksHandle;
         private readonly LLVMDisasmContextRef Handle;
 
         #region Native marshalling callbacks
@@ -184,7 +200,7 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                if(!MarshalGCHandle.TryGet<IDisassemblerCallbacks>( disInfo, out IDisassemblerCallbacks? callBacks ))
+                if(!NativeContext.TryFrom<IDisassemblerCallbacks>(disInfo, out var callBacks ))
                 {
                     return null;
                 }
@@ -223,7 +239,7 @@ namespace Ubiquity.NET.Llvm
         {
             try
             {
-                return MarshalGCHandle.TryGet<IDisassemblerCallbacks>( disInfo, out IDisassemblerCallbacks? callBacks )
+                return NativeContext.TryFrom<IDisassemblerCallbacks>(disInfo, out var callBacks )
                     ? callBacks.OpInfo( pc, offset, opSize, instSize, tagType, (nint)tagBuf )
                     : 0; // TODO: Is this a legit failure return value?
             }

@@ -6,7 +6,9 @@ Text based UI/UX. This is generally only relevant for console based apps.
 `IDiagnosticReporter` interface is at the core of the UX. It is similar in many ways to many
 of the logging interfaces available. The primary distinction is with the ***intention*** of
 use. `IDiagnosticReporter` specifically assumes the use for UI/UX rather than a
-debugging/diagnostic log.
+debugging/diagnostic log. These have VERY distinct use cases and purposes and generally show
+very different information. (Not to mention the overlly complex requirements of
+the anti-pattern DI container assumed in `Microsoft.Extensions.Logging`)
 
 ### Messages
 All messages for the UX use a simple immutable structure to store the details of a message
@@ -17,7 +19,8 @@ There are a few pre-built implementation of the `IDiagnosticReporter` interface.
 * `TextWriterReporter`
     * Base class for writing UX to a `TextWriter`
 * `ConsoleReporter`
-    * Reporter that reports errors to `Console.Error` and all other errors to `Console.Out`
+    * Reporter that reports errors to `Console.Error` and all other nessages to
+      `Console.Out`
 * `ColoredConsoleReporter`
     * `ConsoleReporter` that colorizes output using ANSI color codes
         * Colors are customizable, but contains a common default

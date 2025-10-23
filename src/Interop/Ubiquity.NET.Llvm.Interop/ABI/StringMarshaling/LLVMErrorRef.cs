@@ -82,7 +82,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
                 }
 
                 return LazyMessage.IsValueCreated
-                     ? LLVMGetStringErrorTypeId()
+                     ? LLVMGetStringErrorTypeId() // string retrieved already so the "type" is known.
                      : LLVMErrorTypeId.FromABI(LLVMGetErrorTypeId(DangerousGetHandle()));
 
                 [DllImport( LibraryName )]
@@ -135,7 +135,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         /// In all other cases a fully wrapped handle (<see cref="LLVMErrorRef"/>) is used via <see cref="Create(LazyEncodedString)"/>.
         /// </para>
         /// </remarks>
-        public static unsafe nint CreateForNativeOut( LazyEncodedString errMsg )
+        public static nint CreateForNativeOut( LazyEncodedString errMsg )
         {
             unsafe
             {
@@ -150,6 +150,14 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
             [DllImport( LibraryName, EntryPoint = "LLVMCreateStringError" )]
             [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
             static unsafe extern nint /*LLVMErrorRef*/ LLVMCreateStringError( byte* ErrMsg );
+        }
+
+        /// <summary>Create a new <see cref="LLVMErrorRef"/> as <see cref="nint"/> from <see cref="Exception.Message"/></summary>
+        /// <param name="ex">Exceotion to get the error message from</param>
+        /// <inheritdoc cref="CreateForNativeOut(LazyEncodedString)"/>
+        public static nint CreateForNativeOut( Exception ex)
+        {
+            return CreateForNativeOut(ex.Message);
         }
 
         public void Dispose()
@@ -178,19 +186,6 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         public static LLVMErrorRef FromABI( nint abiValue )
         {
             return new(abiValue);
-        }
-
-        private LLVMErrorTypeId LazyGetTypeId()
-        {
-            // NOTE: Native API will fail (undocumented) if error message already retrieved.
-            // This causes a crash in a debugger trying to show this property as ToString()
-            // is already called.
-            return LazyMessage.IsValueCreated ? default : LLVMErrorTypeId.FromABI(LLVMGetErrorTypeId(DangerousGetHandle()));
-
-            [DllImport( LibraryName )]
-            [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-            [SuppressMessage( "Interoperability", "SYSLIB1054:Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time", Justification = "Signature is P/Invoke ready" )]
-            static extern /*LLVMErrorTypeId*/nint LLVMGetErrorTypeId(/*LLVMErrorRef*/ nint Err );
         }
 
         private ErrorMessageString LazyGetMessage( )

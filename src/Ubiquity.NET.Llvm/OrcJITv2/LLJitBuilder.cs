@@ -30,9 +30,22 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public void Dispose( )
         {
             // ensure move semantics work by making this Idempotent.
+            // If handle is null this instance does not own it (or the context)
             if(!Handle.IsNull)
             {
                 Handle.Dispose();
+                unsafe
+                {
+                    if(ObjectLinkingLayerContext is not null)
+                    {
+                        // If the callback context handle exists and is allocated then free it now.
+                        // The handle for this builder itself is already closed so LLVM should not
+                        // have any callbacks for this to handle... (docs are silent on the point)
+                        NativeContext.Release(ObjectLinkingLayerContext);
+                        ObjectLinkingLayerContext = null;
+                    }
+                }
+
                 InvalidateAfterMove();
             }
         }
@@ -57,14 +70,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         public void SetObjectLinkingLayerCreator( ObjectLayerFactory creator )
         {
             ArgumentNullException.ThrowIfNull( creator );
-            ObjectLinkingLayerContextHandle = new( creator );
-
             unsafe
             {
+                ObjectLinkingLayerContext = creator.AsNativeContext();
+
                 LLVMOrcLLJITBuilderSetObjectLinkingLayerCreator(
                     Handle,
                     &NativeObjectLinkingLayerCreatorCallback,
-                    (void*)ObjectLinkingLayerContextHandle.AddRefAndGetNativeContext()
+                    ObjectLinkingLayerContext
                     );
             }
         }
@@ -124,27 +137,14 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         private void InvalidateAfterMove( )
         {
             Handle = default;
-
-            // If the callback context handle exists and is allocated then free it now.
-            // The handle for this builder itself is already closed so LLVM should not
-            // have any callbacks for this to handle... (docs are silent on the point)
-            if(!ObjectLinkingLayerContextHandle.IsInvalid && !ObjectLinkingLayerContextHandle.IsClosed)
-            {
-                ObjectLinkingLayerContextHandle.Dispose();
-            }
-
-            // Break any GC references to allow release
-            InternalObjectLayerFactory = null;
         }
 
         private LLJitBuilder( LLVMOrcLLJITBuilderRef h )
         {
             Handle = h;
-            ObjectLinkingLayerContextHandle = new( this );
         }
 
-        private SafeGCHandle ObjectLinkingLayerContextHandle;
-        private ObjectLayerFactory? InternalObjectLayerFactory;
+        private unsafe void* ObjectLinkingLayerContext = null;
 
         [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
         [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]
@@ -156,16 +156,17 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             try
             {
-                if(MarshalGCHandle.TryGet<LLJitBuilder>( context, out LLJitBuilder? self ) && self.InternalObjectLayerFactory is not null)
+                if(NativeContext.TryFrom<ObjectLayerFactory>(context, out var self ))
                 {
                     using var managedTriple = new Triple(LazyEncodedString.FromUnmanaged(triple));
 
                     // caller takes ownership of the resulting handle; Don't Dispose it
-                    var factory = self.InternalObjectLayerFactory( new ExecutionSession( sessionRef ), managedTriple );
+                    // It is returned via the raw native handle.
+                    var factory = self( new ExecutionSession( sessionRef ), managedTriple );
                     return factory.Handle;
                 }
 
-                // TODO: How/Can this report an error? Internally the result is (via a C++ lambda) that returns an "llvm::expected"
+                // TODO: How/Can this report an error? Internally the result is (via a C++ lambda) assigned to an "llvm::expected"
                 // but it is unclear if this method can return an error or what happens on a null return...
                 return 0; // This will probably crash in LLVM anyway - best effort.
             }

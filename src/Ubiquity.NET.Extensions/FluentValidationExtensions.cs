@@ -5,24 +5,31 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace Ubiquity.NET.Extensions
 {
+    // This does NOT use the new C# 14 extension syntax due to several reasons
+    // 1) Code lens does not work https://github.com/dotnet/roslyn/issues/79006 [Sadly, marked as "not planned" - e.g., dead-end]
+    // 2) MANY analyzers get things wrong and need to be supressed (CA1000, CA1034, and many others [SAxxxx])
+    // 3) Many tools (like docfx) don't support the new syntax yet and it isn't clear if they will in the future.
+    // 4) No clear support for Caller* attributes ([CallerArgumentExpression(...)]).
+    //
+    // Bottom line it's a good idea with an incomplete implementation lacking support
+    // in the overall ecosystem. Don't use it unless you absolutely have to until all
+    // of that is sorted out.
+
     /// <summary>Extension class to provide Fluent validation of arguments</summary>
     /// <remarks>
     /// These are similar to many of the built-in support checks except that
     /// they use a `Fluent' style to allow validation of parameters used as inputs
     /// to other functions that ultimately produce parameters for a base constructor.
     /// They also serve to provide validation when using body expressions for property
-    /// method implementations etc...
+    /// method implementations etc... Though the C# 14 <c>field</c> keyword makes that
+    /// use mostly a moot point.
     /// </remarks>
     public static class FluentValidationExtensions
     {
-        // NOTE: These DO NOT use the new `extension` keyword syntax as it is not clear
-        //       how CallerArgumentExpression is supposed to be used for those...
-
         /// <summary>Throws an exception if <paramref name="obj"/> is <see langword="null"/></summary>
         /// <typeparam name="T">Type of reference parameter to test for</typeparam>
         /// <param name="obj">Instance to test</param>
@@ -72,9 +79,12 @@ namespace Ubiquity.NET.Extensions
             where T : struct, Enum
         {
             ArgumentNullException.ThrowIfNull(self, exp);
+
+            // TODO: Move the exception message to a resource for globalization
+            // This matches the overloaded constructor version but allows for reporting enums with non-int underlying type.
             return Enum.IsDefined( typeof(T), self )
                    ? self
-                   : throw new InvalidEnumArgumentException(exp);
+                   : throw new InvalidEnumArgumentException($"The value of argument '{exp}' ({self}) is invalid for Enum of type '{typeof(T)}'");
         }
     }
 }
