@@ -1,8 +1,8 @@
 # About
-Ubiquity.NET.InteropHelpers helper support common to low level interop libraries. While this
-library is intended to support the Ubiquity.NET.Llvm interop requirements there isn't anything
-bound to that library in the support here. That is it is independent and a useful library for
-any code base providing interop support.
+Ubiquity.NET.InteropHelpers helper support common to low level interop libraries. While
+this library is intended to support the Ubiquity.NET.Llvm interop requirements there isn't
+anything bound to that library in the support here. That is it is independent and a useful
+library for any code base providing interop support.
 
 # Key Features
 * String handling
@@ -18,10 +18,10 @@ any code base providing interop support.
 * Delegates and NativeCallbacks as Function pointers
     * Function pointers are a new feature of C# that makes for very high performance interop
       scenarios. However, sometimes the callback for a function pointer actually needs
-      additional data not part of the parameters of the function to work properly. This library
-      provides support for such scenarios where a delegate is used to "capture" the data while
-      still supporting AOT scenarios. (NOTE: Marshal.GetFunctionPointerForDelegate() must
-      dynamically emit a thunk that contains the proper signature and the captured "this"
-      pointer so is NOT AOT friendly) The support offered in this library, though a bit more
-      tedious, is AOT friendly.
+      additional data not part of the parameters of the function to work properly. This
+      library provides support for such scenarios where a delegate is used to "capture" the
+      data while still supporting AOT scenarios. (NOTE: Marshal.GetFunctionPointerForDelegate()
+      must dynamically emit a thunk that contains the proper signature and the captured
+      "this" pointer so is NOT AOT friendly) The support offered in this library, though a
+      bit more tedious, is AOT friendly.
 

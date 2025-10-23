@@ -8,7 +8,6 @@
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     public interface IJitMemoryAllocator
-        : IDisposable
     {
         /// <summary>Allocate a block of contiguous memory for use as code execution by the native code JIT engine</summary>
         /// <param name="size">Size of the block</param>
@@ -49,5 +48,16 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="errMsg">Error message in the event of a failure</param>
         /// <returns><see langword="true"/> if successfull (<paramref name="errMsg"/> is <see langword="null"/>); <see langword="false"/> if not (<paramref name="errMsg"/> has the reason)</returns>
         bool FinalizeMemory([NotNullWhen(false)] out LazyEncodedString? errMsg);
+
+        /// <summary>Release the context for the memory. No further callbacks will occur for this allocator</summary>
+        /// <remarks>
+        /// This is similar to a call to <see cref="IDisposable.Dispose"/> except that it releases only the native context
+        /// in respnse to a callback, not the handle for allocator itself. That MUST live longer than the JIT as any memory
+        /// it allocated MAY still be in use as code or data in the JIT. (This interface only deals with WHOLE JIT memory
+        /// allocation. It is at least plausible to have an allocator per JitDyLib but that would end up needing to leverage
+        /// a global one to ensure that secion ordering and size limits of the underlying OS are met. If such a things is
+        /// ever implented, it would use a different interface for clarity.)
+        /// </remarks>
+        void ReleaseContext();
     }
 }

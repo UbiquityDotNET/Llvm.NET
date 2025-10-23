@@ -9,91 +9,84 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ExecutionEngine;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
+    /// <summary>Base class for a simple MCJIT style memory allocator</summary>
+    /// <remarks>
+    /// Derived types need not be concrend with any of the low level native interop. Instead
+    /// they simply implement the abstract methods to perform the required allocations. This
+    /// base type handles all of the interop, including the reverse P/Invoke marhsalling for
+    /// callbacks.
+    /// </remarks>
+    [Experimental("LLVMEXP005")]
     public abstract class SimpleJitMemoryAllocatorBase
         : DisposableObject
         , IJitMemoryAllocator
     {
         protected SimpleJitMemoryAllocatorBase()
         {
-            AllocatedSelf = new(this);
             unsafe
             {
+                CallbackContext = this.AsNativeContext();
+
                 Handle = LLVMCreateSimpleMCJITMemoryManager(
-                    (void*)AddRefAndGetNativeContext(),
+                    CallbackContext,
                     &MemoryAllocatorNativeCallbacks.AllocateCodeSection,
                     &MemoryAllocatorNativeCallbacks.AllocateDataSection,
                     &MemoryAllocatorNativeCallbacks.FinalizeMemory,
-                    &MemoryAllocatorNativeCallbacks.DestroyMemory
+                    &MemoryAllocatorNativeCallbacks.NotifyTerminating
                     );
             }
         }
 
-        /// <summary>Allocate a block of contiguous memory for use as code execution by the native code JIT engine</summary>
-        /// <param name="size">Size of the block</param>
-        /// <param name="alignment">alignment requirements of the block</param>
-        /// <param name="sectionId">ID for the section</param>
-        /// <param name="sectionName">Name of the section</param>
-        /// <returns>Address of the first byte of the allocated memory</returns>
-        /// <remarks>
-        /// If the memory is allocated from the managed heap then the returned address <em><i>MUST</i></em>
-        /// remain pinned until <see cref="IDisposable.Dispose"/> is called on this allocator
-        /// <note type="important">
-        /// The Execute only page setting and any other page properties is not applied to the returned
-        /// address (or entire memory of the allocated section) until <see cref="FinalizeMemory"/> is called.
-        /// This allows the JIT to write code into the memory area even if it is ultimately Execute-Only.
-        /// </note>
-        /// </remarks>
+        /// <inheritdoc/>
         public abstract nuint AllocateCodeSection(nuint size, UInt32 alignment, UInt32 sectionId, LazyEncodedString sectionName );
 
-        /// <summary>Allocate a block of contiguous memory for use as data by the native code JIT engine</summary>
-        /// <param name="size">Size of the block</param>
-        /// <param name="alignment">alignment requirements of the block</param>
-        /// <param name="sectionId">ID for the section</param>
-        /// <param name="sectionName">Name of the section</param>
-        /// <param name="isReadOnly">Memory section is Read-Only</param>
-        /// <returns>Address of the first byte of the allocated memory</returns>
-        /// <remarks>
-        /// If the memory is allocated from the managed heap then the returned address <em><i>MUST</i></em>
-        /// remain pinned until <see cref="IDisposable.Dispose"/> is called on this allocator.
-        /// <note type="important">
-        /// The <paramref name="isReadOnly"/> and any other page properties is not applied to the returned
-        /// address (or entire memory of the allocated section) until <see cref="FinalizeMemory"/> is called.
-        /// This allows the JIT to write initial data into the memory even if it is ultimately Read-Only.
-        /// </note>
-        /// </remarks>
+        /// <inheritdoc/>
         public abstract nuint AllocateDataSection(nuint size, UInt32 alignment, UInt32 sectionId, LazyEncodedString sectionName, bool isReadOnly);
 
-        /// <summary>Finalizes a previous allocation by applying page settings for the allocation</summary>
-        /// <param name="errMsg">Error message in the event of a failure</param>
-        /// <returns><see langword="true"/> if successfull (<paramref name="errMsg"/> is <see langword="null"/>); <see langword="false"/> if not (<paramref name="errMsg"/> has the reason)</returns>
+        /// <inheritdoc/>
         public abstract bool FinalizeMemory([NotNullWhen(false)] out LazyEncodedString? errMsg);
+
+        /// <inheritdoc/>
+        public virtual void ReleaseContext()
+        {
+            unsafe
+            {
+                NativeContext.Release(ref CallbackContext);
+            }
+        }
 
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
-            if(disposing && !AllocatedSelf.IsInvalid && !AllocatedSelf.IsClosed)
-            {
-                // Decrements the ref count on the handle
-                // might not actually destroy anything
-                AllocatedSelf.Dispose();
-            }
-
-            Handle = default;
             base.Dispose( disposing );
+            if(disposing)
+            {
+                if(!Handle.IsNull)
+                {
+                    Handle.Dispose();
+                    Handle = default;
+                }
+
+                // Releases the allocated handle for the native code
+                // might not actually destroy anything. This is INTENTIONALLY done
+                // AFTER disposing the handle so that any pending call backs
+                // use a valid context. After the memory manager handle is destroyed
+                // no more call backs should occur so it is safe to release the
+                // context. (Ideally, the ReleaseContext() callback already happened
+                // but the LLVM docs, and code comments, are silent on the point. Thus,
+                // that uses a ref parameter that is set to null and a null check is
+                // applied here.)
+                unsafe
+                {
+                    if(CallbackContext is not null)
+                    {
+                            NativeContext.Release(ref CallbackContext);
+                    }
+                }
+            }
         }
 
-        internal unsafe nint AddRefAndGetNativeContext( )
-        {
-            ObjectDisposedException.ThrowIf(IsDisposed, this);
-
-            return AllocatedSelf.AddRefAndGetNativeContext();
-        }
-
-        // This is the key to ref counted behavior to hold this instance (and anything it references)
-        // alive for the GC. The "ownership" of the refcount is handed to native code while the
-        // calling code is free to no longer reference this instance as it holds an allocated
-        // GCHandle for itself and THAT is kept alive by a ref count that is "owned" by native code.
-        private SafeGCHandle AllocatedSelf { get; }
+        private unsafe void* CallbackContext;
 
         private LLVMMCJITMemoryManagerRef Handle;
     }

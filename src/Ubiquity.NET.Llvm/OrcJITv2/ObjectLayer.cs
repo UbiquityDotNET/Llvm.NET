@@ -6,6 +6,12 @@ using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>ORC JIT v2 Object linking layer</summary>
+    /// <remarks>
+    /// Since instances of an Object Linking layer are ONLY ever created by <see cref="ObjectLayerFactory"/> and
+    /// returned directly to the native code as the raw handle, they are not generally disposable. They do
+    /// implement IDisposable as a means to enusre proper release in the face of an exception in an implementation
+    /// of <see cref="ObjectLayerFactory"/> but are not something that generally needs disposal at a managed level.
+    /// </remarks>
     public class ObjectLayer
         : DisposableObject
     {
@@ -59,10 +65,10 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         }
 
         /// <inheritdoc/>
-        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor")]
+        [SuppressMessage( "IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "Ownership transferred in constructor" )]
         protected override void Dispose( bool disposing )
         {
-            base.Dispose(disposing);
+            base.Dispose( disposing );
             if(!Handle.IsNull)
             {
                 Handle.Dispose();

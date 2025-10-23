@@ -7,8 +7,6 @@ of this library from direct dependencies on the interop library. If a consumer h
 the low level interop (Test code sometimes does) it must explicitly reference it.
 */
 
-using System.Collections.Immutable;
-
 using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.AttributeBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.DebugInfo;
 

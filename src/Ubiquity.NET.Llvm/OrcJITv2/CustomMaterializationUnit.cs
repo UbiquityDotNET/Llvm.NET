@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System.Collections.Immutable;
-
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
@@ -10,8 +8,8 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// <summary>Delegate to perform action on Materialization</summary>
     /// <param name="r"><see cref="MaterializationResponsibility"/> that serves as the context for this materialization</param>
     /// <remarks>
-    /// This must be a "custom" delegate as the <see cref="JITDyLib"/> is a
-    /// ref type that is NOT allowed as a type parameter for <see cref="Action{T1, T2}"/>.
+    /// This is "custom" delegate for consistency with <see cref="DiscardAction"/>
+    /// which requires one for .NET runtimes lower than .NET 9.
     /// </remarks>
     public delegate void MaterializationAction( MaterializationResponsibility r );
 
@@ -22,7 +20,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// This must be a "custom" delegate as the <see cref="JITDyLib"/> is a
     /// ref type that is NOT allowed as a type parameter for <see cref="Action{T1, T2}"/>.
     /// </remarks>
-    public delegate void DiscardAction( JITDyLib jitLib, SymbolStringPoolEntry symbol );
+    public delegate void DiscardAction( ref readonly JITDyLib jitLib, SymbolStringPoolEntry symbol );
 
     /// <summary>LLVM ORC JIT v2 custom materialization unit</summary>
     /// <remarks>
@@ -91,48 +89,47 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             ValidateInitSym(initSymbol, symbols);
             LLVMOrcMaterializationUnitRef retVal;
 
-            // This will internally manage the lifetime
-#pragma warning disable IDE0063 // Use simple 'using' statement
-            using( var materializer = new CustomMaterializer(materializeAction, discardAction))
+            using IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> nativeSyms = symbols.InitializeNativeCopy();
+
+            // using expression ensures cleanup of addref in case of exceptions...
+            // But since it is an immutable Value type that isn't viable here and try/finally is used
+            LLVMOrcSymbolStringPoolEntryRef nativeInitSym = initSymbol?.AddRefForNative() ?? default;
+            unsafe
             {
-                using(IMemoryOwner<LLVMOrcCSymbolFlagsMapPair> nativeSyms = symbols.InitializeNativeCopy())
+                void* nativeContext = null; // init only from inside try/catch block
+                try
                 {
-                    nint nativeContext = materializer.AddRefAndGetNativeContext();
+                    nativeContext = new MaterializerCallbacksHolder(materializeAction, discardAction).AsNativeContext();
+                    using var pinnedSyms = nativeSyms.Memory.Pin();
+                    retVal = LLVMOrcCreateCustomMaterializationUnit(
+                        name,
+                        nativeContext,
+                        (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
+                        checked((nuint)symbols.Length),
+                        nativeInitSym,
+                        &NativeCallbacks.Materialize,
+                        &NativeCallbacks.Discard,
+                        &NativeCallbacks.Destroy
+                        );
 
-                    // using expression ensures cleanup of addref in case of exceptions...
-                    // But since it is an immutable Value type that isn't viable here and try/finally is used
-                    LLVMOrcSymbolStringPoolEntryRef nativeInitSym = initSymbol?.AddRefForNative() ?? default;
-                    try
+                    // ownership of this symbol was moved to native, mark transfer so auto clean up (for exceptional cases)
+                    // does NOT kick in.
+                    nativeInitSym = default;
+                }
+                catch when (nativeContext is not null)
+                {
+                    // release the handle allocated for the native code as it isn't used there in the face of an exception here
+                    NativeContext.Release( ref nativeContext);
+                    throw;
+                }
+                finally
+                {
+                    if(!nativeInitSym.IsNull)
                     {
-                        unsafe
-                        {
-                            using var pinnedSyms = nativeSyms.Memory.Pin();
-                            retVal = LLVMOrcCreateCustomMaterializationUnit(
-                                name,
-                                (void*)nativeContext,
-                                (LLVMOrcCSymbolFlagsMapPair*)pinnedSyms.Pointer,
-                                checked((nuint)symbols.Length),
-                                nativeInitSym,
-                                &NativeCallbacks.Materialize,
-                                materializer.SupportsDiscard ? &NativeCallbacks.Discard : null,
-                                &NativeCallbacks.Destroy
-                                );
-
-                            // ownership of this symbol was moved to native, mark transfer so auto clean up (for exceptional cases)
-                            // does NOT kick in.
-                            nativeInitSym = default;
-                        }
-                    }
-                    finally
-                    {
-                        if(!nativeInitSym.IsNull)
-                        {
-                            nativeInitSym.Dispose();
-                        }
+                        nativeInitSym.Dispose();
                     }
                 }
             }
-#pragma warning restore IDE0063 // Use simple 'using' statement
 
             return retVal;
         }
@@ -159,22 +156,18 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(MarshalGCHandle.TryGet<CustomMaterializer>( context, out CustomMaterializer? self ))
+                    if(NativeContext.TryFrom<IMaterializerCallbacks>(context, out var self ))
                     {
+                        // Destroy callback is NOT called if this one is...
+                        // Internally LLVM will set the context to null [Undocumented!]
+                        NativeContext.Release(context);
+
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
                         // [It is an alias; Dispose is a NOP with wasted overhead]
-                        self.MaterializeHandler( new MaterializationResponsibility( abiResponsibility, alias: true ) );
+                        self.Materialize( new MaterializationResponsibility( abiResponsibility, alias: true ) );
 #pragma warning restore IDISP004 // Don't ignore created IDisposable
 #pragma warning restore CA2000 // Dispose objects before losing scope
-
-#pragma warning disable IDISP007 // Don't dispose injected
-                        /*
-                        Not really "injected" and this is how the data/context is disposed when the
-                        native code is done with it.
-                        */
-                        self.Dispose();
-#pragma warning restore IDISP007 // Don't dispose injected
                     }
                 }
                 catch
@@ -189,12 +182,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(MarshalGCHandle.TryGet<CustomMaterializer>( context, out CustomMaterializer? self ))
+                    if(NativeContext.TryFrom<IMaterializerCallbacks>( context, out var self ))
                     {
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable IDISP004 // Don't ignore created IDisposable
                         // [It is an alias; Dispose is a NOP with wasted overhead]
-                        self.DiscardHandler?.Invoke( new JITDyLib( abiLib ), new SymbolStringPoolEntry( abiSymbol, alias: true ) );
+                        var managedLib = new JITDyLib( abiLib );
+                        self.Discard( in managedLib, new SymbolStringPoolEntry( abiSymbol, alias: true ) );
 #pragma warning restore IDISP004 // Don't ignore created IDisposable
 #pragma warning restore CA2000 // Dispose objects before losing scope
                     }
@@ -211,15 +205,13 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             {
                 try
                 {
-                    if(MarshalGCHandle.TryGet<CustomMaterializer>( context, out CustomMaterializer? self ))
+                    if(NativeContext.TryFrom<IMaterializerCallbacks>(context, out var self ))
                     {
-#pragma warning disable IDISP007 // Don't dispose injected
-                        /*
-                        Not really "injected" and this is how the data/context is disposed when the
-                        native code is done with it.
-                        */
-                        self.Dispose();
-#pragma warning restore IDISP007 // Don't dispose injected
+                        // self is a managed instance with normal GC rules now so release
+                        // the context created for callbacks as it is not needed anymore.
+                        // After this scope exits, GC is free to collect the instance.
+                        NativeContext.Release(context);
+                        self.Destroy();
                     }
                 }
                 catch

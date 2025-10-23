@@ -421,7 +421,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial void LLVMContextSetDiagnosticHandler( LLVMContextRefAlias C, LLVMDiagnosticHandler Handler, nint DiagnosticContext );
+        public static unsafe partial void LLVMContextSetDiagnosticHandler( LLVMContextRefAlias C, LLVMDiagnosticHandler Handler, void* DiagnosticContext );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
@@ -429,7 +429,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.llvm_c
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
-        public static unsafe partial nint LLVMContextGetDiagnosticContext( LLVMContextRefAlias C );
+        public static unsafe partial void* LLVMContextGetDiagnosticContext( LLVMContextRefAlias C );
 
         [LibraryImport( LibraryName )]
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]

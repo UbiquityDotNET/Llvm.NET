@@ -3,20 +3,23 @@
 
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
-    // Native only callbacks that use a SafeGCHandle as the "context" to allow
-    // the native API to re-direct to the proper managed implementation instance.
-    // (That is, this is a revers P/Invoke that handles marshalling of parameters
-    // and return type for native callers into managed code)
+    // Native only callbacks that use a GCHandle converted to a void* as the
+    // "context" to allow the native API to re-direct to the proper managed
+    // implementation instance. (That is, this is a reverse P/Invoke that
+    // handles marshalling of parameters and return type for native callers
+    // into managed code)
+
     internal static class MemoryAllocatorNativeCallbacks
     {
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        internal static unsafe void *CreateContext(void* outerContext)
+        internal static unsafe void *CreatePerObjContextAsGlobalContext(void* outerContext)
         {
+            // Provide the "global"/"outer" context as the "inner"/"Per OBJ" context
             return outerContext;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        internal static unsafe void DestroyContext(void *ctx)
+        internal static unsafe void DestroyPerObjContextNOP(void *_)
         {
             /* Intentional NOP */
         }
@@ -24,9 +27,12 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe byte* AllocateCodeSection(void* ctx, nuint size, UInt32 alignment, UInt32 sectionId, byte* sectionName)
         {
-            return MarshalGCHandle.TryGet<IJitMemoryAllocator>( ctx, out IJitMemoryAllocator? self )
-                ? (byte*)self.AllocateCodeSection(size, alignment, sectionId, LazyEncodedString.FromUnmanaged(sectionName))
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // NOT dispsable, just "borrowed" via ctx
+            return NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self )
+                ? (byte*)self!.AllocateCodeSection(size, alignment, sectionId, LazyEncodedString.FromUnmanaged(sectionName))
                 : (byte*)null;
+#pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
@@ -39,40 +45,52 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             /*LLVMBool*/Int32 isReadOnly
             )
         {
-            return MarshalGCHandle.TryGet<IJitMemoryAllocator>( ctx, out IJitMemoryAllocator? self )
-                ? (byte*)self.AllocateDataSection(size, alignment, sectionId, LazyEncodedString.FromUnmanaged(sectionName), isReadOnly != 0)
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // NOT dispsable, just "borrowed" via ctx
+            return NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self )
+                ? (byte*)self!.AllocateDataSection(size, alignment, sectionId, LazyEncodedString.FromUnmanaged(sectionName), isReadOnly != 0)
                 : (byte*)null;
+#pragma warning restore CA2000 // Dispose objects before losing scope
+
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe /*LLVMStatus*/ Int32 FinalizeMemory(void* ctx, byte** errMsg)
         {
             *errMsg = null;
-            if(MarshalGCHandle.TryGet<IJitMemoryAllocator>( ctx, out IJitMemoryAllocator? self ))
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // NOT dispsable, just "borrowed" via ctx
+            if(NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self ))
             {
-                if(!self.FinalizeMemory(out LazyEncodedString? managedErrMsg))
+                if(!self!.FinalizeMemory(out LazyEncodedString? managedErrMsg))
                 {
                     AllocateAndSetNativeMessage( errMsg, managedErrMsg.ToReadOnlySpan(includeTerminator: true));
                 }
             }
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
             AllocateAndSetNativeMessage( errMsg, "Invalid context provided to FinalizeMemory callback!"u8);
             return 0;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        internal static unsafe void DestroyMemory(void* ctx)
+        internal static unsafe void NotifyTerminating(void* ctx)
         {
-            if(MarshalGCHandle.TryGet<IJitMemoryAllocator>( ctx, out IJitMemoryAllocator? self ))
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // NOT dispsable, just "borrowed" via ctx
+            if(NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self ))
             {
-#pragma warning disable IDISP007 // Don't dispose injected
-                // NOT injected; ref counted, native code is releasing ref count via this call
-                self.Dispose();
-#pragma warning restore IDISP007 // Don't dispose injected
+                // Don't dispose it here; But do release the context
+                // as no more callbacks will occur after this.
+                // Dispose controls the allocator handle itself, NOT the
+                // context used for the callbacks. This ONLY releases the
+                // callback context.
+                self.ReleaseContext();
             }
+#pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
-        // WARNING: Native caller ***WILL*** call `free(*errMsg)` if `*errMsg != nullptr`!!
+        // WARNING: Native caller ***WILL*** call `free(*errMsg)` if `*errMsg != nullptr`!! [Undocumented!]
         //          Therefore, any error message returned should be allocated with NativeMemory.Alloc()
         //          to allow free() on the pointer.
         private static unsafe void AllocateAndSetNativeMessage( byte** errMsg, ReadOnlySpan<byte> managedErrMsg )
