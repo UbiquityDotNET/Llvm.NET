@@ -1,0 +1,54 @@
+﻿<plist version="1.0">
+  <dict>
+    <key>uuid</key>
+    <string>6F193C25-558C-4DFF-8807-A304287C8EEE</string>
+    <key>name</key>
+    <string>Kaleidoscope</string>
+    <key>scopeName</key>
+    <string>source.kaleidoscope</string>
+    <key>fileTypes</key>
+    <array>
+      <string>kls</string>
+    </array>
+    <key>patterns</key>
+    <array>
+      <dict>
+        <!-- NOTE: In VS these become tagged as "keyword" unless overridden with a custom definition -->
+        <key>name</key>
+        <string>keyword.control.kaleidoscope</string>
+        <key>match</key>
+        <string>\b(def|extern|if|then|else|for|in|var|unary|binary)\b</string>
+      </dict>
+      <dict>
+        <!-- NOTE: In VS these become tagged as "keyword" unless overridden with a custom definition -->
+        <key>name</key>
+        <string>support.function.kaleidoscope</string>
+        <key>match</key>
+        <string>\b(putchard|printd)\b</string>
+      </dict>
+      <dict>
+        <!-- NOTE: In VS these become tagged as "comment" unless overridden with a custom definition -->
+        <key>name</key>
+        <string>comment.line.number-sign.kaleidoscope</string>
+        <key>begin</key>
+          <string>#</string>
+          <key>end</key>
+          <string>\n</string>
+      </dict>
+      <dict>
+        <!-- NOTE: In VS these become tagged as "number" unless overridden with a custom definition -->
+        <key>name</key>
+        <string>constant.numeric.kaleidoscope</string>
+        <key>match</key>
+        <string>-?\d+(?:[.]\d+)?(?:[eE][-+]?\d+)?</string>
+      </dict>
+      <dict>
+        <!-- NOTE: In VS these become tagged as "identifier" unless overridden with a custom definition -->
+        <key>name</key>
+        <string>variable.other.kaleidoscope</string>
+        <key>match</key>
+        <string>[A-Za-z\$_][0-9A-Za-z\$_]*</string>
+      </dict>
+    </array>
+  </dict>
+</plist>
