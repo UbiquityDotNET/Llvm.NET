@@ -118,7 +118,7 @@ the use of the library.
 
 >[!NOTE]
 > Visual Studio Code is NOT officially supported. Such support is welcome as a PR as long as
-> it does not impact the use of VS 2022 nor the automated build. [Obviously this comment
+> it does not impact the use of VS 20xx nor the automated build. [Obviously this comment
 > should be removed if such a PR is made!]
  
 #### Using Visual Studio
