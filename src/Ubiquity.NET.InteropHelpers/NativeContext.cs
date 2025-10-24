@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
+using Ubiquity.NET.Extensions;
+
 namespace Ubiquity.NET.InteropHelpers
 {
     // This does NOT use the new C# 14 extension syntax due to several reasons
@@ -51,6 +53,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// in a callback implementation. Ultimately the allocated handle is freed in a call to <see cref="Release(ref void*)"/>.
         /// </para>
         /// </remarks>
+        [MustUseReturnValue]
         public static unsafe void* AsNativeContext<T>(this T self)
         {
             var handle = GCHandle.Alloc( self );
@@ -70,6 +73,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// <param name="ctx">Native context</param>
         /// <param name="value">Materialized value or <see langword="null"/> if not</param>
         /// <returns><see langword="true"/> if the value is succesfully materialized and <see langword="false"/> if not</returns>
+        [MustUseReturnValue]
         public static unsafe bool TryFrom<T>(void* ctx, [MaybeNullWhen(false)] out T value)
         {
             if(ctx is not null && GCHandle.FromIntPtr( (nint)ctx ).Target is T managedInst)
