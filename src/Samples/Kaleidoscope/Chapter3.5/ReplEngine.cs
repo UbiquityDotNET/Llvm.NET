@@ -12,7 +12,7 @@ using Ubiquity.NET.Runtime.Utils;
 namespace Kaleidoscope.Chapter3_5
 {
     internal class ReplEngine
-        : KaleidoscopeReadEvaluatePrintLoopBase<Value>
+        : ReadEvaluatePrintLoopBase<Value>
     {
         public ReplEngine( )
             : base( LanguageLevel.SimpleExpressions )
