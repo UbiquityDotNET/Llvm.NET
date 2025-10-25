@@ -11,7 +11,7 @@ using Ubiquity.NET.Runtime.Utils;
 namespace Kaleidoscope.Chapter2
 {
     internal class ReplEngine
-        : KaleidoscopeReadEvaluatePrintLoopBase<IAstNode>
+        : ReadEvaluatePrintLoopBase<IAstNode>
     {
         public ReplEngine( )
             : base( LanguageLevel.MutableVariables )

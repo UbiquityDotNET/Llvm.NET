@@ -15,8 +15,8 @@ namespace Kaleidoscope.Runtime
 {
     /// <summary>REPL Loop implementation for the Kaleidoscope language</summary>
     /// <typeparam name="T">Type of values produced by the evaluation stage</typeparam>
-    public abstract class KaleidoscopeReadEvaluatePrintLoopBase<T>
-        : REPLBase<T>
+    public abstract class ReadEvaluatePrintLoopBase<T>
+        : Ubiquity.NET.Runtime.Utils.REPLBase<T>
     {
         /// <summary>Gets the Kaleidoscope language level for this instance</summary>
         public LanguageLevel LanguageFeatureLevel { get; }
@@ -64,23 +64,23 @@ namespace Kaleidoscope.Runtime
             await Run( input, parser, generator, cancelToken );
         }
 
-        /// <summary>Initializes a new instance of the <see cref="KaleidoscopeReadEvaluatePrintLoopBase{T}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ReadEvaluatePrintLoopBase{T}"/> class.</summary>
         /// <param name="level">Language level supported by this REPL instance</param>
         /// <remarks>
         /// This is protected to prevent use by anything other than a derived type.
         /// </remarks>
-        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level )
+        protected ReadEvaluatePrintLoopBase( LanguageLevel level )
             : this(level, new ParseErrorDiagnosticAdapter(new ColoredConsoleReporter(), "KLS"))
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="KaleidoscopeReadEvaluatePrintLoopBase{T}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ReadEvaluatePrintLoopBase{T}"/> class.</summary>
         /// <param name="level">Language level supported by this REPL instance</param>
         /// <param name="logger">Logger to report any issues parsing the input.</param>
         /// <remarks>
         /// This is protected to prevent use by anything other than a derived type.
         /// </remarks>
-        protected KaleidoscopeReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
+        protected ReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
             : base( logger )
         {
             LanguageFeatureLevel = level;

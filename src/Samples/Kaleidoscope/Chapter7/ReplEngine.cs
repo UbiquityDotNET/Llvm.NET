@@ -12,7 +12,7 @@ using Ubiquity.NET.Runtime.Utils;
 namespace Kaleidoscope.Chapter7
 {
     internal class ReplEngine
-        : KaleidoscopeReadEvaluatePrintLoopBase<Value>
+        : ReadEvaluatePrintLoopBase<Value>
     {
         public ReplEngine( )
             : base( LanguageLevel.MutableVariables )
@@ -41,8 +41,15 @@ namespace Kaleidoscope.Chapter7
 
             case Function function:
 #if SAVE_LLVM_IR
-                string safeFileName = Utilities.GetSafeFileName( function.Name );
-                _ = function.ParentModule.WriteToTextFile( System.IO.Path.ChangeExtension( safeFileName, "ll" ), out string _ );
+                if(function.Name is not null)
+                {
+                    string safeFileName = Utilities.GetSafeFileName( function.Name );
+                    string finalPath = System.IO.Path.ChangeExtension( safeFileName, "ll" );
+                    if(!function.ParentModule.WriteToTextFile( finalPath, out string errMessage ))
+                    {
+                        Console.Error.WriteLine($"ERROR saving output file '{finalPath}': {errMessage}");
+                    }
+                }
 #endif
                 break;
 
