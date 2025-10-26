@@ -21,9 +21,9 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.IsNotNull( machine );
             Assert.AreEqual( target, machine.Target );
-            Assert.AreEqual( DefaultTargetTriple, machine.Triple );
-            Assert.AreEqual( DefaultTargetCpu, machine.Cpu );
-            Assert.AreEqual( DefaultTargetFeatures, machine.Features );
+            Assert.AreEqual<string>( DefaultTargetTriple, machine.Triple );
+            Assert.AreEqual<string>( DefaultTargetCpu, machine.Cpu );
+            Assert.AreEqual<string>( DefaultTargetFeatures, machine.Features );
         }
 
         [TestMethod]
@@ -31,8 +31,8 @@ namespace Ubiquity.NET.Llvm.UT
         {
             var target = Target.FromTriple( DefaultTargetTriple );
             Assert.IsNotNull( target );
-            Assert.AreEqual( "thumb", target.Name );
-            Assert.AreEqual( "Thumb", target.Description );
+            Assert.AreEqual<string>( "thumb", target.Name );
+            Assert.AreEqual<string>( "Thumb", target.Description );
             Assert.IsTrue( target.HasAsmBackEnd );
             Assert.IsTrue( target.HasJIT );
             Assert.IsTrue( target.HasTargetMachine );
@@ -57,8 +57,8 @@ namespace Ubiquity.NET.Llvm.UT
             {
                 Assert.IsNotNull( target );
                 TargetInfo info = TargetInfo.ExpectedTargets[ target.Name ];
-                Assert.AreEqual( info.Name, target.Name );
-                Assert.AreEqual( info.Description, target.Description );
+                Assert.AreEqual<string>( info.Name, target.Name );
+                Assert.AreEqual<string>( info.Description, target.Description );
                 Assert.AreEqual( info.HasAsmBackEnd, target.HasAsmBackEnd );
                 Assert.AreEqual( info.HasJit, target.HasJIT );
                 Assert.AreEqual( info.HasTargetMachine, target.HasTargetMachine );

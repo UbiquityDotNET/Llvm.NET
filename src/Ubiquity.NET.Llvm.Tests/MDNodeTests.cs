@@ -20,14 +20,14 @@ namespace Ubiquity.NET.Llvm.UT
             DICompileUnit cu = diBuilder.CreateCompileUnit(SourceLanguage.C99, "test.c", "unit-tests");
 
             module.AddModuleFlag( ModuleFlagBehavior.Append, "testMD", ctx.CreateMDNode( "testValue" ) );
-            Assert.AreEqual( 1, module.ModuleFlags.Count );
+            Assert.HasCount( 1, module.ModuleFlags );
             var flag = module.ModuleFlags[ "testMD" ];
             Assert.IsNotNull( flag );
             Assert.AreEqual( ModuleFlagBehavior.Append, flag.Behavior );
-            Assert.AreEqual( "testMD", flag.Name );
+            Assert.AreEqual<string>( "testMD", flag.Name );
             Assert.IsInstanceOfType<MDTuple>( flag.Metadata );
             var tuple = ( MDTuple )flag.Metadata;
-            Assert.AreEqual( "testValue", tuple.GetOperandString( 0 ) );
+            Assert.AreEqual<string>( "testValue", tuple.GetOperandString( 0 ) );
         }
 
         [TestMethod]

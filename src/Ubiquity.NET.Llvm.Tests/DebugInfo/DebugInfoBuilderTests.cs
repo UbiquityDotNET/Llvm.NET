@@ -1361,7 +1361,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             Assert.AreEqual( expectedOperandCount, unit.Operands.Count, "CompileUnit should have correct number of operands" );
             var operandList = unit.Operands.ToList();
-            Assert.AreEqual( expectedOperandCount, operandList.Count, "Enumerating CompileUnit.Operands should have correct number of elements" );
+            Assert.HasCount( expectedOperandCount, operandList, "Enumerating CompileUnit.Operands should have correct number of elements" );
             Assert.IsNotNull( operandList[ 0 ], "Expect DIFile operand not null" );
 
             ValidateMetadataStringOperand( nameof( producer ), producer, operandList[ 1 ] );
@@ -1439,7 +1439,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
             // 3 - SourceText[MDString?]
             Assert.AreEqual( 4, file.Operands.Count, "DIFile should have correct number of operands" );
             var operandList = file.Operands.ToList();
-            Assert.AreEqual( file.Operands.Count, operandList.Count, "Enumerating DIFile.Operands should have correct number of elements" );
+            Assert.HasCount( file.Operands.Count, operandList, "Enumerating DIFile.Operands should have correct number of elements" );
             ValidateMetadataStringOperand( "FileName", expecteFileName, operandList[ 0 ] );
             ValidateMetadataStringOperand( "Directory", expectedDirectory, operandList[ 1 ] );
             ValidateMetadataStringOperand( "CheckSum", expectedCheckSum, operandList[ 2 ] );

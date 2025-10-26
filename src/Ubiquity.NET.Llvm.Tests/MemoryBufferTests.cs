@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( result );
 
             byte[ ] expected = Encoding.ASCII.GetBytes( TestData );
-            Assert.AreEqual( expected.Length, result.Length );
+            Assert.HasCount( expected.Length, result );
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( result );
 
             byte[ ] expected = Encoding.ASCII.GetBytes( TestData );
-            Assert.AreEqual( expected.Length, result.Length );
+            Assert.HasCount( expected.Length, result );
 
             for(int i = 0; i < result.Length; ++i)
             {

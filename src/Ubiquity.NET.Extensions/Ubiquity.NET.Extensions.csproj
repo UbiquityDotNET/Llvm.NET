@@ -29,5 +29,12 @@
         <None Include="ReadMe.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Analyzers\RepositoryVerifier\RepositoryVerifier.csproj">
+            <PrivateAssets>all</PrivateAssets>
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+            <OutputItemType>Analyzer</OutputItemType>
+        </ProjectReference>
+    </ItemGroup>
 
 </Project>

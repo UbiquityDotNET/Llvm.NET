@@ -138,4 +138,13 @@
   <data name="UNL000_Title" xml:space="preserve">
     <value>Internal Error</value>
   </data>
+  <data name="UNL002_Title" xml:space="preserve">
+    <value>C# `extension` keyword used</value>
+  </data>
+  <data name="UNL002_Description" xml:space="preserve">
+    <value>Use of the C# 14 `extension` keyword is currently banned in this repository.</value>
+  </data>
+  <data name="UNL002_MessageFormat" xml:space="preserve">
+    <value>C# `extension` keyword used - Use of this keyword is currently banned in this repository</value>
+  </data>
 </root>

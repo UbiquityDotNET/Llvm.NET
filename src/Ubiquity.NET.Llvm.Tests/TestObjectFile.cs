@@ -143,7 +143,7 @@ namespace Ubiquity.NET.Llvm.UT
             }
         }
 
-        [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+        [ClassCleanup]
         public static void Cleanup( )
         {
             System.IO.File.Delete( TestObjFileName );

@@ -40,7 +40,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( Tag.UnionType, union.DebugInfoType!.Tag );
             Assert.AreEqual( nativeUnionName, union.Name );
             Assert.AreEqual( nativeUnionName, union.NativeType.Name );
-            Assert.AreEqual( unionSymbolName, union.DebugInfoType.Name );
+            Assert.AreEqual<string>( unionSymbolName, union.DebugInfoType.Name );
             Assert.IsNull( union.DebugInfoType.Scope );
             Assert.AreEqual( testFile, union.DebugInfoType.File );
             Assert.AreEqual( 0U, union.DebugInfoType.Line );
@@ -123,7 +123,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( Tag.UnionType, union.DebugInfoType!.Tag );
             Assert.AreEqual( nativeUnionName, union.Name );
             Assert.AreEqual( nativeUnionName, union.NativeType!.Name );
-            Assert.AreEqual( unionSymbolName, union.DebugInfoType.Name );
+            Assert.AreEqual<string>( unionSymbolName, union.DebugInfoType.Name );
             Assert.IsNull( union.DebugInfoType.Scope );
             Assert.AreEqual( diFile, union.DebugInfoType.File );
             Assert.AreEqual( 0U, union.DebugInfoType.Line );
@@ -168,7 +168,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsFalse( union.IsFloatingPoint );
             Assert.AreEqual( 0U, union.IntegerBitWidth );
 
-            Assert.AreEqual( 1, union.NativeType.Members.Count );
+            Assert.HasCount( 1, union.NativeType.Members );
             Assert.AreEqual( ctx.Int32Type, union.NativeType.Members[ 0 ] );
 
             Assert.IsNotNull( union.DebugInfoType.Elements );
@@ -178,7 +178,7 @@ namespace Ubiquity.NET.Llvm.UT
                 var memberType = union.DebugInfoType.Elements[ i ] as DIDerivedType;
                 Assert.IsNotNull( memberType );
                 Assert.AreEqual( Tag.Member, memberType!.Tag );
-                Assert.AreEqual( members[ i ].Name, memberType.Name );
+                Assert.AreEqual<string>( members[ i ].Name, memberType.Name );
                 Assert.AreEqual( members[ i ].DebugType.DebugInfoType, memberType.BaseType );
             }
         }

@@ -4,6 +4,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
@@ -13,3 +15,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid( "826adb1c-4bdc-4a89-836b-87088e511d6a" )]
 
 [assembly: CLSCompliant( false )]
+
+[assembly: Parallelize( Scope = ExecutionScope.ClassLevel )]

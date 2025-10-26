@@ -107,7 +107,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             function.Parameters[ 0 ].AddAttributes( nestAttrib, byValInt32Attrib );
             var attributes = function.GetAttributesAtIndex( FunctionAttributeIndex.Parameter0 ).ToArray( );
-            Assert.AreEqual( 2, attributes.Length );
+            Assert.HasCount( 2, attributes );
             Assert.IsTrue( attributes.Contains( nestAttrib ) );
             Assert.IsTrue( attributes.Contains( byValInt32Attrib ) );
         }

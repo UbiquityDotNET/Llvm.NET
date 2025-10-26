@@ -7,3 +7,4 @@ Rule ID | Category | Severity | Notes
 --------|----------|----------|-------
 UNL000 | Internal | Error | Diagnostics, [Documentation](AnalyzerException)
 UNL001 | Usage | Error | Diagnostics
+UNL002 | Usage | Error | Diagnostics, [Documentation](Compiler)
