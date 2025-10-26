@@ -39,7 +39,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
-        <ProjectReference Include="..\ReferenceEqualityVerifier\ReferenceEqualityVerifier\ReferenceEqualityVerifier.csproj">
+        <ProjectReference Include="..\Analyzers\RepositoryVerifier\RepositoryVerifier.csproj">
             <PrivateAssets>all</PrivateAssets>
             <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
             <OutputItemType>Analyzer</OutputItemType>

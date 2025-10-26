@@ -4,6 +4,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 // In SDK-style projects such as this one, several assembly attributes that were historically
 // defined in this file are now automatically added during build and populated with
 // values defined in project properties. For details of which attributes are included
@@ -18,3 +20,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid( "994905c9-5cea-480a-b9fa-1458c5fc04d5" )]
 
 [assembly: CLSCompliant( false )]
+
+[assembly: Parallelize( Scope = ExecutionScope.ClassLevel )]

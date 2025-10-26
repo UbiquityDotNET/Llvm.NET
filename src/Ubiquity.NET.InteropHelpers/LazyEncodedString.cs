@@ -319,13 +319,26 @@ namespace Ubiquity.NET.InteropHelpers
         /// <summary>Gets a <see cref="LazyEncodedString"/> representation of an empty string</summary>
         public static LazyEncodedString Empty { get; } = new( string.Empty );
 
+        /// <summary>Converts a managed string into a <see cref="LazyEncodedString"/></summary>
+        /// <param name="managed">Input string to convert</param>
+        /// <returns><see cref="LazyEncodedString"/> wrapping <paramref name="managed"/></returns>
+        /// <remarks>
+        /// If the input <paramref name="managed"/> is <see langword="null"/> then this will return
+        /// a <see langword="null"/> to maintain intent and semantics that <see langword="null"/>
+        /// may not have the same meaning as an empty string.
+        /// </remarks>
+        [return: NotNullIfNotNull( nameof( managed ) )]
+        public static LazyEncodedString? From( string? managed )
+        {
+            return managed is null ? null : new( managed );
+        }
+
         /// <summary>Implicit cast to a string via <see cref="ToString"/></summary>
         /// <param name="self">instance to cast</param>
-        public static implicit operator string( LazyEncodedString self )
+        [return: NotNullIfNotNull(nameof(self))]
+        public static implicit operator string?( LazyEncodedString? self )
         {
-            ArgumentNullException.ThrowIfNull( self );
-
-            return self.ToString();
+            return self?.ToString();
         }
 
         /// <summary>Implicit cast to a span via <see cref="ToReadOnlySpan"/></summary>
@@ -338,19 +351,6 @@ namespace Ubiquity.NET.InteropHelpers
             ArgumentNullException.ThrowIfNull( self );
 
             return self.ToReadOnlySpan();
-        }
-
-        /// <summary>Converts a managed string into a <see cref="LazyEncodedString"/></summary>
-        /// <param name="managed">Input string to convert</param>
-        /// <returns><see cref="LazyEncodedString"/> wrapping <paramref name="managed"/></returns>
-        /// <remarks>
-        /// If the input <paramref name="managed"/> is <see langword="null"/> then this will return
-        /// a <see langword="null"/> to maintain intent and semantics that <see langword="null"/>
-        /// may not have the same meaning as an empty string.
-        /// </remarks>
-        public static LazyEncodedString? From( string? managed )
-        {
-            return managed is null ? null : new( managed );
         }
 
         /// <summary>Convenient implicit conversion of a managed string into a Lazily encoded string</summary>

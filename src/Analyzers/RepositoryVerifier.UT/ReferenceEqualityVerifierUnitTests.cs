@@ -10,16 +10,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static Microsoft.CodeAnalysis.Testing.ReferenceAssemblies;
 
-namespace ReferenceEqualityVerifier.Test
+namespace RepositoryVerifier.UT
 {
     [TestClass]
     public class ReferenceEqualityVerifierUnitTests
     {
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public async Task EmptySourceAnalyzesClean( )
         {
             var analyzerTest = CreateTestRunner(string.Empty);
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -33,7 +35,7 @@ namespace ReferenceEqualityVerifier.Test
                 ]
             );
 
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -46,7 +48,7 @@ namespace ReferenceEqualityVerifier.Test
                 ]
             );
 
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -60,7 +62,7 @@ namespace ReferenceEqualityVerifier.Test
                 ]
             );
 
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -73,7 +75,7 @@ namespace ReferenceEqualityVerifier.Test
                 ]
             );
 
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -82,7 +84,7 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(CompareWithNull);
 
             // no diagnostics expected (ref equality against null is always a ref equality check!)
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -93,7 +95,7 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(NoNamespaceEquatable);
 
             // no diagnostics expected
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -102,7 +104,7 @@ namespace ReferenceEqualityVerifier.Test
             var analyzerTest = CreateTestRunner(StructEquatable);
 
             // no diagnostics expected
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -114,7 +116,7 @@ namespace ReferenceEqualityVerifier.Test
                     new DiagnosticResult("CS1525", DiagnosticSeverity.Error).WithLocation(16,25),
                 ]
             );
-            await analyzerTest.RunAsync();
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         private static AnalyzerTest<DefaultVerifier> CreateTestRunner( string source )

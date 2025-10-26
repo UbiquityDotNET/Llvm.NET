@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReferenceEqualityVerifier\ReferenceEqualityVerifier.csproj" />
+    <ProjectReference Include="..\RepositoryVerifier\RepositoryVerifier.csproj" />
   </ItemGroup>
 
 </Project>

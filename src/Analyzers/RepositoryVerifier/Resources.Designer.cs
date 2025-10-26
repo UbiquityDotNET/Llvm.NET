@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReferenceEqualityVerifier {
+namespace RepositoryVerifier {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace ReferenceEqualityVerifier {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace ReferenceEqualityVerifier {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReferenceEqualityVerifier.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RepositoryVerifier.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -111,6 +111,33 @@ namespace ReferenceEqualityVerifier {
         internal static string UNL001_Title {
             get {
                 return ResourceManager.GetString("UNL001_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use of the C# 14 `extension` keyword is currently banned in this repository..
+        /// </summary>
+        internal static string UNL002_Description {
+            get {
+                return ResourceManager.GetString("UNL002_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C# `extension` keyword used - Use of this keyword is currently banned in this repository.
+        /// </summary>
+        internal static string UNL002_MessageFormat {
+            get {
+                return ResourceManager.GetString("UNL002_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C# `extension` keyword used.
+        /// </summary>
+        internal static string UNL002_Title {
+            get {
+                return ResourceManager.GetString("UNL002_Title", resourceCulture);
             }
         }
     }

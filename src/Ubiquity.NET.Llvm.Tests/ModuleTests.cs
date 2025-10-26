@@ -232,7 +232,7 @@ namespace Ubiquity.NET.Llvm.UT
             // verify basics
             Assert.IsNotNull( testFunc );
             Assert.AreEqual( module, testFunc.ParentModule );
-            Assert.AreEqual( "foo", testFunc.Name );
+            Assert.AreEqual<string>( "foo", testFunc.Name );
 
             // Verify the function is in the module, and getting it retrieves the same instance
             Assert.IsTrue( module.TryGetFunction( "foo", out Function? funcFromModule ) );
@@ -322,7 +322,7 @@ namespace Ubiquity.NET.Llvm.UT
             GlobalVariable? globalVar = module.GetNamedGlobal( "TestInt" );
             Assert.IsNotNull( globalVar );
 
-            Assert.AreEqual( "TestInt", globalVar!.Name );
+            Assert.AreEqual<string>( "TestInt", globalVar!.Name );
             Assert.AreEqual( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
         }
 
@@ -359,7 +359,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsNotNull( globalVar );
             Assert.IsNotNull( globalVar!.Initializer );
 
-            Assert.AreEqual( "TestInt", globalVar.Name );
+            Assert.AreEqual<string>( "TestInt", globalVar.Name );
             Assert.AreEqual( module.Context.Int32Type.CreatePointerType(), globalVar.NativeType );
             Assert.AreEqual( module.Context.Int32Type, globalVar.Initializer!.NativeType );
             Assert.AreEqual( Linkage.WeakODR, globalVar.Linkage );
@@ -427,7 +427,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var wcharSizeFlag = module.ModuleFlags[ "wchar_size" ];
             Assert.AreEqual( ModuleFlagBehavior.Error, wcharSizeFlag.Behavior );
-            Assert.AreEqual( "wchar_size", wcharSizeFlag.Name );
+            Assert.AreEqual<string>( "wchar_size", wcharSizeFlag.Name );
             Assert.IsInstanceOfType<ConstantAsMetadata>( wcharSizeFlag.Metadata );
 
             var wcharSizeConst = ( ( ConstantAsMetadata )wcharSizeFlag.Metadata ).Constant;
@@ -436,7 +436,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var minEnumSizeFlag = module.ModuleFlags[ "wchar_size" ];
             Assert.AreEqual( ModuleFlagBehavior.Error, minEnumSizeFlag.Behavior );
-            Assert.AreEqual( "wchar_size", minEnumSizeFlag.Name );
+            Assert.AreEqual<string>( "wchar_size", minEnumSizeFlag.Name );
             Assert.IsInstanceOfType<ConstantAsMetadata>( minEnumSizeFlag.Metadata );
 
             var minEnumSizeConst = ( ( ConstantAsMetadata )minEnumSizeFlag.Metadata ).Constant;

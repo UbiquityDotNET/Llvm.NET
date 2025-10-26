@@ -63,7 +63,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
 
             // Test enumeration of records works (doesn't crash at least)
             DebugRecord[] records = [ .. mallocInst.DebugRecords ];
-            Assert.AreEqual( 1, records.Length );
+            Assert.HasCount( 1, records );
             Assert.IsFalse( records[ 0 ].IsNull, "Should not enumerate a null record" );
             Assert.IsTrue( records[ 0 ].NextRecord.IsNull, "Next record should be null (only one record expected)" );
         }

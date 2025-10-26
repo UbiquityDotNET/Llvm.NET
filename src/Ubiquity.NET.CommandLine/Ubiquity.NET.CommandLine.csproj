@@ -34,6 +34,11 @@
     <ItemGroup>
         <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
         <ProjectReference Include="..\Ubiquity.NET.TextUX\Ubiquity.NET.TextUX.csproj" />
+        <ProjectReference Include="..\Analyzers\RepositoryVerifier\RepositoryVerifier.csproj">
+            <PrivateAssets>all</PrivateAssets>
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+            <OutputItemType>Analyzer</OutputItemType>
+        </ProjectReference>
     </ItemGroup>
 
 </Project>

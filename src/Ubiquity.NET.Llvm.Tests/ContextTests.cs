@@ -120,7 +120,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.AreEqual( TypeKind.Function, funcSig.Kind );
             Assert.AreEqual( context.FloatType, funcSig.ReturnType );
-            Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
+            Assert.HasCount( 2, funcSig.ParameterTypes );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, funcSig.IntegerBitWidth );
@@ -248,7 +248,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.AreEqual( TypeKind.Function, funcSig.Kind );
             Assert.AreEqual( context.Int16Type, funcSig.ReturnType );
-            Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
+            Assert.HasCount( 2, funcSig.ParameterTypes );
 
             // verify additional properties created properly
             Assert.AreEqual( 0U, funcSig.IntegerBitWidth );
@@ -278,7 +278,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.AreEqual( TypeKind.Function, funcSig.Kind );
             Assert.AreEqual( context.Int16Type, funcSig.ReturnType );
-            Assert.AreEqual( 2, funcSig.ParameterTypes.Count );
+            Assert.HasCount( 2, funcSig.ParameterTypes );
             Assert.IsTrue( funcSig.IsVarArg );
 
             // verify additional properties created properly
@@ -308,7 +308,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
             Assert.AreEqual( typeName, type.Name );
-            Assert.AreEqual( 0, type.Members.Count );
+            Assert.IsEmpty( type.Members);
 
             // with no elements the type should not be considered sized
             Assert.IsFalse( type.IsSized );
@@ -340,7 +340,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsTrue( type.IsStruct );
             Assert.IsNotNull( type.Name );
             Assert.IsEmpty( type.Name );
-            Assert.AreEqual( 1, type.Members.Count );
+            Assert.HasCount( 1, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.IsFalse( type.IsPacked );
 
@@ -374,7 +374,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsTrue( type.IsStruct );
             Assert.IsNotNull( type.Name );
             Assert.IsEmpty( type.Name );
-            Assert.AreEqual( 1, type.Members.Count );
+            Assert.HasCount( 1, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.IsTrue( type.IsPacked );
 
@@ -408,7 +408,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsTrue( type.IsStruct );
             Assert.IsNotNull( type.Name );
             Assert.IsEmpty( type.Name );
-            Assert.AreEqual( 2, type.Members.Count );
+            Assert.HasCount( 2, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.AreEqual( context.Int32Type, type.Members[ 1 ] );
             Assert.IsFalse( type.IsPacked );
@@ -443,7 +443,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.IsTrue( type.IsStruct );
             Assert.IsNotNull( type.Name );
             Assert.IsEmpty( type.Name );
-            Assert.AreEqual( 2, type.Members.Count );
+            Assert.HasCount( 2, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.AreEqual( context.Int32Type, type.Members[ 1 ] );
             Assert.IsTrue( type.IsPacked );
@@ -477,7 +477,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
             Assert.AreEqual( typeName, type.Name );
-            Assert.AreEqual( 1, type.Members.Count );
+            Assert.HasCount( 1, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.IsFalse( type.IsPacked );
 
@@ -510,7 +510,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
             Assert.AreEqual( typeName, type.Name );
-            Assert.AreEqual( 1, type.Members.Count );
+            Assert.HasCount( 1, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.IsTrue( type.IsPacked );
 
@@ -543,7 +543,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
             Assert.AreEqual( typeName, type.Name );
-            Assert.AreEqual( 2, type.Members.Count );
+            Assert.HasCount( 2, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.AreEqual( context.Int32Type, type.Members[ 1 ] );
             Assert.IsFalse( type.IsPacked );
@@ -577,7 +577,7 @@ namespace Ubiquity.NET.Llvm.UT
             Assert.AreEqual( TypeKind.Struct, type.Kind );
             Assert.IsTrue( type.IsStruct );
             Assert.AreEqual( typeName, type.Name );
-            Assert.AreEqual( 2, type.Members.Count );
+            Assert.HasCount( 2, type.Members );
             Assert.AreEqual( context.Int16Type, type.Members[ 0 ] );
             Assert.AreEqual( context.Int32Type, type.Members[ 1 ] );
             Assert.IsTrue( type.IsPacked );

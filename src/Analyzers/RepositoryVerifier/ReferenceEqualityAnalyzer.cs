@@ -12,7 +12,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace ReferenceEqualityVerifier
+namespace RepositoryVerifier
 {
     /// <summary>Analyzer to perform the checks for use of reference equality when <see cref="IEquatable{T}"/> should be used</summary>
     /// <remarks>
@@ -27,13 +27,14 @@ namespace ReferenceEqualityVerifier
     {
         private const string RelevantNamespaceName = "Ubiquity.NET.Llvm";
 
-        /// <summary>Gets the diagnostics supported by this analyzer</summary>
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => Diagnostics.AllDiagnostics;
+        /// <inheritdoc/>
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => Diagnostics.ReferenceEqualityAnalyzer;
 
         /// <summary>Initializes the analyzer to detect potentially incorrect use</summary>
         /// <param name="context">Compiler provided context for initialization</param>
         public override void Initialize( AnalysisContext context )
         {
+            // ignore generated code
             context.ConfigureGeneratedCodeAnalysis( GeneratedCodeAnalysisFlags.None );
             context.EnableConcurrentExecution();
             context.RegisterOperationAction( BinaryOpAction, OperationKind.Binary );
@@ -98,7 +99,7 @@ namespace ReferenceEqualityVerifier
             }
             catch(Exception ex)
             {
-                context.ReportDiagnostic( Diagnostic.Create( Diagnostics.RefEqualityInternalError, context.Operation.Syntax.GetLocation(), ex.Message ) );
+                context.ReportDiagnostic( Diagnostic.Create( Diagnostics.InternalError, context.Operation.Syntax.GetLocation(), ex.Message ) );
             }
         }
 

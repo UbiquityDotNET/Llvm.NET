@@ -85,7 +85,7 @@ namespace Ubiquity.NET.Llvm.UT.DebugInfo
                 packed,
                 elements );
 
-            Assert.AreEqual( elements.Length, debugStructType.Members.Count );
+            Assert.HasCount( elements.Length, debugStructType.Members );
             for(int i = 0; i < elements.Length; ++i)
             {
                 Assert.AreEqual( elements[ i ], debugStructType.Members[ i ] );
