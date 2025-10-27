@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -37,7 +38,7 @@ namespace Ubiquity.NET.Llvm.JIT.Tests
                 using(SymbolStringPoolEntry entry2 = entry.AddRef())
                 {
                     var activeSyms = jit.Session.SymbolStringPool.GetSymbolsInPool();
-                    Assert.AreEqual(initSyms.Length + 1, activeSyms.Length);
+                    Assert.HasCount( initSyms.Length + 1, activeSyms );
                 } // end of using scope should decrement ref count (once)
             } // end of using scope should decrement ref count (once)
 #pragma warning restore IDE0063 // Use simple 'using' statement

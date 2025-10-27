@@ -21,7 +21,8 @@ a project via MSBUILD. Instead it focused on a .NET tool to do it all via the
 command line. Ultimately the docfx.json serves as the "project" file for the
 different site builds. The PowerShell script `Build-Docs.ps1` was updated to use
 the new tool directly. Using that script should have little or no impact on the
-overall flow.
+overall flow. There is a "no-targets" project in the solution to enable easier access to the
+input files but does not itself, generate any docs - it's just a placeholder.
 
 ## Files used by the docs generation
 There are a lot of files used to generate the docs and the concept of a Table of

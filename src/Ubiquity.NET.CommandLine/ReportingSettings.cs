@@ -7,8 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
-using Ubiquity.NET.TextUX;
-
 namespace Ubiquity.NET.CommandLine
 {
     // internal extension for IDiagnosticReporter

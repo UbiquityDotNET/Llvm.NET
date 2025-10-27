@@ -8,10 +8,8 @@
     <Platform Condition="'$(Platform)'=='x86'">AnyCPU</Platform>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
-
   <!--
   This projects serves as a convenient placeholder to reference the doc files. It uses project relative include
   and exclude patterns to simplify referencing ALL files but skipping over the generated API files.
@@ -59,7 +57,6 @@
     <!--Everything in the TextUX sub-folders except the API folder as that contains generated files -->
     <None Include="TextUX/**" Exclude="TextUX/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="TextUX/api/index.md" />
   </ItemGroup>
   <ItemGroup>
     <!--Everything in the CommandLine sub-folders except the API folder as that contains generated files -->
@@ -67,44 +64,41 @@
     <!-- Explicitly call out the non-generated files in the API folder-->
     <None Include="CommandLine/api/index.md" />
   </ItemGroup>
-
   <Target Name="AlwaysRun" BeforeTargets="AfterBuild">
     <Message Importance="High" Text="NOTE: Building $(MSBuildProjectFile) does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files" />
   </Target>
-
   <!--
   Target to generate the versioning JSON file for consumption by the docs scripts. This target is explicitly called out
   by the build scripts to generate the JSON file with all the version details from Ubiquity.NET.Versioning.Build.Tasks.
   The `PrepareVersioningForBuild` target comes from there.
   -->
   <Target Name="GenerateVersionJson" DependsOnTargets="PrepareVersioningForBuild">
-    <Error Condition="'$(FullBuildNumber)'==''" Text="FullBuildNumber not available!"/>
-    <Message Importance="normal" Text="        BuildTime: $(BuildTime)"/>
-    <Message Importance="normal" Text="  FullBuildNumber: $(FullBuildNumber)"/>
-    <Message Importance="normal" Text="       BuildMajor: $(BuildMajor)"/>
-    <Message Importance="normal" Text="       BuildMinor: $(BuildMinor)"/>
-    <Message Importance="normal" Text="       BuildPatch: $(BuildPatch)"/>
-    <Message Importance="normal" Text="   PreReleaseName: $(PreReleaseName)"/>
-    <Message Importance="normal" Text=" PreReleaseNumber: $(PreReleaseNumber)"/>
-    <Message Importance="normal" Text="    PreReleaseFix: $(PreReleaseFix)"/>
-    <Message Importance="normal" Text="        BuildMeta: $(BuildMeta)"/>
-    <Message Importance="normal" Text="      CiBuildName: $(CiBuildName)"/>
-    <Message Importance="normal" Text="     CiBuildIndex: $(CiBuildIndex)"/>
+    <Error Condition="'$(FullBuildNumber)'==''" Text="FullBuildNumber not available!" />
+    <Message Importance="normal" Text="        BuildTime: $(BuildTime)" />
+    <Message Importance="normal" Text="  FullBuildNumber: $(FullBuildNumber)" />
+    <Message Importance="normal" Text="       BuildMajor: $(BuildMajor)" />
+    <Message Importance="normal" Text="       BuildMinor: $(BuildMinor)" />
+    <Message Importance="normal" Text="       BuildPatch: $(BuildPatch)" />
+    <Message Importance="normal" Text="   PreReleaseName: $(PreReleaseName)" />
+    <Message Importance="normal" Text=" PreReleaseNumber: $(PreReleaseNumber)" />
+    <Message Importance="normal" Text="    PreReleaseFix: $(PreReleaseFix)" />
+    <Message Importance="normal" Text="        BuildMeta: $(BuildMeta)" />
+    <Message Importance="normal" Text="      CiBuildName: $(CiBuildName)" />
+    <Message Importance="normal" Text="     CiBuildIndex: $(CiBuildIndex)" />
     <ItemGroup>
-        <__Line Include="{"/>
-        <__Line Include="    &quot;FullBuildNumber&quot; : &quot;$(FullBuildNumber)&quot;," />
-        <__Line Include="    &quot;BuildMajor&quot; : $(BuildMajor)," />
-        <__Line Include="    &quot;BuildMinor&quot; : $(BuildMinor)," />
-        <__Line Include="    &quot;BuildPatch&quot; : $(BuildPatch)," />
-        <__Line Include="    &quot;PreReleaseName&quot; : &quot;$(PreReleaseName)&quot;," />
-        <__Line Include="    &quot;CiBuildName&quot; : &quot;$(CiBuildName)&quot;," />
-        <__Line Include="    &quot;CiBuildIndex&quot; : $(CiBuildIndex)," />
-        <__Line Condition="'$(PreReleaseNumber)'!=''" Include="&quot;PreReleaseNumber&quot; : $(PreReleaseNumber)," />
-        <__Line Condition="'$(PreReleaseFix)'!=''" Include="&quot;PreReleaseFix&quot; : $(PreReleaseFix)," />
-        <__Line Condition="'$(BuildMeta)'!=''" Include="&quot;BuildMeta&quot; : &quot;$(BuildMeta)&quot;," />
-        <__Line Include="}"/>
+      <__Line Include="{" />
+      <__Line Include="    &quot;FullBuildNumber&quot; : &quot;$(FullBuildNumber)&quot;," />
+      <__Line Include="    &quot;BuildMajor&quot; : $(BuildMajor)," />
+      <__Line Include="    &quot;BuildMinor&quot; : $(BuildMinor)," />
+      <__Line Include="    &quot;BuildPatch&quot; : $(BuildPatch)," />
+      <__Line Include="    &quot;PreReleaseName&quot; : &quot;$(PreReleaseName)&quot;," />
+      <__Line Include="    &quot;CiBuildName&quot; : &quot;$(CiBuildName)&quot;," />
+      <__Line Include="    &quot;CiBuildIndex&quot; : $(CiBuildIndex)," />
+      <__Line Condition="'$(PreReleaseNumber)'!=''" Include="&quot;PreReleaseNumber&quot; : $(PreReleaseNumber)," />
+      <__Line Condition="'$(PreReleaseFix)'!=''" Include="&quot;PreReleaseFix&quot; : $(PreReleaseFix)," />
+      <__Line Condition="'$(BuildMeta)'!=''" Include="&quot;BuildMeta&quot; : &quot;$(BuildMeta)&quot;," />
+      <__Line Include="}" />
     </ItemGroup>
-    <WriteLinesToFile File="CurrentVersionInfo.json" Lines="@(__Line)" Overwrite="true"/>
+    <WriteLinesToFile File="CurrentVersionInfo.json" Lines="@(__Line)" Overwrite="true" />
   </Target>
-
 </Project>

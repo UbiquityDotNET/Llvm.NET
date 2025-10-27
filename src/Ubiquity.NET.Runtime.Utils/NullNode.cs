@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-using Ubiquity.NET.TextUX;
+using Ubiquity.NET.Extensions;
 
 namespace Ubiquity.NET.Runtime.Utils
 {

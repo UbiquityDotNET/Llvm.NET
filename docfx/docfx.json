@@ -87,18 +87,6 @@
                 // in this project let alone all the ones found on-line.)
                 "TargetFramework": "net8.0"
             }
-        },
-        {
-            // TextUX  library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.TextUX",
-                    "files": ["**.csproj"]
-                }
-            ],
-            "dest": "TextUX/api"
         }
     ],
     "build": {
@@ -195,18 +183,6 @@
                 // NOTE: File paths are relative to the location of this file
                 "files": [
                     "runtime-utils/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
-                // TextUX project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
-                "files": [
-                    "TextUX/**.{md,yml}"
                 ],
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [

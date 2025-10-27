@@ -4,8 +4,8 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {

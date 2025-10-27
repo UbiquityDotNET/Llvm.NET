@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Reporter that collects diagnostic information without reporting it in any UI/UX</summary>
     public class DiagnosticMessageCollection

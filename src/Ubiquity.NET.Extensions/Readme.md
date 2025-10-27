@@ -14,37 +14,42 @@ multiple other Ubiquity.NET projects.
   for interoperability across OS platforms and compatibility with "on disk" representations.
 * A custom ValidatedNotNullAttribute to allow compiler to assume a parameter
   value is validated as not null.
-* Fluent style parameter value validation extensions.
-    - These are useful when passing parameters to a function that produces a
-      result that is fed to the base constructor. These are also useful in body
-      expressions to validate input parameters.
 * DictionaryBuilder to enable dictionary initializer style initialization of
   `ImmutableDictionary<TKey, TValue>` with significantly reduced overhead.
-    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build the
-      dictionary. When the `ToImmutable()` method is called the builder is converted to the
-      immutable state without any overhead of a copy or re-construction of hash tables etc...
-* KvpArrayBuilder to enable array initializer style initialization of
+    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build
+      the dictionary. When the `ToImmutable()` method is called the builder is converted to
+      the immutable state without any overhead of a copy or re-construction of hash tables
+      etc...
+* KvpArrayBuilder to enable initializer style initialization of
   `ImmutableArray<KeyValuePair<TKey, TValue>>` with significantly reduced overhead.
-    - This leverages an `ImmutableArray<T>.Builder` under the hood to build the array directly.
-      When the `ToImmutable()` method is called the builder is converted to the immutable state without any
-      overhead of a copy.
-    - Since this is an array and not a dictionary there is no overhead for allocating, initializing or copying
-      any hash mapping for the keys.
+    - This leverages an `ImmutableArray<T>.Builder` under the hood to build the array
+      directly. When the `ToImmutable()` method is called the builder is ***converted*** to
+      the immutable state without any overhead of a copy.
+    - Since this is an array and not a dictionary there is no overhead for allocating,
+      initializing or copying any hash mapping for the keys.
 
 ## Fluent Validation
 The library includes extensions that support fluent validation to allow use in property
 accessors and constructors that forward values to a base or another constructor. This is
 normally used when the value itself isn't passed on but some transformed value is.
 
-* `ThrowIfNull()`
-* `ThrowIfOutOfRange()`
-* `ThrowIfNotDefined()`
+|Method | Description |
+|-------|-------------|
+|`ThrowIfNull()`| Thows an exception if the argument is null or returns it as-is |
+|`ThrowIfOutOfRange()` | Thorws an exception if a value is out of the specified range |
+|`ThrowIfNotDefined()` | Throws an exception if an enum value is undefined |
 
-## PolyFill
-While it isn't `impossible` to make polyfill this to work on .NET standard 2.0 it is a HUGE
-amount of effort to do so and there's no compelling reason to do so. Roslyn extensions/VSIX
-extensions are the most likely candidates left. VS extensions are shifting to external
-processes for extensions for this reason, leaving Roslyn generators. The bottom line is
-that too much of MODERN .NET and C# is incompatible with .NET Standard 2.0 that a distinct
-PolyFill library can only cover some of it. (Even the PolySharp generator covers only
-some of the missing functionality)
+## Why not PolyFill?
+While it isn't impossible to make polyfill for this to work on .NET standard 2.0 it
+***is*** a HUGE amount of effort to do so and there's no compelling reason to do so. Roslyn
+extensions/VSIX extensions are the most likely candidates left. VS extensions are shifting
+to external processes for extensions for this reason, leaving Roslyn generators. The bottom
+line is that too much of MODERN .NET and C# is incompatible with .NET Standard 2.0 that a
+distinct PolyFill library can only cover some of it. (Even the PolySharp generator covers
+only some of the missing functionality)
+
+## Runtime Dependencies
+None  
+
+There are dependencies on various compile time analyzers but no runtime dependencies are
+allowed.

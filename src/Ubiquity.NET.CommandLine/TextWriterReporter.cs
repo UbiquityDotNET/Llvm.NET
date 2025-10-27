@@ -7,9 +7,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
-    /// <summary>Base class for <see cref="TextWriter"/> based reporting</summary>
+    /// <summary>Base class for reporting diagnostics via an instance of <see cref="TextWriter"/></summary>
     public class TextWriterReporter
         : IDiagnosticReporter
     {

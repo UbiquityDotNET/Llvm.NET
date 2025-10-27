@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using CppSharp;
 
 using Ubiquity.NET.CommandLine;
-using Ubiquity.NET.TextUX;
 
 namespace LlvmBindingsGenerator
 {

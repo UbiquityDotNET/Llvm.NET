@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Parsing;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Ubiquity.NET.CommandLine
 {
@@ -190,6 +191,7 @@ namespace Ubiquity.NET.CommandLine
         }
 
         // returns true if the exception is one of the documented types for Directory.CreateDirectory().
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsDirectoryCreationException(Exception ex)
         {
             return ex is IOException or

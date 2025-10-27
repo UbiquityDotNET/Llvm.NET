@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Implementation of <see cref="IDiagnosticReporter"/> that reports messages to a <see cref="Console"/></summary>
     /// <remarks>

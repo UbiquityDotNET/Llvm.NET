@@ -6,7 +6,9 @@ using System.Text;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Ubiquity.NET.TextUX.UT
+using Ubiquity.NET.CommandLine;
+
+namespace Ubiquity.NET.Commandline.UT
 {
     [TestClass]
     public class ArgumentExceptionReporterTests

@@ -4,7 +4,7 @@
 using System;
 using System.Globalization;
 
-using Ubiquity.NET.TextUX;
+using Ubiquity.NET.CommandLine;
 
 namespace Ubiquity.NET.Runtime.Utils
 {

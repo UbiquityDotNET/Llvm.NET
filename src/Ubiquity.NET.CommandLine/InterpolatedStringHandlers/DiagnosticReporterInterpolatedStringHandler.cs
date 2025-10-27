@@ -3,12 +3,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
+namespace Ubiquity.NET.CommandLine.InterpolatedStringHandlers
 {
-    /// <summary>Interpolated string handler for an <see cref="IDiagnosticReporter"/> using a fixed <see cref="MsgLevel.Error"/></summary>
+    /// <summary>Interpolated string handler for an <see cref="IDiagnosticReporter"/></summary>
     /// <remarks>
     /// <para>This handler will use the state of the <see cref="IDiagnosticReporter.Level"/> to filter messages
     /// as interpolated strings. If the channel for the message is not enabled, then the handler filters
@@ -16,7 +17,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
     /// one [Limit of how Handlers work in .NET]). The limitation of the first is further restricted to the
     /// first "thing" interpolated including a string literal. Thus, the parameterized elements are not generated
     /// if the channel isn't enabled unless the element is the first thing in the interpolated string. In that
-    /// case only the first entry is evaluated.</para>
+    /// case only, the first entry is evaluated.</para>
     /// <note type="important">
     /// Apps should NOT depend on the subtleties of interpolated parameter evaluation to guarantee invocation
     /// (or not) of side effects. This is a "best-effort" optimization. In particular, apps should assume that
@@ -28,30 +29,42 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
     /// </remarks>
     [InterpolatedStringHandler]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Not relevant for an interpolated string handler" )]
-    public readonly struct ErrorReportingInterpolatedStringHandler
+    public readonly struct DiagnosticReporterInterpolatedStringHandler
     {
-        /// <summary>Initializes a new instance of the <see cref="ErrorReportingInterpolatedStringHandler"/> struct.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DiagnosticReporterInterpolatedStringHandler"/> struct.</summary>
         /// <param name="literalLength">Length of the literal</param>
         /// <param name="formattedCount">Sadly .NET doesn't document this, or much else in relation to interpolated string handlers</param>
         /// <param name="reporter">"this" reference for the reporter. (Mapped via InterpolatedStringHandlerArgument applied to method)</param>
+        /// <param name="level">Reporting level parameter to report for. (Mapped via InterpolatedStringHandlerArgument applied to method)</param>
+        /// <param name="formatProvider">Format provider</param>
         /// <remarks>
         /// The <paramref name="reporter"/> may not have the level enabled. This is used to ONLY process the interpolated string
         /// if the reporter has the level enabled. Thus, it may produce NO message at all if not enabled.
         /// </remarks>
-        public ErrorReportingInterpolatedStringHandler( int literalLength, int formattedCount, IDiagnosticReporter reporter )
+        public DiagnosticReporterInterpolatedStringHandler(
+            int literalLength,
+            int formattedCount,
+            IDiagnosticReporter reporter,
+            MsgLevel level,
+            IFormatProvider? formatProvider = null
+            )
         {
-            Builder = reporter.IsEnabled( MsgLevel.Error ) ? new( literalLength ) : null;
+            FormatProvider = formatProvider ?? CultureInfo.CurrentCulture;
+            Builder = reporter.IsEnabled( level ) ? new( literalLength ) : null;
         }
 
         /// <summary>Gets a value indicating whether this handler is enabled</summary>
         public bool IsEnabled => Builder is not null;
+
+        /// <summary>Gets the format provider used by this interpolated string handler</summary>
+        public IFormatProvider FormatProvider { get; }
 
         /// <summary>Appends a literal value to the results of interpolating a string</summary>
         /// <param name="s">literal value to append</param>
         /// <returns><see langword="true"/> if the interpolation should continue with other conversions or <see langword="false"/> if not.</returns>
         /// <remarks>
         /// The return is used to short circuit all other calls to interpolation, thus, this implementation returns if the
-        /// <see cref="MsgLevel.Error"/> level is enabled for a given reporter.
+        /// reporting level is enabled for a given reporter.
         /// </remarks>
         public bool AppendLiteral( string s )
         {
@@ -70,7 +83,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
         /// <returns><see langword="true"/> if the interpolation should continue with other conversions or <see langword="false"/> if not.</returns>
         /// <remarks>
         /// The return is used to short circuit all other calls to interpolation, thus, this implementation returns if the
-        /// <see cref="MsgLevel.Error"/>  level is enabled for a given reporter.
+        /// reporting level is enabled for a given reporter.
         /// </remarks>
         public readonly bool AppendFormatted<T>( T t )
         {
@@ -90,7 +103,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
         /// <returns><see langword="true"/> if the interpolation should continue with other conversions or <see langword="false"/> if not.</returns>
         /// <remarks>
         /// The return is used to short circuit all other calls to interpolation, thus, this implementation returns if the
-        /// <see cref="MsgLevel.Error"/>  level is enabled for a given reporter.
+        /// reporting level is enabled for a given reporter.
         /// </remarks>
         public readonly bool AppendFormatted<T>( T t, string format )
             where T : IFormattable
@@ -100,7 +113,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
                 return false;
             }
 
-            Builder?.Append( t?.ToString( format, null ) );
+            Builder?.Append( t?.ToString( format, FormatProvider ) );
             return true;
         }
 

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 using Kaleidoscope.Grammar;
 
+using Ubiquity.NET.CommandLine;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Runtime
 {
