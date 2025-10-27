@@ -100,7 +100,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// <summary>Makes an identifier (Escaping a language keyword)</summary>
         /// <param name="self">identifier string to convert</param>
         /// <returns>Syntactically valid identifier</returns>
-        public static string MakeIdentifier( string self )
+        public static string MakeIdentifier( this string self )
         {
             ArgumentNullException.ThrowIfNull( self );
 

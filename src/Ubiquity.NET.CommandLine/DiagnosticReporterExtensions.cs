@@ -365,6 +365,18 @@ namespace Ubiquity.NET.CommandLine
         {
             Error(self, code: null, location, origin: null, subCategory: null, handler);
         }
+
+        // doc comments don't inherit param correctly, see: https://github.com/dotnet/roslyn/issues/67326#issuecomment-3452843800
+
+        /// <inheritdoc cref="Error(IDiagnosticReporter, string?, SourceRange, Uri?, string?, ErrorReportingInterpolatedStringHandler)" path="/summary"/>
+        /// <param name="self">Reporter to report message to</param>
+        /// <param name="msg">Message to report</param>
+        /// <param name="location">Location in the origin that this message refers to</param>
+        /// <inheritdoc cref="Error(IDiagnosticReporter, string?, SourceRange, Uri?, string?, ErrorReportingInterpolatedStringHandler)" path="/remarks"/>
+        public static void Error(this IDiagnosticReporter self, string msg, SourceRange location = default)
+        {
+            Error(self, code: null, location, origin: null, subCategory: null, formatProvider: null, msg /*, args...*/);
+        }
         #endregion
 
         #region MsgLevel.Warning
@@ -469,6 +481,18 @@ namespace Ubiquity.NET.CommandLine
             )
         {
             Warning(self, code: null, location, origin: null, subCategory: null, handler);
+        }
+
+        // doc comments don't inherit param correctly, see: https://github.com/dotnet/roslyn/issues/67326#issuecomment-3452843800
+
+        /// <inheritdoc cref="Warning(IDiagnosticReporter, string?, SourceRange, Uri?, string?, WarningReportingInterpolatedStringHandler)" path="/summary"/>
+        /// <param name="self">Reporter to report message to</param>
+        /// <param name="msg">Message to report</param>
+        /// <param name="location">Location in the origin that this message refers to</param>
+        /// <inheritdoc cref="Warning(IDiagnosticReporter, string?, SourceRange, Uri?, string?, WarningReportingInterpolatedStringHandler)" path="/remarks"/>
+        public static void Warning( this IDiagnosticReporter self, string msg, SourceRange location = default )
+        {
+            Warning( self, code: null, location, origin: null, subCategory: null, formatProvider: null, msg /*, args...*/);
         }
         #endregion
 
@@ -575,6 +599,19 @@ namespace Ubiquity.NET.CommandLine
         {
             Information(self, code: null, location, origin: null, subCategory: null, handler);
         }
+
+        // doc comments don't inherit param correctly, see: https://github.com/dotnet/roslyn/issues/67326#issuecomment-3452843800
+
+        /// <inheritdoc cref="Information(IDiagnosticReporter, string?, SourceRange, Uri?, string?, InformationReportingInterpolatedStringHandler)" path="/summary"/>
+        /// <param name="self">Reporter to report message to</param>
+        /// <param name="msg">Message to report</param>
+        /// <param name="location">Location in the origin that this message refers to</param>
+        /// <inheritdoc cref="Information(IDiagnosticReporter, string?, SourceRange, Uri?, string?, InformationReportingInterpolatedStringHandler)" path="/remarks"/>
+        public static void Information( this IDiagnosticReporter self, string msg, SourceRange location = default )
+        {
+            Information( self, code: null, location, origin: null, subCategory: null, formatProvider: null, msg /*, args...*/);
+        }
+
         #endregion
 
         #region MsgLevel.Verbose
@@ -679,6 +716,18 @@ namespace Ubiquity.NET.CommandLine
             )
         {
             Verbose(self, code: null, location, origin: null, subCategory: null, handler);
+        }
+
+        // doc comments don't inherit param correctly, see: https://github.com/dotnet/roslyn/issues/67326#issuecomment-3452843800
+
+        /// <inheritdoc cref="Verbose(IDiagnosticReporter, string?, SourceRange, Uri?, string?, VerboseReportingInterpolatedStringHandler)" path="/summary"/>
+        /// <param name="self">Reporter to report message to</param>
+        /// <param name="msg">Message to report</param>
+        /// <param name="location">Location in the origin that this message refers to</param>
+        /// <inheritdoc cref="Verbose(IDiagnosticReporter, string?, SourceRange, Uri?, string?, VerboseReportingInterpolatedStringHandler)" path="/remarks"/>
+        public static void Verbose( this IDiagnosticReporter self, string msg, SourceRange location = default )
+        {
+            Verbose( self, code: null, location, origin: null, subCategory: null, formatProvider: null, msg /*, args...*/);
         }
         #endregion
     }
