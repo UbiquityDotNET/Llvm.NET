@@ -7,9 +7,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-using Ubiquity.NET.TextUX.InterpolatedStringHandlers;
+using Ubiquity.NET.CommandLine.InterpolatedStringHandlers;
+using Ubiquity.NET.Extensions;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Extensions to <see cref="IDiagnosticReporter"/> for specific message levels</summary>
     public static class DiagnosticReporterExtensions

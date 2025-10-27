@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
+namespace Ubiquity.NET.CommandLine.InterpolatedStringHandlers
 {
     /// <summary>Interpolated string handler for an <see cref="IDiagnosticReporter"/> using a fixed <see cref="MsgLevel.Information"/></summary>
     /// <remarks>

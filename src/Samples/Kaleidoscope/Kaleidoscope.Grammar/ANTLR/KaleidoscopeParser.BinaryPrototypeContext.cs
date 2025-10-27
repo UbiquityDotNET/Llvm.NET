@@ -9,7 +9,7 @@ using System.Linq;
 using Antlr4.Runtime;
 
 using Ubiquity.NET.ANTLR.Utils;
-using Ubiquity.NET.TextUX;
+using Ubiquity.NET.Extensions;
 
 namespace Kaleidoscope.Grammar.ANTLR
 {

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-using Ubiquity.NET.TextUX;
+using Ubiquity.NET.Extensions;
 
 namespace Ubiquity.NET.Runtime.Utils
 {

@@ -17,8 +17,6 @@
       href: extensions/index.md
     - name: ANTLR Utilities
       href: antlr-utils/index.md
-    - name: TextUX Utilities
-      href: TextUX/index.md
     - name: Interop Helpers
       href: interop-helpers/index.md
     - name: CommandLine Parsing

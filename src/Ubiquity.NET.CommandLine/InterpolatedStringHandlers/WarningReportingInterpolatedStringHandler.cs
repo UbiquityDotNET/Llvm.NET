@@ -6,9 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
+namespace Ubiquity.NET.CommandLine.InterpolatedStringHandlers
 {
-    /// <summary>Interpolated string handler for an <see cref="IDiagnosticReporter"/> using a fixed <see cref="MsgLevel.Verbose"/></summary>
+    /// <summary>Interpolated string handler for an <see cref="IDiagnosticReporter"/> using a fixed <see cref="MsgLevel.Warning"/></summary>
     /// <remarks>
     /// <para>This handler will use the state of the <see cref="IDiagnosticReporter.Level"/> to filter messages
     /// as interpolated strings. If the channel for the message is not enabled, then the handler filters
@@ -28,9 +28,9 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
     /// </remarks>
     [InterpolatedStringHandler]
     [SuppressMessage( "Performance", "CA1815:Override equals and operator equals on value types", Justification = "Not relevant for an interpolated string handler" )]
-    public readonly struct VerboseReportingInterpolatedStringHandler
+    public readonly struct WarningReportingInterpolatedStringHandler
     {
-        /// <summary>Initializes a new instance of the <see cref="VerboseReportingInterpolatedStringHandler"/> struct.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WarningReportingInterpolatedStringHandler"/> struct.</summary>
         /// <param name="literalLength">Length of the literal</param>
         /// <param name="formattedCount">Sadly .NET doesn't document this, or much else in relation to interpolated string handlers</param>
         /// <param name="reporter">"this" reference for the reporter. (Mapped via InterpolatedStringHandlerArgument applied to method)</param>
@@ -38,9 +38,9 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
         /// The <paramref name="reporter"/> may not have the level enabled. This is used to ONLY process the interpolated string
         /// if the reporter has the level enabled. Thus, it may produce NO message at all if not enabled.
         /// </remarks>
-        public VerboseReportingInterpolatedStringHandler( int literalLength, int formattedCount, IDiagnosticReporter reporter )
+        public WarningReportingInterpolatedStringHandler( int literalLength, int formattedCount, IDiagnosticReporter reporter )
         {
-            Builder = reporter.IsEnabled( MsgLevel.Verbose ) ? new( literalLength ) : null;
+            Builder = reporter.IsEnabled( MsgLevel.Warning ) ? new( literalLength ) : null;
         }
 
         /// <summary>Gets a value indicating whether this handler is enabled</summary>
@@ -51,7 +51,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
         /// <returns><see langword="true"/> if the interpolation should continue with other conversions or <see langword="false"/> if not.</returns>
         /// <remarks>
         /// The return is used to short circuit all other calls to interpolation, thus, this implementation returns if the
-        /// <see cref="MsgLevel.Verbose"/> level is enabled for a given reporter.
+        /// <see cref="MsgLevel.Warning"/> level is enabled for a given reporter.
         /// </remarks>
         public bool AppendLiteral( string s )
         {
@@ -70,7 +70,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
         /// <returns><see langword="true"/> if the interpolation should continue with other conversions or <see langword="false"/> if not.</returns>
         /// <remarks>
         /// The return is used to short circuit all other calls to interpolation, thus, this implementation returns if the
-        /// <see cref="MsgLevel.Verbose"/>  level is enabled for a given reporter.
+        /// <see cref="MsgLevel.Warning"/>  level is enabled for a given reporter.
         /// </remarks>
         public readonly bool AppendFormatted<T>( T t )
         {
@@ -90,7 +90,7 @@ namespace Ubiquity.NET.TextUX.InterpolatedStringHandlers
         /// <returns><see langword="true"/> if the interpolation should continue with other conversions or <see langword="false"/> if not.</returns>
         /// <remarks>
         /// The return is used to short circuit all other calls to interpolation, thus, this implementation returns if the
-        /// <see cref="MsgLevel.Verbose"/>  level is enabled for a given reporter.
+        /// <see cref="MsgLevel.Warning"/>  level is enabled for a given reporter.
         /// </remarks>
         public readonly bool AppendFormatted<T>( T t, string format )
             where T : IFormattable

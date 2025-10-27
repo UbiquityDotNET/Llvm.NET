@@ -9,7 +9,7 @@ using AnsiCodes;
 
 using Ubiquity.NET.Extensions;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Implementation of <see cref="IDiagnosticReporter"/> that uses colorized console output</summary>
     public sealed class ColoredConsoleReporter

@@ -7,8 +7,6 @@ using System.CommandLine.Invocation;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-using Ubiquity.NET.TextUX;
-
 namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Results of invoking the default handlers for <see cref="HelpOption"/> or <see cref="VersionOption"/></summary>

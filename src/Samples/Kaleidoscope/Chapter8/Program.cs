@@ -10,7 +10,6 @@ using Kaleidoscope.Grammar;
 using Ubiquity.NET.CommandLine;
 using Ubiquity.NET.Llvm;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 using static Ubiquity.NET.Llvm.Library;
 

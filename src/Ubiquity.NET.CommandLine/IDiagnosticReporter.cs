@@ -3,7 +3,7 @@
 
 using System.Text;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Interface for UX message reporting</summary>
     /// <remarks>

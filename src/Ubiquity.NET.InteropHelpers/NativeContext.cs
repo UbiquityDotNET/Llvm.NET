@@ -23,15 +23,15 @@ namespace Ubiquity.NET.InteropHelpers
     /// <remarks>
     /// <para>To interop with native ABI callbacks it is important to ensure that any
     /// context pointer provided is valid when the callback is called by native
-    /// layers. This type provides support for doing so using a <see cref="GCHandle"/>.
-    /// The handle is allocated in <see cref="AsNativeContext{T}(T)"/> and then released
-    /// in <see cref="Release(ref void*)"/>. The actual target is obtainable via
-    /// <see cref="TryFrom{T}(void*, out T)"/> which is normally used in the callback to
-    /// get back the original managed object the handle refers to.
+    /// layers. This type provides support, as extension methods, for doing so using a
+    /// <see cref="GCHandle"/>. The handle is allocated in <see cref="AsNativeContext{T}(T)"/>
+    /// and then released in <see cref="Release(ref void*)"/>. The actual target is
+    /// obtainable via <see cref="TryFrom{T}(void*, out T)"/> which is normally used in
+    /// the callback to get back the original managed object the handle refers to.
     /// </para>
-    /// <para>Since the handle is allocated the GC will keep it alive until freed. Thus,
-    /// the callback can use the object it gets. Normally, <see cref="Release(ref void*)"/>
-    /// is called from a final callback method but it is also possible that the API gurantess
+    /// <para>Since the handle is allocated the GC will keep the object it refers to alive
+    /// until freed. Thus, the callback can use the object it gets. Normally, <see cref="Release(ref void*)"/>
+    /// is called from a final callback method but it is also possible that the API guarantees
     /// only a single call to a provided method where it would release the native context
     /// after materializing it to a managed form. (After materialization, normal GC rules
     /// apply to the managed instance such that while it is in scope it is not released by

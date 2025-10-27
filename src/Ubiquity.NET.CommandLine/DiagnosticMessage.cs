@@ -6,7 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
-namespace Ubiquity.NET.TextUX
+using Ubiquity.NET.Extensions;
+
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Tool Message category</summary>
     public enum MsgLevel

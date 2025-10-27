@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Implementation of <see cref="IDiagnosticReporter"/> that throws <see cref="ArgumentException"/> for any errors reported.</summary>
     public class ArgumentExceptionReporter

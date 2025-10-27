@@ -6,14 +6,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Represents a single point position in a source input</summary>
     /// <remarks>
     /// Positions use a Line numbering similar to most editors that is 1 based.([1..n][0 = uninitialized/unknown]).
     /// Column position, also like most editors, use a 0 based value ([0..n-1]).
-    /// The index, if available indicates the index into a theoretical vector of characters for the position.
-    /// Not all location information includes such a thing so it may not have a value.
+    /// The index, if available, indicates the 0 based index into a theoretical vector of characters
+    /// for the position. Not all location information includes such a thing so it may not have a value.
     /// </remarks>
     [DebuggerDisplay("{DebuggerToString(),nq}")]
     public readonly record struct SourcePosition
@@ -33,7 +33,7 @@ namespace Ubiquity.NET.TextUX
         /// <summary>Gets the 0 based index from the start of the source to this position if available</summary>
         public int? Index { get; init; }
 
-        /// <summary>Gets the column value of this position</summary>
+        /// <summary>Gets the 0 based column value of this position</summary>
         public required int Column
         {
             get;

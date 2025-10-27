@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace Ubiquity.NET.TextUX
+namespace Ubiquity.NET.Extensions
 {
     /// <summary>Process related extensions/support</summary>
     public static class ProcessInfo

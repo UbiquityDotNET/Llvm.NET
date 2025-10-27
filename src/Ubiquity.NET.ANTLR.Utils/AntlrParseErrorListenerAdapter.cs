@@ -8,8 +8,8 @@ using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Ubiquity.NET.ANTLR.Utils
 {
