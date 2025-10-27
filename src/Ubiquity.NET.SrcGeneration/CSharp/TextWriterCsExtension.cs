@@ -44,7 +44,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// <summary>Writes an XML Doc comment summary</summary>
         /// <param name="self">The writer to write to</param>
         /// <param name="description">Text to include in the summary (Nothing is written if this is <see langword="null"/> </param>
-        public static void WriteSummary(this TextWriter self, string? description )
+        public static void WriteSummaryComment(this TextWriter self, string? description )
         {
             ArgumentNullException.ThrowIfNull( self );
 
@@ -92,7 +92,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// is used as the summary. If <paramref name="defaultSummary"/> is also empty or all Whitespace then nothing
         /// is output.
         /// </remarks>
-        public static void WriteSummaryAndRemarks( this TextWriter self, string? txt, string defaultSummary = "" )
+        public static void WriteSummaryAndRemarksComments( this TextWriter self, string? txt, string defaultSummary = "" )
         {
             ArgumentNullException.ThrowIfNull( self );
 
