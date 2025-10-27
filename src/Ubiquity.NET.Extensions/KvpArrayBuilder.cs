@@ -69,6 +69,7 @@ namespace Ubiquity.NET.Extensions
 
         /// <inheritdoc/>
         /// <exception cref="NotImplementedException">Always; Do not use this method. It exists only to allow compile time initializer syntax.</exception>
+        [DoesNotReturn]
         public IEnumerator GetEnumerator( )
         {
             // Only implementing IEnumerable because collection initializer

@@ -10,6 +10,13 @@ namespace Ubiquity.NET.Extensions
     /// <summary>The kind of line endings for a string of characters</summary>
     public enum LineEndingKind
     {
+        /// <summary>Source line endings are mixed or otherwise unknown.</summary>
+        /// <remarks>
+        /// This kind is only allowed as a source description since it does NOT define any
+        /// particular output format. Only an ambiguous input.
+        /// </remarks>
+        MixedOrUnknownEndings,
+
         /// <summary>Line endings consist of the single line feed character '\n'</summary>
         /// <remarks>This is the typical form for *nix systems, and Mac OS X and later</remarks>
         LineFeed,
@@ -24,7 +31,13 @@ namespace Ubiquity.NET.Extensions
     }
 
     /// <summary>Utility class for converting line endings to expected forms</summary>
-    public static class StringNormalizer
+    /// <remarks>This is similar to <see cref="string.ReplaceLineEndings()"/> and
+    /// <see cref="string.ReplaceLineEndings(string)"/> except that it allows explicit
+    /// control of the input AND output forms of the string via <see cref="LineEndingKind"/>.
+    /// Ultimately all forms of normalization resolves to a call to
+    /// <see cref="NormalizeLineEndings(string?, LineEndingKind, LineEndingKind)"/>.
+    /// </remarks>
+    public static partial class StringNormalizer
     {
         /// <summary>Gets a string form of the line ending</summary>
         /// <param name="kind">Kind of line ending to get the string form of</param>
@@ -48,10 +61,15 @@ namespace Ubiquity.NET.Extensions
         /// <param name="txt">input string to convert</param>
         /// <param name="dstKind">destination kind of string to convert</param>
         /// <returns>Normalized string; If dstKind matches the current system environment then this returns <paramref name="txt"/> un-modified</returns>
+        /// <remarks>
+        /// This is equivalent to a call to <see cref="NormalizeLineEndings(string?, LineEndingKind, LineEndingKind)"/> with the
+        /// source kind set to <see cref="LineEndingKind.MixedOrUnknownEndings"/>. Thus, it sets all forms of line endings to
+        /// the kind specified in <paramref name="dstKind"/>.
+        /// </remarks>
         [return: NotNullIfNotNull(nameof(txt))]
         public static string? NormalizeLineEndings( this string? txt, LineEndingKind dstKind )
         {
-            return txt.NormalizeLineEndings( SystemLineEndings, dstKind );
+            return txt.NormalizeLineEndings( LineEndingKind.MixedOrUnknownEndings, dstKind );
         }
 
         /// <summary>Converts a string into a string with managed environment line endings</summary>
@@ -59,14 +77,29 @@ namespace Ubiquity.NET.Extensions
         /// <param name="srcKind">Line ending kind for the source (<paramref name="txt"/>)</param>
         /// <param name="dstKind">Line ending kind for the destination (return string)</param>
         /// <returns>Normalized string; If the <paramref name="srcKind"/> is the same as <paramref name="dstKind"/> this is returns <paramref name="txt"/> un-modified</returns>
+        /// <remarks>
+        /// Unlike the runtime provided <see cref="string.ReplaceLineEndings(string)"/> this does NOT replace ALL forms
+        /// of line endings unless <paramref name="srcKind"/> is <see cref="LineEndingKind.MixedOrUnknownEndings"/>. In
+        /// all other cases it ONLY replaces exact matches for the line endings specified in <paramref name="srcKind"/>.
+        /// </remarks>
         [return: NotNullIfNotNull(nameof(txt))]
+        [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Nested conditional are NOT simpler" )]
         public static string? NormalizeLineEndings( this string? txt, LineEndingKind srcKind, LineEndingKind dstKind )
         {
-            // shortcut optimization for environments that match the ABI assumption
-            // as well as any null or empty strings
-            return string.IsNullOrEmpty( txt ) || srcKind == dstKind
-                ? txt
-                : txt!.Replace( srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
+            if(dstKind == LineEndingKind.MixedOrUnknownEndings)
+            {
+                throw new ArgumentException("Mixed line endings is invalid for the destination.", nameof(dstKind));
+            }
+
+            // short-circuit for null, empty, or same kind.
+            if(srcKind == dstKind || string.IsNullOrEmpty( txt ))
+            {
+                return txt;
+            }
+
+            return srcKind == LineEndingKind.MixedOrUnknownEndings
+                 ? txt.ReplaceLineEndings( dstKind.LineEnding() )
+                 : txt.Replace( srcKind.LineEnding(), dstKind.LineEnding(), StringComparison.Ordinal );
         }
 
         // simplifies consistency of exception in face of unknown environment configuration
@@ -74,7 +107,7 @@ namespace Ubiquity.NET.Extensions
 
         private static readonly Lazy<LineEndingKind> LazySystemKind = new(ComputeSystemLineEndings);
 
-        [SuppressMessage( "Style", "IDE0066:Convert switch statement to expression", Justification = "Reduces readability" )]
+        [SuppressMessage( "Style", "IDE0066:Convert switch statement to expression", Justification = "Far more readable this way" )]
         private static LineEndingKind ComputeSystemLineEndings( )
         {
             string newLine = Environment.NewLine;

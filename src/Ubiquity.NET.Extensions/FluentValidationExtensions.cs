@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace Ubiquity.NET.Extensions
@@ -30,18 +31,18 @@ namespace Ubiquity.NET.Extensions
     /// </remarks>
     public static class FluentValidationExtensions
     {
-        /// <summary>Throws an exception if <paramref name="obj"/> is <see langword="null"/></summary>
+        /// <summary>Throws an exception if <paramref name="self"/> is <see langword="null"/></summary>
         /// <typeparam name="T">Type of reference parameter to test for</typeparam>
-        /// <param name="obj">Instance to test</param>
-        /// <param name="exp">Name or expression of the value in <paramref name="obj"/> [Default: provided by compiler]</param>
-        /// <returns><paramref name="obj"/></returns>
-        /// <exception cref="ArgumentNullException"><paramref name="obj"/> is <see langword="null"/></exception>
+        /// <param name="self">Instance to test</param>
+        /// <param name="exp">Name or expression of the value in <paramref name="self"/> [Default: provided by compiler]</param>
+        /// <returns><paramref name="self"/></returns>
+        /// <exception cref="ArgumentNullException"><paramref name="self"/> is <see langword="null"/></exception>
         [DebuggerStepThrough]
-        public static T ThrowIfNull<T>( [NotNull] this T? obj, [CallerArgumentExpression( nameof( obj ) )] string? exp = null )
+        public static T ThrowIfNull<T>( [NotNull] this T? self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
         {
-            ArgumentNullException.ThrowIfNull( obj, exp );
+            ArgumentNullException.ThrowIfNull( self, exp );
 
-            return obj;
+            return self;
         }
 
         /// <summary>Throws an exception if an argument is outside of a given (Inclusive) range</summary>
@@ -78,13 +79,29 @@ namespace Ubiquity.NET.Extensions
         public static T ThrowIfNotDefined<T>( this T self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, Enum
         {
-            ArgumentNullException.ThrowIfNull(self, exp);
+            exp ??= string.Empty;
 
-            // TODO: Move the exception message to a resource for globalization
-            // This matches the overloaded constructor version but allows for reporting enums with non-int underlying type.
-            return Enum.IsDefined( typeof(T), self )
-                   ? self
-                   : throw new InvalidEnumArgumentException($"The value of argument '{exp}' ({self}) is invalid for Enum of type '{typeof(T)}'");
+            if(Enum.IsDefined( typeof(T), self ))
+            {
+                return self;
+            }
+
+            try
+            {
+                int underlyingValue = (int)Convert.ChangeType(self, typeof(int), CultureInfo.InvariantCulture);
+                throw new InvalidEnumArgumentException( exp, underlyingValue, typeof( T ) );
+            }
+            catch(Exception ex) when (ex is InvalidCastException or FormatException or OverflowException)
+            {
+                // InvalidEnumArgumentException constructors ONLY provide paramater name value set for values
+                // that are representable as an int. Thus, anything else requires a custom message that at
+                // least includes the original value in question. (Normally an enum does fit an int, but for
+                // interop might not) the resulting exception will have "ParamName" as the default of "null"!
+                //
+                // TODO: Move the exception message to a resource for globalization
+                // This matches the overloaded constructor version but allows for reporting enums with non-int underlying type.
+                throw new InvalidEnumArgumentException( $"The value of argument '{exp}' ({self}) is invalid for Enum of type '{typeof( T )}'" );
+            }
         }
     }
 }
