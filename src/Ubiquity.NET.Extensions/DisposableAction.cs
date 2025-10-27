@@ -2,6 +2,7 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Ubiquity.NET.Extensions
@@ -16,13 +17,15 @@ namespace Ubiquity.NET.Extensions
         : IDisposable
     {
         /// <summary>Initializes a new instance of the <see cref="DisposableAction"/> class.</summary>
-        /// <param name="onDispose">Action to run when <see cref="Dispose"/>is called.</param>
-        public DisposableAction( Action onDispose )
+        /// <param name="onDispose">Action to run when <see cref="Dispose"/> is called.</param>
+        /// <param name="exp">Expression for any exceptions; default normally provided by compiler as expression for <paramref name="onDispose"/></param>
+        public DisposableAction( Action onDispose, [CallerArgumentExpression(nameof(onDispose))] string? exp = null )
         {
-            OnDispose = onDispose ?? throw new ArgumentNullException( nameof( onDispose ) );
+            OnDispose = onDispose ?? throw new ArgumentNullException( exp );
         }
 
-        /// <summary>Runs the action provided in the constructor (<see cref="DisposableAction(System.Action)"/>)</summary>
+        /// <summary>Runs the action provided in the constructor (<see cref="DisposableAction(Action, string?)"/>)</summary>
+        /// <exception cref="ObjectDisposedException">This instance is already disposed</exception>
         public void Dispose( )
         {
             var disposeOp = Interlocked.Exchange(ref OnDispose, null);
@@ -30,7 +33,7 @@ namespace Ubiquity.NET.Extensions
             disposeOp!();
         }
 
-        /// <summary>Creates the an implementation of <see cref="IDisposable"/> that does nothing for the "Null Object" pattern</summary>
+        /// <summary>Creates an implementation of <see cref="IDisposable"/> that does nothing for the "Null Object" pattern</summary>
         /// <returns>The <see cref="IDisposable"/> that does nothing on <see cref="IDisposable.Dispose"/></returns>
         /// <remarks>
         /// The instance returned is allocated from the managed heap to ensure that <see cref="IDisposable.Dispose"/> is
