@@ -20,11 +20,10 @@
         <PackageReference Include="CppSharp" PrivateAssets="all" />
         <PackageReference Include="System.CodeDom" PrivateAssets="all" />
 
-        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
+        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here -->
         <!--
         NOTE: This isn't directly used by this project. However, it allows for scripts to restore this project, which
-        guarantees the package is available, so they can use the contained headers as input to the application built
-        by this project.
+        guarantees the package is available, so that running it can use the contained headers as input.
         -->
         <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" PrivateAssets="all" />
     </ItemGroup>
@@ -57,10 +56,10 @@
     <!--
     This target is triggered externally to generate the response file for an invocation of the generator.
     The response file provides the paths for the headers based on the location of the package used by
-    the build. Restoring this project will download and cache the package. This target allows creation
-    of the response file to use for involving the application built by this project so that it has the
-    actual headers from the package as input to the generator. This is all automated by the developer
-    facing script to generate the headers.
+    the build. Restoring this project will download and cache the LLVM package that includes the headers.
+    This target allows creation of the response file to use for invoking the application built by this
+    project so that it has the actual headers from the package as input to the generator. This is all
+    automated by the developer facing script to generate the headers.
     SEE: Generate-HandleWrappers.ps1
     -->
     <Target Name="GenerateResponseFile">

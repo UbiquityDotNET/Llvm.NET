@@ -16,11 +16,7 @@ namespace Ubiquity.NET.CommandLine.UT
             var settings = CreateTestSettings();
             var result = ArgsParsing.Parse<TestOptions>(["--version"], settings);
 
-            // due to bug in underlying library this will fail, see: https://github.com/dotnet/command-line-api/issues/2659
-            // bug is fixed in PR https://github.com/dotnet/command-line-api/pull/2644 but not available
-            // yet. (as of version 2.0.0-beta7.25380.108)
-            //Assert.HasCount( 0, result.Errors );
-            Assert.HasCount( 1, result.Errors );
+            Assert.HasCount( 0, result.Errors, "Version alone should not procue errors" );
 
             var versionOption = result.GetVersionOption();
             Assert.IsNotNull(versionOption);
@@ -45,14 +41,12 @@ namespace Ubiquity.NET.CommandLine.UT
         }
 
         [TestMethod]
-        [Ignore("https://github.com/dotnet/command-line-api/issues/2664")]
         public void CommandLine_with_known_option_and_version_has_errors( )
         {
             var settings = CreateTestSettings();
             ParseResult result = ArgsParsing.Parse<TestOptions>(["--version", "--option1"], settings );
 
-            // until https://github.com/dotnet/command-line-api/issues/2664 is resolved this will fail
-            Assert.HasCount( 2, result.Errors, "Should be one error (--version must be set alone, missing arg for --option1)" );
+            Assert.HasCount( 1, result.Errors, "Should be one error (--version must be set alone) [Other errors ignored for --version]" );
         }
 
         [TestMethod]

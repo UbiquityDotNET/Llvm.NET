@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-// due to bug in Nuget publication, this can't be tested yet...
-// see: https://developercommunity.visualstudio.com/t/VS2026--NET-10-Cant-build-analyzier/10989212
-#if NET10_0_OR_GREATER
+// This isn't a normal built-in define; but follows the pattern for built-in defines and expresses the intent.
+// There is no Known way to "light up" at runtime for functionality available in newer versions
+#if COMPILER_5_OR_GREATER
 using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
@@ -25,7 +25,7 @@ namespace RepositoryVerifier.UT
         public async Task EmptySourceAnalyzesClean( )
         {
             var analyzerTest = CreateTestRunner(string.Empty);
-            await analyzerTest.RunAsync( TestContext.CancellationTokenSource.Token );
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -34,11 +34,11 @@ namespace RepositoryVerifier.UT
             var analyzerTest = CreateTestRunner(ExtensionKeywordUsed);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("UNL002", DiagnosticSeverity.Error).WithLocation(5, 5)
+                    new DiagnosticResult("UNL002", DiagnosticSeverity.Error).WithLocation( 5, 5 ),
                 ]
             );
 
-            await analyzerTest.RunAsync( TestContext.CancellationTokenSource.Token );
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace RepositoryVerifier.UT
             var analyzerTest = CreateTestRunner(NoExtensionKeywordUsed);
 
             // no diagnostics expected
-            await analyzerTest.RunAsync( TestContext.CancellationTokenSource.Token );
+            await analyzerTest.RunAsync( TestContext.CancellationToken );
         }
 
         private static AnalyzerTest<DefaultVerifier> CreateTestRunner( string source )
@@ -62,17 +62,17 @@ namespace RepositoryVerifier.UT
             };
         }
 
-       private class ExtensionKeywordAnalyzerTest
-            : CSharpAnalyzerTest<ExtensionKeywordAnalyzer, DefaultVerifier>
+        private class ExtensionKeywordAnalyzerTest
+             : CSharpAnalyzerTest<ExtensionKeywordAnalyzer, DefaultVerifier>
         {
             protected override ParseOptions CreateParseOptions( )
             {
-                // Until C# 14 and .NET SDK 10 is formally released, it is considered "Preview"
-                return new CSharpParseOptions(LanguageVersion.Preview, DocumentationMode.Diagnose);
+                // Until C# 14 and .NET SDK 10 is formally released, the language version is considered "Preview"
+                return new CSharpParseOptions( LanguageVersion.Preview, DocumentationMode.Diagnose );
             }
         }
 
-       private const string ExtensionKeywordUsed = """
+        private const string ExtensionKeywordUsed = """
         using System;
 
         public static class TestExtension
@@ -85,9 +85,13 @@ namespace RepositoryVerifier.UT
                 }
             }
         }
+
+        file class Foo
+        {
+        }
         """;
 
-       private const string NoExtensionKeywordUsed = """
+        private const string NoExtensionKeywordUsed = """
         using System;
 
         public static class TestExtension

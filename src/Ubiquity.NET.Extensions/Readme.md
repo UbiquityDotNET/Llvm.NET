@@ -1,7 +1,8 @@
 # About
-Ubiquity.NET.Extensions contains general extensions for .NET. This is
-a bit of a "grab bag" of functionality used by but not actually part of
-multiple other Ubiquity.NET projects.
+Ubiquity.NET.Extensions contains general extensions for .NET. This is a bit of a "grab bag"
+of functionality used by but not actually part of multiple other Ubiquity.NET projects. A
+core principal is that this library has NO dependencies beyond the runtime itself. That is,
+this library should remain at the bottom of any dependency chain.
 
 ## Key support
 * Computing a hash code for a ReadOnlySpan of bytes using
