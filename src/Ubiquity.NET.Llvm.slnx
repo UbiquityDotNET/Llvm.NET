@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Analyzers/" Id="02ea681e-c7d8-13c7-8484-4ac65e1b71e8">
+    <File Path="Analyzers/ReadMe.md" />
     <Project Path="Analyzers/RepositoryVerifier/RepositoryVerifier.csproj" />
   </Folder>
   <Folder Name="/Interop/">

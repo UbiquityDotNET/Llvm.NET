@@ -27,8 +27,9 @@
         <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.3" />
         <PackageVersion Include="System.Buffers" Version="4.6.1" />
         <PackageVersion Include="System.Collections.Immutable" Version="9.0.8" />
-        <PackageVersion Include="System.CommandLine" Version="2.0.0-beta7.25380.108" />
+        <PackageVersion Include="System.CommandLine" Version="2.0.0-rc.2.25502.107" />
 
+        <!-- Security vulnerability overrides -->
         <!-- Workaround(2): https://github.com/dotnet/roslyn-sdk/issues/1191 -->
         <PackageVersion Include="System.Formats.Asn1" Version="9.0.10" />
 

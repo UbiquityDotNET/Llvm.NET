@@ -26,7 +26,7 @@ C# 14 `extension` keyword used. This is currently blocked in this repository. Ho
 this is short term but is not allowed. This prevents any current/experimental use and any
 future use. The experiments with using it have unveiled a lot of issues that make that an
 incomplete feature. "Complete" requires proper support in the majority of analyzers and
-third party tools.
+third party tools. That support does not exist yet.
 
 ## ReferenceEqualityAnalyzer
 This analyzer was designed to identify places within the Ubiquity.NET.Llvm library where the

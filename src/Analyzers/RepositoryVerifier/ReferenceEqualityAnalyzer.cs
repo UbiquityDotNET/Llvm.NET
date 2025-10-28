@@ -45,7 +45,7 @@ namespace RepositoryVerifier
         {
             try
             {
-                if(!(context.Operation is IBinaryOperation op))
+                if(context.Operation is not IBinaryOperation op)
                 {
                     throw new InvalidOperationException( "Unknown case; non-binary operation..." );
                 }
