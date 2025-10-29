@@ -21,6 +21,9 @@ namespace Kaleidoscope.Runtime
         /// <summary>Gets the Kaleidoscope language level for this instance</summary>
         public LanguageLevel LanguageFeatureLevel { get; }
 
+        /// <summary>Gets a value indicating whether this variant of the language runtime supports function re-definition</summary>
+        public bool SupportsRedefinition { get; }
+
         /// <summary>Gets the <see cref="TextWriter"/> to use of output from the loop</summary>
         public TextWriter Output { get; init; } = Console.Out;
 
@@ -59,31 +62,34 @@ namespace Kaleidoscope.Runtime
         /// <returns><see cref="Task"/>for the REPL operation</returns>
         public async Task Run( TextReader input, IVisualizer? visualizer, CancellationToken cancelToken = default )
         {
-            var parser = new Kaleidoscope.Grammar.Parser(LanguageFeatureLevel, visualizer);
+            var parser = new Kaleidoscope.Grammar.Parser(LanguageFeatureLevel, functionRedefinitionIsAnError: !SupportsRedefinition, visualizer);
             using ICodeGenerator<T> generator = CreateGenerator( parser.GlobalState );
             await Run( input, parser, generator, cancelToken );
         }
 
         /// <summary>Initializes a new instance of the <see cref="ReadEvaluatePrintLoopBase{T}"/> class.</summary>
         /// <param name="level">Language level supported by this REPL instance</param>
+        /// <param name="functionRedfinitionIsAnError">Flag to indicate whether function redefinition is an error or allowed</param>
         /// <remarks>
         /// This is protected to prevent use by anything other than a derived type.
         /// </remarks>
-        protected ReadEvaluatePrintLoopBase( LanguageLevel level )
-            : this(level, new ParseErrorDiagnosticAdapter(new ColoredConsoleReporter(), "KLS"))
+        protected ReadEvaluatePrintLoopBase( LanguageLevel level, bool functionRedfinitionIsAnError = false )
+            : this(level, new ParseErrorDiagnosticAdapter(new ColoredConsoleReporter(), "KLS"), functionRedfinitionIsAnError )
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="ReadEvaluatePrintLoopBase{T}"/> class.</summary>
         /// <param name="level">Language level supported by this REPL instance</param>
         /// <param name="logger">Logger to report any issues parsing the input.</param>
+        /// <param name="functionRedfinitionIsAnError">Flag to indicate whether function redefinition is an error or allowed</param>
         /// <remarks>
         /// This is protected to prevent use by anything other than a derived type.
         /// </remarks>
-        protected ReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger )
+        protected ReadEvaluatePrintLoopBase( LanguageLevel level, IParseErrorReporter logger, bool functionRedfinitionIsAnError = false )
             : base( logger )
         {
             LanguageFeatureLevel = level;
+            SupportsRedefinition = !functionRedfinitionIsAnError;
         }
     }
 }

@@ -14,8 +14,9 @@ namespace Kaleidoscope.Chapter71
     internal class ReplEngine
         : ReadEvaluatePrintLoopBase<Value>
     {
+        // This uses Lazy JIT evaluation so redefinition is not supported.
         public ReplEngine( )
-            : base( LanguageLevel.MutableVariables )
+            : base( LanguageLevel.MutableVariables, functionRedfinitionIsAnError: true )
         {
         }
 

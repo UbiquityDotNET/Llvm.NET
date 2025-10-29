@@ -4,12 +4,19 @@
 // Elements ARE ordered correctly, analyzer has dumb defaults and doesn't allow override of order
 #pragma warning disable SA1202 // Elements should be ordered by access
 
+using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
+
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>Abstract base class for an LLVM ORC JIT v2 Materialization Unit</summary>
     public abstract class MaterializationUnit
         : DisposableObject
     {
+        /// <remarks>
+        /// For this class, this is an idempotent method. This allows MOVE semantics for native
+        /// code to function and callers remain oblivious. Callers should always call this for
+        /// correctness if it was succesfully moved to native code then such a call is a NOP.
+        /// </remarks>
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
         {
@@ -22,6 +29,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             base.Dispose( disposing );
         }
 
+        /// <summary>This will set the internal handle to a default state; makeing <see cref="Dispose"/> a NOP</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void InvalidateAfterMove( )
         {
