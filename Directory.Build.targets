@@ -1,4 +1,10 @@
 <Project InitialTargets="VerifyProjectSettings;ShowBuildParameters;EnsureBuildOutputPaths">
+
+     <!--This must go in the targets as the directory imports occur BEFORE $(NETCoreSdkVersion) is set and would end up blank -->
+    <PropertyGroup Condition="'$(NETCoreSdkVersion)'!='' AND $([MSBuild]::VersionGreaterThanOrEquals('$(NETCoreSdkVersion)', '10.0.0'))">
+        <DefineConstants>$(DefineConstants);NET_SDK_10_OR_GREATER</DefineConstants>
+    </PropertyGroup>
+
     <!--
     Since Nuget.config is configured to include the build output location this
     will ensure the folder exists during restore so that it won't fail.
@@ -19,6 +25,7 @@
         <Message Importance="normal" Text="               FileVersion: $(FileVersion)"/>
         <Message Importance="normal" Text="                  Platform: $(Platform)"/>
         <Message Importance="normal" Text="             Configuration: $(Configuration)"/>
+        <Message Importance="normal" Text="         NETCoreSdkVersion: $(NETCoreSdkVersion)"/>
     </Target>
 
     <Target Name="VerifyProjectSettings" Condition="'$(MSBuildProjectExtension)'=='.csproj'">

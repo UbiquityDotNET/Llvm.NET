@@ -83,6 +83,11 @@
                 <ImplicitUsings>disable</ImplicitUsings>
                 <!-- NOTE: Top-Level statements blocked as an error in .editorconfig and ImplicitUsings 'feature' VERIFIED in the targets file -->
             </PropertyGroup>
+
+            <!--
+            Apply SyleCop settings to all projects; It is at least plausible to do this in a .editorconfig but there's no docs on
+            how. Only a PR and multiple bugs/discussions pointing to it. It's too big to decipher to make it worth using. Docs please.
+            -->
             <ItemGroup Condition="'$(NoCommonAnalyzers)'!='true'">
                 <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
             </ItemGroup>

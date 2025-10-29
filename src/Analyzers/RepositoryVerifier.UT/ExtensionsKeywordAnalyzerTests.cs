@@ -3,7 +3,8 @@
 
 // This isn't a normal built-in define; but follows the pattern for built-in defines and expresses the intent.
 // There is no Known way to "light up" at runtime for functionality available in newer versions
-#if COMPILER_5_OR_GREATER
+// See: Directory.Build.targets for how this is set. (Roslyn compiler v5.x is included in .NET 10)
+#if NET_SDK_10_OR_GREATER
 using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
