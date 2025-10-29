@@ -34,15 +34,39 @@ namespace Kaleidoscope.Grammar
     /// </remarks>
     public class DynamicRuntimeState
     {
-        /// <summary>Initializes a new instance of the <see cref="DynamicRuntimeState"/> class.</summary>
-        /// <param name="languageLevel">Language level supported for this instance</param>
+        /// <remarks>This overload supports function re-definition for the normal case</remarks>
+        /// <inheritdoc cref="DynamicRuntimeState.DynamicRuntimeState(LanguageLevel, bool)"/>
         public DynamicRuntimeState( LanguageLevel languageLevel )
+            : this(languageLevel, functionRedefinitionIsAnError: false)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="DynamicRuntimeState"/> class.</summary>
+        /// <param name="functionRedefinitionIsAnError">Flag to indicate if function definitions are an error</param>
+        /// <param name="languageLevel">Language level supported for this instance</param>
+        /// <remarks>
+        /// <see cref="SupportsRedefinition"/> is used to indicate if this language implementation supports
+        /// redefinition of functions. This is ordinarily allowed for interactive languages but if an extreme
+        /// lazy JIT is used, the asynchronous nature of materialization makes it a very difficult (maybe
+        /// impossible) task to accomplish. So Such runtimes will generally not support re-definition.
+        /// </remarks>
+        public DynamicRuntimeState( LanguageLevel languageLevel, bool functionRedefinitionIsAnError = false )
         {
             LanguageLevel = languageLevel;
+            SupportsRedefinition = !functionRedefinitionIsAnError;
         }
 
         /// <summary>Gets or sets the Language level the application supports</summary>
         public LanguageLevel LanguageLevel { get; set; }
+
+        /// <summary>Gets a value indicating whether this runtime supports redefinition of functions</summary>
+        /// <remarks>
+        /// Extreme Lazy JIT realization does not support redifinition at this point. It's s complicated problem
+        /// that is not entirely clear how to solve using the LLVM-C API. Thus, it is currently not supported. This
+        /// is generally not an issue as such lazy JIT execution is ordinarily not used for an interactive runtime
+        /// where function re-definition is used.
+        /// </remarks>
+        public bool SupportsRedefinition { get; init; }
 
         /// <summary>Gets a collection of function definitions parsed but not yet generated</summary>
         /// <remarks>

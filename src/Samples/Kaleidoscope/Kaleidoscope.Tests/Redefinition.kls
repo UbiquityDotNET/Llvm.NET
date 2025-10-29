@@ -1,0 +1,9 @@
+# This is intended as a test case to identify issues with redefinition of
+# symbols in a LazyJIT scenario. (Either it works or is at least flagged
+# as an error before triggering an error deep in LLVM.
+
+def foo(a b) a*a + 2*a*b + b*b;
+
+# Ideally, this second definition should replace the first, or produce
+# an error not crash with a non-string LLVMErrorRef...
+def foo(a b) a*a + 2*a*b;

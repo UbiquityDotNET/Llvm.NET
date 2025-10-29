@@ -133,15 +133,27 @@ namespace Kaleidoscope.Grammar.AST
                                                );
 
             // only add valid definitions to the runtime state.
-            if(errors.Length == 0)
-            {
-                RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
-            }
-            else
+            if(errors.Length > 0)
             {
                 // remove the prototype implicitly added for this definition
                 // as the definition has errors
                 RuntimeState.FunctionDeclarations.Remove( sig );
+            }
+            else
+            {
+                if(RuntimeState.SupportsRedefinition)
+                {
+                    RuntimeState.FunctionDefinitions.AddOrReplaceItem( retVal );
+                }
+                else
+                {
+                    if(RuntimeState.FunctionDefinitions.Contains(retVal.Name))
+                    {
+                        return new ErrorNode(retVal.Location, (int)DiagnosticCode.RedclarationNotSupported, "Duplicate function name, redefinitions not allowed." );
+                    }
+
+                    RuntimeState.FunctionDefinitions.Add( retVal );
+                }
             }
 
             return retVal;

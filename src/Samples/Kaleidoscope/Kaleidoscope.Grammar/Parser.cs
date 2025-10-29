@@ -30,7 +30,16 @@ namespace Kaleidoscope.Grammar
         /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
         /// <param name="visualizer">Visualizer to use for the parse (Includes possible error nodes)</param>
         public Parser( LanguageLevel level, IVisualizer? visualizer = null )
-            : this( new DynamicRuntimeState( level ), visualizer )
+            : this( new DynamicRuntimeState( level, functionRedefinitionIsAnError: false ), visualizer )
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Parser"/> class.</summary>
+        /// <param name="level"><see cref="LanguageLevel"/> for the parser</param>
+        /// <param name="functionRedefinitionIsAnError">flag to indicate if redefinition of a function is an error</param>
+        /// <param name="visualizer">Visualizer to use for the parse (Includes possible error nodes)</param>
+        public Parser( LanguageLevel level, bool functionRedefinitionIsAnError, IVisualizer? visualizer = null )
+            : this( new DynamicRuntimeState( level, functionRedefinitionIsAnError ), visualizer )
         {
         }
 

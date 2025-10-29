@@ -42,5 +42,8 @@ namespace Kaleidoscope.Grammar.AST
 
         /// <summary>Parse was cancelled</summary>
         ParseCanceled = 2000,
+
+        /// <summary>Re-declaration is not supported in the runtime</summary>
+        RedclarationNotSupported,
     }
 }

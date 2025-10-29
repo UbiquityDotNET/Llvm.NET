@@ -34,6 +34,9 @@
         <None Update="mandel.kls">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Redefinition.kls">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="SimpleExpressions.kls">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
