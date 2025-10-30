@@ -20,14 +20,15 @@ multiple other Ubiquity.NET projects.
       expressions to validate input parameters.
 * DictionaryBuilder to enable dictionary initializer style initialization of
   `ImmutableDictionary<TKey, TValue>` with significantly reduced overhead.
-    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build the dictionary.
-      When the `ToImmutable()` method is called the builder is converted to the immutable state without any
-      overhead of a copy or re-construction of hash tables etc...
+    - This leverages an `ImmutableDictionary<TKey, TValue>.Builder` under the hood to build
+      the dictionary. When the `ToImmutable()` method is called the builder is converted to
+      the immutable state without any overhead of a copy or re-construction of hash tables
+      etc...
 * KvpArrayBuilder to enable array initializer style initialization of
   `ImmutableArray<KeyValuePair<TKey, TValue>>` with significantly reduced overhead.
-    - This leverages an `ImmutableArray<T>.Builder` under the hood to build the array directly.
-      When the `ToImmutable()` method is called the builder is converted to the immutable state without any
-      overhead of a copy.
-    - Since this is an array and not a dictionary there is no overhead for allocating, initializing or copying
-      any hash mapping for the keys.
+    - This leverages an `ImmutableArray<T>.Builder` under the hood to build the array
+      directly. When the `ToImmutable()` method is called the builder is converted to the
+      immutable state without any overhead of a copy.
+    - Since this is an array and not a dictionary there is no overhead for allocating,
+      initializing or copying any hash mapping for the keys.
 

@@ -44,7 +44,8 @@ While other languages are possible this is the only one currently "built-in".
       for use in determining if analyzers apply or not. (Usually analyzers are set to ignore
       generated code as it isn't something that is controlled by the developer).
     * Write an auto generated comment as a scope to allow adding custom content in the comment
-        * Closing of the comment region doesn't occur until the return is Disposed (RAII pattern)
+        * Closing of the comment region doesn't occur until the return is Disposed (RAII
+          pattern)
     * Write a namespace scope
         * All subsequent content is indented for the scope
         * Closing of the scope doesn't occur until the return is Disposed (RAII pattern).
