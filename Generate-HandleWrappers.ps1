@@ -27,7 +27,7 @@ try
     $rspPath = Join-Path $PSScriptRoot 'generator.rsp'
 
     Write-Information "Generating response file: $rspPath via GenerateResponseFile target in $generatorProj"
-    dotnet msbuild -restore -target:GenerateResponseFile -property:HandleGeneratorResponeFilePath=`""$rspPath"`" $generatorProj
+    dotnet msbuild -tl:off -restore -target:GenerateResponseFile -property:HandleGeneratorResponeFilePath=`""$rspPath"`" $generatorProj
 
     if(!$SkipRun)
     {
