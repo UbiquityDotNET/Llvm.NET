@@ -66,12 +66,14 @@
         <PropertyGroup>
             <HandleGeneratorResponeFilePath Condition="'$(HandleGeneratorResponeFilePath)'==''">LlvmBindingsGenerator.rsp</HandleGeneratorResponeFilePath>
             <__GeneratedSourcePath>$([MSBuild]::NormalizeDirectory('..\..\interop\Ubiquity.NET.LLvm.Interop\Generated\Handles'))</__GeneratedSourcePath>
+            <__LibLLVM_VERSION>$([System.IO.Path]::GetFileName("$(PkgUbiquity_NET_LibLLVM)"))</__LibLLVM_VERSION>
         </PropertyGroup>
         <ItemGroup>
             <__RspContent Include="-l $(PkgUbiquity_NET_LibLLVM)\Content\native" />
             <__RspContent Include="-e $(PkgUbiquity_NET_LibLLVM)\Content\native" />
             <__RspContent Include="-o $(__GeneratedSourcePath)" />
         </ItemGroup>
+        <Message Importance="high" Text="Generating Response file for headers in v$(__LibLLVM_VERSION)"/>
         <WriteLinesToFile File="$(HandleGeneratorResponeFilePath)" Lines="@(__RspContent)" Overwrite="true" />
     </Target>
 </Project>
